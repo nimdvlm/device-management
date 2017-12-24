@@ -71,12 +71,14 @@ public class HttpUtil {
     }
 
     public static boolean getAccessToken(HttpSession session){
-        JsonPrimitive username = (JsonPrimitive)session.getAttribute("username");
-        JsonPrimitive password = (JsonPrimitive)session.getAttribute("password");
-        if(username==null||password==null) return false;
+//        JsonPrimitive username = (JsonPrimitive)session.getAttribute("username");
+//        JsonPrimitive password = (JsonPrimitive)session.getAttribute("password");
+//        if(username==null||password==null) return false;
         JsonObject json = new JsonObject();
-        json.addProperty("username",username.getAsString());
-        json.addProperty("password",password.getAsString());
+//        json.addProperty("username",username.getAsString());
+//        json.addProperty("password",password.getAsString());
+        json.addProperty("username","tenant@thingsboard.org");
+        json.addProperty("password","tenant");
         RequestBody body = RequestBody.create(JSON, json.toString());
         Request.Builder buider = new Request.Builder()
                 .url(tockenurl)
