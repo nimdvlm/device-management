@@ -89,7 +89,7 @@ public class GroupController {
         String token = (String)session.getAttribute("token");
         if(token == null || token.isEmpty()) {
             boolean accessToken = HttpUtil.getAccessToken(session);
-            request.setAttribute("token", token);
+            token = (String)session.getAttribute("token") ;
         }
         return token ;
     }
