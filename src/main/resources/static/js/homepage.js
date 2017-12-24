@@ -30,7 +30,7 @@ $('#device_table').DataTable({
    }
    } ,//多语言配置
 ajax: {
-            url: "../../api/noauth/allDevices",
+            url: "/api/device/allDevices",
             dataSrc: ""
         },
         //默认最后一列（最后更新时间）降序排列

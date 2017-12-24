@@ -3,6 +3,7 @@ package cn.edu.bupt.utils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import okhttp3.*;
 
 import javax.servlet.http.HttpSession;
@@ -70,14 +71,12 @@ public class HttpUtil {
     }
 
     public static boolean getAccessToken(HttpSession session){
-//        Object username = session.getAttribute("username");
-//        Object password = session.getAttribute("username");
-        String username = "tenant@thingsboard.org" ;
-        String password = "tenant" ;
+        JsonPrimitive username = (JsonPrimitive)session.getAttribute("username");
+        JsonPrimitive password = (JsonPrimitive)session.getAttribute("password");
         if(username==null||password==null) return false;
         JsonObject json = new JsonObject();
-        json.addProperty("username",(String)username);
-        json.addProperty("password",(String)password);
+        json.addProperty("username",username.getAsString());
+        json.addProperty("password",password.getAsString());
         RequestBody body = RequestBody.create(JSON, json.toString());
         Request.Builder buider = new Request.Builder()
                 .url(tockenurl)
@@ -89,8 +88,8 @@ public class HttpUtil {
             if(response.isSuccessful()){
                 String res = response.body().string();
                 JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
-                session.setAttribute("tocken",obj.get("token").getAsString());
-                session.setAttribute("refreshToken","obj.get(\"token\").getAsString()");
+                session.setAttribute("token",obj.get("token").getAsString());
+                session.setAttribute("refreshToken",obj.get("refreshToken").getAsString());
                 return true;
             }else{
                 throw new Exception("the first fail!") ;
@@ -101,8 +100,8 @@ public class HttpUtil {
                 Response response = execute(request);
                 String res = response.body().string();
                 JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
-                session.setAttribute("tocken",obj.get("tocken").getAsString());
-                session.setAttribute("refreshToken","obj.get(\"tocken\").getAsString()");
+                session.setAttribute("token",obj.get("token").getAsString());
+                session.setAttribute("refreshToken",obj.get("refreshToken").getAsString());
                 return true ;
             } catch (IOException e1) {
             }

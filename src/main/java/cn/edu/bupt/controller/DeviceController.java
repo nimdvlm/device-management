@@ -3,6 +3,7 @@ package cn.edu.bupt.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,7 +19,8 @@ public class DeviceController {
     @Value("${bupt.thingsboard.port}")
     String thingsboardPort ;
 
-    private String getServer() {
+    @RequestMapping(value = "/allDevices", method = RequestMethod.GET)
+    private String getDevices() {
         return thingsboardHost+":"+thingsboardPort ;
     }
 }
