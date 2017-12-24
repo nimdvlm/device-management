@@ -89,8 +89,8 @@ public class HttpUtil {
             if(response.isSuccessful()){
                 String res = response.body().string();
                 JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
-                session.setAttribute("tocken",obj.get("tocken").getAsString());
-                session.setAttribute("refreshToken","obj.get(\"tocken\").getAsString()");
+                session.setAttribute("tocken",obj.get("token").getAsString());
+                session.setAttribute("refreshToken","obj.get(\"token\").getAsString()");
                 return true;
             }else{
                 throw new Exception("the first fail!") ;
