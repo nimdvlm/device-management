@@ -23,14 +23,14 @@ public class NavigationController {
         return "index";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("/signin")
     public String  login() {
-        return "login";
+        return "signin";
     }
 
-    @RequestMapping("/logout")
+    @RequestMapping("/signup")
     public String  logout() {
-        return "logout";
+        return "signup";
     }
 
     @RequestMapping("/homepage")
