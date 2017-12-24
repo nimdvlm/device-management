@@ -4,3 +4,7 @@ spring.thymeleaf.mode: LEGACYHTML5
 spring.thymeleaf.cache: false
 
 security.basic.enabled: false
+
+# OpenIoT 配置
+bupt.thingsboard:
+  server: 10.108.217.227:8080
