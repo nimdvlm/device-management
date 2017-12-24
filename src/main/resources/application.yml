@@ -7,4 +7,5 @@ security.basic.enabled: false
 
 # OpenIoT 配置
 bupt.thingsboard:
-  server: 10.108.217.227:8080
+  host: 10.108.217.227
+  port: 8080
