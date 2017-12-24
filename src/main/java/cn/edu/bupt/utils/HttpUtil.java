@@ -8,6 +8,7 @@ import okhttp3.*;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Administrator on 2017/12/23.
@@ -81,7 +82,8 @@ public class HttpUtil {
                 .post(body);
         Request request = buider.build();
         try{
-            Response response = httpClient.newCall(request).execute();
+            // 第一次获取token
+            Response response = execute(request);
             if(response.isSuccessful()){
                 String res = response.body().string();
                 JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
@@ -89,22 +91,68 @@ public class HttpUtil {
                 session.setAttribute("refreshToken","obj.get(\"tocken\").getAsString()");
                 return true;
             }else{
-                return false;
+                throw new Exception("the first fail!") ;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            // 第二次获取token
+            try {
+                Response response = execute(request);
+                String res = response.body().string();
+                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
+                session.setAttribute("tocken",obj.get("tocken").getAsString());
+                session.setAttribute("refreshToken","obj.get(\"tocken\").getAsString()");
+                return true ;
+            } catch (IOException e1) {
+            }
             return false;
         }
     }
 
-    public static void main(String[] args){
-        try{
+    /**
+     * 向Sever发送http请求，有无fileStr区分POST和GET
+     * @param url
+     * @param headers
+     * @param fileStr
+     * @return
+     * @throws IOException
+     */
+    public static String getStringFromServer(String url, Map<String, String> headers, String fileStr) throws IOException {
 
-           // Response response =  getAccessToken("tenant@thingsboard.org","tenant");
-          //  System.out.println(response.body().string());
+        Request.Builder requestBuilders = new Request.Builder()
+                .url(url);
+        for(Map.Entry<String, String> item : headers.entrySet()) {
+            requestBuilders = requestBuilders.header(item.getKey(), item.getValue());
+        }
 
-        }catch(Exception e){
+        if (fileStr == null) {
+            requestBuilders = requestBuilders.get();
+        } else {
+            RequestBody body = RequestBody.create(JSON, fileStr);
+            requestBuilders = requestBuilders.post(body);
+        }
+        Request request = requestBuilders.build();
 
+        Response response = execute(request);
+        if (response.isSuccessful()) {
+            String string = response.body().string();
+            return string ;
+        } else {
+            throw new IOException("Unexpected code " + response) ;
         }
     }
+
+    /**
+     * 同步方法
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    public static Response execute(Request request) throws IOException {
+        return mOkHttpClient.newCall(request).execute() ;
+    }
+
+    private static final OkHttpClient mOkHttpClient = new OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
+            .build();
 }

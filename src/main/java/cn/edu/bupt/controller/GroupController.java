@@ -1,16 +1,19 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpClientUtil;
+import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by Administrator on 2017/12/23.
@@ -34,7 +37,7 @@ public class GroupController {
     public String devicegroupList() {
         String requestAddr = "/api/group/groups" ;
 
-        String token = (String)request.getSession().getAttribute("token");
+        String token = this.guaranteeSessionToken();
 
         StringBuffer param = new StringBuffer();
         param.append("limit").append("=").append("100");
@@ -88,6 +91,17 @@ public class GroupController {
         log.info("============== the info of DeviceGroup ==============") ;
         log.info("thingsboard: ++++ " + getServer());
         log.info("request: ++++ " + this.request.toString()) ;
+    }
+
+    private String guaranteeSessionToken() {
+        HttpSession session = request.getSession();
+        String token = (String)session.getAttribute("token");
+        if(token == null || token.isEmpty()) {
+            boolean accessToken = HttpUtil.getAccessToken(session);
+            request.setAttribute("token", token);
+            // todo throw NoToken
+        }
+        return token ;
     }
 
     private String getServer() {
