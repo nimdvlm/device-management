@@ -4,10 +4,12 @@ import cn.edu.bupt.utils.HttpClientUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -15,13 +17,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/api/group")
+@Slf4j
 public class GroupController {
 
     @Value("${bupt.thingsboard.server}")
     String thingsboardAddress ;
 
     @Autowired
-    private HttpServletRequest request;
+    HttpServletRequest request;
 
     @RequestMapping(value = "/noauth/devicegroup/data", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -75,6 +78,13 @@ public class GroupController {
         JsonObject parsed = (JsonObject) parse ;
 
         return parsed.toString() ;
+    }
+
+    @PostConstruct
+    public void test() {
+        log.info("============== the info of DeviceGroup ==============") ;
+        log.info("thingsboard: ++++ " + getServer());
+        log.info("request: ++++ " + this.request.toString()) ;
     }
 
     private String getServer() {
