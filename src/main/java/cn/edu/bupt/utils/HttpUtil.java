@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -13,12 +15,19 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Administrator on 2017/12/23.
+ * 在启动的时候不能使用
  */
+@Component
 public class HttpUtil {
+
+    @Value("${bupt.thingsboard.login_url}")
+    private void getLogin(String loginUrl) {
+        tokenurl = loginUrl ;
+    }
 
     private static final OkHttpClient httpClient = new OkHttpClient();
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private static final String  tockenurl = "http://10.108.219.8:8080/api/auth/login";
+    private static String  tokenurl = "http://10.108.219.8:8080/api/auth/login";
 
 
     public static String sendPostToThingsboard(String url, Map<String,String> headers, JsonObject requestBody,HttpSession session) throws Exception{
@@ -85,7 +94,7 @@ public class HttpUtil {
         json.addProperty("password","tenant");
         RequestBody body = RequestBody.create(JSON, json.toString());
         Request.Builder buider = new Request.Builder()
-                .url(tockenurl)
+                .url(tokenurl)
                 .post(body);
         Request request = buider.build();
         try{
