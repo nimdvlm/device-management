@@ -57,7 +57,7 @@ public class GroupController {
     public String create(@RequestBody String deviceGroupInfo) {
         String requestAddr = "/api/group/save" ;
 
-        String token = (String)request.getSession().getAttribute("token");
+        String token = this.guaranteeSessionToken();
 
         String responseContent = HttpClientUtil.getInstance()
                 .sendHttpPost("http://" + getServer()
@@ -74,7 +74,7 @@ public class GroupController {
     public String delete(@RequestParam String deviceGroupId) {
         String requestAddr = String.format("/api/group/delete/%s", deviceGroupId);
 
-        String token = (String)request.getSession().getAttribute("token");
+        String token = this.guaranteeSessionToken();
 
         String responseContent = HttpClientUtil.getInstance()
                 .sendHttpGet("http://" + getServer()
