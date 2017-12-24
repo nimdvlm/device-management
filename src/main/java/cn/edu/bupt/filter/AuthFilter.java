@@ -22,7 +22,7 @@ public class AuthFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse)servletResponse;
         String path = requ.getRequestURI();
         String method = requ.getMethod().toLowerCase();
-        if(path.endsWith(".html")||path.endsWith(".css")||path.endsWith(".js")){
+        if(path.endsWith(".html")||path.endsWith(".css")||path.endsWith(".js")||path.endsWith(".png")||path.endsWith(".jpg")||path.endsWith(".db ")){
             filterChain.doFilter(servletRequest,servletResponse);
             return ;
         }
