@@ -44,6 +44,30 @@ public class HttpUtil {
         return "";
     }
 
+    public static String sendGetToThingsboard(String url, Map<String,String> headers, HttpSession session) throws Exception{
+
+        Request.Builder buider = new Request.Builder()
+                .url(url)
+                .get() ;
+
+        String tocken = (String)session.getAttribute("token");
+        buider.header("X-Authorization","Bearer "+tocken);
+
+        if(headers!=null){
+            for(Map.Entry<String,String> entry:headers.entrySet()){
+                buider.header(entry.getKey(),entry.getValue());
+            }
+        }
+        Request request = buider.build();
+        Response response = httpClient.newCall(request).execute();
+        if(response.isSuccessful()){
+            return response.body().string();
+        }else if(response.code() == 401){
+            return "";
+        }
+        return "";
+    }
+
     public static boolean getAccessToken(HttpSession session){
         Object username = session.getAttribute("username");
         Object password = session.getAttribute("username");
