@@ -42,7 +42,7 @@ public class DeviceController {
         String token = this.guaranteeSessionToken();
 
         StringBuffer param = new StringBuffer();
-        param.append("limit").append("=").append("1000");
+        param.append("limit").append("=").append("30");
 
         String responseContent = HttpClientUtil.getInstance()
                 .sendHttpGet("http://" + getServer()

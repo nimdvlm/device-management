@@ -18,7 +18,7 @@ public class HttpUtil {
 
     private static final OkHttpClient httpClient = new OkHttpClient();
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private static final String  tockenurl = "http://10.108.217.227:8080/api/auth/login";
+    private static final String  tockenurl = "http://10.108.219.8:8080/api/auth/login";
 
 
     public static String sendPostToThingsboard(String url, Map<String,String> headers, JsonObject requestBody,HttpSession session) throws Exception{
