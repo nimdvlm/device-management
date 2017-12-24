@@ -136,11 +136,11 @@ div.modal-body{
 }
 
 .bo{
-	height: 239px;
+	height: 190px;
     background-color: rgba(123, 123, 124, 0.09);
     border-radius: 33px;
     box-shadow: 0px 0px 10px #808080;
-    margin: 70px 47px;
+    margin: 10px 47px;
     font-size: 30px;
     font-weight: bold;
     color: #161F28;
