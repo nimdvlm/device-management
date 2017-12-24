@@ -100,8 +100,8 @@ public class HttpUtil {
                 Response response = execute(request);
                 String res = response.body().string();
                 JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
-                session.setAttribute("tocken",obj.get("tocken").getAsString());
-                session.setAttribute("refreshToken","obj.get(\"tocken\").getAsString()");
+                session.setAttribute("token",obj.get("token").getAsString());
+                session.setAttribute("refreshToken",obj.get("refreshToken").getAsString());
                 return true ;
             } catch (IOException e1) {
             }
