@@ -29,7 +29,7 @@ public class ShadowController {
     @Autowired
     HttpServletRequest request;
 
-    @RequestMapping("/api/shadow/{deviceId}")
+    @RequestMapping("/{deviceId}")
     public String getDeviceShadow(@PathVariable("deviceId") String deviceId){
         String url = getServer()+"/api/shadow/"+deviceId;
         JsonObject body = new JsonObject();

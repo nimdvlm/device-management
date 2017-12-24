@@ -42,7 +42,7 @@ ajax: {
                        data: "updated_at",
                        title: "操作",
                        render: function (data, type, row, meta) {
-                           return '<a class="btn-sm btn-danger del" data-toggle="modal" data-target="#delModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success" data-toggle="modal" data-target="#conModal">'+'控制'+'</a>';
+                           return '<a class="btn-sm btn-danger del" data-toggle="modal" data-target="#delModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" data-toggle="modal" data-target="#conModal" name="'+row.deviceId+'">'+'控制'+'</a>';
                        }
                    },
        {
@@ -121,4 +121,24 @@ ajax: {
                                          }
                                      });
                 })
+                //控制功能
+                $('#devices_table').on('click','tr .ctrl', function () {
+                                var deviceId = $(this).attr('name');
+                                console.log(deviceId)
+                                $.ajax({
+                                                                         url: "/api/user/login",
+                                                                         type: "GET",
+                                                                         contentType: "application/json;charset=utf-8",
+                                                                         data: JSON.stringify({'username': deviceId}),
+                                                                         dataType: "text",
+                                                                         success: function (result) {
+                                                                             var obj = JSON.parse(result);
+                                                                             console.log("success");
+                                                                             window.location.href = "homepage";
+                                                                         },
+                                                                         error: function (msg) {
+                                                                             alert(msg.message);
+                                                                         }
+                                                                     });
+                                } );
 })
