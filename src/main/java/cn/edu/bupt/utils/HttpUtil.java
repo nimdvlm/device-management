@@ -70,8 +70,10 @@ public class HttpUtil {
     }
 
     public static boolean getAccessToken(HttpSession session){
-        Object username = session.getAttribute("username");
-        Object password = session.getAttribute("username");
+//        Object username = session.getAttribute("username");
+//        Object password = session.getAttribute("username");
+        String username = "tenant@thingsboard.org" ;
+        String password = "tenant" ;
         if(username==null||password==null) return false;
         JsonObject json = new JsonObject();
         json.addProperty("username",(String)username);
