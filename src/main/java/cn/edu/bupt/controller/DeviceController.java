@@ -21,6 +21,9 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/api/device")
 @Slf4j
 public class DeviceController {
+
+    public static final String DEVICE_ID = "deviceId";
+
     @Value("${bupt.thingsboard.host}")
     String thingsboardHost ;
 
@@ -52,20 +55,39 @@ public class DeviceController {
         return deviceJsonArr.toString() ;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     private String createDevice(@RequestBody String deviceInfo) {
-        // todo
+        String requestAddr = "/api/device" ;
 
-        return "" ;
+        String token = this.guaranteeSessionToken() ;
+
+        /**
+         * 这里的deviceInfo为json
+         * {"name":"test0name","type":"default","additionalInfo":{"description":"jhdajd"}}
+         */
+        JsonObject deviceInfoJson = (JsonObject)new JsonParser().parse(deviceInfo);
+
+        String responseContent = HttpClientUtil.getInstance()
+                .sendHttpPost("http://" + getServer()
+                        + requestAddr, deviceInfoJson.getAsString(), token);
+
+
+        return responseContent ;
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{deviceId}", method = RequestMethod.GET)
     @ResponseBody
-    public String delete(@RequestParam String deviceId) {
-        // todo
+    public String delete(@PathVariable(DEVICE_ID) String strDeviceId) {
+        String requestAddr = String.format("/api/device/delete/%s", strDeviceId);
 
-        return "" ;
+        String token = this.guaranteeSessionToken() ;
+
+        String responseContent = HttpClientUtil.getInstance()
+                .sendHttpGet("http://" + getServer()
+                        + requestAddr, "", token);
+
+        return responseContent ;
     }
 
     private String guaranteeSessionToken() {

@@ -50,7 +50,7 @@ public class GroupController {
         return groupJsonArr.toString() ;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public String create(@RequestBody String deviceGroupInfo) {
         String requestAddr = "/api/group/save" ;
@@ -61,10 +61,7 @@ public class GroupController {
                 .sendHttpPost("http://" + getServer()
                         + requestAddr, deviceGroupInfo, token) ;
 
-        JsonElement parse = new JsonParser().parse(responseContent);
-        JsonObject parsed = (JsonObject) parse ;
-
-        return parsed.toString() ;
+        return responseContent ;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -78,10 +75,7 @@ public class GroupController {
                 .sendHttpGet("http://" + getServer()
                         + requestAddr, "", token) ;
 
-        JsonElement parse = new JsonParser().parse(responseContent);
-        JsonObject parsed = (JsonObject) parse ;
-
-        return parsed.toString() ;
+        return responseContent ;
     }
 
     private String guaranteeSessionToken() {
