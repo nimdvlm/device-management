@@ -12,7 +12,7 @@ $(function () {
                     "t" +
                     "<'row'<'col-md-5 sm-center'i><'col-md-7 text-right sm-center'p>>"
                 });
-$('#device_group_table').DataTable({
+$('#dataTables-example').DataTable({
  "bAutoWidth": false,
   "oLanguage": {
  "sProcessing": "正在加载中......",
