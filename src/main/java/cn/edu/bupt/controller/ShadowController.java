@@ -31,7 +31,7 @@ public class ShadowController {
 
     @RequestMapping("/{deviceId}")
     public String getDeviceShadow(@PathVariable("deviceId") String deviceId){
-        String url = getServer()+"/api/shadow/"+deviceId;
+        String url = "http://"+getServer()+"/api/shadow/"+deviceId;
         JsonObject body = new JsonObject();
         body.addProperty("requestName","get");
         JsonObject res = new JsonObject();
