@@ -85,6 +85,11 @@ class DeviceInfoDecode {
                 aDevice.addProperty("status", "");
             }
             try {
+                aDevice.addProperty("deviceId", ((JsonObject)item).get("id").getAsString());
+            } catch (Exception e) {
+                aDevice.addProperty("deviceId", "");
+            }
+            try {
                 aDevice.addProperty("createdTime", ((JsonObject)item).get("createdTime").getAsString());
             } catch (Exception e) {
                 aDevice.addProperty("createdTime", "");
