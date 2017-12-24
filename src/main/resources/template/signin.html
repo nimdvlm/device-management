@@ -86,67 +86,27 @@
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
      <script>
          $(document).ready(function() {
-             $("#login").click(function(e) {
+             $("#login").click(function (e) {
                  e.preventDefault();
                  var username = $("#username").val();
                  var password = $("#password").val();
                  $.ajax({
-                     url: "/api/auth/login",
+                     url: "/api/user/login",
                      type: "POST",
                      contentType: "application/json;charset=utf-8",
-                     data: JSON.stringify({'username':username, 'password':password}),
+                     data: JSON.stringify({'username': username, 'password': password}),
                      dataType: "text",
-                     success: function(result) {
+                     success: function (result) {
                          var obj = JSON.parse(result);
-                         var jwtToken = obj.token;
-                         var refreshToken = obj.refreshToken;
-                         setUserFromJwtToken(jwtToken, refreshToken);
-                         console.log(jwtToken);
-                         console.log(refreshToken);
-                         window.location.href="homepage";
+                         console.log("success");
+                         window.location.href = "homepage";
                      },
-                     error: function(msg) {
+                     error: function (msg) {
                          alert(msg.message);
                      }
                  });
                  return false;
              });
-
-             function setUserFromJwtToken(jwtToken, refreshToken) {
-                 updateAndValidateToken(jwtToken, 'jwt_token');
-                 updateAndValidateToken(refreshToken, 'refresh_token');
-
-                 /*$.ajax({
-                     url: "/api/homepage",
-                     type: "POST",
-                     contentType: "application/html;charset=utf-8",
-                     headers: {
-                         "X-Authorization": "Bearer " + localStorage.getItem('jwt_token')
-                     },
-                     dataType: "html",
-                     success: function(result) {
-                         console.log("Bearer " + localStorage.getItem('jwt_token'));
-                         $(document.body).html(result);
-                     },
-                     error: function(msg) {
-                         console.log(msg);
-                     }
-                 });*/
-             }
-
-             function updateAndValidateToken(token, prefix) {
-                 var tokenData = jwt_decode(token);
-                 var issuedAt = tokenData.iat;
-                 var expTime = tokenData.exp;
-                 if (issuedAt && expTime) {
-                     var ttl = expTime - issuedAt;
-                     if (ttl > 0) {
-                         var clientExpiration = new Date().valueOf() + ttl*1000;
-                         localStorage.setItem(prefix, token);
-                         localStorage.setItem(prefix + '_expiration', clientExpiration);
-                     }
-                 }
-             }
          });
      </script>
   </body>
