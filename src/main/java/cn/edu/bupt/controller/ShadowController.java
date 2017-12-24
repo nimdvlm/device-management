@@ -33,7 +33,7 @@ public class ShadowController {
     public String getDeviceShadow(@PathVariable("deviceId") String deviceId){
         String url = getServer()+"/api/shadow/"+deviceId;
         JsonObject body = new JsonObject();
-        body.addProperty("methodName","get");
+        body.addProperty("requestName","get");
         JsonObject res = new JsonObject();
         try{
             String s = HttpUtil.sendPostToThingsboard(url,null,body,request.getSession());
@@ -51,8 +51,8 @@ public class ShadowController {
     public String controlDevice(@RequestBody String bd,@PathVariable("deviceId") String deviceId){
         String url = getServer()+"/api/shadow/"+deviceId;
         JsonObject body = new JsonObject();
-        body.addProperty("methodName","serviceCall");
-        body.add("serviceBody",new JsonParser().parse(bd));
+        body.addProperty("requestName","serviceCall");
+        body.add("requestBody",new JsonParser().parse(bd));
         JsonObject res = new JsonObject();
         try{
             String s = HttpUtil.sendPostToThingsboard(url,null,body,request.getSession());

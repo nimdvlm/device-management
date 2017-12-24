@@ -29,6 +29,10 @@ public class HttpUtil {
                 .post(body);
 
         String tocken = (String)session.getAttribute("token");
+        if(tocken==null){
+            getAccessToken(session);
+        }
+        tocken = (String)session.getAttribute("token");
         buider.header("X-Authorization","Bearer "+tocken);
 
         if(headers!=null){
