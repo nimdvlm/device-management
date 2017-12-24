@@ -126,15 +126,16 @@ ajax: {
                                 var deviceId = $(this).attr('name');
                                 console.log(deviceId)
                                 $.ajax({
-                                                                         url: "/api/user/login",
+                                                                         url: "/api/shadow/"+deviceId,
                                                                          type: "GET",
                                                                          contentType: "application/json;charset=utf-8",
-                                                                         data: JSON.stringify({'username': deviceId}),
+//                                                                         data: JSON.stringify({'username': deviceId}),
                                                                          dataType: "text",
                                                                          success: function (result) {
                                                                              var obj = JSON.parse(result);
                                                                              console.log("success");
-                                                                             window.location.href = "homepage";
+                                                                             console.log(obj)
+//                                                                             window.location.href = "homepage";
                                                                          },
                                                                          error: function (msg) {
                                                                              alert(msg.message);
