@@ -20,8 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class GroupController {
 
-    @Value("${bupt.thingsboard.server}")
-    String thingsboardAddress ;
+    @Value("${bupt.thingsboard.host}")
+    String thingsboardHost ;
+
+    @Value("${bupt.thingsboard.port}")
+    String thingsboardPort ;
 
     @Autowired
     HttpServletRequest request;
@@ -88,6 +91,6 @@ public class GroupController {
     }
 
     private String getServer() {
-        return thingsboardAddress ;
+        return thingsboardHost+":"+thingsboardPort ;
     }
 }
