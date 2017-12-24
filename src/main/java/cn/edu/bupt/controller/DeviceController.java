@@ -85,7 +85,7 @@ class DeviceInfoDecode {
                 aDevice.addProperty("status", "");
             }
             try {
-                aDevice.addProperty("deviceId", ((JsonObject)item).get("id").getAsString());
+                aDevice.addProperty("deviceId", ((JsonObject)item).get("id").getAsJsonObject().get("id").getAsString());
             } catch (Exception e) {
                 aDevice.addProperty("deviceId", "");
             }

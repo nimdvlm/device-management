@@ -33,6 +33,16 @@ public class NavigationController {
         return "signup";
     }
 
+    @RequestMapping("/device_group")
+    public String  device_group() {
+        return "device_group";
+    }
+
+    @RequestMapping("/homepages")
+    public String  homepages() {
+        return "homepages";
+    }
+
     @RequestMapping("/homepage")
     public String  homepage() {
         return "homepage";
