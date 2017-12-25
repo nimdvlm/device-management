@@ -27,7 +27,9 @@ $('#devices_table').DataTable({
  "sFirst": "首页",
  "sPrevious": "上一页",
  "sNext": "下一页",
-  "sLast": "末页"
+  "sLast": "末页",
+  "bSort":true,
+  "bSortClasses":true
    }
    } ,//多语言配置
 ajax: {
@@ -65,6 +67,7 @@ ajax: {
                        targets: 2,
                        data: null,
                        title: "描述",
+                       width: "20%",
                        render: function (data, type, row, meta) {
                            return row.additionalInfo;
                        }
@@ -124,7 +127,6 @@ ajax: {
                 //控制功能
                 $('#devices_table').on('click','tr .ctrl', function () {
                                 var deviceId = $(this).attr('name');
-                                console.log(deviceId)
                                 $.ajax({
                                                                          url: "/api/shadow/"+deviceId,
                                                                          type: "GET",
@@ -133,8 +135,14 @@ ajax: {
                                                                          dataType: "text",
                                                                          success: function (result) {
                                                                              var obj = JSON.parse(result);
-                                                                             console.log("success");
-                                                                             console.log(obj)
+                                                                             console.log(obj);
+                                                                             console.log(obj.responce_msg.services)
+                                                                             var services = obj.responce_msg.services;
+                                                                             for (x in services){
+                                                                                console.log(services[x].serviceBody.params);
+
+                                                                             }
+                                                                             console.log(document.getElementById("rt"))
 //                                                                             window.location.href = "homepage";
                                                                          },
                                                                          error: function (msg) {

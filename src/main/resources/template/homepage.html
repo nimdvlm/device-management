@@ -8,9 +8,9 @@
 	<!-- FONTAWESOME STYLES-->
 	<link href="../../static/css/font-awesome.css" rel="stylesheet" />
 	<!-- MORRIS CHART STYLES-->
-
-	<!-- CUSTOM STYLES-->
 	<link href="../../static/css/custom.css" rel="stylesheet" />
+	<!-- CUSTOM STYLES-->
+	<link href="../../static/css/bootstrapSwitch.css" rel="stylesheet" />
 	<!-- GOOGLE FONTS-->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 	<!-- TABLE STYLES-->
@@ -161,7 +161,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust">退出登
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">创建设备</h4>
+				<h4 class="modal-title" id="myModalLabel">控制设备</h4>
 			</div>
 			<div class="modal-body">
 				<form class="form-horizontal" role="form" action="#" >
@@ -175,29 +175,24 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust">退出登
 					<div class="form-group">
 						<label  class="col-sm-3 control-label control-label1" style='text-align: left;'>设备描述</label>
 						<div class="col-sm-9">
-							<textarea class="form-control" rows="3" placeholder="长度n个字符" id="description"></textarea>
+							<div class="switch" data-on="success" data-off="warning" style="height: 30px;">
+								<input type="checkbox" checked id="rt"/>
+							</div>
+							<div class="switch" data-on="success" data-off="warning" style="height: 30px;">
+								<input type="checkbox" checked />
+							</div>
 						</div>
 					</div>
 					<div class="form-group">
-						<label  class="col-sm-3 control-label" style='text-align: left;'>通信协议</label>
+						<label  class="col-sm-3 control-label control-label1" style='text-align: left;'>设备描述</label>
 						<div class="col-sm-9">
-							MQTT
+							<input type="number"/>
 						</div>
-					</div>
-					<div class="form-group">
-						<label  class="col-sm-3 control-label" style='text-align: left;'>选择设备组</label>
-						<div class="col-sm-9" >
-							<input type="text" class='add' placeholder="请输入名称" id="devicegroup"/>
-							<input type="button" id="add" class= 'btn btn-primary pull-right' value="添加" />
-						</div>
-						<div class="col-sm-9 col-sm-offset-3" id='content'>
-						</div>
-
 					</div>
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" id="create">创建</button>
+				<button type="button" class="btn btn-primary" id="create">确定</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 
 			</div>
@@ -213,6 +208,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust">退出登
 <script src="../../static/js/jquery.metisMenu.js"></script>
 <!-- DATA TABLE SCRIPTS -->
 <script src="../../static/js/homepage.js"></script>
+<script src="../../static/js/bootstrapSwitch.js"></script>
 <script src="../../static/dataTables/jquery.dataTables.js"></script>
 <script src="../../static/dataTables/dataTables.bootstrap.js"></script>
 <script>
