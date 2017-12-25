@@ -9,3 +9,4 @@ security.basic.enabled: false
 bupt.thingsboard:
   host: 10.108.219.8
   port: 8080
+  login_url: http://${bupt.thingsboard.host}:${bupt.thingsboard.port}/api/auth/login
