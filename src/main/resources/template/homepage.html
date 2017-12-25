@@ -169,30 +169,30 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust">退出登
 					<div class="form-group">
 						<label  class="col-sm-3 control-label" style='text-align: left;'>设备名称</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="name" placeholder="请输入名称"/>
+							<input type="text" class="form-control" id="ctrName"  disabled="disabled"/>
 						</div>
 					</div>
-					<div class="form-group">
-						<label  class="col-sm-3 control-label control-label1" style='text-align: left;'>设备描述</label>
-						<div class="col-sm-9">
-							<div class="switch" data-on="success" data-off="warning" style="height: 30px;">
-								<input type="checkbox" checked id="rt"/>
-							</div>
-							<div class="switch" data-on="success" data-off="warning" style="height: 30px;">
-								<input type="checkbox" checked />
-							</div>
-						</div>
+					<div class="form-group" id="ctrDevice">
+						<!--<label  class="col-sm-3 control-label control-label1" style='text-align: left;'>设备描述</label>-->
+						<!--<div class="col-sm-9">-->
+							<!--<div class="switch" data-animated="false" style="height: 30px;">-->
+								<!--<input type="checkbox" checked />-->
+							<!--</div>-->
+							<!--<div class="switch" data-animated="false" style="height: 30px;">-->
+								<!--<input type="checkbox" checked />-->
+							<!--</div>-->
+						<!--</div>-->
 					</div>
-					<div class="form-group">
-						<label  class="col-sm-3 control-label control-label1" style='text-align: left;'>设备描述</label>
-						<div class="col-sm-9">
-							<input type="number"/>
-						</div>
-					</div>
+					<!--<div class="form-group">-->
+						<!--<label  class="col-sm-3 control-label control-label1" style='text-align: left;'>设备描述</label>-->
+						<!--<div class="col-sm-9">-->
+							<!--<input type="number"/>-->
+						<!--</div>-->
+					<!--</div>-->
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" id="create">确定</button>
+				<button type="button" class="btn btn-primary" id="control">确定</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 
 			</div>
@@ -207,18 +207,16 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust">退出登
 <!-- METISMENU SCRIPTS -->
 <script src="../../static/js/jquery.metisMenu.js"></script>
 <!-- DATA TABLE SCRIPTS -->
-<script src="../../static/js/homepage.js"></script>
 <script src="../../static/js/bootstrapSwitch.js"></script>
 <script src="../../static/dataTables/jquery.dataTables.js"></script>
 <script src="../../static/dataTables/dataTables.bootstrap.js"></script>
-<script>
-            $(document).ready(function () {
-                $('#dataTables-example').dataTable();
-            });
-    </script>
+<script src="../../static/js/homepage.js"></script>
+
 <!-- CUSTOM SCRIPTS -->
 <script src="../../static/js/custom.js"></script>
-
-
+<script>
+	<!--var onOff = '<div class="switch" data-animated="false"><input type="checkbox"></div>';-->
+            <!--$('#ctrDevice').append(onOff);-->
+</script>
 </body>
 </html>
