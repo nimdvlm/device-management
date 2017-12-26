@@ -100,17 +100,20 @@ public class GroupController {
     public String getDevicesByGroupId(@PathVariable("groupId") String gId) throws Exception {
         int limit = 1000 ;
         String requestAddr = String.format("/api/group/%s/devices", gId);
-        requestAddr = requestAddr + "?limit="+limit ;
+        requestAddr = requestAddr ;
 
         String token = this.guaranteeSessionToken();
 
         String responseContent = HttpClientUtil.getInstance()
                 .sendHttpGet("http://" + getServer()
-                        + requestAddr, "", token) ;
+                        + requestAddr, "limit="+limit, token) ;
+        try {
+            JsonArray deviceJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent);
+            return deviceJsonArr.toString() ;
+        } catch (Exception e) {
 
-        JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
-
-        return deviceJsonArr.toString() ;
+        }
+        return "error occur!!" ;
     }
 
     @RequestMapping(value = "/device/{deviceId}/group/{groupId}", method = RequestMethod.GET)
