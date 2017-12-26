@@ -74,4 +74,23 @@ ajax: {
                     $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#mm">+ 创建设备组</button>');
                 }
 });
+$('#create').on('click',function(){
+    var groupName = $('#groupName').val();
+     $.ajax({
+                                             url: "/api/group/create",
+                                             type: "POST",
+                                             contentType: "application/json;charset=utf-8",
+                                             data: JSON.stringify({'groupName': groupName}),
+                                             dataType: "text",
+                                             success: function (result) {
+                                                 var obj = JSON.parse(result);
+                                                 console.log("success");
+//                                                 $('#delModal').modal('hide')
+//                                                 window.location.href = "homepage";
+                                             },
+                                             error: function (msg) {
+                                                 alert(msg.message);
+                                             }
+                                         });
+})
 })
