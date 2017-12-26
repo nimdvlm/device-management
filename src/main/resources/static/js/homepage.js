@@ -13,6 +13,8 @@ $(function () {
                     "<'row'<'col-md-5 sm-center'i><'col-md-7 text-right sm-center'p>>"
                 });
 $('#devices_table').DataTable({
+"aLengthMenu" : [5,10, 25, 50, 100],
+"bPaginate" : true,
  "bAutoWidth": false,
   "oLanguage": {
  "sProcessing": "正在加载中......",
@@ -84,7 +86,7 @@ ajax: {
                        data: "title",
                        title: "设备名称",
                        render: function (data, type, row, meta) {
-                           return "<span class='row-details row-details-close' data_id='" + row.deviceId + "'></span>&nbsp;"+row.name;
+                           return row.name;
                        }
                    }
                ],
@@ -106,7 +108,10 @@ ajax: {
                                     success: function (result) {
                                         var obj = JSON.parse(result);
                                         console.log("success");
+                                         $('#myModal').modal('hide')
+                                        $('#lastCreate').on('click',function(){
                                         window.location.href = "homepage";
+                                        });
                                     },
                                     error: function (msg) {
                                         alert(msg.message);
@@ -116,37 +121,6 @@ ajax: {
                }
 
 });
-$('.table').on('click', ' tbody td .row-details',
-               function() {
-                   var nTr = $(this).parents('tr')[0];
-                   if (oTable.fnIsOpen(nTr)) //判断是否已打开
-                   {
-                       /* This row is already open - close it */
-                       $(this).addClass("row-details-close").removeClass("row-details-open");
-                       oTable.fnClose(nTr);
-                   } else {
-                       /* Open this row */
-                       $(this).addClass("row-details-open").removeClass("row-details-close");
-                       //  alert($(this).attr("data_id"));
-                       //oTable.fnOpen( nTr,
-                       // 调用方法显示详细信息 data_id为自定义属性 存放配置ID
-                       fnFormatDetails(nTr, $(this).attr("data_id"));
-                   }
-               });
-
-
-   function fnFormatDetails(nTr, pdataId) {
-       //根据配置Id 异步查询数据
-       $.get("../resources/user_share/row_details/language.txt",
-               function(json) {
-                   var array = json.data;
-                   for (var i = 0; i < array.length; i++) {
-                       if (pdataId == array[i].language) {
-                           var sOut = '<center> <p style="width:70%">' + array[i].desc + '<a target="_blank" href="' + array[i].url + '">更多</a></p></center>';
-                           oTable.fnOpen(nTr, sOut, 'details');
-                       }
-                   }
-               });}
 
                 $('#devices_table').on('click','tr .del', function () {
                 console.log($(this).attr('id'))
@@ -164,8 +138,11 @@ $('.table').on('click', ' tbody td .row-details',
                                          success: function (result) {
                                              var obj = JSON.parse(result);
                                              console.log("success");
-                                             $('#delModal').modal('hide')
-                                             window.location.href = "homepage";
+$('#delModal').modal('hide');
+//                                          setTimeout('window.location.href = "device_group"',2000)
+$('#last').on('click',function(){
+window.location.href = "device_group";
+});
                                          },
                                          error: function (msg) {
                                              alert(msg.message);

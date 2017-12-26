@@ -120,9 +120,27 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust">退出登
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" id="create">创建</button>
+				<button type="button" class="btn btn-primary" id="create" data-toggle="modal" data-target="#createSuc">创建</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="createSuc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+				<!--<h4 class="modal-title" id="myModalLabel">删除设备</h4>-->
+			</div>
+			<div class="modal-body">
+				<p>创建成功！</p>
+			</div>
+			<div class="modal-footer">
+				<!--<button type="button" class="btn btn-primary" id="delete" data-toggle="modal" data-target="#delsModal">确认</button>-->
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="lastCreate">确定</button>
 			</div>
 		</div>
 	</div>
@@ -159,7 +177,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust">退出登
 			</div>
 			<div class="modal-footer">
 				<!--<button type="button" class="btn btn-primary" id="delete" data-toggle="modal" data-target="#delsModal">确认</button>-->
-				<button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="last">确定</button>
 			</div>
 		</div>
 	</div>
@@ -208,12 +226,12 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust">退出登
 		</div>
 	</div>
 </div>
+
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->
 
 <script src="../../static/js/jquery.min.js"></script>
 <!-- BOOTSTRAP SCRIPTS -->
-<script src="../../static/js/jquery.dataTables.min.js"></script>
 <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
 <!-- METISMENU SCRIPTS -->
 <script src="../../static/js/jquery.metisMenu.js"></script>
@@ -222,7 +240,6 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust">退出登
 <script src="../../static/dataTables/jquery.dataTables.js"></script>
 <script src="../../static/dataTables/dataTables.bootstrap.js"></script>
 
-<script src="../../static/js/DT_bootstrap.js"></script>
 
 <script src="../../static/js/homepage.js"></script>
 
