@@ -79,8 +79,13 @@ ajax: {
 //展示设备组
 $('#dataTables-example').on('click','tr .show', function () {
 var groupId = $(this).attr('id');
-console.log(groupId)
-$('#dataTables-show').DataTable({
+console.log(groupId);
+if ( $.fn.dataTable.isDataTable( '#dataTables-show' ) ){
+//table.destroy();
+$('#dataTables-show').DataTable().destroy();
+console.log('aa')
+}
+table = $('#dataTables-show').DataTable({
 "aLengthMenu" : [5,10, 25, 50, 100],
 "bPaginate" : true,
  "bAutoWidth": false,
@@ -111,7 +116,7 @@ ajax: {
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-danger del" data-toggle="modal" data-target="#delModal" id="'+row.id+'">'+'删除'+'</a>';
+                    return '<a class="btn-sm btn-danger delDev" data-toggle="modal" data-target="#delDevModal" id="'+row.deviceId+'">'+'删除'+'</a>';
                 }
             },
 
@@ -136,15 +141,40 @@ ajax: {
                 data: null,
                 title: "设备组ID",
                 render: function (data, type, row, meta) {
-                    return '<a class="show" id="'+row.id+'">'+row.id+'</a>';
+                    return row.deviceId;
                 }
             }
-        ],
-        initComplete:function(){
-                    $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#mm">+ 创建设备组</button>');
-                }
+        ]
 });
-})
+});
+//删除设备组里的设备
+$('#dataTables-show').on('click','tr .delDev', function () {
+var deviceId = $(this).attr('id')
+$('#devDel').val($(this).attr('id'))
+console.log(deviceId)
+});
+$('#devDelete').on('click',function(){
+                var devDelId = $('#devDel').val();
+ $.ajax({
+                                             url: "/api/group/unassign/"+devDelId,
+                                             type: "GET",
+                                             contentType: "application/json;charset=utf-8",
+                                             data: "",
+                                             dataType: "text",
+                                             success: function (result) {
+                                                 var obj = JSON.parse(result);
+                                                 console.log("success");
+                                                 $('#delDevModal').modal('hide')
+$('#lastDev').on('click',function(){
+window.location.href = "device_group";
+});
+//                                                 window.location.href = "device_group";
+                                             },
+                                             error: function (msg) {
+                                                 alert(msg.message);
+                                             }
+                                         });
+});
 
 //创建设备组
 $('#create').on('click',function(){
@@ -169,7 +199,7 @@ window.location.href = "device_group";
                                              }
                                          });
 })
-//删除
+//删除设备组
 $('#dataTables-example').on('click','tr .del', function () {
                 console.log($(this).attr('id'))
                 $('#confirmDel').val($(this).attr('id'))

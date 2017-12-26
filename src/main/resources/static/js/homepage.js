@@ -45,7 +45,7 @@ ajax: {
                        data: "updated_at",
                        title: "操作",
                        render: function (data, type, row, meta) {
-                           return '<a class="btn-sm btn-danger del" data-toggle="modal" data-target="#delModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" data-toggle="modal" data-target="#conModal" id="'+row.name+'" name="'+row.deviceId+'">'+'控制'+'</a>';
+                           return '<a class="btn-sm btn-danger del" style="cursor:hand" data-toggle="modal" data-target="#delModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:hand" data-toggle="modal" data-target="#conModal" id="'+row.name+'" name="'+row.deviceId+'">'+'控制'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:hand" data-toggle="modal" data-target="#assModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
                        }
                    },
        {
@@ -121,7 +121,7 @@ ajax: {
                }
 
 });
-
+//删除功能
                 $('#devices_table').on('click','tr .del', function () {
                 console.log($(this).attr('id'))
                 $('#confirmDel').val($(this).attr('id'))
@@ -149,6 +149,59 @@ window.location.href = "device_group";
                                          }
                                      });
                 })
+//                分配功能
+ $('#devices_table').on('click','tr .assign', function () {
+ $("#assGroup").empty();
+                                var deviceId = $(this).attr('id');
+                                var deviceName = $(this).attr('name');
+                                $('#assName').val(deviceId);
+                                $('#deviceName').val(deviceName);
+                    $.ajax({
+                                                            url: "/api/group/allGroups/",
+                                                            type: "GET",
+                                                            contentType: "application/json;charset=utf-8",
+                                                            data: "",
+                                                            dataType: "text",
+                                                            success: function (result) {
+                                                                var obj = JSON.parse(result);
+                                                                var groups = [];
+                                                            for(x in obj){
+                                                            groups.push(obj[x].id);
+                                                            }
+                                               var optionstring = "";
+                                                                       for (var j = 0; j < groups.length; j++) {
+                                                                           optionstring += "<option value=\"" + groups[j] + "\" >" + groups[j] + "</option>";
+                                                                       }
+                                                                       $('#assGroup').append(optionstring)
+                                                            },
+                                                            error: function (msg) {
+                                                                alert(msg.message);
+                                                            }
+                                                        });
+                   });
+                   $('#assignDev').on('click',function(){
+                   var assName = $('#assName').val();
+                   var assGroup = $('#assGroup').val();
+                    $.ajax({
+                                                                               url: "/api/group/device/"+assName+"/group/"+assGroup,
+                                                                               type: "GET",
+                                                                               contentType: "application/json;charset=utf-8",
+                                                                               data: "",
+                                                                               dataType: "text",
+                                                                               success: function (result) {
+                                                                                   var obj = JSON.parse(result);
+                                                                                   console.log('suscc');
+                                                                                   $('#assModal').modal('hide');
+                                                                                   //                                          setTimeout('window.location.href = "device_group"',2000)
+                                                                                   $('#lastAssign').on('click',function(){
+                                                                                   window.location.href = "homepage";
+                                                                                   });
+                                                                               },
+                                                                               error: function (msg) {
+                                                                                   alert(msg.message);
+                                                                               }
+                                                                           });
+                   })
                 //控制功能
                 $('#devices_table').on('click','tr .ctrl', function () {
                 $("#ctrDevice").empty();
