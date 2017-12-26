@@ -187,7 +187,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.cetc.di.App</mainClass>
+                            <mainClass>cn.edu.bupt.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
