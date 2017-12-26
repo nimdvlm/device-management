@@ -1,5 +1,4 @@
 $(function () {
-
 	$("#device_input").keyup(function () {
 		$("#device_table tbody tr").hide()
                 .filter(":contains('"+($(this).val())+"')").show();//filter和contains共同来实现了这个功能。
@@ -85,22 +84,70 @@ ajax: {
                        data: "title",
                        title: "设备名称",
                        render: function (data, type, row, meta) {
-                           return row.name;
+                           return "<span class='row-details row-details-close' data_id='" + row.deviceId + "'></span>&nbsp;"+row.name;
                        }
                    }
                ],
                initComplete:function(){
-               function del(){
-               console.log("del")};
-                           $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" data-toggle="modal" data-target="#myModal">+ 创建设备</button>');
-                       $(".addDevice").click(function(){
-                                          console.log("add")
-                                       });
-                       }
+                     $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" data-toggle="modal" data-target="#myModal">+ 创建设备</button>');
+               $("#create").click(function(){
+               var name = $('#name').val();
+               var type = $('#type').val();
+               var manufacture = $('#manufacture').val();
+               var deviceType = $('#deviceType').val();
+               var model = $('#model').val();
+               var description = $('#description').val();
+                $.ajax({
+                                    url: "/api/device/create",
+                                    type: "POST",
+                                    contentType: "application/json;charset=utf-8",
+                                    data: JSON.stringify({'name': name, 'type': type,'manufacture':manufacture,'deviceType':deviceType,'model':model, "additionalInfo":{"description":description}}),
+                                    dataType: "text",
+                                    success: function (result) {
+                                        var obj = JSON.parse(result);
+                                        console.log("success");
+                                        window.location.href = "homepage";
+                                    },
+                                    error: function (msg) {
+                                        alert(msg.message);
+                                    }
+                                });
+               });
+               }
+
 });
-                $("#add").click(function(){
-                    console.log("suss")
-                    });
+$('.table').on('click', ' tbody td .row-details',
+               function() {
+                   var nTr = $(this).parents('tr')[0];
+                   if (oTable.fnIsOpen(nTr)) //判断是否已打开
+                   {
+                       /* This row is already open - close it */
+                       $(this).addClass("row-details-close").removeClass("row-details-open");
+                       oTable.fnClose(nTr);
+                   } else {
+                       /* Open this row */
+                       $(this).addClass("row-details-open").removeClass("row-details-close");
+                       //  alert($(this).attr("data_id"));
+                       //oTable.fnOpen( nTr,
+                       // 调用方法显示详细信息 data_id为自定义属性 存放配置ID
+                       fnFormatDetails(nTr, $(this).attr("data_id"));
+                   }
+               });
+
+
+   function fnFormatDetails(nTr, pdataId) {
+       //根据配置Id 异步查询数据
+       $.get("../resources/user_share/row_details/language.txt",
+               function(json) {
+                   var array = json.data;
+                   for (var i = 0; i < array.length; i++) {
+                       if (pdataId == array[i].language) {
+                           var sOut = '<center> <p style="width:70%">' + array[i].desc + '<a target="_blank" href="' + array[i].url + '">更多</a></p></center>';
+                           oTable.fnOpen(nTr, sOut, 'details');
+                       }
+                   }
+               });}
+
                 $('#devices_table').on('click','tr .del', function () {
                 console.log($(this).attr('id'))
                 $('#confirmDel').val($(this).attr('id'))
@@ -109,14 +156,15 @@ ajax: {
                 var deviceId = $('#confirmDel').val();
                 console.log(deviceId)
                     $.ajax({
-                                         url: "/api/user/login",
+                                         url: "/api/device/delete/"+deviceId,
                                          type: "GET",
                                          contentType: "application/json;charset=utf-8",
-                                         data: JSON.stringify({'username': deviceId}),
+                                         data: "",
                                          dataType: "text",
                                          success: function (result) {
                                              var obj = JSON.parse(result);
                                              console.log("success");
+                                             $('#delModal').modal('hide')
                                              window.location.href = "homepage";
                                          },
                                          error: function (msg) {
@@ -126,6 +174,7 @@ ajax: {
                 })
                 //控制功能
                 $('#devices_table').on('click','tr .ctrl', function () {
+                $("#ctrDevice").empty();
                                 var deviceId = $(this).attr('name');
                                 var ctrName = $(this).attr('id');
                                 $('#ctrName').val(ctrName)

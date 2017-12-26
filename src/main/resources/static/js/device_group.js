@@ -30,32 +30,25 @@ $('#dataTables-example').DataTable({
    }
    } ,//多语言配置
 ajax: {
-            url: "../../api/noauth/allDevices",
+            url: "/api/group/allGroups",
             dataSrc: ""
         },
         //默认最后一列（最后更新时间）降序排列
         order: [[ 2, "desc" ]],
         columnDefs: [
             {
-                targets: 4,
+                targets: 3,
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
                     return '<a class="btn-sm btn-danger" data-toggle="modal" data-target="#delModal">'+'删除'+'</a>';
                 }
             },
-{
-                targets: 3,
-                data: null,
-                title: "创建时间",
-                render: function (data, type, row, meta) {
-                    return row.status;
-                }
-            },
+
 {
                 targets: 2,
                 data: null,
-                title: "描述",
+                title: "创建时间",
                 render: function (data, type, row, meta) {
                     return row.createdTime;
                 }
@@ -63,22 +56,22 @@ ajax: {
 {
                 targets: 1,
                 data: null,
-                title: "包含设备数",
+                title: "设备组名",
                 render: function (data, type, row, meta) {
-                    return row.additionalInfo;
+                    return row.name;
                 }
             },
             {
                 targets: 0,
                 data: null,
-                title: "设备路径",
+                title: "设备组ID",
                 render: function (data, type, row, meta) {
-                    return row.type;
+                    return row.tenantId;
                 }
             }
         ],
         initComplete:function(){
-                    $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#mm">+ 创建设备</button>');
+                    $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#mm">+ 创建设备组</button>');
                 }
 });
 })
