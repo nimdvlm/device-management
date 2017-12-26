@@ -71,7 +71,12 @@ public class HttpUtil {
                 .url(url)
                 .get() ;
 
+
         String tocken = (String)session.getAttribute("token");
+        if(tocken==null){
+            getAccessToken(session);
+        }
+        tocken = (String)session.getAttribute("token");
         buider.header("X-Authorization","Bearer "+tocken);
 
         if(headers!=null){
@@ -84,7 +89,13 @@ public class HttpUtil {
         if(response.isSuccessful()){
             return response.body().string();
         }else if(response.code() == 401){
-            return "";
+            getAccessToken(session);
+            Response response1 = httpClient.newCall(request).execute();
+            if(response1.isSuccessful()){
+                return response1.body().string();
+            }else{
+                return "";
+            }
         }
         return "";
     }

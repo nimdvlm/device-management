@@ -31,11 +31,22 @@ public class ServicTableController {
     HttpServletRequest request;
 
     @RequestMapping("/save")
-    public String getDeviceShadow(@RequestBody String json) {
+    public String saveDeviceTable(@RequestBody String json) {
         String url = "http://"+getServer()+"/api/servicetable/save";
         try{
             String responce = HttpUtil.sendPostToThingsboard(url,null,new JsonParser().parse(json).getAsJsonObject(),request.getSession());
             return responce;
+        }catch(Exception e){
+            e.printStackTrace();
+            return "保存失败";
+        }
+    }
+
+    @RequestMapping("/serviceTables")
+    public String serviceTableLists() {
+        String url = "http://"+getServer()+"/api/servicetable/getAll";
+        try{
+            return HttpUtil.sendGetToThingsboard(url,null,request.getSession());
         }catch(Exception e){
             e.printStackTrace();
             return "保存失败";
