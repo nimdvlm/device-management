@@ -100,17 +100,20 @@ public class GroupController {
     public String getDevicesByGroupId(@PathVariable("groupId") String gId) throws Exception {
         int limit = 1000 ;
         String requestAddr = String.format("/api/group/%s/devices", gId);
-        requestAddr = requestAddr + "?limit="+limit ;
+        requestAddr = requestAddr ;
 
         String token = this.guaranteeSessionToken();
 
         String responseContent = HttpClientUtil.getInstance()
                 .sendHttpGet("http://" + getServer()
-                        + requestAddr, "", token) ;
+                        + requestAddr, "limit="+limit, token) ;
+        try {
+            JsonArray deviceJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent);
+            return deviceJsonArr.toString() ;
+        } catch (Exception e) {
 
-        JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
-
-        return deviceJsonArr.toString() ;
+        }
+        return "error occur!!" ;
     }
 
     @RequestMapping(value = "/device/{deviceId}/group/{groupId}", method = RequestMethod.GET)
@@ -164,6 +167,11 @@ class DeviceGroupInfoDecode {
             JsonObject item = (JsonObject) i ;
             JsonObject aGroup = new JsonObject();
 
+            try {
+                aGroup.addProperty("id", item.get("id").getAsJsonObject().get("id").getAsString());
+            } catch (Exception e) {
+                aGroup.addProperty("id", "hhaha");
+            }
             try {
                 aGroup.addProperty("createdTime", item.get("createdTime").getAsString());
             } catch (Exception e) {
