@@ -31,6 +31,9 @@ public class GroupController {
     @Autowired
     HttpServletRequest request;
 
+    /**
+     * @return
+     */
     @RequestMapping(value = "/allGroups", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String devicegroupList() {
@@ -50,6 +53,11 @@ public class GroupController {
         return groupJsonArr.toString() ;
     }
 
+    /**
+     * 该接口的requestBody为包含一个groupName的json
+     * @param deviceGroupInfo
+     * @return
+     */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public String create(@RequestBody String deviceGroupInfo) {
@@ -64,9 +72,13 @@ public class GroupController {
         return responseContent ;
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    /**
+     * @param deviceGroupId
+     * @return
+     */
+    @RequestMapping(value = "/delete/{deviceGroupId}", method = RequestMethod.GET)
     @ResponseBody
-    public String delete(@RequestParam String deviceGroupId) {
+    public String delete(@PathVariable String deviceGroupId) {
         String requestAddr = String.format("/api/group/delete/%s", deviceGroupId);
 
         String token = this.guaranteeSessionToken();
@@ -75,6 +87,55 @@ public class GroupController {
                 .sendHttpGet("http://" + getServer()
                         + requestAddr, "", token) ;
 
+        return responseContent ;
+    }
+
+    /**
+     * @param gId
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/{groupId}/devices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getDevicesByGroupId(@PathVariable("groupId") String gId) throws Exception {
+        int limit = 1000 ;
+        String requestAddr = String.format("/api/group/%s/devices", gId);
+        requestAddr = requestAddr + "?limit="+limit ;
+
+        String token = this.guaranteeSessionToken();
+
+        String responseContent = HttpClientUtil.getInstance()
+                .sendHttpGet("http://" + getServer()
+                        + requestAddr, "", token) ;
+
+        JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
+
+        return deviceJsonArr.toString() ;
+    }
+
+    @RequestMapping(value = "/device/{deviceId}/group/{groupId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String assignDeviceToGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {
+        String requestAddr = String.format("/api/group/device/%s/group/%s", dId, gId);
+
+        String token = this.guaranteeSessionToken();
+
+        String responseContent = HttpClientUtil.getInstance()
+                .sendHttpGet("http://" + getServer()
+                        + requestAddr, "", token) ;
+        return responseContent ;
+    }
+
+    @RequestMapping(value = "/unassign/{deviceId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String unAssignDeviceFromGroup(@PathVariable("deviceId") String dId) throws Exception {
+        String requestAddr = String.format("/api/group/unassign/%s", dId);
+
+        String token = this.guaranteeSessionToken();
+
+        String responseContent = HttpClientUtil.getInstance()
+                .sendHttpGet("http://" + getServer()
+                        + requestAddr, "", token) ;
         return responseContent ;
     }
 
