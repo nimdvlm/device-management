@@ -47,9 +47,10 @@ public class ShadowController {
         }
     }
 
-    @RequestMapping("/api/shadow/control/{deviceId}")
+    @RequestMapping("/control/{deviceId}")
     public String controlDevice(@RequestBody String bd,@PathVariable("deviceId") String deviceId){
         String url = getServer()+"/api/shadow/"+deviceId;
+        System.out.println(bd);
         JsonObject body = new JsonObject();
         body.addProperty("requestName","serviceCall");
         body.add("requestBody",new JsonParser().parse(bd));
