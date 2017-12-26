@@ -160,26 +160,27 @@ class DeviceGroupInfoDecode {
         JsonArray groupJsonArr = new JsonArray();
         JsonObject parsed = (JsonObject)new JsonParser().parse(jsonStr);
 
-        for(JsonElement item : parsed.getAsJsonArray("data")) {
+        for(JsonElement i : parsed.getAsJsonArray("data")) {
+            JsonObject item = (JsonObject) i ;
             JsonObject aGroup = new JsonObject();
 
             try {
-                aGroup.addProperty("createdTime", aGroup.get("createdTime").getAsString());
+                aGroup.addProperty("createdTime", item.get("createdTime").getAsString());
             } catch (Exception e) {
                 aGroup.addProperty("createdTime", "");
             }
             try {
-                aGroup.addProperty("name", aGroup.get("name").getAsString());
+                aGroup.addProperty("name", item.get("name").getAsString());
             } catch (Exception e) {
                 aGroup.addProperty("name", "");
             }
             try {
-                aGroup.addProperty("tenantId", aGroup.get("tenantId").getAsJsonObject().get("id").getAsString());
+                aGroup.addProperty("tenantId", item.get("tenantId").getAsJsonObject().get("id").getAsString());
             } catch (Exception e) {
                 aGroup.addProperty("tenantId", "");
             }
             try {
-                aGroup.addProperty("customerId", aGroup.get("customerId").getAsJsonObject().get("id").getAsString());
+                aGroup.addProperty("customerId", item.get("customerId").getAsJsonObject().get("id").getAsString());
             } catch (Exception e) {
                 aGroup.addProperty("customerId", "");
             }
