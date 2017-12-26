@@ -54,7 +54,13 @@ public class HttpUtil {
         if(response.isSuccessful()){
             return response.body().string();
         }else if(response.code() == 401){
-            return "";
+            getAccessToken(session);
+            Response response1 = httpClient.newCall(request).execute();
+            if(response1.isSuccessful()){
+                return response1.body().string();
+            }else{
+                return "";
+            }
         }
         return "";
     }
