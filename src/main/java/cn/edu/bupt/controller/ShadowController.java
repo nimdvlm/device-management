@@ -1,5 +1,6 @@
 package cn.edu.bupt.controller;
 
+import cn.edu.bupt.data.CachForDeviceService;
 import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -38,7 +39,9 @@ public class ShadowController {
         try{
             String s = HttpUtil.sendPostToThingsboard(url,null,body,request.getSession());
             res.addProperty("responce_code",0);
-            res.add("responce_msg",new JsonParser().parse(s));
+            JsonObject obj = new JsonParser().parse(s).getAsJsonObject();
+            CachForDeviceService.put(deviceId,obj);
+            res.add("responce_msg",obj);
             return res.toString();
         }catch(Exception e){
             res.addProperty("responce_code",1);
@@ -49,11 +52,16 @@ public class ShadowController {
 
     @RequestMapping("/control/{deviceId}")
     public String controlDevice(@RequestBody String bd,@PathVariable("deviceId") String deviceId){
-        String url = getServer()+"/api/shadow/"+deviceId;
+        String url = "http://"+getServer()+"/api/shadow/"+deviceId;
         System.out.println(bd);
         JsonObject body = new JsonObject();
         body.addProperty("requestName","serviceCall");
-        body.add("requestBody",new JsonParser().parse(bd));
+        JsonObject paramsAndServiceName = new JsonParser().parse(bd).getAsJsonObject();
+        String serviceNmae = paramsAndServiceName.get("serviceName").getAsString();
+        JsonObject service = CachForDeviceService.get(deviceId,serviceNmae);
+        paramsAndServiceName.remove("serviceName");
+        service.get("serviceBody").getAsJsonObject().add("params",paramsAndServiceName);
+        body.add("requestBody",service);
         JsonObject res = new JsonObject();
         try{
             String s = HttpUtil.sendPostToThingsboard(url,null,body,request.getSession());
@@ -61,6 +69,7 @@ public class ShadowController {
             res.addProperty("responce_msg",s);
             return res.toString();
         }catch(Exception e){
+            e.printStackTrace();
             res.addProperty("responce_code",1);
             res.addProperty("responce_msg","control failed");
             return res.toString();
