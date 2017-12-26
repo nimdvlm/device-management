@@ -174,6 +174,8 @@ ajax: {
                                                                                 var label = document.createElement("label");
                                                                                 var image = document.createElement("img");
                                                                                 image.setAttribute('src','../img/off.png');
+                                                                                image.setAttribute("on",serv[1]);
+                                                                                image.setAttribute("off",serv[2]);
                                                                                 image.onclick = images;
                                                                                 function images(){
                                                                                 if(this.getAttribute('src') == '../img/off.png'){
@@ -223,9 +225,13 @@ ajax: {
                                                                                          console.log(subChildren[i].innerHTML+"-->"+subChildren[i+1].value);
 
                                                                                         }else{
-                                                                                        diction[subChildren[i].innerHTML] = subChildren[i+1].getAttribute('src');
-                                                                                        console.log(subChildren[i].innerHTML+"-->"+subChildren[i+1].getAttribute('src'));
-                                                                                        }
+                                                                                            if(subChildren[i+1].getAttribute('src').indexOf('on')>=0){
+                                                                                                diction[subChildren[i].innerHTML] = subChildren[i+1].getAttribute('on');
+                                                                                            }else{
+                                                                                                diction[subChildren[i].innerHTML] = subChildren[i+1].getAttribute('off');
+                                                                                            }
+                                                                                            console.log(subChildren[i].innerHTML+"-->"+subChildren[i+1].getAttribute('src'));
+                                                                                           }
                                                                                      //diction(subChildren[i]) = subChildren[i+1]
                                                                                      // console.log(subChildren[i]+"-->"+subChildren[i+1]);
                                                                                      i=i+2;
