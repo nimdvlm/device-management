@@ -30,9 +30,21 @@ public class ServicTableController {
     @Autowired
     HttpServletRequest request;
 
-    @RequestMapping("/save")
+    @RequestMapping("/saveGroup")
     public String saveDeviceTable(@RequestBody String json) {
-        String url = "http://"+getServer()+"/api/servicetable/save";
+        String url = "http://"+getServer()+"/api/servicetable/saveServiceGroup"";
+        try{
+            String responce = HttpUtil.sendPostToThingsboard(url,null,new JsonParser().parse(json).getAsJsonObject(),request.getSession());
+            return responce;
+        }catch(Exception e){
+            e.printStackTrace();
+            return "保存失败";
+        }
+    }
+
+    @RequestMapping("/saveServiceToGroup")
+    public String saveServiceToGroup(@RequestBody String json) {
+        String url = "http://"+getServer()+"/api/servicetable/add";
         try{
             String responce = HttpUtil.sendPostToThingsboard(url,null,new JsonParser().parse(json).getAsJsonObject(),request.getSession());
             return responce;
