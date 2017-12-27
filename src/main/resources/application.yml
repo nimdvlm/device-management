@@ -6,7 +6,7 @@ spring.thymeleaf.cache: true
 security.basic.enabled: false
 
 server:
-    port: 80
+    port: 8080
 
 # OpenIoT 配置
 bupt.thingsboard:
