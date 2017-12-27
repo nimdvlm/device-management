@@ -102,7 +102,7 @@ public class DeviceController {
 
         String responseContent = HttpClientUtil.getInstance()
                 .sendHttpPost("http://" + getServer()
-                        + requestAddr, deviceInfoJson.getAsString(), token);
+                        + requestAddr, deviceInfoJson.toString(), token);
 
 
         return responseContent ;
