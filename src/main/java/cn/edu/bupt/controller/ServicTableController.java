@@ -7,10 +7,7 @@ import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,6 +59,21 @@ public class ServicTableController {
         }catch(Exception e){
             e.printStackTrace();
             return "保存失败";
+        }
+    }
+
+    @RequestMapping(value = "/services/{manufacture}/{deviceType}/{model}", method = RequestMethod.GET)
+    @ResponseBody
+    public String serviceTableList(@PathVariable String manufacture,@PathVariable String deviceType,@PathVariable String model) {
+        String requestAddr = String.format("/services/%s/%s/%s", manufacture, deviceType, model) ;
+        String url = "http://"+getServer() + requestAddr;
+        try{
+            return HttpUtil.sendGetToThingsboard(url,null,request.getSession());
+        }catch(Exception e){
+            JsonObject errorInfoJson = new JsonObject() ;
+            errorInfoJson.addProperty("responce_code", 1);
+            errorInfoJson.addProperty("responce_msg", "can't link to thingsboard: " + e);
+            return errorInfoJson.toString() ;
         }
     }
 

@@ -46,13 +46,28 @@ public class DeviceController {
         StringBuffer param = new StringBuffer();
         param.append("limit").append("=").append("30");
 
-        String responseContent = HttpClientUtil.getInstance()
-                .sendHttpGet("http://" + getServer()
-                        + requestAddr, param.toString(), token);
+        String responseContent ;
+        try {
+            responseContent = HttpClientUtil.getInstance()
+                    .sendHttpGet("http://" + getServer()
+                            + requestAddr, param.toString(), token);
+        } catch (Exception e) {
+            JsonObject errorInfoJson = new JsonObject() ;
+            errorInfoJson.addProperty("responce_code", 1);
+            errorInfoJson.addProperty("responce_msg", "can't link to thingsboard: " + e);
+            return errorInfoJson.toString() ;
+        }
 
-        JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
+        try {
+            JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
+            return deviceJsonArr.toString() ;
+        } catch (Exception e) {
+            JsonObject errorInfoJson = new JsonObject() ;
+            errorInfoJson.addProperty("responce_code", 1);
+            errorInfoJson.addProperty("responce_msg", "can't decode the msg: " + e);
+            return errorInfoJson.toString() ;
+        }
 
-        return deviceJsonArr.toString() ;
     }
 
 
