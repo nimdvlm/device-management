@@ -32,7 +32,7 @@ public class ServicTableController {
 
     @RequestMapping("/saveGroup")
     public String saveDeviceTable(@RequestBody String json) {
-        String url = "http://"+getServer()+"/api/servicetable/saveServiceGroup"";
+        String url = "http://"+getServer()+"/api/servicetable/saveServiceGroup";
         try{
             String responce = HttpUtil.sendPostToThingsboard(url,null,new JsonParser().parse(json).getAsJsonObject(),request.getSession());
             return responce;

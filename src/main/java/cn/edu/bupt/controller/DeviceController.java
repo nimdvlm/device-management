@@ -55,6 +55,23 @@ public class DeviceController {
         return deviceJsonArr.toString() ;
     }
 
+
+    @RequestMapping(value = "/token/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    private String getDeviceToken(@PathVariable String deviceId) {
+        String requestAddr = "/api/device/"+deviceId+"/credentials" ;
+        String token = this.guaranteeSessionToken();
+        String responseContent = "";
+        try{
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer()
+                    + requestAddr,null,request.getSession());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
+        return deviceJsonArr.toString() ;
+    }
+
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     private String createDevice(@RequestBody String deviceInfo) {
