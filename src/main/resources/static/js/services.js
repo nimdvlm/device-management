@@ -32,7 +32,7 @@ $('#dataTables-example').DataTable({
    }
    } ,//多语言配置
 ajax: {
-            url: "/api/group/allGroups",
+            url: "/api/service/serviceTables",
             dataSrc: ""
         },
         //默认最后一列（最后更新时间）降序排列
@@ -43,37 +43,40 @@ ajax: {
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delModal" id="'+row.id+'">'+'删除'+'</a>';
+                    return '<a class="btn-sm btn-success del" style="cursor:pointer" data-toggle="modal" data-target="#creModal" id="'+row.id+'">'+'+创建服务'+'</a>';
                 }
             },
 
 {
                 targets: 2,
                 data: null,
-                title: "创建时间",
+                title: "设备型号",
                 render: function (data, type, row, meta) {
-                    return row.createdTime;
+                var model = row.coordinate.split('%')[2];
+                    return model;
                 }
             },
 {
                 targets: 1,
                 data: null,
-                title: "设备组名",
+                title: "设备类型",
                 render: function (data, type, row, meta) {
-                    return row.name;
+                var deviceType = row.coordinate.split('%')[1];
+                    return deviceType;
                 }
             },
             {
                 targets: 0,
                 data: null,
-                title: "设备组ID",
+                title: "厂商",
                 render: function (data, type, row, meta) {
-                    return '<a class="show" id="'+row.id+'">'+row.id+'</a>';
+                manufacture = row.coordinate.split('%')[0];
+                    return '<a class="show" id="'+row.id+'">'+manufacture+'</a>';
                 }
             }
         ],
         initComplete:function(){
-                    $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#mm">+ 创建设备组</button>');
+                    $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="'+manufacture+'" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
                 }
 });
 //展示设备组
@@ -147,6 +150,17 @@ ajax: {
         ]
 });
 });
+//创建服务
+$('#addParams').on('click',function(){
+var input = document.createElement("input");
+var p = document.createElement("p");
+$('#param').append(p);
+$('#param').append(input);
+});
+$('#devices_table').on('click','tr .create', function () {
+var manufacture = $(this).attr('id');
+ $('#manufactureCre').val(ctrName);
+});
 //删除设备组里的设备
 $('#dataTables-show').on('click','tr .delDev', function () {
 var deviceId = $(this).attr('id')
@@ -178,19 +192,21 @@ window.location.href = "device_group";
 
 //创建设备组
 $('#create').on('click',function(){
-    var groupName = $('#groupName').val();
+    var manufacture = $('#manufacture').val();
+     var deviceType = $('#deviceType').val();
+      var model = $('#model').val();
      $.ajax({
-                                             url: "/api/group/create",
+                                             url: "/api/service/saveGroup/",
                                              type: "POST",
                                              contentType: "application/json;charset=utf-8",
-                                             data: JSON.stringify({'groupName': groupName}),
+                                             data: JSON.stringify({'manufacture': manufacture,'deviceType':deviceType,'model':model}),
                                              dataType: "text",
                                              success: function (result) {
-                                                 var obj = JSON.parse(result);
+//                                                 var obj = JSON.parse(result);
                                                  console.log("success");
                                                  $('#mm').modal('hide')
 $('#lastCreate').on('click',function(){
-window.location.href = "device_group";
+window.location.href = "services";
 });
 //                                                 window.location.href = "device_group";
                                              },
