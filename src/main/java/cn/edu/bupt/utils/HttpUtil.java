@@ -65,6 +65,32 @@ public class HttpUtil {
         return "";
     }
 
+    public static String sendDeletToThingsboard(String url,HttpSession session) throws Exception{
+        Request.Builder buider = new Request.Builder()
+                .url(url)
+                .delete() ;
+        String tocken = (String)session.getAttribute("token");
+        if(tocken==null){
+            getAccessToken(session);
+        }
+        tocken = (String)session.getAttribute("token");
+        buider.header("X-Authorization","Bearer "+tocken);
+        Request request = buider.build();
+        Response response = httpClient.newCall(request).execute();
+        if(response.isSuccessful()){
+            return response.body().string();
+        }else if(response.code() == 401){
+            getAccessToken(session);
+            Response response1 = httpClient.newCall(request).execute();
+            if(response1.isSuccessful()){
+                return response1.body().string();
+            }else{
+                return "";
+            }
+        }
+        return "";
+    }
+
     public static String sendGetToThingsboard(String url, Map<String,String> headers, HttpSession session) throws Exception{
 
         Request.Builder buider = new Request.Builder()

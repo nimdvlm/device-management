@@ -111,15 +111,14 @@ public class DeviceController {
     @RequestMapping(value = "/delete/{deviceId}", method = RequestMethod.GET)
     @ResponseBody
     public String delete(@PathVariable(DEVICE_ID) String strDeviceId) {
-        String requestAddr = String.format("/api/device/delete/%s", strDeviceId);
-
-        String token = this.guaranteeSessionToken() ;
-
-        String responseContent = HttpClientUtil.getInstance()
-                .sendHttpGet("http://" + getServer()
-                        + requestAddr, "", token);
-
-        return responseContent ;
+        String requestAddr ="http://"+getServer()+String.format("/api/device/%s", strDeviceId);
+        try{
+            String res = HttpUtil.sendDeletToThingsboard(requestAddr,request.getSession());
+            return res ;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private String guaranteeSessionToken() {
