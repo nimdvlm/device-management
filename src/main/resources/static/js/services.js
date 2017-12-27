@@ -147,7 +147,10 @@ ajax: {
                     return row.deviceId;
                 }
             }
-        ]
+        ],
+         initComplete:function(){
+                            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="'+manufacture+'" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
+                        }
 });
 });
 //创建服务
@@ -157,14 +160,16 @@ var p = document.createElement("p");
 $('#param').append(p);
 $('#param').append(input);
 });
-$('#devices_table').on('click','tr .create', function () {
+$('#dataTables-example').on('click','tr .create', function () {
+console.log(7878)
 var manufacture = $(this).attr('id');
- $('#manufactureCre').val(ctrName);
+console.log(manufacture);
+ $('#manufactureCre').val(manufacture);
 });
 //删除设备组里的设备
 $('#dataTables-show').on('click','tr .delDev', function () {
-var deviceId = $(this).attr('id')
-$('#devDel').val($(this).attr('id'))
+var deviceId = $(this).attr('id');
+$('#devDel').val($(this).attr('id'));
 console.log(deviceId)
 });
 $('#devDelete').on('click',function(){

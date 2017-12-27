@@ -48,4 +48,9 @@ public class NavigationController {
         return "homepage";
     }
 
+    @RequestMapping("/services")
+    public String  services() {
+        return "services";
+    }
+
 }
