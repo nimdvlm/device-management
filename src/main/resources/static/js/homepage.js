@@ -136,12 +136,12 @@ ajax: {
                                          data: "",
                                          dataType: "text",
                                          success: function (result) {
-                                             var obj = JSON.parse(result);
+//                                             var obj = JSON.parse(result);
                                              console.log("success");
 $('#delModal').modal('hide');
 //                                          setTimeout('window.location.href = "device_group"',2000)
 $('#last').on('click',function(){
-window.location.href = "device_group";
+window.location.href = "homepage";
 });
                                          },
                                          error: function (msg) {

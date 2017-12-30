@@ -43,7 +43,7 @@ ajax: {
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-success del" style="cursor:pointer" data-toggle="modal" data-target="#creModal" id="'+row.id+'">'+'+创建服务'+'</a>';
+                    return '<a class="btn-sm btn-success create" style="cursor:pointer" data-toggle="modal" data-target="#creModal" name="'+model+'" id="'+deviceType+'" data="'+manufacture+'">'+'+创建服务'+'</a>';
                 }
             },
 
@@ -52,7 +52,7 @@ ajax: {
                 data: null,
                 title: "设备型号",
                 render: function (data, type, row, meta) {
-                var model = row.coordinate.split('%')[2];
+                model = row.coordinate.split('%')[2];
                     return model;
                 }
             },
@@ -61,7 +61,7 @@ ajax: {
                 data: null,
                 title: "设备类型",
                 render: function (data, type, row, meta) {
-                var deviceType = row.coordinate.split('%')[1];
+                deviceType = row.coordinate.split('%')[1];
                     return deviceType;
                 }
             },
@@ -71,7 +71,7 @@ ajax: {
                 title: "厂商",
                 render: function (data, type, row, meta) {
                 manufacture = row.coordinate.split('%')[0];
-                    return '<a class="show" id="'+row.id+'">'+manufacture+'</a>';
+                    return '<a class="show" name="'+row.coordinate.split('%')[2]+'" id="'+row.coordinate.split('%')[1]+'" data="'+row.coordinate.split('%')[0]+'">'+row.coordinate.split('%')[0]+'</a>';
                 }
             }
         ],
@@ -81,8 +81,12 @@ ajax: {
 });
 //展示设备组
 $('#dataTables-example').on('click','tr .show', function () {
-var groupId = $(this).attr('id');
-console.log(groupId);
+var deviceType = $(this).attr('id');
+var model = $(this).attr('name');
+var manufacture = $(this).attr('data');
+console.log(deviceType);
+console.log(model);
+console.log(manufacture);
 if ( $.fn.dataTable.isDataTable( '#dataTables-show' ) ){
 //table.destroy();
 $('#dataTables-show').DataTable().destroy();
@@ -108,7 +112,7 @@ table = $('#dataTables-show').DataTable({
    }
    } ,//多语言配置
 ajax: {
-            url: "/api/group/"+groupId+"/devices",
+            url: "/api/service/services/"+manufacture+"/"+deviceType+"/"+model,
             dataSrc: ""
         },
         //默认最后一列（最后更新时间）降序排列
@@ -161,10 +165,64 @@ $('#param').append(p);
 $('#param').append(input);
 });
 $('#dataTables-example').on('click','tr .create', function () {
+//$("#param").empty();
 console.log(7878)
-var manufacture = $(this).attr('id');
+var manufacture = $(this).attr('data');
+var deviceType = $(this).attr('id');
+var model = $(this).attr('name');
+console.log(deviceType);
 console.log(manufacture);
+console.log(model);
  $('#manufactureCre').val(manufacture);
+ $('#deviceTypeCre').val(deviceType);
+ $('#modelCre').val(model);
+
+});
+$('#confirmcre').on('click',function(){
+var manufacture ='"'+$('#manufactureCre').val()+'"';
+var deviceType = '"'+$('#deviceTypeCre').val()+'"';
+ var model ='"'+$('#modelCre').val()+'"';
+ var serviceName ='"'+ $('#serviceName').val()+'"';
+ var serviceDescription ='"'+ $('#serviceDescription').val()+'"';
+ var serviceType = '"'+$('#serviceType').val()+'"';
+ var protocol = '"'+$('#protocol').val()+'"';
+ var url = '"'+$('#url').val()+'"';
+ var requireResponce = '"'+$('#requireResponce').val()+'"';
+ var methodName ='"'+ $('#methodName').val()+'"';
+ var a = [];
+ for(var i=0;i<$('#param').find('input').length;i++){
+ var b = $('#param').find('input')[i].value;
+ b = b.split(':');
+ console.log(b[0])
+  console.log(b[1])
+ a[b[0]]=b[1];
+ }
+ console.log(a)
+ var s = '{';
+                             for(key in a){
+                              s += '"'+key+'":"'+a[key]+'",'
+                             }
+     s = s.slice(0,s.length-1)
+                                 s += '}'
+                                 console.log(s)
+ data = '{"manufacture":'+manufacture+',"deviceType":'+deviceType+',"model":'+model+',"description":{"serviceName":'+serviceName+',"serviceDescription":'+serviceDescription+',"serviceDescription":'+serviceDescription+',"serviceType":'
+ +serviceType+',"protocol":'+protocol+',"url":'+url+',"requireResponce":'+requireResponce+',"serviceBody":{"methodName":'+methodName+',"params":'+s+'}}}'
+ console.log(data)
+ $.ajax({
+                     url: "/api/service/saveServiceToGroup",
+                     type: "POST",
+                     contentType: "application/json;charset=utf-8",
+                     data: JSON.stringify(data),
+                     dataType: "text",
+                     success: function (result) {
+//                         var obj = JSON.parse(result);
+                         console.log("success");
+//                         window.location.href = "homepage";
+                     },
+                     error: function (msg) {
+                         alert(msg.message);
+                     }
+                 });
 });
 //删除设备组里的设备
 $('#dataTables-show').on('click','tr .delDev', function () {
@@ -185,7 +243,7 @@ $('#devDelete').on('click',function(){
                                                  console.log("success");
                                                  $('#delDevModal').modal('hide')
 $('#lastDev').on('click',function(){
-window.location.href = "device_group";
+window.location.href = "services";
 });
 //                                                 window.location.href = "device_group";
                                              },
@@ -240,7 +298,7 @@ $('#dataTables-example').on('click','tr .del', function () {
                                              $('#delModal').modal('hide');
 //                                          setTimeout('window.location.href = "device_group"',2000)
 $('#last').on('click',function(){
-window.location.href = "device_group";
+window.location.href = "services";
 });
                                          },
                                          error: function (msg) {
