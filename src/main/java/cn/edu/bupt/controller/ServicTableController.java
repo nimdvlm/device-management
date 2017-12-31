@@ -2,6 +2,7 @@ package cn.edu.bupt.controller;
 
 import cn.edu.bupt.data.CachForDeviceService;
 import cn.edu.bupt.utils.HttpUtil;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,8 @@ public class ServicTableController {
     public String saveServiceToGroup(@RequestBody String json) {
         String url = "http://"+getServer()+"/api/servicetable/add";
         try{
-            String responce = HttpUtil.sendPostToThingsboard(url,null,new JsonParser().parse(json).getAsJsonObject(),request.getSession());
+            JsonObject asJsonObject = (JsonObject)new JsonParser().parse(json);
+            String responce = HttpUtil.sendPostToThingsboard(url,null, asJsonObject, request.getSession());
             return responce;
         }catch(Exception e){
             e.printStackTrace();
@@ -65,10 +67,11 @@ public class ServicTableController {
     @RequestMapping(value = "/services/{manufacture}/{deviceType}/{model}", method = RequestMethod.GET)
     @ResponseBody
     public String serviceTableList(@PathVariable String manufacture,@PathVariable String deviceType,@PathVariable String model) {
-        String requestAddr = String.format("/services/%s/%s/%s", manufacture, deviceType, model) ;
+        String requestAddr = String.format("/api/services/%s/%s/%s", manufacture, deviceType, model) ;
         String url = "http://"+getServer() + requestAddr;
         try{
-            return HttpUtil.sendGetToThingsboard(url,null,request.getSession());
+            String response = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
+            return response ;
         }catch(Exception e){
             JsonObject errorInfoJson = new JsonObject() ;
             errorInfoJson.addProperty("responce_code", 1);

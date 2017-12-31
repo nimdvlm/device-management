@@ -53,4 +53,9 @@ public class NavigationController {
         return "services";
     }
 
+    @RequestMapping("/assess")
+    public String  assess() {
+        return "assess";
+    }
+
 }

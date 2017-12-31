@@ -179,16 +179,16 @@ console.log(model);
 
 });
 $('#confirmcre').on('click',function(){
-var manufacture ='"'+$('#manufactureCre').val()+'"';
-var deviceType = '"'+$('#deviceTypeCre').val()+'"';
- var model ='"'+$('#modelCre').val()+'"';
- var serviceName ='"'+ $('#serviceName').val()+'"';
- var serviceDescription ='"'+ $('#serviceDescription').val()+'"';
- var serviceType = '"'+$('#serviceType').val()+'"';
- var protocol = '"'+$('#protocol').val()+'"';
- var url = '"'+$('#url').val()+'"';
- var requireResponce = '"'+$('#requireResponce').val()+'"';
- var methodName ='"'+ $('#methodName').val()+'"';
+var manufacture =$('#manufactureCre').val() ;
+var deviceType = $('#deviceTypeCre').val() ;
+ var model = $('#modelCre').val() ;
+ var serviceName = $('#serviceName').val() ;
+ var serviceDescription = $('#serviceDescription').val() ;
+ var serviceType = $('#serviceType').val() ;
+ var protocol = $('#protocol').val() ;
+ var url = $('#url').val() ;
+ var requireResponce = $('#requireResponce').val() ;
+ var methodName = $('#methodName').val() ;
  var a = [];
  for(var i=0;i<$('#param').find('input').length;i++){
  var b = $('#param').find('input')[i].value;
@@ -205,14 +205,26 @@ var deviceType = '"'+$('#deviceTypeCre').val()+'"';
      s = s.slice(0,s.length-1)
                                  s += '}'
                                  console.log(s)
- data = '{"manufacture":'+manufacture+',"deviceType":'+deviceType+',"model":'+model+',"description":{"serviceName":'+serviceName+',"serviceDescription":'+serviceDescription+',"serviceDescription":'+serviceDescription+',"serviceType":'
- +serviceType+',"protocol":'+protocol+',"url":'+url+',"requireResponce":'+requireResponce+',"serviceBody":{"methodName":'+methodName+',"params":'+s+'}}}'
- console.log(data)
+
  $.ajax({
                      url: "/api/service/saveServiceToGroup",
                      type: "POST",
                      contentType: "application/json;charset=utf-8",
-                     data: JSON.stringify(data),
+                     data: JSON.stringify({"manufacture": manufacture,
+                         "deviceType": deviceType,
+                         "model": model,
+                         "description":
+                             {   "serviceName": serviceName,
+                                 "serviceDescription": serviceDescription,
+                                 "serviceDescription":serviceDescription,
+                                 "serviceType": serviceType,
+                                 "protocol": protocol,
+                                 "url": url,
+                                 "requireResponce": requireResponce,
+                                 "serviceBody":
+                                     {   "methodName": methodName,
+                                         "params":'+s+'}}}
+                     ),
                      dataType: "text",
                      success: function (result) {
 //                         var obj = JSON.parse(result);
