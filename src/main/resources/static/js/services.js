@@ -76,7 +76,8 @@ ajax: {
             }
         ],
         initComplete:function(){
-                    $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="'+manufacture+'" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
+//                    $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="'+manufacture+'" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
+                $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
                 }
 });
 //展示设备组
@@ -118,43 +119,43 @@ ajax: {
         //默认最后一列（最后更新时间）降序排列
         order: [[ 2, "desc" ]],
         columnDefs: [
-            {
-                targets: 3,
-                data: "updated_at",
-                title: "操作",
-                render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-danger delDev" data-toggle="modal" data-target="#delDevModal" id="'+row.deviceId+'">'+'删除'+'</a>';
-                }
-            },
+//            {
+//                targets: 3,
+//                data: "updated_at",
+//                title: "操作",
+//                render: function (data, type, row, meta) {
+//                    return '<a class="btn-sm btn-danger delDev" data-toggle="modal" data-target="#delDevModal" id="'+row.deviceId+'">'+'删除'+'</a>';
+//                }
+//            },
 
 {
                 targets: 2,
                 data: null,
-                title: "创建时间",
+                title: "服务类型",
                 render: function (data, type, row, meta) {
-                    return row.createdTime;
+                    return row.serviceType;
                 }
             },
 {
                 targets: 1,
                 data: null,
-                title: "设备组名",
+                title: "服务描述",
                 render: function (data, type, row, meta) {
-                    return row.name;
+                    return row.serviceDescription;
                 }
             },
             {
                 targets: 0,
                 data: null,
-                title: "设备组ID",
+                title: "服务名称",
                 render: function (data, type, row, meta) {
-                    return row.deviceId;
+                    return row.serviceName;
                 }
             }
         ],
-         initComplete:function(){
-                            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="'+manufacture+'" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
-                        }
+//         initComplete:function(){
+//                            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="'+manufacture+'" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
+//                        }
 });
 });
 //创建服务
@@ -227,8 +228,12 @@ var deviceType = $('#deviceTypeCre').val() ;
                      ),
                      dataType: "text",
                      success: function (result) {
+                      $('#creModal').modal('hide')
+                     $('#last').on('click',function(){
+                     window.location.href = "services";
+                     });
 //                         var obj = JSON.parse(result);
-                         console.log("success");
+                         console.log("创建服务成功！");
 //                         window.location.href = "homepage";
                      },
                      error: function (msg) {
