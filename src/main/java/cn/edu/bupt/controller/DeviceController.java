@@ -1,6 +1,5 @@
 package cn.edu.bupt.controller;
 
-import cn.edu.bupt.utils.HttpClientUtil;
 import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by Administrator on 2017/12/23.
@@ -41,31 +39,26 @@ public class DeviceController {
     @ResponseBody
     private String getDevices() {
         String requestAddr = "/api/tenant/devices" ;
-        String token = this.guaranteeSessionToken();
 
         StringBuffer param = new StringBuffer();
         param.append("limit").append("=").append("30");
 
-        String responseContent ;
+        requestAddr = requestAddr + "?"+param ;
+
+        String responseContent = null ;
         try {
-            responseContent = HttpClientUtil.getInstance()
-                    .sendHttpGet("http://" + getServer()
-                            + requestAddr, param.toString(), token);
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
         } catch (Exception e) {
-            JsonObject errorInfoJson = new JsonObject() ;
-            errorInfoJson.addProperty("responce_code", 1);
-            errorInfoJson.addProperty("responce_msg", "can't link to thingsboard: " + e);
-            return errorInfoJson.toString() ;
+            return getErrorMsg(e) ;
         }
 
         try {
             JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
             return deviceJsonArr.toString() ;
         } catch (Exception e) {
-            JsonObject errorInfoJson = new JsonObject() ;
-            errorInfoJson.addProperty("responce_code", 1);
-            errorInfoJson.addProperty("responce_msg", "can't decode the msg: " + e);
-            return errorInfoJson.toString() ;
+            return getErrorMsg(e) ;
         }
 
     }
@@ -75,13 +68,13 @@ public class DeviceController {
     @ResponseBody
     private String getDeviceToken(@PathVariable String deviceId) {
         String requestAddr = "/api/device/"+deviceId+"/credentials" ;
-        String token = this.guaranteeSessionToken();
-        String responseContent = "";
+        String responseContent = null ;
         try{
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer()
-                    + requestAddr,null,request.getSession());
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    request.getSession());
         }catch(Exception e){
-            e.printStackTrace();
+            return getErrorMsg(e) ;
         }
         JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
         return deviceJsonArr.toString() ;
@@ -92,18 +85,21 @@ public class DeviceController {
     private String createDevice(@RequestBody String deviceInfo) {
         String requestAddr = "/api/device" ;
 
-        String token = this.guaranteeSessionToken() ;
-
         /**
          * 这里的deviceInfo为json
          * {"name":"test0name","type":"default","additionalInfo":{"description":"jhdajd"}}
          */
         JsonObject deviceInfoJson = (JsonObject)new JsonParser().parse(deviceInfo);
 
-        String responseContent = HttpClientUtil.getInstance()
-                .sendHttpPost("http://" + getServer()
-                        + requestAddr, deviceInfoJson.toString(), token);
-
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    deviceInfoJson,
+                    request.getSession()) ;
+        } catch (Exception e) {
+            return getErrorMsg(e) ;
+        }
 
         return responseContent ;
     }
@@ -113,22 +109,18 @@ public class DeviceController {
     public String delete(@PathVariable(DEVICE_ID) String strDeviceId) {
         String requestAddr ="http://"+getServer()+String.format("/api/device/%s", strDeviceId);
         try{
-            String res = HttpUtil.sendDeletToThingsboard(requestAddr,request.getSession());
-            return res ;
+            String responseContent = HttpUtil.sendDeletToThingsboard(requestAddr,request.getSession());
+            return responseContent ;
         }catch(Exception e){
-            e.printStackTrace();
-            return null;
+            return getErrorMsg(e) ;
         }
     }
 
-    private String guaranteeSessionToken() {
-        HttpSession session = request.getSession();
-        String token = (String)session.getAttribute("token");
-        if(token == null || token.isEmpty()) {
-            boolean accessToken = HttpUtil.getAccessToken(session);
-            token = (String)session.getAttribute("token") ;
-        }
-        return token ;
+    private String getErrorMsg(Exception e) {
+        JsonObject errorInfoJson = new JsonObject() ;
+        errorInfoJson.addProperty("responce_code", 1);
+        errorInfoJson.addProperty("responce_msg", "can't link to thingsboard: " + e);
+        return errorInfoJson.toString() ;
     }
 }
 
