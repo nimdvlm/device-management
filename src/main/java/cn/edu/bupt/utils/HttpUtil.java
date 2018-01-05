@@ -1,9 +1,7 @@
 package cn.edu.bupt.utils;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -183,39 +181,6 @@ public class HttpUtil {
             }
         }
         return "";
-    }
-
-    /**
-     * 向Sever发送http请求，有无fileStr区分POST和GET
-     * @param url
-     * @param headers
-     * @param fileStr
-     * @return
-     * @throws IOException
-     */
-    public static String getStringFromServer(String url, Map<String, String> headers, String fileStr) throws IOException {
-
-        Request.Builder requestBuilders = new Request.Builder()
-                .url(url);
-        for(Map.Entry<String, String> item : headers.entrySet()) {
-            requestBuilders = requestBuilders.header(item.getKey(), item.getValue());
-        }
-
-        if (fileStr == null) {
-            requestBuilders = requestBuilders.get();
-        } else {
-            RequestBody body = RequestBody.create(JSON, fileStr);
-            requestBuilders = requestBuilders.post(body);
-        }
-        Request request = requestBuilders.build();
-
-        Response response = execute(request);
-        if (response.isSuccessful()) {
-            String string = response.body().string();
-            return string ;
-        } else {
-            throw new IOException("Unexpected code " + response) ;
-        }
     }
 
     /**
