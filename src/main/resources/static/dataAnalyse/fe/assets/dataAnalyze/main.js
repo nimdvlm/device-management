@@ -1,7 +1,3 @@
-/**
- * Created by kenkozheng on 2015/7/10.
- */
-
 'use strict';
 
 (function (win) {
@@ -14,10 +10,6 @@
     var config = {
         baseUrl: baseUrl,
         urlArgs: '20161212',
-        // 如果平台的根目录（/）不是当前目录时，且模块目录与main.js在同一目录时
-        // 模块还是会按照根目录的路径加载。比如：即使baseurl设置为'assets/js/ansparjs/'
-        // 加载deadlink时，url请求还是http://xxx.xxx.xx:xx/deadlink/deadlink.js
-        // 所以在router中加载模块时用绝对路径
         paths: {                    //如果某个前缀的依赖不是按照baseUrl拼接这么简单，就需要在这里指出
             underscore: 'libs/underscore',
             angular: 'libs/angular',
