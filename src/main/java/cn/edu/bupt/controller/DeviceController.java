@@ -63,10 +63,14 @@ public class DeviceController {
 
     }
 
-
+    /**
+     * abandon. Don't use
+     * @param deviceId
+     * @return
+     */
     @RequestMapping(value = "/token/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    private String getDeviceToken(@PathVariable String deviceId) {
+    public String getDeviceToken(@PathVariable String deviceId) {
         String requestAddr = "/api/device/"+deviceId+"/credentials" ;
         String responseContent = null ;
         try{
@@ -82,7 +86,7 @@ public class DeviceController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    private String createDevice(@RequestBody String deviceInfo) {
+    public String createDevice(@RequestBody String deviceInfo) {
         String requestAddr = "/api/device" ;
 
         /**
@@ -112,6 +116,29 @@ public class DeviceController {
             String responseContent = HttpUtil.sendDeletToThingsboard(requestAddr,request.getSession());
             return responseContent ;
         }catch(Exception e){
+            return getErrorMsg(e) ;
+        }
+    }
+
+    @RequestMapping(value = "/accesstoken/{deviceId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getDeviceAccessToken(@PathVariable(DEVICE_ID) String strDeviceId) {
+        String requestAddr = "http://" + getServer() + "/api/device/"+strDeviceId+"/credentials" ;
+
+        try {
+            String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
+                    null,
+                    request.getSession()) ;
+            try {
+                JsonObject jsonR = (JsonObject)new JsonParser().parse(responseContent);
+                String credentialsId = jsonR.get("credentialsId").getAsString() ;
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("credentialsId", credentialsId);
+                return jsonObject.toString();
+            } catch (Exception e) {
+                return getErrorMsg(e) ;
+            }
+        } catch (Exception e) {
             return getErrorMsg(e) ;
         }
     }
