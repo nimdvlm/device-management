@@ -50,19 +50,20 @@ public class HttpUtil {
             }
         }
         Request request = buider.build();
-        Response response = httpClient.newCall(request).execute();
-        if(response.isSuccessful()){
-            return response.body().string();
-        }else if(response.code() == 401){
-            getAccessToken(session);
-            Response response1 = httpClient.newCall(request).execute();
-            if(response1.isSuccessful()){
-                return response1.body().string();
-            }else{
-                return "";
-            }
-        }
-        return "";
+//        Response response = httpClient.newCall(request).execute();
+//        if(response.isSuccessful()){
+//            return response.body().string();
+//        }else if(response.code() == 401){
+//            getAccessToken(session);
+//            Response response1 = httpClient.newCall(request).execute();
+//            if(response1.isSuccessful()){
+//                return response1.body().string();
+//            }else{
+//                return "";
+//            }
+//        }
+//        return "";
+        return sendRequireToThingsboard(request, session);
     }
 
     public static String sendDeletToThingsboard(String url,HttpSession session) throws Exception{
@@ -76,19 +77,20 @@ public class HttpUtil {
         tocken = (String)session.getAttribute("token");
         buider.header("X-Authorization","Bearer "+tocken);
         Request request = buider.build();
-        Response response = httpClient.newCall(request).execute();
-        if(response.isSuccessful()){
-            return response.body().string();
-        }else if(response.code() == 401){
-            getAccessToken(session);
-            Response response1 = httpClient.newCall(request).execute();
-            if(response1.isSuccessful()){
-                return response1.body().string();
-            }else{
-                return "";
-            }
-        }
-        return "";
+//        Response response = httpClient.newCall(request).execute();
+//        if(response.isSuccessful()){
+//            return response.body().string();
+//        }else if(response.code() == 401){
+//            getAccessToken(session);
+//            Response response1 = httpClient.newCall(request).execute();
+//            if(response1.isSuccessful()){
+//                return response1.body().string();
+//            }else{
+//                return "";
+//            }
+//        }
+//        return "";
+        return sendRequireToThingsboard(request, session);
     }
 
     public static String sendGetToThingsboard(String url, Map<String,String> headers, HttpSession session) throws Exception{
@@ -111,19 +113,19 @@ public class HttpUtil {
             }
         }
         Request request = buider.build();
-        Response response = httpClient.newCall(request).execute();
-        if(response.isSuccessful()){
-            return response.body().string();
-        }else if(response.code() == 401){
-            getAccessToken(session);
-            Response response1 = httpClient.newCall(request).execute();
-            if(response1.isSuccessful()){
-                return response1.body().string();
-            }else{
-                return "";
-            }
-        }
-        return "";
+//        Response response = httpClient.newCall(request).execute();
+//        if(response.isSuccessful()){
+//            return response.body().string();
+//        }else if(response.code() == 401){
+//            getAccessToken(session);
+//            Response response1 = httpClient.newCall(request).execute();
+//            if(response1.isSuccessful()){
+//                return response1.body().string();
+//            }else{
+//                return "";
+//            }
+//        }
+        return sendRequireToThingsboard(request, session);
     }
 
     public static boolean getAccessToken(HttpSession session){
@@ -165,6 +167,22 @@ public class HttpUtil {
             }
             return false;
         }
+    }
+
+    private static String sendRequireToThingsboard(Request request, HttpSession session) throws Exception{
+        Response response = httpClient.newCall(request).execute();
+        if(response.isSuccessful()){
+            return response.body().string();
+        }else if(response.code() == 401){
+            getAccessToken(session);
+            Response response1 = httpClient.newCall(request).execute();
+            if(response1.isSuccessful()){
+                return response1.body().string();
+            }else{
+                return "";
+            }
+        }
+        return "";
     }
 
     /**
