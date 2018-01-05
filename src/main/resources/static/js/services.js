@@ -207,6 +207,8 @@ var deviceType = $('#deviceTypeCre').val() ;
                                  s += '}'
                                  console.log(s)
 
+    var s1 = JSON.parse(s);
+
  $.ajax({
                      url: "/api/service/saveServiceToGroup",
                      type: "POST",
@@ -224,7 +226,7 @@ var deviceType = $('#deviceTypeCre').val() ;
                                  "requireResponce": requireResponce,
                                  "serviceBody":
                                      {   "methodName": methodName,
-                                         "params":'+s+'}}}
+                                         "params":s1}}}
                      ),
                      dataType: "text",
                      success: function (result) {
