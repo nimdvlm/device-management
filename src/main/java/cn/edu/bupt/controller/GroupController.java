@@ -1,6 +1,5 @@
 package cn.edu.bupt.controller;
 
-import cn.edu.bupt.utils.HttpClientUtil;
 import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by Administrator on 2017/12/23.
@@ -39,14 +37,17 @@ public class GroupController {
     public String devicegroupList() {
         String requestAddr = "/api/group/groups" ;
 
-        String token = this.guaranteeSessionToken();
-
         StringBuffer param = new StringBuffer();
         param.append("limit").append("=").append("1000");
 
-        String responseContent = HttpClientUtil.getInstance()
-                .sendHttpGet("http://" + getServer()
-                        + requestAddr, param.toString(), token);
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr + "?" + param.toString(),
+                    null,
+                    request.getSession());
+        } catch (Exception e) {
+            return getErrorMsg(e) ;
+        }
 
         JsonArray groupJsonArr = (JsonArray)DeviceGroupInfoDecode.groupArr(responseContent);
 
@@ -63,11 +64,15 @@ public class GroupController {
     public String create(@RequestBody String deviceGroupInfo) {
         String requestAddr = "/api/group/save" ;
 
-        String token = this.guaranteeSessionToken();
-
-        String responseContent = HttpClientUtil.getInstance()
-                .sendHttpPost("http://" + getServer()
-                        + requestAddr, deviceGroupInfo, token) ;
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    (JsonObject) new JsonParser().parse(deviceGroupInfo),
+                    request.getSession());
+        } catch (Exception e) {
+            return getErrorMsg(e) ;
+        }
 
         return responseContent ;
     }
@@ -81,11 +86,14 @@ public class GroupController {
     public String delete(@PathVariable String deviceGroupId) {
         String requestAddr = String.format("/api/group/delete/%s", deviceGroupId);
 
-        String token = this.guaranteeSessionToken();
-
-        String responseContent = HttpClientUtil.getInstance()
-                .sendHttpGet("http://" + getServer()
-                        + requestAddr, "", token) ;
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    request.getSession());
+        } catch (Exception e) {
+            return getErrorMsg(e) ;
+        }
 
         return responseContent ;
     }
@@ -100,20 +108,17 @@ public class GroupController {
     public String getDevicesByGroupId(@PathVariable("groupId") String gId) throws Exception {
         int limit = 1000 ;
         String requestAddr = String.format("/api/group/%s/devices", gId);
-        requestAddr = requestAddr ;
+        requestAddr = requestAddr  + "?limit="+limit;
 
-        String token = this.guaranteeSessionToken();
-
-        String responseContent = HttpClientUtil.getInstance()
-                .sendHttpGet("http://" + getServer()
-                        + requestAddr, "limit="+limit, token) ;
+        String responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+                null,
+                request.getSession()) ;
         try {
             JsonArray deviceJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent);
             return deviceJsonArr.toString() ;
         } catch (Exception e) {
-
+            return getErrorMsg(e) ;
         }
-        return "error occur!!" ;
     }
 
     @RequestMapping(value = "/device/{deviceId}/group/{groupId}", method = RequestMethod.GET)
@@ -121,11 +126,15 @@ public class GroupController {
     public String assignDeviceToGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {
         String requestAddr = String.format("/api/group/device/%s/group/%s", dId, gId);
 
-        String token = this.guaranteeSessionToken();
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+        } catch (Exception e) {
+            return getErrorMsg(e) ;
+        }
 
-        String responseContent = HttpClientUtil.getInstance()
-                .sendHttpGet("http://" + getServer()
-                        + requestAddr, "", token) ;
         return responseContent ;
     }
 
@@ -134,26 +143,26 @@ public class GroupController {
     public String unAssignDeviceFromGroup(@PathVariable("deviceId") String dId) throws Exception {
         String requestAddr = String.format("/api/group/unassign/%s", dId);
 
-        String token = this.guaranteeSessionToken();
-
-        String responseContent = HttpClientUtil.getInstance()
-                .sendHttpGet("http://" + getServer()
-                        + requestAddr, "", token) ;
-        return responseContent ;
-    }
-
-    private String guaranteeSessionToken() {
-        HttpSession session = request.getSession();
-        String token = (String)session.getAttribute("token");
-        if(token == null || token.isEmpty()) {
-            boolean accessToken = HttpUtil.getAccessToken(session);
-            token = (String)session.getAttribute("token") ;
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+        } catch (Exception e) {
+            return getErrorMsg(e) ;
         }
-        return token ;
+        return responseContent ;
     }
 
     private String getServer() {
         return thingsboardHost+":"+thingsboardPort ;
+    }
+
+    private String getErrorMsg(Exception e) {
+        JsonObject errorInfoJson = new JsonObject() ;
+        errorInfoJson.addProperty("responce_code", 1);
+        errorInfoJson.addProperty("responce_msg", e.toString());
+        return errorInfoJson.toString() ;
     }
 }
 
@@ -170,7 +179,7 @@ class DeviceGroupInfoDecode {
             try {
                 aGroup.addProperty("id", item.get("id").getAsJsonObject().get("id").getAsString());
             } catch (Exception e) {
-                aGroup.addProperty("id", "hhaha");
+                aGroup.addProperty("id", "");
             }
             try {
                 aGroup.addProperty("createdTime", item.get("createdTime").getAsString());

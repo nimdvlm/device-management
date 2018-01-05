@@ -1,9 +1,7 @@
 package cn.edu.bupt.utils;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -50,19 +48,8 @@ public class HttpUtil {
             }
         }
         Request request = buider.build();
-        Response response = httpClient.newCall(request).execute();
-        if(response.isSuccessful()){
-            return response.body().string();
-        }else if(response.code() == 401){
-            getAccessToken(session);
-            Response response1 = httpClient.newCall(request).execute();
-            if(response1.isSuccessful()){
-                return response1.body().string();
-            }else{
-                return "";
-            }
-        }
-        return "";
+
+        return sendRequireToThingsboard(request, session);
     }
 
     public static String sendDeletToThingsboard(String url,HttpSession session) throws Exception{
@@ -76,19 +63,8 @@ public class HttpUtil {
         tocken = (String)session.getAttribute("token");
         buider.header("X-Authorization","Bearer "+tocken);
         Request request = buider.build();
-        Response response = httpClient.newCall(request).execute();
-        if(response.isSuccessful()){
-            return response.body().string();
-        }else if(response.code() == 401){
-            getAccessToken(session);
-            Response response1 = httpClient.newCall(request).execute();
-            if(response1.isSuccessful()){
-                return response1.body().string();
-            }else{
-                return "";
-            }
-        }
-        return "";
+
+        return sendRequireToThingsboard(request, session);
     }
 
     public static String sendGetToThingsboard(String url, Map<String,String> headers, HttpSession session) throws Exception{
@@ -111,19 +87,8 @@ public class HttpUtil {
             }
         }
         Request request = buider.build();
-        Response response = httpClient.newCall(request).execute();
-        if(response.isSuccessful()){
-            return response.body().string();
-        }else if(response.code() == 401){
-            getAccessToken(session);
-            Response response1 = httpClient.newCall(request).execute();
-            if(response1.isSuccessful()){
-                return response1.body().string();
-            }else{
-                return "";
-            }
-        }
-        return "";
+
+        return sendRequireToThingsboard(request, session);
     }
 
     public static boolean getAccessToken(HttpSession session){
@@ -168,36 +133,26 @@ public class HttpUtil {
     }
 
     /**
-     * 向Sever发送http请求，有无fileStr区分POST和GET
-     * @param url
-     * @param headers
-     * @param fileStr
+     * 发送请求到thingsboard，并确保session中的认证。
+     * @param request
+     * @param session
      * @return
-     * @throws IOException
+     * @throws Exception
      */
-    public static String getStringFromServer(String url, Map<String, String> headers, String fileStr) throws IOException {
-
-        Request.Builder requestBuilders = new Request.Builder()
-                .url(url);
-        for(Map.Entry<String, String> item : headers.entrySet()) {
-            requestBuilders = requestBuilders.header(item.getKey(), item.getValue());
+    private static String sendRequireToThingsboard(Request request, HttpSession session) throws Exception{
+        Response response = httpClient.newCall(request).execute();
+        if(response.isSuccessful()){
+            return response.body().string();
+        }else if(response.code() == 401){
+            getAccessToken(session);
+            Response response1 = httpClient.newCall(request).execute();
+            if(response1.isSuccessful()){
+                return response1.body().string();
+            }else{
+                return "";
+            }
         }
-
-        if (fileStr == null) {
-            requestBuilders = requestBuilders.get();
-        } else {
-            RequestBody body = RequestBody.create(JSON, fileStr);
-            requestBuilders = requestBuilders.post(body);
-        }
-        Request request = requestBuilders.build();
-
-        Response response = execute(request);
-        if (response.isSuccessful()) {
-            String string = response.body().string();
-            return string ;
-        } else {
-            throw new IOException("Unexpected code " + response) ;
-        }
+        return "";
     }
 
     /**
