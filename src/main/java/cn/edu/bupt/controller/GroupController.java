@@ -161,7 +161,7 @@ public class GroupController {
     private String getErrorMsg(Exception e) {
         JsonObject errorInfoJson = new JsonObject() ;
         errorInfoJson.addProperty("responce_code", 1);
-        errorInfoJson.addProperty("responce_msg", "can't link to thingsboard: " + e);
+        errorInfoJson.addProperty("responce_msg", e.toString());
         return errorInfoJson.toString() ;
     }
 }

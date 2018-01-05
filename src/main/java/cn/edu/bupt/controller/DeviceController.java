@@ -134,7 +134,7 @@ public class DeviceController {
                 String credentialsId = jsonR.get("credentialsId").getAsString() ;
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("credentialsId", credentialsId);
-                return jsonObject.toString();
+                return jsonObject.getAsString() ;
             } catch (Exception e) {
                 return getErrorMsg(e) ;
             }
@@ -146,7 +146,7 @@ public class DeviceController {
     private String getErrorMsg(Exception e) {
         JsonObject errorInfoJson = new JsonObject() ;
         errorInfoJson.addProperty("responce_code", 1);
-        errorInfoJson.addProperty("responce_msg", "can't link to thingsboard: " + e);
+        errorInfoJson.addProperty("responce_msg", e.toString());
         return errorInfoJson.toString() ;
     }
 }
