@@ -113,7 +113,7 @@ table = $('#dataTables-show').DataTable({
    }
    } ,//多语言配置
 ajax: {
-            url: "/api/service/services/"+manufacture+"/"+deviceType+"/"+model,
+            url: "/api/service/services/"+manufacture+"/"+deviceType+"/"+model+"/tail",
             dataSrc: ""
         },
         //默认最后一列（最后更新时间）降序排列

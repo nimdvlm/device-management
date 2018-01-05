@@ -62,7 +62,7 @@ public class ServicTableController {
         }
     }
 
-    @RequestMapping(value = "/services/{manufacture}/{deviceType}/{model}", method = RequestMethod.GET)
+    @RequestMapping(value = "/services/{manufacture}/{deviceType}/{model}/tail", method = RequestMethod.GET)
     @ResponseBody
     public String serviceTableList(@PathVariable String manufacture,@PathVariable String deviceType,@PathVariable String model) {
         String requestAddr = String.format("/api/services/%s/%s/%s", manufacture, deviceType, model) ;
