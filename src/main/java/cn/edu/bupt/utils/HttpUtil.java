@@ -48,19 +48,7 @@ public class HttpUtil {
             }
         }
         Request request = buider.build();
-//        Response response = httpClient.newCall(request).execute();
-//        if(response.isSuccessful()){
-//            return response.body().string();
-//        }else if(response.code() == 401){
-//            getAccessToken(session);
-//            Response response1 = httpClient.newCall(request).execute();
-//            if(response1.isSuccessful()){
-//                return response1.body().string();
-//            }else{
-//                return "";
-//            }
-//        }
-//        return "";
+
         return sendRequireToThingsboard(request, session);
     }
 
@@ -75,19 +63,7 @@ public class HttpUtil {
         tocken = (String)session.getAttribute("token");
         buider.header("X-Authorization","Bearer "+tocken);
         Request request = buider.build();
-//        Response response = httpClient.newCall(request).execute();
-//        if(response.isSuccessful()){
-//            return response.body().string();
-//        }else if(response.code() == 401){
-//            getAccessToken(session);
-//            Response response1 = httpClient.newCall(request).execute();
-//            if(response1.isSuccessful()){
-//                return response1.body().string();
-//            }else{
-//                return "";
-//            }
-//        }
-//        return "";
+
         return sendRequireToThingsboard(request, session);
     }
 
@@ -111,18 +87,7 @@ public class HttpUtil {
             }
         }
         Request request = buider.build();
-//        Response response = httpClient.newCall(request).execute();
-//        if(response.isSuccessful()){
-//            return response.body().string();
-//        }else if(response.code() == 401){
-//            getAccessToken(session);
-//            Response response1 = httpClient.newCall(request).execute();
-//            if(response1.isSuccessful()){
-//                return response1.body().string();
-//            }else{
-//                return "";
-//            }
-//        }
+
         return sendRequireToThingsboard(request, session);
     }
 
@@ -167,6 +132,13 @@ public class HttpUtil {
         }
     }
 
+    /**
+     * 发送请求到thingsboard，并确保session中的认证。
+     * @param request
+     * @param session
+     * @return
+     * @throws Exception
+     */
     private static String sendRequireToThingsboard(Request request, HttpSession session) throws Exception{
         Response response = httpClient.newCall(request).execute();
         if(response.isSuccessful()){
