@@ -179,7 +179,7 @@ class DeviceGroupInfoDecode {
             try {
                 aGroup.addProperty("id", item.get("id").getAsJsonObject().get("id").getAsString());
             } catch (Exception e) {
-                aGroup.addProperty("id", "hhaha");
+                aGroup.addProperty("id", "");
             }
             try {
                 aGroup.addProperty("createdTime", item.get("createdTime").getAsString());
