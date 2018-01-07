@@ -4,9 +4,6 @@ import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,17 +47,6 @@ public class UserController {
         JsonObject json = new JsonObject();
         json.addProperty("responce_code",0);
         json.addProperty("responce_msg","logout ok");
-
-
-        // tjl
-        try {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth != null){
-                new SecurityContextLogoutHandler().logout(request, response, auth);
-            }
-        } catch (Exception e) {
-
-        }
 
         return "redirect:/homepage";
     }
