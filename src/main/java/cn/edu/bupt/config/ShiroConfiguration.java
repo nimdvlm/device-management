@@ -67,16 +67,19 @@ public class ShiroConfiguration {
     public CredentialsMatcher credentialsMatcher() {
         return new CredentialsMatcher();
     }
+
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
         return new LifecycleBeanPostProcessor();
     }
+
     @Bean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
         DefaultAdvisorAutoProxyCreator creator=new DefaultAdvisorAutoProxyCreator();
         creator.setProxyTargetClass(true);
         return creator;
     }
+
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") SecurityManager manager) {
         AuthorizationAttributeSourceAdvisor advisor=new AuthorizationAttributeSourceAdvisor();
