@@ -7,6 +7,8 @@ import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 
 /**
  * Created by tangjialiang on 2018/1/7.
+ *
+ * Shiro的用户权限登录器
  */
 public class CredentialsMatcher extends SimpleCredentialsMatcher {
 

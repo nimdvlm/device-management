@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created by Administrator on 2017/12/24.
+ *
+ * deprecated to use !!!!!   (new for LoginController)
  */
 //@RestController
 //@RequestMapping("/api/user")

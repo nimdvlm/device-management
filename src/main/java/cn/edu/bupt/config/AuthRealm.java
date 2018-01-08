@@ -7,6 +7,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 /**
  * Created by tangjialiang on 2018/1/7.
+ *
+ * Shiro的安全事务管理器
  */
 public class AuthRealm extends AuthorizingRealm {
 
