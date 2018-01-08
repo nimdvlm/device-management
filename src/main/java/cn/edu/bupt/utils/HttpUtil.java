@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static org.bouncycastle.cms.RecipientId.password;
+
 /**
  * Created by Administrator on 2017/12/23.
  * 在启动的时候不能使用
@@ -92,14 +94,14 @@ public class HttpUtil {
     }
 
     public static boolean getAccessToken(HttpSession session){
-//        JsonPrimitive username = (JsonPrimitive)session.getAttribute("username");
-//        JsonPrimitive password = (JsonPrimitive)session.getAttribute("password");
-//        if(username==null||password==null) return false;
+        String username = (String)session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+        if(username==null|| password ==null) return false;
         JsonObject json = new JsonObject();
-//        json.addProperty("username",username.getAsString());
-//        json.addProperty("password",password.getAsString());
-        json.addProperty("username","tenant@thingsboard.org");
-        json.addProperty("password","tenant");
+        json.addProperty("username",username);
+        json.addProperty("password", password);
+//        json.addProperty("username","tenant@thingsboard.org");
+//        json.addProperty("password","tenant");
         RequestBody body = RequestBody.create(JSON, json.toString());
         Request.Builder buider = new Request.Builder()
                 .url(tokenurl)
@@ -126,9 +128,9 @@ public class HttpUtil {
                 session.setAttribute("token",obj.get("token").getAsString());
                 session.setAttribute("refreshToken",obj.get("refreshToken").getAsString());
                 return true ;
-            } catch (IOException e1) {
+            } catch (Exception e1) {
+                return false ;
             }
-            return false;
         }
     }
 
