@@ -53,15 +53,15 @@ public class ShadowController {
     @RequestMapping("/control/{deviceId}")
     public String controlDevice(@RequestBody String bd,@PathVariable("deviceId") String deviceId){
         String url = "http://"+getServer()+"/api/shadow/"+deviceId;
-        System.out.println(bd);
         JsonObject body = new JsonObject();
         body.addProperty("requestName","serviceCall");
         JsonObject paramsAndServiceName = new JsonParser().parse(bd).getAsJsonObject();
-        String serviceNmae = paramsAndServiceName.get("serviceName").getAsString();
-        JsonObject service = CachForDeviceService.get(deviceId,serviceNmae);
-        paramsAndServiceName.remove("serviceName");
-        service.get("serviceBody").getAsJsonObject().add("params",paramsAndServiceName);
-        body.add("requestBody",service);
+//        String serviceNmae = paramsAndServiceName.get("serviceName").getAsString();
+//        JsonObject service = CachForDeviceService.get(deviceId,serviceNmae);
+//        paramsAndServiceName.remove("serviceName");
+//        service.get("serviceBody").getAsJsonObject().add("params",paramsAndServiceName);
+//        body.add("requestBody",service);
+        body.add("requestBody",paramsAndServiceName);
         JsonObject res = new JsonObject();
         try{
             String s = HttpUtil.sendPostToThingsboard(url,null,body,request.getSession());
