@@ -81,7 +81,7 @@ define(function (require) {
                         
                         setInterval(function (){       
                             myChart.setOption(option);
-                        }, 2100);
+                        }, 100);
                         // myChart.setOption(option);
                         if ($scope.eventclick()) {
                             myChart.on('click', $scope.eventclick());

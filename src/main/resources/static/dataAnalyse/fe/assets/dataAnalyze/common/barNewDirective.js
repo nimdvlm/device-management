@@ -109,7 +109,7 @@ define(function (require) {
                             var myChart = echarts.init(document.getElementById($scope.id), macarons);       
                             setInterval(function (){                    
                                 myChart.setOption(option);
-                            }, 2100);
+                            }, 100);
                             // myChart.setOption(option);
                         }, true);
                 }

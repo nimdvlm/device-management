@@ -119,13 +119,14 @@
                 </div>
             </div>
             <button class="btn btn-primary" style="margin:5px;" data-toggle="modal" data-target="#myModal">选择数据源</button>
-            <div>
-                    <aside class="aside-lg b-l">
-                            <div class="padder">
-                              <!-- <h4>字段展示</h4> -->
-                              <div class="line"></div>
-                              <div id="myEvents" class="pillbox clearfix m-b no-border no-padder">
-                                <ul style='display:grid;'>
+
+            <!--<div>-->
+                    <!--<aside class="aside-lg b-l">-->
+                            <!--<div class="padder">-->
+                              <!--&lt;!&ndash; <h4>字段展示</h4> &ndash;&gt;-->
+                              <!--<div class="line"></div>-->
+                              <!--<div id="myEvents" class="pillbox clearfix m-b no-border no-padder">-->
+                                <!--<ul style='display:grid;'>-->
                                   <!-- <li class="label bg-dark" id="time;" ondrop="drop(event)" ondragover="allowDrop(event)"> -->
                                         <!-- <div  class="div"> -->
                                                 <!-- <p draggable="true" ondragstart="drag(event)" id="time;" width="80" height="30"> 时间</p> -->
@@ -148,9 +149,9 @@
                                   <li class="label bg-info">Item Five</li>
                                   <li class="label bg-primary">Item Six</li> -->
                                   <!-- <input type="text" placeholder="add an event"> -->
-                                </ul>
-                              </div>
-                              <div class="line"></div>
+                                <!--</ul>-->
+                              <!--</div>-->
+                              <!--<div class="line"></div>-->
                               <!-- <div class="checkbox">
                                 <label class="checkbox-custom">
                                   <input type='checkbox' id='drop-remove' />
@@ -170,13 +171,26 @@
                     <p draggable="true" ondragstart="drag(event)" id="temprature;" width="80" height="30"> 温度</p>
                 </div> -->
             </div>
-        </div>
+
         <div id="right">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    数据分析
+                </div>
+                <div class="panel-body">
+                    <button class="btn btn-sm btn-danger">设备性能变化趋势分析</button><p></p>
+                    <button class="btn btn-sm btn-danger">数据安全分析</button><p></p>
+                    <button class="btn btn-s btn-danger">预测</button><p></p>
+                    <button class="btn btn-sm btn-danger">分类</button><p></p>
+                    <button class="btn btn-sm btn-danger">聚类</button>
+                </div>
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     控制面板
                 </div>
                 <div class="panel-body">
+
                         <section class="panel panel-default" style="margin: -15px;">
                                 <header class="panel-heading bg-light">
                                   <ul class="nav nav-tabs nav-justified">
@@ -197,7 +211,7 @@
         </div>
     </div>
 </section>
-
+</div>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">

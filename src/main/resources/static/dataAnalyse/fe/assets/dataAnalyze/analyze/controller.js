@@ -75,7 +75,7 @@ define(function (require) {
                 $scope.appData.xAxis.push(axisData);
                 $scope.appData.data.temprature.shift();
                 $scope.appData.data.temprature.push((Math.random() * 10 + 5).toFixed(1) - 0);
-            }, 2100);
+            }, 1000);
             
         $scope.appTitle = {
                 text: '',

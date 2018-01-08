@@ -91,7 +91,7 @@
                  var username = $("#username").val();
                  var password = $("#password").val();
                  $.ajax({
-                     url: "/api/user/login",
+                     url: "/api/user/login", // tjl
                      type: "POST",
                      contentType: "application/json;charset=utf-8",
                      data: JSON.stringify({'username': username, 'password': password}),
