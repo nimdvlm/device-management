@@ -13,17 +13,17 @@ import org.springframework.stereotype.Component;
 public class ResponceUtilImp implements ResponceUtil{
     @Override
     public String onSuccess(String msg) {
-        JsonObject errorInfoJson = new JsonObject() ;
-        errorInfoJson.addProperty("responce_code", 0);
-        errorInfoJson.addProperty("responce_msg", msg);
-        return errorInfoJson.toString() ;
+        JsonObject InfoJson = new JsonObject() ;
+        InfoJson.addProperty("responce_code", 0);
+        InfoJson.addProperty("responce_msg", msg);
+        return InfoJson.toString() ;
     }
 
     @Override
     public String onFail(String msg) {
-        JsonObject errorInfoJson = new JsonObject() ;
-        errorInfoJson.addProperty("responce_code", 1);
-        errorInfoJson.addProperty("responce_msg", msg);
-        return errorInfoJson.toString() ;
+        JsonObject InfoJson = new JsonObject() ;
+        InfoJson.addProperty("responce_code", 1);
+        InfoJson.addProperty("responce_msg", msg);
+        return InfoJson.toString() ;
     }
 }
