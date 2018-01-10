@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 
-public class DeafultThingsboardAwaredController {
+public class DefaultThingsboardAwaredController {
 
     @Value("${bupt.thingsboard.host}")
     String thingsboardHost ;
@@ -28,7 +28,7 @@ public class DeafultThingsboardAwaredController {
     @Autowired
     ResponceUtil responceUtil ;
 
-    private String getServer() {
+    protected String getServer() {
         return thingsboardHost+":"+thingsboardPort ;
     }
 

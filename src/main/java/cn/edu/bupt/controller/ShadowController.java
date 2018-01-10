@@ -2,18 +2,14 @@ package cn.edu.bupt.controller;
 
 import cn.edu.bupt.data.CachForDeviceService;
 import cn.edu.bupt.utils.HttpUtil;
-import cn.edu.bupt.utils.ResponceUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Administrator on 2017/12/23.
@@ -23,19 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api/shadow")
 @Slf4j
-public class ShadowController {
-    @Value("${bupt.thingsboard.host}")
-    String thingsboardHost ;
-
-    @Value("${bupt.thingsboard.port}")
-    String thingsboardPort ;
-
-    @Autowired
-    HttpServletRequest request;
-
-    @Autowired
-    ResponceUtil responceUtil ;
-
+public class ShadowController extends DefaultThingsboardAwaredController {
+    
     @RequestMapping("/{deviceId}")
     public String getDeviceShadow(@PathVariable("deviceId") String deviceId){
         String url = "http://"+getServer()+"/api/shadow/"+deviceId;
@@ -50,7 +35,7 @@ public class ShadowController {
 //            res.add("responce_msg",obj);
             return responceUtil.onSuccess(obj) ;
         }catch(Exception e){
-            return responceUtil.onFail(e);
+            return retFail(e.toString());
         }
     }
 
@@ -71,13 +56,9 @@ public class ShadowController {
             String s = HttpUtil.sendPostToThingsboard(url,null,body,request.getSession());
 //            res.addProperty("responce_code",0);
 //            res.addProperty("responce_msg",s);
-            return responceUtil.onSuccess(s);
+            return retSuccess(s);
         }catch(Exception e){
-            return responceUtil.onFail(e);
+            return retFail(e.toString());
         }
-    }
-
-    private String getServer() {
-        return thingsboardHost+":"+thingsboardPort ;
     }
 }
