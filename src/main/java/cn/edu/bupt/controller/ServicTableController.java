@@ -4,37 +4,26 @@ import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Administrator on 2017/12/26.
+ *
+ *  -- 该类的所有接口返回采用统一json
  */
 @RestController
 @RequestMapping("/api/service")
 @Slf4j
-public class ServicTableController {
-    @Value("${bupt.thingsboard.host}")
-    String thingsboardHost ;
-
-    @Value("${bupt.thingsboard.port}")
-    String thingsboardPort ;
-
-    @Autowired
-    HttpServletRequest request;
+public class ServicTableController extends DefaultThingsboardAwaredController {
 
     @RequestMapping("/saveGroup")
     public String saveDeviceTable(@RequestBody String json) {
         String url = "http://"+getServer()+"/api/servicetable/saveServiceGroup";
         try{
             String responce = HttpUtil.sendPostToThingsboard(url,null,new JsonParser().parse(json).getAsJsonObject(),request.getSession());
-            return responce;
+            return retSuccess(responce);
         }catch(Exception e){
-            e.printStackTrace();
-            return "保存失败";
+            return retFail("保存失败: - " + e.toString());
         }
     }
 
@@ -43,10 +32,9 @@ public class ServicTableController {
         String url = "http://"+getServer()+"/api/servicetable/deleteServiceGroup";
         try{
             String responce = HttpUtil.sendPostToThingsboard(url,null,new JsonParser().parse(json).getAsJsonObject(),request.getSession());
-            return responce;
+            return retSuccess(responce);
         }catch(Exception e){
-            e.printStackTrace();
-            return "删除失败";
+            return retFail("删除失败: - " + e.toString());
         }
     }
 
@@ -56,10 +44,9 @@ public class ServicTableController {
         try{
             JsonObject asJsonObject = (JsonObject)new JsonParser().parse(json);
             String responce = HttpUtil.sendPostToThingsboard(url,null, asJsonObject, request.getSession());
-            return responce;
+            return retSuccess(responce);
         }catch(Exception e){
-            e.printStackTrace();
-            return "保存失败";
+            return retFail("保存失败: - " + e.toString());
         }
     }
 
@@ -69,10 +56,9 @@ public class ServicTableController {
         try{
             JsonObject asJsonObject = (JsonObject)new JsonParser().parse(json);
             String responce = HttpUtil.sendPostToThingsboard(url,null, asJsonObject, request.getSession());
-            return responce;
+            return retSuccess(responce);
         }catch(Exception e){
-            e.printStackTrace();
-            return "删除失败";
+            return retFail("删除失败: - " + e.toString());
         }
     }
 
@@ -80,10 +66,10 @@ public class ServicTableController {
     public String serviceTableLists() {
         String url = "http://"+getServer()+"/api/servicetable/getAll";
         try{
-            return HttpUtil.sendGetToThingsboard(url,null,request.getSession());
+            String s = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
+            return retSuccess(s) ;
         }catch(Exception e){
-            e.printStackTrace();
-            return "保存失败";
+            return retFail("保存失败: - " + e.toString());
         }
     }
 
@@ -93,16 +79,9 @@ public class ServicTableController {
         String url = "http://"+getServer() + requestAddr;
         try{
             String response = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
-            return response ;
+            return retSuccess(response) ;
         }catch(Exception e){
-            JsonObject errorInfoJson = new JsonObject() ;
-            errorInfoJson.addProperty("responce_code", 1);
-            errorInfoJson.addProperty("responce_msg", "can't link to thingsboard: " + e);
-            return errorInfoJson.toString() ;
+            return retFail("can't link to thingsboard: " + e) ;
         }
-    }
-
-    private String getServer() {
-        return thingsboardHost+":"+thingsboardPort ;
     }
 }

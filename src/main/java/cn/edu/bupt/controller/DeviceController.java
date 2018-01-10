@@ -1,39 +1,26 @@
 package cn.edu.bupt.controller;
 
+import cn.edu.bupt.controller.string2jsonDecode.DeviceInfoDecode;
 import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Administrator on 2017/12/23.
+ *
+ * 设备数据的获取
+ * -- 该类的所有接口返回采用统一json
  */
 @RestController
 @RequestMapping("/api/device")
 @Slf4j
-public class DeviceController {
+public class DeviceController extends DefaultThingsboardAwaredController {
 
     public static final String DEVICE_ID = "deviceId";
-
-    @Value("${bupt.thingsboard.host}")
-    String thingsboardHost ;
-
-    @Value("${bupt.thingsboard.port}")
-    String thingsboardPort ;
-
-    private String getServer() {
-        return thingsboardHost+":"+thingsboardPort ;
-    }
-
-    @Autowired
-    HttpServletRequest request;
 
     @RequestMapping(value = "/allDevices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -51,14 +38,14 @@ public class DeviceController {
                     null,
                     request.getSession()) ;
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return retFail(e.toString()) ;
         }
 
         try {
             JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
-            return deviceJsonArr.toString() ;
+            return retSuccess(deviceJsonArr.toString()) ;
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return retFail(e.toString()) ;
         }
 
     }
@@ -78,10 +65,10 @@ public class DeviceController {
                     null,
                     request.getSession());
         }catch(Exception e){
-            return getErrorMsg(e) ;
+            return retFail(e.toString()) ;
         }
-        JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
-        return deviceJsonArr.toString() ;
+        JsonArray deviceJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent) ;
+        return retSuccess(deviceJsonArr.toString()) ;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -102,10 +89,10 @@ public class DeviceController {
                     deviceInfoJson,
                     request.getSession()) ;
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return retFail(e.toString()) ;
         }
 
-        return responseContent ;
+        return retSuccess(responseContent) ;
     }
 
     @RequestMapping(value = "/delete/{deviceId}", method = RequestMethod.GET)
@@ -114,9 +101,9 @@ public class DeviceController {
         String requestAddr ="http://"+getServer()+String.format("/api/device/%s", strDeviceId);
         try{
             String responseContent = HttpUtil.sendDeletToThingsboard(requestAddr,request.getSession());
-            return responseContent ;
+            return retSuccess(responseContent) ;
         }catch(Exception e){
-            return getErrorMsg(e) ;
+            return retFail(e.toString()) ;
         }
     }
 
@@ -134,70 +121,12 @@ public class DeviceController {
                 String credentialsId = jsonR.get("credentialsId").getAsString() ;
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("credentialsId", credentialsId);
-                return jsonObject.getAsString() ;
+                return retSuccess(jsonObject.getAsString()) ;
             } catch (Exception e) {
-                return getErrorMsg(e) ;
+                return retFail(e.toString()) ;
             }
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return retFail(e.toString()) ;
         }
-    }
-
-    private String getErrorMsg(Exception e) {
-        JsonObject errorInfoJson = new JsonObject() ;
-        errorInfoJson.addProperty("responce_code", 1);
-        errorInfoJson.addProperty("responce_msg", e.toString());
-        return errorInfoJson.toString() ;
-    }
-}
-
-
-
-class DeviceInfoDecode {
-
-    public static JsonElement deviceArr(String jsonStr) {
-
-        JsonArray deviceJsonArr = new JsonArray();
-
-        JsonElement parse = new JsonParser().parse(jsonStr);
-        JsonObject parsed = (JsonObject) parse ;
-
-        for(JsonElement item : parsed.getAsJsonArray("data")) {
-            JsonObject aDevice = new JsonObject();
-            // status\createdTime\additionalInfo\type\name
-            try {
-                aDevice.addProperty("status", "");
-            } catch (Exception e) {
-                aDevice.addProperty("status", "");
-            }
-            try {
-                aDevice.addProperty("deviceId", ((JsonObject)item).get("id").getAsJsonObject().get("id").getAsString());
-            } catch (Exception e) {
-                aDevice.addProperty("deviceId", "");
-            }
-            try {
-                aDevice.addProperty("createdTime", ((JsonObject)item).get("createdTime").getAsString());
-            } catch (Exception e) {
-                aDevice.addProperty("createdTime", "");
-            }
-            try {
-                aDevice.addProperty("additionalInfo",  ((JsonObject)item).get("additionalInfo").getAsJsonObject().get("description").getAsString());
-            } catch (Exception e) {
-                aDevice.addProperty("additionalInfo",  "");
-            }
-            try {
-                aDevice.addProperty("type",  ((JsonObject)item).get("type").getAsString());
-            } catch (Exception e) {
-                aDevice.addProperty("type",  "");
-            }
-            try {
-                aDevice.addProperty("name",  ((JsonObject)item).get("name").getAsString());
-            } catch (Exception e) {
-                aDevice.addProperty("name",  "");
-            }
-            deviceJsonArr.add(aDevice);
-        }
-
-        return deviceJsonArr ;
     }
 }
