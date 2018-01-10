@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Administrator on 2017/12/23.
+ *
+ * 返回的字符串在处理上为静态资源的地址
  */
 @Controller
 @Slf4j
