@@ -119,10 +119,10 @@ public class GroupController extends DefaultThingsboardAwaredController{
         }
     }
 
-    @RequestMapping(value = "/device/{deviceId}/group/{groupId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/assign/{deviceId}/{groupId}", method = RequestMethod.GET)
     @ResponseBody
     public String assignDeviceToGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {
-        String requestAddr = String.format("/api/group/device/%s/group/%s", dId, gId);
+        String requestAddr = String.format("/api/group/assign/%s/%s", dId, gId);
 
         String responseContent = null ;
         try {
@@ -136,10 +136,10 @@ public class GroupController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent) ;
     }
 
-    @RequestMapping(value = "/unassign/{deviceId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/unassign/{deviceId}/{groupId}", method = RequestMethod.GET)
     @ResponseBody
-    public String unAssignDeviceFromGroup(@PathVariable("deviceId") String dId) throws Exception {
-        String requestAddr = String.format("/api/group/unassign/%s", dId);
+    public String unAssignDeviceFromGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {
+        String requestAddr = String.format("/api/group/unassign/%s/%s", dId,gId);
 
         String responseContent = null ;
         try {
