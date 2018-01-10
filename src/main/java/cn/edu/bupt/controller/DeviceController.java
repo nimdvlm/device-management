@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Administrator on 2017/12/23.
+ *
+ * 设备数据的获取
  */
 @RestController
 @RequestMapping("/api/device")
