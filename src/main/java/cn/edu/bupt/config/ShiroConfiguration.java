@@ -16,6 +16,7 @@ import java.util.LinkedHashMap;
 /**
  * Created by tangjialiang on 2018/1/7.
  *
+ * 认证框架（Shiro）的相关配置
  */
 
 @Configuration

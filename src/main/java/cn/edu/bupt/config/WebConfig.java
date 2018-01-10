@@ -6,6 +6,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 /**
  * Created by Administrator on 2017/12/24.
+ *
+ * web应用的基础配置
  */
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {

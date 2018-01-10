@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Administrator on 2018/1/10.
+ *
+ * 规则接口
  */
 @RestController
 @RequestMapping("/api/rule")
