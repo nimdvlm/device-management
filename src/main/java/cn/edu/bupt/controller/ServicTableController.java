@@ -1,6 +1,7 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
+import cn.edu.bupt.utils.ResponceUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Administrator on 2017/12/26.
+ *
+ *  -- 该类的所有接口返回采用统一json
  */
 @RestController
 @RequestMapping("/api/service")
@@ -26,15 +29,17 @@ public class ServicTableController {
     @Autowired
     HttpServletRequest request;
 
+    @Autowired
+    ResponceUtil responceUtil ;
+
     @RequestMapping("/saveGroup")
     public String saveDeviceTable(@RequestBody String json) {
         String url = "http://"+getServer()+"/api/servicetable/saveServiceGroup";
         try{
             String responce = HttpUtil.sendPostToThingsboard(url,null,new JsonParser().parse(json).getAsJsonObject(),request.getSession());
-            return responce;
+            return responceUtil.onSuccess(responce);
         }catch(Exception e){
-            e.printStackTrace();
-            return "保存失败";
+            return responceUtil.onFail("保存失败: - " + e.toString());
         }
     }
 
@@ -43,10 +48,9 @@ public class ServicTableController {
         String url = "http://"+getServer()+"/api/servicetable/deleteServiceGroup";
         try{
             String responce = HttpUtil.sendPostToThingsboard(url,null,new JsonParser().parse(json).getAsJsonObject(),request.getSession());
-            return responce;
+            return responceUtil.onSuccess(responce);
         }catch(Exception e){
-            e.printStackTrace();
-            return "删除失败";
+            return responceUtil.onFail("删除失败: - " + e.toString());
         }
     }
 
@@ -56,10 +60,9 @@ public class ServicTableController {
         try{
             JsonObject asJsonObject = (JsonObject)new JsonParser().parse(json);
             String responce = HttpUtil.sendPostToThingsboard(url,null, asJsonObject, request.getSession());
-            return responce;
+            return responceUtil.onSuccess(responce);
         }catch(Exception e){
-            e.printStackTrace();
-            return "保存失败";
+            return responceUtil.onFail("保存失败: - " + e.toString());
         }
     }
 
@@ -69,10 +72,9 @@ public class ServicTableController {
         try{
             JsonObject asJsonObject = (JsonObject)new JsonParser().parse(json);
             String responce = HttpUtil.sendPostToThingsboard(url,null, asJsonObject, request.getSession());
-            return responce;
+            return responceUtil.onSuccess(responce);
         }catch(Exception e){
-            e.printStackTrace();
-            return "删除失败";
+            return responceUtil.onFail("删除失败: - " + e.toString());
         }
     }
 
@@ -80,10 +82,10 @@ public class ServicTableController {
     public String serviceTableLists() {
         String url = "http://"+getServer()+"/api/servicetable/getAll";
         try{
-            return HttpUtil.sendGetToThingsboard(url,null,request.getSession());
+            String s = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
+            return responceUtil.onSuccess(s) ;
         }catch(Exception e){
-            e.printStackTrace();
-            return "保存失败";
+            return responceUtil.onFail("保存失败: - " + e.toString());
         }
     }
 
@@ -93,12 +95,9 @@ public class ServicTableController {
         String url = "http://"+getServer() + requestAddr;
         try{
             String response = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
-            return response ;
+            return responceUtil.onSuccess(response) ;
         }catch(Exception e){
-            JsonObject errorInfoJson = new JsonObject() ;
-            errorInfoJson.addProperty("responce_code", 1);
-            errorInfoJson.addProperty("responce_msg", "can't link to thingsboard: " + e);
-            return errorInfoJson.toString() ;
+            return responceUtil.onFail("can't link to thingsboard: " + e) ;
         }
     }
 
