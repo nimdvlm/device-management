@@ -7,10 +7,10 @@
     <meta http-equiv="description" content="this is my page">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/login.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/headName.css">
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/login.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/headName.css">
 
 </head>
 
@@ -28,14 +28,14 @@
             </button>
             <a class="navbar-brand" href="#"><span id="headName">物联网开放平台首页</span></a>
         </div>
+
         <div class="collapse navbar-collapse navbar-right " id="example-navbar-collapse" >
             <ul class="nav navbar-nav">
                 <!--<li><a href="signup"><span class="glyphicon glyphicon-user"></span> 注册</a></li>-->
                 <!--<li><a href="signin"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>-->
-                <div style="color: white;
-padding: 15px 50px 5px 50px;
-float: right;
-font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust">退出登录</a> </div>
+                <div style="color: white;padding: 15px 50px 5px 50px;float: right;font-size: 16px;">
+                    <a href="/" class="btn btn-danger square-btn-adjust">退出登录</a>
+                </div>
             </ul>
         </div>
     </div>
@@ -69,36 +69,43 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust">退出登
 <!--<a class="carousel-control right" href="#myCarousel" -->
 <!--data-slide="next"></a>-->
 <!--</div> -->
-<div style="    width: 100%;
-    height: 380px;
-    margin-top: -20px;">
-    <image src="/static/img/bg.jpg;" style="width: 100%;height: 100%;"/>
+<div style="width: 100%;height: 380px;margin-top: -20px;">
+    <image src="../static/img/bg.jpg" style="width: 100%;height: 100%;"/>
 </div>
-<footer style="position:absolute;bottom:0px;margin-right: 20px;">
-<div class='row'>
-<div class='col-sm-3 bo'>
-    <a href="homepage">物管理</a>
-<div class='bobo'>创建虚拟设备，与被管理的实体设备对应。实现对设备的管理与检测</div>
+
+<div style="position:absolute;bottom:0px;margin-right: 20px;top:450px;left:0px;right:0px;">
+    <div class="container-fluid">
+        <div class='row'>
+            <div class='col-sm-4' style="padding: 10px 47px">
+                <div class="bo">
+                    <a href="homepage">物管理</a>
+                    <div class='bobo'>创建虚拟设备，与被管理的实体设备对应。实现对设备的管理与检测</div>
+                </div>
+            </div>
+            <div class='col-sm-4 ' style="padding: 10px 47px">
+                <div class="bo">
+                    <a href="dataAnalyse/fe/index.html">数据分析</a>
+                    <div class='bobo'>获取物联网中物与物之间的关系，通过对大量数据的分析挖掘找到相应的数据价值</div>
+                </div>
+            </div>
+            <div class='col-sm-4 ' style="padding: 10px 47px">
+                <div class="bo">
+                    <a href="gis/index.html">3D webGIS</a>
+                    <div class='bobo'>用3D模型展示的方式给用户提供了一种三维立体交互的方式来控制和查看设备</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class='col-sm-3 bo'>
-    <a href="dataAnalyse/fe/index.html">数据分析</a>
-<div class='bobo'>
-    获取物联网中物与物之间的关系，通过对大量数据的分析挖掘找到相应的数据价值</div></div>
-<div class='col-sm-3 bo'>
-    <a href="gis/index.html">3D webGIS</a>
-<div class='bobo'>用3D模型展示的方式给用户提供了一种三维立体交互的方式来控制和查看设备</div></div>
 
-<div>
-</footer>
-
+<!--<div class='row'>
+    <div class= 'col-md-4'>联系我们</div>
+    <div class= 'col-md-4'>教程指导</div>
+    <div class= 'col-md-4'>Powered by BUPT815</div>
+</div>-->
 
 </body>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 </html>
-<!--<div class='row'>-->
-<!--<div class= 'col-md-3'>联系我们</div>-->
-<!--<div class= 'col-md-3'>教程指导</div>-->
-<!--<div class= 'col-md-3'>Powered by CHENSI</div>-->
-<!---->
-<!--</div>-->
+
