@@ -1,5 +1,7 @@
 package cn.edu.bupt.controller;
 
+import cn.edu.bupt.controller.string2jsonDecode.DeviceGroupInfoDecode;
+import cn.edu.bupt.controller.string2jsonDecode.DeviceInfoDecode;
 import cn.edu.bupt.utils.HttpUtil;
 import cn.edu.bupt.utils.ResponceUtil;
 import com.google.gson.JsonArray;
@@ -23,19 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api/group")
 @Slf4j
-public class GroupController {
-
-    @Value("${bupt.thingsboard.host}")
-    String thingsboardHost ;
-
-    @Value("${bupt.thingsboard.port}")
-    String thingsboardPort ;
-
-    @Autowired
-    HttpServletRequest request;
-
-    @Autowired
-    ResponceUtil responceUtil ;
+public class GroupController extends DefaultThingsboardAwaredController{
 
     /**
      * @return
@@ -54,12 +44,12 @@ public class GroupController {
                     null,
                     request.getSession());
         } catch (Exception e) {
-            return responceUtil.onFail(e.toString()) ;
+            return retFail(e.toString()) ;
         }
 
-        JsonArray groupJsonArr = (JsonArray)DeviceGroupInfoDecode.groupArr(responseContent);
+        JsonArray groupJsonArr = (JsonArray) DeviceGroupInfoDecode.groupArr(responseContent);
 
-        return responceUtil.onSuccess(groupJsonArr.toString()) ;
+        return retSuccess(groupJsonArr.toString()) ;
     }
 
     /**
@@ -79,10 +69,10 @@ public class GroupController {
                     (JsonObject) new JsonParser().parse(deviceGroupInfo),
                     request.getSession());
         } catch (Exception e) {
-            return responceUtil.onFail(e.toString()) ;
+            return retFail(e.toString()) ;
         }
 
-        return responceUtil.onSuccess(responseContent) ;
+        return retSuccess(responseContent) ;
     }
 
     /**
@@ -100,10 +90,10 @@ public class GroupController {
                     null,
                     request.getSession());
         } catch (Exception e) {
-            return responceUtil.onFail(e.toString()) ;
+            return retFail(e.toString()) ;
         }
 
-        return responceUtil.onSuccess(responseContent) ;
+        return retSuccess(responseContent) ;
     }
 
     /**
@@ -123,9 +113,9 @@ public class GroupController {
                 request.getSession()) ;
         try {
             JsonArray deviceJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent);
-            return responceUtil.onSuccess(deviceJsonArr.toString()) ;
+            return retSuccess(deviceJsonArr.toString()) ;
         } catch (Exception e) {
-            return responceUtil.onFail(e.toString()) ;
+            return retFail(e.toString()) ;
         }
     }
 
@@ -140,10 +130,10 @@ public class GroupController {
                     null,
                     request.getSession()) ;
         } catch (Exception e) {
-            return responceUtil.onFail(e.toString()) ;
+            return retFail(e.toString()) ;
         }
 
-        return responceUtil.onSuccess(responseContent) ;
+        return retSuccess(responseContent) ;
     }
 
     @RequestMapping(value = "/unassign/{deviceId}", method = RequestMethod.GET)
@@ -157,56 +147,8 @@ public class GroupController {
                     null,
                     request.getSession()) ;
         } catch (Exception e) {
-            return responceUtil.onFail(e.toString()) ;
+            return retFail(e.toString()) ;
         }
-        return responceUtil.onSuccess(responseContent) ;
-    }
-
-    private String getServer() {
-        return thingsboardHost+":"+thingsboardPort ;
-    }
-
-}
-
-
-class DeviceGroupInfoDecode {
-    public static JsonElement groupArr(String jsonStr) {
-        JsonArray groupJsonArr = new JsonArray();
-        JsonObject parsed = (JsonObject)new JsonParser().parse(jsonStr);
-
-        for(JsonElement i : parsed.getAsJsonArray("data")) {
-            JsonObject item = (JsonObject) i ;
-            JsonObject aGroup = new JsonObject();
-
-            try {
-                aGroup.addProperty("id", item.get("id").getAsJsonObject().get("id").getAsString());
-            } catch (Exception e) {
-                aGroup.addProperty("id", "");
-            }
-            try {
-                aGroup.addProperty("createdTime", item.get("createdTime").getAsString());
-            } catch (Exception e) {
-                aGroup.addProperty("createdTime", "");
-            }
-            try {
-                aGroup.addProperty("name", item.get("name").getAsString());
-            } catch (Exception e) {
-                aGroup.addProperty("name", "");
-            }
-            try {
-                aGroup.addProperty("tenantId", item.get("tenantId").getAsJsonObject().get("id").getAsString());
-            } catch (Exception e) {
-                aGroup.addProperty("tenantId", "");
-            }
-            try {
-                aGroup.addProperty("customerId", item.get("customerId").getAsJsonObject().get("id").getAsString());
-            } catch (Exception e) {
-                aGroup.addProperty("customerId", "");
-            }
-            groupJsonArr.add(aGroup);
-        }
-
-        return groupJsonArr ;
+        return retSuccess(responseContent) ;
     }
 }
-
