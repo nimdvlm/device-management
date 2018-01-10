@@ -1,6 +1,7 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
+import cn.edu.bupt.utils.ResponceUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Administrator on 2017/12/23.
  *
  * 设备数据的获取
+ * -- 该类的所有接口返回采用统一json
  */
 @RestController
 @RequestMapping("/api/device")
@@ -29,6 +31,9 @@ public class DeviceController {
 
     @Value("${bupt.thingsboard.port}")
     String thingsboardPort ;
+
+    @Autowired
+    ResponceUtil responseUtil ;
 
     private String getServer() {
         return thingsboardHost+":"+thingsboardPort ;
@@ -53,14 +58,14 @@ public class DeviceController {
                     null,
                     request.getSession()) ;
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return responseUtil.onFail(e.toString()) ;
         }
 
         try {
             JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
-            return deviceJsonArr.toString() ;
+            return responseUtil.onSuccess(deviceJsonArr.toString()) ;
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return responseUtil.onFail(e.toString()) ;
         }
 
     }
@@ -80,10 +85,10 @@ public class DeviceController {
                     null,
                     request.getSession());
         }catch(Exception e){
-            return getErrorMsg(e) ;
+            return responseUtil.onFail(e.toString()) ;
         }
         JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
-        return deviceJsonArr.toString() ;
+        return responseUtil.onSuccess(deviceJsonArr.toString()) ;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -104,10 +109,10 @@ public class DeviceController {
                     deviceInfoJson,
                     request.getSession()) ;
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return responseUtil.onFail(e.toString()) ;
         }
 
-        return responseContent ;
+        return responseUtil.onSuccess(responseContent) ;
     }
 
     @RequestMapping(value = "/delete/{deviceId}", method = RequestMethod.GET)
@@ -116,9 +121,9 @@ public class DeviceController {
         String requestAddr ="http://"+getServer()+String.format("/api/device/%s", strDeviceId);
         try{
             String responseContent = HttpUtil.sendDeletToThingsboard(requestAddr,request.getSession());
-            return responseContent ;
+            return responseUtil.onSuccess(responseContent) ;
         }catch(Exception e){
-            return getErrorMsg(e) ;
+            return responseUtil.onFail(e.toString()) ;
         }
     }
 
@@ -136,20 +141,13 @@ public class DeviceController {
                 String credentialsId = jsonR.get("credentialsId").getAsString() ;
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("credentialsId", credentialsId);
-                return jsonObject.getAsString() ;
+                return responseUtil.onSuccess(jsonObject.getAsString()) ;
             } catch (Exception e) {
-                return getErrorMsg(e) ;
+                return responseUtil.onFail(e.toString()) ;
             }
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return responseUtil.onFail(e.toString()) ;
         }
-    }
-
-    private String getErrorMsg(Exception e) {
-        JsonObject errorInfoJson = new JsonObject() ;
-        errorInfoJson.addProperty("responce_code", 1);
-        errorInfoJson.addProperty("responce_msg", e.toString());
-        return errorInfoJson.toString() ;
     }
 }
 

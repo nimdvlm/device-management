@@ -1,12 +1,14 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
+import cn.edu.bupt.utils.ResponceUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Administrator on 2017/12/23.
  *
  * 设备组数据的获取
+ * -- 该类的所有接口返回采用统一json
  */
 @RestController
 @RequestMapping("/api/group")
@@ -30,6 +33,9 @@ public class GroupController {
 
     @Autowired
     HttpServletRequest request;
+
+    @Autowired
+    ResponceUtil responceUtil ;
 
     /**
      * @return
@@ -48,12 +54,12 @@ public class GroupController {
                     null,
                     request.getSession());
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return responceUtil.onFail(e.toString()) ;
         }
 
         JsonArray groupJsonArr = (JsonArray)DeviceGroupInfoDecode.groupArr(responseContent);
 
-        return groupJsonArr.toString() ;
+        return responceUtil.onSuccess(groupJsonArr.toString()) ;
     }
 
     /**
@@ -73,10 +79,10 @@ public class GroupController {
                     (JsonObject) new JsonParser().parse(deviceGroupInfo),
                     request.getSession());
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return responceUtil.onFail(e.toString()) ;
         }
 
-        return responseContent ;
+        return responceUtil.onSuccess(responseContent) ;
     }
 
     /**
@@ -94,10 +100,10 @@ public class GroupController {
                     null,
                     request.getSession());
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return responceUtil.onFail(e.toString()) ;
         }
 
-        return responseContent ;
+        return responceUtil.onSuccess(responseContent) ;
     }
 
     /**
@@ -117,9 +123,9 @@ public class GroupController {
                 request.getSession()) ;
         try {
             JsonArray deviceJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent);
-            return deviceJsonArr.toString() ;
+            return responceUtil.onSuccess(deviceJsonArr.toString()) ;
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return responceUtil.onFail(e.toString()) ;
         }
     }
 
@@ -134,10 +140,10 @@ public class GroupController {
                     null,
                     request.getSession()) ;
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return responceUtil.onFail(e.toString()) ;
         }
 
-        return responseContent ;
+        return responceUtil.onSuccess(responseContent) ;
     }
 
     @RequestMapping(value = "/unassign/{deviceId}", method = RequestMethod.GET)
@@ -151,21 +157,15 @@ public class GroupController {
                     null,
                     request.getSession()) ;
         } catch (Exception e) {
-            return getErrorMsg(e) ;
+            return responceUtil.onFail(e.toString()) ;
         }
-        return responseContent ;
+        return responceUtil.onSuccess(responseContent) ;
     }
 
     private String getServer() {
         return thingsboardHost+":"+thingsboardPort ;
     }
 
-    private String getErrorMsg(Exception e) {
-        JsonObject errorInfoJson = new JsonObject() ;
-        errorInfoJson.addProperty("responce_code", 1);
-        errorInfoJson.addProperty("responce_msg", e.toString());
-        return errorInfoJson.toString() ;
-    }
 }
 
 
