@@ -38,6 +38,18 @@ public class ServicTableController {
         }
     }
 
+    @RequestMapping("/deleteGroup")
+    public String deleteGroup(@RequestBody String json) {
+        String url = "http://"+getServer()+"/api/servicetable/deleteServiceGroup";
+        try{
+            String responce = HttpUtil.sendPostToThingsboard(url,null,new JsonParser().parse(json).getAsJsonObject(),request.getSession());
+            return responce;
+        }catch(Exception e){
+            e.printStackTrace();
+            return "删除失败";
+        }
+    }
+
     @RequestMapping("/saveServiceToGroup")
     public String saveServiceToGroup(@RequestBody String json) {
         String url = "http://"+getServer()+"/api/servicetable/add";
@@ -48,6 +60,19 @@ public class ServicTableController {
         }catch(Exception e){
             e.printStackTrace();
             return "保存失败";
+        }
+    }
+
+    @RequestMapping("/deleteServiceFromGroup")
+    public String deleteServiceFromGroup(@RequestBody String json) {
+        String url = "http://"+getServer()+"/api/servicetable/delete";
+        try{
+            JsonObject asJsonObject = (JsonObject)new JsonParser().parse(json);
+            String responce = HttpUtil.sendPostToThingsboard(url,null, asJsonObject, request.getSession());
+            return responce;
+        }catch(Exception e){
+            e.printStackTrace();
+            return "删除失败";
         }
     }
 
@@ -63,7 +88,6 @@ public class ServicTableController {
     }
 
     @RequestMapping(value = "/services/{manufacture}/{deviceType}/{model}/tail", method = RequestMethod.GET)
-    @ResponseBody
     public String serviceTableList(@PathVariable String manufacture,@PathVariable String deviceType,@PathVariable String model) {
         String requestAddr = String.format("/api/services/%s/%s/%s", manufacture, deviceType, model) ;
         String url = "http://"+getServer() + requestAddr;
