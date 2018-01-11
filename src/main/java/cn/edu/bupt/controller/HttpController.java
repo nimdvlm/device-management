@@ -8,10 +8,10 @@ import javax.servlet.http.HttpSession;
 
 
 /**
- * Created by hasee on 2018/1/11.
+ * Created by liyou on 2018/1/11.
  */
 @RestController
-@RequestMapping("/Token")
+@RequestMapping("/api/Token")
 public class HttpController
 {
     @RequestMapping("/getToken")

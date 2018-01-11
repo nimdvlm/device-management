@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by hasee on 2018/1/11.
+ * Created by liyou on 2018/1/11.
  */
 
 @RestController
-@RequestMapping("/mail")
+@RequestMapping("/api/mail")
 public class MailControl extends DefaultThingsboardAwaredController{
 
     @RequestMapping("/sendMail")
