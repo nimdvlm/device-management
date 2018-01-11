@@ -35,7 +35,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
                     request.getSession());
 
         }catch(Exception e){
-            return getErrorMsg(e) ;
+            return retFail(e.toString()) ;
         }
         return retSuccess(responseContent);
     }
@@ -52,7 +52,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
                     null,
                     request.getSession());
         }catch(Exception e){
-            return getErrorMsg(e);
+            return retFail(e.toString());
         }
         return retSuccess(responseContent);
     }
@@ -69,7 +69,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
                     null,
                     request.getSession());
         }catch (Exception e){
-            return getErrorMsg(e);
+            return retFail(e.toString());
         }
         return retSuccess(responseContent);
     }
@@ -86,7 +86,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
                     null,
                     request.getSession());
         }catch (Exception e){
-            return getErrorMsg(e);
+            return retFail(e.toString());
         }
 
         return retSuccess(responseContent);
@@ -105,7 +105,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
                     null,
                     request.getSession());
         }catch(Exception e){
-            return getErrorMsg(e) ;
+            return retFail(e.toString()) ;
         }
         return retSuccess(responseContent);
     }
@@ -123,7 +123,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
                     null,
                     request.getSession());
         }catch(Exception e){
-            return getErrorMsg(e) ;
+            return retFail(e.toString()) ;
         }
 
        return retSuccess(responseContent);
