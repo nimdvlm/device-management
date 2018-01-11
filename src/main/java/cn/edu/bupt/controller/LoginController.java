@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 @RequestMapping("/api/user")
-public class LoginController {
+public class LoginController extends DefaultThingsboardAwaredController {
     @Autowired
     private HttpServletRequest request;
 
@@ -67,7 +67,7 @@ public class LoginController {
         json.addProperty("responce_code",0);
         json.addProperty("responce_msg","logout ok");
 
-        return "redirect:/homepage";
+        return retSuccess("success to logout");
     }
 
 }
