@@ -14,23 +14,19 @@ public class SendMail{
     public static final String DEFALUT_ENCODING = "UTF-8";
 
     public String sendEmail(String[] to,String subject,String text) throws Exception {
-        System.out.println(1);
         JavaMailSenderImpl sender =initJavaMailSender();
-       // String[] to={"liyou@bupt.edu.cn"};
-        System.out.println(2);
+       //String[] to={"liyou@bupt.edu.cn"};
         try {
             sendTextWithHtml(sender, to, subject, text);
         }catch (Exception e){
             System.out.println(e);
         }
-        System.out.println(3);
         return "发送成功";
     }
 
     public static void sendTextWithHtml(JavaMailSenderImpl sender, String[] tos, String subject, String text)
             throws Exception {
         MimeMessage mailMessage = sender.createMimeMessage();
-        System.out.println(4);
         initMimeMessageHelper(mailMessage, tos, sender.getUsername(), subject, text);
         // 发送邮件
         sender.send(mailMessage);
