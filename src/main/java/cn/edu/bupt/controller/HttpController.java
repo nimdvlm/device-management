@@ -1,0 +1,25 @@
+package cn.edu.bupt.controller;
+
+import cn.edu.bupt.utils.HttpUtil;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
+
+
+/**
+ * Created by hasee on 2018/1/11.
+ */
+@RestController
+@RequestMapping("/Token")
+public class HttpController
+{
+    @RequestMapping("/getToken")
+    public String getToken(HttpSession session)
+    {
+
+        boolean t= HttpUtil.getAccessToken(session);
+        String token=session.getAttribute("token").toString();
+        return token;
+    }
+}
