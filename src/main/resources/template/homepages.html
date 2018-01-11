@@ -108,23 +108,19 @@
 </body>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-
-<script>
+<script src="/static/js/logout.js"></script>
+<!--<script>
     $(document).ready(function() {
         $("#logout").click(function (e) {
             e.preventDefault();
-            //var username = $("#username").val();
-            //var password = $("#password").val();
             $.ajax({
                 url: "/api/user/logout", // tjl
                 type: "GET",
-                //contentType: "application/json;charset=utf-8",
-                //data: JSON.stringify({'username': username, 'password': password}),
                 dataType: "text",
                 success: function (result) {
                     var obj = JSON.parse(result);
                     console.log("success");
-                    window.location.href = "/signin";
+                    window.location.href = "signin";
                 },
                 error: function (msg) {
                     alert(msg.message);
@@ -133,7 +129,7 @@
             return false;
         });
     });
-</script>
+</script>-->
 
 </html>
 
