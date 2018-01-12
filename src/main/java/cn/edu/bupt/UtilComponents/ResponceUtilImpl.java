@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class ResponceUtilImp implements ResponceUtil{
+public class ResponceUtilImpl implements ResponceUtil{
     @Override
     public String onSuccess(String msg) {
         JsonObject InfoJson = new JsonObject() ;
