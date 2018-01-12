@@ -50,11 +50,6 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
     }
 
-    /**
-     * abandon. Don't use
-     * @param deviceId
-     * @return
-     */
     @RequestMapping(value = "/token/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getDeviceToken(@PathVariable String deviceId) {
