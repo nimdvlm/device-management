@@ -16,6 +16,11 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <!-- TABLE STYLES-->
     <link href="../static/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <style>
+        label.error{
+            color: red !important;
+        }
+    </style>
 </head>
 <body>
 <div id="wrapper">
@@ -100,7 +105,6 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         设备型号
                         <input type="text" class="form-control" placeholder="" id="modelCre" disabled="disabled">
                         服务体<br>
-
                         &nbsp;&nbsp;&nbsp;方法名
                         <input type="text" class="form-control" placeholder="" id="methodName">
                         <div id="param">
@@ -162,36 +166,37 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                 <h4 class="modal-title" id="mmLabel">创建服务组</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form" action="#" >
-
-                    <div class="form-group">
+                <form class="form-horizontal" role="form" action="#" id="createServiceGroup">
+                    <div class="form-group has-feedback">
                         <label  class="col-sm-3 control-label" style='text-align: left;'>厂商</label>
                         <div class="col-sm-9" >
-                            <input type="text" class='add' placeholder="请输入厂商" id="manufacture"/>
+                            <input type="text" class='add' placeholder="必填" id="manufacture" name="manufacture">
                         </div>
                         <div class="col-sm-9 col-sm-offset-3" id='content'></div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group has-feedback">
                         <label  class="col-sm-3 control-label" style='text-align: left;'>设备类型</label>
                         <div class="col-sm-9" >
-                            <input type="text" class='add' placeholder="请输入设备类型" id="deviceType"/>
+                            <input type="text" class='add' placeholder="必填" id="deviceType" name="deviceType">
                         </div>
                         <div class="col-sm-9 col-sm-offset-3" id='content'></div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group has-feedback">
                         <label  class="col-sm-3 control-label" style='text-align: left;'>设备型号</label>
                         <div class="col-sm-9" >
-                            <input type="text" class='add' placeholder="请输入设备型号" id="model"/>
+                            <input type="text" class='add' placeholder="必填" id="model" name="model">
                         </div>
                         <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                    </div>
+                    <div class="modal-footer">
+                        <!--<button type="submit" class="btn btn-primary" id="create" data-toggle="modal" data-target="#createSuc">创建</button>-->
+                        <button type="submit" class="btn btn-primary" id="create" data-toggle="modal">创建</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="create" data-toggle="modal" data-target="#createSuc" >创建</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 
-            </div>
+
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
@@ -252,6 +257,8 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->
 <script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/jquery.js"></script>
+<script src="../static/js/jquery.validate.js"></script>
 <!-- BOOTSTRAP SCRIPTS -->
 <script src="../static/bootstrap/js/bootstrap.min.js"></script>
 <!-- METISMENU SCRIPTS -->
@@ -267,8 +274,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
     </script>
 <!-- CUSTOM SCRIPTS -->
 <script src="../static/js/custom.js"></script>
-<script src="/static/js/logout.js"></script>
-
-
+<script src="../static/js/logout.js"></script>
+<script src="../static/js/createServiceGroup.js"></script>
 </body>
 </html>

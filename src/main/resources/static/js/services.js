@@ -76,8 +76,8 @@ ajax: {
             }
         ],
         initComplete:function(){
-//                    $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="'+manufacture+'" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
-                $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
+//               $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="'+manufacture+'" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
+//                $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
                 }
 });
 //展示设备组
@@ -94,22 +94,22 @@ $('#dataTables-show').DataTable().destroy();
 console.log('aa')
 }
 table = $('#dataTables-show').DataTable({
-"aLengthMenu" : [5,10, 25, 50, 100],
-"bPaginate" : true,
- "bAutoWidth": false,
-  "oLanguage": {
- "sProcessing": "正在加载中......",
- "sLengthMenu": "每页显示 _MENU_ 条记录",
- "sZeroRecords": "对不起，查询不到相关数据！",
- "sEmptyTable": "表中无数据存在！",
- "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
- "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
- "sSearch": "搜索",
- "oPaginate": {
- "sFirst": "首页",
- "sPrevious": "上一页",
- "sNext": "下一页",
-  "sLast": "末页"
+    "aLengthMenu" : [5,10, 25, 50, 100],
+    "bPaginate" : true,
+    "bAutoWidth": false,
+    "oLanguage": {
+    "sProcessing": "正在加载中......",
+    "sLengthMenu": "每页显示 _MENU_ 条记录",
+    "sZeroRecords": "对不起，查询不到相关数据！",
+    "sEmptyTable": "表中无数据存在！",
+    "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+    "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
+    "sSearch": "搜索",
+    "oPaginate": {
+    "sFirst": "首页",
+    "sPrevious": "上一页",
+    "sNext": "下一页",
+    "sLast": "末页"
    }
    } ,//多语言配置
 ajax: {
@@ -271,31 +271,45 @@ window.location.href = "services";
                                              }
                                          });
 });
-
-//创建设备组
+//
+//创建服务组
 $('#create').on('click',function(){
     var manufacture = $('#manufacture').val();
-     var deviceType = $('#deviceType').val();
-      var model = $('#model').val();
-     $.ajax({
-                                             url: "/api/service/saveGroup/",
-                                             type: "POST",
-                                             contentType: "application/json;charset=utf-8",
-                                             data: JSON.stringify({'manufacture': manufacture,'deviceType':deviceType,'model':model}),
-                                             dataType: "text",
-                                             success: function (result) {
-//                                                 var obj = JSON.parse(result);
-                                                 console.log("success");
-                                                 $('#mm').modal('hide')
-$('#lastCreate').on('click',function(){
-window.location.href = "services";
-});
-//                                                 window.location.href = "device_group";
-                                             },
-                                             error: function (msg) {
-                                                 alert(msg.message);
-                                             }
-                                         });
+    var deviceType = $('#deviceType').val();
+    var model = $('#model').val();
+    console.log(manufacture,deviceType);
+     // if(manufacture!="" && deviceType!="" && model!=""){
+     //     alert("创建成功");
+         $.ajax({
+             url: "/api/service/saveGroup/",
+             type: "POST",
+             contentType: "application/json;charset=utf-8",
+             data: JSON.stringify({'manufacture': manufacture,'deviceType':deviceType,'model':model}),
+             dataType: "text",
+             success: function (result) {
+                 //如果创建成功
+             //    if(----){
+
+             //    }
+             //}
+
+//        var obj = JSON.parse(result);
+                 console.log("yyyyy");
+                 console.log("success");
+                 $('#mm').modal('hide');
+
+                 $('#lastCreate').on('click',function(){
+                     window.location.href = "services";
+                 });
+             },
+             error: function (msg) {
+                 alert(msg.message);
+             }
+         });
+     //}
+     // else{
+     //     alert("创建失败");
+     // }
 })
 //删除设备组
 $('#dataTables-example').on('click','tr .del', function () {
