@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>数据分析平台</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- VENDOR CSS -->
+	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
+	<link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
+	<!-- MAIN CSS -->
+	<link rel="stylesheet" href="assets/css/main.css">
+	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+	<link rel="stylesheet" href="assets/css/demo.css">
+	<!-- GOOGLE FONTS -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<!-- ICONS -->
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+</head>
+
+<body>
+	<!-- WRAPPER -->
+	<div id="wrapper">
+		<!-- NAVBAR -->
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="brand">
+				<a href="index.html" style="font-size: 20px;font-weight: bold;">数据分析平台</a>
+			</div>
+			<div class="container-fluid">
+				<div class="navbar-btn">
+					<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+				</div>
+				<form class="navbar-form navbar-left">
+					<!-- <div class="input-group">
+						<input type="text" value="" class="form-control" placeholder="Search dashboard...">
+						<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+					</div> -->
+					<div >
+						<select >
+							<option value="">请选择设备</option>
+							<option value="1">device_01</option>
+							<option value="2">device_02</option>
+							<option value="3">device_03</option>
+							<option value="4">device_04</option>
+						</select>
+					</div>
+				</form>
+				<div class="navbar-btn navbar-btn-right">
+					<a class="btn btn-success update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
+				</div>
+				<div id="navbar-menu">
+					<ul class="nav navbar-nav navbar-right">
+						<!--<li class="dropdown">
+							<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+								<i class="lnr lnr-alarm"></i>
+								<span class="badge bg-danger">5</span>
+							</a>
+							 <ul class="dropdown-menu notifications"> 
+								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
+								<li><a href="#" class="more">See all notifications</a></li>
+							</ul>
+						</li>-->
+						<!-- <li class="dropdown"> 
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Help</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Basic Use</a></li>
+								<li><a href="#">Working With Data</a></li>
+								<li><a href="#">Security</a></li>
+								<li><a href="#">Troubleshooting</a></li>
+							</ul>
+						</li>-->
+						<!-- <li class="dropdown"> 
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png" class="img-circle" alt="Avatar"> <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
+								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
+								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
+								<li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+							</ul>
+						</li>-->
+						<!-- <li>
+							<a class="update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
+						</li> -->
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<!-- END NAVBAR -->
+		<!-- LEFT SIDEBAR -->
+		 <div id="sidebar-nav" class="sidebar"> 
+			<div class="sidebar-scroll">
+				<nav>
+					<ul class="nav">
+						<!-- <li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li> -->
+						<!-- <li><a href="elements.html" class=""><i class="lnr lnr-code"></i> <span>Elements</span></a></li> -->
+						<!-- <li><a href="charts.html" class="active"><i class="lnr lnr-chart-bars"></i> <span>Charts</span></a></li> -->
+						<!-- <li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>Panels</span></a></li> -->
+						<!-- <li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notifications</span></a></li> -->
+						<li>
+							<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Charts</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages" class="collapse ">
+								<ul class="nav">
+									<li><a href="page-profile.html" class="">real-time data</a></li>
+									<li><a href="page-login.html" class="">history data</a></li> -->
+									<!-- <li><a href="page-lockscreen.html" class="">Lockscreen</a></li> -->
+								</ul>
+							</div>
+						</li>
+						<!-- <li><a href="tables.html" class=""><i class="lnr lnr-dice"></i> <span>Tables</span></a></li> -->
+						<!-- <li><a href="typography.html" class=""><i class="lnr lnr-text-format"></i> <span>Typography</span></a></li> -->
+						<!-- <li><a href="icons.html" class=""><i class="lnr lnr-linearicons"></i> <span>Icons</span></a></li> -->
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!-- END LEFT SIDEBAR -->
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+					<!-- <h3 class="page-title" style="color:rgb(153,220,220);display: inline-block;">数据分析平台</h3> -->
+                    <!-- <h4 class="page-title" style="margin-left:600px;display: inline-block;">温湿4</h4> -->
+					<div class="row">
+                        <div class="col-md-6">
+                            <!--<div class="panel">
+                            <div class="panel-heading">
+                                    <h3 class="panel-title">平均值</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="demo-line-chart" class="ct-chart"></div>
+                                </div>
+                            </div>-->
+						</div>
+						<div class="col-md-6">
+                            <!--<div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">方差</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="demo-bar-chart" class="ct-chart"></div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                    <!--<div class="row">
+                        <div class="col-md-6">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Area Chart</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="demo-area-chart" class="ct-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Multiple Chart</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="multiple-chart" class="ct-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+			<!-- END MAIN CONTENT -->
+		</div>
+		<!-- END MAIN -->
+		<!--<div class="clearfix"></div>
+		 <footer>
+			<div class="container-fluid">
+				<p class="copyright">Copyright &copy; 2017.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
+			</div>
+		</footer> 
+	</div>-->
+	<!-- END WRAPPER -->
+	<!-- Javascript -->
+	<script src="assets/vendor/jquery/jquery.min.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="assets/vendor/chartist/js/chartist.min.js"></script>
+	<script src="assets/scripts/klorofil-common.js"></script>
+
+					<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+            <div id="main" style="height:400px"></div>
+					<!--ECharts单文件引入-->
+            <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+            <script type="text/javascript">
+
+                // var ws = new WebSocket("ws://www.baidu.com");
+                var ws ;
+                $(document).ready(function(){
+                    var xdata;
+                    var ydata;
+                    var token;
+                    var url = '';
+                    $.ajax({
+                        url: "/api/Token/getToken",
+                        type: "GET",
+                        // contentType: "application/json;charset=utf-8",
+                        //使用post的时候才用 data: token,
+                        dataType: "text",
+                        success: function (data) {
+                            token = data;
+                            console.log("token值："+data);
+                            console.log('success');
+                            <!--刷新-->
+                            <!-- window.location.href = "${request.contextPath}/api/noauth/homepage";-->
+                            url='ws://10.108.217.227:8080/api/ws/plugins/telemetry?token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZW5hbnRAdGhpbmdzYm9hcmQub3JnIiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiJhMmIyNTMxMC1iN2VjLTExZTctOGZjMC01NTkyMmI1ZDQ3ZjYiLCJlbmFibGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiYTJiMTY4YjAtYjdlYy0xMWU3LThmYzAtNTU5MjJiNWQ0N2Y2IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6InRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTEwMTk4Njc5LCJleHAiOjE1MTkxOTg2Nzl9.XPq489vRt3CSpqdY6kzr5DNBvhyCcnezFK4DUAgQTjVkiVqjDEPN_jGKgdb9dKA_aiXVdWptkWOjLwJqubFpjA' ;
+                            console.log("url值："+url);
+
+                            ws = new WebSocket(url);
+                            // 打开Socket
+                            // Listen for the connection open event then call the sendMessage function
+                            listenWs(ws)
+
+                        },
+                        error: function (msg) {
+                            alert(msg.message);
+                        }
+                    });
+
+                    setTimeout("",200);
+                    //获取token值
+
+                    //console.log("token值："+token);
+                    //   url='ws://10.108.217.227:8080/api/ws/plugins/telemetry?token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZW5hbnRAdGhpbmdzYm9hcmQub3JnIiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiJhMmIyNTMxMC1iN2VjLTExZTctOGZjMC01NTkyMmI1ZDQ3ZjYiLCJlbmFibGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiYTJiMTY4YjAtYjdlYy0xMWU3LThmYzAtNTU5MjJiNWQ0N2Y2IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6InRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTEwMTk4Njc5LCJleHAiOjE1MTkxOTg2Nzl9.XPq489vRt3CSpqdY6kzr5DNBvhyCcnezFK4DUAgQTjVkiVqjDEPN_jGKgdb9dKA_aiXVdWptkWOjLwJqubFpjA';
+
+                    // Listen for the close connection event
+                    // listenWs(ws) ;
+
+                    function listenWs(ws) {
+                        ws.onopen = function(e) {
+                            log("Connected");
+                            sendMessage('{"tsSubCmds":[{"entityType":"DEVICE","entityId":"9b944690-d026-11e7-a71a-974188b66f66","scope":"LATEST_TELEMETRY","cmdId":2}],"historyCmds":[],"attrSubCmds":[{"entityType":"DEVICE","entityId":"9b944690-d026-11e7-a71a-974188b66f66","scope":"CLIENT_SCOPE","cmdId":1}]}')
+                            //sendMessage('{"tsSubCmds":[{"entityType":"DEVICE","entityId":"9b944690-d026-11e7-a71a-974188b66f66","scope":"LATEST_TELEMETRY","cmdId":2}],"historyCmds":[],"attrSubCmds":[{"entityType":"DEVICE","entityId":"9b944690-d026-11e7-a71a-974188b66f66","scope":"CLIENT_SCOPE","cmdId":1}]}')
+                        }
+
+                        ws.onclose = function(e) {
+                            log("Disconnected: " + e.reason);
+                        }
+                        // Listen for connection errors
+                        ws.onerror = function(e) {
+                            log("Error ");
+                        };
+                        // Listen for new messages arriving at the client
+                        //var time0 = formatDate(time);
+                        ws.onmessage = function(e) {
+                            log("Message received: " + e.data);
+                            // console.log("e.data值："+e.data);
+                            var temp = JSON.parse(e.data);//将字符串转为json
+                            console.log(temp);
+                            // console.log(temp.data.data[0][0]);//横坐标值
+                            // console.log(temp.data.data[0][1]);//纵坐标值
+
+                            var time = new Date(temp.data.data[0][0]);//将时间戳转换为正常的时间格式
+
+                            var time0 = formatDate(time);
+
+                            xdata = time0;//横轴坐标值
+                            ydata = temp.data.data[0][1];//纵轴坐标值
+                            console.log("time0:" + time0);
+                        }
+                    }
+
+
+                    function log(s) {
+                        // Also log information on the javascript console
+                        console.log(s);
+                    }
+
+                    function sendMessage(msg){
+                        ws.send(msg);
+                        log("Message sent");
+                    }
+                    //time用来存储前10个初试时间
+                    // var time = [];
+
+                    // var time0 = formatDate(data1.latestValues.data);
+                    // console.log("time0" + time0);
+
+                    //用于将时间戳转换为时间 xxxx-xx-xx xx:xx:xx
+                    function formatDate(now) {
+
+                        var year=now.getFullYear();
+                        var month=now.getMonth()+1;
+                        var date=now.getDate();
+                        var hour=now.getHours();
+                        var minute=now.getMinutes();
+                        var second=now.getSeconds();
+                        return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
+                    }
+
+                    <!--路径配置-->
+                    require.config({
+                        paths: {
+                            echarts: 'http://echarts.baidu.com/build/dist'
+                        }
+
+                    });
+                    // 使用
+                    require
+                    (
+                        [
+                            'echarts',
+                            'echarts/chart/line'  // 使用柱状图就加载bar模块，按需加载
+                        ],
+                        function (ec)
+                        {
+                            // 基于准备好的dom，初始化echarts图表
+                            var myChart = ec.init(document.getElementById('main'));
+                            var option = {
+
+                                tooltip : {
+                                    trigger: 'axis'
+                                },
+                                legend: {
+                                    data:['平均数']
+                                },
+                                toolbox: {
+                                    show : true,
+                                    feature : {
+                                        mark : {show: true},
+                                        dataView : {show: true, readOnly: false},
+                                        magicType : {show: true, type: ['line']},
+                                        restore : {show: true},
+                                        saveAsImage : {show: true}
+                                    }
+                                },
+                                dataZoom : {
+                                    show : false,
+                                    start : 0,
+                                    end : 100
+                                },
+                                xAxis : [
+                                    {
+                                        type : 'category',
+                                        boundaryGap : true,
+                                        data : (function (){
+                                            var now = new Date();
+                                            var res = [];
+                                            var len =10;
+                                            while (len--) {
+                                                res.unshift(now.toLocaleString("ja-JP").replace(/^\D*/,''));
+                                                now = new Date(now - 2000);
+                                                /* console.log("1111111111111111111111111111111111111")
+
+
+                                                 console.log(time0)*/
+                                            }
+                                            return res;
+                                        })()
+                                    }
+                                ],
+                                yAxis : [
+                                    {
+                                        type : 'value',
+                                        scale: true,
+                                        name : '平均数',
+                                        boundaryGap: [0.2, 0.2]
+                                    },
+
+                                ],
+                                series : [
+                                    {
+
+                                        data:(function (){
+                                            var res = [];
+                                            var len = 10;
+                                            while (len--) {
+                                                res.push(Math.round(Math.random() * 1000));
+                                                /*res.push(y)*/
+
+                                            }
+                                            return res;
+                                        })()
+                                    },
+                                    {
+                                        name:'平均数',
+                                        type:'line',
+                                        data:(function (){
+                                            var res = [];
+                                            var len = 10;
+                                            while (len--) {
+                                                // res.push((Math.random()*10 + 5).toFixed(1) - 0);
+                                                res.push(ydata);
+                                            }
+                                            return res;
+                                        })()
+                                    }
+                                ]
+                            };;
+                            myChart.setOption(option);
+
+                            var lastData = 1;
+                            var axisData;
+                            var timeTicket;
+                            clearInterval(timeTicket);
+                            timeTicket = setInterval(function (){
+                                // lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+                                // lastData = lastData.toFixed(1) - 0;
+                                axisData = (new Date()).toLocaleTimeString("ja-JP").replace(/^\D*/,'');
+
+                                // 动态数据接口 addData
+                                myChart.addData([
+
+                                    [
+                                        1,        // 系列索引
+                                        ydata, // 新增数据
+                                        false,    // 新增数据是否从队列头部插入
+                                        false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                                        xdata  // 坐标轴标签
+                                    ]
+                                ]);
+                            }, 2100);
+                        }
+                    );
+                });
+
+
+            </script>
+
+            <!--&lt;!&ndash; 为ECharts准备一个具备大小（宽高）的Dom &ndash;&gt;-->
+            <!--<div id="main1" style="height:400px"></div>-->
+            <!--<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>-->
+            <!--<script type="text/javascript">-->
+                <!--require.config({-->
+                    <!--paths: {-->
+                        <!--echarts: 'http://echarts.baidu.com/build/dist'-->
+                    <!--}-->
+                <!--});-->
+                <!--// 使用-->
+                <!--require-->
+                <!--(-->
+                        <!--[-->
+                            <!--'echarts',-->
+                            <!--'echarts/chart/line'  // 使用柱状图就加载bar模块，按需加载-->
+                        <!--],-->
+                        <!--function (ec)-->
+                        <!--{-->
+                            <!--// 基于准备好的dom，初始化echarts图表-->
+                            <!--var myChart = ec.init(document.getElementById('main1'));-->
+                            <!--var option = {-->
+
+                                <!--tooltip : {-->
+                                    <!--trigger: 'axis'-->
+                                <!--},-->
+                                <!--legend: {-->
+                                    <!--data:['方差']-->
+                                <!--},-->
+                                <!--toolbox: {-->
+                                    <!--show : true,-->
+                                    <!--feature : {-->
+                                        <!--mark : {show: true},-->
+                                        <!--dataView : {show: true, readOnly: false},-->
+                                        <!--magicType : {show: true, type: ['line']},-->
+                                        <!--restore : {show: true},-->
+                                        <!--saveAsImage : {show: true}-->
+                                    <!--}-->
+                                <!--},-->
+                                <!--dataZoom : {-->
+                                    <!--show : false,-->
+                                    <!--start : 0,-->
+                                    <!--end : 100-->
+                                <!--},-->
+                                <!--xAxis : [-->
+                                    <!--{-->
+                                        <!--type : 'category',-->
+                                        <!--boundaryGap : true,-->
+                                        <!--data : (function (){-->
+                                            <!--var now = new Date();-->
+                                            <!--var res = [];-->
+                                            <!--var len =10;-->
+                                            <!--while (len&#45;&#45;) {-->
+                                                <!--res.unshift(now.toLocaleString("ja-JP").replace(/^\D*/,''));-->
+                                                <!--now = new Date(now - 2000);-->
+                                            <!--}-->
+                                            <!--return res;-->
+                                        <!--})()-->
+                                    <!--}-->
+                                <!--],-->
+                                <!--yAxis : [-->
+                                    <!--{-->
+                                        <!--type : 'value',-->
+                                        <!--scale: true,-->
+                                        <!--name : '方差',-->
+                                        <!--boundaryGap: [0.2, 0.2]-->
+                                    <!--},-->
+
+                                <!--],-->
+                                <!--series : [-->
+                                    <!--{-->
+
+                                        <!--data:(function (){-->
+                                            <!--var res = [];-->
+                                            <!--var len = 10;-->
+                                            <!--while (len&#45;&#45;) {-->
+                                                <!--res.push(Math.round(Math.random() *1000));-->
+                                            <!--}-->
+                                            <!--return res;-->
+                                        <!--})()-->
+                                    <!--},-->
+                                    <!--{-->
+                                        <!--name:'方差',-->
+                                        <!--type:'line',-->
+                                        <!--data:(function (){-->
+                                            <!--var res = [];-->
+                                            <!--var len = 10;-->
+                                            <!--while (len&#45;&#45;) {-->
+                                                <!--res.push((Math.random()).toFixed(1) - 0);//当前y轴数据-->
+                                            <!--}-->
+                                            <!--return res;-->
+                                        <!--})()-->
+                                    <!--}-->
+                                <!--]-->
+                            <!--};-->
+                            <!--myChart.setOption(option);-->
+
+                            <!--var lastData = 11;-->
+                            <!--var axisData;-->
+                            <!--var timeTicket;-->
+                            <!--clearInterval(timeTicket);-->
+                            <!--timeTicket = setInterval(function (){-->
+                                <!--lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);-->
+                                <!--lastData = lastData.toFixed(1) - 0;-->
+                                <!--axisData = (new Date()).toLocaleTimeString("ja-JP").replace(/^\D*/,'');-->
+
+                                <!--// 动态数据接口 addData-->
+                                <!--myChart.addData([-->
+
+                                    <!--[-->
+                                        <!--1,-->
+										<!--// 系列索引-->
+                                        <!--e.data.data[1],-->
+                                        <!--//lastData, // 新增数据-->
+
+                                        <!--false,    // 新增数据是否从队列头部插入-->
+                                        <!--false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头-->
+                                        <!--axisData  // 坐标轴标签-->
+                                    <!--]-->
+                                <!--]);-->
+                            <!--}, 2100);-->
+                        <!--}-->
+                <!--);-->
+            <!--</script>-->
+</body>
+
+</html>
