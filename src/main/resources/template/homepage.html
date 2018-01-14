@@ -84,37 +84,55 @@ font-size: 16px;">
 				<form class="form-horizontal" role="form" action="#" >
 
 					<div class="form-group">
-						<label  class="col-sm-3 control-label" style='text-align: left;'>设备名称</label>
+						<label  class="col-sm-3 control-label" for="name" style='text-align: left;'>设备名称</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="name" required placeholder="必填"/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label  class="col-sm-3 control-label" style='text-align: left;'>设备大类型</label>
+						<label  class="col-sm-3 control-label" for="type" style='text-align: left;'>设备大类型</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="type" required placeholder="可空"/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label  class="col-sm-3 control-label" style='text-align: left;'>厂商</label>
+						<label  class="col-sm-3 control-label" for="manufacture" style='text-align: left;'>厂商</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="manufacture" required="required" placeholder="可空"/>
+							<select class="form-control" id="manufacture" required>
+								<option selected value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+							<!--<input type="text" class="form-control" id="manufacture" required="required" placeholder="可空"/>-->
 						</div>
 					</div>
 					<div class="form-group">
-						<label  class="col-sm-3 control-label" style='text-align: left;'>设备具体类型</label>
+						<label  class="col-sm-3 control-label" for="deviceType" style='text-align: left;'>设备具体类型</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="deviceType" required="required" placeholder="可空"/>
+							<select class="form-control" id="deviceType" required>
+								<option selected value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+							<!--<input type="text" class="form-control" id="deviceType" required="required" placeholder="可空"/>-->
 						</div>
 					</div>
 					<div class="form-group">
-						<label  class="col-sm-3 control-label" style='text-align: left;'>型号</label>
+						<label  class="col-sm-3 control-label" for="model" style='text-align: left;'>型号</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="model" required="required" placeholder="可空"/>
+							<select class="form-control" id="model" required>
+								<option selected value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+							<!--<input type="text" class="form-control" id="model" required="required" placeholder="可空"/>-->
 						</div>
 					</div>
 					<div class="form-group">
-						<label  class="col-sm-3 control-label" style='text-align: left;'>设备描述</label>
+						<label  class="col-sm-3 control-label" for="description" style='text-align: left;'>设备描述</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="description" placeholder="可空"/>
 						</div>
