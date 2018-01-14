@@ -1,6 +1,7 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.controller.string2jsonDecode.DeviceInfoDecode;
+import cn.edu.bupt.controller.string2jsonDecode.DeviceTokenInfoDecode;
 import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -51,7 +52,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     }
 
     /**
-     * abandon. Don't use
+     * @deprecated
      * @param deviceId
      * @return
      */
@@ -67,8 +68,8 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         }catch(Exception e){
             return retFail(e.toString()) ;
         }
-        JsonArray deviceJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent) ;
-        return retSuccess(deviceJsonArr.toString()) ;
+        JsonObject token = (JsonObject)DeviceTokenInfoDecode.deviceToken(responseContent);
+        return retSuccess(token.toString());
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
