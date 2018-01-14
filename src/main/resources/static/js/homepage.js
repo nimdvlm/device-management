@@ -187,7 +187,7 @@ $(function () {
         var assName = $('#assName').val();
         var assGroup = $('#assGroup').val();
         $.ajax({
-            url: "/api/group/device/"+assName+"/group/"+assGroup,
+            url: "/api/group//assign/"+assName+"/"+assGroup,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             data: "",
