@@ -2,13 +2,15 @@ package cn.edu.bupt.controller.sendEmailMethod;
 
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import sun.rmi.runtime.Log;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import java.util.Properties;
 
 /**
- * Created by hasee on 2018/1/11.
+ * Created by liyou on 2018/1/11.
  */
 public class SendMail{
     public static final String DEFALUT_ENCODING = "UTF-8";
@@ -18,10 +20,10 @@ public class SendMail{
        //String[] to={"liyou@bupt.edu.cn"};
         try {
             sendTextWithHtml(sender, to, subject, text);
+            return "发送成功";
         }catch (Exception e){
-            System.out.println(e);
+            return "发送失败";
         }
-        return "发送成功";
     }
 
     public static void sendTextWithHtml(JavaMailSenderImpl sender, String[] tos, String subject, String text)
@@ -31,7 +33,6 @@ public class SendMail{
         // 发送邮件
         sender.send(mailMessage);
 
-        System.out.println("邮件发送成功..");
     }
 
     private static MimeMessageHelper initMimeMessageHelper(MimeMessage mailMessage, String[] tos, String from,
