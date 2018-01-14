@@ -293,14 +293,14 @@
                             log("Message received: " + e.data);
                             // console.log("e.data值："+e.data);
                             var temp = JSON.parse(e.data);//将字符串转为json
-							var key = new Array();
+							var key;
 							var value=new Array();
 
 							for(var i in temp.data)
 							{
 							    var j=0;
-							    key[j]=i;
-							    value[j] = temp.data[i];
+							    key=i;
+							    value = temp.data[i];
 							    j++;
 							}
 
@@ -361,7 +361,7 @@
                         function (ec)
                         {
                             // 基于准备好的dom，初始化echarts图表
-                            var myChart = ec.init(document.getElementById('main'));
+                            var myChart = ec.init(document.getElementById('main'));//??"main"+i
                             var option = {
 
                                 tooltip : {
