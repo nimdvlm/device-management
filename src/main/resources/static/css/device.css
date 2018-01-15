@@ -1,3 +1,7 @@
 label[class=error] {
     color: red;
 }
+
+.detail-block-header {
+    margin: 30px 20px;
+}
