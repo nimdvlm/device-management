@@ -13,9 +13,13 @@
 	<link href="../static/css/bootstrapSwitch.css" rel="stylesheet" />
 	<!-- GOOGLE FONTS-->
 	<!--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />-->
+    <!--BootstrapValidator Styles-->
+    <link type="text/css" rel="stylesheet" href="../static/css/bootstrapValidator.css">
 	<!-- TABLE STYLES-->
 	<link href="../static/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 	<link href="../static/css/style.css" rel="stylesheet" />
+
+	<link href="../static/css/device.css" rel="stylesheet" />
 </head>
 <body>
 <div id="wrapper">
@@ -73,6 +77,7 @@ font-size: 16px;">
 </div>
 <!-- /. PAGE WRAPPER  -->
 <!-- /. WRAPPER  -->
+<!-- 创建设备模态框 -->
 <div class="modal fade" id="createDeviceModal" tabindex="-1" role="dialog" aria-labelledby="createDeviceModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -81,73 +86,76 @@ font-size: 16px;">
 				<h4 class="modal-title" id="createDeviceModalLabel">创建设备</h4>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" role="form" action="#" >
+				<form class="form-horizontal" id="createDeviceForm" role="form" action="#" method="post">
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label" for="name" style='text-align: left;'><span style="color: red;">* </span>设备名称</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="name" name="deviceName" placeholder="必填" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label" for="type" style='text-align: left;'><span style="color: red;">* </span>设备大类型</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="type" name="bigType" placeholder="必填"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label" for="manufacture" style='text-align: left;'><span style="color: red;">* </span>厂商</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="manufacture" name="manufacture">
+                                <option value="">--请选择厂商</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                            <!--<input type="text" class="form-control" id="manufacture" required="required" placeholder="可空"/>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label" for="deviceType" style='text-align: left;'><span style="color: red;">* </span>设备具体类型</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="deviceType" name="specificType">
+                                <option value="">--请选择设备具体类型</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                            <!--<input type="text" class="form-control" id="deviceType" required="required" placeholder="可空"/>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label" for="model" style='text-align: left;'><span style="color: red;">* </span>型号</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="model" name="deviceModel">
+                                <option value="">--请选择设备型号</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                            <!--<input type="text" class="form-control" id="model" required="required" placeholder="可空"/>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label" for="description" style='text-align: left;'>设备描述</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="description" name="deviceDescription" placeholder="可空"/>
+                        </div>
+                    </div>
 
-					<div class="form-group">
-						<label  class="col-sm-3 control-label" for="name" style='text-align: left;'>设备名称</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="name" required placeholder="必填"/>
-						</div>
-					</div>
-					<div class="form-group">
-						<label  class="col-sm-3 control-label" for="type" style='text-align: left;'>设备大类型</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="type" required placeholder="可空"/>
-						</div>
-					</div>
-					<div class="form-group">
-						<label  class="col-sm-3 control-label" for="manufacture" style='text-align: left;'>厂商</label>
-						<div class="col-sm-9">
-							<select class="form-control" id="manufacture" required>
-								<option selected value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-							</select>
-							<!--<input type="text" class="form-control" id="manufacture" required="required" placeholder="可空"/>-->
-						</div>
-					</div>
-					<div class="form-group">
-						<label  class="col-sm-3 control-label" for="deviceType" style='text-align: left;'>设备具体类型</label>
-						<div class="col-sm-9">
-							<select class="form-control" id="deviceType" required>
-								<option selected value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-							</select>
-							<!--<input type="text" class="form-control" id="deviceType" required="required" placeholder="可空"/>-->
-						</div>
-					</div>
-					<div class="form-group">
-						<label  class="col-sm-3 control-label" for="model" style='text-align: left;'>型号</label>
-						<div class="col-sm-9">
-							<select class="form-control" id="model" required>
-								<option selected value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-							</select>
-							<!--<input type="text" class="form-control" id="model" required="required" placeholder="可空"/>-->
-						</div>
-					</div>
-					<div class="form-group">
-						<label  class="col-sm-3 control-label" for="description" style='text-align: left;'>设备描述</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="description" placeholder="可空"/>
-						</div>
-					</div>
-
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary" id="create" data-toggle="modal" data-target="#createSuc">创建</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					</div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="create">创建</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
 
+<!-- 创建设备成功模态框 -->
 <div class="modal fade" id="createSuc" tabindex="-1" role="dialog" aria-labelledby="createDeviceModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -178,7 +186,7 @@ font-size: 16px;">
 				<input type="hidden" id="confirmDel" value=""/>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delsModal"  id="confirmDelete">确认</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delSucModal"  id="confirmDelete">确认</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			</div>
 		</div>
@@ -277,7 +285,7 @@ font-size: 16px;">
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" id="assignDev" data-toggle="modal" data-target="#assignModal">确定</button>
+				<button type="button" class="btn btn-primary" id="assignDev" data-toggle="modal" data-target="#assignSucModal">确定</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 
 			</div>
@@ -285,7 +293,7 @@ font-size: 16px;">
 	</div>
 </div>
 
-<div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="assDeviceModalLabel" aria-hidden="true">
+<div class="modal fade" id="assignSucModal" tabindex="-1" role="dialog" aria-labelledby="assDeviceModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -306,6 +314,7 @@ font-size: 16px;">
 <!-- JQUERY SCRIPTS -->
 
 <script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/jquery.validate.js"></script>
 <!-- BOOTSTRAP SCRIPTS -->
 <script src="../static/bootstrap/js/bootstrap.min.js"></script>
 <!-- METISMENU SCRIPTS -->
@@ -314,9 +323,11 @@ font-size: 16px;">
 <script src="../static/js/bootstrapSwitch.js"></script>
 <script src="../static/dataTables/jquery.dataTables.js"></script>
 <script src="../static/dataTables/dataTables.bootstrap.js"></script>
+<!-- Bootstrap Validator Scripts-->
+<script src="../static/js/bootstrapValidator.js"></script>
+<script src="../static/js/language/zh_CN.js"></script>
 
-
-<script src="../static/js/homepage.js"></script>
+<script src="../static/js/device.js"></script>
 
 <!-- CUSTOM SCRIPTS -->
 <script src="../static/js/custom.js"></script>
