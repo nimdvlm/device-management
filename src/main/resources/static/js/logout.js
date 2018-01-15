@@ -6,8 +6,12 @@ $(document).ready(function() {
             type: "GET",
             dataType: "text",
             success: function (result) {
-                var obj = JSON.parse(result);
-                console.log("success");
+                try {
+                    var obj = JSON.parse(result);
+                    console.log("success");
+                } catch(e) {
+                    console.log("failed-no");
+                }
                 window.location.href = "signin";
             },
             error: function (msg) {
