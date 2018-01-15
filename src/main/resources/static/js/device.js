@@ -47,7 +47,7 @@ $(function () {
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-danger del" style="cursor:hand" data-toggle="modal" data-target="#delModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:hand" data-toggle="modal" data-target="#conModal" id="'+row.name+'" name="'+row.deviceId+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:hand" data-toggle="modal" data-target="#assModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
+                    return '<a class="btn-sm btn-danger del" style="cursor:hand" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:hand" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.name+'" name="'+row.deviceId+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:hand" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
                 }
             },
             {
@@ -55,7 +55,7 @@ $(function () {
                 data: null,
                 title: "状态",
                 render: function (data, type, row, meta) {
-                    return row.responce_msg.status;
+                    return row.status;
                 }
             },
             {
@@ -63,7 +63,7 @@ $(function () {
                 data: null,
                 title: "创建时间",
                 render: function (data, type, row, meta) {
-                    return row.responce_msg.createdTime;
+                    return row.createdTime;
                 }
             },
             {
@@ -72,7 +72,7 @@ $(function () {
                 title: "描述",
                 width: "20%",
                 render: function (data, type, row, meta) {
-                    return row.responce_msg.additionalInfo;
+                    return row.additionalInfo;
                 }
             },
             {
@@ -80,7 +80,7 @@ $(function () {
                 data: null,
                 title: "类型",
                 render: function (data, type, row, meta) {
-                    return row.responce_msg.type;
+                    return row.type;
                 }
             },
             {
@@ -88,12 +88,13 @@ $(function () {
                 data: "title",
                 title: "设备名称",
                 render: function (data, type, row, meta) {
-                    return row.responce_msg.name;
+                    return row.name;
                 }
             }
         ],
         initComplete:function(){
             $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" data-toggle="modal" data-target="#createDeviceModal">+ 创建设备</button>');
+            // 怎样控制验证通过后才传输数据
             $("#create").click(function(){
                 var name = $('#name').val();
                 var type = $('#type').val();
@@ -110,7 +111,7 @@ $(function () {
                     success: function (result) {
                         var obj = JSON.parse(result);
                         console.log("success");
-                        $('#myModal').modal('hide')
+                        $('#myModal').modal('hide');
                         $('#lastCreate').on('click',function(){
                             window.location.href = "homepage";
                         });
@@ -355,4 +356,73 @@ $(function () {
         });
     } );
 
-})
+});
+
+// $(document).ready(function() {
+//     // validate form 表单验证
+//     console.log("start form validation");
+//     $('#createDeviceForm').bootstrapValidator({
+//         message: 'This value is not valid',
+//         feedbackIcons: {
+//             valid: 'glyphicon glyphicon-ok',
+//             invalid: 'glyphicon glyphicon-remove',
+//             validating: 'glyphicon glyphicon-refresh'
+//         },
+//         fields: {
+//             deviceName: {
+//                 message: 'The device name is not valid',
+//                 validators: {
+//                     notEmpty: {
+//                         message: '设备名称不能为空',
+//                     }
+//                 }
+//             },
+//             bigType: {
+//                 validators: {
+//                     notEmpty: {
+//                         message: '设备大类型不能为空'
+//                     }
+//                 }
+//             },
+//             manufacture: {
+//                 validators: {
+//                     notEmpty: {
+//                         message: '必须为设备选择一个厂商'
+//                     }
+//                 }
+//             },
+//             specificType: {
+//                 validators: {
+//                     notEmpty: {
+//                         message: '必须为设备选择具体类型'
+//                     }
+//                 }
+//             },
+//             deviceModel: {
+//                 validators: {
+//                     notEmpty: {
+//                         message: '必须为设备选择型号'
+//                     }
+//                 }
+//             }
+//         }
+//     });
+// });
+
+// 创建设备必填限制
+$('#createDeviceForm').validate({
+    rules: {
+        deviceName: {required: true},
+        bigType: {required: true},
+        manufacture: {required: true},
+        specificType: {required: true},
+        deviceModel: {required: true}
+    },
+    messages: {
+        deviceName: {required: '设备名称不能为空'},
+        bigType: {required: '设备大类型不能为空'},
+        manufacture: {required: '必须为设备选择一个厂商'},
+        specificType: {required: '必须为设备选择具体类型'},
+        deviceModel: {required: "必须为设备选择型号"}
+    }
+});
