@@ -1,20 +1,21 @@
 $(function () {
-	$("#device_input").keyup(function () {
-		$("#device_table tbody tr").hide()
-                .filter(":contains('"+($(this).val())+"')").show();//filter和contains共同来实现了这个功能。
+    $("#device_input").keyup(function () {
+        $("#device_table tbody tr").hide()
+            .filter(":contains('"+($(this).val())+"')").show();//filter和contains共同来实现了这个功能。
     }).keyup();
-	//配置DataTables默认参数
+    //配置DataTables默认参数
     $.extend(true, $.fn.dataTable.defaults, {
-//      "language": {
-//          "url": "/assets/Chinese.txt"
-//      },
+//                    "language": {
+//                        "url": "/assets/Chinese.txt"
+//                    },
         "dom": "<'row'<'col-md-6'l<'#toolbar'>><'col-md-6'f>r>" +
-               "t" +
-               "<'row'<'col-md-5 sm-center'i><'col-md-7 text-right sm-center'p>>"
+        "t" +
+        "<'row'<'col-md-5 sm-center'i><'col-md-7 text-right sm-center'p>>"
     });
+    // $('#toolbar').html('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" data-toggle="modal" data-target="#createDeviceModal">+ 创建设备</button>');
 
     $('#devices_table').DataTable({
-        "LengthMenu" : [5,10, 25, 50, 100],
+        "aLengthMenu" : [5,10, 25, 50, 100],
         "bPaginate" : true,
         "bAutoWidth": false,
         "oLanguage": {
@@ -41,59 +42,59 @@ $(function () {
         //默认最后一列（最后更新时间）降序排列
         order: [[ 2, "desc" ]],
         columnDefs: [
-                   {
-                       targets: 5,
-                       data: "updated_at",
-                       title: "操作",
-                       render: function (data, type, row, meta) {
-                           return '<a class="btn-sm btn-danger del" style="cursor:hand" data-toggle="modal" data-target="#delModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:hand" data-toggle="modal" data-target="#conModal" id="'+row.name+'" name="'+row.deviceId+'">'+'控制'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:hand" data-toggle="modal" data-target="#assModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
-                       }
-                   },
-                   {
-                       targets: 4,
-                       data: null,
-                       title: "状态",
-                       render: function (data, type, row, meta) {
-                           return row.status;
-                       }
-                   },
-                   {
-                       targets: 3,
-                       data: null,
-                       title: "创建时间",
-                       render: function (data, type, row, meta) {
-                           return row.createdTime;
-                       }
-                   },
-                   {
-                       targets: 2,
-                       data: null,
-                       title: "描述",
-                       width: "20%",
-                       render: function (data, type, row, meta) {
-                           return row.additionalInfo;
-                       }
-                   },
-                   {
-                       targets: 1,
-                       data: null,
-                       title: "类型",
-                       render: function (data, type, row, meta) {
-                           return row.type;
-                       }
-                   },
-                   {
-                       targets: 0,
-                       data: "title",
-                       title: "设备名称",
-                       render: function (data, type, row, meta) {
-                           return row.name;
-                       }
-                   }
-               ],
-
+            {
+                targets: 5,
+                data: "updated_at",
+                title: "操作",
+                render: function (data, type, row, meta) {
+                    return '<a class="btn-sm btn-danger del" style="cursor:hand" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:hand" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.name+'" name="'+row.deviceId+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:hand" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
+                }
+            },
+            {
+                targets: 4,
+                data: null,
+                title: "状态",
+                render: function (data, type, row, meta) {
+                    return row.status;
+                }
+            },
+            {
+                targets: 3,
+                data: null,
+                title: "创建时间",
+                render: function (data, type, row, meta) {
+                    return row.createdTime;
+                }
+            },
+            {
+                targets: 2,
+                data: null,
+                title: "描述",
+                width: "20%",
+                render: function (data, type, row, meta) {
+                    return row.additionalInfo;
+                }
+            },
+            {
+                targets: 1,
+                data: null,
+                title: "类型",
+                render: function (data, type, row, meta) {
+                    return row.type;
+                }
+            },
+            {
+                targets: 0,
+                data: "title",
+                title: "设备名称",
+                render: function (data, type, row, meta) {
+                    return row.name;
+                }
+            }
+        ],
         initComplete:function(){
-            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" data-toggle="modal" data-target="#myModal">+ 创建设备</button>');
+            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" data-toggle="modal" data-target="#createDeviceModal">+ 创建设备</button>');
+            // 怎样控制验证通过后才传输数据
             $("#create").click(function(){
                 var name = $('#name').val();
                 var type = $('#type').val();
@@ -110,7 +111,7 @@ $(function () {
                     success: function (result) {
                         var obj = JSON.parse(result);
                         console.log("success");
-                        $('#myModal').modal('hide')
+                        $('#myModal').modal('hide');
                         $('#lastCreate').on('click',function(){
                             window.location.href = "homepage";
                         });
@@ -123,12 +124,11 @@ $(function () {
         }
 
     });
-
-    //删除功能
+//删除功能
     $('#devices_table').on('click','tr .del', function () {
         console.log($(this).attr('id'))
         $('#confirmDel').val($(this).attr('id'))
-    });
+    } );
     $('#confirmDelete').on('click',function(){
         var deviceId = $('#confirmDel').val();
         console.log(deviceId)
@@ -139,10 +139,10 @@ $(function () {
             data: "",
             dataType: "text",
             success: function (result) {
-//              var obj = JSON.parse(result);
+//                                             var obj = JSON.parse(result);
                 console.log("success");
                 $('#delModal').modal('hide');
-//                  setTimeout('window.location.href = "device_group"',2000)
+//                                          setTimeout('window.location.href = "device_group"',2000)
                 $('#last').on('click',function(){
                     window.location.href = "homepage";
                 });
@@ -152,8 +152,7 @@ $(function () {
             }
         });
     })
-
-    //分配功能
+//                分配功能
     $('#devices_table').on('click','tr .assign', function () {
         $("#assGroup").empty();
         var deviceId = $(this).attr('id');
@@ -187,7 +186,7 @@ $(function () {
         var assName = $('#assName').val();
         var assGroup = $('#assGroup').val();
         $.ajax({
-            url: "/api/group/device/"+assName+"/group/"+assGroup,
+            url: "/api/group//assign/"+assName+"/"+assGroup,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             data: "",
@@ -196,7 +195,7 @@ $(function () {
                 var obj = JSON.parse(result);
                 console.log('suscc');
                 $('#assModal').modal('hide');
-                //setTimeout('window.location.href = "device_group"',2000)
+                //                                          setTimeout('window.location.href = "device_group"',2000)
                 $('#lastAssign').on('click',function(){
                     window.location.href = "homepage";
                 });
@@ -206,7 +205,6 @@ $(function () {
             }
         });
     })
-
     //控制功能
     $('#devices_table').on('click','tr .ctrl', function () {
         $("#ctrDevice").empty();
@@ -217,17 +215,18 @@ $(function () {
             url: "/api/shadow/"+deviceId,
             type: "GET",
             contentType: "application/json;charset=utf-8",
-//          data: JSON.stringify({'username': deviceId}),
+//                                                                         data: JSON.stringify({'username': deviceId}),
             dataType: "text",
             success: function (result) {
+
                 var obj = JSON.parse(result);
-//              console.log(obj);
-//              console.log(obj.responce_msg.services)
+//                                                                             console.log(obj);
+//                                                                             console.log(obj.responce_msg.services)
                 var services = obj.responce_msg.services;
                 var serviceNames = [];
                 for (x in services){
                     var divs = document.createElement("div");
-//                  divs.setAttribute('id',services[x].serviceName)
+//                                                                             divs.setAttribute('id',services[x].serviceName)
                     $('#ctrDevice').append(divs);
                     var label5 = document.createElement("label");
                     label5.innerText = services[x].serviceName;
@@ -241,17 +240,17 @@ $(function () {
                     submit.setAttribute('type','button');
                     submit.value = '确定';
                     data.setAttribute('type','number');
-//                  var input = document.createElement('input');
-//                  input.setAttribute('type','checkbox');
-//                  div.appendChild(input);
-//                  document.getElementById('ctrDevice').appendChild(image);
-//                  console.log(document.getElementById('ctrDevice'))
+//                                                                             var input = document.createElement('input');
+//                                                                             input.setAttribute('type','checkbox');
+//                                                                             div.appendChild(input);
+//                                                                             document.getElementById('ctrDevice').appendChild(image);
+//                                                                             console.log(document.getElementById('ctrDevice'))
 //
-//                  console.log(services[x].serviceBody.params)
+//                                                                             console.log(services[x].serviceBody.params)
                     for(y in services[x].serviceBody.params){
                         var serv = services[x].serviceBody.params[y].split("=");
-//                      console.log(y);
-//                      console.log(serv);
+//                                                                                console.log(y);
+//                                                                                console.log(serv);
 
                         var input = document.createElement("input");
                         var label = document.createElement("label");
@@ -263,14 +262,15 @@ $(function () {
                         function images(){
                             if(this.getAttribute('src') == '../img/off.png'){
                                 this.setAttribute('src','../img/on.png');
-                            } else{
+                            }else{
                                 this.setAttribute('src','../img/off.png');
                             }
                         }
                         if(serv[0] == '1'){
+
                             input.value = serv[1];
                             label.innerText = y;
-//                          alert('label')
+//                                                                                alert('label')
                             console.log(label)
                             divs.append(label);
                             divs.append(input);
@@ -300,11 +300,12 @@ $(function () {
                                 diction['serviceName'] = subChildren[i].innerHTML;
 
                                 console.log('serviceName -->'+subChildren[i].innerHTML);
-                                i++;
+                                i++
                             }else{
                                 if(subChildren[i+1] instanceof HTMLInputElement){
                                     diction[subChildren[i].innerHTML] = subChildren[i+1].value;
                                     console.log(subChildren[i].innerHTML+"-->"+subChildren[i+1].value);
+
                                 }else{
                                     if(subChildren[i+1].getAttribute('src').indexOf('on')>=0){
                                         diction[subChildren[i].innerHTML] = subChildren[i+1].getAttribute('on');
@@ -346,13 +347,82 @@ $(function () {
                 }
 
 
-//              console.log(serviceNames);
-//              window.location.href = "homepage";
+//                                                                             console.log(serviceNames);
+//                                                                             window.location.href = "homepage";
             },
             error: function (msg) {
                 alert(msg.message);
             }
         });
-    });
+    } );
 
+});
+
+// $(document).ready(function() {
+//     // validate form 表单验证
+//     console.log("start form validation");
+//     $('#createDeviceForm').bootstrapValidator({
+//         message: 'This value is not valid',
+//         feedbackIcons: {
+//             valid: 'glyphicon glyphicon-ok',
+//             invalid: 'glyphicon glyphicon-remove',
+//             validating: 'glyphicon glyphicon-refresh'
+//         },
+//         fields: {
+//             deviceName: {
+//                 message: 'The device name is not valid',
+//                 validators: {
+//                     notEmpty: {
+//                         message: '设备名称不能为空',
+//                     }
+//                 }
+//             },
+//             bigType: {
+//                 validators: {
+//                     notEmpty: {
+//                         message: '设备大类型不能为空'
+//                     }
+//                 }
+//             },
+//             manufacture: {
+//                 validators: {
+//                     notEmpty: {
+//                         message: '必须为设备选择一个厂商'
+//                     }
+//                 }
+//             },
+//             specificType: {
+//                 validators: {
+//                     notEmpty: {
+//                         message: '必须为设备选择具体类型'
+//                     }
+//                 }
+//             },
+//             deviceModel: {
+//                 validators: {
+//                     notEmpty: {
+//                         message: '必须为设备选择型号'
+//                     }
+//                 }
+//             }
+//         }
+//     });
+// });
+
+// 创建设备必填限制
+$('#createDeviceForm').validate({
+    rules: {
+        deviceName: {required: true},
+        bigType: {required: true},
+        manufacture: {required: true},
+        specificType: {required: true},
+        deviceModel: {required: true}
+    },
+    messages: {
+        deviceName: {required: '设备名称不能为空'},
+        bigType: {required: '设备大类型不能为空'},
+        manufacture: {required: '必须为设备选择一个厂商'},
+        specificType: {required: '必须为设备选择具体类型'},
+        deviceModel: {required: "必须为设备选择型号"}
+    }
 });
