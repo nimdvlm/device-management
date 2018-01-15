@@ -5,6 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import static cn.edu.bupt.utils.TimeConvertUtil.TimeStamp2Date;
+
 /**
  * Created by tangjialiang on 2018/1/10.
  */
@@ -24,7 +26,8 @@ public class DeviceGroupInfoDecode {
                 aGroup.addProperty("id", "");
             }
             try {
-                aGroup.addProperty("createdTime", item.get("createdTime").getAsString());
+                String data = TimeStamp2Date(((JsonObject)item).get("createdTime").getAsString() ,"");
+                aGroup.addProperty("createdTime", data);
             } catch (Exception e) {
                 aGroup.addProperty("createdTime", "");
             }

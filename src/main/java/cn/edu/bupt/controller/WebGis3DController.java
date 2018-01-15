@@ -7,15 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by Administrator on 2017/12/23.
- *
+ * Created by whr on 2018/1/15.
+ *  -- 该类为3Dwebgis提供接口
  *  -- 该类的所有接口返回采用统一json
  */
 
 @RestController
 @RequestMapping("/api/3Dwebgis")
 @Slf4j
-public class ThreeDimensionController extends DefaultThingsboardAwaredController {
+public class WebGis3DController extends DefaultThingsboardAwaredController {
 
     public static final String DEVICE_ID = "deviceId";
 

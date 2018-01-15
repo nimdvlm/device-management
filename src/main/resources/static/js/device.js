@@ -47,7 +47,7 @@ $(function () {
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-danger del" style="cursor:hand" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:hand" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.name+'" name="'+row.deviceId+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:hand" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
+                    return '<a class="btn-sm btn-danger del" style="cursor:hand" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:hand" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.deviceId+'" name="'+row.name+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:hand" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
                 }
             },
             {
@@ -205,12 +205,12 @@ $(function () {
             }
         });
     })
-    //控制功能
+    //详情功能
     $('#devices_table').on('click','tr .ctrl', function () {
         $("#ctrDevice").empty();
-        var deviceId = $(this).attr('name');
-        var ctrName = $(this).attr('id');
-        $('#ctrName').val(ctrName)
+        var deviceId = $(this).attr('id');
+        var ctrName = $(this).attr('name');
+        $('#ctrName').val(ctrName);
         $.ajax({
             url: "/api/shadow/"+deviceId,
             type: "GET",

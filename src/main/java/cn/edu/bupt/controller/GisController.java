@@ -29,7 +29,7 @@ public class GisController {
     }
 
     @RequestMapping("/getmodel.do")
-    String getSensors() {
+    public String getSensors() {
         System.out.print("get model");
         JsonObject obj = new JsonObject();
         obj.addProperty("传感器","upload/sensor_center.stl");
@@ -39,19 +39,19 @@ public class GisController {
     }
 
     @RequestMapping("/getdata.do")
-    String getData(@PathParam( "uid")String uid) throws Exception{
+    public String getData(@PathParam( "uid")String uid) throws Exception{
         System.out.println("getdata :"+uid);
            String res = null;
         if("uid4".equals(uid)){
             res = "26 ℃";
         }else{
-            res =    "33";
+            res = "33";
         }
         return res;
     }
 
     @RequestMapping("/control.do")
-    String control(@PathParam( "uid")String uid) throws Exception{
+    public String control(@PathParam("uid")String uid) throws Exception{
 //        System.out.println("control :"+uid);
 //        ThingsBoardApi api =  ThingsBoardApi.getInstance("10.108.217.227",8080);
 //        String token = api.api_token("tenant@thingsboard.org","tenant");

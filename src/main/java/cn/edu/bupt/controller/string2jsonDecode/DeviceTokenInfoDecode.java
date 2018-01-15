@@ -4,6 +4,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+/**
+ * Created by whr on 2018/1/15.
+ * -- 获取token的decode
+ */
+
 public class DeviceTokenInfoDecode {
 
     public static JsonElement deviceToken(String jsonStr){
@@ -12,10 +17,10 @@ public class DeviceTokenInfoDecode {
         JsonObject parsed = (JsonObject)new JsonParser().parse(jsonStr);
 
         try{
-                aToken.addProperty("credentialsId",parsed.get("credentialsId").getAsString());
-            }catch(Exception e){
-                aToken.addProperty("credentialsId","");
-            }
+            aToken.addProperty("credentialsId",parsed.get("credentialsId").getAsString());
+        }catch(Exception e){
+            aToken.addProperty("credentialsId","");
+        }
         return aToken;
     }
 }
