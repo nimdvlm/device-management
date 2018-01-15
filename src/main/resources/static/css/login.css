@@ -159,6 +159,9 @@ div.modal-body{
     /*height: 141px;*/
     margin-top: 20px;
 }
+.bobo a {
+    color: white;
+}
 .title{
 	    font-size: 20px;
     /* text-align: center; */
