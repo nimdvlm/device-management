@@ -47,7 +47,7 @@ public class NavigationController {
 
     @RequestMapping("/homepage")
     public String  homepage() {
-        return "homepage";
+        return "device";
     }
 
     @RequestMapping("/services")
