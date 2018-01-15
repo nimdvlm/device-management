@@ -17,9 +17,14 @@ public class TimeConvertUtil {
     public static String TimeStamp2Date(String timestampString, String formats) {
         if (TextUtils.isEmpty(formats))
             formats = "yyyy-MM-dd HH:mm:ss";
-        Long timestamp = Long.parseLong(timestampString);
-        String date = new SimpleDateFormat(formats, Locale.CHINA).format(new Date(timestamp));
-        return date;
+        try{
+            Long timestamp = Long.parseLong(timestampString);
+            String date = new SimpleDateFormat(formats, Locale.CHINA).format(new Date(timestamp));
+            return date;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
     }
 
 

@@ -2,6 +2,34 @@ label[class=error] {
     color: red;
 }
 
+#devices_table_wrapper {
+    min-width: 800px;
+}
+
 .detail-block-header {
-    margin: 30px 20px;
+    margin: 10px 20px 20px 0;
+}
+
+@media (min-width: 900px) {
+    #detailDeviceModal .modal-dialog {
+        width: 900px;
+    }
+}
+
+.deviceAttributeList {
+    margin-left: 10px;
+}
+
+.attributeName {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.attributeValue {
+    font-size: 13px;
+}
+
+.realtime-data-table {
+    width: 90%;
+    margin: 0 20px 10px 20px;
 }

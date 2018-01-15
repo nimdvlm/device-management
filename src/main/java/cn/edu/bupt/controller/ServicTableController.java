@@ -84,4 +84,40 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
             return retFail("can't link to thingsboard: " + e) ;
         }
     }
+
+    @RequestMapping(value = "/manufactures", method = RequestMethod.GET)
+    public String serviceManufacture(){
+        String url = "http://" + getServer() + "/api/servicetable/manufatures";
+        try{
+            String s = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
+            return retSuccess(s) ;
+        }catch (Exception e){
+            return retFail("获取厂商失败: - " + e.toString());
+        }
+    }
+
+    @RequestMapping(value = "/{manufacture}/deviceTypes", method = RequestMethod.GET)
+    public String serviceDeviceType(@PathVariable String manufacture){
+        String requestAddr = String.format("/api/servicetable/%s/deviceTypes", manufacture) ;
+        String url = "http://" + getServer() + requestAddr;
+        try{
+            String s = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
+            return retSuccess(s) ;
+        }catch (Exception e){
+            return retFail("获取设备类型失败: - " + e.toString());
+        }
+    }
+
+    @RequestMapping(value = "/{manufacture}/{deviceType}/models", method = RequestMethod.GET)
+    public String serviceModel(@PathVariable String manufacture,@PathVariable String deviceType){
+        String requestAddr = String.format("/api/servicetable/%s/%s/models", manufacture, deviceType) ;
+        String url = "http://"+getServer()+ requestAddr;
+        try{
+            String s = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
+            return retSuccess(s) ;
+        }catch (Exception e){
+            return retFail("获取模块失败: - " + e.toString());
+        }
+    }
+
 }

@@ -61,7 +61,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">服务组</h3>
-                    <button id="123     ">测试</button>
+                    <!--<button id="123">测试</button>-->
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -223,21 +223,22 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
         </div>
     </div>
 </div>
+
 <!--删除模态框-->
-<div class="modal fade" id="delDevModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="delSerModal" tabindex="-1" role="dialog" aria-labelledby="delSerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">删除设备</h4>
+                <h4 class="modal-title" id="delSerModalLabel">删除设备</h4>
             </div>
             <div class="modal-body">
                 <p>确认删除吗？</p>
-                <input type="hidden" id="devDel" value=""/>
+                <input type="hidden" id="SerDel" value=""/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delsDevModal"
-                        id="devDelete">确认
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delsSerModal"
+                        id="SerDelete">确认
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
             </div>
@@ -245,7 +246,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
     </div>
 </div>
 <!--删除模态框-->
-<div class="modal fade" id="delsDevModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="delsSerModal" tabindex="-1" role="dialog" aria-labelledby="delSerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -257,7 +258,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
             </div>
             <div class="modal-footer">
                 <!--<button type="button" class="btn btn-primary" id="delete" data-toggle="modal" data-target="#delsModal">确认</button>-->
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="lastDev">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="lastSer">确定</button>
             </div>
         </div>
     </div>
