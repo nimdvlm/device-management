@@ -1,5 +1,5 @@
 $(function () {
-    $('#123').click(function () {
+ /*   $('#123').click(function () {
         $.ajax({
             url: "/api/service/serviceTables",
             type: "GET",
@@ -14,8 +14,7 @@ $(function () {
                 alert(msg.message);
             }
         });
-    })
-
+    })*/
 
     $("#device_input").keyup(function () {
         $("#device_table tbody tr").hide()
@@ -175,9 +174,9 @@ $(function () {
                     }
                 }
             ],
-            initComplete: function () {
-                $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="' + manufacture + '" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
-            }
+            // initComplete: function () {
+            //     $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="' + manufacture + '" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
+            // }
         });
     });
 //创建服务
