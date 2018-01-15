@@ -63,7 +63,7 @@ $(function () {
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-success create" style="cursor:pointer" data-toggle="modal" data-target="#creModal" name="' + model + '" id="' + deviceType + '" data="' + manufacture + '">' + '+创建服务' + '</a>';
+                    return '<a class="btn-sm btn-success create" style="cursor:pointer" data-toggle="modal" data-target="#creModal" name="' + model + '" id="' + deviceType + '" data="' + manufacture + '">' + '+创建服务' + '</a>'+'<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delSerModal" id="'+row.id+'">'+'删除'+'</a>';
                 }
             },
 
@@ -140,14 +140,14 @@ $(function () {
             //默认最后一列（最后更新时间）降序排列
             order: [[2, "desc"]],
             columnDefs: [
-//            {
-//                targets: 3,
-//                data: "updated_at",
-//                title: "操作",
-//                render: function (data, type, row, meta) {
-//                    return '<a class="btn-sm btn-danger delDev" data-toggle="modal" data-target="#delDevModal" id="'+row.deviceId+'">'+'删除'+'</a>';
-//                }
-//            },
+           {
+               targets: 3,
+               data: "updated_at",
+               title: "操作",
+               render: function (data, type, row, meta) {
+                   return '<a class="btn-sm btn-danger delDev" data-toggle="modal" data-target="#delSerModal" style="cursor:pointer" id="'+row.id+'">'+'删除'+'</a>';
+               }
+           },
 
                 {
                     targets: 2,
@@ -270,16 +270,18 @@ $(function () {
             }
         });
     });
-//删除设备组里的设备
+//删除服务组里的服务
     $('#dataTables-show').on('click', 'tr .delDev', function () {
-        var deviceId = $(this).attr('id');
-        $('#devDel').val($(this).attr('id'));
+        var deviceId = $(this).attr('id')
+        $('#devDel').val($(this).attr('id'))
         console.log(deviceId)
     });
     $('#devDelete').on('click', function () {
         var devDelId = $('#devDel').val();
+        //var groupId = groupId;
+        //var groupId = $(this).attr('id');
         $.ajax({
-            url: "/api/group/unassign/" + devDelId,
+            url: "/api/group/unassign/" + devDelId + "/" + deviceType,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             data: "",
@@ -291,7 +293,6 @@ $(function () {
                 $('#lastDev').on('click', function () {
                     window.location.href = "services";
                 });
-//                                                 window.location.href = "device_group";
             },
             error: function (msg) {
                 alert(msg.message);
@@ -320,16 +321,17 @@ $(function () {
                     console.log("success");
                     console.log(result);
                     $('#mm').modal('hide');
-                    //创建成功提示
-                    $('#createSuc').modal('show');
-                    // $('#lastCreate').on('click', function () {
-                    //     window.location.href = "services";
-                    // });
+                    alert("create success");
+                    $('#lastCreate').on('click', function () {
+                         window.location.href = "services";
+                     });
                 },
                 error: function (msg) {
                     alert(msg.message);
                 }
             });
+            //创建成功提示
+            $('#createSuc').modal('show');
         }
     });
     $('#cancle').on('click', function () {
@@ -342,16 +344,16 @@ $(function () {
         document.getElementById("createServiceGroup").reset();
     });
 
-//删除设备组
+//删除服务组
     $('#dataTables-example').on('click', 'tr .del', function () {
         console.log($(this).attr('id'))
         $('#confirmDel').val($(this).attr('id'))
     });
     $('#confirmDelete').on('click', function () {
-        var deviceGroupId = $('#confirmDel').val();
-        console.log(deviceGroupId)
+        var serviceGroupId = $('#confirmDel').val();
+        console.log(serviceGroupId)
         $.ajax({
-            url: "/api/group/delete/" + deviceGroupId,
+            url: "/api/group/delete/" + serviceGroupId,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             data: "",
