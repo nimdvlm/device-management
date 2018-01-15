@@ -1,4 +1,5 @@
 $(function () {
+    var groupId;
     $("#device_input").keyup(function () {
         $("#device_table tbody tr").hide()
             .filter(":contains('" + ($(this).val()) + "')").show();//filter和contains共同来实现了这个功能。
@@ -78,7 +79,7 @@ $(function () {
     });
 //展示设备组
     $('#dataTables-example').on('click', 'tr .show', function () {
-        var groupId = $(this).attr('id');
+        groupId = $(this).attr('id');
         console.log(groupId);
         if ($.fn.dataTable.isDataTable('#dataTables-show')) {
 //table.destroy();
@@ -139,7 +140,7 @@ $(function () {
                 {
                     targets: 0,
                     data: null,
-                    title: "设备组ID",
+                    title: "设备ID",
                     render: function (data, type, row, meta) {
                         return row.deviceId;
                     }
@@ -155,7 +156,8 @@ $(function () {
     });
     $('#devDelete').on('click', function () {
         var devDelId = $('#devDel').val();
-        var groupId = groupId;
+        //var groupId = groupId;
+        //var groupId = $(this).attr('id');
         $.ajax({
             url: "/api/group/unassign/" + devDelId + "/" + groupId,
             type: "GET",
@@ -169,7 +171,6 @@ $(function () {
                 $('#lastDev').on('click', function () {
                     window.location.href = "device_group";
                 });
-//                                                 window.location.href = "device_group";
             },
             error: function (msg) {
                 alert(msg.message);
