@@ -156,7 +156,7 @@ font-size: 16px;">
 </div>
 
 <!-- 创建设备成功模态框 -->
-<div class="modal fade" id="createSuc" tabindex="-1" role="dialog" aria-labelledby="createDeviceModalLabel" aria-hidden="true">
+<div class="modal fade" id="createSucModal" tabindex="-1" role="dialog" aria-labelledby="createDeviceModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -221,42 +221,42 @@ font-size: 16px;">
 			<div class="modal-body">
                 <h4 class="detail-block-header">设备属性</h4>
                 <form class="form-horizontal" role="form" action="#" >
-                    <div class="form-group">
-                        <label  class="col-sm-3 control-label" style='text-align: left;'>设备名称</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="ctrName"  disabled="disabled"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-sm-3 control-label" for="ctrType" style='text-align: left;'></span>设备大类型</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="ctrType" disabled="disabled"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-sm-3 control-label" for="ctrManufacture" style='text-align: left;'></span>厂商</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="ctrManufacture" disabled="disabled"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-sm-3 control-label" for="ctrDeviceType" style='text-align: left;'>设备具体类型</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="ctrDeviceType" disabled="disabled"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-sm-3 control-label" for="ctrModel" style='text-align: left;'>型号</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="ctrModel" disabled="disabled"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-sm-3 control-label" for="ctrDescription" style='text-align: left;'>设备描述</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="ctrDescription" disabled="disabled"/>
-                        </div>
-                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label  class="col-sm-3 control-label" style='text-align: left;'>设备名称</label>-->
+                        <!--<div class="col-sm-9">-->
+                            <!--<input type="text" class="form-control" id="ctrName"  disabled="disabled"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label  class="col-sm-3 control-label" for="ctrType" style='text-align: left;'></span>设备大类型</label>-->
+                        <!--<div class="col-sm-9">-->
+                            <!--<input type="text" class="form-control" id="ctrType" disabled="disabled"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label  class="col-sm-3 control-label" for="ctrManufacture" style='text-align: left;'></span>厂商</label>-->
+                        <!--<div class="col-sm-9">-->
+                            <!--<input type="text" class="form-control" id="ctrManufacture" disabled="disabled"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label  class="col-sm-3 control-label" for="ctrDeviceType" style='text-align: left;'>设备具体类型</label>-->
+                        <!--<div class="col-sm-9">-->
+                            <!--<input type="text" class="form-control" id="ctrDeviceType" disabled="disabled"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label  class="col-sm-3 control-label" for="ctrModel" style='text-align: left;'>型号</label>-->
+                        <!--<div class="col-sm-9">-->
+                            <!--<input type="text" class="form-control" id="ctrModel" disabled="disabled"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label  class="col-sm-3 control-label" for="ctrDescription" style='text-align: left;'>设备描述</label>-->
+                        <!--<div class="col-sm-9">-->
+                            <!--<input type="text" class="form-control" id="ctrDescription" disabled="disabled"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="form-group" id="ctrDevice">
                         <!--<label  class="col-sm-3 control-label control-label1" style='text-align: left;'>设备描述</label>-->
                         <!--<div class="col-sm-9">-->
@@ -276,13 +276,34 @@ font-size: 16px;">
                     <!--</div>-->
                 </form>
 
+				<ul class="list-inline deviceAttributeList">
+					<div class="row">
+						<li class="col-xs-4 col-sm-3 col-md-2 attributeName">设备名称：</li>
+						<li><span class="col-xs-8 col-sm-3 col-md-4 attributeValue" id="ctrName"></span></li>
+						<li class="col-xs-4 col-sm-3 col-md-2 attributeName">设备大类型：</li>
+						<li><span class="col-xs-8 col-sm-3 col-md-4 attributeValue" id="ctrType"></span></li>
+					</div>
+					<div class="row">
+						<li class="col-xs-4 col-sm-3 col-md-2 attributeName">厂商：</li>
+						<li><span class="col-xs-8 col-sm-3 col-md-4 attributeValue" id="ctrManufacture"></span></li>
+						<li class="col-xs-4 col-sm-3 col-md-2 attributeName">设备具体类型：</li>
+						<li><span class="col-xs-8 col-sm-3 col-md-4 attributeValue" id="ctrDeviceType"></span></li>
+					</div>
+					<div class="row">
+						<li class="col-xs-4 col-sm-3 col-md-2 attributeName">型号：</li>
+						<li><span class="col-xs-8 col-sm-3 col-md-4 attributeValue" id="ctrModel"></span></li>
+						<li class="col-xs-4 col-sm-3 col-md-2 attributeName">设备描述：</li>
+						<li><span class="col-xs-8 col-sm-3 col-md-4 attributeValue" id="ctrDescription"></span></li>
+					</div>
+				</ul>
+
                 <hr>
 
-                <h4>状态</h4>
+                <h4 class="detail-block-header">状态</h4>
 
                 <hr>
 
-                <h4>控制</h4>
+                <h4 class="detail-block-header">控制</h4>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" id="detail">确定</button>

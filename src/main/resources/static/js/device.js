@@ -94,36 +94,58 @@ $(function () {
         ],
         initComplete:function(){
             $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" data-toggle="modal" data-target="#createDeviceModal">+ 创建设备</button>');
-            // 怎样控制验证通过后才传输数据
-            $("#create").click(function(){
-                var name = $('#name').val();
-                var type = $('#type').val();
-                var manufacture = $('#manufacture').val();
-                var deviceType = $('#deviceType').val();
-                var model = $('#model').val();
-                var description = $('#description').val();
-                $.ajax({
-                    url: "/api/device/create",
-                    type: "POST",
-                    contentType: "application/json;charset=utf-8",
-                    data: JSON.stringify({'name': name, 'type': type,'manufacture':manufacture,'deviceType':deviceType,'model':model, "additionalInfo":{"description":description}}),
-                    dataType: "text",
-                    success: function (result) {
-                        var obj = JSON.parse(result);
-                        console.log("success");
-                        $('#myModal').modal('hide');
-                        $('#lastCreate').on('click',function(){
-                            window.location.href = "homepage";
-                        });
-                    },
-                    error: function (msg) {
-                        alert(msg.message);
-                    }
-                });
-            });
         }
-
     });
+
+    $.validator.setDefaults({
+        submitHandler: function(){
+            var name = $('#name').val();
+            var type = $('#type').val();
+            var manufacture = $('#manufacture').val();
+            var deviceType = $('#deviceType').val();
+            var model = $('#model').val();
+            var description = $('#description').val();
+            $.ajax({
+                url: "/api/device/create",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({'name': name, 'type': type,'manufacture':manufacture,'deviceType':deviceType,'model':model, "additionalInfo":{"description":description}}),
+                dataType: "text",
+                success: function (result) {
+                    // var obj = JSON.parse(result);
+                    console.log("success");
+                    $('#createDeviceModal').modal('hide');
+                    $('#lastCreate').on('click',function(){
+                        window.location.href = "homepage";
+                    });
+                },
+                error: function (msg) {
+                    alert(msg.message);
+                }
+            });
+
+            $('#createSucModal').modal('show');
+        }
+    });
+
+    // 创建设备必填限制
+    $('#createDeviceForm').validate({
+        rules: {
+            deviceName: {required: true},
+            bigType: {required: true},
+            manufacture: {required: true},
+            specificType: {required: true},
+            deviceModel: {required: true}
+        },
+        messages: {
+            deviceName: {required: '设备名称不能为空'},
+            bigType: {required: '设备大类型不能为空'},
+            manufacture: {required: '必须为设备选择一个厂商'},
+            specificType: {required: '必须为设备选择具体类型'},
+            deviceModel: {required: "必须为设备选择型号"}
+        }
+    });
+
 //删除功能
     $('#devices_table').on('click','tr .del', function () {
         console.log($(this).attr('id'))
@@ -141,17 +163,18 @@ $(function () {
             success: function (result) {
 //                                             var obj = JSON.parse(result);
                 console.log("success");
-                $('#delModal').modal('hide');
+                $('#delDeviceModal').modal('hide');
 //                                          setTimeout('window.location.href = "device_group"',2000)
-                $('#last').on('click',function(){
+                $('#lastDelete').on('click',function(){
                     window.location.href = "homepage";
+                    $('#devices_table').ajax.reload();
                 });
             },
             error: function (msg) {
                 alert(msg.message);
             }
         });
-    })
+    });
 //                分配功能
     $('#devices_table').on('click','tr .assign', function () {
         $("#assGroup").empty();
@@ -194,7 +217,7 @@ $(function () {
             success: function (result) {
                 var obj = JSON.parse(result);
                 console.log('suscc');
-                $('#assModal').modal('hide');
+                $('#assDeviceModal').modal('hide');
                 //                                          setTimeout('window.location.href = "device_group"',2000)
                 $('#lastAssign').on('click',function(){
                     window.location.href = "homepage";
@@ -204,13 +227,13 @@ $(function () {
                 alert(msg.message);
             }
         });
-    })
+    });
     //详情功能
     $('#devices_table').on('click','tr .ctrl', function () {
         $("#ctrDevice").empty();
         var deviceId = $(this).attr('id');
         var ctrName = $(this).attr('name');
-        $('#ctrName').val(ctrName);
+        $('#ctrName').text(ctrName);
         $.ajax({
             url: "/api/shadow/"+deviceId,
             type: "GET",
@@ -220,7 +243,7 @@ $(function () {
             success: function (result) {
 
                 var obj = JSON.parse(result);
-//                                                                             console.log(obj);
+                                                                            // console.log(obj);
 //                                                                             console.log(obj.responce_msg.services)
                 var services = obj.responce_msg.services;
                 var serviceNames = [];
@@ -409,20 +432,3 @@ $(function () {
 //     });
 // });
 
-// 创建设备必填限制
-$('#createDeviceForm').validate({
-    rules: {
-        deviceName: {required: true},
-        bigType: {required: true},
-        manufacture: {required: true},
-        specificType: {required: true},
-        deviceModel: {required: true}
-    },
-    messages: {
-        deviceName: {required: '设备名称不能为空'},
-        bigType: {required: '设备大类型不能为空'},
-        manufacture: {required: '必须为设备选择一个厂商'},
-        specificType: {required: '必须为设备选择具体类型'},
-        deviceModel: {required: "必须为设备选择型号"}
-    }
-});
