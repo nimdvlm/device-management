@@ -21,7 +21,7 @@ public class WebGis3DController extends DefaultThingsboardAwaredController {
 
     @RequestMapping(value = "/all3Ddevices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    private String getthreeDdevices() {
+    private String get3Ddevices() {
         String requestAddr = "/api/tenant/devices?limit=20";
 
         String responseContent = null;
@@ -55,6 +55,8 @@ public class WebGis3DController extends DefaultThingsboardAwaredController {
         }
         return retSuccess(responseContent) ;
     }
+
+    //@RequestMapping(value = "/")
 }
 
 
