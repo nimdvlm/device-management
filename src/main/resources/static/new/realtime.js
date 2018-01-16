@@ -2,11 +2,25 @@
 // var ws = new WebSocket("ws://www.baidu.com");
 var ws ;
 //jQuery的ready事件，表示DOM加载后执行ready中的函数（此处为function（））
-$(document).ready(function(){
+//$(document).ready(function(){
     var xdata;
-    var ydata;
+    var ydata=[];
+    var key=[];
     var token;
     var url = '';
+
+$.ajax({
+    url: "/api/data/getKeyData/9b829350-d026-11e7-a71a-974188b66f66",
+    type: "GET",
+    dataType: "text",
+    success: function (data){
+        var name=data.replace(/\[|]/g,"");
+        name=name.replace(/\"/g,"");
+        var nameuse=name.split(",");
+        chart(nameuse);
+    }
+});
+
     $.ajax({
         url: "/api/Token/getToken",
         type: "GET",
@@ -45,7 +59,7 @@ $(document).ready(function(){
     function listenWs(ws) {
         ws.onopen = function(e) {
             log("Connected");
-            sendMessage('{"tsSubCmds":[{"entityType":"DEVICE","entityId":"9b8b45e0-d026-11e7-a71a-974188b66f66","scope":"LATEST_TELEMETRY","cmdId":2}],"historyCmds":[],"attrSubCmds":[{"entityType":"DEVICE","entityId":"9b8b45e0-d026-11e7-a71a-974188b66f66","scope":"CLIENT_SCOPE","cmdId":1}]}')
+            sendMessage('{"tsSubCmds":[{"entityType":"DEVICE","entityId":"9b829350-d026-11e7-a71a-974188b66f66","scope":"LATEST_TELEMETRY","cmdId":2}],"historyCmds":[],"attrSubCmds":[{"entityType":"DEVICE","entityId":"9b829350-d026-11e7-a71a-974188b66f66","scope":"CLIENT_SCOPE","cmdId":1}]}')
             //前端获取的entityID需要给后台，以获取对应设备ID的相关信息
             //sendMessage('{"tsSubCmds":[{"entityType":"DEVICE","entityId":"9b944690-d026-11e7-a71a-974188b66f66","scope":"LATEST_TELEMETRY","cmdId":2}],"historyCmds":[],"attrSubCmds":[{"entityType":"DEVICE","entityId":"9b944690-d026-11e7-a71a-974188b66f66","scope":"CLIENT_SCOPE","cmdId":1}]}')
         }
@@ -63,27 +77,68 @@ $(document).ready(function(){
             log("Message received: " + e.data);
             // console.log("e.data值："+e.data);
             var temp = JSON.parse(e.data);//将字符串转为json
-            var key;
-            var value=new Array();
+            var time
+            var value=[];
 
             for(var i in temp.data)
             {
                 var j=0;
-                key=i;
-                value = temp.data[i];
-                j++;
+                for(j=0;j<key.length;j++)
+                {
+                    if(key[j]==i)
+                    {
+                        value=temp.data[i];
+                        ydata[j]=value[0][1];
+
+                        log("1"+key[j]+"/"+j+"/"+ydata[j]);
+                        break;
+                    }
+                }
+
+                if(j==key.length
+                    && i!="attribid"
+                    && i!="clusterid"
+                    && i!="deviceid"
+                    && i!="devicename"
+                    && i!="devicesnid"
+                    && i!="devicestatus"
+                    && i!="devicestate"
+                    && i!="hascolourable"
+                    && i!="hasdimmable"
+                    && i!="hasoutcolor"
+                    && i!="hasoutgroup"
+                    && i!="hasoutlevel"
+                    && i!="hasoutscene"
+                    && i!="hasoutswitch"
+                    && i!="haspowerusage"
+                    && i!="hassensor"
+                    && i!="hasswitchable"
+                    && i!="hasthermometer"
+                    && i!="issmartplug"
+                    && i!="profileid"
+                    && i!="sensordata"
+                    && i!="type"
+                    && i!="uid"
+                    && i!="zonetype")
+                {
+                    key[j]=i;
+                    value = temp.data[i];
+                    ydata[j]=value[0][1];
+                    log("2"+key[j]+"/"+j+"/"+ydata[j])
+                }
             }
+
 
             //console.log(key);//从后台获取的数据
             // console.log(temp.data.data[0][0]);//横坐标值
             // console.log(temp.data.data[0][1]);//纵坐标值
 
-            var time = new Date(value[0][0]);//将时间戳new为Date对象
+            time = new Date(value[0][0]);//将时间戳new为Date对象
             console.log(time);
             var time0 = formatDate(time);//将时间戳转换为正常的时间格式
 
             xdata = time0;//横轴坐标值
-            ydata =value[0][1];
+            //ydata =value[0][1];
             //ydata = temp.data.data[0][1];//纵轴坐标值
             //console.log("time0:" + time0);
         }
@@ -114,127 +169,184 @@ $(document).ready(function(){
         return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
     }
 
-    <!--路径配置-->
-    require.config({
-        paths: {
-            echarts: 'http://echarts.baidu.com/build/dist'
-        }
+    function chart(data)
+    {
+        <!--路径配置-->
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
 
-    });
-    // 使用
+        });
+        // 使用
 
-    require
-    (
-        [
-            'echarts',
-            'echarts/chart/line'  // 使用柱状图就加载bar模块，按需加载
-        ],
-        function (ec) {
-            // 基于准备好的dom，初始化echarts图表
-            var myChart = ec.init(document.getElementById('main'));//??"main"+i
-            var option = {
+        require
+        (
+            [
+                'echarts',
+                'echarts/chart/line'  // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));//??"main"+i
 
-                tooltip: {
-                    trigger: 'axis'
-                },
-                legend: {
-                    data: ['实时数据']
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        mark: {show: true},
-                        dataView: {show: true, readOnly: false},
-                        magicType: {show: true, type: ['line']},
-                        restore: {show: true},
-                        saveAsImage: {show: true}
-                    }
-                },
-                dataZoom: {
-                    show: false,
-                    start: 0,
-                    end: 100
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        boundaryGap: true,
-                        data: (function () {
-                            var now = new Date();
-                            var res = [];
-                            var len = 10;
-                            while (len--) {
-                                res.unshift(now.toLocaleString("ja-JP").replace(/^\D*/, ''));
-                                now = new Date(now -2000);
+                var option = {
 
-                            }
-                            return ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*'];
-                        })()
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value',
-                        scale: true,
-                        name: 'data',
-                        boundaryGap: [0.2, 0.2]
+                    tooltip: {
+                        trigger: 'axis'
                     },
-
-                ],
-                series: [
-                    {
-
-                        data: (function () {
-                            var res = [];
-                            var len = 10;
-                            while (len--) {
-                                res.push(Math.round(Math.random() * 1000));
-
-
-                            }
-                            return res;
-                        })()
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            magicType: {show: true, type: ['line']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
                     },
-                    {
-                        name: '实时数据',
-                        type: 'line',
-                        data: (function () {
-                            var res = [];
-                            var len = 10;
-                            while (len--) {
-                                // res.push((Math.random()*10 + 5).toFixed(1) - 0);
-                                res.push(ydata);
-                            }
-                            return res;
-                        })()
+                    dataZoom: {
+                        show: false,
+                        start: 0,
+                        end: 100
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: true,
+                            data: (function () {
+                                var now = new Date();
+                                var res = [];
+                                var len = 10;
+                                while (len--) {
+                                    res.unshift(now.toLocaleString("ja-JP").replace(/^\D*/, ''));
+                                    now = new Date(now - 2000);
+
+                                }
+                                return ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*'];
+                            })()
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            scale: true,
+                            name: 'value',
+                            boundaryGap: [0.2, 0.2]
+                        },
+
+                    ],
+                    series: []
+                };
+
+                var item = [];
+                for(var i=0;i<data.length;i++)
+                {
+                    var things ={
+                        name: data[i],
+                        type
+                            :
+                            'line',
+                        data
+                            :
+                            (function () {
+                                var res = [];
+                                var len = 10;
+                                while (len--) {
+                                    // res.push((Math.random()*10 + 5).toFixed(1) - 0);
+                                    res.push(ydata[i]);
+                                }
+                                return res;
+                            })()
                     }
-                ]
-            };
-            ;
-            myChart.setOption(option);
+                    item.push(things);
+                }
 
-            var lastData = 1;
-            var axisData;
-            var timeTicket;
-            clearInterval(timeTicket);
-            timeTicket = setInterval(function () {
-                // lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
-                // lastData = lastData.toFixed(1) - 0;
-                //axisData = (new Date()).toLocaleTimeString("ja-JP").replace(/^\D*/,'');
+                var legend = {data: data};
+                option.legend = legend;
+                option.series = item;
+                console.log(option);
+                myChart.setOption(option);
 
-                // 动态数据接口 addData
-                myChart.addData([
+                var lastData = 1;
+                var axisData;
+                var timeTicket;
+                clearInterval(timeTicket);
+                timeTicket = setInterval(function () {
+                    // lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+                    // lastData = lastData.toFixed(1) - 0;
+                    //axisData = (new Date()).toLocaleTimeString("ja-JP").replace(/^\D,'');
 
-                    [
-                        1,        // 系列索引
-                        ydata, // 新增数据
-                        false,    // 新增数据是否从队列头部插入
-                        false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
-                        xdata  // 坐标轴标签
-                    ]
-                ]);
-            }, 2100);
-        }
-    );
+                    // 动态数据接口 addData
 
-});
+                    myChart.addData([
+
+                        [
+                            0,        // 系列索引
+                            ydata[0], // 新增数据
+                            false,    // 新增数据是否从队列头部插入
+                            false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                            xdata  // 坐标轴标签
+                        ]
+                    ]);
+                }, 2100);
+
+                timeTicket = setInterval(function () {
+                    // lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+                    // lastData = lastData.toFixed(1) - 0;
+                    //axisData = (new Date()).toLocaleTimeString("ja-JP").replace(/^\D,'');
+
+                    // 动态数据接口 addData
+                    myChart.addData([
+
+                        [
+                            1,        // 系列索引
+                            ydata[1], // 新增数据
+                            false,    // 新增数据是否从队列头部插入
+                            false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                            xdata  // 坐标轴标签
+                        ]
+                    ]);
+                }, 2100);
+
+                timeTicket = setInterval(function () {
+                    // lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+                    // lastData = lastData.toFixed(1) - 0;
+                    //axisData = (new Date()).toLocaleTimeString("ja-JP").replace(/^\D,'');
+
+                    // 动态数据接口 addData
+                    myChart.addData([
+
+                        [
+                            2,        // 系列索引
+                            ydata[2], // 新增数据
+                            false,    // 新增数据是否从队列头部插入
+                            false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                            xdata  // 坐标轴标签
+                        ]
+                    ]);
+                }, 2100);
+
+                timeTicket = setInterval(function () {
+                    // lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+                    // lastData = lastData.toFixed(1) - 0;
+                    //axisData = (new Date()).toLocaleTimeString("ja-JP").replace(/^\D,'');
+
+                    // 动态数据接口 addData
+                    myChart.addData([
+
+                        [
+                            3,        // 系列索引
+                            ydata[3], // 新增数据
+                            false,    // 新增数据是否从队列头部插入
+                            false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                            xdata  // 坐标轴标签
+                        ]
+                    ]);
+                }, 2100);
+            }
+        );
+    }
+
+
+//});
