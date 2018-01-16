@@ -21,7 +21,7 @@ public class WebGis3DController extends DefaultThingsboardAwaredController {
 
     @RequestMapping(value = "/all3Ddevices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    private String getthreeDdevices() {
+    private String get3Ddevices() {
         String requestAddr = "/api/tenant/devices?limit=20";
 
         String responseContent = null;
@@ -34,15 +34,15 @@ public class WebGis3DController extends DefaultThingsboardAwaredController {
         }
 
         try {
-            JsonArray threeDdeviceJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent);
-            return retSuccess(threeDdeviceJsonArr.toString());
+            JsonArray device3DJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent);
+            return retSuccess(device3DJsonArr.toString());
         } catch (Exception e) {
             return retFail(e.toString());
         }
     }
 
     @RequestMapping(value = "/device/{deviceId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    public String searchDevice(@PathVariable("deviceId") String dId){
+    public String getDevice(@PathVariable("deviceId") String dId){
         String requestAddr = String.format("/api/device/%s", dId);
 
         String responseContent = null ;
@@ -55,6 +55,38 @@ public class WebGis3DController extends DefaultThingsboardAwaredController {
         }
         return retSuccess(responseContent) ;
     }
+
+
+    @RequestMapping(value = "/search/{textSearch}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String searchDevices(@PathVariable String textSearch) {
+        String requestAddr = "/api/tenant/devices" ;
+
+        StringBuffer s = new StringBuffer();
+        s.append("textSearch=").append(textSearch).append("&").
+                append("limit").append("=").append("3");
+
+        requestAddr = requestAddr + "?" + s ;
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+        try {
+            JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
+            return retSuccess(deviceJsonArr.toString()) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+    }
+
+
 }
 
 

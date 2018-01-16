@@ -25,7 +25,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
     @RequestMapping(value = "/allDevices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    private String getDevices() {
+    public String getDevices() {
         String requestAddr = "/api/tenant/devices" ;
 
         StringBuffer param = new StringBuffer();

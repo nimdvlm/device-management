@@ -49,19 +49,25 @@ public class DataController extends DefaultThingsboardAwaredController{
         return retSuccess(responseHistoricalDataContent);
     }
 
-    @RequestMapping(value="/getAttribute/{deviceId}")
-    public String getAttributes(@PathVariable("deviceId") String deviceId)
-    {
-        String requestKeyAddr = "/api/plugins/telemetry/DEVICE/"+deviceId+"/keys/ATTRIBUTES";
+    @RequestMapping(value="/getKeyAttribute/{deviceId}")
+    public String getKeyAttributes(@PathVariable("deviceId") String deviceId) {
+        String requestKeyAddr = "/api/plugins/telemetry/DEVICE/" + deviceId + "/keys/ATTRIBUTES";
 
-        String responseKeyAttributeContent = null ;
+        String responseKeyAttributeContent = null;
         try {
             responseKeyAttributeContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestKeyAddr,
                     null,
                     request.getSession());
         } catch (Exception e) {
-            return retFail(e.toString()) ;
+            return retFail(e.toString());
         }
+        return retSuccess(responseKeyAttributeContent);
+    }
+
+    @RequestMapping(value="/getAttribute/{deviceId}")
+    public String getValueAttribute(@PathVariable("deviceId") String deviceId)
+    {
+        String responseKeyAttributeContent=getKeyAttributes(deviceId);
 
         responseKeyAttributeContent=responseKeyAttributeContent.replaceAll("[\\[\\]]","");
         responseKeyAttributeContent=responseKeyAttributeContent.replaceAll("\"","");
