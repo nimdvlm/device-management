@@ -14,20 +14,25 @@ import cn.edu.bupt.utils.HttpUtil;
 @RequestMapping("/api/data")
 public class DataController extends DefaultThingsboardAwaredController{
 
-    @RequestMapping(value="/getHistoricalData/{deviceId}/{startTime}/{endTime}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
-    public String getHistoricalData(@PathVariable("deviceId") String deviceId, @PathVariable("startTime") String startTime, @PathVariable("endTime") String endTime)
-    {
-        String requestKeyAddr = "/api/plugins/telemetry/DEVICE/"+deviceId+"/keys/TIMESERIES";
+    @RequestMapping(value="/getKeyData/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    public String getKeyData(@PathVariable("deviceId") String deviceId) {
+        String requestKeyAddr = "/api/plugins/telemetry/DEVICE/" + deviceId + "/keys/TIMESERIES";
 
-        String responseKeyContent = null ;
+        String responseKeyContent = null;
         try {
             responseKeyContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestKeyAddr,
                     null,
                     request.getSession());
         } catch (Exception e) {
-            return retFail(e.toString()) ;
+            return retFail(e.toString());
         }
+        return retSuccess(responseKeyContent);
+    }
 
+    @RequestMapping(value="/getHistoricalData/{deviceId}/{startTime}/{endTime}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    public String getHistoricalData(@PathVariable("deviceId") String deviceId,@PathVariable("startTime") String startTime,@PathVariable("endTime") String endTime)
+    {
+        String responseKeyContent=getKeyData(deviceId);
         responseKeyContent=responseKeyContent.replaceAll("[\\[\\]]","");
         responseKeyContent=responseKeyContent.replaceAll("\"","");
 
