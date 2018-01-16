@@ -1,21 +1,24 @@
 $(function () {
- /*   $('#123').click(function () {
-        $.ajax({
-            url: "/api/service/serviceTables",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            dataType: "text",
-            success: function (result) {
+    /*   $('#123').click(function () {
+           $.ajax({
+               url: "/api/service/serviceTables",
+               type: "GET",
+               contentType: "application/json;charset=utf-8",
+               dataType: "text",
+               success: function (result) {
 
-                console.log(result);
+                   console.log(result);
 
-            },
-            error: function (msg) {
-                alert(msg.message);
-            }
-        });
-    })*/
-
+               },
+               error: function (msg) {
+                   alert(msg.message);
+               }
+           });
+       })*/
+    var model1;
+    var manufacture1;
+    var deviceType1;
+    var serviceName1;
     $("#device_input").keyup(function () {
         $("#device_table tbody tr").hide()
             .filter(":contains('" + ($(this).val()) + "')").show();//filter和contains共同来实现了这个功能。
@@ -60,15 +63,18 @@ $(function () {
         columnDefs: [
             {
                 targets: 3,
+                width:"25%",
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-success create" style="cursor:pointer" data-toggle="modal" data-target="#creModal" name="' + model + '" id="' + deviceType + '" data="' + manufacture + '">' + '+创建服务' + '</a>'+'<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delSerModal" id="'+row.id+'">'+'删除'+'</a>';
+                    return '<a class="btn-sm btn-success create" style="cursor:pointer" data-toggle="modal" data-target="#creModal" name="' + model + '" id="' + deviceType + '" data="' + manufacture + '">' + '+创建服务' + '</a>'
+                        + '<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delSerModal" name="' + model + '" id="' + deviceType + '" data="' + manufacture + '">' + '删除' + '</a>';
                 }
             },
 
             {
                 targets: 2,
+                width:"25%",
                 data: null,
                 title: "设备型号",
                 render: function (data, type, row, meta) {
@@ -79,6 +85,7 @@ $(function () {
             },
             {
                 targets: 1,
+                width:"25%",
                 data: null,
                 title: "设备类型",
                 render: function (data, type, row, meta) {
@@ -88,6 +95,7 @@ $(function () {
             },
             {
                 targets: 0,
+                width:"25%",
                 data: null,
                 title: "厂商",
                 render: function (data, type, row, meta) {
@@ -103,12 +111,16 @@ $(function () {
     });
 //展示设备组
     $('#dataTables-example').on('click', 'tr .show', function () {
+        console.log("show1");
         var deviceType = $(this).attr('id');
+        deviceType1 = deviceType;
         var model = $(this).attr('name');
+        model1 = model;
         var manufacture = $(this).attr('data');
-        console.log(deviceType);
-        console.log(model);
-        console.log(manufacture);
+        manufacture1 = manufacture;
+        console.log(deviceType1);
+        console.log(model1);
+        console.log(manufacture1);
         if ($.fn.dataTable.isDataTable('#dataTables-show')) {
 //table.destroy();
             $('#dataTables-show').DataTable().destroy();
@@ -140,17 +152,19 @@ $(function () {
             //默认最后一列（最后更新时间）降序排列
             order: [[2, "desc"]],
             columnDefs: [
-           {
-               targets: 3,
-               data: "updated_at",
-               title: "操作",
-               render: function (data, type, row, meta) {
-                   return '<a class="btn-sm btn-danger delDev" data-toggle="modal" data-target="#delSerModal" style="cursor:pointer" id="'+row.id+'">'+'删除'+'</a>';
-               }
-           },
+                {
+                    targets: 3,
+                    width:"25%",
+                    data: "updated_at",
+                    title: "操作",
+                    render: function (data, type, row, meta) {
+                        return '<a class="btn-sm btn-danger delDev" data-toggle="modal" data-target="#delServiceModal" style="cursor:pointer" id="' + row.serviceName + '">' + '删除' + '</a>';
+                    }
+                },
 
                 {
                     targets: 2,
+                    width:"25%",
                     data: null,
                     title: "服务类型",
                     render: function (data, type, row, meta) {
@@ -159,6 +173,7 @@ $(function () {
                 },
                 {
                     targets: 1,
+                    width:"25%",
                     data: null,
                     title: "服务描述",
                     render: function (data, type, row, meta) {
@@ -167,6 +182,7 @@ $(function () {
                 },
                 {
                     targets: 0,
+                    width:"25%",
                     data: null,
                     title: "服务名称",
                     render: function (data, type, row, meta) {
@@ -188,7 +204,7 @@ $(function () {
     });
     $('#dataTables-example').on('click', 'tr .create', function () {
 //$("#param").empty();
-        console.log(7878)
+        console.log("create service");
         var manufacture = $(this).attr('data');
         var deviceType = $(this).attr('id');
         var model = $(this).attr('name');
@@ -272,25 +288,32 @@ $(function () {
     });
 //删除服务组里的服务
     $('#dataTables-show').on('click', 'tr .delDev', function () {
-        var deviceId = $(this).attr('id')
-        $('#devDel').val($(this).attr('id'))
-        console.log(deviceId)
+        //$('#devDel').val($(this).attr('id'));
+        serviceName1 = $(this).attr('id');
+        console.log(serviceName1);
+        console.log(deviceType1);
+        console.log(manufacture1);
+        console.log(model1);
     });
-    $('#devDelete').on('click', function () {
-        var devDelId = $('#devDel').val();
-        //var groupId = groupId;
-        //var groupId = $(this).attr('id');
+    $('#ServiceDelete').on('click', function () {
+        console.log(model1, manufacture1, deviceType1, serviceName1);
         $.ajax({
-            url: "/api/group/unassign/" + devDelId + "/" + deviceType,
-            type: "GET",
+            url: "/api/service/deleteServiceFromGroup/" ,
+            type: "POST",
             contentType: "application/json;charset=utf-8",
-            data: "",
+            data: JSON.stringify({
+                    "manufacture": manufacture1,
+                    "deviceType": deviceType1,
+                    "model": model1,
+                    "serivceName": serviceName1,
+                }
+            ),
             dataType: "text",
             success: function (result) {
-                var obj = JSON.parse(result);
-                console.log("success");
-                $('#delDevModal').modal('hide')
-                $('#lastDev').on('click', function () {
+                //var obj = JSON.parse(result);
+                console.log("delete service success");
+                $('#delServiceModal').modal('hide')
+                $('#lastService').on('click', function () {
                     window.location.href = "services";
                 });
             },
@@ -323,8 +346,8 @@ $(function () {
                     $('#mm').modal('hide');
                     alert("create success");
                     $('#lastCreate').on('click', function () {
-                         window.location.href = "services";
-                     });
+                        window.location.href = "services";
+                    });
                 },
                 error: function (msg) {
                     alert(msg.message);
@@ -344,26 +367,37 @@ $(function () {
         document.getElementById("createServiceGroup").reset();
     });
 
+    var manufacture2;
+    var deviceType2;
+    var model2;
+
 //删除服务组
     $('#dataTables-example').on('click', 'tr .del', function () {
-        console.log($(this).attr('id'))
-        $('#confirmDel').val($(this).attr('id'))
+        console.log('name:' + $(this).attr('data'));
+        console.log('id:' + $(this).attr('id'));
+        console.log('data:' + $(this).attr('name'));
+        manufacture2 = $(this).attr('data');
+        deviceType2 = $(this).attr('id');
+        model2 = $(this).attr('name');
+        //$('#confirmDel').val($(this).attr('id'));
     });
-    $('#confirmDelete').on('click', function () {
-        var serviceGroupId = $('#confirmDel').val();
-        console.log(serviceGroupId)
+    $('#SerDelete').on('click', function () {
         $.ajax({
-            url: "/api/group/delete/" + serviceGroupId,
-            type: "GET",
+            url: "/api/service/deleteGroup/" ,
+            type: "POST",
             contentType: "application/json;charset=utf-8",
-            data: "",
+            data: JSON.stringify({
+                    "manufacture": manufacture2,
+                    "deviceType": deviceType2,
+                    "model": model2,
+                }
+            ),
             dataType: "text",
             success: function (result) {
-                var obj = JSON.parse(result);
-                console.log("success");
-                $('#delModal').modal('hide');
-//                                          setTimeout('window.location.href = "device_group"',2000)
-                $('#last').on('click', function () {
+                //var obj = JSON.parse(result);
+                console.log("delete service group success");
+                $('#delSerModal').modal('hide')
+                $('#lastSer').on('click', function () {
                     window.location.href = "services";
                 });
             },
