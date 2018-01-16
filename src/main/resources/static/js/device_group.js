@@ -151,7 +151,7 @@ $(function () {
 //删除设备组里的设备
     $('#dataTables-show').on('click', 'tr .delDev', function () {
         var deviceId = $(this).attr('id')
-        $('#devDel').val($(this).attr('id'))
+       // $('#devDel').val($(this).attr('id'))
         console.log(deviceId)
     });
     $('#devDelete').on('click', function () {

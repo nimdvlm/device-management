@@ -224,28 +224,26 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
     </div>
 </div>
 
-<!--删除模态框-->
+<!--删除服务组模态框1-->
 <div class="modal fade" id="delSerModal" tabindex="-1" role="dialog" aria-labelledby="delSerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="delSerModalLabel">删除设备</h4>
+                <h4 class="modal-title" id="delSerModalLabel">删除服务组</h4>
             </div>
             <div class="modal-body">
                 <p>确认删除吗？</p>
                 <input type="hidden" id="SerDel" value=""/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delsSerModal"
-                        id="SerDelete">确认
-                </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delsSerModal" id="SerDelete">确认</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
             </div>
         </div>
     </div>
 </div>
-<!--删除模态框-->
+<!--删除服务组模态框2-->
 <div class="modal fade" id="delsSerModal" tabindex="-1" role="dialog" aria-labelledby="delSerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -263,6 +261,47 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
         </div>
     </div>
 </div>
+
+
+<!--删除服务模态框1-->
+<div class="modal fade" id="delServiceModal" tabindex="-1" role="dialog" aria-labelledby="delServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="delServiceModalLabel">删除服务</h4>
+            </div>
+            <div class="modal-body">
+                <p>确认删除吗？</p>
+                <input type="hidden" id="ServiceDel" value=""/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delsServiceModal" id="ServiceDelete">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--删除服务模态框2-->
+<div class="modal fade" id="delsServiceModal" tabindex="-1" role="dialog" aria-labelledby="delServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                <!--<h4 class="modal-title" id="myModalLabel">删除设备</h4>-->
+            </div>
+            <div class="modal-body">
+                <p>删除成功！</p>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-primary" id="delete" data-toggle="modal" data-target="#delsModal">确认</button>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="lastService">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->
 <script src="../static/js/jquery.min.js"></script>
