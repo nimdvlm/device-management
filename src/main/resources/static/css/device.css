@@ -16,6 +16,11 @@ label[class=error] {
     }
 }
 
+#device_attribute_table_wrapper {
+    width: 90%;
+    margin: 20px;
+}
+
 .deviceAttributeList {
     margin-left: 10px;
 }
