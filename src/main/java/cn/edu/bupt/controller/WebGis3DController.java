@@ -34,8 +34,8 @@ public class WebGis3DController extends DefaultThingsboardAwaredController {
         }
 
         try {
-            JsonArray threeDdeviceJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent);
-            return retSuccess(threeDdeviceJsonArr.toString());
+            JsonArray device3DJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent);
+            return retSuccess(device3DJsonArr.toString());
         } catch (Exception e) {
             return retFail(e.toString());
         }
