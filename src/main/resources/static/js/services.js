@@ -216,17 +216,38 @@ $(function () {
         $('#modelCre').val(model);
 
     });
+    $('#serviceType').on('change', function () {
+        var serviceType = $('#serviceType').val();
+        if(serviceType == 'platform'){
+            $('#hideDiv').css('display','block');
+        }else{
+            $('#hideDiv').css('display','none');
+            $('#protocol').val('');
+            $('#url').val('');
+
+        }
+        console.log("serviceType:"+serviceType)
+    })
     $('#confirmcre').on('click', function () {
         var manufacture = $('#manufactureCre').val();
+        console.log("manufacture:"+manufacture);
         var deviceType = $('#deviceTypeCre').val();
+        console.log("deviceType:"+deviceType);
         var model = $('#modelCre').val();
+        console.log("model:"+model);
         var serviceName = $('#serviceName').val();
+        console.log("serviceName:"+serviceName)
         var serviceDescription = $('#serviceDescription').val();
+        console.log("serviceDescription"+serviceDescription);
         var serviceType = $('#serviceType').val();
         var protocol = $('#protocol').val();
+        console.log("protocol:"+protocol);
         var url = $('#url').val();
+        console.log("url:"+url);
         var requireResponce = $('#requireResponce').val();
+        console.log("requireResponce:"+requireResponce);
         var methodName = $('#methodName').val();
+        console.log("methodName:"+methodName);
         var a = [];
         for (var i = 0; i < $('#param').find('input').length; i++) {
             var b = $('#param').find('input')[i].value;
@@ -258,7 +279,7 @@ $(function () {
                         {
                             "serviceName": serviceName,
                             "serviceDescription": serviceDescription,
-                            "serviceDescription": serviceDescription,
+                            //"serviceDescription": serviceDescription,
                             "serviceType": serviceType,
                             "protocol": protocol,
                             "url": url,
@@ -279,12 +300,11 @@ $(function () {
                 });
 //                         var obj = JSON.parse(result);
                 console.log("创建服务成功！");
-//                         window.location.href = "homepage";
             },
             error: function (msg) {
                 alert(msg.message);
             }
-        });
+        })
     });
 //删除服务组里的服务
     $('#dataTables-show').on('click', 'tr .delDev', function () {
@@ -305,7 +325,7 @@ $(function () {
                     "manufacture": manufacture1,
                     "deviceType": deviceType1,
                     "model": model1,
-                    "serivceName": serviceName1,
+                    "serviceName": serviceName1,
                 }
             ),
             dataType: "text",
@@ -339,22 +359,29 @@ $(function () {
                 data: JSON.stringify({'manufacture': manufacture, 'deviceType': deviceType, 'model': model}),
                 dataType: "text",
                 success: function (result) {
-                    alert('123')
+                    alert('123') ;
 //        var obj = JSON.parse(result);
                     console.log("success");
                     console.log(result);
-                    $('#mm').modal('hide');
+
                     alert("create success");
+
+                    $('#createSuc').modal('show');
+                    $('#mm').modal('hide');
+
                     $('#lastCreate').on('click', function () {
                         window.location.href = "services";
                     });
+
+                    alert("hello") ;
+
                 },
                 error: function (msg) {
                     alert(msg.message);
                 }
             });
             //创建成功提示
-            $('#createSuc').modal('show');
+
         }
     });
     $('#cancle').on('click', function () {
@@ -405,5 +432,5 @@ $(function () {
                 alert(msg.message);
             }
         });
-    })
-})
+    });
+});
