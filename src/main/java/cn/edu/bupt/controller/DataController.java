@@ -54,7 +54,7 @@ public class DataController extends DefaultThingsboardAwaredController{
         return retSuccess(responseHistoricalDataContent);
     }
 
-    @RequestMapping(value="/getKeyAttribute/{deviceId}")
+    @RequestMapping(value="/getKeyAttribute/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getKeyAttributes(@PathVariable("deviceId") String deviceId) {
         String requestKeyAddr = "/api/plugins/telemetry/DEVICE/" + deviceId + "/keys/ATTRIBUTES";
 
@@ -69,7 +69,7 @@ public class DataController extends DefaultThingsboardAwaredController{
         return retSuccess(responseKeyAttributeContent);
     }
 
-    @RequestMapping(value="/getAttribute/{deviceId}")
+    @RequestMapping(value="/getAttribute/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getValueAttribute(@PathVariable("deviceId") String deviceId)
     {
         String responseKeyAttributeContent=getKeyAttributes(deviceId);
