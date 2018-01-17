@@ -35,7 +35,7 @@ public class Swagger2 {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Device Manager后台的RESTful APIs")
-                .description("ヽ(ˋДˊ)ノ Day Day UP ！！！ ヽ(ˋ▽ˊ)ノ ")
+                .description("<hr / ><hr / >ヽ(ˋДˊ)ノ Day Day UP ！！！ ヽ(ˋ▽ˊ)ノ<hr / ><hr /> ヽ(ˋДˊ)ノ Day Day DOWN ！！！ ヽ(ˋ▽ˊ)ノ<img src='http://5b0988e595225.cdn.sohucs.com/images/20170818/5619328e9ab6496abc87e4eae6c0df59.jpeg' height=\"400\" width=\"400\"> <hr / ><hr / >")
                 .contact("bupt_815_iot")
                 .version("1.0")
                 .build();
