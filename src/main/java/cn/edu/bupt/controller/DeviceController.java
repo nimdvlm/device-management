@@ -137,7 +137,9 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         String requestAddr = "http://" + getServer() + "/api/"+parentDeviceId+"/devices?limit=5";
 
             try{
-                String responseContent = HttpUtil.sendDeletToThingsboard(requestAddr,request.getSession());
+                String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
+                        null,
+                        request.getSession());
                 return retSuccess(responseContent) ;
             }catch(Exception e){
                 return retFail(e.toString()) ;
