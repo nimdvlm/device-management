@@ -2,6 +2,7 @@ package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/api/Token")
 public class HttpController
 {
-    @RequestMapping("/getToken")
+    @RequestMapping(value = "/getToken", method = {RequestMethod.GET, RequestMethod.POST})
     public String getToken(HttpSession session)
     {
 
