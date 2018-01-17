@@ -6,6 +6,9 @@ import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +26,11 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
     public static final String DEVICE_ID = "deviceId";
 
+    /**
+     * 获取所有设备的信息
+     * @return
+     */
+    @ApiOperation(value="获取所有设备的信息", notes="获取所有设备的信息")
     @RequestMapping(value = "/allDevices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getDevices() {
@@ -56,6 +64,8 @@ public class DeviceController extends DefaultThingsboardAwaredController {
      * @param deviceId
      * @return
      */
+    @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken")
+    @ApiImplicitParam(name = "deviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/token/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getDeviceToken(@PathVariable String deviceId) {
@@ -72,7 +82,9 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         return retSuccess(token.toString());
     }
 
+    @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @ApiImplicitParam(name="deviceInfo", value = "设备信息", required = true)
     @ResponseBody
     public String createDevice(@RequestBody String deviceInfo) {
         String requestAddr = "/api/device" ;
@@ -122,7 +134,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
                 String credentialsId = jsonR.get("credentialsId").getAsString() ;
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("credentialsId", credentialsId);
-                return retSuccess(jsonObject.getAsString()) ;
+                return retSuccess(jsonObject.toString()) ;
             } catch (Exception e) {
                 return retFail(e.toString()) ;
             }
