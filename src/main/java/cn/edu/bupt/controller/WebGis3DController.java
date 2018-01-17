@@ -3,6 +3,8 @@ package cn.edu.bupt.controller;
 import cn.edu.bupt.controller.string2jsonDecode.DeviceInfoDecode;
 import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonArray;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,7 @@ public class WebGis3DController extends DefaultThingsboardAwaredController {
 
     public static final String DEVICE_ID = "deviceId";
 
+    @ApiOperation(value = "得到所有3D设备的信息", notes = "得到所有3D设备的信息")
     @RequestMapping(value = "/all3Ddevices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     private String get3Ddevices() {
@@ -41,6 +44,8 @@ public class WebGis3DController extends DefaultThingsboardAwaredController {
         }
     }
 
+    @ApiOperation(value = "根据设备ID获取设备信息", notes = "根据设备ID获取设备信息")
+    @ApiImplicitParam(name = "deviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/device/{deviceId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public String getDevice(@PathVariable("deviceId") String dId){
         String requestAddr = String.format("/api/device/%s", dId);
@@ -56,7 +61,8 @@ public class WebGis3DController extends DefaultThingsboardAwaredController {
         return retSuccess(responseContent) ;
     }
 
-
+    @ApiOperation(value = "根据关键字查询设备信息", notes = "根据关键字查询设备信息")
+    @ApiImplicitParam(name = "textSearch", value = "搜索域", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/search/{textSearch}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String searchDevices(@PathVariable String textSearch) {

@@ -64,9 +64,4 @@ public class GisController {
 //        System.out.println(responce);
         return "rpc cpmmd send ok";
     }
-
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(App.class, args);
-    }
-
 }

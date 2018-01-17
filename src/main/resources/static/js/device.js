@@ -189,26 +189,7 @@ $(function () {
         }
     });
 
-    // $('#add_device_btn').click(function() {
-    //     alert("add device");
-    //     $.ajax({
-    //         url: "/api/service/manufactures/",
-    //         type: "GET",
-    //         contentType: "application/json;charset=utf-8",
-    //         data: "",
-    //         dataType: "text",
-    //         success: function (result) {
-    //             console.log(result);
-    //             var obj = JSON.parse(result);
-    //             console.log(obj);
-    //             $('#manufacture').options.length = 0;
-    //         },
-    //         error: function(msg) {
-    //             alert(msg.message);
-    //         }
-    //     });
-    // });
-
+    // 创建设备表单验证提交设置
     $.validator.setDefaults({
         submitHandler: function(){
             var name = $('#name').val();
@@ -370,6 +351,26 @@ $(function () {
                     "pageLength": 5,
                     "lengthMenu": [5, 10, 15, 20],
                     "autoWidth": false,
+                    "language": {
+                        "sProcessing":   "处理中...",
+                        "sLengthMenu":   "显示 _MENU_ 项结果",
+                        "sZeroRecords":  "没有匹配结果",
+                        "sInfo":         "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                        "sInfoEmpty":    "显示第 0 至 0 项结果，共 0 项",
+                        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                        "sInfoPostFix":  "",
+                        "sSearch":       "搜索:",
+                        "sUrl":          "",
+                        "sEmptyTable":     "表中数据为空",
+                        "sLoadingRecords": "载入中...",
+                        "sInfoThousands":  ",",
+                        "oPaginate": {
+                            "sFirst":    "首页",
+                            "sPrevious": "上页",
+                            "sNext":     "下页",
+                            "sLast":     "末页"
+                        },
+                    },
                     "data": obj,
                     "columns": [
                         {
@@ -474,149 +475,76 @@ $(function () {
             }
         });
 
-//         $.ajax({
-//             url: "/api/shadow/"+deviceId,
-//             type: "GET",
-//             contentType: "application/json;charset=utf-8",
-// //                                                                         data: JSON.stringify({'username': deviceId}),
-//             dataType: "text",
-//             success: function (result) {
-//
-//                 var obj = JSON.parse(result);
-//                                                                             // console.log(obj);
-// //                                                                             console.log(obj.responce_msg.services)
-//                 var services = obj.responce_msg.services;
-//                 var serviceNames = [];
-//                 for (x in services){
-//                     var divs = document.createElement("div");
-// //                                                                             divs.setAttribute('id',services[x].serviceName)
-//                     $('#ctrDevice').append(divs);
-//                     var label5 = document.createElement("label");
-//                     label5.innerText = services[x].serviceName;
-//                     divs.append(label5)
-//                     serviceNames.push(services[x].serviceName);
-//
-//                     var input = document.createElement("input");
-//                     var data = document.createElement("input");
-//                     var submit = document.createElement("input");
-//                     var label = document.createElement("label");
-//                     submit.setAttribute('type','button');
-//                     submit.value = '确定';
-//                     data.setAttribute('type','number');
-// //                                                                             var input = document.createElement('input');
-// //                                                                             input.setAttribute('type','checkbox');
-// //                                                                             div.appendChild(input);
-// //                                                                             document.getElementById('ctrDevice').appendChild(image);
-// //                                                                             console.log(document.getElementById('ctrDevice'))
-// //
-// //                                                                             console.log(services[x].serviceBody.params)
-//                     for(y in services[x].serviceBody.params){
-//                         var serv = services[x].serviceBody.params[y].split("=");
-// //                                                                                console.log(y);
-// //                                                                                console.log(serv);
-//
-//                         var input = document.createElement("input");
-//                         var label = document.createElement("label");
-//                         var image = document.createElement("img");
-//                         image.setAttribute('src','../img/off.png');
-//                         image.setAttribute("on",serv[1]);
-//                         image.setAttribute("off",serv[2]);
-//                         image.onclick = images;
-//                         function images(){
-//                             if(this.getAttribute('src') == '../img/off.png'){
-//                                 this.setAttribute('src','../img/on.png');
-//                             }else{
-//                                 this.setAttribute('src','../img/off.png');
-//                             }
-//                         }
-//                         if(serv[0] == '1'){
-//
-//                             input.value = serv[1];
-//                             label.innerText = y;
-// //                                                                                alert('label')
-//                             console.log(label)
-//                             divs.append(label);
-//                             divs.append(input);
-//                         }
-//                         if(serv[0] == '2'){
-//                             label.innerText = y;
-//                             console.log(label)
-//                             divs.append(label);
-//                             divs.append(image);
-//
-//                         }
-//                         if(serv[0] == '3'){
-//                             label.innerText = y;
-//                             console.log(label)
-//                             divs.append(label);
-//                             divs.append(data);
-//                         }
-//                         divs.append(submit);
-//
-//                     }
-//                     submit.onclick = submits;
-//                     function submits(){
-//                         var subChildren = this.parentNode.childNodes;
-//                         var diction = [];
-//                         for(var i=0; i<subChildren.length-1;){
-//                             if(i==0){
-//                                 diction['serviceName'] = subChildren[i].innerHTML;
-//
-//                                 console.log('serviceName -->'+subChildren[i].innerHTML);
-//                                 i++
-//                             }else{
-//                                 if(subChildren[i+1] instanceof HTMLInputElement){
-//                                     diction[subChildren[i].innerHTML] = subChildren[i+1].value;
-//                                     console.log(subChildren[i].innerHTML+"-->"+subChildren[i+1].value);
-//
-//                                 }else{
-//                                     if(subChildren[i+1].getAttribute('src').indexOf('on')>=0){
-//                                         diction[subChildren[i].innerHTML] = subChildren[i+1].getAttribute('on');
-//                                     }else{
-//                                         diction[subChildren[i].innerHTML] = subChildren[i+1].getAttribute('off');
-//                                     }
-//                                     console.log(subChildren[i].innerHTML+"-->"+subChildren[i+1].getAttribute('src'));
-//                                 }
-//                                 //diction(subChildren[i]) = subChildren[i+1]
-//                                 // console.log(subChildren[i]+"-->"+subChildren[i+1]);
-//                                 i=i+2;
-//                             }
-//
-//                         }
-//
-//                         var s = '{';
-//                         for(key in diction){
-//                             s += '"'+key+'":"'+diction[key]+'",'
-//                         }
-//                         s = s.slice(0,s.length-1)
-//                         s += '}'
-//                         $.ajax({
-//                             url: "/api/shadow/control/"+deviceId,
-//                             type: "POST",
-//                             contentType: "application/json;charset=utf-8",
-//                             data:  s,
-//                             dataType: "text",
-//                             success: function (result) {
-//                                 var obj = JSON.parse(result);
-//                                 console.log("success");
-//                                 window.location.href = "homepage";
-//                             },
-//                             error: function (msg) {
-//                                 alert(msg.message);
-//                             }
-//                         });
-//
-//                     }
-//                 }
-//
-//
-// //                                                                             console.log(serviceNames);
-// //                                                                             window.location.href = "homepage";
-//             },
-//             error: function (msg) {
-//                 alert(msg.message);
-//             }
-//         });
+        // 详情页控制栏
+        $.ajax({
+            url: "/api/shadow/" + deviceId,
+            type: "GET",
+            contentType: "application/json:charset=utf-8",
+            data: "",
+            dataType: "text",
+            success: function(result) {
+                var obj = JSON.parse(result);
+                // console.log(obj);
+                var services = obj.services;
+                console.log(services);
+                var serviceName = [];
+                $('#control_panel').empty();
+                for (var i = 0; i < services.length; i++) {
+                    serviceName[i] = services[i].serviceName;
+                    $('#control_panel').append('<div class="col-xs-10 col-sm-6 col-md-4 service-panel"><form id="service-control-form"><fieldset id="' + serviceName[i] + '"><legend class="service-control-legend">' + serviceName[i] + '</legend></fieldset></form></div>');
+                    var params = services[i].serviceBody.params;
+                    console.log(params);
+                    for (var j in params) {
+                        // console.log(params[j]);
+                        // console.log(params.params[j]);
+                        var paramType = params[j].split("=");
+                        // console.log(paramType);
+                        if (paramType[0] === '1') {
+                            var paramName = j;
+                            // console.log(paramName);
+                            var inputValue = paramType[1];
+                            // console.log(inputValue);
+                            $('#' + serviceName[i]).append('<div class="form-group"><label class="col-sm-3 control-label" for="param' + j + '" style="text-align: left;">' + paramName + '</label><div class="col-sm-9"><input type="text" class="form-control" id="param' + j + '" name="" value="' + inputValue +'"/></div></div>');
+                        }
+                        if (paramType[0] === '2') {
+                            var paramName = j;
+                            var leftStatus = paramType[1];
+                            var rightStatus = paramType[2];
+                            var curStatus = rightStatus;
+
+                            $('#' + serviceName[i]).append('<div class="form-group"><label class="col-sm-3 control-label" for="' + paramName + '" style="text-align: left;">' + paramName +  '</label><div class="col-sm-9"><image src="../img/off.png" id="' + paramName + '" onclick="changeImg(this.id)" style="cursor: pointer; width: 80px; height: 30px; margin: 0 10px;"></image></div></div>');
+                            var img = document.getElementById(paramName);
+                            img.setAttribute('on', leftStatus);
+                            img.setAttribute('off', rightStatus);
+                        }
+                        if (paramType[0] === '3') {
+                            var paramName = j;
+                            var lowerBound = paramType[1];
+                            var upperBound = paramType[2];
+                            $('#' + serviceName[i]).append('<div class="form-group"><label class="col-sm-3 control-label" for="param' + j + '" style="text-align: left;">' + paramName + '</label><div class="col-sm-9"><input type="number" class="form-control range-input" id="param' + j + '" name="rangeInput" min="' + lowerBound + '" max="' + upperBound + '" value="' + lowerBound +'" step="10"/><a>(' + lowerBound + '-' + upperBound + ')</a></div></div>');
+
+                            // $('.range-input').change(function() {
+                            //     // alert("change");
+                            //
+                            //     $('#service-control-form').validate({
+                            //         rules: {
+                            //             rangeInput: {min: lowerBound, max: upperBound, digits: true}
+                            //         },
+                            //         messages: {
+                            //             rangeInput: {min: '请输入正确范围内的值', max: '请输入正确范围内的值', digits: '请输入正确范围内的值'}
+                            //         }
+                            //     });
+                            // });
+                        }
+                    }
+                    var ddd =1;
+                    $('#' + serviceName[i]).append('<div class="form-group"><button id="' + deviceId + '" type="button" class="btn btn-primary" onclick="submits(this.parentNode.parentNode,this.id)">确认</button></div>');
+                }
+            },
+            error: function(msg) {
+                alert(msg.message);
+            }
+        });
 
         // 关闭详情页时清除表格
         $('#detail').on('click',function(){
@@ -634,57 +562,6 @@ $(function () {
     } );
 
 });
-
-// $(document).ready(function() {
-//     // validate form 表单验证
-//     console.log("start form validation");
-//     $('#createDeviceForm').bootstrapValidator({
-//         message: 'This value is not valid',
-//         feedbackIcons: {
-//             valid: 'glyphicon glyphicon-ok',
-//             invalid: 'glyphicon glyphicon-remove',
-//             validating: 'glyphicon glyphicon-refresh'
-//         },
-//         fields: {
-//             deviceName: {
-//                 message: 'The device name is not valid',
-//                 validators: {
-//                     notEmpty: {
-//                         message: '设备名称不能为空',
-//                     }
-//                 }
-//             },
-//             bigType: {
-//                 validators: {
-//                     notEmpty: {
-//                         message: '设备大类型不能为空'
-//                     }
-//                 }
-//             },
-//             manufacture: {
-//                 validators: {
-//                     notEmpty: {
-//                         message: '必须为设备选择一个厂商'
-//                     }
-//                 }
-//             },
-//             specificType: {
-//                 validators: {
-//                     notEmpty: {
-//                         message: '必须为设备选择具体类型'
-//                     }
-//                 }
-//             },
-//             deviceModel: {
-//                 validators: {
-//                     notEmpty: {
-//                         message: '必须为设备选择型号'
-//                     }
-//                 }
-//             }
-//         }
-//     });
-// });
 
 // 用于将时间戳转换为时间 xxxx-xx-xx xx:xx:xx*/
 function formatDate(now) {
@@ -707,4 +584,74 @@ function inArray(value, array) {
         }
     }
     return false;
+}
+
+// 改变on/off开关图片
+function changeImg(index) {
+    // console.log(index);
+    if($('#' + index).attr('src') === '../img/off.png'){
+        console.log("off->on");
+        $('#' + index).attr('src','../img/on.png');
+    }else{
+        $('#' + index).attr('src','../img/off.png');
+        console.log("on->off");
+    }
+}
+
+// 提交单个服务的表单
+function submits(fieldSet, deviceId) {
+    // console.log(fieldSet);
+    console.log(deviceId);
+    var serviceName = fieldSet.id;
+    // console.log(serviceName);
+    var children = fieldSet.childNodes;
+    var keys = [];
+    var values = [];
+    keys.push("serviceName");
+    values.push(serviceName);
+    // console.log(children);
+    for (var i = 1; i < children.length-1; i++) {
+        var param = children[i].childNodes;
+        console.log(param);
+        // console.log(param[0].textContent);
+        keys.push(param[0].textContent);
+        // console.log(param[1].childNodes[0].value);
+        if (param[1].childNodes[0] instanceof HTMLInputElement) {
+            values.push(param[1].childNodes[0].value);
+        }
+        else {
+            console.log(param[1].childNodes[0].getAttribute('on'));
+
+            if (param[1].childNodes[0].src.indexOf('on') >= 0 ) {
+                values.push(param[1].childNodes[0].getAttribute('on'));
+            }
+            else {
+                values.push(param[1].childNodes[0].getAttribute('off'));
+            }
+        }
+    }
+
+    var json = '{';
+    for (var j = 0; j < keys.length; j++) {
+        json += '"' + keys[j] +'":"' + values[j] + '",';
+    }
+    json = json.slice(0,json.length-1);
+    json += '}';
+
+    $.ajax({
+        url: "/api/shadow/control/"+deviceId,
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        data:  json,
+        dataType: "text",
+        success: function (result) {
+            // var obj = JSON.parse(result);
+            console.log(deviceId);
+            console.log("success");
+            // window.location.href = "homepage";
+        },
+        error: function (msg) {
+            alert(msg.message);
+        }
+    });
 }

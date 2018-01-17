@@ -38,3 +38,17 @@ label[class=error] {
     width: 90%;
     margin: 0 20px 10px 20px;
 }
+
+.service-panel {
+
+}
+
+/*.service-control-legend {*/
+    /*display: block;*/
+    /*-webkit-padding-start: 2px;*/
+    /*-webkit-padding-end: 2px;*/
+    /*border-width: initial;*/
+    /*border-style: none;*/
+    /*border-color: initial;*/
+    /*border-image: initial;*/
+/*}*/
