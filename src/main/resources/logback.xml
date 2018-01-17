@@ -19,6 +19,7 @@
 <!DOCTYPE configuration>
 <configuration>
 
+    <!-- 装载一个输出器(标准输出流|输出格式) -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n</pattern>
