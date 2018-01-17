@@ -93,9 +93,121 @@ $(function () {
             }
         ],
         initComplete:function(){
-            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" data-toggle="modal" data-target="#createDeviceModal">+ 创建设备</button>');
+            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" id="add_device_btn" data-toggle="modal" data-target="#createDeviceModal">+ 创建设备</button>');
         }
     });
+
+    // 获取厂商列表
+    $.ajax({
+        url: "/api/service/manufactures/",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        data: "",
+        dataType: "text",
+        success: function (result) {
+            // var obj = JSON.parse(result);
+            console.log(result);
+            var temp = "";
+            for (var j = 1; j < result.length - 1; j++) {
+                temp += result[j];
+            }
+            console.log(temp);
+            var arr = temp.split(', ');
+            $('#manufacture').empty();
+            $('#manufacture').append('<option value="">--请选择厂商</option>');
+            $('#deviceType').empty();
+            $('#deviceType').append('<option value="">--请选择设备类型</option>');
+            $('#model').empty();
+            $('#model').append('<option value="">--请选择设备型号</option>');
+            for (var i = 0; i < arr.length; i++) {
+                $('#manufacture').append('<option value = "' + arr[i] + '">' + arr[i] + '</option>');
+            }
+        },
+        error: function(msg) {
+            alert(msg.message);
+        }
+    });
+
+    $('#manufacture').change(function() {
+        // 获取设备类型列表
+        if ($('#manufacture option:selected').val() !== ""){
+            $.ajax({
+                url: "/api/service/" + $('#manufacture option:selected').val() + "/deviceTypes/",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                data: "",
+                dataType: "text",
+                success: function(result) {
+                    // var obj = JSON.parse(result);
+                    console.log(result);
+                    var temp = "";
+                    for (var j = 1; j < result.length - 1; j++) {
+                        temp += result[j];
+                    }
+                    var arr = temp.split(', ');
+                    $('#deviceType').empty();
+                    $('#deviceType').append('<option value="">--请选择设备类型</option>');
+                    for (var i = 0; i < arr.length; i++) {
+                        $('#deviceType').append('<option value = "' + arr[i] + '">' + arr[i] + '</option>');
+                    }
+                },
+                error: function(msg) {
+                    alert(msg.message);
+                }
+            });
+        }
+    });
+
+    $('#deviceType').change(function() {
+        // 获取设备型号列表
+        console.log($('#deviceType option:selected').val());
+        if ($('#deviceType option:selected').val() !== "") {
+            $.ajax({
+                url: "/api/service/" + $('#manufacture option:selected').val() + '/' + $('#deviceType option:selected').val() + "/models/",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                data: "",
+                dataType: "text",
+                success: function(result) {
+                    // var obj = JSON.parse(result);
+                    console.log(result);
+                    var temp = "";
+                    for (var j = 1; j < result.length - 1; j++) {
+                        temp += result[j];
+                    }
+                    var arr = temp.split(', ');
+                    $('#model').empty();
+                    $('#model').append('<option value="">--请选择设备型号</option>');
+                    for (var i = 0; i < arr.length; i++) {
+                        $('#model').append('<option value = "' + arr[i] + '">' + arr[i] + '</option>');
+                    }
+                },
+                error: function(msg) {
+                    alert(msg.message);
+                }
+            });
+        }
+    });
+
+    // $('#add_device_btn').click(function() {
+    //     alert("add device");
+    //     $.ajax({
+    //         url: "/api/service/manufactures/",
+    //         type: "GET",
+    //         contentType: "application/json;charset=utf-8",
+    //         data: "",
+    //         dataType: "text",
+    //         success: function (result) {
+    //             console.log(result);
+    //             var obj = JSON.parse(result);
+    //             console.log(obj);
+    //             $('#manufacture').options.length = 0;
+    //         },
+    //         error: function(msg) {
+    //             alert(msg.message);
+    //         }
+    //     });
+    // });
 
     $.validator.setDefaults({
         submitHandler: function(){
@@ -294,7 +406,6 @@ $(function () {
             dataType: "text",
             success: function(result) {
                 var keys = [];
-                console.log(keys);
                 var token = result;
                 var addr = '10.108.217.227';
                 var port = '8080';
@@ -322,32 +433,26 @@ $(function () {
                         log("message received: " + e.data);
                         // 将收到的数据转换成JSON格式
                         var message = JSON.parse(e.data);
-                        console.log(message);
+                        // console.log(message);
                         for(var i in message.data) {
                             var key = i;
-                            console.log(message.data);
-                            console.log(message.data[i][0][0]);
                             var telemetryDate = formatDate(new Date(message.data[i][0][0]));
-                            console.log(message.data[i][0][1]);
                             var telemetryValue = message.data[i][0][1];
-                            console.log(telemetryDate + " " + key + " " + telemetryValue);
                             // 是之前出现过的key，则刷新原来的行
-                            console.log(keys);
+                            // console.log(keys);
                             if (inArray(key, keys)) {
+                                // 遍历table
                                 $('#realtime_data_table tr').each(function(trindex) {
                                    var tableKey = $(this).children('td').eq(1).text();
-                                   console.log(tableKey);
                                    if (tableKey === key){
                                        $(this).children('td').eq(0).text(telemetryDate);
                                        $(this).children('td').eq(2).text(telemetryValue);
                                    }
                                 });
-                                $('#realtime_data_table ').each(function() {
-                                })
                             }
                             // 是之前未出现过的key，则新加一行显示
                             else {
-                                console.log(keys);
+                                // console.log(keys);
                                 keys.push(key);
                                 $('#realtime_data_table').append('<tr><td>' + telemetryDate + '</td><td>' + key + '</td><td>' + telemetryValue + '</td></tr>');
                             }
@@ -363,6 +468,9 @@ $(function () {
                         ws.send(msg);
                         log("Message sent");
                     }
+            },
+            error: function(msg) {
+                alert(msg.message);
             }
         });
 

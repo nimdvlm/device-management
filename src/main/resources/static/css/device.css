@@ -21,9 +21,9 @@ label[class=error] {
     margin: 20px;
 }
 
-.deviceAttributeList {
-    margin-left: 10px;
-}
+/*.deviceAttributeList {*/
+    /*margin-left: 10px;*/
+/*}*/
 
 .attributeName {
     font-size: 13px;
