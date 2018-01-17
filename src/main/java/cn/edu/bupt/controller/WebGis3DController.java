@@ -64,7 +64,7 @@ public class WebGis3DController extends DefaultThingsboardAwaredController {
 
         StringBuffer s = new StringBuffer();
         s.append("textSearch=").append(textSearch).append("&").
-                append("limit").append("=").append("3");
+                append("limit").append("=").append("20");
 
         requestAddr = requestAddr + "?" + s ;
 
