@@ -56,7 +56,7 @@ public class DataController extends DefaultThingsboardAwaredController{
         return retSuccess(responseHistoricalDataContent);
     }
 
-    @RequestMapping(value="/getKeyAttribute/{deviceId}")
+    @RequestMapping(value="/getKeyAttribute/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getKeyAttributes(@PathVariable("deviceId") String deviceId) {
         String requestKeyAddr = "/api/plugins/telemetry/DEVICE/" + deviceId + "/keys/ATTRIBUTES";
 
@@ -73,7 +73,7 @@ public class DataController extends DefaultThingsboardAwaredController{
 
     @ApiOperation(value="test - tjl", notes="根据device的id来指定操作")
     @ApiImplicitParam(name = "deviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
-    @RequestMapping(value="/getAttribute/{deviceId}")
+    @RequestMapping(value="/getAttribute/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getValueAttribute(@PathVariable("deviceId") String deviceId)
     {
         String responseKeyAttributeContent=getKeyAttributes(deviceId);
