@@ -18,7 +18,7 @@ public class ResponceUtilImpl implements ResponceUtil{
 
     @Override
     public String onSuccess(JsonObject jsonObject) {
-        return this.onSuccess(jsonObject.getAsString()) ;
+        return this.onSuccess(jsonObject.toString()) ;
     }
 
     @Override
