@@ -78,13 +78,13 @@ $(function () {
         }
     });
 //展示设备组
+    var deciveId;
     $('#dataTables-example').on('click', 'tr .show', function () {
         groupId = $(this).attr('id');
-        console.log(groupId);
+        //console.log(groupId);
         if ($.fn.dataTable.isDataTable('#dataTables-show')) {
 //table.destroy();
             $('#dataTables-show').DataTable().destroy();
-            console.log('aa')
         }
         table = $('#dataTables-show').DataTable({
             "aLengthMenu": [5, 10, 25, 50, 100],
@@ -119,6 +119,7 @@ $(function () {
                     render: function (data, type, row, meta) {
                         return '<a class="btn-sm btn-danger delDev" data-toggle="modal" data-target="#delDevModal" id="' + row.deviceId + '">' + '删除' + '</a>';
                     }
+
                 },
 
                 {
@@ -149,15 +150,17 @@ $(function () {
         });
     });
 //删除设备组里的设备
+    var deviceId;
     $('#dataTables-show').on('click', 'tr .delDev', function () {
-        var groupId = $(this).attr('id');
+        //var groupId = $(this).attr('id');
+        deviceId = $(this).attr('id');
        // $('#devDel').val($(this).attr('id'))
-        console.log(groupId)
+        console.log(deviceId);
     });
     $('#devDelete').on('click', function () {
-        //var devDelId = $('#devDel').val();
-        var deviceId = $(this).attr('id')
-        console.log(deviceId)
+
+        //var deviceId = $(this).attr('id')
+        console.log(deviceId);
         $.ajax({
             url: "/api/group/unassign/" + deviceId + "/" + groupId,
             type: "GET",
