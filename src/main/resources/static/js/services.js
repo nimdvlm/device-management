@@ -222,6 +222,9 @@ $(function () {
             $('#hideDiv').css('display','block');
         }else{
             $('#hideDiv').css('display','none');
+            $('#protocol').val('');
+            $('#url').val('');
+
         }
         console.log("serviceType:"+serviceType)
     })
@@ -236,7 +239,7 @@ $(function () {
         console.log("serviceName:"+serviceName)
         var serviceDescription = $('#serviceDescription').val();
         console.log("serviceDescription"+serviceDescription);
-        //var serviceType = $('#serviceType').val();
+        var serviceType = $('#serviceType').val();
         var protocol = $('#protocol').val();
         console.log("protocol:"+protocol);
         var url = $('#url').val();
