@@ -9,7 +9,7 @@ $.ajax({
         //console.log(data);
         var temp = JSON.parse(data);
         var sel = document.getElementById("device");
-        for(var i=0;temp[i].name!=null;i++)
+        for(var i=0;temp[i]!=null;i++)
         {
             var option = new Option(temp[i].name,temp[i].deviceId);
             sel.options.add(option);
