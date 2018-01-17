@@ -93,9 +93,121 @@ $(function () {
             }
         ],
         initComplete:function(){
-            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" data-toggle="modal" data-target="#createDeviceModal">+ 创建设备</button>');
+            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" id="add_device_btn" data-toggle="modal" data-target="#createDeviceModal">+ 创建设备</button>');
         }
     });
+
+    // 获取厂商列表
+    $.ajax({
+        url: "/api/service/manufactures/",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        data: "",
+        dataType: "text",
+        success: function (result) {
+            // var obj = JSON.parse(result);
+            console.log(result);
+            var temp = "";
+            for (var j = 1; j < result.length - 1; j++) {
+                temp += result[j];
+            }
+            console.log(temp);
+            var arr = temp.split(', ');
+            $('#manufacture').empty();
+            $('#manufacture').append('<option value="">--请选择厂商</option>');
+            $('#deviceType').empty();
+            $('#deviceType').append('<option value="">--请选择设备类型</option>');
+            $('#model').empty();
+            $('#model').append('<option value="">--请选择设备型号</option>');
+            for (var i = 0; i < arr.length; i++) {
+                $('#manufacture').append('<option value = "' + arr[i] + '">' + arr[i] + '</option>');
+            }
+        },
+        error: function(msg) {
+            alert(msg.message);
+        }
+    });
+
+    $('#manufacture').change(function() {
+        // 获取设备类型列表
+        if ($('#manufacture option:selected').val() !== ""){
+            $.ajax({
+                url: "/api/service/" + $('#manufacture option:selected').val() + "/deviceTypes/",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                data: "",
+                dataType: "text",
+                success: function(result) {
+                    // var obj = JSON.parse(result);
+                    console.log(result);
+                    var temp = "";
+                    for (var j = 1; j < result.length - 1; j++) {
+                        temp += result[j];
+                    }
+                    var arr = temp.split(', ');
+                    $('#deviceType').empty();
+                    $('#deviceType').append('<option value="">--请选择设备类型</option>');
+                    for (var i = 0; i < arr.length; i++) {
+                        $('#deviceType').append('<option value = "' + arr[i] + '">' + arr[i] + '</option>');
+                    }
+                },
+                error: function(msg) {
+                    alert(msg.message);
+                }
+            });
+        }
+    });
+
+    $('#deviceType').change(function() {
+        // 获取设备型号列表
+        console.log($('#deviceType option:selected').val());
+        if ($('#deviceType option:selected').val() !== "") {
+            $.ajax({
+                url: "/api/service/" + $('#manufacture option:selected').val() + '/' + $('#deviceType option:selected').val() + "/models/",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                data: "",
+                dataType: "text",
+                success: function(result) {
+                    // var obj = JSON.parse(result);
+                    console.log(result);
+                    var temp = "";
+                    for (var j = 1; j < result.length - 1; j++) {
+                        temp += result[j];
+                    }
+                    var arr = temp.split(', ');
+                    $('#model').empty();
+                    $('#model').append('<option value="">--请选择设备型号</option>');
+                    for (var i = 0; i < arr.length; i++) {
+                        $('#model').append('<option value = "' + arr[i] + '">' + arr[i] + '</option>');
+                    }
+                },
+                error: function(msg) {
+                    alert(msg.message);
+                }
+            });
+        }
+    });
+
+    // $('#add_device_btn').click(function() {
+    //     alert("add device");
+    //     $.ajax({
+    //         url: "/api/service/manufactures/",
+    //         type: "GET",
+    //         contentType: "application/json;charset=utf-8",
+    //         data: "",
+    //         dataType: "text",
+    //         success: function (result) {
+    //             console.log(result);
+    //             var obj = JSON.parse(result);
+    //             console.log(obj);
+    //             $('#manufacture').options.length = 0;
+    //         },
+    //         error: function(msg) {
+    //             alert(msg.message);
+    //         }
+    //     });
+    // });
 
     $.validator.setDefaults({
         submitHandler: function(){
@@ -234,148 +346,290 @@ $(function () {
         var deviceId = $(this).attr('id');
         var ctrName = $(this).attr('name');
         $('#ctrName').text(ctrName);
+
+        // 详情页属性栏
         $.ajax({
-            url: "/api/shadow/"+deviceId,
+            url: "/api/data/getAttribute/" + deviceId,
             type: "GET",
             contentType: "application/json;charset=utf-8",
-//                                                                         data: JSON.stringify({'username': deviceId}),
+            data: "",
             dataType: "text",
-            success: function (result) {
-
+            success: function(result) {
                 var obj = JSON.parse(result);
-                                                                            // console.log(obj);
-//                                                                             console.log(obj.responce_msg.services)
-                var services = obj.responce_msg.services;
-                var serviceNames = [];
-                for (x in services){
-                    var divs = document.createElement("div");
-//                                                                             divs.setAttribute('id',services[x].serviceName)
-                    $('#ctrDevice').append(divs);
-                    var label5 = document.createElement("label");
-                    label5.innerText = services[x].serviceName;
-                    divs.append(label5)
-                    serviceNames.push(services[x].serviceName);
-
-                    var input = document.createElement("input");
-                    var data = document.createElement("input");
-                    var submit = document.createElement("input");
-                    var label = document.createElement("label");
-                    submit.setAttribute('type','button');
-                    submit.value = '确定';
-                    data.setAttribute('type','number');
-//                                                                             var input = document.createElement('input');
-//                                                                             input.setAttribute('type','checkbox');
-//                                                                             div.appendChild(input);
-//                                                                             document.getElementById('ctrDevice').appendChild(image);
-//                                                                             console.log(document.getElementById('ctrDevice'))
-//
-//                                                                             console.log(services[x].serviceBody.params)
-                    for(y in services[x].serviceBody.params){
-                        var serv = services[x].serviceBody.params[y].split("=");
-//                                                                                console.log(y);
-//                                                                                console.log(serv);
-
-                        var input = document.createElement("input");
-                        var label = document.createElement("label");
-                        var image = document.createElement("img");
-                        image.setAttribute('src','../img/off.png');
-                        image.setAttribute("on",serv[1]);
-                        image.setAttribute("off",serv[2]);
-                        image.onclick = images;
-                        function images(){
-                            if(this.getAttribute('src') == '../img/off.png'){
-                                this.setAttribute('src','../img/on.png');
-                            }else{
-                                this.setAttribute('src','../img/off.png');
-                            }
-                        }
-                        if(serv[0] == '1'){
-
-                            input.value = serv[1];
-                            label.innerText = y;
-//                                                                                alert('label')
-                            console.log(label)
-                            divs.append(label);
-                            divs.append(input);
-                        }
-                        if(serv[0] == '2'){
-                            label.innerText = y;
-                            console.log(label)
-                            divs.append(label);
-                            divs.append(image);
-
-                        }
-                        if(serv[0] == '3'){
-                            label.innerText = y;
-                            console.log(label)
-                            divs.append(label);
-                            divs.append(data);
-                        }
-                        divs.append(submit);
-
-                    }
-                    submit.onclick = submits;
-                    function submits(){
-                        var subChildren = this.parentNode.childNodes;
-                        var diction = [];
-                        for(var i=0; i<subChildren.length-1;){
-                            if(i==0){
-                                diction['serviceName'] = subChildren[i].innerHTML;
-
-                                console.log('serviceName -->'+subChildren[i].innerHTML);
-                                i++
-                            }else{
-                                if(subChildren[i+1] instanceof HTMLInputElement){
-                                    diction[subChildren[i].innerHTML] = subChildren[i+1].value;
-                                    console.log(subChildren[i].innerHTML+"-->"+subChildren[i+1].value);
-
-                                }else{
-                                    if(subChildren[i+1].getAttribute('src').indexOf('on')>=0){
-                                        diction[subChildren[i].innerHTML] = subChildren[i+1].getAttribute('on');
-                                    }else{
-                                        diction[subChildren[i].innerHTML] = subChildren[i+1].getAttribute('off');
-                                    }
-                                    console.log(subChildren[i].innerHTML+"-->"+subChildren[i+1].getAttribute('src'));
-                                }
-                                //diction(subChildren[i]) = subChildren[i+1]
-                                // console.log(subChildren[i]+"-->"+subChildren[i+1]);
-                                i=i+2;
-                            }
-
-                        }
-
-                        var s = '{';
-                        for(key in diction){
-                            s += '"'+key+'":"'+diction[key]+'",'
-                        }
-                        s = s.slice(0,s.length-1)
-                        s += '}'
-                        $.ajax({
-                            url: "/api/shadow/control/"+deviceId,
-                            type: "POST",
-                            contentType: "application/json;charset=utf-8",
-                            data:  s,
-                            dataType: "text",
-                            success: function (result) {
-                                var obj = JSON.parse(result);
-                                console.log("success");
-                                window.location.href = "homepage";
-                            },
-                            error: function (msg) {
-                                alert(msg.message);
-                            }
-                        });
-
-                    }
+                console.log(obj);
+                for (var i = 0; i < obj.length; i++) {
+                    $('.deviceAttributeList').append('<li class="col-xs-3 col-sm-3 col-md-3 attributeName">lastUpdateTime</li> ' + '<li class="col-xs-3 col-sm-3 col-md-3 attributeValue">' + obj[i].lastUpdateTs + '</li> '
+                         + '<li class="col-xs-3 col-sm-3 col-md-3 attributeName">' + obj[i].key + '</li>'
+                         + '<li class="col-xs-3 col-sm-3 col-md-3 attributeValue">' + obj[i].value + '</li>');
+                    var date = formatDate(new Date(obj[i].lastUpdateTs));
+                    obj[i].lastUpdateTs = date;
                 }
-
-
-//                                                                             console.log(serviceNames);
-//                                                                             window.location.href = "homepage";
+                $('#device_attribute_table').dataTable({
+                    "paging": true,
+                    "pagingType": "simple_numbers",
+                    "pageLength": 5,
+                    "lengthMenu": [5, 10, 15, 20],
+                    "autoWidth": false,
+                    "data": obj,
+                    "columns": [
+                        {
+                            "title": "最后更新时间",
+                            "data": "lastUpdateTs",
+                            "width": "30%"
+                        },
+                        {
+                            "title": "键",
+                            "data": "key",
+                            "orderable": true,
+                            "orderSequence": ["asc"],
+                            "width": "20%"
+                        },
+                        {
+                            "title": "值",
+                            "data": "value",
+                            "width": "50%"
+                        }
+                    ]
+                });
             },
             error: function (msg) {
                 alert(msg.message);
             }
+        });
+
+        // 详情页遥测数据栏
+        $.ajax({
+            url: "/api/Token/getToken/",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            data: "",
+            dataType: "text",
+            success: function(result) {
+                var keys = [];
+                var token = result;
+                var addr = '10.108.217.227';
+                var port = '8080';
+                var url = 'ws://' + addr + ':' + port + '/api/ws/plugins/telemetry?token=' + token;
+                var ws = new WebSocket(url);
+                // 打开Socket
+                    // Listen for the connection open event then call the sendMessage function
+                    ws.onopen = function(e) {
+                        log("Connected");
+                        sendMessage('{"tsSubCmds":[{"entityType":"DEVICE","entityId":"' + deviceId + '","scope":"LATEST_TELEMETRY","cmdId":2}],"historyCmds":[]}')
+                    };
+
+                    // Listen for the close connection event
+                    ws.onclose = function(e) {
+                        log("Disconnected: " + e.reason);
+                    };
+
+                    // Listen for connection errors
+                    ws.onerror = function(e) {
+                        log("Error ");
+                    };
+
+                    // Listen for messages arriving at the client
+                    ws.onmessage = function(e) {
+                        log("message received: " + e.data);
+                        // 将收到的数据转换成JSON格式
+                        var message = JSON.parse(e.data);
+                        // console.log(message);
+                        for(var i in message.data) {
+                            var key = i;
+                            var telemetryDate = formatDate(new Date(message.data[i][0][0]));
+                            var telemetryValue = message.data[i][0][1];
+                            // 是之前出现过的key，则刷新原来的行
+                            // console.log(keys);
+                            if (inArray(key, keys)) {
+                                // 遍历table
+                                $('#realtime_data_table tr').each(function(trindex) {
+                                   var tableKey = $(this).children('td').eq(1).text();
+                                   if (tableKey === key){
+                                       $(this).children('td').eq(0).text(telemetryDate);
+                                       $(this).children('td').eq(2).text(telemetryValue);
+                                   }
+                                });
+                            }
+                            // 是之前未出现过的key，则新加一行显示
+                            else {
+                                // console.log(keys);
+                                keys.push(key);
+                                $('#realtime_data_table').append('<tr><td>' + telemetryDate + '</td><td>' + key + '</td><td>' + telemetryValue + '</td></tr>');
+                            }
+                        }
+                    };
+
+                    function log(s) {
+                        // Also log information on the javascript console
+                        console.log(s);
+                    }
+
+                    function sendMessage(msg) {
+                        ws.send(msg);
+                        log("Message sent");
+                    }
+            },
+            error: function(msg) {
+                alert(msg.message);
+            }
+        });
+
+//         $.ajax({
+//             url: "/api/shadow/"+deviceId,
+//             type: "GET",
+//             contentType: "application/json;charset=utf-8",
+// //                                                                         data: JSON.stringify({'username': deviceId}),
+//             dataType: "text",
+//             success: function (result) {
+//
+//                 var obj = JSON.parse(result);
+//                                                                             // console.log(obj);
+// //                                                                             console.log(obj.responce_msg.services)
+//                 var services = obj.responce_msg.services;
+//                 var serviceNames = [];
+//                 for (x in services){
+//                     var divs = document.createElement("div");
+// //                                                                             divs.setAttribute('id',services[x].serviceName)
+//                     $('#ctrDevice').append(divs);
+//                     var label5 = document.createElement("label");
+//                     label5.innerText = services[x].serviceName;
+//                     divs.append(label5)
+//                     serviceNames.push(services[x].serviceName);
+//
+//                     var input = document.createElement("input");
+//                     var data = document.createElement("input");
+//                     var submit = document.createElement("input");
+//                     var label = document.createElement("label");
+//                     submit.setAttribute('type','button');
+//                     submit.value = '确定';
+//                     data.setAttribute('type','number');
+// //                                                                             var input = document.createElement('input');
+// //                                                                             input.setAttribute('type','checkbox');
+// //                                                                             div.appendChild(input);
+// //                                                                             document.getElementById('ctrDevice').appendChild(image);
+// //                                                                             console.log(document.getElementById('ctrDevice'))
+// //
+// //                                                                             console.log(services[x].serviceBody.params)
+//                     for(y in services[x].serviceBody.params){
+//                         var serv = services[x].serviceBody.params[y].split("=");
+// //                                                                                console.log(y);
+// //                                                                                console.log(serv);
+//
+//                         var input = document.createElement("input");
+//                         var label = document.createElement("label");
+//                         var image = document.createElement("img");
+//                         image.setAttribute('src','../img/off.png');
+//                         image.setAttribute("on",serv[1]);
+//                         image.setAttribute("off",serv[2]);
+//                         image.onclick = images;
+//                         function images(){
+//                             if(this.getAttribute('src') == '../img/off.png'){
+//                                 this.setAttribute('src','../img/on.png');
+//                             }else{
+//                                 this.setAttribute('src','../img/off.png');
+//                             }
+//                         }
+//                         if(serv[0] == '1'){
+//
+//                             input.value = serv[1];
+//                             label.innerText = y;
+// //                                                                                alert('label')
+//                             console.log(label)
+//                             divs.append(label);
+//                             divs.append(input);
+//                         }
+//                         if(serv[0] == '2'){
+//                             label.innerText = y;
+//                             console.log(label)
+//                             divs.append(label);
+//                             divs.append(image);
+//
+//                         }
+//                         if(serv[0] == '3'){
+//                             label.innerText = y;
+//                             console.log(label)
+//                             divs.append(label);
+//                             divs.append(data);
+//                         }
+//                         divs.append(submit);
+//
+//                     }
+//                     submit.onclick = submits;
+//                     function submits(){
+//                         var subChildren = this.parentNode.childNodes;
+//                         var diction = [];
+//                         for(var i=0; i<subChildren.length-1;){
+//                             if(i==0){
+//                                 diction['serviceName'] = subChildren[i].innerHTML;
+//
+//                                 console.log('serviceName -->'+subChildren[i].innerHTML);
+//                                 i++
+//                             }else{
+//                                 if(subChildren[i+1] instanceof HTMLInputElement){
+//                                     diction[subChildren[i].innerHTML] = subChildren[i+1].value;
+//                                     console.log(subChildren[i].innerHTML+"-->"+subChildren[i+1].value);
+//
+//                                 }else{
+//                                     if(subChildren[i+1].getAttribute('src').indexOf('on')>=0){
+//                                         diction[subChildren[i].innerHTML] = subChildren[i+1].getAttribute('on');
+//                                     }else{
+//                                         diction[subChildren[i].innerHTML] = subChildren[i+1].getAttribute('off');
+//                                     }
+//                                     console.log(subChildren[i].innerHTML+"-->"+subChildren[i+1].getAttribute('src'));
+//                                 }
+//                                 //diction(subChildren[i]) = subChildren[i+1]
+//                                 // console.log(subChildren[i]+"-->"+subChildren[i+1]);
+//                                 i=i+2;
+//                             }
+//
+//                         }
+//
+//                         var s = '{';
+//                         for(key in diction){
+//                             s += '"'+key+'":"'+diction[key]+'",'
+//                         }
+//                         s = s.slice(0,s.length-1)
+//                         s += '}'
+//                         $.ajax({
+//                             url: "/api/shadow/control/"+deviceId,
+//                             type: "POST",
+//                             contentType: "application/json;charset=utf-8",
+//                             data:  s,
+//                             dataType: "text",
+//                             success: function (result) {
+//                                 var obj = JSON.parse(result);
+//                                 console.log("success");
+//                                 window.location.href = "homepage";
+//                             },
+//                             error: function (msg) {
+//                                 alert(msg.message);
+//                             }
+//                         });
+//
+//                     }
+//                 }
+//
+//
+// //                                                                             console.log(serviceNames);
+// //                                                                             window.location.href = "homepage";
+//             },
+//             error: function (msg) {
+//                 alert(msg.message);
+//             }
+//         });
+
+        // 关闭详情页时清除表格
+        $('#detail').on('click',function(){
+            $('#device_attribute_table').DataTable().clear().draw();
+            window.location.href = "homepage";
+        });
+        $('#detailCancel').on('click',function(){
+            $('#device_attribute_table').DataTable().clear().draw();
+            window.location.href = "homepage";
+        });
+        $('#detailClose').on('click',function(){
+            $('#device_attribute_table').DataTable().clear().draw();
+            window.location.href = "homepage";
         });
     } );
 
@@ -432,3 +686,25 @@ $(function () {
 //     });
 // });
 
+// 用于将时间戳转换为时间 xxxx-xx-xx xx:xx:xx*/
+function formatDate(now) {
+
+    var year=now.getFullYear();
+    var month=now.getMonth()+1;
+    var date=now.getDate();
+    var hour=now.getHours();
+    var minute=now.getMinutes();
+    var second=now.getSeconds();
+    return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
+}
+
+// 判断元素是否在数组中
+function inArray(value, array) {
+    var i = array.length;
+    while (i--) {
+        if (array[i] === value) {
+            return true;
+        }
+    }
+    return false;
+}

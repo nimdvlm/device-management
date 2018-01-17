@@ -16,9 +16,14 @@ label[class=error] {
     }
 }
 
-.deviceAttributeList {
-    margin-left: 10px;
+#device_attribute_table_wrapper {
+    width: 90%;
+    margin: 20px;
 }
+
+/*.deviceAttributeList {*/
+    /*margin-left: 10px;*/
+/*}*/
 
 .attributeName {
     font-size: 13px;

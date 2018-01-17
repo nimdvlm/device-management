@@ -130,4 +130,21 @@ public class DeviceController extends DefaultThingsboardAwaredController {
             return retFail(e.toString()) ;
         }
     }
+
+    @RequestMapping(value = "/parentDevices/{parentDeviceId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getParentDevices(@PathVariable String parentDeviceId) {
+        String requestAddr = "http://" + getServer() + "/api/"+parentDeviceId+"/devices?limit=5";
+
+            try{
+                String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
+                        null,
+                        request.getSession());
+                return retSuccess(responseContent) ;
+            }catch(Exception e){
+                return retFail(e.toString()) ;
+            }
+    }
+
+
 }
