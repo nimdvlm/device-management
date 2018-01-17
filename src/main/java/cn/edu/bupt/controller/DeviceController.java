@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -82,9 +83,9 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         return retSuccess(token.toString());
     }
 
-    @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken")
+    @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken <br /> {\"name\":\"test0name\",\"type\":\"default\",\"additionalInfo\":{\"description\":\"jhdajd\"}}")
+    @ApiImplicitParam(name="deviceInfo", value = "设备信息JSON", required = true, paramType = "body")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    @ApiImplicitParam(name="deviceInfo", value = "设备信息", required = true)
     @ResponseBody
     public String createDevice(@RequestBody String deviceInfo) {
         String requestAddr = "/api/device" ;
@@ -108,6 +109,8 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         return retSuccess(responseContent) ;
     }
 
+    @ApiOperation(value = "删除设备", notes = "根据deviceId删除设备")
+    @ApiImplicitParam(name="deviceId", value = "设备ID", required = true, paramType = "path", dataType = "String")
     @RequestMapping(value = "/delete/{deviceId}", method = RequestMethod.GET)
     @ResponseBody
     public String delete(@PathVariable(DEVICE_ID) String strDeviceId) {
@@ -120,6 +123,8 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         }
     }
 
+    @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken")
+    @ApiImplicitParam(name = "strDeviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/accesstoken/{deviceId}", method = RequestMethod.GET)
     @ResponseBody
     public String getDeviceAccessToken(@PathVariable(DEVICE_ID) String strDeviceId) {
@@ -143,6 +148,8 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         }
     }
 
+    @ApiOperation(value = "得到parentId设备的设备信息", notes = "得到parentId设备的设备信息")
+    @ApiImplicitParam(name = "parentDeviceId", value = "父设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/parentDevices/{parentDeviceId}", method = RequestMethod.GET)
     @ResponseBody
     public String getParentDevices(@PathVariable String parentDeviceId) {
