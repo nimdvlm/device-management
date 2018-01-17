@@ -8,6 +8,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +33,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
     /**
      * @return
      */
+    @ApiOperation(value="获取所有设备组", notes="获取所有设备组")
     @RequestMapping(value = "/allGroups", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String devicegroupList() {
@@ -79,6 +83,8 @@ public class GroupController extends DefaultThingsboardAwaredController{
      * @param deviceGroupId
      * @return
      */
+    @ApiOperation(value="删除设备组", notes="删除设备组")
+    @ApiImplicitParam(name = "deviceGroupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/delete/{deviceGroupId}", method = RequestMethod.GET)
     @ResponseBody
     public String delete(@PathVariable String deviceGroupId) {
@@ -101,6 +107,8 @@ public class GroupController extends DefaultThingsboardAwaredController{
      * @return
      * @throws Exception
      */
+    @ApiOperation(value="获取设备组下的所有设备", notes="获取设备组下的所有设备")
+    @ApiImplicitParam(name = "groupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{groupId}/devices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getDevicesByGroupId(@PathVariable("groupId") String gId) throws Exception {
@@ -119,6 +127,9 @@ public class GroupController extends DefaultThingsboardAwaredController{
         }
     }
 
+    @ApiOperation(value="分配设备到设备组", notes="分配设备到设备组")
+    @ApiImplicitParams({ @ApiImplicitParam(name = "deviceId", value = "设备Id", required = true, dataType = "String",paramType = "path"),
+            @ApiImplicitParam(name = "groupId", value = "设备组Id", required = true, dataType = "String",paramType = "path")})
     @RequestMapping(value = "/assign/{deviceId}/{groupId}", method = RequestMethod.GET)
     @ResponseBody
     public String assignDeviceToGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {
@@ -136,6 +147,9 @@ public class GroupController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent) ;
     }
 
+    @ApiOperation(value="移除设备组中的设备", notes="移除设备组中的设备")
+    @ApiImplicitParams({ @ApiImplicitParam(name = "deviceId", value = "设备Id", required = true, dataType = "String",paramType = "path"),
+            @ApiImplicitParam(name = "groupId", value = "设备组Id", required = true, dataType = "String",paramType = "path")})
     @RequestMapping(value = "/unassign/{deviceId}/{groupId}", method = RequestMethod.GET)
     @ResponseBody
     public String unAssignDeviceFromGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {

@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<!-- VENDOR CSS -->
 	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+
 	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
 	<link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
@@ -20,6 +21,22 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+
+	<script src="assets/vendor/jquery/jquery.min.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="assets/vendor/chartist/js/chartist.min.js"></script>
+	<script src="assets/scripts/klorofil-common.js"></script>
+	<script src="style.js"></script>
+	<script src="echarts.js"></script>
+
+	<!--<script src="echarts.js"></script>-->
+	<script src="history.js"></script>
+<!--
+	<script src="submitTime.js"></script>
+-->
+
+	<script src="getDevice.js"></script>
 
 </head>
 
@@ -44,14 +61,13 @@
 						<select id="device">
 							<option value="">请选择设备</option>
 						</select>
-					</div>
-					<script src="assets/vendor/jquery/jquery.min.js"></script>
-					<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-					<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-					<script src="assets/vendor/chartist/js/chartist.min.js"></script>
-					<script src="assets/scripts/klorofil-common.js"></script>
+					<!--	<input type="text" id="deviceInput">
+						<ul class="deviceUl">
 
-					<script src="getDevice.js"></script>
+						</ul>-->
+					</div>
+
+
 				</form>
 				<div class="navbar-btn navbar-btn-right">
 					<a class="btn btn-success update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
@@ -112,8 +128,13 @@
 							<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Charts</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse ">
 								<ul class="nav">
-									<li onclick="realtime()"><a  style="cursor: pointer">real-time data</a></li>
-									<li onclick="history()"><a  style="cursor: pointer">history data</a></li>
+									<li onclick="realtime()"><a  style="cursor: pointer" >real-time data</a></li>
+									<li onclick="history()"><a  style="cursor: pointer"  >history data</a>
+
+									</li>
+<!--
+									<li onclick="submitTim()">11111</li>
+-->
 									<!--cursor属性：定义了鼠标指针放在一个元素边界范围内时所用的光标形状-->
 									<!-- <li><a href="page-lockscreen.html" class="">Lockscreen</a></li> -->
 								</ul>
@@ -130,13 +151,27 @@
 		<!-- MAIN -->
 		<div class="main">
 			<!-- MAIN CONTENT -->
+
 			<div class="main-content">
 				<div id="container-fluid" class="container-fluid">
 					<!-- <h3 class="page-title" style="color:rgb(153,220,220);display: inline-block;">数据分析平台</h3> -->
                     <!-- <h4 class="page-title" style="margin-left:600px;display: inline-block;">温湿4</h4> -->
 					<div class="row">
-                        <div class="col-md-6">
-                            <!--<div class="panel">
+
+                        <div class="col-md-12 col-md-offset-2" id="choose1">
+
+							<form class="navbar-form navbar-left" role="search">
+								<div class="form-group" style="width: 100%">
+									startTime：<input type="date" class="form-control" id="start_date">
+									endTime：<input type="date" class="form-control" id="end_date">
+
+								</div>
+
+							</form>
+
+							<input type="button" class="btn btn-default" id="submitTime" onclick="submitTime()"  style="position: absolute;top: 23px;" value="submit">
+
+							<!--<div class="panel">
                             <div class="panel-heading">
                                     <h3 class="panel-title">平均值</h3>
                                 </div>
@@ -194,28 +229,237 @@
 	<!-- Javascript -->
 	<style type="text/css">
 					#main1{display: none;}
+					#choose1{display: none;}
 	</style>
-	<script src="style.js"></script>
-
 			<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 			<div id="main" style="height:400px"></div>
 			<!--ECharts单文件引入-->
+					<script src="realtime.js"></script>
 
-			<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
-            <script src="realtime.js"></script>
-				<div>
-					<select >
-							<option value="">请选择时间段</option>
-							<option value="1">00：00-1：00</option>
-							<option value="2">1:00-2:00</option>
-							<option value="3">2:00-3:00</option>
-							<option value="4">3:00-4:00</option>
-					</select>
-				</div>
+
             <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
             <div id="main1" style="height:400px;width: 1000px"></div>
-            <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
-            <script src="history.js"></script>
+
+				</div>
+			</div>
+		</div>
+	</div>
+<!--
+<input onclick="submitTim()" value="1111111111111">
+-->
 </body>
+<!--submitTime.js-->
+<script>
+    var nameuse=[];
+	var device_ID;
+    var time1;
+    var time2;
+
+    var temp1=[];
+    var ydata=[];
+    function submitTime() {
+         // 表单提交数据
+         // alert("1")
+         var sTime = document.getElementById("start_date").value;
+         var eTime = document.getElementById("end_date").value;
+         /*alert(sTime);
+         alert(eTime);*/
+         var str1 = sTime.replace(/-/g, '/'); // 将-替换成/，因为下面这个构造函数只支持/分隔的日期字符串
+         var str2 = eTime.replace(/-/g, '/');
+         var date1 = new Date(str1);//将字符串类型的时间转换为日期对象
+         var date2 = new Date(str2);
+         /*alert(str1);
+         alert(str2);*/
+         time1 = date1.getTime();//将日期对象转换为时间戳
+         time2 = date2.getTime();
+        /* alert(time1);
+         alert(time2);*/
+         if (time1 > time2)
+             alert("Wrong time.")
+         device_ID = document.getElementById("device").value;//获取设备id
+/*
+         alert(device_ID);
+*/
+     }
+    $("#submitTime").on("click",function (){
+        console.log(device_ID);
+        console.log(time2);
+        console.log(time1);
+       /*取有几个属性*/
+        $.ajax({
+            url: "/api/data/getKeyData/" + deviceId,
+            type: "GET",
+            dataType: "text",
+            success: function (data) {
+                var name = data.replace(/\[|]/g, "");
+                name = name.replace(/\"/g, "");
+                nameuse = name.split(",");
+                //chart(nameuse);
+				console.log("参数个数："+data);
+            }
+        });
+        /*取后台数据*/
+        $.ajax({
+            url: "/api/data/getHistoricalData/"+device_ID+"/"+time1+"/"+time2,
+            type: "GET",
+            /*contentType: "application/json;charset=utf-8",//服务端返回的一段json串给客户端*!/
+            //data: JSON.stringify({'time1': time1, 'time2': time2,'device_ID':device_ID}),//使用POST请求时前端传给后端的数据*/
+            dataType: "text",//后台交付的数据为字符串形式
+
+            success: function (data) {//success为请求成功后的回调函数
+
+                var temp = JSON.parse(data);//将字符串转为json
+
+				console.log(temp);
+
+				var xArr = [];//用于存放x轴时间戳
+				var yArr = [];
+				for(var i=0;i<temp.data.length;i++)
+				{	if(i % 10 == 0)
+					{	/*push()向数组队尾追加一个数据，然后返回新的数组长度*/
+                        console.log(temp.data[i].ts);
+                        xArr.push(temp.data[i].ts);
+                        yArr.push(temp.data[i].value);
+                        console.log(xArr);
+                        console.log(yArr);
+					}/*else{
+
+					}*/
+				}
+				console.log(xArr);
+				console.log(yArr);
+				for (var i = 0;i<=xArr.length;i++)
+				{
+				    console.log("xArr"+i+":"+xArr[i]);
+				    console.log("yArr"+i+":"+yArr[i]);
+				}
+				/*for(var j=1;nameuse[j]!=null;j++)
+				{
+				    for(var i= 1;i<100;i++)
+					{
+					    temp1[j]=temp.nameuse[j].i.ts;
+					    ydata[j]=temp.nameuse[j].i.value;
+					    console.log(temp1[i]);
+					}
+				}*/
+
+                require.config({
+                    paths: {
+                        echarts: 'http://echarts.baidu.com/build/dist'
+                    }
+                });
+// 使用
+                require
+                (
+                    [
+                        'echarts',
+                        'echarts/chart/line'  // 使用柱状图就加载bar模块，按需加载
+                    ],
+                    function (ec)
+                    {
+                        // 基于准备好的dom，初始化echarts图表
+                        var myChart = ec.init(document.getElementById('main1'));
+                        // 指定图表的配置项和数据
+                        var option = {
+
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            legend: {
+                                data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            toolbox: {
+                                feature: {
+                                    saveAsImage: {}
+                                }
+                            },
+                            xAxis: {
+                                type: 'category',
+                                boundaryGap: false,
+                                data: ['周一','周二','周三','周四','周五','周六','周日']
+                            },
+                            yAxis: {
+                                type: 'value'
+                            },
+                            series: [
+                                {
+                                    name:'邮件营销',
+                                    type:'line',
+                                    stack: '总量',
+                                    data:[120, 132, 101, 134, 90, 230, 210]
+                                },
+                                {
+                                    name:'联盟广告',
+                                    type:'line',
+                                    stack: '总量',
+                                    data:[220, 182, 191, 234, 290, 330, 310]
+                                },
+                                {
+                                    name:'视频广告',
+                                    type:'line',
+                                    stack: '总量',
+                                    data:[150, 232, 201, 154, 190, 330, 410]
+                                },
+                                {
+                                    name:'直接访问',
+                                    type:'line',
+                                    stack: '总量',
+                                    data:[320, 332, 301, 334, 390, 330, 320]
+                                },
+                                {
+                                    name:'搜索引擎',
+                                    type:'line',
+                                    stack: '总量',
+                                    data:[820, 932, 901, 934, 1290, 1330, 1320]
+                                }
+                            ]
+                        };
+                        myChart.setOption(option);
+
+
+
+                        /* 一段不知道作用的代码*/
+                        var lastData = 11;
+                        var axisData;
+                        var timeTicket;
+                        clearInterval(timeTicket);
+                        timeTicket = setInterval(function (){
+                            lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+                            lastData = lastData.toFixed(1) - 0;
+                            axisData = (new Date()).toLocaleTimeString("ja-JP").replace(/^\D*/,'');
+
+                            // 动态数据接口 addData
+                            myChart.addData([
+
+                                [
+                                    1,
+                                    // 系列索引
+
+                                    //e.data.data[1],
+                                    lastData, // 新增数据
+
+                                    false,    // 新增数据是否从队列头部插入
+                                    false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                                    axisData  // 坐标轴标签
+                                ]
+                            ]);
+                        }, 2100);
+                    }
+                );
+
+
+            },
+            error: function (msg) {//error为在请求出错时的回调函数
+                console.log(msg.message);
+            }
+        });
+    })
+</script>
 
 </html>
