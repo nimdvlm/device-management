@@ -218,7 +218,7 @@ $(function () {
     });
     $('#serviceType').on('change', function () {
         var serviceType = $('#serviceType').val();
-        if(serviceType == 'platform'){
+        if(serviceType == 'thirdparty'){
             $('#hideDiv').css('display','block');
         }else{
             $('#hideDiv').css('display','none');

@@ -150,22 +150,22 @@ $(function () {
     });
 //删除设备组里的设备
     $('#dataTables-show').on('click', 'tr .delDev', function () {
-        var deviceId = $(this).attr('id')
+        var groupId = $(this).attr('id');
        // $('#devDel').val($(this).attr('id'))
-        console.log(deviceId)
+        console.log(groupId)
     });
     $('#devDelete').on('click', function () {
-        var devDelId = $('#devDel').val();
-        //var groupId = groupId;
-        //var groupId = $(this).attr('id');
+        //var devDelId = $('#devDel').val();
+        var deviceId = $(this).attr('id')
+        console.log(deviceId)
         $.ajax({
-            url: "/api/group/unassign/" + devDelId + "/" + groupId,
+            url: "/api/group/unassign/" + deviceId + "/" + groupId,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             data: "",
             dataType: "text",
             success: function (result) {
-                var obj = JSON.parse(result);
+                //var obj = JSON.parse(result);
                 console.log("success");
                 $('#delDevModal').modal('hide')
                 $('#lastDev').on('click', function () {
