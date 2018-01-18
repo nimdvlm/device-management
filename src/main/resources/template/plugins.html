@@ -49,13 +49,14 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                 <li><a href="homepage"><span class="glyphicon glyphicon-th-list"></span> <span> 设备列表</span></a></li>
                 <li><a href="device_group"><span class="glyphicon glyphicon-inbox"></span> 设备组</a></li>
                 <li><a href="services"><span class="glyphicon glyphicon-leaf"></span> <span> 服务管理</span></a></li>
-                <li><a href="plugins"><span class="glyphicon glyphicon-search"></span> 插件管理 </a></li>
+
                 <li class="active" style="background:red;">
-                    <a href="rules">
+                    <a href="plugins">
                         <span class="glyphicon glyphicon-search"></span>
-                        <span> 规则管理</span>
+                        <span> 插件管理</span>
                     </a>
                 </li>
+                <li><a href="rules"><span class="glyphicon glyphicon-search"></span>规则管理 </a></li>
                 <li><a href="assess"><span class="glyphicon glyphicon-edit"></span> 能力评估</a></li>
             </ul>
         </div>
@@ -65,7 +66,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
         <div id="page-inner">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">规则组</h3>
+                    <h3 class="panel-title">插件组</h3>
                     <!--<button id="123">测试</button>-->
                 </div>
                 <div class="panel-body">
@@ -74,15 +75,15 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         </table>
                     </div>
                 </div>
-<!--                <div class="panel-heading" style="background-color: cornflowerblue;">
-                    <h3 class="panel-title">查看服务</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table id="dataTables-show" class="table table-striped table-bordered table-hover">
-                        </table>
-                    </div>
-                </div>-->
+                <!--                <div class="panel-heading" style="background-color: cornflowerblue;">
+                                    <h3 class="panel-title">查看服务</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table id="dataTables-show" class="table table-striped table-bordered table-hover">
+                                        </table>
+                                    </div>
+                                </div>-->
             </div>
         </div>
     </div>
@@ -182,7 +183,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="mmLabel">创建规则</h4>
+                <h4 class="modal-title" id="mmLabel">新增插件</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form" action="#" id="createServiceGroup">
@@ -333,7 +334,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
 <!-- METISMENU SCRIPTS -->
 <script src="../static/js/jquery.metisMenu.js"></script>
 <!-- DATA TABLE SCRIPTS -->
-<script src="../static/js/services.js"></script>
+<script src="../static/js/plugins.js"></script>
 <script src="../static/dataTables/jquery.dataTables.js"></script>
 <script src="../static/dataTables/dataTables.bootstrap.js"></script>
 <script>
