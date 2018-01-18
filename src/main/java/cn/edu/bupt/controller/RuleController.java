@@ -165,6 +165,24 @@ public class RuleController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent);
     }
 
+    @RequestMapping(value = "/delete/{ruleId}",method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    private String deleteRules(@PathVariable("ruleId") String ruleId)
+    {
+        String requestAddr = "/api/rules/"+ruleId;
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    request.getSession());
+
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+        return retSuccess(responseContent);
+    }
+
     private String getErrorMsg(Exception e) {
         JsonObject errorInfoJson = new JsonObject();
         errorInfoJson.addProperty("responce_code", 1);
