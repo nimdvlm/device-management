@@ -43,11 +43,15 @@ label[class=error] {
 
 }
 
+.service-btn-group button {
+    margin: 10px 5px 10px 0;
+}
+
 /*.service-control-legend {*/
     /*display: block;*/
     /*-webkit-padding-start: 2px;*/
     /*-webkit-padding-end: 2px;*/
-    /*border-width: initial;*/
+    /*border-width: initial;*/s
     /*border-style: none;*/
     /*border-color: initial;*/
     /*border-image: initial;*/

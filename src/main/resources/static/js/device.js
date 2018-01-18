@@ -521,7 +521,7 @@ $(function () {
                             var paramName = j;
                             var lowerBound = paramType[1];
                             var upperBound = paramType[2];
-                            $('#' + serviceName[i]).append('<div class="form-group"><label class="col-sm-3 control-label" for="param' + j + '" style="text-align: left;">' + paramName + '</label><div class="col-sm-9"><input type="number" class="form-control range-input" id="param' + j + '" name="rangeInput" min="' + lowerBound + '" max="' + upperBound + '" value="' + lowerBound +'" step="10"/><a>(' + lowerBound + '-' + upperBound + ')</a></div></div>');
+                            $('#' + serviceName[i]).append('<div class="form-group"><label class="col-sm-3 control-label" for="param' + j + '" style="text-align: left;">' + paramName + '</label><div class="col-sm-9"><input type="number" class="form-control range-input" id="param' + j + '" name="rangeInput" min="' + lowerBound + '" max="' + upperBound + '" value="' + lowerBound +'" step="1"/><a>(' + lowerBound + '-' + upperBound + ')</a></div></div>');
 
                             // $('.range-input').change(function() {
                             //     // alert("change");
@@ -537,8 +537,9 @@ $(function () {
                             // });
                         }
                     }
-                    var ddd =1;
-                    $('#' + serviceName[i]).append('<div class="form-group"><button id="' + deviceId + '" type="button" class="btn btn-primary" onclick="submits(this.parentNode.parentNode,this.id)">确认</button></div>');
+                    $('#' + serviceName[i]).append('<div class="form-group service-btn-group"><button id="' + deviceId + '" type="button" class="btn btn-primary col-sm-3" onclick="commonSubmit(this.parentNode.parentNode,this.id)">确定</button>' +
+                        '<button id="' + deviceId + '" type="button" class="btn btn-info col-sm-4" onclick="delaySubmit(this.parentNode.parentNode,this.id)">延时执行</button>' +
+                        '<button id="' + deviceId + '" type="button" class="btn btn-warning col-sm-4" onclick="cycleSubmit(this.parentNode.parentNode,this.id)">周期执行</button></div>');
                 }
             },
             error: function(msg) {
@@ -561,11 +562,30 @@ $(function () {
         });
     } );
 
+    // 日期时间选择插件
+    $('#inputDelayTime').flatpickr({
+        allowInput: false,
+        clickOpens: true,
+        defaultDate: formatDate(new Date()),
+        enableTime: true,
+        enableSeconds: true,
+        minuteIncrement: 1,
+        minDate: formatDate(new Date())
+    });
+    $('#firstExecuteTime').flatpickr({
+        allowInput: false,
+        clickOpens: true,
+        defaultDate: formatDate(new Date()),
+        enableTime: true,
+        enableSeconds: true,
+        minuteIncrement: 1,
+        minDate: formatDate(new Date())
+    });
+
 });
 
 // 用于将时间戳转换为时间 xxxx-xx-xx xx:xx:xx*/
 function formatDate(now) {
-
     var year=now.getFullYear();
     var month=now.getMonth()+1;
     var date=now.getDate();
@@ -599,7 +619,7 @@ function changeImg(index) {
 }
 
 // 提交单个服务的表单
-function submits(fieldSet, deviceId) {
+function commonSubmit(fieldSet, deviceId) {
     // console.log(fieldSet);
     console.log(deviceId);
     var serviceName = fieldSet.id;
@@ -648,10 +668,189 @@ function submits(fieldSet, deviceId) {
             // var obj = JSON.parse(result);
             console.log(deviceId);
             console.log("success");
-            // window.location.href = "homepage";
         },
         error: function (msg) {
             alert(msg.message);
         }
+    });
+}
+
+// 延时执行，需设置延时时间
+function delaySubmit(fieldSet, deviceId) {
+    var delayTime = "";
+    var delayTimeStamp = ""; // 时间戳格式  怎么转换????
+    // 显示选择延时时间点的模态框
+    $('#delayModal').modal('show');
+    $('#delayClose').on('click', function() {
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+    });
+    $('#delayCancel').on('click', function() {
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+    });
+    $('#delayModal').modal({
+        backdrop:"static"
+    });
+
+    // console.log(fieldSet);
+    console.log(deviceId);
+    var serviceName = fieldSet.id;
+    // console.log(serviceName);
+    var children = fieldSet.childNodes;
+    var keys = [];
+    var values = [];
+    keys.push("serviceName");
+    values.push(serviceName);
+    // console.log(children);
+    for (var i = 1; i < children.length-1; i++) {
+        var param = children[i].childNodes;
+        console.log(param);
+        // console.log(param[0].textContent);
+        keys.push(param[0].textContent);
+        // console.log(param[1].childNodes[0].value);
+        if (param[1].childNodes[0] instanceof HTMLInputElement) {
+            values.push(param[1].childNodes[0].value);
+        }
+        else {
+            console.log(param[1].childNodes[0].getAttribute('on'));
+
+            if (param[1].childNodes[0].src.indexOf('on') >= 0 ) {
+                values.push(param[1].childNodes[0].getAttribute('on'));
+            }
+            else {
+                values.push(param[1].childNodes[0].getAttribute('off'));
+            }
+        }
+    }
+
+    $('#delaySubmit').on('click',function(){
+        delayTime = $('#inputDelayTime').val();
+        delayTimeStamp = Date.parse(new Date(delayTime));
+        // delayTimeStamp = delayTimeStamp / 1000;
+        console.log(delayTimeStamp);
+        $('#delayModal').modal('hide');
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+
+        var json = '{';
+        for (var j = 0; j < keys.length; j++) {
+            json += '"' + keys[j] +'":"' + values[j] + '",';
+        }
+        json += '"startTime":"' + delayTimeStamp + '",';
+        json = json.slice(0,json.length-1);
+        json += '}';
+
+        $.ajax({
+            url: "/api/shadow/control/"+deviceId,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data:  json,
+            dataType: "text",
+            success: function (result) {
+                // var obj = JSON.parse(result);
+                console.log(deviceId);
+                console.log("success");
+            },
+            error: function (msg) {
+                alert(msg.message);
+            }
+        });
+    });
+}
+
+// 周期执行，需设置开始时间与周期
+function cycleSubmit(fieldSet, deviceId) {
+    var startTime = "";
+    var startTimeStamp = "";
+    var cycle = "";
+    var cycleUnit = "";
+    // 显示选择延时时间点的模态框
+    $('#cycleModal').modal('show');
+    $('#cycleClose').on('click', function() {
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+    });
+    $('#cycleCancel').on('click', function() {
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+    });
+    $('#cycleModal').modal({
+        backdrop:"static"
+    });
+
+    // console.log(fieldSet);
+    console.log(deviceId);
+    var serviceName = fieldSet.id;
+    // console.log(serviceName);
+    var children = fieldSet.childNodes;
+    var keys = [];
+    var values = [];
+    keys.push("serviceName");
+    values.push(serviceName);
+    // console.log(children);
+    for (var i = 1; i < children.length-1; i++) {
+        var param = children[i].childNodes;
+        console.log(param);
+        // console.log(param[0].textContent);
+        keys.push(param[0].textContent);
+        // console.log(param[1].childNodes[0].value);
+        if (param[1].childNodes[0] instanceof HTMLInputElement) {
+            values.push(param[1].childNodes[0].value);
+        }
+        else {
+            console.log(param[1].childNodes[0].getAttribute('on'));
+
+            if (param[1].childNodes[0].src.indexOf('on') >= 0 ) {
+                values.push(param[1].childNodes[0].getAttribute('on'));
+            }
+            else {
+                values.push(param[1].childNodes[0].getAttribute('off'));
+            }
+        }
+    }
+
+    $('#cycleSubmit').on('click',function(){
+        startTime = $('#firstExecuteTime').val();
+        startTimeStamp = Date.parse(new Date(startTime));
+        // startTimeStamp = startTimeStamp / 1000;
+        console.log(startTimeStamp);
+        cycle = $('#cycle').val();
+        cycleUnit = $('#cycleUnit').val();
+        $('#cycleModal').modal('hide');
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+
+        var json = '{';
+        for (var j = 0; j < keys.length; j++) {
+            json += '"' + keys[j] +'":"' + values[j] + '",';
+        }
+        json += '"startTime":"' + startTimeStamp + '",';
+        json += '"period":"' + cycle + '",';
+        json += '"unit":"' + cycleUnit + '",';
+        json = json.slice(0,json.length-1);
+        json += '}';
+
+        $.ajax({
+            url: "/api/shadow/control/"+deviceId,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data:  json,
+            dataType: "text",
+            success: function (result) {
+                // var obj = JSON.parse(result);
+                console.log(deviceId);
+                console.log("success");
+            },
+            error: function (msg) {
+                alert(msg.message);
+            }
+        });
     });
 }

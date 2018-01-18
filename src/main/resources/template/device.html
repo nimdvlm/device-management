@@ -17,6 +17,9 @@
     <link type="text/css" rel="stylesheet" href="../static/css/bootstrapValidator.css">
 	<!-- TABLE STYLES-->
 	<link href="../static/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <!-- FLATPICKER STYLES-->
+    <link rel="stylesheet" type="text/css" href="../static/css/flatpickr.min.css">
+
 	<link href="../static/css/style.css" rel="stylesheet" />
 
 	<link href="../static/css/device.css" rel="stylesheet" />
@@ -311,7 +314,6 @@ font-size: 16px;">
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" id="assignDev" data-toggle="modal" data-target="#assignSucModal">确定</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-
 			</div>
 		</div>
 	</div>
@@ -333,6 +335,77 @@ font-size: 16px;">
 		</div>
 	</div>
 </div>
+
+<!--延时执行模态框 -->
+<div class="modal fade" id="delayModal" tabindex="-1" role="dialog" aria-labelledby="delayModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="delayClose" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="delayModalLabel">延时执行设置</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputDelayTime" class="col-sm-3 control-label">延时时间</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="inputDelayTime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="delaySubmit">确定</button>
+                            <button type="button" class="btn btn-default" id="delayCancel" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 周期执行模态框 -->
+<div class="modal fade" id="cycleModal" tabindex="10" role="dialog" aria-labelledby="cycleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="cycleClose" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="cycleModalLabel">周期执行设置</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="firstExecuteTime" class="col-sm-3 control-label">首次执行时间</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="firstExecuteTime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cycle" class="col-sm-3 control-label">执行周期</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="cycle" min="1" placeholder="1">
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="cycleUnit">
+                                <option value="second" selected>秒</option>
+                                <option value="hour">小时</option>
+                                <option value="day">天</option>
+                                <option value="week">周</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="cycleSubmit">确定</button>
+                            <button type="button" class="btn btn-default" id="cycleCancel" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- SCRIPTS -AT THE BOTTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->
 
@@ -349,6 +422,9 @@ font-size: 16px;">
 <!-- Bootstrap Validator Scripts-->
 <script src="../static/js/bootstrapValidator.js"></script>
 <script src="../static/js/language/zh_CN.js"></script>
+<!-- FLATPICKER SCRIPTS -->
+<script src="../static/js/flatpickr.js"></script>
+<script src="../static/js/flatpickr.l10n.zh.js"></script>
 
 <script src="../static/js/device.js"></script>
 <script src="../static/js/logout.js"></script>
