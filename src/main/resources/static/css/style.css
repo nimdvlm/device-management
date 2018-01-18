@@ -41,11 +41,11 @@ Reset and overrides
 }
 html,body {
   color: #000;
-  font-family:"Microsoft YaHei",Arial,Helvetical,sans-serif,"å®‹ä½“";
-  /*font-family: 'Open Sans';*/
+  /*font-family:"Microsoft YaHei",Arial,Helvetical,sans-serif,"å®‹ä½“";*/
+  font-family: 'Open Sans';
   padding: 0px !important;
   margin: 0px !important;
-  font-size:13px;
+  /*font-size:13px;*/
   direction: ltr;
   height: 100%;
 }
@@ -138,7 +138,7 @@ Close icon used for modal dialog and other UI element close buttons
   width: 9px;
   height: 9px;
   background-repeat: no-repeat !important;
-  background-image: url("../image/remove-icon-small.png") !important;
+  background-image: url("../img/remove-icon-small.png") !important;
 }
 
 /***
@@ -558,7 +558,7 @@ ul.page-sidebar-menu > li.active > a .selected {
   display: block;
   width: 8px;
   height: 25px;
-  background-image: url("../image/sidebar-menu-arrow.png");
+  background-image: url("../img/sidebar-menu-arrow.png");
   float: right;
   position: absolute;
   right:0px;
