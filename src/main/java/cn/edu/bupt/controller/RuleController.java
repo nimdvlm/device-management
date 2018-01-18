@@ -129,16 +129,18 @@ public class RuleController extends DefaultThingsboardAwaredController{
        return retSuccess(responseContent);
     }
 
-    @RequestMapping(value = "/active/{ruleId}}",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/active/{ruleId}",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String active(@PathVariable("ruleId") String ruleId)
     {
         String requestAddr = "/api/rule/"+ruleId+"/activate";
+        JsonObject requestbody=new JsonObject();
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
                     null,
+                    requestbody,
                     request.getSession());
         }catch(Exception e){
             return retFail(e.toString()) ;
@@ -147,16 +149,18 @@ public class RuleController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent);
     }
 
-    @RequestMapping(value = "/suspend/{ruleId}}",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/suspend/{ruleId}",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String suspend(@PathVariable("ruleId") String ruleId)
     {
         String requestAddr = "/api/rule/"+ruleId+"/suspend";
+        JsonObject requestbody=new JsonObject();
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
                     null,
+                    requestbody,
                     request.getSession());
         }catch(Exception e){
             return retFail(e.toString()) ;
@@ -173,8 +177,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
-                    null,
+            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getServer() + requestAddr,
                     request.getSession());
 
         }catch(Exception e){
