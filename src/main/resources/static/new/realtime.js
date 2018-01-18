@@ -24,11 +24,19 @@ document.getElementById("main");
 
         var style = document.createAttribute("style");
         div.style.height = "400px";
+        div.style.width = "1000px";
+
+        var id = document.getElementById("main1");
 
         deviceId=$("#device").val();
         if(deviceId!="")
         {
             realtimeDevice(deviceId);
+        }
+
+        if(id.style.display=="block")
+        {
+            div.style.display="none";
         }
     });
 
