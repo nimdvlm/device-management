@@ -183,31 +183,94 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="mmLabel">新增插件</h4>
+                <h4 class="text-primary" id="mmLabel" style="font-weight: bold">添加插件</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="createPlugins">
                 <form class="form-horizontal" role="form" action="#" id="createServiceGroup">
+
                     <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>厂商</label>
+                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>名称</label>
                         <div class="col-sm-9">
-                            <input type="text" class='add' placeholder="必填" id="manufacture" name="manufacture">
+                            <input type="text" class='add form-control' placeholder="必填" id="pluginName" name="pluginName">
+                        </div>
+                        <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <label  class="col-sm-3 control-label" style='text-align: left;'>&nbsp;&nbsp;&nbsp;描述</label>
+                        <div class="col-sm-9" >
+                            <input type="text" class='add form-control'  id="groupName"/>
+                            <!--placeholder="请输入设备组名"-->
+                        </div>
+                        <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>API令牌</label>
+                        <div class="col-sm-9">
+                            <input type="text" class='add form-control' placeholder="必填" id="deviceType" name="deviceType">
                         </div>
                         <div class="col-sm-9 col-sm-offset-3" id='content1'></div>
                     </div>
+
                     <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>设备类型</label>
+                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>插件类型</label>
                         <div class="col-sm-9">
-                            <input type="text" class='add' placeholder="必填" id="deviceType" name="deviceType">
+                            <input type="text" class='add form-control' placeholder="REST API Call Plugin" id="pluginType" name="pluginType" readonly>
                         </div>
                         <div class="col-sm-9 col-sm-offset-3" id='content2'></div>
                     </div>
+
+                    <div>
+                        <h4 class="text-warning" style="font-weight: bold">插件配置</h4>
+                    </div>
+
                     <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>设备型号</label>
+                        <label class="col-sm-3 control-label" style='text-align: left;font-size: 12px'><span style="color: red;">* </span>URI Scheme name</label>
                         <div class="col-sm-9">
-                            <input type="text" class='add' placeholder="必填" id="model" name="model">
+                            <select class="form-control" id="pluginURI" name="pluginURI">
+                                <option>HTTP</option>
+                                <option>HTTPS</option>
+                            </select>
                         </div>
                         <div class="col-sm-9 col-sm-offset-3" id='content3'></div>
                     </div>
+
+                    <div class="form-group has-feedback">
+                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>Host</label>
+                        <div class="col-sm-9">
+                            <input type="text" class='add form-control' placeholder="必填" id="pluginHost" name="pluginHost">
+                        </div>
+                        <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>Port</label>
+                        <div class="col-sm-9">
+                            <input type="text" class='add form-control' placeholder="必填" id="port" name="port">
+                        </div>
+                        <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>Base Path</label>
+                        <div class="col-sm-9">
+                            <input type="text" class='add form-control' placeholder="必填" id="pluginPath" name="pluginPath">
+                        </div>
+                        <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <label class="col-sm-3 control-label" style='text-align: left;font-size: 12px'><span style="color: red;">* </span>Authentication &nbsp;&nbsp;&nbsp;method</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="pluginMethod" name="pluginMethod">
+                                <option>No authentication</option>
+                                <option>Basic authentication</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                    </div>
+
                     <div class="modal-footer">
                         <!--<button type="submit" class="btn btn-primary" id="create" data-toggle="modal" data-target="#createSuc">创建</button>-->
                         <button type="submit" class="btn btn-primary" id="create">创建</button>
@@ -345,6 +408,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
 <!-- CUSTOM SCRIPTS -->
 <script src="../static/js/custom.js"></script>
 <script src="../static/js/logout.js"></script>
-<script src="../static/js/createServiceGroup.js"></script>
+<script src="../static/js/createPlugins.js"></script>
+
 </body>
 </html>
