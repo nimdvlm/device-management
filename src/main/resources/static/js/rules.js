@@ -190,9 +190,7 @@ $(function () {
                 //var obj = JSON.parse(result);
                 console.log("active rule success");
                 $('#deleteModal').modal('hide')
-                $('#lastDelete').on('click', function () {
-                    window.location.href = "rules";
-                });
+                window.location.href = "rules";
             },
             error: function (msg) {
                 alert(msg.message);
@@ -217,9 +215,7 @@ $(function () {
             success: function (result) {
                 //var obj = JSON.parse(result);
                 console.log("suspend rule success");
-                $('#lastDelete').on('click', function () {
-                    window.location.href = "rules";
-                });
+                window.location.href = "rules";
             },
             error: function (msg) {
                 alert(msg.message);
