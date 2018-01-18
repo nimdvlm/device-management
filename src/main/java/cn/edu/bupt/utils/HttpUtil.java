@@ -31,8 +31,13 @@ public class HttpUtil {
 
 
     public static String sendPostToThingsboard(String url, Map<String,String> headers, JsonObject requestBody,HttpSession session) throws Exception{
-
-        RequestBody body = RequestBody.create(JSON, requestBody.toString());
+        String str ;
+        if(requestBody==null){
+            str = "";
+        }else{
+            str = requestBody.toString();
+        }
+        RequestBody body = RequestBody.create(JSON, str);
         Request.Builder buider = new Request.Builder()
                 .url(url)
                 .post(body);
