@@ -22,6 +22,15 @@
             padding: 5px;
             margin: 0px middle;
         }
+        #Loading {
+                color:#fff;
+                position: absolute;
+                top:45%;width: 100%;
+                padding: 5px;
+                margin: 0px middle;
+                z-index: 3;
+                font-size: 30px;
+            }
     </style>
 </head>
 
@@ -30,6 +39,7 @@
 <div id="info">
     Labroom_815_monitoring
 </div>
+<div id="Loading"></div>
 <script src="build/three.js"></script>
 <script src="js/libs/stats.min.js"></script>
 <script src="js/libs/dat.gui.min.js"></script>
@@ -217,7 +227,11 @@
         var onProgress = function(xhr) {
             if (xhr.lengthComputable) {
                 var percentComplete = xhr.loaded / xhr.total * 100;
-                console.log(Math.round(percentComplete, 2) + '% downloaded');
+                var process_loading = 'Loading Models:'+Math.round(percentComplete, 2) + '%';
+                document.getElementById('Loading').innerHTML = process_loading;
+                if(percentComplete == 100){
+                document.getElementById('Loading').style.display = 'none';
+            }
             }
         };
         var onError = function(xhr) {};
