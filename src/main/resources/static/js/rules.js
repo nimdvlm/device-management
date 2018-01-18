@@ -87,11 +87,11 @@ $(function () {
         ],
         initComplete: function () {
 //               $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="'+manufacture+'" data-toggle="modal" data-target="#CreateRulesModal">+ 创建服务组</button>');
-            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" data-toggle="modal" data-target="#CreateRulesModal">+ 创建规则</button>');
+            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" data-toggle="modal" data-target="#AddRuleModal">+ 创建规则</button>');
         }
     });
 
-/*//创建服务组
+//添加过滤器
     $('#create').on('click', function () {
         var manufacture = $('#manufacture').val();
         var deviceType = $('#deviceType').val();
@@ -140,7 +140,7 @@ $(function () {
         console.log('hideeee');
 
         document.getElementById("createServiceGroup").reset();
-    });*/
+    });
 
     var ruleId;
 
@@ -149,10 +149,10 @@ $(function () {
         console.log('id:' + $(this).attr('id'));
         ruleId = $(this).attr('id');
     });
-    $('#SerDelete').on('click', function () {
+    $('#RuleDelete').on('click', function () {
         $.ajax({
             url: "/api/rule/delete/" + ruleId,
-            type: "POST",
+            type: "DELETE",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({
                     "id": ruleId,
@@ -224,6 +224,43 @@ $(function () {
     });
 
 
+    // 获取插件名称列表
+    $.ajax({
+        url: "/api/plugin/allPlugins/",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        data: "",
+        dataType: "text",
+        success: function (result) {
+            // var obj = JSON.parse(result);
+            console.log(result);
+            var obj = JSON.parse(result);
+            $('#PluginType').empty();
+            for (var j = 0; j < obj.length; j++) {
+                $('#PluginType').append('<option value = "' + obj[j].name + '">' + obj[j].name + '</option>');
+            }
+            // var temp = "";
+            // for (var j = 1; j < result.length - 1; j++) {
+            //     temp += result[j];
+            // }
+            // console.log(temp);
+            // var obj = JSON.parse(temp);
+            // // var pluginArr = [];
+            // // console.log(pluginArr);
+            // $('#PluginType').empty();
+            // for (var j = 0; j < obj.length; j++) {
+            //     // for (var k = 1; k < objArr[j].length)
+            //     // pluginArr = JSON.parse(objArr[j]);
+            //     $('#PluginType').append('<option value = "' + obj[j].name + '">' + obj[j].name + '</option>');
+            // }
+            // // for (var i = 0; i < arr.length; i++) {
+            // //
+            // // }
+        },
+        error: function(msg) {
+            alert(msg.message);
+        }
+    });
 
 });
 
