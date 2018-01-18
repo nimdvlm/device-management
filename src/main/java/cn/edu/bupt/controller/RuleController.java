@@ -129,6 +129,60 @@ public class RuleController extends DefaultThingsboardAwaredController{
        return retSuccess(responseContent);
     }
 
+    @RequestMapping(value = "/active/{ruleId}}",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String active(@PathVariable("ruleId") String ruleId)
+    {
+        String requestAddr = "/api/rule/"+ruleId+"/activate";
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/suspend/{ruleId}}",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String suspend(@PathVariable("ruleId") String ruleId)
+    {
+        String requestAddr = "/api/rule/"+ruleId+"/suspend";
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/delete/{ruleId}",method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String deleteRules(@PathVariable("ruleId") String ruleId)
+    {
+        String requestAddr = "/api/rules/"+ruleId;
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    request.getSession());
+
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+        return retSuccess(responseContent);
+    }
+
     private String getErrorMsg(Exception e) {
         JsonObject errorInfoJson = new JsonObject();
         errorInfoJson.addProperty("responce_code", 1);
