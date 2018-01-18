@@ -9,10 +9,13 @@ $.ajax({
         //console.log(data);
         var temp = JSON.parse(data);
         var sel = document.getElementById("device");
+        console.log(temp);
+
         for(var i=0;temp[i]!=null;i++)
         {
             var option = new Option(temp[i].name,temp[i].deviceId);
             sel.options.add(option);
+
         }
 
     }

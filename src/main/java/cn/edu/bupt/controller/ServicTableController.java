@@ -3,6 +3,9 @@ package cn.edu.bupt.controller;
 import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +55,10 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
 
     @RequestMapping("/deleteServiceFromGroup")
     public String deleteServiceFromGroup(@RequestBody String json) {
+        // model
+        // manufacture
+        // deviceType
+        // df
         String url = "http://"+getServer()+"/api/servicetable/delete";
         try{
             JsonObject asJsonObject = (JsonObject)new JsonParser().parse(json);
@@ -85,6 +92,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
         }
     }
 
+    @ApiOperation(value = "获取所有厂商信息", notes = "获取所有厂商信息")
     @RequestMapping(value = "/manufactures", method = RequestMethod.GET)
     public String serviceManufacture(){
         String url = "http://" + getServer() + "/api/servicetable/manufatures";
@@ -96,6 +104,8 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
         }
     }
 
+    @ApiOperation(value = "返回某一厂商下的所有设备类型", notes = "返回某一厂商下的所有设备类型")
+    @ApiImplicitParam(name = "manufacture", value = "厂商", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{manufacture}/deviceTypes", method = RequestMethod.GET)
     public String serviceDeviceType(@PathVariable String manufacture){
         String requestAddr = String.format("/api/servicetable/%s/deviceTypes", manufacture) ;
@@ -108,6 +118,9 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
         }
     }
 
+    @ApiOperation(value = "返回固定某一厂商和设备类型下的所有型号", notes = "返回固定某一厂商和设备类型下的所有型号")
+    @ApiImplicitParams({ @ApiImplicitParam(name = "manufacture", value = "厂商", required = true, dataType = "String",paramType = "path"),
+            @ApiImplicitParam(name = "deviceType", value = "设备类型", required = true, dataType = "String",paramType = "path")})
     @RequestMapping(value = "/{manufacture}/{deviceType}/models", method = RequestMethod.GET)
     public String serviceModel(@PathVariable String manufacture,@PathVariable String deviceType){
         String requestAddr = String.format("/api/servicetable/%s/%s/models", manufacture, deviceType) ;
@@ -116,7 +129,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
             String s = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
             return retSuccess(s) ;
         }catch (Exception e){
-            return retFail("获取模块失败: - " + e.toString());
+            return retFail("获取型号失败: - " + e.toString());
         }
     }
 

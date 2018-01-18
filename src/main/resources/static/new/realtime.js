@@ -1,6 +1,6 @@
 var deviceId='';
 var ws;
-
+document.getElementById("main");
     $("#device").change(function(){
         var child = document.getElementById("main");
         var parent = document.getElementById("container-fluid");
@@ -28,7 +28,7 @@ var ws;
         deviceId=$("#device").val();
         if(deviceId!="")
         {
-            realtime(deviceId);
+            realtimeDevice(deviceId);
         }
     });
 
@@ -37,7 +37,7 @@ var ws;
 //jQuery的ready事件，表示DOM加载后执行ready中的函数（此处为function（））
 //$(document).ready(function(){
 
-function realtime(deviceId) {
+function realtimeDevice(deviceId) {
     var xdata;
     var ydata=[];
     var key=[];
@@ -117,7 +117,7 @@ function realtime(deviceId) {
             log("Message received: " + e.data);
             // console.log("e.data值："+e.data);
             var temp = JSON.parse(e.data);//将字符串转为json
-            var time
+            var time;
             var value = [];
 
             for (var i in temp.data) {
@@ -263,9 +263,9 @@ function realtime(deviceId) {
                     ],
                     yAxis: [
                         {
-                            type: 'value',
+                            type: 'real-time value',
                             scale: true,
-                            name: 'value',
+                            name: 'real-time value',
                             boundaryGap: [0.2, 0.2]
                         },
 

@@ -44,13 +44,17 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
         <div class="sidebar-collapse">
             <ul class="nav" id="main-menu">
                 <li class="text-center">
-                    <h3 href="/static/homepage.html" style="color:white;"><span class="glyphicon glyphicon-home"></span>
-                        物管理</h3>
+                    <h3 href="/static/homepage.html" style="color:white;"><span class="glyphicon glyphicon-home"></span>物管理</h3>
                 </li>
                 <li><a href="homepage"><span class="glyphicon glyphicon-th-list"></span> <span> 设备列表</span></a></li>
                 <li><a href="device_group"><span class="glyphicon glyphicon-inbox"></span> 设备组</a></li>
-                <li class="active" style="background:red;"><a href="services"><span
-                        class="glyphicon glyphicon-leaf"></span> <span> 服务管理</span></a></li>
+                <li class="active" style="background:red;">
+                    <a href="services">
+                        <span class="glyphicon glyphicon-search"></span>
+                        <span> 服务管理</span>
+                    </a>
+                </li>
+                <li><a href=""><span class="glyphicon glyphicon-edit"></span> 规则管理 </a></li>
                 <li><a href="assess"><span class="glyphicon glyphicon-edit"></span> 能力评估</a></li>
             </ul>
         </div>
@@ -100,39 +104,47 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
+                        <div style="display: none;">
                         厂商
                         <input type="text" class="form-control" placeholder="" id="manufactureCre" disabled="disabled">
                         设备类型
                         <input type="text" class="form-control" placeholder="" id="deviceTypeCre" disabled="disabled">
                         设备型号
                         <input type="text" class="form-control" placeholder="" id="modelCre" disabled="disabled">
-                        服务体<br>
-                        &nbsp;&nbsp;&nbsp;方法名
-                        <input type="text" class="form-control" placeholder="" id="methodName">
-                        <div id="param">
-                            &nbsp;&nbsp;&nbsp;参数<br>
-                            <input type="text" placeholder="" id="params" placeholder="形如(status:true)"> &nbsp;&nbsp;&nbsp;<span
-                                id="addParams">+</span>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        服务名称
-                        <input type="text" class="form-control" placeholder="请输入厂商" id="serviceName">
-                        服务描述
-                        <input type="text" class="form-control" placeholder="请输入服务名称" id="serviceDescription">
-                        服务类型
-                        <input type="text" class="form-control" placeholder="请输入设备类型" id="serviceType">
-                        协议
-                        <input type="text" class="form-control" placeholder="请输入协议" id="protocol">
-                        URL
-                        <input type="text" class="form-control" placeholder="请输入URL" id="url">
-                        请求回复
+                        <b>服务名称</b>
+                        <input type="text" value="" class="form-control" placeholder="必填" id="serviceName">
+                        <b>服务描述</b>
+                        <input type="text" value="" class="form-control" placeholder="必填" id="serviceDescription">
+                        <b>服务类型</b>
+                        <select type="text" class="form-control" id="serviceType">
+                            <option value="platform">platform</option>
+                            <option value="thrdparty">thirdparty</option>
+                        </select>
+                        <div id="hideDiv" style="display: block;">
+                            <b>协议</b>
+                            <input type="text"  value="" class="form-control" id="protocol">
+                            <b>URL</b>
+                            <input type="text"  value="" class="form-control" id="url">
+
+                        </div>
+                         <b>请求回复</b>
                         <select type="text" class="form-control" id="requireResponce">
                             <option value="true">true</option>
                             <option value="false">false</option>
                         </select>
                         <!--<input type="text" class="form-control" placeholder="请输入请求回复" id="requireResponce">-->
+                    <!--</div>
+                    <div class="col-lg-6">-->
+                        <b>服务体</b><br>
+                        &nbsp;&nbsp;&nbsp;方法名
+                        <input type="text" value="" class="form-control" placeholder="" id="methodName">
+                        <div id="param">
+                            &nbsp;&nbsp;&nbsp;参数<br>
+                            <input type="text" value="" placeholder="" id="params" placeholder="形如(status:true)"> &nbsp;&nbsp;&nbsp;<span
+                                id="addParams">+</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -174,21 +186,21 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
             <div class="modal-body">
                 <form class="form-horizontal" role="form" action="#" id="createServiceGroup">
                     <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label" style='text-align: left;'>厂商</label>
+                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>厂商</label>
                         <div class="col-sm-9">
                             <input type="text" class='add' placeholder="必填" id="manufacture" name="manufacture">
                         </div>
                         <div class="col-sm-9 col-sm-offset-3" id='content'></div>
                     </div>
                     <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label" style='text-align: left;'>设备类型</label>
+                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>设备类型</label>
                         <div class="col-sm-9">
                             <input type="text" class='add' placeholder="必填" id="deviceType" name="deviceType">
                         </div>
                         <div class="col-sm-9 col-sm-offset-3" id='content'></div>
                     </div>
                     <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label" style='text-align: left;'>设备型号</label>
+                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>设备型号</label>
                         <div class="col-sm-9">
                             <input type="text" class='add' placeholder="必填" id="model" name="model">
                         </div>
@@ -206,7 +218,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
-<div class="modal fade" id="createSuc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="createSuc" tabindex="-1" role="dialog" aria-labelledby="mmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -225,7 +237,8 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
 </div>
 
 <!--删除服务组模态框1-->
-<div class="modal fade" id="delSerModal" tabindex="-1" role="dialog" aria-labelledby="delSerModalLabel" aria-hidden="true">
+<div class="modal fade" id="delSerModal" tabindex="-1" role="dialog" aria-labelledby="delSerModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -237,14 +250,17 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                 <input type="hidden" id="SerDel" value=""/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delsSerModal" id="SerDelete">确认</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delsSerModal"
+                        id="SerDelete">确认
+                </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
             </div>
         </div>
     </div>
 </div>
 <!--删除服务组模态框2-->
-<div class="modal fade" id="delsSerModal" tabindex="-1" role="dialog" aria-labelledby="delSerModalLabel" aria-hidden="true">
+<div class="modal fade" id="delsSerModal" tabindex="-1" role="dialog" aria-labelledby="delSerModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -264,7 +280,8 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
 
 
 <!--删除服务模态框1-->
-<div class="modal fade" id="delServiceModal" tabindex="-1" role="dialog" aria-labelledby="delServiceModalLabel" aria-hidden="true">
+<div class="modal fade" id="delServiceModal" tabindex="-1" role="dialog" aria-labelledby="delServiceModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -276,14 +293,17 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                 <input type="hidden" id="ServiceDel" value=""/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delsServiceModal" id="ServiceDelete">确认</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delsServiceModal"
+                        id="ServiceDelete">确认
+                </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
             </div>
         </div>
     </div>
 </div>
 <!--删除服务模态框2-->
-<div class="modal fade" id="delsServiceModal" tabindex="-1" role="dialog" aria-labelledby="delServiceModalLabel" aria-hidden="true">
+<div class="modal fade" id="delsServiceModal" tabindex="-1" role="dialog" aria-labelledby="delServiceModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -316,9 +336,9 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
 <script src="../static/dataTables/jquery.dataTables.js"></script>
 <script src="../static/dataTables/dataTables.bootstrap.js"></script>
 <script>
-    $(document).ready(function () {
-        $('#dataTables-example').dataTable();
-    });
+    // $(document).ready(function () {
+    //     $('#dataTables-example').dataTable();
+    // });
 </script>
 <!-- CUSTOM SCRIPTS -->
 <script src="../static/js/custom.js"></script>

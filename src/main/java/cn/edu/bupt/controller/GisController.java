@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
@@ -15,7 +16,7 @@ import java.util.Map;
  * Created by Administrator on 2017/12/26.
  */
 @RestController
-@RequestMapping("/api/gis")
+@RequestMapping(value = "/api/gis", method = {RequestMethod.GET, RequestMethod.POST})
 @Slf4j
 public class GisController {
 
@@ -28,7 +29,7 @@ public class GisController {
 
     }
 
-    @RequestMapping("/getmodel.do")
+    @RequestMapping(value = "/getmodel.do", method = {RequestMethod.GET, RequestMethod.POST})
     public String getSensors() {
         System.out.print("get model");
         JsonObject obj = new JsonObject();
@@ -38,7 +39,7 @@ public class GisController {
         return obj.toString();
     }
 
-    @RequestMapping("/getdata.do")
+    @RequestMapping(value = "/getdata.do", method = {RequestMethod.GET, RequestMethod.POST})
     public String getData(@PathParam( "uid")String uid) throws Exception{
         System.out.println("getdata :"+uid);
            String res = null;
@@ -50,7 +51,7 @@ public class GisController {
         return res;
     }
 
-    @RequestMapping("/control.do")
+    @RequestMapping(value = "/control.do", method = {RequestMethod.GET, RequestMethod.POST})
     public String control(@PathParam("uid")String uid) throws Exception{
 //        System.out.println("control :"+uid);
 //        ThingsBoardApi api =  ThingsBoardApi.getInstance("10.108.217.227",8080);
@@ -64,9 +65,4 @@ public class GisController {
 //        System.out.println(responce);
         return "rpc cpmmd send ok";
     }
-
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(App.class, args);
-    }
-
 }

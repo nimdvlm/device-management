@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration>
+<configuration>
+    <!--级别排序为： TRACE < DEBUG < INFO < WARN < ERROR-->
+
+    <!-- 装载一个输出器(标准输出流|输出格式) -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 配置包的device-manager工程的log, 没有在该包下的log使用根配置 -->
+    <logger name="cn.edu.bupt" level="TRACE" />
+
+    <!-- 配置swagger的的log -->
+    <logger name="org.thymeleaf" level="WARN" />
+
+    <!-- 根log配置, 默认配置为这个 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>

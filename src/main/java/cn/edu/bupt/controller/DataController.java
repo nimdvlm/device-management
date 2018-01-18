@@ -1,5 +1,7 @@
 package cn.edu.bupt.controller;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,7 +56,7 @@ public class DataController extends DefaultThingsboardAwaredController{
         return retSuccess(responseHistoricalDataContent);
     }
 
-    @RequestMapping(value="/getKeyAttribute/{deviceId}")
+    @RequestMapping(value="/getKeyAttribute/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getKeyAttributes(@PathVariable("deviceId") String deviceId) {
         String requestKeyAddr = "/api/plugins/telemetry/DEVICE/" + deviceId + "/keys/ATTRIBUTES";
 
@@ -69,7 +71,9 @@ public class DataController extends DefaultThingsboardAwaredController{
         return retSuccess(responseKeyAttributeContent);
     }
 
-    @RequestMapping(value="/getAttribute/{deviceId}")
+    @ApiOperation(value="test - tjl", notes="根据device的id来指定操作")
+    @ApiImplicitParam(name = "deviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
+    @RequestMapping(value="/getAttribute/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getValueAttribute(@PathVariable("deviceId") String deviceId)
     {
         String responseKeyAttributeContent=getKeyAttributes(deviceId);
