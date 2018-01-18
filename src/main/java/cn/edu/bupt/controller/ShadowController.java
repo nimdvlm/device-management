@@ -38,13 +38,57 @@ public class ShadowController extends DefaultThingsboardAwaredController {
             return retFail(e.toString());
         }
     }
+    @RequestMapping("/task/list/{deviceId}")
+    public String taskLists(@PathVariable("deviceId") String deviceId){
+        String url = "http://"+getServer()+"/api/shadow/list/"+deviceId;
+//        JsonObject res = new JsonObject();
+        try{
+            String s = HttpUtil.sendGetToThingsboard(url,null,request.getSession());
+    //        JsonObject obj = new JsonParser().parse(s).getAsJsonObject();
+            return  retSuccess(s);
+        }catch(Exception e){
+            return retFail(e.toString());
+        }
+    }
+
+    @RequestMapping("/task/cancel/{deviceId}/{taskId}")
+    public String cancelTask(@PathVariable("deviceId") String deviceId,@PathVariable String taskId){
+        String url = "http://"+getServer()+"/api/shadow/cancel/"+deviceId+"/"+taskId;
+        try{
+            String s = HttpUtil.sendGetToThingsboard(url,null,request.getSession());
+           // JsonObject obj = new JsonParser().parse(s).getAsJsonObject();
+         // return responceUtil.onSuccess(obj) ;
+           return  retSuccess(s);
+        }catch(Exception e){
+            return retFail(e.toString());
+        }
+    }
+
+
+
 
     @RequestMapping("/control/{deviceId}")
     public String controlDevice(@RequestBody String bd,@PathVariable("deviceId") String deviceId){
-        String url = "http://"+getServer()+"/api/shadow/"+deviceId;
+        String url ;
         JsonObject body = new JsonObject();
         body.addProperty("requestName","serviceCall");
         JsonObject paramsAndServiceName = new JsonParser().parse(bd).getAsJsonObject();
+
+        if(paramsAndServiceName.has("startTime")){
+            if(paramsAndServiceName.has("period")){
+                url =  "http://"+getServer()+"/api/shadow/"+deviceId+"/period/"+
+                        paramsAndServiceName.get("startTime").getAsString()+"/"+paramsAndServiceName.get("period").getAsString();
+                paramsAndServiceName.remove("startTime");
+                paramsAndServiceName.remove("period");
+            }else{
+                url =  "http://"+getServer()+"/api/shadow/"+deviceId+"/delay/"+
+                        paramsAndServiceName.get("startTime").getAsString();
+                paramsAndServiceName.remove("startTime");
+            }
+        }else{
+            url = "http://"+getServer()+"/api/shadow/"+deviceId;
+        }
+
 //        String serviceNmae = paramsAndServiceName.get("serviceName").getAsString();
 //        JsonObject service = CachForDeviceService.get(deviceId,serviceNmae);
 //        paramsAndServiceName.remove("serviceName");

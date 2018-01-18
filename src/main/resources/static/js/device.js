@@ -47,7 +47,7 @@ $(function () {
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-danger del" style="cursor:hand" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:hand" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.deviceId+'" name="'+row.name+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:hand" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
+                    return '<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:pointer" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.deviceId+'" name="'+row.name+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:pointer" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
                 }
             },
             {
@@ -677,8 +677,6 @@ function commonSubmit(fieldSet, deviceId) {
 
 // 延时执行，需设置延时时间
 function delaySubmit(fieldSet, deviceId) {
-    var delayTime = "";
-    var delayTimeStamp = ""; // 时间戳格式  怎么转换????
     // 显示选择延时时间点的模态框
     $('#delayModal').modal('show');
     $('#delayClose').on('click', function() {
@@ -726,7 +724,14 @@ function delaySubmit(fieldSet, deviceId) {
         }
     }
 
-    $('#delaySubmit').on('click',function(){
+    var json = '{';
+    for (var j = 0; j < keys.length; j++) {
+        json += '"' + keys[j] +'":"' + values[j] + '",';
+    }
+
+    $('#delaySubmit').one('click',function(){
+        var delayTime = "";
+        var delayTimeStamp = ""; // 时间戳格式  怎么转换????
         delayTime = $('#inputDelayTime').val();
         delayTimeStamp = Date.parse(new Date(delayTime));
         // delayTimeStamp = delayTimeStamp / 1000;
@@ -736,10 +741,6 @@ function delaySubmit(fieldSet, deviceId) {
             $('body').addClass('modal-open')
         },1000);
 
-        var json = '{';
-        for (var j = 0; j < keys.length; j++) {
-            json += '"' + keys[j] +'":"' + values[j] + '",';
-        }
         json += '"startTime":"' + delayTimeStamp + '",';
         json = json.slice(0,json.length-1);
         json += '}';
@@ -764,10 +765,6 @@ function delaySubmit(fieldSet, deviceId) {
 
 // 周期执行，需设置开始时间与周期
 function cycleSubmit(fieldSet, deviceId) {
-    var startTime = "";
-    var startTimeStamp = "";
-    var cycle = "";
-    var cycleUnit = "";
     // 显示选择延时时间点的模态框
     $('#cycleModal').modal('show');
     $('#cycleClose').on('click', function() {
@@ -815,7 +812,11 @@ function cycleSubmit(fieldSet, deviceId) {
         }
     }
 
-    $('#cycleSubmit').on('click',function(){
+    $('#cycleSubmit').one('click',function(){
+        var startTime = "";
+        var startTimeStamp = "";
+        var cycle = "";
+        var cycleUnit = "";
         startTime = $('#firstExecuteTime').val();
         startTimeStamp = Date.parse(new Date(startTime));
         // startTimeStamp = startTimeStamp / 1000;
@@ -854,3 +855,8 @@ function cycleSubmit(fieldSet, deviceId) {
         });
     });
 }
+
+// function test() {
+//     console.log("test");
+//     document.getElementById("delaySubmit").onclick = null;
+// }
