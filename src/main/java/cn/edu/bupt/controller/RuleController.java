@@ -167,7 +167,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
 
     @RequestMapping(value = "/delete/{ruleId}",method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    private String deleteRules(@PathVariable("ruleId") String ruleId)
+    public String deleteRules(@PathVariable("ruleId") String ruleId)
     {
         String requestAddr = "/api/rules/"+ruleId;
 
