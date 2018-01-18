@@ -6,6 +6,10 @@ label[class=error] {
     min-width: 800px;
 }
 
+#device_task_wrapper {
+    min-width: 800px;
+}
+
 .detail-block-header {
     margin: 10px 20px 20px 0;
 }

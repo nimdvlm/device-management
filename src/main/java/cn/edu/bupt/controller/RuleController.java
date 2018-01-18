@@ -173,7 +173,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     public String deleteRules(@PathVariable("ruleId") String ruleId)
     {
-        String requestAddr = "/api/rules/"+ruleId;
+        String requestAddr = "/api/rule/"+ruleId;
 
         String responseContent = null;
         try{
@@ -183,6 +183,27 @@ public class RuleController extends DefaultThingsboardAwaredController{
         }catch(Exception e){
             return retFail(e.toString()) ;
         }
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String createRule(@RequestBody String ruleInfo)
+    {
+        String requestAddr = "/api/rule";
+
+        JsonObject ruleInfoJson = (JsonObject)new JsonParser().parse(ruleInfo);
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    ruleInfoJson,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
         return retSuccess(responseContent);
     }
 

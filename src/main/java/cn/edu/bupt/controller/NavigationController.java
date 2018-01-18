@@ -60,6 +60,9 @@ public class NavigationController {
         return "rules";
     }
 
+    @RequestMapping("/plugins")
+    public String  plugins() { return "plugins"; }
+
     @RequestMapping("/assess")
     public String  assess() {
         return "assess";
