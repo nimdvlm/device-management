@@ -55,6 +55,11 @@ public class NavigationController {
         return "services";
     }
 
+    @RequestMapping("/rules")
+    public String  rules() {
+        return "rules";
+    }
+
     @RequestMapping("/assess")
     public String  assess() {
         return "assess";
