@@ -1,20 +1,4 @@
 $(function () {
-    /*   $('#123').click(function () {
-           $.ajax({
-               url: "/api/service/serviceTables",
-               type: "GET",
-               contentType: "application/json;charset=utf-8",
-               dataType: "text",
-               success: function (result) {
-
-                   console.log(result);
-
-               },
-               error: function (msg) {
-                   alert(msg.message);
-               }
-           });
-       })*/
     var model1;
     var manufacture1;
     var deviceType1;
@@ -55,7 +39,7 @@ $(function () {
             }
         },//多语言配置
         ajax: {
-            url: "/api/service/serviceTables",
+            url: "/api/rule/allRules",
             dataSrc: ""
         },
         //默认最后一列（最后更新时间）降序排列
@@ -67,8 +51,9 @@ $(function () {
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-success create" style="cursor:pointer" data-toggle="modal" data-target="#creModal" name="' + model + '" id="' + deviceType + '" data="' + manufacture + '">' + '+激活' + '</a>'
-                        + '<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delSerModal" name="' + model + '" id="' + deviceType + '" data="' + manufacture + '">' + '删除' + '</a>';
+                    return '<a class="btn-sm btn-danger delete" style="cursor:pointer" data-toggle="modal" data-target="#deleteModal" id="' + row.id.id + '">' + '删除' + '</a>'
+                        + '<a class="btn-sm btn-success active" style="cursor:pointer" id="' + row.id.id + '">' + '激活' + '</a>'
+                        + '<a class="btn-sm btn-danger suspend" style="cursor:pointer" id="' + row.id.id + '">' + '暂停' + '</a>';
                 }
             },
 
@@ -78,9 +63,7 @@ $(function () {
                 data: null,
                 title: "当前状态",
                 render: function (data, type, row, meta) {
-                    console.log(row);
-                    model = row.coordinate.split('%')[2];
-                    return model;
+                    return row.state;
                 }
             },
             {
@@ -89,8 +72,7 @@ $(function () {
                 data: null,
                 title: "创建时间",
                 render: function (data, type, row, meta) {
-                    deviceType = row.coordinate.split('%')[1];
-                    return deviceType;
+                    return row.createdTime;
                 }
             },
             {
@@ -99,251 +81,17 @@ $(function () {
                 data: null,
                 title: "规则名称",
                 render: function (data, type, row, meta) {
-                    manufacture = row.coordinate.split('%')[0];
-                    return '<a class="show" name="' + row.coordinate.split('%')[2] + '" id="' + row.coordinate.split('%')[1] + '" data="' + row.coordinate.split('%')[0] + '">' + row.coordinate.split('%')[0] + '</a>';
+                    return row.name;
                 }
             }
         ],
         initComplete: function () {
-//               $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="'+manufacture+'" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
-            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" data-toggle="modal" data-target="#mm">+ 创建规则</button>');
+//               $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="'+manufacture+'" data-toggle="modal" data-target="#CreateRulesModal">+ 创建服务组</button>');
+            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" data-toggle="modal" data-target="#CreateRulesModal">+ 创建规则</button>');
         }
     });
-/*//展示规则
-    $('#dataTables-example').on('click', 'tr .show', function () {
-        console.log("show1");
-        var deviceType = $(this).attr('id');
-        deviceType1 = deviceType;
-        var model = $(this).attr('name');
-        model1 = model;
-        var manufacture = $(this).attr('data');
-        manufacture1 = manufacture;
-        console.log(deviceType1);
-        console.log(model1);
-        console.log(manufacture1);
-        if ($.fn.dataTable.isDataTable('#dataTables-show')) {
-//table.destroy();
-            $('#dataTables-show').DataTable().destroy();
-            console.log('aa')
-        }
-        table = $('#dataTables-show').DataTable({
-            "aLengthMenu": [5, 10, 25, 50, 100],
-            "bPaginate": true,
-            "bAutoWidth": false,
-            "oLanguage": {
-                "sProcessing": "正在加载中......",
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "对不起，查询不到相关数据！",
-                "sEmptyTable": "表中无数据存在！",
-                "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
-                "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
-                "sSearch": "搜索",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "上一页",
-                    "sNext": "下一页",
-                    "sLast": "末页"
-                }
-            },//多语言配置
-            ajax: {
-                url: "/api/service/services/" + manufacture + "/" + deviceType + "/" + model + "/tail",
-                dataSrc: ""
-            },
-            //默认最后一列（最后更新时间）降序排列
-            order: [[2, "desc"]],
-            columnDefs: [
-                {
-                    targets: 3,
-                    width:"25%",
-                    data: "updated_at",
-                    title: "操作",
-                    render: function (data, type, row, meta) {
-                        return '<a class="btn-sm btn-danger delDev" data-toggle="modal" data-target="#delServiceModal" style="cursor:pointer" id="' + row.serviceName + '">' + '删除' + '</a>';
-                    }
-                },
 
-                {
-                    targets: 2,
-                    width:"25%",
-                    data: null,
-                    title: "服务类型",
-                    render: function (data, type, row, meta) {
-                        return row.serviceType;
-                    }
-                },
-                {
-                    targets: 1,
-                    width:"25%",
-                    data: null,
-                    title: "服务描述",
-                    render: function (data, type, row, meta) {
-                        return row.serviceDescription;
-                    }
-                },
-                {
-                    targets: 0,
-                    width:"25%",
-                    data: null,
-                    title: "服务名称",
-                    render: function (data, type, row, meta) {
-                        return row.serviceName;
-                    }
-                }
-            ],
-            // initComplete: function () {
-            //     $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="' + manufacture + '" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
-            // }
-        });
-    });*/
-/*//创建规则
-    $('#addParams').on('click', function () {
-        var input = document.createElement("input");
-        var p = document.createElement("p");
-        $('#param').append(p);
-        $('#param').append(input);
-    });
-    $('#dataTables-example').on('click', 'tr .create', function () {
-//$("#param").empty();
-        console.log("create service");
-        var manufacture = $(this).attr('data');
-        var deviceType = $(this).attr('id');
-        var model = $(this).attr('name');
-        console.log(deviceType);
-        console.log(manufacture);
-        console.log(model);
-        $('#rulesName').val(manufacture);
-        $('#createTime').val(deviceType);
-        $('#currentStatus').val(model);
-
-    });
-    $('#serviceType').on('change', function () {
-        var serviceType = $('#serviceType').val();
-        if(serviceType == 'thirdparty'){
-            $('#hideDiv').css('display','block');
-        }else{
-            $('#hideDiv').css('display','none');
-            $('#protocol').val('');
-            $('#url').val('');
-
-        }
-        console.log("serviceType:"+serviceType)
-    })
-    $('#confirmcre').on('click', function () {
-        var manufacture = $('#rulesName').val();
-        console.log("manufacture:"+manufacture);
-        var deviceType = $('#createTime').val();
-        console.log("deviceType:"+deviceType);
-        var model = $('#currentStatus').val();
-        console.log("model:"+model);
-        var serviceName = $('#serviceName').val();
-        console.log("serviceName:"+serviceName)
-        var serviceDescription = $('#serviceDescription').val();
-        console.log("serviceDescription"+serviceDescription);
-        var serviceType = $('#serviceType').val();
-        var protocol = $('#protocol').val();
-        console.log("protocol:"+protocol);
-        var url = $('#url').val();
-        console.log("url:"+url);
-        var requireResponce = $('#requireResponce').val();
-        console.log("requireResponce:"+requireResponce);
-        var methodName = $('#methodName').val();
-        console.log("methodName:"+methodName);
-        var a = [];
-        for (var i = 0; i < $('#param').find('input').length; i++) {
-            var b = $('#param').find('input')[i].value;
-            b = b.split(':');
-            console.log(b[0])
-            console.log(b[1])
-            a[b[0]] = b[1];
-        }
-        console.log(a)
-        var s = '{';
-        for (key in a) {
-            s += '"' + key + '":"' + a[key] + '",'
-        }
-        s = s.slice(0, s.length - 1)
-        s += '}'
-        console.log(s)
-
-        var s1 = JSON.parse(s);
-
-        $.ajax({
-            url: "/api/service/saveServiceToGroup",
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            data: JSON.stringify({
-                    "manufacture": manufacture,
-                    "deviceType": deviceType,
-                    "model": model,
-                    "description":
-                        {
-                            "serviceName": serviceName,
-                            "serviceDescription": serviceDescription,
-                            //"serviceDescription": serviceDescription,
-                            "serviceType": serviceType,
-                            "protocol": protocol,
-                            "url": url,
-                            "requireResponce": requireResponce,
-                            "serviceBody":
-                                {
-                                    "methodName": methodName,
-                                    "params": s1
-                                }
-                        }
-                }
-            ),
-            dataType: "text",
-            success: function (result) {
-                $('#creModal').modal('hide')
-                $('#last').on('click', function () {
-                    window.location.href = "services";
-                });
-//                         var obj = JSON.parse(result);
-                console.log("创建服务成功！");
-            },
-            error: function (msg) {
-                alert(msg.message);
-            }
-        })
-    });*/
-/*//删除服务组里的服务
-    $('#dataTables-show').on('click', 'tr .delDev', function () {
-        //$('#devDel').val($(this).attr('id'));
-        serviceName1 = $(this).attr('id');
-        console.log(serviceName1);
-        console.log(deviceType1);
-        console.log(manufacture1);
-        console.log(model1);
-    });
-    $('#ServiceDelete').on('click', function () {
-        console.log(model1, manufacture1, deviceType1, serviceName1);
-        $.ajax({
-            url: "/api/service/deleteServiceFromGroup/" ,
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            data: JSON.stringify({
-                    "manufacture": manufacture1,
-                    "deviceType": deviceType1,
-                    "model": model1,
-                    "serviceName": serviceName1,
-                }
-            ),
-            dataType: "text",
-            success: function (result) {
-                //var obj = JSON.parse(result);
-                console.log("delete service success");
-                $('#delServiceModal').modal('hide')
-                $('#lastService').on('click', function () {
-                    window.location.href = "services";
-                });
-            },
-            error: function (msg) {
-                alert(msg.message);
-            }
-        });
-    });
-//*/
-//创建服务组
+/*//创建服务组
     $('#create').on('click', function () {
         var manufacture = $('#manufacture').val();
         var deviceType = $('#deviceType').val();
@@ -367,7 +115,7 @@ $(function () {
                     alert("create success");
 
                     $('#createSuc').modal('show');
-                    $('#mm').modal('hide');
+                    $('#CreateRulesModal').modal('hide');
 
                     $('#lastCreate').on('click', function () {
                         window.location.href = "services";
@@ -385,47 +133,38 @@ $(function () {
         }
     });
     $('#cancle').on('click', function () {
-        $('#mm').modal('hide');
+        $('#CreateRulesModal').modal('hide');
 
     })
-    $('#mm').on('hide.bs.modal', function () {
+    $('#CreateRulesModal').on('hide.bs.modal', function () {
         console.log('hideeee');
 
         document.getElementById("createServiceGroup").reset();
-    });
+    });*/
 
-    var manufacture2;
-    var deviceType2;
-    var model2;
+    var ruleId;
 
-//删除服务组
-    $('#dataTables-example').on('click', 'tr .del', function () {
-        console.log('name:' + $(this).attr('data'));
+//删除
+    $('#dataTables-example').on('click', 'tr .delete', function () {
         console.log('id:' + $(this).attr('id'));
-        console.log('data:' + $(this).attr('name'));
-        manufacture2 = $(this).attr('data');
-        deviceType2 = $(this).attr('id');
-        model2 = $(this).attr('name');
-        //$('#confirmDel').val($(this).attr('id'));
+        ruleId = $(this).attr('id');
     });
     $('#SerDelete').on('click', function () {
         $.ajax({
-            url: "/api/service/deleteGroup/" ,
+            url: "/api/rule/delete/" + ruleId,
             type: "POST",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({
-                    "manufacture": manufacture2,
-                    "deviceType": deviceType2,
-                    "model": model2,
+                    "id": ruleId,
                 }
             ),
             dataType: "text",
             success: function (result) {
                 //var obj = JSON.parse(result);
-                console.log("delete service group success");
-                $('#delSerModal').modal('hide')
-                $('#lastSer').on('click', function () {
-                    window.location.href = "services";
+                console.log("delete rule success");
+                $('#deleteModal').modal('hide')
+                $('#lastDelete').on('click', function () {
+                    window.location.href = "rules";
                 });
             },
             error: function (msg) {
@@ -433,4 +172,59 @@ $(function () {
             }
         });
     });
+
+//激活
+    $('#dataTables-example').on('click', 'tr .active', function () {
+        console.log('id:' + $(this).attr('id'));
+        ruleId = $(this).attr('id');
+        $.ajax({
+            url: "/api/rule/active/" + ruleId,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({
+                    "id": ruleId,
+                }
+            ),
+            dataType: "text",
+            success: function (result) {
+                //var obj = JSON.parse(result);
+                console.log("active rule success");
+                $('#deleteModal').modal('hide')
+                window.location.href = "rules";
+            },
+            error: function (msg) {
+                alert(msg.message);
+            }
+        });
+    });
+
+
+//暂停
+    $('#dataTables-example').on('click', 'tr .suspend', function () {
+        console.log('id:' + $(this).attr('id'));
+        ruleId = $(this).attr('id');
+        $.ajax({ 
+            url: "/api/rule/suspend/" +ruleId,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({
+                    "id": ruleId,
+                }
+            ),
+            dataType: "text",
+            success: function (result) {
+                //var obj = JSON.parse(result);
+                console.log("suspend rule success");
+                window.location.href = "rules";
+            },
+            error: function (msg) {
+                alert(msg.message);
+            }
+        });
+    });
+
+
+
 });
+
+

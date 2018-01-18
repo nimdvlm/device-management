@@ -129,6 +129,84 @@ public class RuleController extends DefaultThingsboardAwaredController{
        return retSuccess(responseContent);
     }
 
+    @RequestMapping(value = "/active/{ruleId}",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String active(@PathVariable("ruleId") String ruleId)
+    {
+        String requestAddr = "/api/rule/"+ruleId+"/activate";
+        JsonObject requestbody=new JsonObject();
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    requestbody,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/suspend/{ruleId}",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String suspend(@PathVariable("ruleId") String ruleId)
+    {
+        String requestAddr = "/api/rule/"+ruleId+"/suspend";
+        JsonObject requestbody=new JsonObject();
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    requestbody,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/delete/{ruleId}",method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String deleteRules(@PathVariable("ruleId") String ruleId)
+    {
+        String requestAddr = "/api/rule/"+ruleId;
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getServer() + requestAddr,
+                    request.getSession());
+
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String createRule(@RequestBody String ruleInfo)
+    {
+        String requestAddr = "/api/rule";
+
+        JsonObject ruleInfoJson = (JsonObject)new JsonParser().parse(ruleInfo);
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    ruleInfoJson,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
     private String getErrorMsg(Exception e) {
         JsonObject errorInfoJson = new JsonObject();
         errorInfoJson.addProperty("responce_code", 1);

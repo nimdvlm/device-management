@@ -40,18 +40,20 @@ $(function () {
             dataSrc: ""
         },
         //默认最后一列（最后更新时间）降序排列
-        order: [[ 2, "desc" ]],
+        order: [[ 3, "desc" ]],
         columnDefs: [
             {
                 targets: 5,
+                width: "20%",
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-danger del" style="cursor:hand" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:hand" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.deviceId+'" name="'+row.name+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:hand" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
+                    return '<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:pointer" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.deviceId+'" name="'+row.name+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:pointer" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
                 }
             },
             {
                 targets: 4,
+                width: "8%",
                 data: null,
                 title: "状态",
                 render: function (data, type, row, meta) {
@@ -60,6 +62,7 @@ $(function () {
             },
             {
                 targets: 3,
+                width: "20%",
                 data: null,
                 title: "创建时间",
                 render: function (data, type, row, meta) {
@@ -68,15 +71,16 @@ $(function () {
             },
             {
                 targets: 2,
+                width: "22%",
                 data: null,
                 title: "描述",
-                width: "20%",
                 render: function (data, type, row, meta) {
                     return row.additionalInfo;
                 }
             },
             {
                 targets: 1,
+                width: "15%",
                 data: null,
                 title: "类型",
                 render: function (data, type, row, meta) {
@@ -85,10 +89,12 @@ $(function () {
             },
             {
                 targets: 0,
+                width: "15%",
                 data: "title",
                 title: "设备名称",
                 render: function (data, type, row, meta) {
-                    return row.name;
+                    var deviceId = row.deviceId;
+                    return '<a class="show" id="' + deviceId + '" >' + row.name + '</a>';
                 }
             }
         ],
@@ -96,6 +102,118 @@ $(function () {
             $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" id="add_device_btn" data-toggle="modal" data-target="#createDeviceModal">+ 创建设备</button>');
         }
     });
+
+    // 展示设备任务列表
+    $('#devices_table').on('click', 'tr .show', function () {
+        var deviceId = $(this).attr('id');
+        console.log(deviceId);
+        if ($.fn.dataTable.isDataTable('#device_task')) {
+            $('#device_task').DataTable().destroy();
+            console.log('aa')
+        }
+        $('#device_task').DataTable({
+            "aLengthMenu": [5, 10, 25, 50, 100],
+            "bPaginate": true,
+            "bAutoWidth": false,
+            "oLanguage": {
+                "sProcessing": "正在加载中......",
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "对不起，查询不到相关数据！",
+                "sEmptyTable": "表中无数据存在！",
+                "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+                "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
+                "sSearch": "搜索",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上一页",
+                    "sNext": "下一页",
+                    "sLast": "末页"
+                }
+            },//多语言配置
+            ajax: {
+                url: "/api/shadow/task/list/" + deviceId,
+                dataSrc: ""
+            },
+            //默认最后一列（最后更新时间）降序排列
+            order: [[2, "desc"]],
+            columnDefs: [
+                {
+                    targets: 3,
+                    width:"10%",
+                    data: "updated_at",
+                    title: "操作",
+                    render: function (data, type, row, meta) {
+                        return '<a class="btn-sm btn-danger cancelTask" data-toggle="modal" data-target="#cancelTaskModal" style="cursor:pointer" id="' + row.id + '" name="' + deviceId + '">' + '取消' + '</a>';
+                    }
+                },
+
+                {
+                    targets: 2,
+                    width:"15%",
+                    data: null,
+                    title: "任务状态",
+                    render: function (data, type, row, meta) {
+                        if (row.iscanceled) {
+                            return "已取消";
+                        }
+                        else {
+                            return "执行中";
+                        }
+                        // return row.serviceType;
+                    }
+                },
+                {
+                    targets: 1,
+                    width:"50%",
+                    data: null,
+                    title: "任务描述",
+                    render: function (data, type, row, meta) {
+                        return row.description;
+                    }
+                },
+                {
+                    targets: 0,
+                    width:"25%",
+                    data: null,
+                    title: "任务ID",
+                    render: function (data, type, row, meta) {
+                        return row.id;
+                    }
+                }
+            ]
+        });
+    });
+
+    // 取消设备任务
+    $('#device_task').on('click', 'tr .cancelTask', function () {
+        var taskId = $(this).attr('id');
+        var deviceId = $(this).attr('name');
+        console.log(taskId);
+        console.log(deviceId);
+        $('#confirmCancel').val(taskId + "/" + deviceId);
+    });
+    $('#cancelConfirm').on('click', function() {
+        var arr = $('#confirmCancel').val().split('/');
+        console.log(arr);
+        var deviceId = arr[0];
+        var taskId = arr[1];
+        $.ajax({
+            url: "/api/shadow/task/cancel/" + deviceId + "/" + taskId,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            data: "",
+            dataType: "text",
+            success: function (result) {
+                console.log("success");
+                $('#cancelTaskModal').modal('hide');
+                window.location.href = "homepage";
+                $('#device_task').ajax.reload();
+            },
+            error: function(msg) {
+                alert(msg.message);
+            }
+        });
+    })
 
     // 获取厂商列表
     $.ajax({
@@ -239,7 +357,7 @@ $(function () {
         }
     });
 
-//删除功能
+//删除设备功能
     $('#devices_table').on('click','tr .del', function () {
         console.log($(this).attr('id'))
         $('#confirmDel').val($(this).attr('id'))
@@ -677,8 +795,6 @@ function commonSubmit(fieldSet, deviceId) {
 
 // 延时执行，需设置延时时间
 function delaySubmit(fieldSet, deviceId) {
-    var delayTime = "";
-    var delayTimeStamp = ""; // 时间戳格式  怎么转换????
     // 显示选择延时时间点的模态框
     $('#delayModal').modal('show');
     $('#delayClose').on('click', function() {
@@ -726,7 +842,14 @@ function delaySubmit(fieldSet, deviceId) {
         }
     }
 
-    $('#delaySubmit').on('click',function(){
+    var json = '{';
+    for (var j = 0; j < keys.length; j++) {
+        json += '"' + keys[j] +'":"' + values[j] + '",';
+    }
+
+    $('#delaySubmit').one('click',function(){
+        var delayTime = "";
+        var delayTimeStamp = ""; // 时间戳格式  怎么转换????
         delayTime = $('#inputDelayTime').val();
         delayTimeStamp = Date.parse(new Date(delayTime));
         // delayTimeStamp = delayTimeStamp / 1000;
@@ -736,10 +859,6 @@ function delaySubmit(fieldSet, deviceId) {
             $('body').addClass('modal-open')
         },1000);
 
-        var json = '{';
-        for (var j = 0; j < keys.length; j++) {
-            json += '"' + keys[j] +'":"' + values[j] + '",';
-        }
         json += '"startTime":"' + delayTimeStamp + '",';
         json = json.slice(0,json.length-1);
         json += '}';
@@ -764,10 +883,6 @@ function delaySubmit(fieldSet, deviceId) {
 
 // 周期执行，需设置开始时间与周期
 function cycleSubmit(fieldSet, deviceId) {
-    var startTime = "";
-    var startTimeStamp = "";
-    var cycle = "";
-    var cycleUnit = "";
     // 显示选择延时时间点的模态框
     $('#cycleModal').modal('show');
     $('#cycleClose').on('click', function() {
@@ -815,7 +930,11 @@ function cycleSubmit(fieldSet, deviceId) {
         }
     }
 
-    $('#cycleSubmit').on('click',function(){
+    $('#cycleSubmit').one('click',function(){
+        var startTime = "";
+        var startTimeStamp = "";
+        var cycle = "";
+        var cycleUnit = "";
         startTime = $('#firstExecuteTime').val();
         startTimeStamp = Date.parse(new Date(startTime));
         // startTimeStamp = startTimeStamp / 1000;
@@ -854,3 +973,8 @@ function cycleSubmit(fieldSet, deviceId) {
         });
     });
 }
+
+// function test() {
+//     console.log("test");
+//     document.getElementById("delaySubmit").onclick = null;
+// }
