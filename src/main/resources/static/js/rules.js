@@ -67,7 +67,7 @@ $(function () {
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-success create" style="cursor:pointer" data-toggle="modal" data-target="#creModal" name="' + model + '" id="' + deviceType + '" data="' + manufacture + '">' + '+创建服务' + '</a>'
+                    return '<a class="btn-sm btn-success create" style="cursor:pointer" data-toggle="modal" data-target="#creModal" name="' + model + '" id="' + deviceType + '" data="' + manufacture + '">' + '+激活' + '</a>'
                         + '<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delSerModal" name="' + model + '" id="' + deviceType + '" data="' + manufacture + '">' + '删除' + '</a>';
                 }
             },
@@ -76,7 +76,7 @@ $(function () {
                 targets: 2,
                 width:"25%",
                 data: null,
-                title: "设备型号",
+                title: "当前状态",
                 render: function (data, type, row, meta) {
                     console.log(row);
                     model = row.coordinate.split('%')[2];
@@ -87,7 +87,7 @@ $(function () {
                 targets: 1,
                 width:"25%",
                 data: null,
-                title: "设备类型",
+                title: "创建时间",
                 render: function (data, type, row, meta) {
                     deviceType = row.coordinate.split('%')[1];
                     return deviceType;
@@ -97,7 +97,7 @@ $(function () {
                 targets: 0,
                 width:"25%",
                 data: null,
-                title: "厂商",
+                title: "规则名称",
                 render: function (data, type, row, meta) {
                     manufacture = row.coordinate.split('%')[0];
                     return '<a class="show" name="' + row.coordinate.split('%')[2] + '" id="' + row.coordinate.split('%')[1] + '" data="' + row.coordinate.split('%')[0] + '">' + row.coordinate.split('%')[0] + '</a>';
@@ -106,10 +106,10 @@ $(function () {
         ],
         initComplete: function () {
 //               $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="'+manufacture+'" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
-            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
+            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" data-toggle="modal" data-target="#mm">+ 创建规则</button>');
         }
     });
-//展示设备组
+/*//展示规则
     $('#dataTables-example').on('click', 'tr .show', function () {
         console.log("show1");
         var deviceType = $(this).attr('id');
@@ -194,8 +194,8 @@ $(function () {
             //     $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm create" id="' + manufacture + '" data-toggle="modal" data-target="#mm">+ 创建服务组</button>');
             // }
         });
-    });
-//创建服务
+    });*/
+/*//创建规则
     $('#addParams').on('click', function () {
         var input = document.createElement("input");
         var p = document.createElement("p");
@@ -211,9 +211,9 @@ $(function () {
         console.log(deviceType);
         console.log(manufacture);
         console.log(model);
-        $('#manufactureCre').val(manufacture);
-        $('#deviceTypeCre').val(deviceType);
-        $('#modelCre').val(model);
+        $('#rulesName').val(manufacture);
+        $('#createTime').val(deviceType);
+        $('#currentStatus').val(model);
 
     });
     $('#serviceType').on('change', function () {
@@ -229,11 +229,11 @@ $(function () {
         console.log("serviceType:"+serviceType)
     })
     $('#confirmcre').on('click', function () {
-        var manufacture = $('#manufactureCre').val();
+        var manufacture = $('#rulesName').val();
         console.log("manufacture:"+manufacture);
-        var deviceType = $('#deviceTypeCre').val();
+        var deviceType = $('#createTime').val();
         console.log("deviceType:"+deviceType);
-        var model = $('#modelCre').val();
+        var model = $('#currentStatus').val();
         console.log("model:"+model);
         var serviceName = $('#serviceName').val();
         console.log("serviceName:"+serviceName)
@@ -305,8 +305,8 @@ $(function () {
                 alert(msg.message);
             }
         })
-    });
-//删除服务组里的服务
+    });*/
+/*//删除服务组里的服务
     $('#dataTables-show').on('click', 'tr .delDev', function () {
         //$('#devDel').val($(this).attr('id'));
         serviceName1 = $(this).attr('id');
@@ -342,7 +342,7 @@ $(function () {
             }
         });
     });
-//
+//*/
 //创建服务组
     $('#create').on('click', function () {
         var manufacture = $('#manufacture').val();

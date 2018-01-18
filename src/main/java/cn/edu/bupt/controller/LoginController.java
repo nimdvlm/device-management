@@ -56,7 +56,7 @@ public class LoginController extends DefaultThingsboardAwaredController {
         return json.toString();
     }
 
-    @RequestMapping(value = "/logout")
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession();
         session.removeAttribute("username");

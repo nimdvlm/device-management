@@ -48,13 +48,13 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                 </li>
                 <li><a href="homepage"><span class="glyphicon glyphicon-th-list"></span> <span> 设备列表</span></a></li>
                 <li><a href="device_group"><span class="glyphicon glyphicon-inbox"></span> 设备组</a></li>
+                <li><a href="services"><span class="glyphicon glyphicon-leaf"></span> <span> 服务管理</span></a></li>
                 <li class="active" style="background:red;">
-                    <a href="services">
-                        <span class="glyphicon glyphicon-leaf"></span>
-                        <span> 服务管理</span>
+                    <a href="rules">
+                        <span class="glyphicon glyphicon-search"></span>
+                        <span> 规则管理</span>
                     </a>
                 </li>
-                <li><a href="rules"><span class="glyphicon glyphicon-search"></span> 规则管理 </a></li>
                 <li><a href="assess"><span class="glyphicon glyphicon-edit"></span> 能力评估</a></li>
             </ul>
         </div>
@@ -64,7 +64,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
         <div id="page-inner">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">服务组</h3>
+                    <h3 class="panel-title">规则组</h3>
                     <!--<button id="123">测试</button>-->
                 </div>
                 <div class="panel-body">
@@ -73,7 +73,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         </table>
                     </div>
                 </div>
-                <div class="panel-heading" style="background-color: cornflowerblue;">
+<!--                <div class="panel-heading" style="background-color: cornflowerblue;">
                     <h3 class="panel-title">查看服务</h3>
                 </div>
                 <div class="panel-body">
@@ -81,7 +81,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         <table id="dataTables-show" class="table table-striped table-bordered table-hover">
                         </table>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
@@ -94,24 +94,24 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
 </div>
 <!-- /. PAGE WRAPPER  -->
 <!-- /. WRAPPER  -->
-<!--创建模态框-->
+<!--创建模态框
 <div class="modal fade" id="creModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">创建服务</h4>
+                <h4 class="modal-title" id="myModalLabel">创建规则</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12">
                         <div style="display: none;">
-                        厂商
-                        <input type="text" class="form-control" placeholder="" id="manufactureCre" disabled="disabled">
-                        设备类型
-                        <input type="text" class="form-control" placeholder="" id="deviceTypeCre" disabled="disabled">
-                        设备型号
-                        <input type="text" class="form-control" placeholder="" id="modelCre" disabled="disabled">
+                            规则名称
+                            <input type="text" class="form-control" placeholder="" id="rulesName" disabled="disabled">
+                            创建时间
+                            <input type="text" class="form-control" placeholder="" id="createTime" disabled="disabled">
+                            当前状态
+                            <input type="text" class="form-control" placeholder="" id="currentStatus" disabled="disabled">
                         </div>
                         <b>服务名称</b>
                         <input type="text" value="" class="form-control" placeholder="必填" id="serviceName">
@@ -129,14 +129,14 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                             <input type="text"  value="" class="form-control" id="url">
 
                         </div>
-                         <b>请求回复</b>
+                        <b>请求回复</b>
                         <select type="text" class="form-control" id="requireResponce">
                             <option value="true">true</option>
                             <option value="false">false</option>
                         </select>
-                        <!--<input type="text" class="form-control" placeholder="请输入请求回复" id="requireResponce">-->
-                    <!--</div>
-                    <div class="col-lg-6">-->
+                        &lt;!&ndash;<input type="text" class="form-control" placeholder="请输入请求回复" id="requireResponce">&ndash;&gt;
+                        &lt;!&ndash;</div>
+                        <div class="col-lg-6">&ndash;&gt;
                         <b>服务体</b><br>
                         &nbsp;&nbsp;&nbsp;方法名
                         <input type="text" value="" class="form-control" placeholder="" id="methodName">
@@ -157,31 +157,31 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
         </div>
     </div>
 </div>
-<!--创建模态框-->
+&lt;!&ndash;创建模态框&ndash;&gt;
 <div class="modal fade" id="cresModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-                <!--<h4 class="modal-title" id="myModalLabel">删除设备</h4>-->
+                &lt;!&ndash;<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>&ndash;&gt;
+                &lt;!&ndash;<h4 class="modal-title" id="myModalLabel">删除设备</h4>&ndash;&gt;
             </div>
             <div class="modal-body">
                 <p>创建成功！</p>
             </div>
             <div class="modal-footer">
-                <!--<button type="button" class="btn btn-primary" id="delete" data-toggle="modal" data-target="#delsModal">确认</button>-->
+                &lt;!&ndash;<button type="button" class="btn btn-primary" id="delete" data-toggle="modal" data-target="#delsModal">确认</button>&ndash;&gt;
                 <button type="button" class="btn btn-default" data-dismiss="modal" id="last">确定</button>
             </div>
         </div>
     </div>
-</div>
+</div>-->
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="mm" tabindex="-1" role="dialog" aria-labelledby="mmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="mmLabel">创建服务组</h4>
+                <h4 class="modal-title" id="mmLabel">创建规则</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form" action="#" id="createServiceGroup">
@@ -236,14 +236,14 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
     </div>
 </div>
 
-<!--删除服务组模态框1-->
+<!--删除规则模态框1-->
 <div class="modal fade" id="delSerModal" tabindex="-1" role="dialog" aria-labelledby="delSerModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="delSerModalLabel">删除服务组</h4>
+                <h4 class="modal-title" id="delSerModalLabel">删除规则</h4>
             </div>
             <div class="modal-body">
                 <p>确认删除吗？</p>
@@ -258,7 +258,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
         </div>
     </div>
 </div>
-<!--删除服务组模态框2-->
+<!--删除规则2-->
 <div class="modal fade" id="delsSerModal" tabindex="-1" role="dialog" aria-labelledby="delSerModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -279,7 +279,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
 </div>
 
 
-<!--删除服务模态框1-->
+<!--&lt;!&ndash;删除服务模态框1&ndash;&gt;
 <div class="modal fade" id="delServiceModal" tabindex="-1" role="dialog" aria-labelledby="delServiceModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -301,25 +301,25 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
         </div>
     </div>
 </div>
-<!--删除服务模态框2-->
+&lt;!&ndash;删除服务模态框2&ndash;&gt;
 <div class="modal fade" id="delsServiceModal" tabindex="-1" role="dialog" aria-labelledby="delServiceModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-                <!--<h4 class="modal-title" id="myModalLabel">删除设备</h4>-->
+                &lt;!&ndash;<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>&ndash;&gt;
+                &lt;!&ndash;<h4 class="modal-title" id="myModalLabel">删除设备</h4>&ndash;&gt;
             </div>
             <div class="modal-body">
                 <p>删除成功！</p>
             </div>
             <div class="modal-footer">
-                <!--<button type="button" class="btn btn-primary" id="delete" data-toggle="modal" data-target="#delsModal">确认</button>-->
+                &lt;!&ndash;<button type="button" class="btn btn-primary" id="delete" data-toggle="modal" data-target="#delsModal">确认</button>&ndash;&gt;
                 <button type="button" class="btn btn-default" data-dismiss="modal" id="lastService">确定</button>
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->

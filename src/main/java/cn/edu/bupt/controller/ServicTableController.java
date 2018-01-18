@@ -55,6 +55,10 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
 
     @RequestMapping("/deleteServiceFromGroup")
     public String deleteServiceFromGroup(@RequestBody String json) {
+        // model
+        // manufacture
+        // deviceType
+        // df
         String url = "http://"+getServer()+"/api/servicetable/delete";
         try{
             JsonObject asJsonObject = (JsonObject)new JsonParser().parse(json);
