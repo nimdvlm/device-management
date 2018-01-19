@@ -44,11 +44,11 @@ $(function () {
         columnDefs: [
             {
                 targets: 5,
-                width: "20%",
+                width: "22%",
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:pointer" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.deviceId+'" name="'+row.name+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:pointer" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
+                    return '<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:pointer" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.deviceId+'" name="'+row.name+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:pointer" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>'+'<a class="btn-sm btn-info getToken" style="cursor:pointer" data-toggle="modal" data-target="#tokenModal" id="'+row.deviceId+'">'+'令牌'+'</a>';
                 }
             },
             {
@@ -71,7 +71,7 @@ $(function () {
             },
             {
                 targets: 2,
-                width: "22%",
+                width: "20%",
                 data: null,
                 title: "描述",
                 render: function (data, type, row, meta) {
@@ -386,7 +386,7 @@ $(function () {
             }
         });
     });
-//                分配功能
+    // 分配功能
     $('#devices_table').on('click','tr .assign', function () {
         $("#assGroup").empty();
         var deviceId = $(this).attr('id');
@@ -401,15 +401,19 @@ $(function () {
             dataType: "text",
             success: function (result) {
                 var obj = JSON.parse(result);
-                var groups = [];
-                for(x in obj){
-                    groups.push(obj[x].id);
+                var groupName = [];
+                var groupId = [];
+                for(var x in obj){
+                    groupName.push(obj[x].name);
+                    groupId.push(obj[x].id)
                 }
-                var optionstring = "";
-                for (var j = 0; j < groups.length; j++) {
-                    optionstring += "<option value=\"" + groups[j] + "\" >" + groups[j] + "</option>";
+                for (var j = 0; j < groupName.length; j++) {
+                    $('#assGroup').append('<option value="' + groupName[j] + '">' + groupName[j] + '</option>')
                 }
-                $('#assGroup').append(optionstring)
+                $('#assGroup').change(function () {
+                    var index = jQuery.inArray($('#assGroup').val(), groupName);
+                    $('#assGroup').attr('name', groupId[index]);
+                })
             },
             error: function (msg) {
                 alert(msg.message);
@@ -418,9 +422,9 @@ $(function () {
     });
     $('#assignDev').on('click',function(){
         var assName = $('#assName').val();
-        var assGroup = $('#assGroup').val();
+        var assGroup = $('#assGroup').attr('name');
         $.ajax({
-            url: "/api/group//assign/"+assName+"/"+assGroup,
+            url: "/api/group/assign/"+assName+"/"+assGroup,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             data: "",
@@ -677,6 +681,25 @@ $(function () {
         $('#detailClose').on('click',function(){
             $('#device_attribute_table').DataTable().clear().draw();
             window.location.href = "homepage";
+        });
+    } );
+
+    // 查看令牌功能
+    $('#devices_table').on('click','tr .getToken', function () {
+        var deviceId = $(this).attr('id');
+        $.ajax({
+            url: "/api/device/token/" + deviceId,
+            type: "GET",
+            contentType: "application/json:charset=utf-8",
+            data: "",
+            dataType: "text",
+            success: function(result) {
+                var obj = JSON.parse(result);
+                $('#token').text(obj.credentialsId);
+            },
+            error: function(msg) {
+                alert(msg.message);
+            }
         });
     } );
 
