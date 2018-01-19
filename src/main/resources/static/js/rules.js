@@ -260,7 +260,7 @@ $('#create').on('click', function () {
         if(FilterType == 'Message Type Filter'){
             var MessageType =$('#MessageType').val();
         }else{
-            var FilterDescription ==$('#FilterDescription').val();
+            var FilterDescription = $('#FilterDescription').val();
         }
     }
     var inputPluginActionName = $('#inputPluginActionName').val();
