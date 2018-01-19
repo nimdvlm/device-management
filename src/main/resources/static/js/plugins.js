@@ -218,35 +218,42 @@ $(function () {
 
         var Method=$('#pluginMethod').val();
 
-        $.ajax({
-            url:"/api/plugin/savePlugin",
-            type:"POST",
-            contentType: "application/json;charset=utf-8",
-            data: JSON.stringify({
-                    "additionalInfo":{"description":describe},
-                    "apiToken":apiToken,
-                    "clazz":"org.thingsboard.server.extensions.rest.plugin.RestApiCallPlugin",
-                    "configuration":{"authMethod":Method,
-                        "basePath":basePath,
-                        "host":host,
-                        "port":port.valueOf(),
-                        "protocol":protocol,
-                        "userName":"tenant@thingsboard.org",
-                        "password":"tenant"
-                    },
-                    "name":name
+        if(name!="" && apiToken!="" && host!=""&& ports!="" && basePath!="")
+        {
+            $.ajax({
+                url:"/api/plugin/savePlugin",
+                type:"POST",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                        "additionalInfo":{"description":describe},
+                        "apiToken":apiToken,
+                        "clazz":"org.thingsboard.server.extensions.rest.plugin.RestApiCallPlugin",
+                        "configuration":{"authMethod":Method,
+                            "basePath":basePath,
+                            "host":host,
+                            "port":port.valueOf(),
+                            "protocol":protocol,
+                            "userName":"tenant@thingsboard.org",
+                            "password":"tenant"
+                        },
+                        "name":name
+                    }
+                ),
+                dataType:"text",
+                success: function(result){
+                    alert("create plugins success");
+                    window.location.href = "plugins";
+                },
+                error: function (msg) {
+                    alert(msg.message);
                 }
-            ),
-            dataType:"text",
-            success: function(result){
-                console.log("create plugins success");
-                window.location.href = "plugins";
-            },
-            error: function (msg) {
-                alert(msg.message);
-            }
 
-        });
+            });
+        }
+        else
+        {
+            alert("请填写所有带*信息");
+        }
     });
 });
 

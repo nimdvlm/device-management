@@ -14,6 +14,8 @@
   <script type="text/javascript" src="../ThirdParty/requirejs-2.1.20/require.js"></script>
   <script type="text/javascript" src="./add_models.js"></script>
   <script type="text/javascript" src="./get_data.js"></script>
+  <script type="text/javascript" src="../Build/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../Build/plug-in.min.js"></script>
   <style type="text/css">
       @import url(../Build/Cesium/Widgets/widgets.css);
       html, body, #cesiumContainer {
@@ -27,11 +29,24 @@
       #coords{ width:350px; height:50px; position:absolute;
           background-color:rgba(255,255,255,0.1);color:black ;z-index:3}
       
-      #searchResults{ width:300px; height:400px; position:absolute;top: 125px;background-color:rgba(0,0,0,0.5);color:white ;z-index:6;display: none;}
-      #closeButton{background-color: rgba(0,0,0,0.5);display: inline-block;position: absolute;cursor: pointer;width: 20px;top: 1px;right: 1px;height: 20px;vertical-align: middle;color: white;font-size: 15px;text-align:center;line-height: 20px;z-index:7;
+      #searchResults{ width:auto; height:auto; position:absolute;top: 125px;background-color:rgba(0,0,0,0.5);color:white ;z-index:6;display: none;}
+      #closeButton{background-color: rgba(0,0,0,0.5);display: inline-block;position: absolute;cursor: pointer;width: 20px;top: -19px;right: 1px;height: 20px;vertical-align: middle;color: white;font-size: 15px;text-align:center;line-height: 20px;z-index:7;
       }
-      #Results{line-height: 20px;position: absolute;height: 400px;width: 300px;display: inline-block;
+      #Results{line-height: 20px;position: absolute;height: auto;width: auto;display: inline-block;
+        word-wrap: break-word;top: 125px;background-color:rgba(0,0,0,0.5);color:white ;z-index:6;
+      }
+      table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        position: relative;
+        font-size: 17px;
+        background-color: rgba(0,0,0,0.1);
+        left: 1px;
+        width:300px;
         word-wrap: break-word;
+      }
+      td,th {
+        border: 1px solid black;
       }
   </style>
 </head>
@@ -48,17 +63,13 @@
     float: right;
     margin: 5px auto;
     z-index: 5;">
-
     <input type="search" id="searchBox" class="cesium-geocoder-input" placeholder="Search Devices..." >
     <span class="cesium-geocoder-searchButton fa fa-2x fa-search" vertical="middle" onclick="searchDevice()" >
     </span>
 
   </div>
-  <div id="searchResults">
-    <span id="closeButton" class="fa fa-close" onclick="closeInfo()"></span>
-    <span id="Results"></span>
-  </div>
-  
+  <div id="Results"></div>
+
   <script>
 
 var viewer = new Cesium.Viewer('cesiumContainer', {
@@ -75,7 +86,9 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
 viewer.scene.globe.enableLighting = false;
 //viewer.extend(Cesium.viewerCesiumInspectorMixin);  //附加小模块
 //
-//
+//监测温湿度传感器2
+var all_devices = add_device_models();
+minitor_tempe_test();
 var canvas = viewer.scene.canvas; 
 //获取经纬度
 function getlanlon(){  
@@ -132,46 +145,25 @@ var scene = viewer.scene;
 
 //用ENTITY加载模型
 //
-function blink() {
-    var cur_color;
-    var blink = setInterval(function() {
-        var mydate = new Date();
-        var mySeconds = mydate.getMilliseconds();
-        if(mySeconds < 500)
-            cur_color = "Black";
-        else
-            cur_color =  "Red";
-        entity0.model.color = getColor(cur_color,2.0);
-    },500)
-}
-function getColor(colorName, alpha) {
 
-    var color = Cesium.Color[colorName.toUpperCase()];
-    return Cesium.Color.fromAlpha(color, parseFloat(alpha));
-}
-var entity0 = viewer.entities.add({
-    id:"9b829350-d026-11e7-a71a-974188b66f66",
-    position : Cesium.Cartesian3.fromDegrees(116.3537458249, 39.9616257093,15),
-    model : {
-        uri : './SampleData/my_models/QIUS.gltf',
-        //模型颜色，透明度
-        color : getColor("Red",2.0),
+// var entity0 = viewer.entities.add({
+//     id:"9b829350-d026-11e7-a71a-974188b66f66",
+//     position : Cesium.Cartesian3.fromDegrees(116.3537458249, 39.9616257093,15),
+//     model : {
+//         uri : './SampleData/my_models/QIUS.gltf',
+//         //模型颜色，透明度
+//         color : getColor("Red",2.0),
+//
+//         scale:1,
+//         rotation:Cesium.HeadingPitchRoll.fromDegrees(-45,-45, 0),
+//     },
+//     data : {
+//         originColor:Cesium.Color.ORANGE,
+//     }
+// });
 
-        scale:1,
-        rotation:Cesium.HeadingPitchRoll.fromDegrees(-45,-45, 0),
-    },
-    data : {
-        device_name : "管道探测",
-        device_ID :"00000000",
-        device_status : "great",
-        device_info1 : "-5℃",
-        device_info2 : "height:25M",
-        device_info3 : "815 is here~"
-    }
-});
-blink();
+//add_buildings_models();
 
-//add_models();
 
 // HTML overlay for showing feature name on mouseover
 var nameOverlay = document.createElement('div');
@@ -221,16 +213,18 @@ viewer.screenSpaceEventHandler.setInputAction(function onMouseMove(movement) {
 
     // Pick a new feature
     var pickedFeature = scene.pick(movement.endPosition);//primitive对象
-    
+
     if (!Cesium.defined(pickedFeature)) {
         nameOverlay.style.display = 'none';
         return;
     }
     cur_ID = pickedFeature.id.id;
 
-    getAjax("/api/3Dwebgis/device/"+cur_ID, function(response) {
-        var temp = JSON.parse(response);
 
+    getAjax("/api/3Dwebgis/device/"+cur_ID, function(response) {
+        //console.log(response);
+        var temp = JSON.parse(response);
+        //console.log(temp);
         var attri_data = {
             device_ID : cur_ID,
             device_Name : temp.name,
@@ -321,7 +315,7 @@ viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
                                  '<tr><th>附加信息</th><td>' + device_data.device_AdditionalInfo + '</td></tr>' +
                                  '</tbody></table>'
                                  +'<table class="cesium-infoBox-defaultTable"><tbody>' +
-                                 '<tr><th>遥测数据</th></tr>' +
+                                 '<tr ><td colspan="2" style="text-align: center">遥测数据</td></tr>' +
                                  '<tr><th>设备信息1</th><td>' + device_data.device_info1 + '</td></tr>' +
                                  '<tr><th>设备信息2</th><td>' + device_data.device_info2 + '</td></tr>' +
                                  '<tr><th>设备信息3</th><td>' + device_data.device_info3 + '</td></tr>' +

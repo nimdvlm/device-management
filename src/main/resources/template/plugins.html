@@ -20,7 +20,55 @@
         label.error {
             color: red !important;
         }
+        #content1,#content2,#content3,#content5,#content6
+        {
+            display: none;
+            color: red;
+            font-weight: bold;
+        }
     </style>
+    <script>
+        function createPlugins(){
+
+            var name = document.getElementById("pluginName").value;
+            // console.log("name is "+document.getElementById("pluginName").value);
+
+            var API = document.getElementById("pluginAPI").value;
+            //var type = document.getElementById("pluginType").value;
+            // var pluginURI = document.getElementById("pluginURI").value;
+            var host = document.getElementById("pluginHost").value;
+            var port = document.getElementById("port").value;
+            var path = document.getElementById("pluginPath").value;
+            console.log(name.length);
+            // var pluginMethod = document.getElementById("pluginMethod").value;
+            if(name.length==0)
+            {   document.getElementById("content1").style.display = "block";
+                $("#mm").modal('show');  //手动开启
+
+            }
+            if(API.length==0)
+            {   document.getElementById("content3").style.display = "block";
+
+            }
+           /* if(type.length!=0)
+            {   document.getElementById("content4").style.display = "block";
+
+            }*/
+            if(host.length==0)
+            {   document.getElementById("content2").style.display = "block";
+
+            }
+            if(port.length==0)
+            {   document.getElementById("content5").style.display = "block";
+
+            }
+            if(path.length==0)
+            {   document.getElementById("content6").style.display = "block";
+
+            }
+
+        }
+    </script>
 </head>
 <body>
 <div id="wrapper">
@@ -193,7 +241,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         <div class="col-sm-9">
                             <input type="text" class='add form-control' placeholder="必填" id="pluginName" name="pluginName">
                         </div>
-                        <div class="col-sm-9 col-sm-offset-3"></div>
+                        <div class="col-sm-9 col-sm-offset-3" id='content1'> 名称不能为空 </div>
                     </div>
 
                     <div class="form-group has-feedback">
@@ -210,7 +258,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         <div class="col-sm-9">
                             <input type="text" class='add form-control' placeholder="必填" id="apiToken" name="apiToken"/>
                         </div>
-                        <div class="col-sm-9 col-sm-offset-3" ></div>
+                        <div class="col-sm-9 col-sm-offset-3" id="content3" >API令牌不能为空</div>
                     </div>
 
                     <div class="form-group has-feedback">
@@ -241,7 +289,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         <div class="col-sm-9">
                             <input type="text" class='add form-control' placeholder="必填" id="pluginHost" name="pluginHost">
                         </div>
-                        <div class="col-sm-9 col-sm-offset-3"></div>
+                        <div class="col-sm-9 col-sm-offset-3" id="content2">Host不能为空</div>
                     </div>
 
                     <div class="form-group has-feedback">
@@ -249,7 +297,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         <div class="col-sm-9">
                             <input type="text" class='add form-control' placeholder="必填" id="port" name="port">
                         </div>
-                        <div class="col-sm-9 col-sm-offset-3" ></div>
+                        <div class="col-sm-9 col-sm-offset-3" id="content5" >Port不能为空</div>
                     </div>
 
                     <div class="form-group has-feedback">
@@ -257,7 +305,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         <div class="col-sm-9">
                             <input type="text" class='add form-control' placeholder="必填" id="pluginPath" name="pluginPath">
                         </div>
-                        <div class="col-sm-9 col-sm-offset-3" ></div>
+                        <div class="col-sm-9 col-sm-offset-3" id="content6" >Base Path不能为空</div>
                     </div>
 
                     <div class="form-group has-feedback">
@@ -273,8 +321,10 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
 
                     <div class="modal-footer">
                         <!--<button type="submit" class="btn btn-primary" id="create" data-toggle="modal" data-target="#createSuc">创建</button>-->
-                        <button type="submit" class="btn btn-primary" id="createnewplugins">创建</button>
-                        <button type="button" class="btn btn-default" id="cancelplugins">取消</button>
+                        <button type="submit" class="btn btn-primary" id="createnewplugins" onclick="createPlugins()">创建</button>
+                        <button type="button" class="btn btn-default" id="cancelplugins" data-dismiss="modal">取消</button>
+
+
                     </div>
                 </form>
             </div>
