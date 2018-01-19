@@ -653,7 +653,7 @@ $(function () {
             success: function(result) {
                 var keys = [];
                 var token = result;
-                var addr = '10.108.217.227';
+                var addr = '39.104.84.131';
                 var port = '8080';
                 var url = 'ws://' + addr + ':' + port + '/api/ws/plugins/telemetry?token=' + token;
                 var ws = new WebSocket(url);
