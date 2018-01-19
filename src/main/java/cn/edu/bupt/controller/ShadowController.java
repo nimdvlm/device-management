@@ -5,10 +5,7 @@ import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -21,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ShadowController extends DefaultThingsboardAwaredController {
     
-    @RequestMapping("/{deviceId}")
+    @RequestMapping(value = "/{deviceId}",method = RequestMethod.POST)
     public String getDeviceShadow(@PathVariable("deviceId") String deviceId){
         String url = "http://"+getServer()+"/api/shadow/"+deviceId;
         JsonObject body = new JsonObject();
@@ -38,7 +35,7 @@ public class ShadowController extends DefaultThingsboardAwaredController {
             return retFail(e.toString());
         }
     }
-    @RequestMapping("/task/list/{deviceId}")
+    @RequestMapping(value = "/task/list/{deviceId}",method = RequestMethod.GET)
     public String taskLists(@PathVariable("deviceId") String deviceId){
         String url = "http://"+getServer()+"/api/shadow/list/"+deviceId;
 //        JsonObject res = new JsonObject();
@@ -51,7 +48,7 @@ public class ShadowController extends DefaultThingsboardAwaredController {
         }
     }
 
-    @RequestMapping("/task/cancel/{deviceId}/{taskId}")
+    @RequestMapping(value = "/task/cancel/{deviceId}/{taskId}",method = RequestMethod.GET)
     public String cancelTask(@PathVariable("deviceId") String deviceId,@PathVariable String taskId){
         String url = "http://"+getServer()+"/api/shadow/cancel/"+deviceId+"/"+taskId;
         try{
@@ -67,7 +64,7 @@ public class ShadowController extends DefaultThingsboardAwaredController {
 
 
 
-    @RequestMapping("/control/{deviceId}")
+    @RequestMapping(value = "/control/{deviceId}",method = RequestMethod.POST)
     public String controlDevice(@RequestBody String bd,@PathVariable("deviceId") String deviceId){
         String url ;
         JsonObject body = new JsonObject();
