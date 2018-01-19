@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ShadowController extends DefaultThingsboardAwaredController {
     
-    @RequestMapping(value = "/{deviceId}",method = RequestMethod.POST)
+    @RequestMapping(value = "/{deviceId}",method = RequestMethod.GET)
     public String getDeviceShadow(@PathVariable("deviceId") String deviceId){
         String url = "http://"+getServer()+"/api/shadow/"+deviceId;
         JsonObject body = new JsonObject();
