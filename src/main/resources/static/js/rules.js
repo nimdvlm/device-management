@@ -262,6 +262,70 @@ $(function () {
         }
     });
 
-});
+    //创建规则过滤器选择
+    $('#FilterType').on('change', function () {
+        var FilterType = $('#FilterType').val();
+        if(FilterType == 'Message Type Filter'){
+            $('#Filter1').css('display','block');
+            $('#Filter2').css('display','none');
+        }else{
+            $('#Filter1').css('display','none');
+            $('#Filter2').css('display','block');
+        }
+    })
+
+    $('#filterTable').dataTable({
+        "paging": true,
+        "pagingType": "simple_numbers",
+        "pageLength": 5,
+        "lengthMenu": [5, 10, 15, 20],
+        "autoWidth": false,
+        "language": {
+            "sProcessing":   "处理中...",
+            "sLengthMenu":   "显示 _MENU_ 项结果",
+            "sZeroRecords":  "没有匹配结果",
+            "sInfo":         "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty":    "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix":  "",
+            "sSearch":       "搜索:",
+            "sUrl":          "",
+            "sEmptyTable":     "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands":  ",",
+            "oPaginate": {
+                "sFirst":    "首页",
+                "sPrevious": "上页",
+                "sNext":     "下页",
+                "sLast":     "末页"
+            },
+        },
+        // "data": ,
+        "columnDefs": [
+            {
+                "title": "过滤器名称",
+                "data": "",
+                "width": "30%"
+            },
+            {
+                "title": "过滤器类型",
+                "data": "",
+                "width": "50%"
+            },
+            {
+                "title": "操作",
+                "data": "updated_at",
+                "width": "20%",
+                render: function (data, type, row, meta) {
+                    return '<a class="btn-sm btn-primary editFilter" data-toggle="modal" data-target="#" style="cursor:pointer" id="" name="">' + '编辑' + '</a >';
+                }
+            }
+        ],
+        initComplete:function(){
+            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addFilter" id="add_filter_btn" data-toggle="modal" data-target="#">+ 添加过滤器</button>');
+        }
+    });
+
+        });
 
 
