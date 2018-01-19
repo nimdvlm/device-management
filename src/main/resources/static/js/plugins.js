@@ -212,7 +212,8 @@ $(function () {
         }
 
         var host=$('#pluginHost').val();
-        var port=$('#port').val();
+        var ports=$('#port').val();
+        var port=parseInt(ports);
         var basePath=$('#pluginPath').val();
 
         var Method=$('#pluginMethod').val();
@@ -228,8 +229,11 @@ $(function () {
                     "configuration":{"authMethod":Method,
                         "basePath":basePath,
                         "host":host,
-                        "port":port,
-                        "protocol":protocol},
+                        "port":port.valueOf(),
+                        "protocol":protocol,
+                        "userName":"tenant@thingsboard.org",
+                        "password":"tenant"
+                    },
                     "name":name
                 }
             ),
