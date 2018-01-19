@@ -46,7 +46,7 @@ public class PluginController extends DefaultThingsboardAwaredController{
 
     @RequestMapping(value = "/deletePlugin/{pluginId}",method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     public String deletePlugin(@PathVariable String pluginId){
-        String requestAddr = "/api/plugin?"+pluginId;
+        String requestAddr = "/api/plugin/"+pluginId;
         String responseContent = null;
         try{
             responseContent = HttpUtil.sendDeletToThingsboard("http://" + getServer() + requestAddr,
