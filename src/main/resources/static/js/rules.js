@@ -1,8 +1,4 @@
 $(function () {
-    var model1;
-    var manufacture1;
-    var deviceType1;
-    var serviceName1;
     $("#device_input").keyup(function () {
         $("#device_table tbody tr").hide()
             .filter(":contains('" + ($(this).val()) + "')").show();//filter和contains共同来实现了这个功能。
@@ -91,55 +87,43 @@ $(function () {
         }
     });
 
-//添加过滤器
-    $('#create').on('click', function () {
-        var manufacture = $('#manufacture').val();
-        var deviceType = $('#deviceType').val();
-        var model = $('#model').val();
-        if (manufacture === '' || deviceType === '' || model === '') {
+    //添加过滤器确定
+    $('#AddFilterCon').on('click', function () {
+        var filterName = $('#FilterName').val();
+        var filterType = $('#FilterType').val();
+        var messageType = $('#MessageType').val();
+        var filterDescription = $('#FilterDescription').val();
 
-        } else {
-            console.log('dianji');
-            $.ajax({
-                url: "/api/service/saveGroup/",
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({'manufacture': manufacture, 'deviceType': deviceType, 'model': model}),
-                dataType: "text",
-                success: function (result) {
-                    alert('123') ;
-//        var obj = JSON.parse(result);
-                    console.log("success");
-                    console.log(result);
-
-                    alert("create success");
-
-                    $('#createSuc').modal('show');
-                    $('#CreateRulesModal').modal('hide');
-
-                    $('#lastCreate').on('click', function () {
-                        window.location.href = "services";
-                    });
-
-                    alert("hello") ;
-
-                },
-                error: function (msg) {
-                    alert(msg.message);
-                }
-            });
-            //创建成功提示
-
+        if(filterType=='Message Type Filter'){
+            $('#filterTableBody').append('<tr><td>' + filterName + '</td><td>' + filterType + '</td><td>' + messageType + '</td><td>' + '' + '</td></tr>');
         }
+        else{
+            $('#filterTableBody').append('<tr><td>' + filterName + '</td><td>' + filterType + '</td><td>' + '' + '</td><td>' + filterDescription + '</td></tr>');
+        }
+        $('#AddFilterModal').modal('hide');
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
     });
+    $('#CancelFilterCon').on('click', function () {
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+    });
+    $('#addFilterClose').on('click', function () {
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+    });
+
+
     $('#cancle').on('click', function () {
         $('#CreateRulesModal').modal('hide');
 
     })
     $('#CreateRulesModal').on('hide.bs.modal', function () {
-        console.log('hideeee');
 
-        document.getElementById("createServiceGroup").reset();
+        document.getElementById("createRuleForm").reset();
     });
 
     var ruleId;
@@ -239,29 +223,122 @@ $(function () {
             for (var j = 0; j < obj.length; j++) {
                 $('#PluginType').append('<option value = "' + obj[j].name + '">' + obj[j].name + '</option>');
             }
-            // var temp = "";
-            // for (var j = 1; j < result.length - 1; j++) {
-            //     temp += result[j];
-            // }
-            // console.log(temp);
-            // var obj = JSON.parse(temp);
-            // // var pluginArr = [];
-            // // console.log(pluginArr);
-            // $('#PluginType').empty();
-            // for (var j = 0; j < obj.length; j++) {
-            //     // for (var k = 1; k < objArr[j].length)
-            //     // pluginArr = JSON.parse(objArr[j]);
-            //     $('#PluginType').append('<option value = "' + obj[j].name + '">' + obj[j].name + '</option>');
-            // }
-            // // for (var i = 0; i < arr.length; i++) {
-            // //
-            // // }
         },
         error: function(msg) {
             alert(msg.message);
         }
     });
 
+    //创建规则过滤器选择
+    $('#FilterType').on('change', function () {
+        var FilterType = $('#FilterType').val();
+        if(FilterType == 'Message Type Filter'){
+            $('#Filter1').css('display','block');
+            $('#Filter2').css('display','none');
+        }else{
+            $('#Filter1').css('display','none');
+            $('#Filter2').css('display','block');
+        }
+    })
+
 });
+//取消添加过滤器
+$('#CancleFilterCon').on('click', function () {
+    $('#AddFilterModal').modal('hide');
+
+})
+
+
+//创建规则
+$('#create').on('click', function () {
+    var ruleName = $('#ruleName').val();
+    var ruleDescription = $('#ruleDescription').val();
+    //过滤器数据
+    for(){
+        var FilterName =$('#FilterName').val();
+        var FilterType =$('#FilterType').val();
+        if(FilterType == 'Message Type Filter'){
+            var MessageType =$('#MessageType').val();
+        }else{
+            var FilterDescription = $('#FilterDescription').val();
+        }
+    }
+    var inputPluginActionName = $('#inputPluginActionName').val();
+    var inputPluginActionType = $('#inputPluginActionType').val();
+    var requireConfirm = $('#requireConfirm').val();
+    var inputBodyTemplate = $('#inputBodyTemplate').val();
+    //
+    var inputActionPath = $('#inputActionPath').val();
+    var inputRequestMethod = $('#inputRequestMethod').val();
+    var inputExpectedResultCode = $('#inputExpectedResultCode').val();
+
+
+        $.ajax({
+            url: "/api/rule/create/",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({
+                //传几个过滤器数据？加循环？
+        "filters":[
+        {
+            //选择不同过滤器传不同数据 未被选到的数据项填空？不传？
+/*            "configuration":{
+               //选Message Type Filter
+                if(FilterType == 'Message Type Filter'){
+                    "messageTypes":[
+                        MessageType
+                    ]
+                }
+                //选Device...... Filter
+                else{
+                 "configuration":{
+                "filter":FilterDescription
+            },
+                }*/
+            "name":FilterName,
+            "clazz":'org.thingsboard.server.extensions.core.filter.'+FilterType
+        }
+    ],
+        "name":ruleName,
+        "additionalInfo":{
+        "description":ruleDescription
+    },
+                "pluginToken":inputPluginActionType,
+            "action":{
+            "configuration":{
+                "sync":requireConfirm,
+                    "requestMethod":inputRequestMethod,
+                    "actionPath":inputActionPath,
+                    "template":inputBodyTemplate,
+                    "expectedResultCode":inputExpectedResultCode
+            },
+            "clazz":"org.thingsboard.server.extensions.rest.action.RestApiCallPluginAction",
+                "name":inputPluginActionName
+    }
+
+    }),
+            dataType: "text",
+            success: function (result) {
+                console.log("success");
+                console.log(result);
+                $('#createSuc').modal('show');
+                $('#AddRuleModal').modal('hide');
+                $('#lastCreate').on('click', function () {
+                    window.location.href = "rules";
+                });
+            },
+            error: function (msg) {
+                alert(msg.message);
+            }
+        });
+
+});
+
+
+//取消创建规则
+$('#cancle').on('click', function () {
+    $('#AddRuleModal').modal('hide');
+    window.location.href = "rules";
+})
 
 
