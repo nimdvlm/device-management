@@ -253,14 +253,18 @@ $('#CancleFilterCon').on('click', function () {
 $('#create').on('click', function () {
     var ruleName = $('#ruleName').val();
     var ruleDescription = $('#ruleDescription').val();
+    var filterNames = [];
+    var filterTypes = [];
+    var filterAttribute = [];
     //过滤器数据
-    for(){
-        var FilterName =$('#FilterName').val();
-        var FilterType =$('#FilterType').val();
-        if(FilterType == 'Message Type Filter'){
-            var MessageType =$('#MessageType').val();
+    console.log($('#filterTable').find('tr').length);
+    for(var i = 0; i < $('#filterTable').find('tr').length - 1; i++){
+        filterNames[i] =$('#FilterName').val();
+        filterTypes[i] =$('#FilterType').val();
+        if(filterTypes[i] == 'Message Type Filter'){
+            filterAttribute[i] =$('#MessageType').val();
         }else{
-            var FilterDescription = $('#FilterDescription').val();
+            filterAttribute[i] = $('#FilterDescription').val();
         }
     }
     var inputPluginActionName = $('#inputPluginActionName').val();
@@ -272,65 +276,88 @@ $('#create').on('click', function () {
     var inputRequestMethod = $('#inputRequestMethod').val();
     var inputExpectedResultCode = $('#inputExpectedResultCode').val();
 
-
-        $.ajax({
-            url: "/api/rule/create/",
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            data: JSON.stringify({
-                //传几个过滤器数据？加循环？
-        "filters":[
-        {
-            //选择不同过滤器传不同数据 未被选到的数据项填空？不传？
-/*            "configuration":{
-               //选Message Type Filter
-                if(FilterType == 'Message Type Filter'){
-                    "messageTypes":[
-                        MessageType
-                    ]
-                }
-                //选Device...... Filter
-                else{
-                 "configuration":{
-                "filter":FilterDescription
-            },
-                }*/
-            "name":FilterName,
-            "clazz":'org.thingsboard.server.extensions.core.filter.'+FilterType
+    var json = '{"filters":[';
+    for (var j = 0; j < filterNames.length; j++) {
+        json += '"configuration":{';
+        if (filterTypes[j] === "Message Type Filter") {
+            json += '"messageTypes":"' + filterAttribute[j] + '"},';
         }
-    ],
-        "name":ruleName,
-        "additionalInfo":{
-        "description":ruleDescription
-    },
-                "pluginToken":inputPluginActionType,
-            "action":{
-            "configuration":{
-                "sync":requireConfirm,
-                    "requestMethod":inputRequestMethod,
-                    "actionPath":inputActionPath,
-                    "template":inputBodyTemplate,
-                    "expectedResultCode":inputExpectedResultCode
-            },
-            "clazz":"org.thingsboard.server.extensions.rest.action.RestApiCallPluginAction",
-                "name":inputPluginActionName
+        else {
+            json += '"filter":"' + filterAttribute[j] + '"},';
+        }
+        json += '"name":"' + filterNames[j] + '",';
+        json += '"clazz":"org.thingsboard.server.extensions.core.filter.' + filterTypes[j] + '"}';
     }
 
-    }),
-            dataType: "text",
-            success: function (result) {
-                console.log("success");
-                console.log(result);
-                $('#createSuc').modal('show');
-                $('#AddRuleModal').modal('hide');
-                $('#lastCreate').on('click', function () {
-                    window.location.href = "rules";
-                });
-            },
-            error: function (msg) {
-                alert(msg.message);
-            }
-        });
+    json += '"name":"' + ruleName +'",';
+    json += '"additionalInfo":{"description":"' + ruleDescription + '"},';
+    json += '"pluginToken":"' + inputPluginActionType + '",';
+    json += '"action":{"configuration":{"sync":"' + requireConfirm + '",';
+    json += '"requestMethod":"' + inputRequestMethod + '",';
+    json += '"actionPath":"' + inputActionPath + '",';
+    json += '"template":"' + inputBodyTemplate + '",';
+    json += '"expectedResultCode":"' + inputExpectedResultCode + '"},';
+    json += '"clazz":"org.thingsboard.server.extensions.rest.action.RestApiCallPluginAction","name":"' + inputPluginActionName + '"}}';
+
+    $.ajax({
+        url: "/api/rule/create/",
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        data: json,
+        dataType: "text",
+        success: function (result) {
+            console.log("success");
+            console.log(result);
+            $('#createSuc').modal('show');
+            $('#AddRuleModal').modal('hide');
+            $('#lastCreate').on('click', function () {
+                window.location.href = "rules";
+            });
+        },
+        error: function (msg) {
+            alert(msg.message);
+        }
+    });
+        // data: JSON.stringify({
+//             //传几个过滤器数据？加循环？
+//             "filters":[
+//             {
+//             //选择不同过滤器传不同数据 未被选到的数据项填空？不传？
+// /*            "configuration":{
+//                //选Message Type Filter
+//                 if(FilterType == 'Message Type Filter'){
+//                     "messageTypes":[
+//                         MessageType
+//                     ]
+//                 }
+//                 //选Device...... Filter
+//                 else{
+//                  "configuration":{
+//                 "filter":FilterDescription
+//             },
+//                 }*/
+//             "name":FilterName,
+//             "clazz":'org.thingsboard.server.extensions.core.filter.'+FilterType
+//         }],
+//         "name":ruleName,
+//         "additionalInfo":{
+//             "description":ruleDescription
+//         },
+//         "pluginToken":inputPluginActionType,
+//         "action":{
+//             "configuration":{
+//                 "sync":requireConfirm,
+//                 "requestMethod":inputRequestMethod,
+//                 "actionPath":inputActionPath,
+//                 "template":inputBodyTemplate,
+//                 "expectedResultCode":inputExpectedResultCode
+//             },
+//             "clazz":"org.thingsboard.server.extensions.rest.action.RestApiCallPluginAction",
+//             "name":inputPluginActionName
+//         }
+//
+//     }),
+
 
 });
 
