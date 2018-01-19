@@ -536,7 +536,7 @@ $(function () {
                 $('#assGroup').change(function () {
                     var index = jQuery.inArray($('#assGroup').val(), groupName);
                     $('#assGroup').attr('name', groupId[index]);
-                })
+                });
             },
             error: function (msg) {
                 alert(msg.message);
