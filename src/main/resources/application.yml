@@ -12,5 +12,6 @@ server:
 bupt.thingsboard:
   host: 10.108.216.193 # for cc
 #  host: 10.108.217.227 # for gpu
+#  host: localhost
   port: 8080
   login_url: http://${bupt.thingsboard.host}:${bupt.thingsboard.port}/api/auth/login

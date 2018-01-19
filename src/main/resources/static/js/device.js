@@ -40,18 +40,20 @@ $(function () {
             dataSrc: ""
         },
         //默认最后一列（最后更新时间）降序排列
-        order: [[ 2, "desc" ]],
+        order: [[ 3, "desc" ]],
         columnDefs: [
             {
                 targets: 5,
+                width: "22%",
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-danger del" style="cursor:hand" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:hand" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.deviceId+'" name="'+row.name+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:hand" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>';
+                    return '<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-primary update" style="cursor:pointer" data-toggle="modal" data-target="#chooseManufactureModal" id="'+row.deviceId+'">'+'更新'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:pointer" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.deviceId+'" name="'+row.name+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:pointer" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>'+'<a class="btn-sm btn-info getToken" style="cursor:pointer" data-toggle="modal" data-target="#tokenModal" id="'+row.deviceId+'">'+'令牌'+'</a>';
                 }
             },
             {
                 targets: 4,
+                width: "8%",
                 data: null,
                 title: "状态",
                 render: function (data, type, row, meta) {
@@ -60,6 +62,7 @@ $(function () {
             },
             {
                 targets: 3,
+                width: "20%",
                 data: null,
                 title: "创建时间",
                 render: function (data, type, row, meta) {
@@ -68,15 +71,16 @@ $(function () {
             },
             {
                 targets: 2,
+                width: "20%",
                 data: null,
                 title: "描述",
-                width: "20%",
                 render: function (data, type, row, meta) {
                     return row.additionalInfo;
                 }
             },
             {
                 targets: 1,
+                width: "15%",
                 data: null,
                 title: "类型",
                 render: function (data, type, row, meta) {
@@ -85,10 +89,12 @@ $(function () {
             },
             {
                 targets: 0,
+                width: "15%",
                 data: "title",
                 title: "设备名称",
                 render: function (data, type, row, meta) {
-                    return row.name;
+                    var deviceId = row.deviceId;
+                    return '<a class="show" id="' + deviceId + '" >' + row.name + '</a>';
                 }
             }
         ],
@@ -96,6 +102,119 @@ $(function () {
             $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addDevice" id="add_device_btn" data-toggle="modal" data-target="#createDeviceModal">+ 创建设备</button>');
         }
     });
+
+    // 展示设备任务列表
+    $('#devices_table').on('click', 'tr .show', function () {
+        var deviceId = $(this).attr('id');
+        console.log(deviceId);
+        if ($.fn.dataTable.isDataTable('#device_task')) {
+            $('#device_task').DataTable().destroy();
+            console.log('aa')
+        }
+        $('#device_task').DataTable({
+            "aLengthMenu": [5, 10, 25, 50, 100],
+            "bPaginate": true,
+            "bAutoWidth": false,
+            "oLanguage": {
+                "sProcessing": "正在加载中......",
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "对不起，查询不到相关数据！",
+                "sEmptyTable": "表中无数据存在！",
+                "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+                "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
+                "sSearch": "搜索",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上一页",
+                    "sNext": "下一页",
+                    "sLast": "末页"
+                }
+            },//多语言配置
+            ajax: {
+                url: "/api/shadow/task/list/" + deviceId,
+                dataSrc: ""
+            },
+            //默认最后一列（最后更新时间）降序排列
+            order: [[2, "desc"]],
+            columnDefs: [
+                {
+                    targets: 3,
+                    width:"10%",
+                    data: "updated_at",
+                    title: "操作",
+                    render: function (data, type, row, meta) {
+                        console.log(row);
+                        return '<a class="btn-sm btn-danger cancelTask" data-toggle="modal" data-target="#cancelTaskModal" style="cursor:pointer" id="' + row.id + '" name="' + deviceId + '">' + '取消' + '</a>';
+                    }
+                },
+
+                {
+                    targets: 2,
+                    width:"15%",
+                    data: null,
+                    title: "任务状态",
+                    render: function (data, type, row, meta) {
+                        if (row.iscanceled) {
+                            return "已取消";
+                        }
+                        else {
+                            return "执行中";
+                        }
+                        // return row.serviceType;
+                    }
+                },
+                {
+                    targets: 1,
+                    width:"50%",
+                    data: null,
+                    title: "任务描述",
+                    render: function (data, type, row, meta) {
+                        return row.description;
+                    }
+                },
+                {
+                    targets: 0,
+                    width:"25%",
+                    data: null,
+                    title: "任务ID",
+                    render: function (data, type, row, meta) {
+                        return row.id;
+                    }
+                }
+            ]
+        });
+    });
+
+    // 取消设备任务
+    $('#device_task').on('click', 'tr .cancelTask', function () {
+        var taskId = $(this).attr('id');
+        var deviceId = $(this).attr('name');
+        console.log(taskId);
+        console.log(deviceId);
+        $('#confirmCancel').val(taskId + "/" + deviceId);
+    });
+    $('#cancelConfirm').on('click', function() {
+        var arr = $('#confirmCancel').val().split('/');
+        console.log(arr);
+        var deviceId = arr[0];
+        var taskId = arr[1];
+        $.ajax({
+            url: "/api/shadow/task/cancel/" + deviceId + "/" + taskId,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            data: "",
+            dataType: "text",
+            success: function (result) {
+                console.log("success");
+                $('#cancelTaskModal').modal('hide');
+                window.location.href = "homepage";
+                $('#device_task').ajax.reload();
+            },
+            error: function(msg) {
+                alert(msg.message);
+            }
+        });
+    })
 
     // 获取厂商列表
     $.ajax({
@@ -189,11 +308,133 @@ $(function () {
         }
     });
 
+    // 为设备选择厂商等信息时的下拉列表
+    // 获取厂商列表
+    $.ajax({
+        url: "/api/service/manufactures/",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        data: "",
+        dataType: "text",
+        success: function (result) {
+            // var obj = JSON.parse(result);
+            console.log(result);
+            var temp = "";
+            for (var j = 1; j < result.length - 1; j++) {
+                temp += result[j];
+            }
+            console.log(temp);
+            var arr = temp.split(', ');
+            $('#chooseManufacture').empty();
+            $('#chooseManufacture').append('<option value="">--请选择厂商</option>');
+            $('#chooseDeviceType').empty();
+            $('#chooseDeviceType').append('<option value="">--请选择设备类型</option>');
+            $('#chooseModel').empty();
+            $('#chooseModel').append('<option value="">--请选择设备型号</option>');
+            for (var i = 0; i < arr.length; i++) {
+                $('#chooseManufacture').append('<option value = "' + arr[i] + '">' + arr[i] + '</option>');
+            }
+        },
+        error: function(msg) {
+            alert(msg.message);
+        }
+    });
+
+    $('#chooseManufacture').change(function() {
+        // 获取设备类型列表
+        if ($('#chooseManufacture option:selected').val() !== ""){
+            $.ajax({
+                url: "/api/service/" + $('#chooseManufacture option:selected').val() + "/deviceTypes/",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                data: "",
+                dataType: "text",
+                success: function(result) {
+                    // var obj = JSON.parse(result);
+                    console.log(result);
+                    var temp = "";
+                    for (var j = 1; j < result.length - 1; j++) {
+                        temp += result[j];
+                    }
+                    var arr = temp.split(', ');
+                    $('#chooseDeviceType').empty();
+                    $('#chooseDeviceType').append('<option value="">--请选择设备类型</option>');
+                    for (var i = 0; i < arr.length; i++) {
+                        $('#chooseDeviceType').append('<option value = "' + arr[i] + '">' + arr[i] + '</option>');
+                    }
+                },
+                error: function(msg) {
+                    alert(msg.message);
+                }
+            });
+        }
+    });
+
+    $('#chooseDeviceType').change(function() {
+        // 获取设备型号列表
+        console.log($('#chooseDeviceType option:selected').val());
+        if ($('#chooseDeviceType option:selected').val() !== "") {
+            $.ajax({
+                url: "/api/service/" + $('#chooseManufacture option:selected').val() + '/' + $('#chooseDeviceType option:selected').val() + "/models/",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                data: "",
+                dataType: "text",
+                success: function(result) {
+                    // var obj = JSON.parse(result);
+                    console.log(result);
+                    var temp = "";
+                    for (var j = 1; j < result.length - 1; j++) {
+                        temp += result[j];
+                    }
+                    var arr = temp.split(', ');
+                    $('#chooseModel').empty();
+                    $('#chooseModel').append('<option value="">--请选择设备型号</option>');
+                    for (var i = 0; i < arr.length; i++) {
+                        $('#chooseModel').append('<option value = "' + arr[i] + '">' + arr[i] + '</option>');
+                    }
+                },
+                error: function(msg) {
+                    alert(msg.message);
+                }
+            });
+        }
+    });
+
+    // 为设备选择厂商功能
+    $('#devices_table').on('click','tr .update', function () {
+        console.log($(this).attr('id'))
+        $('#deviceId').val($(this).attr('id'))
+    } );
+    $('#choose').on('click', function() {
+        var manufacture = $('#chooseManufacture').val();
+        var deviceType = $('#chooseDeviceType').val();
+        var model = $('#chooseModel').val();
+        var deviceId = $('#deviceId').val();
+        console.log(deviceId);
+        $.ajax({
+            url: "/api/device/updatecoordinate/" + deviceId,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({'manufacture':manufacture,'deviceType':deviceType,'model':model}),
+            dataType: "text",
+            success: function(result) {
+                $('#chooseManufactureModal').modal('hide');
+                window.location.href = "homepage";
+            },
+            error: function (msg) {
+                alert(msg.message);
+            }
+        });
+    });
+
     // 创建设备表单验证提交设置
     $.validator.setDefaults({
         submitHandler: function(){
             var name = $('#name').val();
             var type = $('#type').val();
+            var isGateway = $('#isGateway').is(':checked');
+            // console.log(isGateway);
             var manufacture = $('#manufacture').val();
             var deviceType = $('#deviceType').val();
             var model = $('#model').val();
@@ -202,7 +443,7 @@ $(function () {
                 url: "/api/device/create",
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({'name': name, 'type': type,'manufacture':manufacture,'deviceType':deviceType,'model':model, "additionalInfo":{"description":description}}),
+                data: JSON.stringify({'name': name, 'type': type,'manufacture':manufacture,'deviceType':deviceType,'model':model, "additionalInfo":{"gateway": isGateway,"description":description}}),
                 dataType: "text",
                 success: function (result) {
                     // var obj = JSON.parse(result);
@@ -225,21 +466,21 @@ $(function () {
     $('#createDeviceForm').validate({
         rules: {
             deviceName: {required: true},
-            bigType: {required: true},
-            manufacture: {required: true},
-            specificType: {required: true},
-            deviceModel: {required: true}
+            bigType: {required: true}
+            // manufacture: {required: true},
+            // specificType: {required: true},
+            // deviceModel: {required: true}
         },
         messages: {
             deviceName: {required: '设备名称不能为空'},
             bigType: {required: '设备大类型不能为空'},
-            manufacture: {required: '必须为设备选择一个厂商'},
-            specificType: {required: '必须为设备选择具体类型'},
-            deviceModel: {required: "必须为设备选择型号"}
+            // manufacture: {required: '必须为设备选择一个厂商'},
+            // specificType: {required: '必须为设备选择具体类型'},
+            // deviceModel: {required: "必须为设备选择型号"}
         }
     });
 
-//删除功能
+//删除设备功能
     $('#devices_table').on('click','tr .del', function () {
         console.log($(this).attr('id'))
         $('#confirmDel').val($(this).attr('id'))
@@ -268,7 +509,7 @@ $(function () {
             }
         });
     });
-//                分配功能
+    // 分配功能
     $('#devices_table').on('click','tr .assign', function () {
         $("#assGroup").empty();
         var deviceId = $(this).attr('id');
@@ -283,15 +524,19 @@ $(function () {
             dataType: "text",
             success: function (result) {
                 var obj = JSON.parse(result);
-                var groups = [];
-                for(x in obj){
-                    groups.push(obj[x].id);
+                var groupName = [];
+                var groupId = [];
+                for(var x in obj){
+                    groupName.push(obj[x].name);
+                    groupId.push(obj[x].id)
                 }
-                var optionstring = "";
-                for (var j = 0; j < groups.length; j++) {
-                    optionstring += "<option value=\"" + groups[j] + "\" >" + groups[j] + "</option>";
+                for (var j = 0; j < groupName.length; j++) {
+                    $('#assGroup').append('<option value="' + groupName[j] + '">' + groupName[j] + '</option>')
                 }
-                $('#assGroup').append(optionstring)
+                $('#assGroup').change(function () {
+                    var index = jQuery.inArray($('#assGroup').val(), groupName);
+                    $('#assGroup').attr('name', groupId[index]);
+                })
             },
             error: function (msg) {
                 alert(msg.message);
@@ -300,9 +545,9 @@ $(function () {
     });
     $('#assignDev').on('click',function(){
         var assName = $('#assName').val();
-        var assGroup = $('#assGroup').val();
+        var assGroup = $('#assGroup').attr('name');
         $.ajax({
-            url: "/api/group//assign/"+assName+"/"+assGroup,
+            url: "/api/group/assign/"+assName+"/"+assGroup,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             data: "",
@@ -521,7 +766,7 @@ $(function () {
                             var paramName = j;
                             var lowerBound = paramType[1];
                             var upperBound = paramType[2];
-                            $('#' + serviceName[i]).append('<div class="form-group"><label class="col-sm-3 control-label" for="param' + j + '" style="text-align: left;">' + paramName + '</label><div class="col-sm-9"><input type="number" class="form-control range-input" id="param' + j + '" name="rangeInput" min="' + lowerBound + '" max="' + upperBound + '" value="' + lowerBound +'" step="10"/><a>(' + lowerBound + '-' + upperBound + ')</a></div></div>');
+                            $('#' + serviceName[i]).append('<div class="form-group"><label class="col-sm-3 control-label" for="param' + j + '" style="text-align: left;">' + paramName + '</label><div class="col-sm-9"><input type="number" class="form-control range-input" id="param' + j + '" name="rangeInput" min="' + lowerBound + '" max="' + upperBound + '" value="' + lowerBound +'" step="1"/><a>(' + lowerBound + '-' + upperBound + ')</a></div></div>');
 
                             // $('.range-input').change(function() {
                             //     // alert("change");
@@ -537,8 +782,9 @@ $(function () {
                             // });
                         }
                     }
-                    var ddd =1;
-                    $('#' + serviceName[i]).append('<div class="form-group"><button id="' + deviceId + '" type="button" class="btn btn-primary" onclick="submits(this.parentNode.parentNode,this.id)">确认</button></div>');
+                    $('#' + serviceName[i]).append('<div class="form-group service-btn-group"><button id="' + deviceId + '" type="button" class="btn btn-primary col-sm-3" onclick="commonSubmit(this.parentNode.parentNode,this.id)">确定</button>' +
+                        '<button id="' + deviceId + '" type="button" class="btn btn-info col-sm-4" onclick="delaySubmit(this.parentNode.parentNode,this.id)">延时执行</button>' +
+                        '<button id="' + deviceId + '" type="button" class="btn btn-warning col-sm-4" onclick="cycleSubmit(this.parentNode.parentNode,this.id)">周期执行</button></div>');
                 }
             },
             error: function(msg) {
@@ -561,11 +807,49 @@ $(function () {
         });
     } );
 
+    // 查看令牌功能
+    $('#devices_table').on('click','tr .getToken', function () {
+        var deviceId = $(this).attr('id');
+        $.ajax({
+            url: "/api/device/token/" + deviceId,
+            type: "GET",
+            contentType: "application/json:charset=utf-8",
+            data: "",
+            dataType: "text",
+            success: function(result) {
+                var obj = JSON.parse(result);
+                $('#token').text(obj.credentialsId);
+            },
+            error: function(msg) {
+                alert(msg.message);
+            }
+        });
+    } );
+
+    // 日期时间选择插件
+    $('#inputDelayTime').flatpickr({
+        allowInput: false,
+        clickOpens: true,
+        defaultDate: formatDate(new Date()),
+        enableTime: true,
+        enableSeconds: true,
+        minuteIncrement: 1,
+        minDate: formatDate(new Date())
+    });
+    $('#firstExecuteTime').flatpickr({
+        allowInput: false,
+        clickOpens: true,
+        defaultDate: formatDate(new Date()),
+        enableTime: true,
+        enableSeconds: true,
+        minuteIncrement: 1,
+        minDate: formatDate(new Date())
+    });
+
 });
 
 // 用于将时间戳转换为时间 xxxx-xx-xx xx:xx:xx*/
 function formatDate(now) {
-
     var year=now.getFullYear();
     var month=now.getMonth()+1;
     var date=now.getDate();
@@ -599,7 +883,7 @@ function changeImg(index) {
 }
 
 // 提交单个服务的表单
-function submits(fieldSet, deviceId) {
+function commonSubmit(fieldSet, deviceId) {
     // console.log(fieldSet);
     console.log(deviceId);
     var serviceName = fieldSet.id;
@@ -648,10 +932,195 @@ function submits(fieldSet, deviceId) {
             // var obj = JSON.parse(result);
             console.log(deviceId);
             console.log("success");
-            // window.location.href = "homepage";
         },
         error: function (msg) {
             alert(msg.message);
         }
     });
 }
+
+// 延时执行，需设置延时时间
+function delaySubmit(fieldSet, deviceId) {
+    // 显示选择延时时间点的模态框
+    $('#delayModal').modal('show');
+    $('#delayClose').on('click', function() {
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+    });
+    $('#delayCancel').on('click', function() {
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+    });
+    $('#delayModal').modal({
+        backdrop:"static"
+    });
+
+    // console.log(fieldSet);
+    console.log(deviceId);
+    var serviceName = fieldSet.id;
+    // console.log(serviceName);
+    var children = fieldSet.childNodes;
+    var keys = [];
+    var values = [];
+    keys.push("serviceName");
+    values.push(serviceName);
+    // console.log(children);
+    for (var i = 1; i < children.length-1; i++) {
+        var param = children[i].childNodes;
+        console.log(param);
+        // console.log(param[0].textContent);
+        keys.push(param[0].textContent);
+        // console.log(param[1].childNodes[0].value);
+        if (param[1].childNodes[0] instanceof HTMLInputElement) {
+            values.push(param[1].childNodes[0].value);
+        }
+        else {
+            console.log(param[1].childNodes[0].getAttribute('on'));
+
+            if (param[1].childNodes[0].src.indexOf('on') >= 0 ) {
+                values.push(param[1].childNodes[0].getAttribute('on'));
+            }
+            else {
+                values.push(param[1].childNodes[0].getAttribute('off'));
+            }
+        }
+    }
+
+    var json = '{';
+    for (var j = 0; j < keys.length; j++) {
+        json += '"' + keys[j] +'":"' + values[j] + '",';
+    }
+
+    $('#delaySubmit').one('click',function(){
+        var delayTime = "";
+        var delayTimeStamp = ""; // 时间戳格式  怎么转换????
+        delayTime = $('#inputDelayTime').val();
+        delayTimeStamp = Date.parse(new Date(delayTime));
+        // delayTimeStamp = delayTimeStamp / 1000;
+        console.log(delayTimeStamp);
+        $('#delayModal').modal('hide');
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+
+        json += '"startTime":"' + delayTimeStamp + '",';
+        json = json.slice(0,json.length-1);
+        json += '}';
+
+        $.ajax({
+            url: "/api/shadow/control/"+deviceId,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data:  json,
+            dataType: "text",
+            success: function (result) {
+                // var obj = JSON.parse(result);
+                console.log(deviceId);
+                console.log("success");
+            },
+            error: function (msg) {
+                alert(msg.message);
+            }
+        });
+    });
+}
+
+// 周期执行，需设置开始时间与周期
+function cycleSubmit(fieldSet, deviceId) {
+    // 显示选择延时时间点的模态框
+    $('#cycleModal').modal('show');
+    $('#cycleClose').on('click', function() {
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+    });
+    $('#cycleCancel').on('click', function() {
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+    });
+    $('#cycleModal').modal({
+        backdrop:"static"
+    });
+
+    // console.log(fieldSet);
+    console.log(deviceId);
+    var serviceName = fieldSet.id;
+    // console.log(serviceName);
+    var children = fieldSet.childNodes;
+    var keys = [];
+    var values = [];
+    keys.push("serviceName");
+    values.push(serviceName);
+    // console.log(children);
+    for (var i = 1; i < children.length-1; i++) {
+        var param = children[i].childNodes;
+        console.log(param);
+        // console.log(param[0].textContent);
+        keys.push(param[0].textContent);
+        // console.log(param[1].childNodes[0].value);
+        if (param[1].childNodes[0] instanceof HTMLInputElement) {
+            values.push(param[1].childNodes[0].value);
+        }
+        else {
+            console.log(param[1].childNodes[0].getAttribute('on'));
+
+            if (param[1].childNodes[0].src.indexOf('on') >= 0 ) {
+                values.push(param[1].childNodes[0].getAttribute('on'));
+            }
+            else {
+                values.push(param[1].childNodes[0].getAttribute('off'));
+            }
+        }
+    }
+
+    $('#cycleSubmit').one('click',function(){
+        var startTime = "";
+        var startTimeStamp = "";
+        var cycle = "";
+        var cycleUnit = "";
+        startTime = $('#firstExecuteTime').val();
+        startTimeStamp = Date.parse(new Date(startTime));
+        // startTimeStamp = startTimeStamp / 1000;
+        console.log(startTimeStamp);
+        cycle = $('#cycle').val();
+        cycleUnit = $('#cycleUnit').val();
+        $('#cycleModal').modal('hide');
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+
+        var json = '{';
+        for (var j = 0; j < keys.length; j++) {
+            json += '"' + keys[j] +'":"' + values[j] + '",';
+        }
+        json += '"startTime":"' + startTimeStamp + '",';
+        json += '"period":"' + cycle + '",';
+        json += '"unit":"' + cycleUnit + '",';
+        json = json.slice(0,json.length-1);
+        json += '}';
+
+        $.ajax({
+            url: "/api/shadow/control/"+deviceId,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data:  json,
+            dataType: "text",
+            success: function (result) {
+                // var obj = JSON.parse(result);
+                console.log(deviceId);
+                console.log("success");
+            },
+            error: function (msg) {
+                alert(msg.message);
+            }
+        });
+    });
+}
+
+// function test() {
+//     console.log("test");
+//     document.getElementById("delaySubmit").onclick = null;
+// }

@@ -3,6 +3,10 @@ label[class=error] {
 }
 
 #devices_table_wrapper {
+    min-width: 1050px;
+}
+
+#device_task_wrapper {
     min-width: 800px;
 }
 
@@ -43,11 +47,23 @@ label[class=error] {
 
 }
 
+.service-btn-group button {
+    margin: 10px 5px 10px 0;
+}
+
+.divide-line {
+    border-top: 4px solid #707070;
+}
+
+#token {
+    text-align: center;
+}
+
 /*.service-control-legend {*/
     /*display: block;*/
     /*-webkit-padding-start: 2px;*/
     /*-webkit-padding-end: 2px;*/
-    /*border-width: initial;*/
+    /*border-width: initial;*/s
     /*border-style: none;*/
     /*border-color: initial;*/
     /*border-image: initial;*/

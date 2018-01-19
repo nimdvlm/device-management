@@ -17,6 +17,9 @@
     <link type="text/css" rel="stylesheet" href="../static/css/bootstrapValidator.css">
 	<!-- TABLE STYLES-->
 	<link href="../static/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <!-- FLATPICKER STYLES-->
+    <link rel="stylesheet" type="text/css" href="../static/css/flatpickr.min.css">
+
 	<link href="../static/css/style.css" rel="stylesheet" />
 
 	<link href="../static/css/device.css" rel="stylesheet" />
@@ -51,6 +54,8 @@ font-size: 16px;">
 				<li class="active" style="background:red;"><a href="homepage"><span class="glyphicon glyphicon-th-list"></span> <span> 设备列表</span></a></li>
 				<li><a href="device_group"><span class="glyphicon glyphicon-inbox"></span> 设备组</a></li>
 				<li><a href="services"><span class="glyphicon glyphicon-leaf"></span> <span> 服务管理</span></a></li>
+				<li><a href="plugins"><span class="glyphicon glyphicon-tags"></span> 插件管理 </a></li>
+				<li><a href="rules"><span class="glyphicon glyphicon-search"></span> 规则管理 </a></li>
 				<li><a href="assess"><span class="glyphicon glyphicon-edit"></span> 能力评估</a></li>
 			</ul>
 		</div>
@@ -68,6 +73,15 @@ font-size: 16px;">
 						</table>
 					</div>
 				</div>
+                <div class="panel-heading" style="background-color: cornflowerblue;">
+                    <h3 class="panel-title">查看设备任务</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="device_task" class="table table-striped table-bordered table-hover">
+                        </table>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -99,39 +113,33 @@ font-size: 16px;">
                             <input type="text" class="form-control" id="type" name="bigType" placeholder="必填"/>
                         </div>
                     </div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" id="isGateway">是网关
+								</label>
+							</div>
+						</div>
+					</div>
                     <div class="form-group">
-                        <label  class="col-sm-3 control-label" for="manufacture" style='text-align: left;'><span style="color: red;">* </span>厂商</label>
+                        <label  class="col-sm-3 control-label" for="manufacture" style='text-align: left;'>厂商</label>
                         <div class="col-sm-9">
                             <select class="form-control" id="manufacture" name="manufacture">
-                                <!--<option value="">&#45;&#45;请选择厂商</option>-->
-                                <!--<option value="815">815</option>-->
-                                <!--<option value="2">2</option>-->
-                                <!--<option value="3">3</option>-->
-                                <!--<option value="4">4</option>-->
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-3 control-label" for="deviceType" style='text-align: left;'><span style="color: red;">* </span>设备具体类型</label>
+                        <label  class="col-sm-3 control-label" for="deviceType" style='text-align: left;'>设备具体类型</label>
                         <div class="col-sm-9">
                             <select class="form-control" id="deviceType" name="specificType">
-                                <!--<option value="">&#45;&#45;请选择设备具体类型</option>-->
-                                <!--<option value="815">815</option>-->
-                                <!--<option value="2">2</option>-->
-                                <!--<option value="3">3</option>-->
-                                <!--<option value="4">4</option>-->
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-3 control-label" for="model" style='text-align: left;'><span style="color: red;">* </span>型号</label>
+                        <label  class="col-sm-3 control-label" for="model" style='text-align: left;'>型号</label>
                         <div class="col-sm-9">
                             <select class="form-control" id="model" name="deviceModel">
-                                <!--<option value="">&#45;&#45;请选择设备型号</option>-->
-                                <!--<option value="815">815</option>-->
-                                <!--<option value="2">2</option>-->
-                                <!--<option value="3">3</option>-->
-                                <!--<option value="4">4</option>-->
                             </select>
                         </div>
                     </div>
@@ -169,6 +177,50 @@ font-size: 16px;">
 		</div>
 	</div>
 </div>
+
+<!-- 为设备选择厂商模态框 -->
+<div class="modal fade" id="chooseManufactureModal" tabindex="-1" role="dialog" aria-labelledby="chooseManufactureModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="chooseManufactureModalLabel">更新设备</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="chooseManufactureForm" role="form" action="#" method="post">
+                    <input id="deviceId" hidden>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label" for="manufacture" style='text-align: left;'>厂商</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="chooseManufacture" name="manufacture">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label" for="deviceType" style='text-align: left;'>设备具体类型</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="chooseDeviceType" name="specificType">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label" for="model" style='text-align: left;'>型号</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="chooseModel" name="deviceModel">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="choose">更新</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--删除模态框-->
 <div class="modal fade" id="delDeviceModal" tabindex="-1" role="dialog" aria-labelledby="delDeviceModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -211,29 +263,29 @@ font-size: 16px;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="detailClose">&times;</button>
-				<h4 class="modal-title" id="detailDeviceModalLabel">控制设备</h4>
+				<h4 class="modal-title" id="detailDeviceModalLabel" style="text-align: center;">设备详情</h4>
 			</div>
 			<div class="modal-body">
                 <h4 class="detail-block-header">属性</h4>
-                <form class="form-horizontal" role="form" action="#" >
-                    <div class="form-group" id="ctrDevice">
-                        <!--<label  class="col-sm-3 control-label control-label1" style='text-align: left;'>设备描述</label>-->
-                        <!--<div class="col-sm-9">-->
-                        <!--<div class="switch" data-animated="false" style="height: 30px;">-->
-                        <!--<input type="checkbox" checked />-->
-                        <!--</div>-->
-                        <!--<div class="switch" data-animated="false" style="height: 30px;">-->
-                        <!--<input type="checkbox" checked />-->
-                        <!--</div>-->
-                        <!--</div>-->
-                    </div>
-                    <!--<div class="form-group">-->
-                    <!--<label  class="col-sm-3 control-label control-label1" style='text-align: left;'>设备描述</label>-->
-                    <!--<div class="col-sm-9">-->
-                    <!--<input type="number"/>-->
+                <!--<form class="form-horizontal" role="form" action="#" >-->
+                    <!--<div class="form-group" id="ctrDevice">-->
+                        <!--&lt;!&ndash;<label  class="col-sm-3 control-label control-label1" style='text-align: left;'>设备描述</label>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="col-sm-9">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="switch" data-animated="false" style="height: 30px;">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input type="checkbox" checked />&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="switch" data-animated="false" style="height: 30px;">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input type="checkbox" checked />&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
                     <!--</div>-->
-                    <!--</div>-->
-                </form>
+                    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<label  class="col-sm-3 control-label control-label1" style='text-align: left;'>设备描述</label>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="col-sm-9">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="number"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--</form>-->
 
 				<div class="row">
 					<table id="device_attribute_table" class="table table-hover deviceAttributeTable">
@@ -243,7 +295,7 @@ font-size: 16px;">
                     <!--</ul>-->
                 </div>
 
-                <hr>
+				<div class="divide-line"></div>
 
                 <h4 class="detail-block-header">最新遥测</h4>
                 <div class="row">
@@ -261,7 +313,8 @@ font-size: 16px;">
                         </table>
                     </div>
                 </div>
-                <hr>
+
+				<div class="divide-line"></div>
 
                 <h4 class="detail-block-header">控制</h4>
 				<div class="row">
@@ -311,7 +364,6 @@ font-size: 16px;">
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" id="assignDev" data-toggle="modal" data-target="#assignSucModal">确定</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-
 			</div>
 		</div>
 	</div>
@@ -333,6 +385,95 @@ font-size: 16px;">
 		</div>
 	</div>
 </div>
+
+<!--延时执行模态框 -->
+<div class="modal fade" id="delayModal" tabindex="-1" role="dialog" aria-labelledby="delayModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="delayClose" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="delayModalLabel">延时执行设置</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputDelayTime" class="col-sm-3 control-label">延时时间</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="inputDelayTime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="delaySubmit">确定</button>
+                            <button type="button" class="btn btn-default" id="delayCancel" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 周期执行模态框 -->
+<div class="modal fade" id="cycleModal" tabindex="10" role="dialog" aria-labelledby="cycleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="cycleClose" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="cycleModalLabel">周期执行设置</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="firstExecuteTime" class="col-sm-3 control-label">首次执行时间</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="firstExecuteTime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cycle" class="col-sm-3 control-label">执行周期</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="cycle" min="1" placeholder="1">
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="cycleUnit">
+                                <option value="second" selected>秒</option>
+                                <option value="hour">小时</option>
+                                <option value="day">天</option>
+                                <option value="week">周</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="cycleSubmit">确定</button>
+                            <button type="button" class="btn btn-default" id="cycleCancel" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 查看令牌模态框 -->
+<div class="modal fade" id="tokenModal" tabindex="-1" role="dialog" aria-labelledby="tokenModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="tokenModalLabel">查看令牌</h4>
+            </div>
+            <div class="modal-body">
+                <p id="token"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="tokenConfirm" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- SCRIPTS -AT THE BOTTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->
 
@@ -349,6 +490,9 @@ font-size: 16px;">
 <!-- Bootstrap Validator Scripts-->
 <script src="../static/js/bootstrapValidator.js"></script>
 <script src="../static/js/language/zh_CN.js"></script>
+<!-- FLATPICKER SCRIPTS -->
+<script src="../static/js/flatpickr.js"></script>
+<script src="../static/js/flatpickr.l10n.zh.js"></script>
 
 <script src="../static/js/device.js"></script>
 <script src="../static/js/logout.js"></script>
