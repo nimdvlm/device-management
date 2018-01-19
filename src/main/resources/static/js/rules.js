@@ -260,7 +260,7 @@ $('#create').on('click', function () {
         if(FilterType == 'Message Type Filter'){
             var MessageType =$('#MessageType').val();
         }else{
-            var FilterDescription ==$('#FilterDescription').val();
+            var FilterDescription = $('#FilterDescription').val();
         }
     }
     var inputPluginActionName = $('#inputPluginActionName').val();
@@ -271,6 +271,8 @@ $('#create').on('click', function () {
     var inputActionPath = $('#inputActionPath').val();
     var inputRequestMethod = $('#inputRequestMethod').val();
     var inputExpectedResultCode = $('#inputExpectedResultCode').val();
+
+
         $.ajax({
             url: "/api/rule/create/",
             type: "POST",
@@ -289,7 +291,9 @@ $('#create').on('click', function () {
                 }
                 //选Device...... Filter
                 else{
-
+                 "configuration":{
+                "filter":FilterDescription
+            },
                 }*/
             "name":FilterName,
             "clazz":'org.thingsboard.server.extensions.core.filter.'+FilterType
