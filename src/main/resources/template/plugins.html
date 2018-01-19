@@ -193,22 +193,22 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         <div class="col-sm-9">
                             <input type="text" class='add form-control' placeholder="必填" id="pluginName" name="pluginName">
                         </div>
-                        <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                        <div class="col-sm-9 col-sm-offset-3"></div>
                     </div>
 
                     <div class="form-group has-feedback">
                         <label  class="col-sm-3 control-label" style='text-align: left;'>&nbsp;&nbsp;&nbsp;描述</label>
                         <div class="col-sm-9" >
-                            <input type="text" class='add form-control'  id="groupName"/>
+                            <input type="text" class='add form-control'  id="Describe"/>
                             <!--placeholder="请输入设备组名"-->
                         </div>
-                        <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                        <div class="col-sm-9 col-sm-offset-3"></div>
                     </div>
 
                     <div class="form-group has-feedback">
                         <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>API令牌</label>
                         <div class="col-sm-9">
-                            <input type="text" class='add form-control' placeholder="必填" id="deviceType" name="deviceType">
+                            <input type="text" class='add form-control' placeholder="必填" id="apiToken" name="apiToken"/>
                         </div>
                         <div class="col-sm-9 col-sm-offset-3" id='content1'></div>
                     </div>
@@ -229,8 +229,8 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         <label class="col-sm-3 control-label" style='text-align: left;font-size: 12px'><span style="color: red;">* </span>URI Scheme name</label>
                         <div class="col-sm-9">
                             <select class="form-control" id="pluginURI" name="pluginURI">
-                                <option>HTTP</option>
-                                <option>HTTPS</option>
+                                <option value="HTTP">HTTP</option>
+                                <option value="HTTPS">HTTPS</option>
                             </select>
                         </div>
                         <div class="col-sm-9 col-sm-offset-3" id='content3'></div>
@@ -241,7 +241,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         <div class="col-sm-9">
                             <input type="text" class='add form-control' placeholder="必填" id="pluginHost" name="pluginHost">
                         </div>
-                        <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                        <div class="col-sm-9 col-sm-offset-3"></div>
                     </div>
 
                     <div class="form-group has-feedback">
@@ -249,7 +249,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         <div class="col-sm-9">
                             <input type="text" class='add form-control' placeholder="必填" id="port" name="port">
                         </div>
-                        <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                        <div class="col-sm-9 col-sm-offset-3" ></div>
                     </div>
 
                     <div class="form-group has-feedback">
@@ -257,24 +257,24 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         <div class="col-sm-9">
                             <input type="text" class='add form-control' placeholder="必填" id="pluginPath" name="pluginPath">
                         </div>
-                        <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                        <div class="col-sm-9 col-sm-offset-3" ></div>
                     </div>
 
                     <div class="form-group has-feedback">
                         <label class="col-sm-3 control-label" style='text-align: left;font-size: 12px'><span style="color: red;">* </span>Authentication &nbsp;&nbsp;&nbsp;method</label>
                         <div class="col-sm-9">
                             <select class="form-control" id="pluginMethod" name="pluginMethod">
-                                <option>No authentication</option>
-                                <option>Basic authentication</option>
+                                <option value="NO_AUTH">No authentication</option>
+                                <option value="BASIC_AUTH">Basic authentication</option>
                             </select>
                         </div>
-                        <div class="col-sm-9 col-sm-offset-3" id='content'></div>
+                        <div class="col-sm-9 col-sm-offset-3"></div>
                     </div>
 
                     <div class="modal-footer">
                         <!--<button type="submit" class="btn btn-primary" id="create" data-toggle="modal" data-target="#createSuc">创建</button>-->
-                        <button type="submit" class="btn btn-primary" id="create">创建</button>
-                        <button type="button" class="btn btn-default" id="cancle">取消</button>
+                        <button type="submit" class="btn btn-primary" id="createnewplugins">创建</button>
+                        <button type="button" class="btn btn-default" id="cancelplugins">取消</button>
                     </div>
                 </form>
             </div>

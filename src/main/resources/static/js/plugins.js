@@ -62,7 +62,7 @@ $(function () {
         order: [[2, "desc"]],
         columnDefs: [
             {
-                targets: 3,
+                targets: 4,
                 width:"25%",
                 data: "updated_at",
                 title: "操作",
@@ -74,8 +74,8 @@ $(function () {
             },
 
             {
-                targets: 2,
-                width:"25%",
+                targets: 3,
+                width:"20%",
                 data: null,
                 title: "创建时间",
                 render: function (data, type, row, meta) {
@@ -83,8 +83,17 @@ $(function () {
                 }
             },
             {
+                targets: 2,
+                width:"15%",
+                data: null,
+                title: "插件状态",
+                render: function (data, type, row, meta) {
+                    return row.state;
+                }
+            },
+            {
                 targets: 1,
-                width:"25%",
+                width:"15%",
                 data: null,
                 title: "插件token",
                 render: function (data, type, row, meta) {
@@ -184,4 +193,59 @@ $(function () {
             }
         });
     });
+
+    $('#createnewplugins').on('click',function () {
+
+        var name=$('#pluginName').val();
+        var describe=$('#Describe').val();
+        var apiToken=$('#apiToken').val();
+
+        var myselect=$('#pluginURI').val();
+        var protocol;
+        if(myselect=="HTTP")
+        {
+            protocol="http://"
+        }
+        else if(myselect=="HTTPS")
+        {
+            protocol="https://"
+        }
+
+        var host=$('#pluginHost').val();
+        var port=$('#port').val();
+        var basePath=$('#pluginPath').val();
+
+        var Method=$('#pluginMethod').val();
+
+        $.ajax({
+            url:"/api/plugin/savePlugin",
+            type:"POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({
+                    "additionalInfo":{"description":describe},
+                    "apiToken":apiToken,
+                    "clazz":"org.thingsboard.server.extensions.rest.plugin.RestApiCallPlugin",
+                    "configuration":{"authMethod":Method,
+                        "basePath":basePath,
+                        "host":host,
+                        "port":port,
+                        "protocol":protocol},
+                    "name":name
+                }
+            ),
+            dataType:"text",
+            success: function(){
+                console.log("create plugins success");
+                window.location.href = "plugins";
+            },
+            error: function (msg) {
+                alert(msg.message);
+            }
+
+        });
+    });
 });
+
+
+
+
