@@ -65,6 +65,22 @@ public class DeviceController extends DefaultThingsboardAwaredController {
      */
     @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken")
     @ApiImplicitParam(name = "deviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
+    @RequestMapping(value = "/updatecoordinate/{deviceId}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String updateDeviceCoordinate(@PathVariable String deviceId,@RequestBody String json) {
+        String requestAddr = "/api/device/updatecoordinate/"+deviceId ;
+        String responseContent = null ;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+                    null,
+                    new JsonParser().parse(json).getAsJsonObject(),
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+        return retSuccess(responseContent);
+    }
+
     @RequestMapping(value = "/token/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getDeviceToken(@PathVariable String deviceId) {
