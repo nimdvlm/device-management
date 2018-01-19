@@ -91,47 +91,31 @@ $(function () {
         }
     });
 
-//添加过滤器
-    $('#create').on('click', function () {
-        var manufacture = $('#manufacture').val();
-        var deviceType = $('#deviceType').val();
-        var model = $('#model').val();
-        if (manufacture === '' || deviceType === '' || model === '') {
+    //添加过滤器确定
+    $('#AddFilterCon').on('click', function () {
+        var filterName = $('#FilterName').val();
+        var filterType = $('#FilterType').val();
+        var messageType = $('#MessageType').val();
+        var filterDescription = $('#FilterDescription').val();
 
-        } else {
-            console.log('dianji');
-            $.ajax({
-                url: "/api/service/saveGroup/",
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({'manufacture': manufacture, 'deviceType': deviceType, 'model': model}),
-                dataType: "text",
-                success: function (result) {
-                    alert('123') ;
-//        var obj = JSON.parse(result);
-                    console.log("success");
-                    console.log(result);
-
-                    alert("create success");
-
-                    $('#createSuc').modal('show');
-                    $('#CreateRulesModal').modal('hide');
-
-                    $('#lastCreate').on('click', function () {
-                        window.location.href = "services";
-                    });
-
-                    alert("hello") ;
-
-                },
-                error: function (msg) {
-                    alert(msg.message);
-                }
-            });
-            //创建成功提示
-
-        }
+        $('#filterTableBody').append('<tr><td>' + filterName + '</td><td>' + filterType + '</td><td>' + messageType + '</td><td>' + filterDescription + '</td></tr>');
+        $('#AddFilterModal').modal('hide');
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
     });
+    $('#CancelFilterCon').on('click', function () {
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+    });
+    $('#addFilterClose').on('click', function () {
+        setTimeout(function(){
+            $('body').addClass('modal-open')
+        },1000);
+    });
+
+
     $('#cancle').on('click', function () {
         $('#CreateRulesModal').modal('hide');
 
@@ -324,7 +308,6 @@ $(function () {
             $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addFilter" id="add_filter_btn" data-toggle="modal" data-target="#">+ 添加过滤器</button>');
         }
     });
-
         });
 
 $('#CancleFilterCon').on('click', function () {
@@ -334,7 +317,7 @@ $('#CancleFilterCon').on('click', function () {
 
 $('#cancle').on('click', function () {
     $('#AddRuleModal').modal('hide');
-
+    window.location.href = "rules";
 })
 
 
