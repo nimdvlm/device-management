@@ -218,7 +218,7 @@ $(function () {
 
         var Method=$('#pluginMethod').val();
 
-        if(name!="" || apiToken!="" || host!=""|| ports!="" || basePath!="")
+        if(name!="" && apiToken!="" && host!=""&& ports!="" && basePath!="")
         {
             $.ajax({
                 url:"/api/plugin/savePlugin",
