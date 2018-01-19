@@ -67,7 +67,7 @@ $(function () {
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-danger delete" style="cursor:pointer" data-toggle="modal" data-target="#deleteModal" id="' + row.id.id + '">' + '删除' + '</a>'
+                    return '<a class="btn-sm btn-danger delete" style="cursor:pointer" data-toggle="modal" data-target="#delSerModal" id="' + row.id.id + '">' + '删除' + '</a>'
                         + '<a class="btn-sm btn-success active" style="cursor:pointer" id="' + row.id.id + '">' + '激活' + '</a>'
                         + '<a class="btn-sm btn-danger suspend" style="cursor:pointer" id="' + row.id.id + '">' + '暂停' + '</a>';
                 }
@@ -116,26 +116,26 @@ $(function () {
         }
     });
 
-    var ruleId;
+    var pluginId;
     $('#dataTables-example').on('click', 'tr .delete', function () {
         console.log('id:' + $(this).attr('id'));
-        ruleId = $(this).attr('id');
+        pluginId = $(this).attr('id');
     });
     $('#SerDelete').on('click', function () {
         $.ajax({
-            url: "/api/plugin/deletePlugin/" + ruleId,
+            url: "/api/plugin/deletePlugin/" + pluginId,
             type: "DELETE",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({
-                    "id": ruleId,
+                    "id": pluginId,
                 }
             ),
             dataType: "text",
             success: function (result) {
                 //var obj = JSON.parse(result);
                 console.log("delete plugins success");
-                $('#deleteModal').modal('hide')
-                $('#lastDelete').on('click', function () {
+                $('#delSerModal').modal('hide')
+                $('#lastSer').on('click', function () {
                     window.location.href = "plugins";
                 });
             },
@@ -147,13 +147,13 @@ $(function () {
 
     $('#dataTables-example').on('click', 'tr .active', function () {
         console.log('id:' + $(this).attr('id'));
-        ruleId = $(this).attr('id');
+        pluginId = $(this).attr('id');
         $.ajax({
-            url: "/api/plugin/"+ruleId+"/activate",
+            url: "/api/plugin/"+pluginId+"/activate",
             type: "POST",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({
-                    "id": ruleId,
+                    "id": pluginId,
                 }
             ),
             dataType: "text",
@@ -173,13 +173,13 @@ $(function () {
 //暂停
     $('#dataTables-example').on('click', 'tr .suspend', function () {
         console.log('id:' + $(this).attr('id'));
-        ruleId = $(this).attr('id');
+        pluginId = $(this).attr('id');
         $.ajax({
-            url: "/api/plugin/"+ruleId+"/suspend",
+            url: "/api/plugin/"+pluginId+"/suspend",
             type: "POST",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({
-                    "id": ruleId,
+                    "id": pluginId,
                 }
             ),
             dataType: "text",
@@ -234,7 +234,7 @@ $(function () {
                 }
             ),
             dataType:"text",
-            success: function(){
+            success: function(result){
                 console.log("create plugins success");
                 window.location.href = "plugins";
             },
