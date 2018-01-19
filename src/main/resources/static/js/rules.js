@@ -138,7 +138,6 @@ $(function () {
     })
     $('#CreateRulesModal').on('hide.bs.modal', function () {
         console.log('hideeee');
-
         document.getElementById("createServiceGroup").reset();
     });
 
@@ -327,5 +326,15 @@ $(function () {
     });
 
         });
+
+$('#CancleFilterCon').on('click', function () {
+    $('#AddFilterModal').modal('hide');
+
+})
+
+$('#cancle').on('click', function () {
+    $('#AddRuleModal').modal('hide');
+
+})
 
 
