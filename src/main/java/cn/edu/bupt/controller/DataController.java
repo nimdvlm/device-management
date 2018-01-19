@@ -30,7 +30,27 @@ public class DataController extends DefaultThingsboardAwaredController{
         }
         return retSuccess(responseKeyContent);
     }
+    @RequestMapping(value="/getlatestData/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    public String getlatestData(@PathVariable("deviceId") String deviceId)
+    {
+        String responseKeyContent=getKeyData(deviceId);
+        responseKeyContent=responseKeyContent.replaceAll("[\\[\\]]","");
+        responseKeyContent=responseKeyContent.replaceAll("\"","");
 
+        String requestHistoricalDataAddr = "/api/plugins/telemetry/DEVICE/"+ deviceId
+                + "/values/TIMESERIES?keys="+responseKeyContent;
+
+        String responseHistoricalDataContent = null ;
+        try {
+            responseHistoricalDataContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestHistoricalDataAddr,
+                    null,
+                    request.getSession());
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseHistoricalDataContent);
+    }
     @RequestMapping(value="/getHistoricalData/{deviceId}/{startTime}/{endTime}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getHistoricalData(@PathVariable("deviceId") String deviceId,@PathVariable("startTime") String startTime,@PathVariable("endTime") String endTime)
     {
@@ -39,7 +59,7 @@ public class DataController extends DefaultThingsboardAwaredController{
         responseKeyContent=responseKeyContent.replaceAll("\"","");
 
         String requestHistoricalDataAddr = "/api/plugins/telemetry/DEVICE/"+ deviceId
-                + "/values/TIMESERIES?keys=" +responseKeyContent
+                + "/values/TIMESERIES?keys="
                 + "&startTs="+startTime
                 + "&endTs="+endTime
                 + "&interval=0&limit=100";
