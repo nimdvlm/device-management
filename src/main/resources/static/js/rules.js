@@ -1,8 +1,4 @@
 $(function () {
-    var model1;
-    var manufacture1;
-    var deviceType1;
-    var serviceName1;
     $("#device_input").keyup(function () {
         $("#device_table tbody tr").hide()
             .filter(":contains('" + ($(this).val()) + "')").show();//filter和contains共同来实现了这个功能。
@@ -98,7 +94,12 @@ $(function () {
         var messageType = $('#MessageType').val();
         var filterDescription = $('#FilterDescription').val();
 
-        $('#filterTableBody').append('<tr><td>' + filterName + '</td><td>' + filterType + '</td><td>' + messageType + '</td><td>' + filterDescription + '</td></tr>');
+        if(filterType=='Message Type Filter'){
+            $('#filterTableBody').append('<tr><td>' + filterName + '</td><td>' + filterType + '</td><td>' + messageType + '</td><td>' + '' + '</td></tr>');
+        }
+        else{
+            $('#filterTableBody').append('<tr><td>' + filterName + '</td><td>' + filterType + '</td><td>' + '' + '</td><td>' + filterDescription + '</td></tr>');
+        }
         $('#AddFilterModal').modal('hide');
         setTimeout(function(){
             $('body').addClass('modal-open')
@@ -121,8 +122,8 @@ $(function () {
 
     })
     $('#CreateRulesModal').on('hide.bs.modal', function () {
-        console.log('hideeee');
-        document.getElementById("createServiceGroup").reset();
+
+        document.getElementById("createRuleForm").reset();
     });
 
     var ruleId;
@@ -222,23 +223,6 @@ $(function () {
             for (var j = 0; j < obj.length; j++) {
                 $('#PluginType').append('<option value = "' + obj[j].name + '">' + obj[j].name + '</option>');
             }
-            // var temp = "";
-            // for (var j = 1; j < result.length - 1; j++) {
-            //     temp += result[j];
-            // }
-            // console.log(temp);
-            // var obj = JSON.parse(temp);
-            // // var pluginArr = [];
-            // // console.log(pluginArr);
-            // $('#PluginType').empty();
-            // for (var j = 0; j < obj.length; j++) {
-            //     // for (var k = 1; k < objArr[j].length)
-            //     // pluginArr = JSON.parse(objArr[j]);
-            //     $('#PluginType').append('<option value = "' + obj[j].name + '">' + obj[j].name + '</option>');
-            // }
-            // // for (var i = 0; i < arr.length; i++) {
-            // //
-            // // }
         },
         error: function(msg) {
             alert(msg.message);
@@ -257,64 +241,95 @@ $(function () {
         }
     })
 
-    $('#filterTable').dataTable({
-        "paging": true,
-        "pagingType": "simple_numbers",
-        "pageLength": 5,
-        "lengthMenu": [5, 10, 15, 20],
-        "autoWidth": false,
-        "language": {
-            "sProcessing":   "处理中...",
-            "sLengthMenu":   "显示 _MENU_ 项结果",
-            "sZeroRecords":  "没有匹配结果",
-            "sInfo":         "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-            "sInfoEmpty":    "显示第 0 至 0 项结果，共 0 项",
-            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-            "sInfoPostFix":  "",
-            "sSearch":       "搜索:",
-            "sUrl":          "",
-            "sEmptyTable":     "表中数据为空",
-            "sLoadingRecords": "载入中...",
-            "sInfoThousands":  ",",
-            "oPaginate": {
-                "sFirst":    "首页",
-                "sPrevious": "上页",
-                "sNext":     "下页",
-                "sLast":     "末页"
-            },
-        },
-        // "data": ,
-        "columnDefs": [
-            {
-                "title": "过滤器名称",
-                "data": "",
-                "width": "30%"
-            },
-            {
-                "title": "过滤器类型",
-                "data": "",
-                "width": "50%"
-            },
-            {
-                "title": "操作",
-                "data": "updated_at",
-                "width": "20%",
-                render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-primary editFilter" data-toggle="modal" data-target="#" style="cursor:pointer" id="" name="">' + '编辑' + '</a >';
-                }
-            }
-        ],
-        initComplete:function(){
-            $("#toolbar").append('<button style="margin-left:20px;" class="btn btn-primary btn-sm addFilter" id="add_filter_btn" data-toggle="modal" data-target="#">+ 添加过滤器</button>');
-        }
-    });
-        });
-
+});
+//取消添加过滤器
 $('#CancleFilterCon').on('click', function () {
     $('#AddFilterModal').modal('hide');
 
 })
 
+
+//创建规则
+$('#create').on('click', function () {
+    var ruleName = $('#ruleName').val();
+    var ruleDescription = $('#ruleDescription').val();
+    //过滤器数据
+    for(){
+        var FilterName =$('#FilterName').val();
+        var FilterType =$('#FilterType').val();
+        if(FilterType == 'Message Type Filter'){
+            var MessageType =$('#MessageType').val();
+        }else{
+            var FilterDescription ==$('#FilterDescription').val();
+        }
+    }
+    var inputPluginActionName = $('#inputPluginActionName').val();
+    var inputPluginActionType = $('#inputPluginActionType').val();
+    var requireConfirm = $('#requireConfirm').val();
+    var inputBodyTemplate = $('#inputBodyTemplate').val();
+    //
+    var inputActionPath = $('#inputActionPath').val();
+    var inputRequestMethod = $('#inputRequestMethod').val();
+    var inputExpectedResultCode = $('#inputExpectedResultCode').val();
+        $.ajax({
+            url: "/api/rule/create/",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({
+                //传几个过滤器数据？加循环？
+        "filters":[
+        {
+            //选择不同过滤器传不同数据 未被选到的数据项填空？不传？
+/*            "configuration":{
+                if(FilterType == 'Message Type Filter'){
+                    "messageTypes":[
+                        MessageType
+                    ]
+                }
+                else{
+
+                }*/
+            "name":FilterName,
+            "clazz":'org.thingsboard.server.extensions.core.filter.'+FilterType
+        }
+    ],
+        "name":ruleName,
+        "additionalInfo":{
+        "description":ruleDescription
+    },
+                "pluginToken":inputPluginActionType,
+            "action":{
+            "configuration":{
+                "sync":requireConfirm,
+                    "requestMethod":inputRequestMethod,
+                    "actionPath":inputActionPath,
+                    "template":inputBodyTemplate,
+                    "expectedResultCode":inputExpectedResultCode
+            },
+            "clazz":"org.thingsboard.server.extensions.rest.action.RestApiCallPluginAction",
+                "name":inputPluginActionName
+    }
+
+    }),
+            dataType: "text",
+            success: function (result) {
+                console.log("success");
+                console.log(result);
+                $('#createSuc').modal('show');
+                $('#AddRuleModal').modal('hide');
+                $('#lastCreate').on('click', function () {
+                    window.location.href = "rules";
+                });
+            },
+            error: function (msg) {
+                alert(msg.message);
+            }
+        });
+
+});
+
+
+//取消创建规则
 $('#cancle').on('click', function () {
     $('#AddRuleModal').modal('hide');
     window.location.href = "rules";
