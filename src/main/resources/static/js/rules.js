@@ -281,11 +281,13 @@ $('#create').on('click', function () {
         {
             //选择不同过滤器传不同数据 未被选到的数据项填空？不传？
 /*            "configuration":{
+               //选Message Type Filter
                 if(FilterType == 'Message Type Filter'){
                     "messageTypes":[
                         MessageType
                     ]
                 }
+                //选Device...... Filter
                 else{
 
                 }*/
