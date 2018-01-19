@@ -49,7 +49,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                 <li><a href="homepage"><span class="glyphicon glyphicon-th-list"></span> <span> 设备列表</span></a></li>
                 <li><a href="device_group"><span class="glyphicon glyphicon-inbox"></span> 设备组</a></li>
                 <li><a href="services"><span class="glyphicon glyphicon-leaf"></span> <span> 服务管理</span></a></li>
-                <li><a href="plugins"><span class="glyphicon glyphicon-search"></span> 插件管理 </a></li>
+                <li><a href="plugins"><span class="glyphicon glyphicon-tags"></span> 插件管理 </a></li>
                 <li class="active" style="background:red;">
                     <a href="rules">
                         <span class="glyphicon glyphicon-search"></span>
@@ -106,24 +106,30 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
             <div class="modal-body">
                 <form class="form-horizontal" role="form" action="#" id="createServiceGroup">
                     <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>名称</label>
+                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span><b>名称</b></label>
                         <div class="col-sm-9">
-                            <input type="text" class='add' placeholder="name" id="ruleName" name="ruleName">
+                            <input type="text" class="add form-control" placeholder="name" id="ruleName" name="ruleName">
                         </div>
                     </div>
                     <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>描述</label>
+                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span><b>描述</b></label>
                         <div class="col-sm-9">
-                            <input type="text" class='add' placeholder="description" id="ruleDescription" name="ruleDescription">
+                            <input type="text" class='add form-control' placeholder="description" id="ruleDescription" name="ruleDescription">
                         </div>
                     </div>
                     <div class="form-group has-feedback">
                         <!--<label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>过滤器</label>-->
                         <button style="margin-left:20px;" class="btn btn-primary btn-sm create" data-toggle="modal" data-target="#AddFilterModal">添加过滤器</button>
                     </div>
+                    <!--根据添加过滤器信息生成表格-->
+                    <div class="form-group">
+                        <table id="filterTable" class="table table-hover filter-table">
+
+                        </table>
+                    </div>
 
                     <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label" style='text-align: left;'>插件</label>
+                        <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span><b>插件</b></label>
                         <div class="col-sm-9">
                             <select type="text" class="form-control" id="PluginType">
                                 <option value="Plugin">Plugin</option>
@@ -132,16 +138,16 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label">插件动作</label>
+                        <label class="control-label"><span style="color: red;">* </span><b>插件动作</b></label>
                         <div class="col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11">
                             <div class="form-group">
-                                <label for="inputPluginActionName" style='text-align: left;' class="col-sm-3 control-label">名称 *</label>
+                                <label for="inputPluginActionName" style='text-align: left;' class="col-sm-3 control-label">名称</label>
                                 <div class="col-sm-9">
                                     <input type="text" name="" class="form-control" id="inputPluginActionName">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputPluginActionType" style='text-align: left;' class="col-sm-3 control-label">类型 *</label>
+                                <label for="inputPluginActionType" style='text-align: left;' class="col-sm-3 control-label">类型</label>
                                 <div class="col-sm-9">
                                     <select class="form-control" id="inputPluginActionType">
                                         <option value="REST API Call Plugin Action" selected>REST API Call Plugin Action</option>
@@ -156,19 +162,19 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputBodyTemplate" style='text-align: left;' class="col-sm-3 control-label">Body Template *</label>
+                                <label for="inputBodyTemplate" style='text-align: left;' class="col-sm-3 control-label">Body Template</label>
                                 <div class="col-sm-9">
                                     <textarea class="form-control" rows="3" id="inputBodyTemplate"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputActionPath" style='text-align: left;' class="col-sm-3 control-label">'Action Path *'</label>
+                                <label for="inputActionPath" style='text-align: left;' class="col-sm-3 control-label">Action Path</label>
                                 <div class="col-sm-9">
                                     <input type="text" name="" class="form-control" id="inputActionPath" value="/">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputRequestMethod" style='text-align: left;' class="col-sm-3 control-label">Request method *</label>
+                                <label for="inputRequestMethod" style='text-align: left;' class="col-sm-3 control-label">Request method</label>
                                 <div class="col-sm-9">
                                     <select class="form-control" id="inputRequestMethod">
                                         <option value="POST" selected>POST</option>
@@ -177,7 +183,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputExpectedResultCode" style='text-align: left;' class="col-sm-3 control-label">'Expected Result Code *'</label>
+                                <label for="inputExpectedResultCode" style='text-align: left;' class="col-sm-3 control-label">Expected Result Code</label>
                                 <div class="col-sm-9">
                                     <input type="text" name="" class="form-control" id="inputExpectedResultCode">
                                 </div>
@@ -259,7 +265,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" id="addFilterClose" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">添加过滤器</h4>
             </div>
             <div class="modal-body">
@@ -279,7 +285,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                             </select>
                         </div>
                     </div>
-                    <div class="form-group has-feedback">
+                    <div class="form-group has-feedback" style="display: block" id="Filter1">
                         <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>消息类型</label>
                         <div class="col-sm-9">
                         <select type="text" class="form-control" id="MessageType">
@@ -290,7 +296,7 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                         </select>
                         </div>
                     </div>
-                    <div class="form-group has-feedback">
+                    <div class="form-group has-feedback" style="display: none" id="Filter2">
                         <label class="col-sm-3 control-label" style='text-align: left;'><span style="color: red;">* </span>过滤器描述</label>
                         <div class="col-sm-9">
                             <input type="text" class='add' placeholder="name" id="FilterDescription" name="FilterDescription">
@@ -298,8 +304,8 @@ font-size: 16px;"><a href="/" class="btn btn-danger square-btn-adjust" id="logou
                     </div>
                     <div class="modal-footer">
                         <!--<button type="submit" class="btn btn-primary" id="create" data-toggle="modal" data-target="#createSuc">创建</button>-->
-                        <button type="submit" class="btn btn-primary" id="AddFilterCon">创建</button>
-                        <button type="button" class="btn btn-default" id="CancleFilterCon">取消</button>
+                        <button type="button" class="btn btn-primary" id="AddFilterCon">创建</button>
+                        <button type="button" class="btn btn-default" id="CancelFilterCon" data-dismiss="modal">取消</button>
                     </div>
                 </form>
             </div>
