@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ServicTableController extends DefaultThingsboardAwaredController {
 
-    @RequestMapping("/saveGroup")
+    @RequestMapping(value = "/saveGroup",method = RequestMethod.POST)
     public String saveDeviceTable(@RequestBody String json) {
         String url = "http://"+getServer()+"/api/servicetable/saveServiceGroup";
         try{
@@ -30,7 +30,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
         }
     }
 
-    @RequestMapping("/deleteGroup")
+    @RequestMapping(value="/deleteGroup", method = RequestMethod.DELETE)
     public String deleteGroup(@RequestBody String json) {
         String url = "http://"+getServer()+"/api/servicetable/deleteServiceGroup";
         try{
@@ -41,7 +41,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
         }
     }
 
-    @RequestMapping("/saveServiceToGroup")
+    @RequestMapping(value = "/saveServiceToGroup", method = RequestMethod.POST)
     public String saveServiceToGroup(@RequestBody String json) {
         String url = "http://"+getServer()+"/api/servicetable/add";
         try{
@@ -53,7 +53,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
         }
     }
 
-    @RequestMapping("/deleteServiceFromGroup")
+    @RequestMapping(value = "/deleteServiceFromGroup",method = RequestMethod.DELETE)
     public String deleteServiceFromGroup(@RequestBody String json) {
         // model
         // manufacture
@@ -69,7 +69,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
         }
     }
 
-    @RequestMapping("/serviceTables")
+    @RequestMapping(value = "/serviceTables",method = RequestMethod.GET)
     public String serviceTableLists() {
         String url = "http://"+getServer()+"/api/servicetable/getAll";
         try{
