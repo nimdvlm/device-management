@@ -51,6 +51,14 @@ label[class=error] {
     margin: 10px 5px 10px 0;
 }
 
+.divide-line {
+    border-top: 4px solid #707070;
+}
+
+#token {
+    text-align: center;
+}
+
 /*.service-control-legend {*/
     /*display: block;*/
     /*-webkit-padding-start: 2px;*/
