@@ -111,7 +111,6 @@ $(function () {
             $('#device_task').DataTable().destroy();
             console.log('aa')
         }
-        alert("haha");
         $('#device_task').DataTable({
             "aLengthMenu": [5, 10, 25, 50, 100],
             "bPaginate": true,
@@ -414,7 +413,7 @@ $(function () {
         var deviceId = $('#deviceId').val();
         console.log(deviceId);
         $.ajax({
-            url: "/api/device/updatecoordinate" + deviceId,
+            url: "/api/device/updatecoordinate/" + deviceId,
             type: "POST",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({'manufacture':manufacture,'deviceType':deviceType,'model':model}),
