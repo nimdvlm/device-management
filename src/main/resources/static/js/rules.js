@@ -411,9 +411,12 @@ function openCreateRuleModal() {
             var obj = JSON.parse(result);
             var objName = [];
             $('#PluginType').empty();
+            var i = 0;
             for (var j = 0; j < obj.length; j++) {
-                $('#PluginType').append('<option value = "' + obj[j].apiToken + '">' + obj[j].name + '</option>');
-                objName[j] = obj[j].name;
+                if (obj[j].clazz === "org.thingsboard.server.extensions.rest.plugin.RestApiCallPlugin") {
+                    $('#PluginType').append('<option value = "' + obj[j].apiToken + '">' + obj[j].name + '</option>');
+                    objName[j] = obj[j].name;
+                }
             }
             console.log(objName);
             $('#PluginType').change(function () {
