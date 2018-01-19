@@ -48,7 +48,7 @@ $(function () {
                 data: "updated_at",
                 title: "操作",
                 render: function (data, type, row, meta) {
-                    return '<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:pointer" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.deviceId+'" name="'+row.name+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:pointer" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>'+'<a class="btn-sm btn-info getToken" style="cursor:pointer" data-toggle="modal" data-target="#tokenModal" id="'+row.deviceId+'">'+'令牌'+'</a>';
+                    return '<a class="btn-sm btn-danger del" style="cursor:pointer" data-toggle="modal" data-target="#delDeviceModal" id="'+row.deviceId+'">'+'删除'+'</a>'+'<a class="btn-sm btn-primary update" style="cursor:pointer" data-toggle="modal" data-target="#chooseManufactureModal" id="'+row.deviceId+'">'+'更新'+'</a>'+'<a class="btn-sm btn-success ctrl" style="cursor:pointer" data-toggle="modal" data-target="#detailDeviceModal" id="'+row.deviceId+'" name="'+row.name+'">'+'详情'+'</a>'+'<a class="btn-sm btn-warning assign" style="cursor:pointer" data-toggle="modal" data-target="#assDeviceModal" name="'+row.name+'" id="'+row.deviceId+'">'+'分配'+'</a>'+'<a class="btn-sm btn-info getToken" style="cursor:pointer" data-toggle="modal" data-target="#tokenModal" id="'+row.deviceId+'">'+'令牌'+'</a>';
                 }
             },
             {
@@ -143,6 +143,7 @@ $(function () {
                     data: "updated_at",
                     title: "操作",
                     render: function (data, type, row, meta) {
+                        console.log(row);
                         return '<a class="btn-sm btn-danger cancelTask" data-toggle="modal" data-target="#cancelTaskModal" style="cursor:pointer" id="' + row.id + '" name="' + deviceId + '">' + '取消' + '</a>';
                     }
                 },
@@ -307,11 +308,133 @@ $(function () {
         }
     });
 
+    // 为设备选择厂商等信息时的下拉列表
+    // 获取厂商列表
+    $.ajax({
+        url: "/api/service/manufactures/",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        data: "",
+        dataType: "text",
+        success: function (result) {
+            // var obj = JSON.parse(result);
+            console.log(result);
+            var temp = "";
+            for (var j = 1; j < result.length - 1; j++) {
+                temp += result[j];
+            }
+            console.log(temp);
+            var arr = temp.split(', ');
+            $('#chooseManufacture').empty();
+            $('#chooseManufacture').append('<option value="">--请选择厂商</option>');
+            $('#chooseDeviceType').empty();
+            $('#chooseDeviceType').append('<option value="">--请选择设备类型</option>');
+            $('#chooseModel').empty();
+            $('#chooseModel').append('<option value="">--请选择设备型号</option>');
+            for (var i = 0; i < arr.length; i++) {
+                $('#chooseManufacture').append('<option value = "' + arr[i] + '">' + arr[i] + '</option>');
+            }
+        },
+        error: function(msg) {
+            alert(msg.message);
+        }
+    });
+
+    $('#chooseManufacture').change(function() {
+        // 获取设备类型列表
+        if ($('#chooseManufacture option:selected').val() !== ""){
+            $.ajax({
+                url: "/api/service/" + $('#chooseManufacture option:selected').val() + "/deviceTypes/",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                data: "",
+                dataType: "text",
+                success: function(result) {
+                    // var obj = JSON.parse(result);
+                    console.log(result);
+                    var temp = "";
+                    for (var j = 1; j < result.length - 1; j++) {
+                        temp += result[j];
+                    }
+                    var arr = temp.split(', ');
+                    $('#chooseDeviceType').empty();
+                    $('#chooseDeviceType').append('<option value="">--请选择设备类型</option>');
+                    for (var i = 0; i < arr.length; i++) {
+                        $('#chooseDeviceType').append('<option value = "' + arr[i] + '">' + arr[i] + '</option>');
+                    }
+                },
+                error: function(msg) {
+                    alert(msg.message);
+                }
+            });
+        }
+    });
+
+    $('#chooseDeviceType').change(function() {
+        // 获取设备型号列表
+        console.log($('#chooseDeviceType option:selected').val());
+        if ($('#chooseDeviceType option:selected').val() !== "") {
+            $.ajax({
+                url: "/api/service/" + $('#chooseManufacture option:selected').val() + '/' + $('#chooseDeviceType option:selected').val() + "/models/",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                data: "",
+                dataType: "text",
+                success: function(result) {
+                    // var obj = JSON.parse(result);
+                    console.log(result);
+                    var temp = "";
+                    for (var j = 1; j < result.length - 1; j++) {
+                        temp += result[j];
+                    }
+                    var arr = temp.split(', ');
+                    $('#chooseModel').empty();
+                    $('#chooseModel').append('<option value="">--请选择设备型号</option>');
+                    for (var i = 0; i < arr.length; i++) {
+                        $('#chooseModel').append('<option value = "' + arr[i] + '">' + arr[i] + '</option>');
+                    }
+                },
+                error: function(msg) {
+                    alert(msg.message);
+                }
+            });
+        }
+    });
+
+    // 为设备选择厂商功能
+    $('#devices_table').on('click','tr .update', function () {
+        console.log($(this).attr('id'))
+        $('#deviceId').val($(this).attr('id'))
+    } );
+    $('#choose').on('click', function() {
+        var manufacture = $('#chooseManufacture').val();
+        var deviceType = $('#chooseDeviceType').val();
+        var model = $('#chooseModel').val();
+        var deviceId = $('#deviceId').val();
+        console.log(deviceId);
+        $.ajax({
+            url: "/api/device/updatecoordinate" + deviceId,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({'manufacture':manufacture,'deviceType':deviceType,'model':model}),
+            dataType: "text",
+            success: function(result) {
+                $('#chooseManufactureModal').modal('hide');
+                window.location.href = "homepage";
+            },
+            error: function (msg) {
+                alert(msg.message);
+            }
+        });
+    });
+
     // 创建设备表单验证提交设置
     $.validator.setDefaults({
         submitHandler: function(){
             var name = $('#name').val();
             var type = $('#type').val();
+            var isGateway = $('#isGateway').is(':checked');
+            // console.log(isGateway);
             var manufacture = $('#manufacture').val();
             var deviceType = $('#deviceType').val();
             var model = $('#model').val();
@@ -320,7 +443,7 @@ $(function () {
                 url: "/api/device/create",
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({'name': name, 'type': type,'manufacture':manufacture,'deviceType':deviceType,'model':model, "additionalInfo":{"description":description}}),
+                data: JSON.stringify({'name': name, 'type': type,'manufacture':manufacture,'deviceType':deviceType,'model':model, "additionalInfo":{"gateway": isGateway,"description":description}}),
                 dataType: "text",
                 success: function (result) {
                     // var obj = JSON.parse(result);
@@ -343,17 +466,17 @@ $(function () {
     $('#createDeviceForm').validate({
         rules: {
             deviceName: {required: true},
-            bigType: {required: true},
-            manufacture: {required: true},
-            specificType: {required: true},
-            deviceModel: {required: true}
+            bigType: {required: true}
+            // manufacture: {required: true},
+            // specificType: {required: true},
+            // deviceModel: {required: true}
         },
         messages: {
             deviceName: {required: '设备名称不能为空'},
             bigType: {required: '设备大类型不能为空'},
-            manufacture: {required: '必须为设备选择一个厂商'},
-            specificType: {required: '必须为设备选择具体类型'},
-            deviceModel: {required: "必须为设备选择型号"}
+            // manufacture: {required: '必须为设备选择一个厂商'},
+            // specificType: {required: '必须为设备选择具体类型'},
+            // deviceModel: {required: "必须为设备选择型号"}
         }
     });
 
