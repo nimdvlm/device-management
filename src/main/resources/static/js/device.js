@@ -111,6 +111,7 @@ $(function () {
             $('#device_task').DataTable().destroy();
             console.log('aa')
         }
+        alert("haha");
         $('#device_task').DataTable({
             "aLengthMenu": [5, 10, 25, 50, 100],
             "bPaginate": true,
