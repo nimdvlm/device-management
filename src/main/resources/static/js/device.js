@@ -111,6 +111,7 @@ $(function () {
             $('#device_task').DataTable().destroy();
             console.log('aa')
         }
+        $.fn.dataTable.ext.errMode = function(s, h, m){};
         $('#device_task').DataTable({
             "aLengthMenu": [5, 10, 25, 50, 100],
             "bPaginate": true,
@@ -144,7 +145,7 @@ $(function () {
                     title: "操作",
                     render: function (data, type, row, meta) {
                         console.log(row);
-                        return '<a class="btn-sm btn-danger cancelTask" data-toggle="modal" data-target="#cancelTaskModal" style="cursor:pointer" id="' + row.id + '" name="' + deviceId + '">' + '取消' + '</a>';
+                        return '<a class="btn-sm btn-danger cancelTask" style="cursor:pointer" id="' + row.id + '" name="' + deviceId + '">' + '取消' + '</a>';
                     }
                 },
 
@@ -187,6 +188,7 @@ $(function () {
 
     // 取消设备任务
     $('#device_task').on('click', 'tr .cancelTask', function () {
+        $('#cancelTaskModal').modal('show');
         var taskId = $(this).attr('id');
         var deviceId = $(this).attr('name');
         console.log(taskId);
@@ -208,13 +210,13 @@ $(function () {
                 console.log("success");
                 $('#cancelTaskModal').modal('hide');
                 window.location.href = "homepage";
-                $('#device_task').ajax.reload();
+                // $('#device_task').ajax.reload();
             },
             error: function(msg) {
                 alert(msg.message);
             }
         });
-    })
+    });
 
     // 获取厂商列表
     $.ajax({
