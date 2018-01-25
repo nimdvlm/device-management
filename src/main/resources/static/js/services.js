@@ -319,7 +319,7 @@ $(function () {
         console.log(model1, manufacture1, deviceType1, serviceName1);
         $.ajax({
             url: "/api/service/deleteServiceFromGroup/" ,
-            type: "POST",
+            type: "DELETE",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({
                     "manufacture": manufacture1,
@@ -411,7 +411,7 @@ $(function () {
     $('#SerDelete').on('click', function () {
         $.ajax({
             url: "/api/service/deleteGroup/" ,
-            type: "POST",
+            type: "DELETE",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({
                     "manufacture": manufacture2,
