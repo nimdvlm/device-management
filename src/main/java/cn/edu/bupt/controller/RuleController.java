@@ -12,6 +12,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2018/1/10.
@@ -21,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api/rule")
 public class RuleController extends DefaultThingsboardAwaredController{
-
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @RequestMapping(value = "/allRules",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     private String getRules()
@@ -37,7 +39,13 @@ public class RuleController extends DefaultThingsboardAwaredController{
         }catch(Exception e){
             return retFail(e.toString()) ;
         }
-        return retSuccess(responseContent);
+        JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
+        for(JsonElement ele:array){
+            JsonObject obj = ele.getAsJsonObject();
+            long time = obj.getAsJsonPrimitive("createdTime").getAsLong();
+            obj.addProperty("createdTime",format.format(new Date(time)));
+        }
+        return retSuccess(array.toString());
     }
 
     @RequestMapping(value = "/allFilters",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})

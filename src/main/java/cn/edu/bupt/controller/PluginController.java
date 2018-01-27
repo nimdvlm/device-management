@@ -1,10 +1,15 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2018/1/18.
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/plugin")
 public class PluginController extends DefaultThingsboardAwaredController{
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @RequestMapping(value = "/allPlugins",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getAllPlugins(){
         String requestAddr = "/api/plugins";
@@ -26,7 +32,13 @@ public class PluginController extends DefaultThingsboardAwaredController{
         }catch(Exception e){
             return retFail(e.toString()) ;
         }
-        return retSuccess(responseContent);
+        JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
+        for(JsonElement ele:array){
+            JsonObject obj = ele.getAsJsonObject();
+            long time = obj.getAsJsonPrimitive("createdTime").getAsLong();
+            obj.addProperty("createdTime",format.format(new Date(time)));
+        }
+        return retSuccess(array.toString());
     }
 
     @RequestMapping(value = "/savePlugin",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
