@@ -338,7 +338,7 @@ $(function () {
                 });
             },
             error: function (msg) {
-                alert(msg.message);
+                //alert(msg.message);
             }
         });
     });
@@ -429,7 +429,7 @@ $(function () {
                 });
             },
             error: function (msg) {
-                alert(msg.message);
+                //alert(msg.message);
             }
         });
     });
