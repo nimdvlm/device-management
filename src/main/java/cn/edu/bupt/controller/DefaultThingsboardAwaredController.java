@@ -50,6 +50,10 @@ public class DefaultThingsboardAwaredController {
         return thingsboardHost+":"+thingsboardPort ;
     }
 
+    protected String getSmartRulerServer() {
+        return smartRulerHost+":"+smartRulerPort ;
+    }
+
     protected String retSuccess(String msg) {
         return responceUtil.onSuccess(msg) ;
     }
