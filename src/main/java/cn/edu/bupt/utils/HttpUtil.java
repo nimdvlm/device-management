@@ -20,20 +20,6 @@ import static org.bouncycastle.cms.RecipientId.password;
 @Component
 public class HttpUtil {
 
-    @Value("${device-access.host}")
-    String deviceAccessHost;
-
-    @Value("${device-access.port}")
-    String deviceAccessPort;
-
-    @Value("${smart_ruler.host}")
-    String smartRulerHost;
-
-    @Value("${smart_ruler.port}")
-    String smartRulerPort;
-
-
-
 
     @Value("${bupt.thingsboard.login_url}")
     private void getLogin(String loginUrl) {
