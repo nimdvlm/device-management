@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -21,14 +22,34 @@ import static org.bouncycastle.cms.RecipientId.password;
 public class HttpUtil {
 
 
-    @Value("${bupt.thingsboard.login_url}")
+    @Value("${account.login_url}")
     private void getLogin(String loginUrl) {
         tokenurl = loginUrl ;
     }
 
+    @Value("${account.logout_url}")
+    private void getLogout(String logoutUrl) {
+        logouturl = logoutUrl ;
+    }
+
+    @Value("${account.client_id}")
+    private void getClientId(String client_id) {
+        Client_id = client_id ;
+    }
+
+    @Value("${account.client_secret}")
+    private void getClientSecret(String client_secret) {
+        Client_secret = client_secret ;
+    }
+
+    private static final Base64.Encoder encoder = Base64.getEncoder();
     private static final OkHttpClient httpClient = new OkHttpClient();
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private static String  tokenurl = "http://10.108.219.8:8080/api/auth/login";
+    private static final MediaType FORM = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
+    private static String tokenurl;
+    private static String logouturl;
+    private static String Client_id;
+    private static String Client_secret;
 
 
     public static String sendPostToThingsboard(String url, Map<String,String> headers, JsonObject requestBody,HttpSession session) throws Exception{
@@ -101,26 +122,28 @@ public class HttpUtil {
 
     public static boolean getAccessToken(HttpSession session){
         String username = (String)session.getAttribute("username");
-        String password = (String) session.getAttribute("password");
+        String password = (String)session.getAttribute("password");
         if(username==null|| password ==null) return false;
-        JsonObject json = new JsonObject();
-        json.addProperty("username",username);
-        json.addProperty("password", password);
-//        json.addProperty("username","tenant@thingsboard.org");
-//        json.addProperty("password","tenant");
-        RequestBody body = RequestBody.create(JSON, json.toString());
-        Request.Builder buider = new Request.Builder()
-                .url(tokenurl)
+
+        String content = "username="+username+"&password="+password;
+        RequestBody body = RequestBody.create(FORM, content);
+        Request.Builder builder = new Request.Builder()
+                .url(tokenurl+"?grant_type=password")
                 .post(body);
-        Request request = buider.build();
+
+        byte[] textByte = (Client_id+":"+Client_secret).getBytes();
+        String auth = encoder.encodeToString(textByte);
+        builder.header("Authorization","Basic "+auth);
+
+        Request request = builder.build();
         try{
             // 第一次获取token
             Response response = execute(request);
             if(response.isSuccessful()){
                 String res = response.body().string();
                 JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
-                session.setAttribute("token",obj.get("token").getAsString());
-                session.setAttribute("refreshToken",obj.get("refreshToken").getAsString());
+                session.setAttribute("token",obj.get("access_token").getAsString());
+                session.setAttribute("refreshToken",obj.get("refresh_token").getAsString());
                 return true;
             }else{
                 throw new Exception("the first fail!") ;
@@ -131,12 +154,32 @@ public class HttpUtil {
                 Response response = execute(request);
                 String res = response.body().string();
                 JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
-                session.setAttribute("token",obj.get("token").getAsString());
-                session.setAttribute("refreshToken",obj.get("refreshToken").getAsString());
+                session.setAttribute("token",obj.get("access_token").getAsString());
+                session.setAttribute("refreshToken",obj.get("refresh_token").getAsString());
                 return true ;
             } catch (Exception e1) {
                 return false ;
             }
+        }
+    }
+
+    public static boolean logout(String token){
+        Request.Builder builder = new Request.Builder()
+                .url(logouturl)
+                .get();
+
+        builder.header("Authorization","bearer"+token);
+        Request request = builder.build();
+        try {
+            // 第一次获取token
+            Response response = execute(request);
+            if(response.isSuccessful()){
+                return true;
+            }else{
+                throw new Exception("fail to logout!") ;
+            }
+        }catch (Exception e) {
+            return false;
         }
     }
 

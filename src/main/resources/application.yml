@@ -15,7 +15,7 @@ bupt.thingsboard:
   #host: 127.0.0.1
   host: 39.104.84.131
   port: 8080
-  login_url: http://${bupt.thingsboard.host}:${bupt.thingsboard.port}/api/auth/login
+
 
 device-access:
  host:
@@ -28,3 +28,12 @@ smart_ruler:
 service-management:
   host:
   port:
+
+account:
+  host: 10.112.233.200
+  port: 8081
+#  url需修改
+  login_url: http://${account.host}:${account.port}/oauth/token
+  logout_url: http://${account.host}:${account.port}/logout
+  client_id: client_2
+  client_secret: 123456

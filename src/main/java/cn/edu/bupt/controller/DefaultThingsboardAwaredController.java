@@ -40,6 +40,12 @@ public class DefaultThingsboardAwaredController {
     @Value("${bupt.thingsboard.port}")
     String thingsboardPort ;
 
+    @Value("${account.host}")
+    String accountHost ;
+
+    @Value("${account.port}")
+    String accountPort ;
+
     @Autowired
     HttpServletRequest request;
 
@@ -53,6 +59,10 @@ public class DefaultThingsboardAwaredController {
     protected String getSmartRulerServer() {
         return smartRulerHost+":"+smartRulerPort ;
     }
+
+    protected String getAccountServer(){return accountHost+":"+accountPort ; }
+
+    protected String getServer(){return ""; }
 
     protected String retSuccess(String msg) {
         return responceUtil.onSuccess(msg) ;

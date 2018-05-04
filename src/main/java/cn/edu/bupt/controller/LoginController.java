@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/api/user")
 public class LoginController extends DefaultThingsboardAwaredController {
+
     @Autowired
     private HttpServletRequest request;
 
@@ -59,15 +60,17 @@ public class LoginController extends DefaultThingsboardAwaredController {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession();
-        session.removeAttribute("username");
-        session.removeAttribute("password");
-        JsonObject json = new JsonObject();
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
-        json.addProperty("responce_code",0);
-        json.addProperty("responce_msg","logout ok");
-
-        return retSuccess("success to logout");
+        String token = (String) session.getAttribute("token");
+        boolean res = HttpUtil.logout(token);
+        if(res) {
+            session.removeAttribute("username");
+            session.removeAttribute("password");
+            Subject subject = SecurityUtils.getSubject();
+            subject.logout();
+            return retSuccess("success to logout");
+        }else {
+            return retFail("fail to logout");
+        }
     }
 
 }
