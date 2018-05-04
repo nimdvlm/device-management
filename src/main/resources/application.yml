@@ -24,3 +24,7 @@ device-access:
 smart_ruler:
   host:
   port:
+
+service-management:
+  host:
+  port:

@@ -16,6 +16,24 @@ import javax.servlet.http.HttpServletRequest;
 
 public class DefaultThingsboardAwaredController {
 
+    @Value("${device-access.host}")
+    String deviceAccessHost;
+
+    @Value("${device-access.port}")
+    String deviceAccessPort;
+
+    @Value("${smart_ruler.host}")
+    String smartRulerHost;
+
+    @Value("${smart_ruler.port}")
+    String smartRulerPort;
+
+    @Value("${service-management.host}")
+    String serviceManagementHost;
+
+    @Value("${service-management.port}")
+    String serviceManagementPort;
+
     @Value("${bupt.thingsboard.host}")
     String thingsboardHost ;
 
