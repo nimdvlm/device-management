@@ -1,17 +1,12 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
-import cn.edu.bupt.utils.ResponceUtil;
-import netscape.javascript.JSObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -28,7 +23,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     private String getRules()
     {
-        String requestAddr = "/api/rules";
+        String requestAddr = "/api/rule/rules";
 
         String responseContent = null;
         try{
@@ -39,6 +34,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
         }catch(Exception e){
             return retFail(e.toString()) ;
         }
+
         JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
         for(JsonElement ele:array){
             JsonObject obj = ele.getAsJsonObject();

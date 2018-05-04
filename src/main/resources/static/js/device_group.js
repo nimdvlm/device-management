@@ -211,7 +211,7 @@ $(function () {
     });
     $('#confirmDelete').on('click', function () {
         var deviceGroupId = $('#confirmDel').val();
-        console.log(deviceGroupId)
+        console.log(deviceGroupId);
         $.ajax({
             url: "/api/group/delete/" + deviceGroupId,
             type: "GET",
