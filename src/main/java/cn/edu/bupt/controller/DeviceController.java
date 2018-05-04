@@ -64,6 +64,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
      * @return
      */
     //此方法后台不存在
+    // TODO 后台方法创建
     @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken")
     @ApiImplicitParam(name = "deviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/updatecoordinate/{deviceId}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
@@ -140,6 +141,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     }
 
     //此方法与获取token方法区别，未改
+    // TODO 后台方法
     @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken")
     @ApiImplicitParam(name = "strDeviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/accesstoken/{deviceId}", method = RequestMethod.GET)
