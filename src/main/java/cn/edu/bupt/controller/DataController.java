@@ -17,6 +17,7 @@ import cn.edu.bupt.utils.HttpUtil;
 public class DataController extends DefaultThingsboardAwaredController{
 
     //该方法有点问题
+    //  TODO 方法修改
     @RequestMapping(value="/getKeyData/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getKeyData(@PathVariable("deviceId") String deviceId) {
         String requestKeyAddr = "/api/v1/data/alldata/" + deviceId ;
@@ -56,6 +57,7 @@ public class DataController extends DefaultThingsboardAwaredController{
     }
 
     //此方法后台不存在
+    // TODO 创建后台方法
     @RequestMapping(value="/getHistoricalData/{deviceId}/{startTime}/{endTime}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getHistoricalData(@PathVariable("deviceId") String deviceId,@PathVariable("startTime") String startTime,@PathVariable("endTime") String endTime)
     {
