@@ -46,8 +46,8 @@ public class DefaultThingsboardAwaredController {
     @Autowired
     ResponceUtil responceUtil ;
 
-    protected String getServer() {
-        return thingsboardHost+":"+thingsboardPort ;
+    protected String getDeviceAccessServer() {
+        return deviceAccessHost+":"+ deviceAccessPort ;
     }
 
     protected String retSuccess(String msg) {

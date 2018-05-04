@@ -3,21 +3,15 @@ package cn.edu.bupt.controller;
 import cn.edu.bupt.controller.string2jsonDecode.DeviceGroupInfoDecode;
 import cn.edu.bupt.controller.string2jsonDecode.DeviceInfoDecode;
 import cn.edu.bupt.utils.HttpUtil;
-import cn.edu.bupt.utils.ResponceUtil;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Administrator on 2017/12/23.
@@ -33,18 +27,18 @@ public class GroupController extends DefaultThingsboardAwaredController{
     /**
      * @return
      */
-    @ApiOperation(value="获取所有设备组", notes="获取所有设备组")
-    @RequestMapping(value = "/allGroups", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ApiOperation(value="获取租户所有设备组", notes="获取租户所有设备组")
+    @RequestMapping(value = "/alltenantgroups/{tenantId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String devicegroupList() {
-        String requestAddr = "/api/group/groups" ;
+    public String devicegroupList(@PathVariable Integer tenantId) {
+        String requestAddr = "/api/v1/groups/tenant/" + tenantId ;
 
         StringBuffer param = new StringBuffer();
-        param.append("limit").append("=").append("1000");
+        param.append("limit").append("=").append("100");
 
         String responseContent = null ;
         try {
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr + "?" + param.toString(),
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr + "?" + param.toString(),
                     null,
                     request.getSession());
         } catch (Exception e) {
@@ -64,11 +58,11 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public String create(@RequestBody String deviceGroupInfo) {
-        String requestAddr = "/api/group/save" ;
+        String requestAddr = "/api/v1/group" ;
 
         String responseContent = null ;
         try {
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                     null,
                     (JsonObject) new JsonParser().parse(deviceGroupInfo),
                     request.getSession());
@@ -85,15 +79,14 @@ public class GroupController extends DefaultThingsboardAwaredController{
      */
     @ApiOperation(value="删除设备组", notes="删除设备组")
     @ApiImplicitParam(name = "deviceGroupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
-    @RequestMapping(value = "/delete/{deviceGroupId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{deviceGroupId}", method = RequestMethod.DELETE)
     @ResponseBody
     public String delete(@PathVariable String deviceGroupId) {
-        String requestAddr = String.format("/api/group/delete/%s", deviceGroupId);
+        String requestAddr = String.format("/api/group/%s", deviceGroupId);
 
         String responseContent = null ;
         try {
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
-                    null,
+            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                     request.getSession());
         } catch (Exception e) {
             return retFail(e.toString()) ;
@@ -113,10 +106,10 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @ResponseBody
     public String getDevicesByGroupId(@PathVariable("groupId") String gId) throws Exception {
         int limit = 1000 ;
-        String requestAddr = String.format("/api/group/%s/devices", gId);
+        String requestAddr = String.format("/api/v1/group/devices/%s", gId);
         requestAddr = requestAddr  + "?limit="+limit;
 
-        String responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+        String responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                 null,
                 request.getSession()) ;
         try {
@@ -133,11 +126,11 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @RequestMapping(value = "/assign/{deviceId}/{groupId}", method = RequestMethod.GET)
     @ResponseBody
     public String assignDeviceToGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {
-        String requestAddr = String.format("/api/group/assign/%s/%s", dId, gId);
+        String requestAddr = String.format("/api/v1/assign/group/%s/%s", gId, dId);
 
         String responseContent = null ;
         try {
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                     null,
                     request.getSession()) ;
         } catch (Exception e) {
@@ -153,11 +146,11 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @RequestMapping(value = "/unassign/{deviceId}/{groupId}", method = RequestMethod.GET)
     @ResponseBody
     public String unAssignDeviceFromGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {
-        String requestAddr = String.format("/api/group/unassign/%s/%s", dId,gId);
+        String requestAddr = String.format("/api/v1/unassign/group/%s/%s", gId,dId);
 
         String responseContent = null ;
         try {
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                     null,
                     request.getSession()) ;
         } catch (Exception e) {

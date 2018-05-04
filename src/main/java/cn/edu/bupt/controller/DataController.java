@@ -16,13 +16,14 @@ import cn.edu.bupt.utils.HttpUtil;
 @RequestMapping("/api/data")
 public class DataController extends DefaultThingsboardAwaredController{
 
+    //该方法有点问题
     @RequestMapping(value="/getKeyData/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getKeyData(@PathVariable("deviceId") String deviceId) {
-        String requestKeyAddr = "/api/plugins/telemetry/DEVICE/" + deviceId + "/keys/TIMESERIES";
+        String requestKeyAddr = "/api/v1/data/alldata/" + deviceId ;
 
         String responseKeyContent = null;
         try {
-            responseKeyContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestKeyAddr,
+            responseKeyContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestKeyAddr,
                     null,
                     request.getSession());
         } catch (Exception e) {
@@ -30,6 +31,8 @@ public class DataController extends DefaultThingsboardAwaredController{
         }
         return retSuccess(responseKeyContent);
     }
+
+    //获取所有历史数据
     @RequestMapping(value="/getlatestData/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getlatestData(@PathVariable("deviceId") String deviceId)
     {
@@ -37,12 +40,12 @@ public class DataController extends DefaultThingsboardAwaredController{
         responseKeyContent=responseKeyContent.replaceAll("[\\[\\]]","");
         responseKeyContent=responseKeyContent.replaceAll("\"","");
 
-        String requestHistoricalDataAddr = "/api/plugins/telemetry/DEVICE/"+ deviceId
-                + "/values/TIMESERIES?keys="+responseKeyContent;
+        String requestHistoricalDataAddr = "/api/v1/data/alllatestdata/"+ deviceId;
+
 
         String responseHistoricalDataContent = null ;
         try {
-            responseHistoricalDataContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestHistoricalDataAddr,
+            responseHistoricalDataContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestHistoricalDataAddr,
                     null,
                     request.getSession());
         } catch (Exception e) {
@@ -51,6 +54,8 @@ public class DataController extends DefaultThingsboardAwaredController{
 
         return retSuccess(responseHistoricalDataContent);
     }
+
+    //此方法后台不存在
     @RequestMapping(value="/getHistoricalData/{deviceId}/{startTime}/{endTime}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getHistoricalData(@PathVariable("deviceId") String deviceId,@PathVariable("startTime") String startTime,@PathVariable("endTime") String endTime)
     {
@@ -66,7 +71,7 @@ public class DataController extends DefaultThingsboardAwaredController{
 
         String responseHistoricalDataContent = null ;
         try {
-            responseHistoricalDataContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestHistoricalDataAddr,
+            responseHistoricalDataContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestHistoricalDataAddr,
                     null,
                     request.getSession());
         } catch (Exception e) {
@@ -76,13 +81,14 @@ public class DataController extends DefaultThingsboardAwaredController{
         return retSuccess(responseHistoricalDataContent);
     }
 
+    //获取所有属性
     @RequestMapping(value="/getKeyAttribute/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getKeyAttributes(@PathVariable("deviceId") String deviceId) {
-        String requestKeyAddr = "/api/plugins/telemetry/DEVICE/" + deviceId + "/keys/ATTRIBUTES";
+        String requestKeyAddr = "/api/v1/allattributes/" + deviceId ;
 
         String responseKeyAttributeContent = null;
         try {
-            responseKeyAttributeContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestKeyAddr,
+            responseKeyAttributeContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestKeyAddr,
                     null,
                     request.getSession());
         } catch (Exception e) {
@@ -91,6 +97,7 @@ public class DataController extends DefaultThingsboardAwaredController{
         return retSuccess(responseKeyAttributeContent);
     }
 
+    //获取属性对应键的值
     @ApiOperation(value="test - tjl", notes="根据device的id来指定操作")
     @ApiImplicitParam(name = "deviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value="/getAttribute/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
@@ -101,12 +108,12 @@ public class DataController extends DefaultThingsboardAwaredController{
         responseKeyAttributeContent=responseKeyAttributeContent.replaceAll("[\\[\\]]","");
         responseKeyAttributeContent=responseKeyAttributeContent.replaceAll("\"","");
 
-        String requestHistoricalDataAddr = "/api/plugins/telemetry/DEVICE/"+ deviceId
-                + "/values/ATTRIBUTES?keys=" +responseKeyAttributeContent;
+        String requestHistoricalDataAddr = "/api/v1/allattributes/"+ deviceId
+                + "?keys=" +responseKeyAttributeContent;
 
         String responseAttributeDataContent = null ;
         try {
-            responseAttributeDataContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestHistoricalDataAddr,
+            responseAttributeDataContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestHistoricalDataAddr,
                     null,
                     request.getSession());
         } catch (Exception e) {
