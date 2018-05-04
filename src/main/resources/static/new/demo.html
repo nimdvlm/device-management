@@ -325,6 +325,7 @@
 
             success: function (data) {//success为请求成功后的回调函数
 				//var value[];
+                console.log(data);
                 var temp = JSON.parse(data);//将字符串转为json
                 var xArr = [];//先声明一维
                 for(var k=0;k<4;k++){        //一维长度为i,i为变量，可以根据实际情况改变

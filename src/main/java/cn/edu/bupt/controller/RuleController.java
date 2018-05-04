@@ -1,19 +1,12 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
-import cn.edu.bupt.utils.ResponceUtil;
-import netscape.javascript.JSObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by Administrator on 2018/1/10.
@@ -28,23 +21,19 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     private String getRules()
     {
-        String requestAddr = "/api/rules";
+        String requestAddr = "/api/rule/rules";
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getSmartRulerServer() + requestAddr,
                     null,
                     request.getSession());
 
         }catch(Exception e){
             return retFail(e.toString()) ;
         }
+
         JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
-        for(JsonElement ele:array){
-            JsonObject obj = ele.getAsJsonObject();
-            long time = obj.getAsJsonPrimitive("createdTime").getAsLong();
-            obj.addProperty("createdTime",format.format(new Date(time)));
-        }
         return retSuccess(array.toString());
     }
 
@@ -52,11 +41,11 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     public String getFilters()
     {
-        String requestAddr = "/api/components/FILTER";
+        String requestAddr = "/api/filter/filters";
 
         String responseContent = null;
         try{
-            responseContent=HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+            responseContent=HttpUtil.sendGetToThingsboard("http://" + getSmartRulerServer() + requestAddr,
                     null,
                     request.getSession());
         }catch(Exception e){
@@ -65,6 +54,8 @@ public class RuleController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent);
     }
 
+    //todo plugin search
+    /**
     @RequestMapping(value = "/allPlugins",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getPlugins()
@@ -136,6 +127,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
 
        return retSuccess(responseContent);
     }
+    **/
 
     @RequestMapping(value = "/active/{ruleId}",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -146,7 +138,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getSmartRulerServer() + requestAddr,
                     null,
                     requestbody,
                     request.getSession());
@@ -166,7 +158,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getSmartRulerServer() + requestAddr,
                     null,
                     requestbody,
                     request.getSession());
@@ -181,11 +173,11 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     public String deleteRules(@PathVariable("ruleId") String ruleId)
     {
-        String requestAddr = "/api/rule/"+ruleId;
+        String requestAddr = "/api/rule/remove/"+ruleId;
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getSmartRulerServer() + requestAddr,
                     request.getSession());
 
         }catch(Exception e){
@@ -198,13 +190,13 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     public String createRule(@RequestBody String ruleInfo)
     {
-        String requestAddr = "/api/rule";
+        String requestAddr = "/api/rule/add";
 
         JsonObject ruleInfoJson = (JsonObject)new JsonParser().parse(ruleInfo);
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getSmartRulerServer() + requestAddr,
                     null,
                     ruleInfoJson,
                     request.getSession());
