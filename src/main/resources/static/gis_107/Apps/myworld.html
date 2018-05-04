@@ -87,6 +87,7 @@ viewer.scene.globe.enableLighting = false;
 //viewer.extend(Cesium.viewerCesiumInspectorMixin);  //附加小模块
 //
 //监测温湿度传感器2
+add_buildings_models();
 var all_devices = add_device_models();
 minitor_tempe_test();
 var canvas = viewer.scene.canvas; 
@@ -162,7 +163,7 @@ var scene = viewer.scene;
 //     }
 // });
 
-add_buildings_models();
+
 
 
 // HTML overlay for showing feature name on mouseover
@@ -321,7 +322,7 @@ viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
                                  '<tr><th>设备信息3</th><td>' + device_data.device_info3 + '</td></tr>' +
                                  '</tbody></table>';
 }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-  
+
 
 
   //FLY to 功能

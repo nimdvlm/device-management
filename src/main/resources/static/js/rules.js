@@ -1,3 +1,8 @@
+
+var filterNames = [];
+var filterTypes = [];
+var filterAttribute = [];
+
 $(function () {
     $("#device_input").keyup(function () {
         $("#device_table tbody tr").hide()
@@ -97,6 +102,15 @@ $(function () {
         var filterType = $('#FilterType').val();
         var messageType = $('#MessageType').val();
         var filterDescription = $('#FilterDescription').val();
+
+         filterNames.push($('#FilterName').val());
+         filterTypes.push($('#FilterType').val());
+
+        if($('#FilterType').val() == 'Message Type Filter'){
+            filterAttribute.push($('#MessageType').val());
+        }else{
+            filterAttribute.push($('#FilterDescription').val());
+        }
 
         if(filterType=='Message Type Filter'){
             $('#filterTableBody').append('<tr><td>' + filterName + '</td><td>' + filterType + '</td><td>' + messageType + '</td><td>' + '' + '</td></tr>');
@@ -259,14 +273,14 @@ $(function () {
 
         var ruleName = $('#ruleName').val();
         var ruleDescription = $('#ruleDescription').val();
-        var filterNames = [];
-        var filterTypes = [];
-        var filterAttribute = [];
+        // var filterNames = [];
+        // var filterTypes = [];
+     //   var filterAttribute = [];
         //过滤器数据
         // console.log($('#filterTable').find('tr').length);
         for(var i = 0; i < $('#filterTable').find('tr').length - 1; i++){
-            filterNames[i] =$('#FilterName').val();
-            filterTypes[i] =$('#FilterType').val();
+            // filterNames[i] =$('#FilterName').val();
+            // filterTypes[i] =$('#FilterType').val();
             if(filterTypes[i] == 'Message Type Filter'){
             //     switch (filterAttribute[i]) {
             //         case "Get attributes":
@@ -298,30 +312,31 @@ $(function () {
         var inputRequestMethod = $('#inputRequestMethod').val();
         var inputExpectedResultCode = $('#inputExpectedResultCode').val();
 
-        var json = '{"filters":[{';
+        var json = '{"filters":[';
         for (var j = 0; j < filterNames.length; j++) {
-            json += '"configuration":{';
+            json += '{"configuration":{';
             if (filterTypes[j] === "Message Type Filter") {
                 json += '"messageTypes":["' + filterAttribute[j] + '"]},';
             }
             else {
-                json += '"filter":["' + filterAttribute[j] + '"]},';
+                json += '"filter":"' + filterAttribute[j] + '"},';
             }
             json += '"name":"' + filterNames[j] + '",';
             if (filterTypes[j] === "Message Type Filter") {
-                json += '"clazz":"org.thingsboard.server.extensions.core.filter.MsgTypeFilter"}';
+                json += '"clazz":"org.thingsboard.server.extensions.core.filter.MsgTypeFilter"},';
             }
             else {
-                json += '"clazz":"org.thingsboard.server.extensions.core.filter.DeviceTelemetryFilter"}';
+                json += '"clazz":"org.thingsboard.server.extensions.core.filter.DeviceTelemetryFilter"},';
             }
         }
-
+        json=json.substring(0,json.length-1);
         json += '],';
         json += '"name":"' + ruleName +'",';
         json += '"additionalInfo":{"description":"' + ruleDescription + '"},';
         json += '"pluginToken":"' + apiToken + '",';
         json += '"action":{"configuration":{"sync":' + requireConfirm + ',';
         json += '"actionPath":"' + inputActionPath + '",';
+     //   inputBodyTemplate = inputBodyTemplate.replaceAll('"','\"');
         json += '"template":"' + inputBodyTemplate + '",';
         json += '"requestMethod":"' + inputRequestMethod + '",';
         json += '"expectedResultCode":' + inputExpectedResultCode + '},';
@@ -398,6 +413,10 @@ $(function () {
 
 function openCreateRuleModal() {
     $('#AddRuleModal').modal('show');
+
+     filterNames = [];
+     filterTypes = [];
+     filterAttribute = [];
     // 获取插件名称列表
     $.ajax({
         url: "/api/plugin/allPlugins/",
