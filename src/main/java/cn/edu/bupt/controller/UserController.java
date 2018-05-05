@@ -1,58 +1,144 @@
 package cn.edu.bupt.controller;
 
+
 import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+@RestController
+@RequestMapping("/api/account")
+@Slf4j
+public class UserController extends DefaultThingsboardAwaredController{
 
-/**
- *
- * @deprecated
- * Created by Administrator on 2017/12/24.
- *
- * deprecated to use !!!!!   (new for LoginController)
- */
-//@RestController
-//@RequestMapping("/api/user")
-public class UserController {
-//    @Autowired
-    private HttpServletRequest request;
+    public static final String API_PREFIX = "/api/v1/account/";
 
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestBody String body){
-        JsonObject json1 = new JsonParser().parse(body).getAsJsonObject();
-        HttpSession session = request.getSession();
-        session.setAttribute("username",json1.get("username"));
-        session.setAttribute("password",json1.get("password"));
-        boolean res = HttpUtil.getAccessToken(session);
-        JsonObject json = new JsonObject();
-        if(res){
-            json.addProperty("responce_code",0);
-            json.addProperty("responce_msg","login ok");
-        }else{
-            json.addProperty("responce_code",1);
-            json.addProperty("responce_msg","wrong username or password");
-            session.removeAttribute("username");
-            session.removeAttribute("password");
+    @RequestMapping(value = "/user",params = {"userId"}, method = RequestMethod.GET)
+    @ResponseBody
+    public String getUserById(@RequestParam Integer userId){
+        String requestAddr = API_PREFIX+"user";
+        StringBuffer param = new StringBuffer();
+        param.append("userId").append("=").append(userId);
+        requestAddr = requestAddr + "?" + param ;
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getAccountServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+            return responseContent;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
         }
-        return json.toString();
     }
 
-//    @RequestMapping(value = "/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response){
-        HttpSession session = request.getSession();
-        session.removeAttribute("username");
-        session.removeAttribute("password");
-        JsonObject json = new JsonObject();
-        json.addProperty("responce_code",0);
-        json.addProperty("responce_msg","logout ok");
+    @RequestMapping(value = "/tenantAdmin", method = RequestMethod.POST)
+    @ResponseBody
+    public String createTenantAdmin(@RequestBody String userInfo){
+        String requestAddr = API_PREFIX+"tenantAdmin";
+        JsonObject UserInfoJson = (JsonObject) new JsonParser().parse(userInfo);
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getAccountServer() + requestAddr,
+                    null,
+                    UserInfoJson,
+                    request.getSession());
+            return responseContent;
+        } catch (Exception e) {
+            return retFail(e.toString());
+        }
+    }
 
-        return "redirect:/homepage";
+    @RequestMapping(value = "/customerUser", method = RequestMethod.POST)
+    @ResponseBody
+    public String createCustomerUser(@RequestBody String userInfo){
+        String requestAddr = API_PREFIX+"customerUser";
+        JsonObject UserInfoJson = (JsonObject) new JsonParser().parse(userInfo);
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getAccountServer() + requestAddr,
+                    null,
+                    UserInfoJson,
+                    request.getSession());
+            return responseContent;
+        } catch (Exception e) {
+            return retFail(e.toString());
+        }
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.PUT)
+    @ResponseBody
+    public String updateUser(@RequestBody String userInfo) {
+        String requestAddr = API_PREFIX + "update";
+        JsonObject UserInfoJson = (JsonObject) new JsonParser().parse(userInfo);
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendPutToThingsboard("http://" + getAccountServer() + requestAddr,
+                    null,
+                    UserInfoJson,
+                    request.getSession());
+            return responseContent;
+        } catch (Exception e) {
+            return retFail(e.toString());
+        }
+    }
+
+    @Transactional
+    @RequestMapping(value = "/user",params = {"userId"}, method = RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deleteUser(@RequestParam Integer userId) {
+        String requestAddr = API_PREFIX + "user";
+        StringBuffer param = new StringBuffer();
+        param.append("userId").append("=").append(userId);
+        requestAddr = requestAddr + "?" + param ;
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getAccountServer() + requestAddr,
+                    request.getSession());
+        } catch (Exception e) {
+        }
+    }
+
+    @RequestMapping(value = "/tenant/users", params = {  "tenantId","limit","page"  }, method = RequestMethod.GET)
+    @ResponseBody
+    public String getTenantAdmins(@RequestParam Integer tenantId,
+                                  @RequestParam int limit,
+                                  @RequestParam int page) {
+        String requestAddr = API_PREFIX + "tenant/users";
+        StringBuffer param = new StringBuffer();
+        param.append("tenantId").append("=").append(tenantId).append("&").append("limit").append("=").append(limit).append("&").append("page").append("=").append(page);
+        requestAddr = requestAddr + "?" + param ;
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getAccountServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+            return responseContent;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+    }
+
+    @RequestMapping(value = "/customer/users", params = {  "customerId","limit","page"  }, method = RequestMethod.GET)
+    @ResponseBody
+    public String getCustomerUsers(@RequestParam Integer customerId,
+                             @RequestParam int limit,
+                             @RequestParam int page) {
+        String requestAddr = API_PREFIX + "customer/users";
+        StringBuffer param = new StringBuffer();
+        param.append("customerId").append("=").append(customerId).append("&").append("limit").append("=").append(limit).append("&").append("page").append("=").append(page);
+        requestAddr = requestAddr + "?" + param ;
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getAccountServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+            return responseContent;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
     }
 
 }

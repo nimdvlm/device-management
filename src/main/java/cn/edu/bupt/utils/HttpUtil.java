@@ -69,7 +69,36 @@ public class HttpUtil {
             getAccessToken(session);
         }
         tocken = (String)session.getAttribute("token");
-        buider.header("X-Authorization","Bearer "+tocken);
+        buider.header("Authorization","Bearer "+tocken);
+
+        if(headers!=null){
+            for(Map.Entry<String,String> entry:headers.entrySet()){
+                buider.header(entry.getKey(),entry.getValue());
+            }
+        }
+        Request request = buider.build();
+
+        return sendRequireToThingsboard(request, session);
+    }
+
+    public static String sendPutToThingsboard(String url, Map<String,String> headers, JsonObject requestBody,HttpSession session) throws Exception{
+        String str ;
+        if(requestBody==null){
+            str = "";
+        }else{
+            str = requestBody.toString();
+        }
+        RequestBody body = RequestBody.create(JSON, str);
+        Request.Builder buider = new Request.Builder()
+                .url(url)
+                .put(body);
+
+        String tocken = (String)session.getAttribute("token");
+        if(tocken==null){
+            getAccessToken(session);
+        }
+        tocken = (String)session.getAttribute("token");
+        buider.header("Authorization","Bearer "+tocken);
 
         if(headers!=null){
             for(Map.Entry<String,String> entry:headers.entrySet()){
@@ -90,7 +119,7 @@ public class HttpUtil {
             getAccessToken(session);
         }
         tocken = (String)session.getAttribute("token");
-        buider.header("X-Authorization","Bearer "+tocken);
+        buider.header("Authorization","Bearer "+tocken);
         Request request = buider.build();
 
         return sendRequireToThingsboard(request, session);
@@ -108,7 +137,7 @@ public class HttpUtil {
             getAccessToken(session);
         }
         tocken = (String)session.getAttribute("token");
-        buider.header("X-Authorization","Bearer "+tocken);
+        buider.header("Authorization","Bearer "+tocken);
 
         if(headers!=null){
             for(Map.Entry<String,String> entry:headers.entrySet()){
