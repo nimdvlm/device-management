@@ -46,12 +46,22 @@ public class DefaultThingsboardAwaredController {
     @Autowired
     ResponceUtil responceUtil ;
 
+    //为了不报错，暂时不要删除这个方法
+    protected String getServer(){
+        return "";
+    }
+
+
     protected String getDeviceAccessServer() {
         return deviceAccessHost+":"+ deviceAccessPort ;
     }
 
     protected String getSmartRulerServer() {
         return smartRulerHost+":"+smartRulerPort ;
+    }
+
+    protected String getServiceManagementServer() {
+        return serviceManagementHost+":"+serviceManagementPort ;
     }
 
     protected String retSuccess(String msg) {
