@@ -17,7 +17,7 @@ public class PluginController extends DefaultThingsboardAwaredController{
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @RequestMapping(value = "/allPlugins",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getAllPlugins(){
-        String requestAddr = "/api/plugin/allPlugins";
+        String requestAddr = "/api/plugin/all";
 
         String responseContent = null;
         try{
