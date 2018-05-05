@@ -52,6 +52,12 @@ public class DefaultThingsboardAwaredController {
     @Autowired
     ResponceUtil responceUtil ;
 
+    //为了不报错，暂时不要删除这个方法
+    protected String getServer(){
+        return "";
+    }
+
+
     protected String getDeviceAccessServer() {
         return deviceAccessHost+":"+ deviceAccessPort ;
     }
@@ -62,7 +68,9 @@ public class DefaultThingsboardAwaredController {
 
     protected String getAccountServer(){return accountHost+":"+accountPort ; }
 
-    protected String getServer(){return ""; }
+    protected String getServiceManagementServer() {
+        return serviceManagementHost+":"+serviceManagementPort ;
+    }
 
     protected String retSuccess(String msg) {
         return responceUtil.onSuccess(msg) ;

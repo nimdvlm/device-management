@@ -54,17 +54,15 @@ public class RuleController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent);
     }
 
-    //todo plugin search
-    /**
     @RequestMapping(value = "/allPlugins",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getPlugins()
     {
-        String requestAddr = "/api/plugins";
+        String requestAddr = "/api/plugin/allPlugins";
 
         String responseContent = null;
         try{
-            responseContent=HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+            responseContent=HttpUtil.sendGetToThingsboard("http://" + getSmartRulerServer() + requestAddr,
                     null,
                     request.getSession());
         }catch (Exception e){
@@ -72,7 +70,8 @@ public class RuleController extends DefaultThingsboardAwaredController{
         }
         return retSuccess(responseContent);
     }
-
+    //无需再捕获插件动作
+/**
     @RequestMapping(value = "/allPluginsSchema",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getPluginsSchema()

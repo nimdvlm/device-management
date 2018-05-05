@@ -2,14 +2,10 @@ package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by Administrator on 2018/1/18.
@@ -21,11 +17,11 @@ public class PluginController extends DefaultThingsboardAwaredController{
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @RequestMapping(value = "/allPlugins",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getAllPlugins(){
-        String requestAddr = "/api/plugins";
+        String requestAddr = "/api/plugin/allPlugins";
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getSmartRulerServer() + requestAddr,
                     null,
                     request.getSession());
 
@@ -33,14 +29,11 @@ public class PluginController extends DefaultThingsboardAwaredController{
             return retFail(e.toString()) ;
         }
         JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
-        for(JsonElement ele:array){
-            JsonObject obj = ele.getAsJsonObject();
-            long time = obj.getAsJsonPrimitive("createdTime").getAsLong();
-            obj.addProperty("createdTime",format.format(new Date(time)));
-        }
         return retSuccess(array.toString());
     }
 
+    //无前端添加删除插件方式
+    /**
     @RequestMapping(value = "/savePlugin",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public String savePlugin(@RequestBody String json){
         String requestAddr = "/api/plugin";
@@ -68,6 +61,7 @@ public class PluginController extends DefaultThingsboardAwaredController{
         }
         return retSuccess(responseContent);
     }
+**/
 
     @RequestMapping(value = "/{pluginId}/suspend",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public String suspend(@PathVariable String pluginId){
