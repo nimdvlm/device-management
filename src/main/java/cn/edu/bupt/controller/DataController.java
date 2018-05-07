@@ -19,10 +19,10 @@ import java.util.Collection;
 public class DataController extends DefaultThingsboardAwaredController{
 
 
-    //后台无此方法，应该是从卡夫卡拿实时数据，keys是加上的
-    @RequestMapping(value="/getKeyData/{deviceId}/{keys}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
-    public String getKeyData(@PathVariable("deviceId") String deviceId, @PathVariable("keys") Collection<String> keys) {
-        String requestKeyAddr = "/api/v1/data/latestdata/" + deviceId + keys;
+    //后台无此方法，应该是从卡夫卡拿实时数据
+    @RequestMapping(value="/getKeyData/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    public String getKeyData(@PathVariable("deviceId") String deviceId) {
+        String requestKeyAddr = "/api/v1/data/latestdata/" + deviceId ;
 
         String responseKeyContent = null;
         try {
