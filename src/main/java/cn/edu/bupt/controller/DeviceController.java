@@ -31,7 +31,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
      */
 
     @ApiImplicitParam(name="deviceInfo", value = "设备信息JSON", required = true, paramType = "body")
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String createDevice(@RequestBody String deviceInfo) {
         String requestAddr = "/api/v1/device" ;
@@ -59,7 +59,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
     @ApiOperation(value = "删除设备", notes = "根据deviceId删除设备")
     @ApiImplicitParam(name="deviceId", value = "设备ID", required = true, paramType = "path", dataType = "String")
-    @RequestMapping(value = "/delete/{deviceId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{deviceId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String delete(@PathVariable(DEVICE_ID) String strDeviceId) {
         String requestAddr ="http://"+ getDeviceAccessServer() +String.format("/api/v1/device/%s", strDeviceId);
@@ -73,9 +73,9 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
 
     @ApiImplicitParam(name = "deviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
-    @RequestMapping(value = "/updatedevice/{deviceId}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/updatedevice", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String updateDeviceCoordinate(@PathVariable String deviceId,@RequestBody String json) {
+    public String updateDeviceCoordinate(@RequestBody String json) {
         String requestAddr = "/api/v1/device" ;
         String responseContent = null ;
         try{
@@ -121,7 +121,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
     @ApiOperation(value = "得到parentId设备的设备信息", notes = "得到parentId设备的设备信息")
     @ApiImplicitParam(name = "parentDeviceId", value = "父设备ID", required = true, dataType = "String", paramType = "path")
-    @RequestMapping(value = "/parentDevices/{parentDeviceId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/parentDevices/{parentDeviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getParentDevices(@PathVariable String parentDeviceId) {
         String requestAddr = "http://" + getDeviceAccessServer() + "/api/v1/parentdevices/"+parentDeviceId + "?limit=5";
