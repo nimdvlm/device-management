@@ -18,22 +18,21 @@ bupt.thingsboard:
 
 
 device-access:
- host:
- port:
+ host: 10.108.218.64
+ port: 8100
 
 smart_ruler:
   host:
   port:
 
 service-management:
-  host:
-  port:
+  host: 10.108.218.64
+  port: 8000
 
 account:
   host: 10.112.233.200
   port: 8081
-#  url需修改
-  login_url: http://${account.host}:${account.port}/oauth/token
-  logout_url: http://${account.host}:${account.port}/logout
+  login_url: http://${account.host}:${account.port}/api/v1/auth/login
+  logout_url: http://${account.host}:${account.port}/api/v1/auth/logout
   client_id: client_2
   client_secret: 123456
