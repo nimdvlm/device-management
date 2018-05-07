@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import cn.edu.bupt.utils.HttpUtil;
 
+import java.util.Collection;
+
 /**
  * Created by liyou on 2018/1/15.
  */
@@ -16,11 +18,11 @@ import cn.edu.bupt.utils.HttpUtil;
 @RequestMapping("/api/data")
 public class DataController extends DefaultThingsboardAwaredController{
 
-    //该方法有点问题
-    //  TODO 方法修改
-    @RequestMapping(value="/getKeyData/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
-    public String getKeyData(@PathVariable("deviceId") String deviceId) {
-        String requestKeyAddr = "/api/v1/data/alldata/" + deviceId ;
+
+    //后台无此方法，应该是从卡夫卡拿实时数据，keys是加上的
+    @RequestMapping(value="/getKeyData/{deviceId}/{keys}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    public String getKeyData(@PathVariable("deviceId") String deviceId, @PathVariable("keys") Collection<String> keys) {
+        String requestKeyAddr = "/api/v1/data/latestdata/" + deviceId + keys;
 
         String responseKeyContent = null;
         try {
@@ -37,9 +39,9 @@ public class DataController extends DefaultThingsboardAwaredController{
     @RequestMapping(value="/getlatestData/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getlatestData(@PathVariable("deviceId") String deviceId)
     {
-        String responseKeyContent=getKeyData(deviceId);
+        /*String responseKeyContent=getKeyData(deviceId);
         responseKeyContent=responseKeyContent.replaceAll("[\\[\\]]","");
-        responseKeyContent=responseKeyContent.replaceAll("\"","");
+        responseKeyContent=responseKeyContent.replaceAll("\"","");*/
 
         String requestHistoricalDataAddr = "/api/v1/data/alllatestdata/"+ deviceId;
 
@@ -56,17 +58,16 @@ public class DataController extends DefaultThingsboardAwaredController{
         return retSuccess(responseHistoricalDataContent);
     }
 
-    //此方法后台不存在
-    // TODO 创建后台方法
+
     @RequestMapping(value="/getHistoricalData/{deviceId}/{startTime}/{endTime}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getHistoricalData(@PathVariable("deviceId") String deviceId,@PathVariable("startTime") String startTime,@PathVariable("endTime") String endTime)
     {
-        String responseKeyContent=getKeyData(deviceId);
+        /*String responseKeyContent=getKeyData(deviceId);
         responseKeyContent=responseKeyContent.replaceAll("[\\[\\]]","");
-        responseKeyContent=responseKeyContent.replaceAll("\"","");
+        responseKeyContent=responseKeyContent.replaceAll("\"","");*/
 
-        String requestHistoricalDataAddr = "/api/plugins/telemetry/DEVICE/"+ deviceId
-                + "/values/TIMESERIES?keys="
+        String requestHistoricalDataAddr = "/api/v1/data/alldata"+ deviceId
+                + "?keys="
                 + "&startTs="+startTime
                 + "&endTs="+endTime
                 + "&interval=0&limit=100";
