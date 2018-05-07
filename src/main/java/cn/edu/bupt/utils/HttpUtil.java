@@ -229,10 +229,10 @@ public class HttpUtil {
             if(response1.isSuccessful()){
                 return response1.body().string();
             }else{
-                return "";
+                return response.body().string();
             }
         }
-        return "";
+        return response.body().string();
     }
 
     /**

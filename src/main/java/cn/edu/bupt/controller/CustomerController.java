@@ -4,9 +4,12 @@ import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by CZX on 2018/5/5.
@@ -17,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController extends DefaultThingsboardAwaredController{
 
     public static final String API_PREFIX = "/api/v1/account/";
+
+    @Autowired
+    private HttpServletResponse response;
 
     @RequestMapping(value = "/customer",params = {"customerId"}, method = RequestMethod.GET)
     @ResponseBody
@@ -30,6 +36,7 @@ public class CustomerController extends DefaultThingsboardAwaredController{
             responseContent = HttpUtil.sendGetToThingsboard("http://" + getAccountServer() + requestAddr,
                     null,
                     request.getSession()) ;
+            ResStatus(responseContent);
             return responseContent;
         } catch (Exception e) {
             return retFail(e.toString()) ;
@@ -47,6 +54,7 @@ public class CustomerController extends DefaultThingsboardAwaredController{
                     null,
                     CustomerInfoJson,
                     request.getSession());
+            ResStatus(responseContent);
             return responseContent;
         } catch (Exception e) {
             return retFail(e.toString());
@@ -64,6 +72,7 @@ public class CustomerController extends DefaultThingsboardAwaredController{
                     null,
                     CustomerInfoJson,
                     request.getSession());
+            ResStatus(responseContent);
             return responseContent;
         } catch (Exception e) {
             return retFail(e.toString());
@@ -82,6 +91,7 @@ public class CustomerController extends DefaultThingsboardAwaredController{
         try {
             responseContent = HttpUtil.sendDeletToThingsboard("http://" + getAccountServer() + requestAddr,
                     request.getSession());
+            ResStatus(responseContent);
         } catch (Exception e) {
         }
     }
@@ -99,9 +109,16 @@ public class CustomerController extends DefaultThingsboardAwaredController{
             responseContent = HttpUtil.sendGetToThingsboard("http://" + getAccountServer() + requestAddr,
                     null,
                     request.getSession()) ;
+            ResStatus(responseContent);
             return responseContent;
         } catch (Exception e) {
             return retFail(e.toString()) ;
         }
+    }
+
+    private void ResStatus(String responseContent){
+        JsonObject responseJson = (JsonObject) new JsonParser().parse(responseContent);
+        if(responseJson.has("status")){
+            response.setStatus(responseJson.get("status").getAsInt());}
     }
 }
