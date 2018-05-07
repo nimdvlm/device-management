@@ -1,0 +1,255 @@
+﻿
+/*======================================
+    GENERAL STYLES
+======================================= */
+
+.b-clr {
+    color:#000;
+}
+.sec-menu {
+    background-color:#305680;
+    padding-top:20px;
+    padding-bottom:15px;
+    color:#fff;
+    font-size:22px;
+
+}
+.content-wrapper {
+    min-height:1000px;
+    background: rgb(238,238,238);
+}
+/* =============================================================
+HEAD MENU STYLES
+============================================================ */
+#quit{
+
+   float: right;
+}
+
+#backIcon{
+    cursor: pointer;
+    color: #ffffff;
+}
+
+
+
+/* =============================================================
+   SIDE MENU STYLES
+ ============================================================ */
+
+#side-menu {
+    height: 100%;
+    position: fixed;
+      left: -250px;
+    background-color: #305680;
+    /*#3AB056*/
+    color: #fff;
+    z-index: 999;
+    overflow: auto;
+    max-width: 500px;
+    overflow:auto;
+}
+
+    #side-menu ul {
+        list-style: none;
+        padding: 0px;
+    }
+
+        #side-menu ul li {
+            border-bottom: 1px solid #cccccc;
+            padding: 20px 25px;
+        }
+
+            #side-menu ul li a i {
+                padding-right: 10px;
+            }
+
+            #side-menu ul li a, #side-menu ul li a:hover {
+                color: #fff;
+                text-decoration: none;
+                font-size: 16px;
+            }
+
+.menu-close-icon, .menu-open-icon {
+    cursor: pointer;
+}
+
+
+
+
+/* =============================================================
+ICON STYLES
+============================================================ */
+
+ul,li{
+    list-style: none;
+
+}
+
+.homeIconBackground{
+    width: 200px;
+    height: 200px;
+    background:#305680;
+    border-radius: 30px;
+    margin-top: 50px;
+    margin-left: 150px;
+    float: left;
+    cursor: pointer;
+
+}
+.homeIcon{
+
+    color: #ffffff;
+    font-size: 50px;
+    margin-top: 50px;
+    margin-left: 70px;
+}
+.homeIconName{
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: center;
+}
+.chooseBtn{
+    margin-top: 50px;
+    margin-left: 50px;
+    cursor: pointer;
+    padding: 20px;
+    width: 150px;
+    height: 100px;
+    border: 1px solid #305680;
+    float: left;
+    border-radius: 10px;
+    background: white;
+}
+.chooseBtn div i{
+    color: #305680;
+    font-size: 30px;
+    text-align: center;
+    display: block;
+
+}
+.chooseBtn div p{
+    text-align: center;
+    margin-top: 10px;
+}
+
+#deviceListIcon{
+    width: 60%;
+    float: left;
+
+}
+
+#deviceListChart{
+    width: 40%;
+    float: left;
+    margin-top: 50px;
+    border: 1px solid #c0c0c0;
+    border-radius: 10px;
+    /*position: fixed;
+    right: 30px;
+    height: 30px;*/
+}
+
+.attName{
+  font-weight: bold;
+}
+
+
+/* =============================================================
+   DeviceGroup
+ ============================================================ */
+.LeftView{
+    margin:30px 0 0 35px;
+    float: left;
+    width:600px;
+}
+.DGTitle{
+    margin:5px 0 0 10px;
+    height: 60px;
+}
+.DGminTitle{
+    height: 20px;
+}
+.DGContainer{
+    margin: -30px 0px 0 -30px;
+}
+.SearchDG{
+    float: right;
+    height: 20px;
+    margin-top: 10px;
+    margin-right:20px;
+    width: 180px;
+}
+.Searchicon{
+    margin-left: -25px;
+    color:#adadad;
+}
+
+/* =============================================================
+   DeviceGroupAssign
+ ============================================================ */
+.RightView{
+    position: fixed;
+    margin:35px 5px 0 670px;
+    width:500px;
+    height:1000px;
+}
+.RightviewTitle{
+    font-size: 20px;
+}
+.item{
+    margin:10px 10px 0 10px;
+}
+.gridStyle{
+    border:1px solid rgb(212,212,212);
+    margin: 0 0 10px 0;
+}
+.DGgridstyle{
+    height: 270px;
+}
+.shand{
+    cursor:pointer;
+}
+.DGAssignContainer{
+    border:1px solid rgb(212,212,212);
+    background-color: #fdfdfd;
+    margin:5px 0 0 0;
+}
+.iedit{
+    margin-left:5px;
+}
+/* =============================================================
+   Rule
+ ============================================================ */
+.RulegridStyle{
+    height: 60px;
+}
+.RuleBtn{
+    width:175px ;
+    margin-left: 25px;
+    padding:15px 5px;
+}
+.ruleiconcontainer{
+    float: right;
+    margin: 5px 10px;
+}
+.ruleicon{
+    margin:0 5px;
+}
+.ruleicon:hover{
+    color: #df5b58;
+}
+#RuleModalInput{
+    margin-top: 15px;
+    width: 450px;
+    height: 125px;
+}
+.stateActive{
+    color: #33ce2d;
+}
+.stateNActive{
+    color: #ff5945;
+}
+
