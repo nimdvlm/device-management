@@ -140,14 +140,13 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         }
     }
 
-    //此方法与获取token方法区别，未改
-    // TODO 后台方法
+   /*
     @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken")
     @ApiImplicitParam(name = "strDeviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/accesstoken/{deviceId}", method = RequestMethod.GET)
     @ResponseBody
     public String getDeviceAccessToken(@PathVariable(DEVICE_ID) String strDeviceId) {
-        String requestAddr = "http://" + getDeviceAccessServer() + "/api/device/"+strDeviceId+"/credentials" ;
+        String requestAddr = "http://" + getDeviceAccessServer() + "/api/v1/credentialbyid/"+strDeviceId ;
 
         try {
             String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
@@ -165,7 +164,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         } catch (Exception e) {
             return retFail(e.toString()) ;
         }
-    }
+    }*/
 
     @ApiOperation(value = "得到parentId设备的设备信息", notes = "得到parentId设备的设备信息")
     @ApiImplicitParam(name = "parentDeviceId", value = "父设备ID", required = true, dataType = "String", paramType = "path")

@@ -19,7 +19,7 @@ import java.util.LinkedHashMap;
  * 认证框架（Shiro）的相关配置
  */
 
-@Configuration
+//@Configuration
 public class ShiroConfiguration {
 
     @Bean(name="shiroFilter")
