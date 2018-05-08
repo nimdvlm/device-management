@@ -22,8 +22,8 @@ device-access:
  port: 8100
 
 smart_ruler:
-  host: 127.0.0.1
-  port: 8080
+  host: 10.108.218.64
+  port: 8200
 
 service-management:
   host: 10.108.218.64
