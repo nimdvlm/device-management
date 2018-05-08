@@ -46,11 +46,11 @@ public class DeviceController extends DefaultThingsboardAwaredController {
          * {"name":"test0name","type":"default","additionalInfo":{"description":"jhdajd"}}
          */
         JsonObject deviceInfoJson = (JsonObject)new JsonParser().parse(deviceInfo);
-       /* HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         String res = HttpUtil.getAccessToken(session);
         JsonObject parsed = (JsonObject)new JsonParser().parse(res);
         Integer tenantId = parsed.get("tenant_id").getAsInt();
-        deviceInfo.;*/
+        deviceInfoJson.addProperty("tenantId", tenantId);
 
         String responseContent = null ;
         try {
