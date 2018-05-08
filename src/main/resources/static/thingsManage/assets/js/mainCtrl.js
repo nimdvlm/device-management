@@ -38,10 +38,6 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
             templateUrl:"tenant.html",
             controller:"mainCtrl"
         })
-        .when("/information",{
-            templateUrl:"information.html",
-            controller:"mainCtrl"
-        })
         .otherwise({
             redirectTo:"/homePage"
         });

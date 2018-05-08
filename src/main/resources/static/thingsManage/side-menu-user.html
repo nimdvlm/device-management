@@ -6,7 +6,7 @@
     <!--[if IE]>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <![endif]-->
-    <title>物管理平台-系统管理员</title>
+    <title>物管理平台-用户</title>
     <link rel="icon" href="assets/img/title.icon" type="image/x-icon"/>
     <!-- BOOTSTRAP CORE STYLE CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
@@ -16,10 +16,14 @@
     <link href="assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT CSS -->
     <link href='assets/css/font-Lobster.css' rel='stylesheet' type='text/css' />
+    <!--ui-grid file-->
 
+    <script type="text/javascript" src="assets/js/jquery-1.11.1.js"></script>
     <!-- MAIN ANGULAR SCRIPT -->
     <script type="text/javascript" src="assets/js/angular.js"></script>
     <script type="text/javascript" src="assets/js/angular-route.js"></script>
+    <script type="text/javascript" src="assets/js/angular-resource.js"></script>
+    <script type="text/javascript" src="assets/js/angular-mocks.js"></script><!--测试用-->
     <script type="text/javascript" src="assets/js/angular-animate.js"></script>
     <script type="text/javascript" src="assets/js/angular-resource.js"></script>
     <script type="text/javascript" src="assets/js/mainCtrl.js"></script>
@@ -33,9 +37,13 @@
     <script type="text/javascript" src="assets/js/deviceGroupCtrl.js"></script>
 
     <!--Rule-->
-    <script type="text/javascript" src="assets/js/rulsCtrl.js"></script>
+    <script type="text/javascript" src="assets/js/rulesCtrl.js"></script>
     <script type="text/javascript" src="assets/js/rulefilterCtrl.js"></script>
     <script type="text/javascript" src="assets/js/rulepluginCtrl.js"></script>
+
+    <!--DeviceGroup-->
+    <script type="text/javascript" src="assets/js/serviceCtrl.js"></script>
+
 
 </head>
 <body ng-controller="mainCtrl">
@@ -56,10 +64,16 @@
                     <i class="pull-right"> 欢迎来到物管理平台 &nbsp;&nbsp;</i>
                 </div>
                 <div class="col-md-1 col-sm-12">
-                    <a href="../home.html"><input type="button" class="btn btn-danger" value="退出登录" id="quit"/></a>
+                    <a href="../../template/home.html"><input type="button" class="btn btn-danger" value="退出登录" id="quit"/></a>
                 </div>
             </div>
+            <!--<div class="row">
+                <div class="col-md-12">
 
+
+                </div>
+
+            </div>-->
         </div>
     </section>
 
@@ -69,7 +83,7 @@
              <a href="#" title="close"> <i class="fa fa-close fa-2x menu-close-icon b-clr"></i></a>
             </li>
             <li class="side-menu-icon">
-                <a href="" title="首页" ng-click="$location.path('homePage')"> <i class="fa fa-home fa-2x "></i> </a>
+                <a href ="" title="首页" ng-click="$location.path('homePage')"> <i class="fa fa-home fa-2x "></i> </a>
             </li>
             <li class="side-menu-icon">
              <a href="" title="设备列表" ng-click="$location.path('deviceList')"> <i class="fa fa-file-text-o fa-2x "></i> </a>
@@ -89,9 +103,7 @@
             <li class="side-menu-icon">
                 <a href="" title="能力评估" ng-click="$location.path('evaluate')"> <i class="fa fa-line-chart fa-2x "></i>  </a>
             </li>
-            <li class="side-menu-icon">
-                <a href="" title="租户" ng-click="$location.path('tenant')"> <i class="fa fa-male fa-2x "></i>  </a>
-            </li>
+            
         </ul>
            
     </div>
@@ -110,6 +122,9 @@
     <script type="text/javascript" src="assets/js/bootstrap.js"></script>
      <!-- CUSTOM SCRIPTS  -->
     <script type="text/javascript" src="assets/js/custom.js" ></script>
+
+    <!--ui-grid file-->
+
 
 </body>
 </html>

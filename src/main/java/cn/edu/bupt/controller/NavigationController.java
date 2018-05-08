@@ -22,7 +22,7 @@ public class NavigationController {
 
     @RequestMapping("/")
     public String  index() {
-        return "index";
+        return "home";
     }
 
     @RequestMapping("/signin")
