@@ -55,7 +55,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
      * @param deviceGroupInfo
      * @return
      */
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String create(@RequestBody String deviceGroupInfo) {
         String requestAddr = "/api/v1/group" ;
@@ -79,7 +79,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
      */
     @ApiOperation(value="删除设备组", notes="删除设备组")
     @ApiImplicitParam(name = "deviceGroupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
-    @RequestMapping(value = "/delete/{deviceGroupId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{deviceGroupId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String delete(@PathVariable String deviceGroupId) {
         String requestAddr = String.format("/api/group/%s", deviceGroupId);
@@ -123,7 +123,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @ApiOperation(value="分配设备到设备组", notes="分配设备到设备组")
     @ApiImplicitParams({ @ApiImplicitParam(name = "deviceId", value = "设备Id", required = true, dataType = "String",paramType = "path"),
             @ApiImplicitParam(name = "groupId", value = "设备组Id", required = true, dataType = "String",paramType = "path")})
-    @RequestMapping(value = "/assign/{deviceId}/{groupId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/assign/{deviceId}/{groupId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String assignDeviceToGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {
         String requestAddr = String.format("/api/v1/assign/group/%s/%s", gId, dId);
@@ -143,7 +143,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @ApiOperation(value="移除设备组中的设备", notes="移除设备组中的设备")
     @ApiImplicitParams({ @ApiImplicitParam(name = "deviceId", value = "设备Id", required = true, dataType = "String",paramType = "path"),
             @ApiImplicitParam(name = "groupId", value = "设备组Id", required = true, dataType = "String",paramType = "path")})
-    @RequestMapping(value = "/unassign/{deviceId}/{groupId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/unassign/{deviceId}/{groupId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String unAssignDeviceFromGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {
         String requestAddr = String.format("/api/v1/unassign/group/%s/%s", gId,dId);

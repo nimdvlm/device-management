@@ -1,214 +1,102 @@
-
-/*=============================================================
-    Authour URI: www.binarycart.com
-    Version: 1.1
-    License: MIT
-    
-    http://opensource.org/licenses/MIT
-
-    100% To use For Personal And Commercial Use.
-   
-    ========================================================  */
-
-(function ($) {
-    "use strict";
-    var mainApp = {
-
-        main_fun: function () {
-            /*====================================
-            METIS MENU 
-            ======================================*/
-            $('#main-menu').metisMenu();
-
-            /*====================================
-              LOAD APPROPRIATE MENU BAR
-           ======================================*/
-            $(window).bind("load resize", function () {
-                if ($(this).width() < 768) {
-                    $('div.sidebar-collapse').addClass('collapse')
-                } else {
-                    $('div.sidebar-collapse').removeClass('collapse')
+// Custom Script
+// Developed by: Samson.Onna
+var customScripts = {
+    profile: function () {
+        // portfolio
+        if ($('.isotopeWrapper').length) {
+            var $container = $('.isotopeWrapper');
+            var $resize = $('.isotopeWrapper').attr('id');
+            // initialize isotope
+            $container.isotope({
+                itemSelector: '.isotopeItem',
+                resizable: false, // disable normal resizing
+                masonry: {
+                    columnWidth: $container.width() / $resize
                 }
             });
-
-            /*====================================
-            MORRIS BAR CHART
-         ======================================*/
-//            Morris.Bar({
-//                element: 'morris-bar-chart',
-//                data: [{
-//                    y: '2006',
-//                    a: 100,
-//                    b: 90
-//                }, {
-//                    y: '2007',
-//                    a: 75,
-//                    b: 65
-//                }, {
-//                    y: '2008',
-//                    a: 50,
-//                    b: 40
-//                }, {
-//                    y: '2009',
-//                    a: 75,
-//                    b: 65
-//                }, {
-//                    y: '2010',
-//                    a: 50,
-//                    b: 40
-//                }, {
-//                    y: '2011',
-//                    a: 75,
-//                    b: 65
-//                }, {
-//                    y: '2012',
-//                    a: 100,
-//                    b: 90
-//                }],
-//                xkey: 'y',
-//                ykeys: ['a', 'b'],
-//                labels: ['Series A', 'Series B'],
-//                hideHover: 'auto',
-//                resize: true
-//            });
-
-            /*====================================
-          MORRIS DONUT CHART
-       ======================================*/
-//            Morris.Donut({
-//                element: 'morris-donut-chart',
-//                data: [{
-//                    label: "Download Sales",
-//                    value: 12
-//                }, {
-//                    label: "In-Store Sales",
-//                    value: 30
-//                }, {
-//                    label: "Mail-Order Sales",
-//                    value: 20
-//                }],
-//                resize: true
-//            });
-
-            /*====================================
-         MORRIS AREA CHART
-      ======================================*/
-
-//            Morris.Area({
-//                element: 'morris-area-chart',
-//                data: [{
-//                    period: '2010 Q1',
-//                    iphone: 2666,
-//                    ipad: null,
-//                    itouch: 2647
-//                }, {
-//                    period: '2010 Q2',
-//                    iphone: 2778,
-//                    ipad: 2294,
-//                    itouch: 2441
-//                }, {
-//                    period: '2010 Q3',
-//                    iphone: 4912,
-//                    ipad: 1969,
-//                    itouch: 2501
-//                }, {
-//                    period: '2010 Q4',
-//                    iphone: 3767,
-//                    ipad: 3597,
-//                    itouch: 5689
-//                }, {
-//                    period: '2011 Q1',
-//                    iphone: 6810,
-//                    ipad: 1914,
-//                    itouch: 2293
-//                }, {
-//                    period: '2011 Q2',
-//                    iphone: 5670,
-//                    ipad: 4293,
-//                    itouch: 1881
-//                }, {
-//                    period: '2011 Q3',
-//                    iphone: 4820,
-//                    ipad: 3795,
-//                    itouch: 1588
-//                }, {
-//                    period: '2011 Q4',
-//                    iphone: 15073,
-//                    ipad: 5967,
-//                    itouch: 5175
-//                }, {
-//                    period: '2012 Q1',
-//                    iphone: 10687,
-//                    ipad: 4460,
-//                    itouch: 2028
-//                }, {
-//                    period: '2012 Q2',
-//                    iphone: 8432,
-//                    ipad: 5713,
-//                    itouch: 1791
-//                }],
-//                xkey: 'period',
-//                ykeys: ['iphone', 'ipad', 'itouch'],
-//                labels: ['iPhone', 'iPad', 'iPod Touch'],
-//                pointSize: 2,
-//                hideHover: 'auto',
-//                resize: true
-//            });
-
-            /*====================================
-    MORRIS LINE CHART
- ======================================*/
-//            Morris.Line({
-//                element: 'morris-line-chart',
-//                data: [{
-//                    y: '2006',
-//                    a: 100,
-//                    b: 90
-//                }, {
-//                    y: '2007',
-//                    a: 75,
-//                    b: 65
-//                }, {
-//                    y: '2008',
-//                    a: 50,
-//                    b: 40
-//                }, {
-//                    y: '2009',
-//                    a: 75,
-//                    b: 65
-//                }, {
-//                    y: '2010',
-//                    a: 50,
-//                    b: 40
-//                }, {
-//                    y: '2011',
-//                    a: 75,
-//                    b: 65
-//                }, {
-//                    y: '2012',
-//                    a: 100,
-//                    b: 90
-//                }],
-//                xkey: 'y',
-//                ykeys: ['a', 'b'],
-//                labels: ['Series A', 'Series B'],
-//                hideHover: 'auto',
-//                resize: true
-//            });
-           
-     
-        },
-
-        initialization: function () {
-            mainApp.main_fun();
-
+			
+            $("a[href='#top']").click(function () {
+                $("html, body").animate({ scrollTop: 0 }, "slow");               
+                return false;
+            });
+            $('.navbar-inverse').on('click', 'li a', function () {                
+                $('.navbar-inverse .in').addClass('collapse').removeClass('in').css('height', '1px');
+            });
+            $('#filter a').click(function () {
+                $('#filter a').removeClass('current');
+                $(this).addClass('current');
+                var selector = $(this).attr('data-filter');
+                $container.isotope({
+                    filter: selector,
+                    animationOptions: {
+                        duration: 1000,
+                        easing: 'easeOutQuart',
+                        queue: false
+                    }
+                });
+                return false;
+            });
+            $(window).smartresize(function () {
+                $container.isotope({
+                    // update columnWidth to a percentage of container width
+                    masonry: {
+                        columnWidth: $container.width() / $resize
+                    }
+                });
+            });
         }
-
+    },
+    fancybox: function () {
+        // fancybox
+        $(".fancybox").fancybox();
+    },
+    onePageNav: function () {
+		if($('#main-nav ul li:first-child').hasClass('active')){
+					$('#main-nav').css('background','none');
+		}
+        $('#mainNav').onePageNav({        
+            currentClass: 'active',
+            changeHash: false,
+            scrollSpeed: 950,
+            scrollThreshold: 0.2,
+            filter: '',
+            easing: 'swing',
+            begin: function () {
+                //I get fired when the animation is starting
+				
+            },
+            end: function () {
+                //I get fired when the animation is ending
+				if(!$('#main-nav ul li:first-child').hasClass('active')){
+					$('#main-nav').addClass('addBg');
+				}else{
+						$('#main-nav').removeClass('addBg');
+				}
+				
+            },
+            scrollChange: function ($currentListItem) {
+                //I get fired when you enter a section and I pass the list item of the section
+				if(!$('#main-nav ul li:first-child').hasClass('active')){
+					$('#main-nav').addClass('addBg');
+				}else{
+						$('#main-nav').removeClass('addBg');
+				}
+            }
+        });
+    },
+    slider: function () {
+        $('#da-slider').cslider({
+            autoplay: true,
+            bgincrement: 0
+        });
+    },
+    init: function () {
+        customScripts.onePageNav();
+        customScripts.profile();
+        customScripts.fancybox();
+        customScripts.slider();
     }
-    // Initializing ///
-
-    $(document).ready(function () {
-        mainApp.main_fun();
-    });
-
-}(jQuery));
+}
+$('document').ready(function () {
+    customScripts.init();
+});

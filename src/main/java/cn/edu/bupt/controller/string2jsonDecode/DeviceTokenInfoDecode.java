@@ -17,7 +17,7 @@ public class DeviceTokenInfoDecode {
         JsonObject parsed = (JsonObject)new JsonParser().parse(jsonStr);
 
         try{
-            aToken.addProperty("credentialsId",parsed.get("credentialsId").getAsString());
+            aToken.addProperty("credentialsId",parsed.get("deviceToken").getAsString());
         }catch(Exception e){
             aToken.addProperty("credentialsId","");
         }

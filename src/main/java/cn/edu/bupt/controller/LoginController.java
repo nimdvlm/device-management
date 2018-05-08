@@ -28,6 +28,9 @@ public class LoginController extends DefaultThingsboardAwaredController {
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    private HttpServletResponse response;
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestBody String body){
         JsonObject json1 = new JsonParser().parse(body).getAsJsonObject();
@@ -38,23 +41,35 @@ public class LoginController extends DefaultThingsboardAwaredController {
         session.setAttribute("username", username);
         session.setAttribute("password", password);
 
-        boolean res = HttpUtil.getAccessToken(session);
-
-        JsonObject json = new JsonObject();
-        if(res){ // 成功登录
+        String res = HttpUtil.getAccessToken(session);
+        JsonObject responseJson = (JsonObject) new JsonParser().parse(res);
+        if(responseJson.has("error")){
+            response.setStatus(400);
+            session.removeAttribute("username");
+            session.removeAttribute("password");
+        }else if(responseJson.has("access_token")){
             UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
             Subject subject = SecurityUtils.getSubject();
             subject.login(usernamePasswordToken);   //完成登录
-
-            json.addProperty("responce_code",0);
-            json.addProperty("responce_msg","login ok");
-        }else{
-            json.addProperty("responce_code",1);
-            json.addProperty("responce_msg","wrong username or password");
-            session.removeAttribute("username");
-            session.removeAttribute("password");
         }
-        return json.toString();
+        return res;
+//        JsonObject json = new JsonObject();
+//        if(res){ // 成功登录
+//            UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
+//            Subject subject = SecurityUtils.getSubject();
+//            subject.login(usernamePasswordToken);   //完成登录
+//
+//            json.addProperty("responce_code",0);
+//            json.addProperty("responce_msg","login ok");
+//            response.setStatus(200);
+//        }else{
+//            json.addProperty("responce_code",1);
+//            json.addProperty("responce_msg","wrong username or password");
+//            session.removeAttribute("username");
+//            session.removeAttribute("password");
+//            response.setStatus(401);
+//        }
+//        return json.toString();
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
