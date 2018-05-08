@@ -6,13 +6,16 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     $scope.deviceList = obj.query();//data返回值为整个接口返回的内容
     console.log($scope.deviceList);
     $scope.show = function (data) {
-        // console.log(data);
+        console.log(data);
         $scope.ID = data.deviceId;
         $scope.deviceName = data.name;
-        $scope.deviceType = data.deviceType;
+        $scope.deviceType = data.type;
         $scope.description = data.additionalInfo;
         $scope.createTime = data.createTime;
         $scope.status = data.status;
+    }
+    $scope.delete = function(id){
+
     }
 
 }]);

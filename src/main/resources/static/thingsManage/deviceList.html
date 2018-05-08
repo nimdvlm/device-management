@@ -8,9 +8,9 @@
         </p>
         <div id="deviceListIcon">
           <div class="chooseBtn" ng-repeat="data in deviceList" ng-click="show(data)">
-                 <div title="{{data.deviceName}}">
+                 <div title="{{data.name}}">
                      <i class="fa fa-file-text-o fa-2x"></i>
-                     <p>{{data.deviceName}}</p>
+                     <p>{{data.name}}</p>
                  </div>
           </div>
         </div>
@@ -49,7 +49,7 @@
                     <td>
                         <button class="btn btn-primary">取消分配客户</button>
                         <button class="btn btn-primary">管理凭据</button>
-                        <button class="btn btn-primary">删除设备</button>
+                        <button class="btn btn-primary" ng-click="delete(id)">删除设备</button>
                     </td>
                 </tr>
                 </tbody>
@@ -59,7 +59,7 @@
 </div>
     <!-- CONTENT-WRAPPER SECTION END-->
 
-<!--  MODEL  -->
+<!--  CREATEMODEL  -->
 <div class="modal fade" tabindex="-1" role="dialog" id="createDevice">
     <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
     <div class="modal-dialog" role="document">
@@ -111,6 +111,12 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+
+
+
+<!--CREATE DEVICE JS-->
 <script type="text/javascript">
     $(document).ready(function () {
         $("#modalConfirm").click(function () {

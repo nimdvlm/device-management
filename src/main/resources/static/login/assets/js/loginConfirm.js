@@ -21,6 +21,7 @@ $(document).ready(function () {
                     /*console.log(userName);
                     console.log(password);
                     console.log(msg);*/
+
                     window.location.href = "chooseIndex.html";
                 },
                 error:function () {
