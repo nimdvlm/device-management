@@ -46,11 +46,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
          * {"name":"test0name","type":"default","additionalInfo":{"description":"jhdajd"}}
          */
         JsonObject deviceInfoJson = (JsonObject)new JsonParser().parse(deviceInfo);
-        HttpSession session = request.getSession();
-        String res = HttpUtil.getAccessToken(session);
-        JsonObject parsed = (JsonObject)new JsonParser().parse(res);
-        Integer tenantId = parsed.get("tenant_id").getAsInt();
-        deviceInfoJson.addProperty("tenantId", tenantId);
+        deviceInfoJson.addProperty("tenantId", getTenantId());
 
         String responseContent = null ;
         try {
@@ -105,12 +101,9 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @ResponseBody
     public String getDevices() {
 
-        HttpSession session = request.getSession();
-        String res = HttpUtil.getAccessToken(session);
-        JsonObject parsed = (JsonObject)new JsonParser().parse(res);
-        Integer tenantId = parsed.get("tenant_id").getAsInt();
 
-        String requestAddr = "/api/v1/tenant/devices/"  + tenantId ;
+
+        String requestAddr = "/api/v1/tenant/devices/"  + getTenantId() ;
 
         StringBuffer param = new StringBuffer();
         param.append("limit").append("=").append("30");
@@ -198,6 +191,12 @@ public class DeviceController extends DefaultThingsboardAwaredController {
             return retFail(e.toString()) ;
         }
     }*/
-
+   public Integer getTenantId(){
+       HttpSession sess = request.getSession();
+       String res = HttpUtil.getAccessToken(sess);
+       JsonObject jo = (JsonObject)new JsonParser().parse(res);
+       Integer tenantId = jo.get("tenant_id").getAsInt();
+       return tenantId;
+   }
 
 }

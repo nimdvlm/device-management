@@ -37,11 +37,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
     public String create(@RequestBody String deviceGroupInfo) {
 
         JsonObject groupInfoJson = (JsonObject)new JsonParser().parse(deviceGroupInfo);
-        HttpSession session = request.getSession();
-        String res = HttpUtil.getAccessToken(session);
-        JsonObject parsed = (JsonObject)new JsonParser().parse(res);
-        Integer tenantId = parsed.get("tenant_id").getAsInt();
-        groupInfoJson.addProperty("tenantId", tenantId);
+        groupInfoJson.addProperty("tenantId", getTenantId());
         String requestAddr = "/api/v1/group" ;
 
         String responseContent = null ;
@@ -53,7 +49,6 @@ public class GroupController extends DefaultThingsboardAwaredController{
         } catch (Exception e) {
             return retFail(e.toString()) ;
         }
-
         return retSuccess(responseContent) ;
     }
 
@@ -103,10 +98,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
         } catch (Exception e) {
             return retFail(e.toString()) ;
         }
-
-        JsonArray groupJsonArr = (JsonArray) DeviceGroupInfoDecode.groupArr(responseContent);
-
-        return retSuccess(groupJsonArr.toString()) ;
+        return retSuccess(decode(responseContent)) ;
     }
 
 
@@ -128,8 +120,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
                 null,
                 request.getSession()) ;
         try {
-            JsonArray deviceJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent);
-            return retSuccess(deviceJsonArr.toString()) ;
+            return retSuccess(decode(responseContent)) ;
         } catch (Exception e) {
             return retFail(e.toString()) ;
         }
@@ -173,4 +164,22 @@ public class GroupController extends DefaultThingsboardAwaredController{
         }
         return retSuccess(responseContent) ;
     }
+
+
+
+    public String decode(String str){
+        JsonObject jsonObject = (JsonObject)new JsonParser().parse(str);
+        String a=jsonObject.getAsJsonArray("data").toString();
+        return a;
+    }
+
+    public Integer getTenantId(){
+        HttpSession session = request.getSession();
+        String res = HttpUtil.getAccessToken(session);
+        JsonObject parsed = (JsonObject)new JsonParser().parse(res);
+        Integer tenantId = parsed.get("tenant_id").getAsInt();
+        return tenantId;
+    }
+
+
 }
