@@ -29,7 +29,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     }
 
     //获取规则组信息
-    var RULE = $resource('http://localhost:8081/api/rules');//获取所有规则接口
+    var RULE = $resource('/api/rules');//获取所有规则接口
     $scope.Rules = RULE.query(function () {
 
         //初始化右侧视图
@@ -70,7 +70,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //根据id查找规则
     $scope.searchRule = function () {
         if ($scope.ruleid != "" && $scope.ruleid != null) {
-            var searchRULE = $resource('http://localhost:8081/api/rule/:id', {id: '@id'});
+            var searchRULE = $resource('/api/rule/:id', {id: '@id'});
             searchRULE.get({id: $scope.ruleid})
                 .$promise.then(function (person) {
                 console.log("文本框输入内容：" + $scope.ruleid);
@@ -110,7 +110,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //删除规则
     $scope.delRule = function () {
-        var delRULE = $resource('http://localhost:8081/api/rule/delete:id', {id: '@id'});
+        var delRULE = $resource('/api/rule/delete:id', {id: '@id'});
         delRULE.delete({}, {id: $scope.Ruleitem.id.id}, function (resp) {
             console.log("删除成功:id=" + $scope.Ruleitem.id.id + ";name=" + $scope.Ruleitem.name);
             $("#delDG").modal("hide");
@@ -124,7 +124,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //启动规则
     $scope.startRule = function () {
         $scope.state1 = "ACTIVE";
-        var editRule = $resource('http://localhost:8081/api/rule/:id/activate', {id: '@id'});
+        var editRule = $resource('/api/rule/:id/activate', {id: '@id'});
         editRule.save({id: $scope.Ruleitem.rule.ruleId}, $scope.state1)
             .$promise.then(function (resp) {
             console.log("规则激活成功:id=" + $scope.Ruleitem.rule.ruleId + ";state=" + $scope.Ruleitem.rule.state);
@@ -137,7 +137,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.stopRule = function () {
         $scope.state2 = "UNACTIVE";
         //此处接口应换成http://localhost:8081/api/rule/:id/suspend
-        var editRule = $resource('http://localhost:8081/api/rule/:id/activate', {id: '@id'});
+        var editRule = $resource('/api/rule/:id/activate', {id: '@id'});
         editRule.save({id: $scope.Ruleitem.rule.ruleId}, $scope.state2)
             .$promise.then(function (resp) {
             console.log("规则激活成功:id=" + $scope.Ruleitem.rule.ruleId + ";state=" + $scope.Ruleitem.rule.state);
@@ -185,7 +185,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //添加规则
     $scope.createRule=function () {
         console.log($scope.formData);
-        var addRULE = $resource('http://localhost:8081/api/rule/create');
+        var addRULE = $resource('/api/rule/create');
         addRULE.save({},$scope.formData)
             .$promise.then(function (resp) {
             console.log("新建设备组成功");

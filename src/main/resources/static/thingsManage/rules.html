@@ -54,11 +54,12 @@
                         <form>
                             <!--添加规则组基本信息-->
                             <p>规则名称：<input type="text" name="rulename" ng-model="formData.rule.name"
-                                           placeholder="name">
+                                           placeholder="请输入规则组名称">
                             </p>
-                            <p>描&emsp;&emsp;述：<input type="text" name="additional_info"
-                                                     ng-model="formData.rule.additional_info"
-                                                     placeholder="additional_info" style="height:150px;width: 450px">
+                            <p><span style="vertical-align:top">描&emsp;&emsp;述：</span><textarea name="additional_info"
+                                                                                                ng-model="formData.rule.additional_info"
+                                                                                                placeholder="请添加对规则的描述..."
+                                                                                                style="height:150px;width: 480px;"></textarea>
                             </p>
                             <hr/>
 
@@ -133,13 +134,13 @@
                     <div class="modal-body">
                         <form name="addfilter">
                             <p>过滤器名称：<input type="text" name="addname" id="addfiltername"
-                                            placeholder="name">
+                                            placeholder="请输入过滤器名称">
                             </p>
                             <p>过滤器类型：<input type="text" name="addtype" disabled="disabled" id="addfiltertype"
-                                            placeholder="未定义">
+                                            placeholder="待定">
                             </p>
                             <p>JS&emsp;代&emsp;码：<textarea name="addjscode" id="addfilterjs"
-                                                          style="height:150px;width: 450px">function filter(key,value){if(key=='x' && value>1){ return true;} else{return false;}}</textarea>
+                                                          style="height:150px;width: 470px">function filter(key,value){if(key=='x' && value>1){return true;}  else{return false;}}</textarea>
                             </p>
                             <input type="reset" style="display:none;"/>
                         </form>
@@ -187,8 +188,8 @@
                             <!--判断是sendmail后显示-->
                             <div ng-show="showsendmail">
                                 <hr/>
-                                <p>收件人：<input type="text" name="mailname"
-                                              placeholder="请输入收件人">
+                                <p>收件人&emsp;：<input type="text" name="mailname"
+                                                    placeholder="请输入收件人">
                                 </p>
                                 <p>邮件主题：<input type="text" name="mailtitle"
                                                placeholder="请输入邮件主题">
