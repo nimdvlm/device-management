@@ -1,75 +1,63 @@
 $(document).ready(function () {
+
     /*
        登录验证
    */
-    $("#login").click(function (event) {
-        // alert("success");
-
+    $("#login").click(function () {
         var userName = $("#form-username").val();
         var password = $("#form-password").val();
         var data = {"username":userName,"password":password};
-        console.log(data);
         var dataString = JSON.stringify(data);
-        console.log(dataString);
-        console.log(userName);
-        console.log(password);
         //window.location.href="chooseIndex.html";//原窗口打开
         // window.open("chooseIndex.html");//新窗口打开
-        $.ajax({
-            url:"/api/user/login",
-            data:dataString,
-            contentType: "application/json; charset=utf-8",//post请求必须
-            dataType:"text",
-            type:"POST",
-            success:function(msg){
-                console.log(userName);
-                console.log(password);
-                console.log(msg);
-                /*console.log(msg[0].username);
-                console.log(msg[0].password);
+        if(userName && password){
+            $.ajax({
+                url:"/api/user/login",
+                data:dataString,
+                contentType: "application/json; charset=utf-8",//post请求必须
+                dataType:"text",
+                type:"POST",
+                success:function(msg){
+                    /*console.log(userName);
+                    console.log(password);
+                    console.log(msg);*/
 
-
-                if(msg[0].username == $("#form-username").val() && msg[0].password == $("#form-password").val()){
                     window.location.href = "chooseIndex.html";
-                }
-                else if($("#form-username").val() && $("#form-password").val()){
-                   toastr.error("用户名或密码错误！");
-                   // alert("用户名或密码错误！");
-                }*/
-                console.log(msg.responce_msg);
-                if(msg.responce_msg == "wrong username or password"){
+                },
+                error:function () {
                     toastr.error("用户名或密码错误！");
                 }
-                else{
-                    //window.location.href = "chooseIndex.html";
-                }
+            });
+        }
 
-
-            }
-        });
     });
     /*
        修改密码验证
    */
     $("#modify").click(function (event) {
-         // event.preventDefault();
+        var userName = $("#form-username").val();
+        var password = $("#form-password").val();
+        var data = {"username":userName,"password":password};
+        var dataString = JSON.stringify(data);
         //window.location.href="modifyPassword.html";//原窗口打开
         // window.open("modifyPassword.html");//新窗口打开
-        $.ajax({
-            url:"http://localhost:5501/my-objects",
-            //data:$("#form-username").val(),
-            dataType:"json",
-            type:"GET",
-            success:function(msg){
-                if(msg[0].username == $("#form-username").val() && msg[0].password == $("#form-password").val()){
+        if(userName && password){
+            $.ajax({
+                url:"/api/user/login",
+                data:dataString,
+                dataType:"json",
+                contentType: "application/json; charset=utf-8",//post请求必须
+                type:"POST",
+                success:function(msg){
                     window.location.href = "modifyPassword.html";
-                }
-                else if($("#form-username").val() && $("#form-password").val()){
-                    // alert("用户名或密码错误！");
+                },
+                error:function () {
                     toastr.error("用户名或密码错误！");
                 }
-            }
-        });
+
+            });
+        }
+
     });
     /*
         返回按钮

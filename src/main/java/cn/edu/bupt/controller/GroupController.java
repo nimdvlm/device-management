@@ -12,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 
 /**
  * Created by Administrator on 2017/12/23.
@@ -24,31 +26,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class GroupController extends DefaultThingsboardAwaredController{
 
-    /**
-     * @return
-     */
-    @ApiOperation(value="获取租户所有设备组", notes="获取租户所有设备组")
-    @RequestMapping(value = "/alltenantgroups/{tenantId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-    public String devicegroupList(@PathVariable Integer tenantId) {
-        String requestAddr = "/api/v1/groups/tenant/" + tenantId ;
-
-        StringBuffer param = new StringBuffer();
-        param.append("limit").append("=").append("100");
-
-        String responseContent = null ;
-        try {
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr + "?" + param.toString(),
-                    null,
-                    request.getSession());
-        } catch (Exception e) {
-            return retFail(e.toString()) ;
-        }
-
-        JsonArray groupJsonArr = (JsonArray) DeviceGroupInfoDecode.groupArr(responseContent);
-
-        return retSuccess(groupJsonArr.toString()) ;
-    }
 
     /**
      * 该接口的requestBody为包含一个groupName的json
@@ -58,28 +35,28 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String create(@RequestBody String deviceGroupInfo) {
+
+        JsonObject groupInfoJson = (JsonObject)new JsonParser().parse(deviceGroupInfo);
+        groupInfoJson.addProperty("tenantId", getTenantId());
         String requestAddr = "/api/v1/group" ;
 
         String responseContent = null ;
         try {
             responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                     null,
-                    (JsonObject) new JsonParser().parse(deviceGroupInfo),
+                    groupInfoJson,
                     request.getSession());
         } catch (Exception e) {
             return retFail(e.toString()) ;
         }
-
         return retSuccess(responseContent) ;
     }
 
-    /**
-     * @param deviceGroupId
-     * @return
-     */
+
+
     @ApiOperation(value="删除设备组", notes="删除设备组")
     @ApiImplicitParam(name = "deviceGroupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
-    @RequestMapping(value = "/delete/{deviceGroupId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/delete/{groupId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String delete(@PathVariable String deviceGroupId) {
         String requestAddr = String.format("/api/group/%s", deviceGroupId);
@@ -94,6 +71,36 @@ public class GroupController extends DefaultThingsboardAwaredController{
 
         return retSuccess(responseContent) ;
     }
+
+    /**
+     * @return
+     */
+    @ApiOperation(value="获取租户所有设备组", notes="获取租户所有设备组")
+    @RequestMapping(value = "/allgroups", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String devicegroupList() {
+
+        HttpSession session = request.getSession();
+        String res = HttpUtil.getAccessToken(session);
+        JsonObject parsed = (JsonObject)new JsonParser().parse(res);
+        Integer tenantId = parsed.get("tenant_id").getAsInt();
+
+        String requestAddr = "/api/v1/groups/tenant/" + tenantId ;
+
+        StringBuffer param = new StringBuffer();
+        param.append("limit").append("=").append("100");
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr + "?" + param.toString(),
+                    null,
+                    request.getSession());
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+        return retSuccess(decode(responseContent)) ;
+    }
+
 
     /**
      * @param gId
@@ -113,8 +120,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
                 null,
                 request.getSession()) ;
         try {
-            JsonArray deviceJsonArr = (JsonArray) DeviceInfoDecode.deviceArr(responseContent);
-            return retSuccess(deviceJsonArr.toString()) ;
+            return retSuccess(decode(responseContent)) ;
         } catch (Exception e) {
             return retFail(e.toString()) ;
         }
@@ -158,4 +164,22 @@ public class GroupController extends DefaultThingsboardAwaredController{
         }
         return retSuccess(responseContent) ;
     }
+
+
+
+    public String decode(String str){
+        JsonObject jsonObject = (JsonObject)new JsonParser().parse(str);
+        String a=jsonObject.getAsJsonArray("data").toString();
+        return a;
+    }
+
+    public Integer getTenantId(){
+        HttpSession session = request.getSession();
+        String res = HttpUtil.getAccessToken(session);
+        JsonObject parsed = (JsonObject)new JsonParser().parse(res);
+        Integer tenantId = parsed.get("tenant_id").getAsInt();
+        return tenantId;
+    }
+
+
 }

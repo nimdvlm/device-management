@@ -9,7 +9,11 @@ import com.google.gson.JsonParser;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 public class DeviceController extends DefaultThingsboardAwaredController {
 
     public static final String DEVICE_ID = "deviceId";
+
 
     /**
      * 获取租户所有设备的信息
@@ -41,6 +46,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
          * {"name":"test0name","type":"default","additionalInfo":{"description":"jhdajd"}}
          */
         JsonObject deviceInfoJson = (JsonObject)new JsonParser().parse(deviceInfo);
+        deviceInfoJson.addProperty("tenantId", getTenantId());
 
         String responseContent = null ;
         try {
@@ -91,10 +97,13 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
 
     @ApiOperation(value="获取租户所有设备的信息", notes="获取租户所有设备的信息")
-    @RequestMapping(value = "/alltenantdevices/{tenantId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/alldevices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getDevices(@PathVariable Integer tenantId) {
-        String requestAddr = "/api/v1/tenant/devices/"  + tenantId ;
+    public String getDevices() {
+
+
+
+        String requestAddr = "/api/v1/tenant/devices/"  + getTenantId() ;
 
         StringBuffer param = new StringBuffer();
         param.append("limit").append("=").append("30");
@@ -111,8 +120,9 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         }
 
         try {
-            JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
-            return retSuccess(deviceJsonArr.toString()) ;
+            JsonObject jsonObject = (JsonObject)new JsonParser().parse(responseContent);
+            String array=jsonObject.getAsJsonArray("data").toString();
+            return retSuccess(array) ;
         } catch (Exception e) {
             return retFail(e.toString()) ;
         }
@@ -181,6 +191,12 @@ public class DeviceController extends DefaultThingsboardAwaredController {
             return retFail(e.toString()) ;
         }
     }*/
-
+   public Integer getTenantId(){
+       HttpSession sess = request.getSession();
+       String res = HttpUtil.getAccessToken(sess);
+       JsonObject jo = (JsonObject)new JsonParser().parse(res);
+       Integer tenantId = jo.get("tenant_id").getAsInt();
+       return tenantId;
+   }
 
 }
