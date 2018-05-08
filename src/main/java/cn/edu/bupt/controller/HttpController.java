@@ -19,7 +19,7 @@ public class HttpController
     public String getToken(HttpSession session)
     {
 
-        boolean t= HttpUtil.getAccessToken(session);
+        HttpUtil.getAccessToken(session);
         String token=session.getAttribute("token").toString();
         return token;
     }

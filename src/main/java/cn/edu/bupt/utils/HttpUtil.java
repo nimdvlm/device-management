@@ -132,12 +132,12 @@ public class HttpUtil {
                 .get() ;
 
 
-//        String tocken = (String)session.getAttribute("token");
-//        if(tocken==null){
-//            getAccessToken(session);
-//        }
-//        tocken = (String)session.getAttribute("token");
-//        buider.header("Authorization","Bearer "+tocken);
+        String tocken = (String)session.getAttribute("token");
+        if(tocken==null){
+            getAccessToken(session);
+        }
+        tocken = (String)session.getAttribute("token");
+        buider.header("Authorization","Bearer "+tocken);
 
         if(headers!=null){
             for(Map.Entry<String,String> entry:headers.entrySet()){
@@ -149,10 +149,10 @@ public class HttpUtil {
         return sendRequireToThingsboard(request, session);
     }
 
-    public static boolean getAccessToken(HttpSession session){
+    public static String getAccessToken(HttpSession session){
         String username = (String)session.getAttribute("username");
         String password = (String)session.getAttribute("password");
-        if(username==null|| password ==null) return false;
+//        if(username==null|| password ==null) return false;
 
         String content = "username="+username+"&password="+password;
         RequestBody body = RequestBody.create(FORM, content);
@@ -171,10 +171,12 @@ public class HttpUtil {
             if(response.isSuccessful()){
                 String res = response.body().string();
                 JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
-                session.setAttribute("token",obj.get("access_token").getAsString());
-                session.setAttribute("refreshToken",obj.get("refresh_token").getAsString());
-                return true;
-            }else{
+                if(!obj.has("error")) {
+                    session.setAttribute("token", obj.get("access_token").getAsString());
+                    session.setAttribute("refreshToken", obj.get("refresh_token").getAsString());
+                }
+                return res;
+            } else{
                 throw new Exception("the first fail!") ;
             }
         }catch (Exception e){
@@ -183,11 +185,13 @@ public class HttpUtil {
                 Response response = execute(request);
                 String res = response.body().string();
                 JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
-                session.setAttribute("token",obj.get("access_token").getAsString());
-                session.setAttribute("refreshToken",obj.get("refresh_token").getAsString());
-                return true ;
+                if(!obj.has("error")) {
+                    session.setAttribute("token", obj.get("access_token").getAsString());
+                    session.setAttribute("refreshToken", obj.get("refresh_token").getAsString());
+                }
+                return res ;
             } catch (Exception e1) {
-                return false ;
+                return  "ERROR!";
             }
         }
     }
@@ -209,6 +213,34 @@ public class HttpUtil {
             }
         }catch (Exception e) {
             return false;
+        }
+    }
+
+    public static String refreshToken(String refreshToken){
+
+        String content = "refresh_token="+refreshToken;
+        RequestBody body = RequestBody.create(FORM, content);
+
+        Request.Builder builder = new Request.Builder()
+                .url(tokenurl+"?grant_type=refresh_token")
+                .post(body);
+
+        byte[] textByte = (Client_id+":"+Client_secret).getBytes();
+        String auth = encoder.encodeToString(textByte);
+        builder.header("Authorization","Basic "+auth);
+
+        Request request = builder.build();
+
+        try {
+            // 第一次获取token
+            Response response = execute(request);
+            if(response.isSuccessful()){
+                return response.body().string();
+            }else{
+                throw new Exception("fail to refresh!") ;
+            }
+        }catch (Exception e) {
+            return e.toString();
         }
     }
 

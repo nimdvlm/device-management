@@ -4,10 +4,11 @@
         <div class="DGTitle">
             <span style="font-size:30px">规则管理</span>
             <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
-                    data-target="#addDeviceGroup">+ 创建规则
+                    data-target="#addRule">+ 创建规则
             </button>
             <div class="SearchDG">
-                <span>搜索：<input type="text" style="width: 130px" placeholder="请输入规则id" ng-model="$parent.ruleid"/></span>
+                <span>搜索：<input type="text" style="width: 130px" placeholder="请输入规则id"
+                                ng-model="$parent.ruleid"/></span>
                 <span class="Searchicon" ng-click="searchRule()" title="搜索">
                     <i class="fa fa-search fa-lg shand" aria-hidden="true"></i>
                 </span>
@@ -37,7 +38,7 @@
         </div>
 
         <!--modal创建规则-->
-        <div class="modal fade" id="addDeviceGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        <div class="modal fade" id="addRule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -50,14 +51,159 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <p>规则名称：<input type="text" name="DevicegroupName"
-                                       placeholder="Demo Device Messaging RPC Plugin">
-                        </p>
+                        <form>
+                            <!--添加规则组基本信息-->
+                            <p>规则名称：<input type="text" name="rulename" ng-model="formData.rule.name"
+                                           placeholder="name">
+                            </p>
+                            <p>描&emsp;&emsp;述：<input type="text" name="additional_info"
+                                                     ng-model="formData.rule.additional_info"
+                                                     placeholder="additional_info" style="height:150px;width: 450px">
+                            </p>
+                            <hr/>
+
+                            <!--添加过滤器-->
+                            <h4>添加过滤器</h4>
+                            <!--添加过滤器后显示-->
+                            <table ng-show="showaddFilter">
+                                <thead>
+                                <tr style="font-weight:bold;">
+                                    <th>过滤器名称</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="filter in formData.filters">
+                                    <th>{{filter.name}}</th>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!--ui-grid显示filter
+                             <div class="item" ng-controller="RuleaddfilterCtrl" ng-show="showaddFilter">
+                                <div class="gridStyle" ui-grid="gridOptions" ui-grid-auto-resize></div>
+                            </div>  -->
+                            <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#addruleFilter">+ 添加过滤器
+                            </button>
+                            <hr/>
+
+                            <!--添加插件-->
+                            <h4>添加变换</h4>
+                            <!--添加插件后显示-->
+                            <table ng-show="showaddTransform">
+                                <thead>
+                                <tr style="font-weight:bold;">
+                                    <th>插件名称</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>{{formData.transform.name}}</th>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#addruleTransform">+ 添加变换
+                            </button>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                         </button>
-                        <button type="button" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" ng-click="createRule()">
+                            确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+        <!--model创建规则-添加过滤器-->
+        <div class="modal fade" id="addruleFilter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">
+                            添加过滤器
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form name="addfilter">
+                            <p>过滤器名称：<input type="text" name="addname" id="addfiltername"
+                                            placeholder="name">
+                            </p>
+                            <p>过滤器类型：<input type="text" name="addtype" disabled="disabled" id="addfiltertype"
+                                            placeholder="未定义">
+                            </p>
+                            <p>JS&emsp;代&emsp;码：<textarea name="addjscode" id="addfilterjs"
+                                                          style="height:150px;width: 450px">function filter(key,value){if(key=='x' && value>1){ return true;} else{return false;}}</textarea>
+                            </p>
+                            <input type="reset" style="display:none;"/>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="subFilter()" data-dismiss="modal">
+                            确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+        <!--model创建规则-添加Transform-->
+        <div class="modal fade" id="addruleTransform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">
+                            添加transform
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form name="addfilter">
+                            <p>名&emsp;&emsp;称：
+                                <select ng-click="addsendmail()" id="addtransformname">
+                                    <option value="empty">--请选择类型--</option>
+                                    <option value="Sendmail">SendMail</option>
+                                    <option value="bilibili">bilibili</option>
+                                </select>
+                            </p>
+                            <p>跳转地址：<input type="text" name="url" disabled="disabled" id="addtransformurl"
+                                           placeholder="http://localhost:8080/api/test/send">
+                            </p>
+                            <p>请求方式：<input type="text" name="method" disabled="disabled" id="addtransformmethod"
+                                           placeholder="POST">
+                            </p>
+
+                            <!--判断是sendmail后显示-->
+                            <div ng-show="showsendmail">
+                                <hr/>
+                                <p>收件人：<input type="text" name="mailname"
+                                              placeholder="请输入收件人">
+                                </p>
+                                <p>邮件主题：<input type="text" name="mailtitle"
+                                               placeholder="请输入邮件主题">
+                                </p>
+                                <p>邮件内容：<input type="text" name="mailcontext"
+                                               style="height:150px;width: 450px"/>
+                                </p>
+                            </div>
+                            <input type="reset" style="display:none;"/>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="subTransform()" data-dismiss="modal">
                             确定
                         </button>
                     </div>
@@ -90,7 +236,7 @@
                     <i ng-class="{true:'fa fa-refresh fa-spin',false:'fa fa-refresh'}[isActive]"></i>
                     {{Ruleitem.rule.state}}
                 </span></p>
-                <p>规则描述：{{Ruleitem.additionalInfo}}<!--规则描述修改按钮
+                <p>规则描述：{{Ruleitem.rule.additional_info}}<!--规则描述修改按钮
                     <i class="fa fa-pencil-square-o iedit shand" data-toggle="modal"
                        data-target="#editRuleDes"></i>
                     </p.time}}   无此接口--></p>
@@ -104,12 +250,14 @@
                 <span class="RightviewTitle">规则详情</span>
             </div>
             <div class="item">
-                <div class="item" ng-controller="RulepluginCtrl">
-                    <div class="gridStyle RulegridStyle" ui-grid="gridOptions"></div>
-                </div>
-
+                <!--filter显示表格-->
                 <div class="item" ng-controller="RulefilterCtrl">
                     <div class="gridStyle RulegridStyle" ui-grid="gridOptions" style="height: 180px"></div>
+                </div>
+
+                <!--plugin显示表格-->
+                <div class="item" ng-controller="RulepluginCtrl">
+                    <div class="gridStyle RulegridStyle" ui-grid="gridOptions"></div>
                 </div>
             </div>
 
@@ -255,4 +403,4 @@
         </div>
 
     </div>
-    </div>
+</div>

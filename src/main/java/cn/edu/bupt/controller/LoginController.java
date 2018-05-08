@@ -1,16 +1,15 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,25 +40,35 @@ public class LoginController extends DefaultThingsboardAwaredController {
         session.setAttribute("username", username);
         session.setAttribute("password", password);
 
-        boolean res = HttpUtil.getAccessToken(session);
-
-        JsonObject json = new JsonObject();
-        if(res){ // 成功登录
+        String res = HttpUtil.getAccessToken(session);
+        JsonObject responseJson = (JsonObject) new JsonParser().parse(res);
+        if(responseJson.has("error")){
+            response.setStatus(400);
+            session.removeAttribute("username");
+            session.removeAttribute("password");
+        }else if(responseJson.has("access_token")){
             UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
             Subject subject = SecurityUtils.getSubject();
             subject.login(usernamePasswordToken);   //完成登录
-
-            json.addProperty("responce_code",0);
-            json.addProperty("responce_msg","login ok");
-            response.setStatus(200);
-        }else{
-            json.addProperty("responce_code",1);
-            json.addProperty("responce_msg","wrong username or password");
-            session.removeAttribute("username");
-            session.removeAttribute("password");
-            response.setStatus(401);
         }
-        return json.toString();
+        return res;
+//        JsonObject json = new JsonObject();
+//        if(res){ // 成功登录
+//            UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
+//            Subject subject = SecurityUtils.getSubject();
+//            subject.login(usernamePasswordToken);   //完成登录
+//
+//            json.addProperty("responce_code",0);
+//            json.addProperty("responce_msg","login ok");
+//            response.setStatus(200);
+//        }else{
+//            json.addProperty("responce_code",1);
+//            json.addProperty("responce_msg","wrong username or password");
+//            session.removeAttribute("username");
+//            session.removeAttribute("password");
+//            response.setStatus(401);
+//        }
+//        return json.toString();
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -76,6 +85,42 @@ public class LoginController extends DefaultThingsboardAwaredController {
         }else {
             return retFail("fail to logout");
         }
+    }
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.PUT)
+    public String changePassword (
+            @RequestBody String changePasswordRequest) {
+        String requestAddr = "/api/v1/auth/changePassword";
+        JsonObject PasswordInfoJson = (JsonObject) new JsonParser().parse(changePasswordRequest);
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendPutToThingsboard("http://" + getAccountServer() + requestAddr,
+                    null,
+                    PasswordInfoJson,
+                    request.getSession());
+            if(responseContent.equals("")){
+                return "succeed to change password!";
+            }else {
+                JsonObject responseJson = (JsonObject) new JsonParser().parse(responseContent);
+                if (responseJson.has("status")) {
+                    response.setStatus(responseJson.get("status").getAsInt());
+                }
+                return responseContent;
+            }
+        } catch (Exception e) {
+            return retFail(e.toString());
+        }
+
+    }
+
+    @RequestMapping(value = "/refreshToken", method = RequestMethod.POST)
+    public String refreshToken () {
+        HttpSession session = request.getSession();
+        String refresh_token = session.getAttribute("refreshToken").toString();
+        String res = HttpUtil.refreshToken(refresh_token);
+        JsonObject newAccessTokenJson = (JsonObject) new JsonParser().parse(res);
+        session.setAttribute("token",newAccessTokenJson.get("access_token").getAsString());
+        return newAccessTokenJson.get("access_token").getAsString();
     }
 
 }
