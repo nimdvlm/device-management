@@ -28,7 +28,7 @@ public class LoginController extends DefaultThingsboardAwaredController {
     @Autowired
     private HttpServletRequest request;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public String login(@RequestBody String body){
         JsonObject json1 = new JsonParser().parse(body).getAsJsonObject();
         String username = json1.get("username").getAsString() ;
