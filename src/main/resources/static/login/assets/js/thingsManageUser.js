@@ -1,7 +1,8 @@
-var level;
+//var level;
 
 //async:false（默认为true）  表示同步加载，会在ajax的success执行完成之后，在执行其他；
 //async:true  表示异步加载，可能会在ajax执行完成之后，就执行下面的方法，从而导致data中没有值；
+/*
 $(document).ready(function () {
     $.ajax({
         url:"http://localhost:5501/my-objects",
@@ -29,4 +30,4 @@ $(document).ready(function () {
         });
     }
 
-})
+})*/

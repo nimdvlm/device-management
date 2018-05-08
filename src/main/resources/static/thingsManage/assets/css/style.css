@@ -112,7 +112,7 @@ ul,li{
     text-align: center;
 }
 .chooseBtn{
-    margin-top: 50px;
+    margin-top: 25px;
     margin-left: 50px;
     cursor: pointer;
     padding: 20px;
@@ -134,10 +134,13 @@ ul,li{
     text-align: center;
     margin-top: 10px;
 }
-
+/* =============================================================
+DEVICELIST STYLES
+============================================================ */
 #deviceListIcon{
     width: 60%;
     float: left;
+    padding-top:10px;
 
 }
 
@@ -154,8 +157,13 @@ ul,li{
 
 .attName{
   font-weight: bold;
+  width: 100px;
+  text-align: center;
 }
 
+.inputInfo{
+    width: 90%;
+}
 
 /* =============================================================
    DeviceGroup
