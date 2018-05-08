@@ -15,7 +15,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
             addDG.save({},$scope.addDGName)
                 .$promise.then(function (resp) {
                 console.log("新建设备组成功");
-                $("#editDGName").modal("hide");
+                $("#addRule").modal("hide");
                 location.reload();
             });
         }else{
