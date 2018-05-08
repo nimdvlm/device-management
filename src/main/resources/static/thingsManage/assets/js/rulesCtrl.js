@@ -29,12 +29,20 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     }
 
     //获取规则组信息
-    var RULE = $resource('/api/rules');//获取所有规则接口
+    //var RULE = $resource('/api/rule/allRules');
+
+    //解决 Expected response to contain an array but got an object 问题
+    var RULE = $resource('/api/rule/allRules',{},{
+        query:{method:'GET',isArray:false}
+    });//获取所有规则组信息
+
+    /*****报错获取不了rules[0]
     $scope.Rules = RULE.query(function () {
 
         //初始化右侧视图
+
         $scope.Ruleitem = $scope.Rules[0];//Rules[0]获取不到第一个对象咋弄？为啥必须在函数里？
-        //console.log($scope.Rules);//此时打印是数组
+        console.log("query获取的数据："+$scope.Rules);//此时打印是数组
         console.log("取第一个对象：" + $scope.Ruleitem);
         $scope.$broadcast('senddata', $scope.Ruleitem);
         if ($scope.Ruleitem.rule.state == "ACTIVE") {
@@ -46,13 +54,17 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             $scope.Rulestart = true;
             $scope.Rulestop = false;
         }
+
     });
-    //console.log($scope.Rules);//此时打印不是数组，而且先运行此处再运行query()里
+     ******/
+    $scope.Rules = RULE.query();
+    console.log($scope.Rules);
 
 
     //右侧展示视图
     $scope.showrule = function (rule) {
         $scope.Ruleitem = rule;
+        console.log("rule in rules:"+$scope.Ruleitem);
         //判断规则运行状态
         if ($scope.Ruleitem.rule.state == "ACTIVE") {
             $scope.isActive = true;
