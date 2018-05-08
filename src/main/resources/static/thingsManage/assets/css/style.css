@@ -253,3 +253,57 @@ ul,li{
     color: #ff5945;
 }
 
+/* =============================================================
+serviceGroup
+============================================================ */
+.homeIconBackgroundstyle{
+    width: 300px;
+    height: 190px;
+    background: rgba(255,253,255,0.69);
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-left: 70px;
+    float: left;
+
+}
+.homeIconstyle{
+
+    color:  #305680;
+    font-size: 30px;
+    margin-top: 0px;
+    margin-left: 6px;
+}
+.style{
+    color:  #305680;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-left:45px;
+}
+.positionTwo{
+    margin-left: 25px;
+}
+.postionOne{
+    margin-left: 180px;
+}
+.mainDiv{
+    margin: 100px 210px 75px 350px;
+}
+.positionThree{
+    margin-left: 650px;
+    margin-bottom: 0px;
+}
+.positionFour{
+    margin-left: 430px;
+}
+.positionFive{
+    margin-right: auto;
+}
+
+.span2{
+    margin-left: 666px;
+    font-weight: initial;
+    font-size: inherit;
+    border-bottom:1px solid #eeeeee;
+
+}

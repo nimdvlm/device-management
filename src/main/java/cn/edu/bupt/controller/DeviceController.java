@@ -29,6 +29,67 @@ public class DeviceController extends DefaultThingsboardAwaredController {
      * 获取租户所有设备的信息
      * @return
      */
+
+    @ApiImplicitParam(name="deviceInfo", value = "设备信息JSON", required = true, paramType = "body")
+    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String createDevice(@RequestBody String deviceInfo) {
+        String requestAddr = "/api/v1/device" ;
+
+        /**
+         * 这里的deviceInfo为json
+         * {"name":"test0name","type":"default","additionalInfo":{"description":"jhdajd"}}
+         */
+        JsonObject deviceInfoJson = (JsonObject)new JsonParser().parse(deviceInfo);
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    null,
+                    deviceInfoJson,
+                    request.getSession()) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent) ;
+    }
+
+
+
+    @ApiOperation(value = "删除设备", notes = "根据deviceId删除设备")
+    @ApiImplicitParam(name="deviceId", value = "设备ID", required = true, paramType = "path", dataType = "String")
+    @RequestMapping(value = "/delete/{deviceId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String delete(@PathVariable(DEVICE_ID) String strDeviceId) {
+        String requestAddr ="http://"+ getDeviceAccessServer() +String.format("/api/v1/device/%s", strDeviceId);
+        try{
+            String responseContent = HttpUtil.sendDeletToThingsboard(requestAddr,request.getSession());
+            return retSuccess(responseContent) ;
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+    }
+
+
+    @ApiImplicitParam(name = "deviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
+    @RequestMapping(value = "/updatedevice", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String updateDeviceCoordinate(@RequestBody String json) {
+        String requestAddr = "/api/v1/device" ;
+        String responseContent = null ;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    null,
+                    new JsonParser().parse(json).getAsJsonObject(),
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+        return retSuccess(responseContent);
+    }
+
+
     @ApiOperation(value="获取租户所有设备的信息", notes="获取租户所有设备的信息")
     @RequestMapping(value = "/alltenantdevices/{tenantId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -58,29 +119,21 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
     }
 
-    /**
-     * @deprecated
-     * @param deviceId
-     * @return
-     */
-    //此方法后台不存在
-    // TODO 后台方法创建
-    @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken")
-    @ApiImplicitParam(name = "deviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
-    @RequestMapping(value = "/updatecoordinate/{deviceId}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ApiOperation(value = "得到parentId设备的设备信息", notes = "得到parentId设备的设备信息")
+    @ApiImplicitParam(name = "parentDeviceId", value = "父设备ID", required = true, dataType = "String", paramType = "path")
+    @RequestMapping(value = "/parentDevices/{parentDeviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String updateDeviceCoordinate(@PathVariable String deviceId,@RequestBody String json) {
-        String requestAddr = "/api/device/updatecoordinate/"+deviceId ;
-        String responseContent = null ;
+    public String getParentDevices(@PathVariable String parentDeviceId) {
+        String requestAddr = "http://" + getDeviceAccessServer() + "/api/v1/parentdevices/"+parentDeviceId + "?limit=5";
+
         try{
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+            String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
                     null,
-                    new JsonParser().parse(json).getAsJsonObject(),
                     request.getSession());
+            return retSuccess(responseContent) ;
         }catch(Exception e){
             return retFail(e.toString()) ;
         }
-        return retSuccess(responseContent);
     }
 
 
@@ -100,54 +153,16 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         return retSuccess(token.toString());
     }
 
-    @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken <br /> {\"name\":\"test0name\",\"type\":\"default\",\"additionalInfo\":{\"description\":\"jhdajd\"}}")
-    @ApiImplicitParam(name="deviceInfo", value = "设备信息JSON", required = true, paramType = "body")
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    @ResponseBody
-    public String createDevice(@RequestBody String deviceInfo) {
-        String requestAddr = "/api/v1/device" ;
 
-        /**
-         * 这里的deviceInfo为json
-         * {"name":"test0name","type":"default","additionalInfo":{"description":"jhdajd"}}
-         */
-        JsonObject deviceInfoJson = (JsonObject)new JsonParser().parse(deviceInfo);
 
-        String responseContent = null ;
-        try {
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
-                    null,
-                    deviceInfoJson,
-                    request.getSession()) ;
-        } catch (Exception e) {
-            return retFail(e.toString()) ;
-        }
 
-        return retSuccess(responseContent) ;
-    }
-
-    @ApiOperation(value = "删除设备", notes = "根据deviceId删除设备")
-    @ApiImplicitParam(name="deviceId", value = "设备ID", required = true, paramType = "path", dataType = "String")
-    @RequestMapping(value = "/delete/{deviceId}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public String delete(@PathVariable(DEVICE_ID) String strDeviceId) {
-        String requestAddr ="http://"+ getDeviceAccessServer() +String.format("/api/v1/device/%s", strDeviceId);
-        try{
-            String responseContent = HttpUtil.sendDeletToThingsboard(requestAddr,request.getSession());
-            return retSuccess(responseContent) ;
-        }catch(Exception e){
-            return retFail(e.toString()) ;
-        }
-    }
-
-    //此方法与获取token方法区别，未改
-    // TODO 后台方法
+   /*
     @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken")
     @ApiImplicitParam(name = "strDeviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/accesstoken/{deviceId}", method = RequestMethod.GET)
     @ResponseBody
     public String getDeviceAccessToken(@PathVariable(DEVICE_ID) String strDeviceId) {
-        String requestAddr = "http://" + getDeviceAccessServer() + "/api/device/"+strDeviceId+"/credentials" ;
+        String requestAddr = "http://" + getDeviceAccessServer() + "/api/v1/credentialbyid/"+strDeviceId ;
 
         try {
             String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
@@ -165,22 +180,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         } catch (Exception e) {
             return retFail(e.toString()) ;
         }
-    }
+    }*/
 
-    @ApiOperation(value = "得到parentId设备的设备信息", notes = "得到parentId设备的设备信息")
-    @ApiImplicitParam(name = "parentDeviceId", value = "父设备ID", required = true, dataType = "String", paramType = "path")
-    @RequestMapping(value = "/parentDevices/{parentDeviceId}", method = RequestMethod.GET)
-    @ResponseBody
-    public String getParentDevices(@PathVariable String parentDeviceId) {
-        String requestAddr = "http://" + getDeviceAccessServer() + "/api/v1/parentdevices/"+parentDeviceId + "?limit=5";
 
-            try{
-                String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
-                        null,
-                        request.getSession());
-                return retSuccess(responseContent) ;
-            }catch(Exception e){
-                return retFail(e.toString()) ;
-            }
-    }
 }
