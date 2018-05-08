@@ -119,6 +119,7 @@ public class CustomerController extends DefaultThingsboardAwaredController{
     private void ResStatus(String responseContent){
         JsonObject responseJson = (JsonObject) new JsonParser().parse(responseContent);
         if(responseJson.has("status")){
-            response.setStatus(responseJson.get("status").getAsInt());}
+            response.setStatus(responseJson.get("status").getAsInt());
+        }
     }
 }

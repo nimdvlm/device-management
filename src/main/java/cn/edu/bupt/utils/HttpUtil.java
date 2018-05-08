@@ -132,12 +132,12 @@ public class HttpUtil {
                 .get() ;
 
 
-//        String tocken = (String)session.getAttribute("token");
-//        if(tocken==null){
-//            getAccessToken(session);
-//        }
-//        tocken = (String)session.getAttribute("token");
-//        buider.header("Authorization","Bearer "+tocken);
+        String tocken = (String)session.getAttribute("token");
+        if(tocken==null){
+            getAccessToken(session);
+        }
+        tocken = (String)session.getAttribute("token");
+        buider.header("Authorization","Bearer "+tocken);
 
         if(headers!=null){
             for(Map.Entry<String,String> entry:headers.entrySet()){

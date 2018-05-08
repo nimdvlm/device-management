@@ -1,16 +1,15 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -86,6 +85,32 @@ public class LoginController extends DefaultThingsboardAwaredController {
         }else {
             return retFail("fail to logout");
         }
+    }
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.PUT)
+    public String changePassword (
+            @RequestBody String changePasswordRequest) {
+        String requestAddr = "/api/v1/auth/changePassword";
+        JsonObject PasswordInfoJson = (JsonObject) new JsonParser().parse(changePasswordRequest);
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendPutToThingsboard("http://" + getAccountServer() + requestAddr,
+                    null,
+                    PasswordInfoJson,
+                    request.getSession());
+            if(responseContent.equals("")){
+                return "succeed to change password!";
+            }else {
+                JsonObject responseJson = (JsonObject) new JsonParser().parse(responseContent);
+                if (responseJson.has("status")) {
+                    response.setStatus(responseJson.get("status").getAsInt());
+                }
+                return responseContent;
+            }
+        } catch (Exception e) {
+            return retFail(e.toString());
+        }
+
     }
 
 }
