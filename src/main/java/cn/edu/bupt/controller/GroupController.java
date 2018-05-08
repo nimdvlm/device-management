@@ -12,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 
 /**
  * Created by Administrator on 2017/12/23.
@@ -28,9 +30,15 @@ public class GroupController extends DefaultThingsboardAwaredController{
      * @return
      */
     @ApiOperation(value="获取租户所有设备组", notes="获取租户所有设备组")
-    @RequestMapping(value = "/alltenantgroups/{tenantId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/allgroups", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String devicegroupList(@PathVariable Integer tenantId) {
+    public String devicegroupList() {
+
+        HttpSession session = request.getSession();
+        String res = HttpUtil.getAccessToken(session);
+        JsonObject parsed = (JsonObject)new JsonParser().parse(res);
+        Integer tenantId = parsed.get("tenant_id").getAsInt();
+
         String requestAddr = "/api/v1/groups/tenant/" + tenantId ;
 
         StringBuffer param = new StringBuffer();
@@ -58,13 +66,20 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String create(@RequestBody String deviceGroupInfo) {
+
+        JsonObject groupInfoJson = (JsonObject)new JsonParser().parse(deviceGroupInfo);
+        HttpSession session = request.getSession();
+        String res = HttpUtil.getAccessToken(session);
+        JsonObject parsed = (JsonObject)new JsonParser().parse(res);
+        Integer tenantId = parsed.get("tenant_id").getAsInt();
+        groupInfoJson.addProperty("tenantId", tenantId);
         String requestAddr = "/api/v1/group" ;
 
         String responseContent = null ;
         try {
             responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                     null,
-                    (JsonObject) new JsonParser().parse(deviceGroupInfo),
+                    groupInfoJson,
                     request.getSession());
         } catch (Exception e) {
             return retFail(e.toString()) ;
