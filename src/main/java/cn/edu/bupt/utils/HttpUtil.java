@@ -216,6 +216,34 @@ public class HttpUtil {
         }
     }
 
+    public static String refreshToken(String refreshToken){
+
+        String content = "refresh_token="+refreshToken;
+        RequestBody body = RequestBody.create(FORM, content);
+
+        Request.Builder builder = new Request.Builder()
+                .url(tokenurl+"?grant_type=refresh_token")
+                .post(body);
+
+        byte[] textByte = (Client_id+":"+Client_secret).getBytes();
+        String auth = encoder.encodeToString(textByte);
+        builder.header("Authorization","Basic "+auth);
+
+        Request request = builder.build();
+
+        try {
+            // 第一次获取token
+            Response response = execute(request);
+            if(response.isSuccessful()){
+                return response.body().string();
+            }else{
+                throw new Exception("fail to refresh!") ;
+            }
+        }catch (Exception e) {
+            return e.toString();
+        }
+    }
+
     /**
      * 发送请求到thingsboard，并确保session中的认证。
      * @param request

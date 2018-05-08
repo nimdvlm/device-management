@@ -113,4 +113,14 @@ public class LoginController extends DefaultThingsboardAwaredController {
 
     }
 
+    @RequestMapping(value = "/refreshToken", method = RequestMethod.POST)
+    public String refreshToken () {
+        HttpSession session = request.getSession();
+        String refresh_token = session.getAttribute("refreshToken").toString();
+        String res = HttpUtil.refreshToken(refresh_token);
+        JsonObject newAccessTokenJson = (JsonObject) new JsonParser().parse(res);
+        session.setAttribute("token",newAccessTokenJson.get("access_token").getAsString());
+        return newAccessTokenJson.get("access_token").getAsString();
+    }
+
 }
