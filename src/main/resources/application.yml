@@ -18,7 +18,7 @@ bupt.thingsboard:
 
 
 device-access:
- host: 10.108.218.64
+ host: 10.108.218.108
  port: 8100
 
 smart_ruler:
@@ -26,7 +26,7 @@ smart_ruler:
   port: 8200
 
 service-management:
-  host: 10.108.218.64
+  host: 10.108.218.108
   port: 8000
 
 account:
