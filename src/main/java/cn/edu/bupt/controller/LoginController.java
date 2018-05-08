@@ -28,6 +28,9 @@ public class LoginController extends DefaultThingsboardAwaredController {
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    private HttpServletResponse response;
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestBody String body){
         JsonObject json1 = new JsonParser().parse(body).getAsJsonObject();
@@ -48,11 +51,13 @@ public class LoginController extends DefaultThingsboardAwaredController {
 
             json.addProperty("responce_code",0);
             json.addProperty("responce_msg","login ok");
+            response.setStatus(200);
         }else{
             json.addProperty("responce_code",1);
             json.addProperty("responce_msg","wrong username or password");
             session.removeAttribute("username");
             session.removeAttribute("password");
+            response.setStatus(401);
         }
         return json.toString();
     }
