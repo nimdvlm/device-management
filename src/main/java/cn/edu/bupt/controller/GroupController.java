@@ -80,12 +80,8 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @ResponseBody
     public String devicegroupList() {
 
-        HttpSession session = request.getSession();
-        String res = HttpUtil.getAccessToken(session);
-        JsonObject parsed = (JsonObject)new JsonParser().parse(res);
-        Integer tenantId = parsed.get("tenant_id").getAsInt();
 
-        String requestAddr = "/api/v1/groups/tenant/" + tenantId ;
+        String requestAddr = "/api/v1/groups/tenant/" + getTenantId() ;
 
         StringBuffer param = new StringBuffer();
         param.append("limit").append("=").append("100");
