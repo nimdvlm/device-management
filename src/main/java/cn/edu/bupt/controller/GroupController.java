@@ -26,6 +26,57 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class GroupController extends DefaultThingsboardAwaredController{
 
+
+    /**
+     * 该接口的requestBody为包含一个groupName的json
+     * @param deviceGroupInfo
+     * @return
+     */
+    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String create(@RequestBody String deviceGroupInfo) {
+
+        JsonObject groupInfoJson = (JsonObject)new JsonParser().parse(deviceGroupInfo);
+        HttpSession session = request.getSession();
+        String res = HttpUtil.getAccessToken(session);
+        JsonObject parsed = (JsonObject)new JsonParser().parse(res);
+        Integer tenantId = parsed.get("tenant_id").getAsInt();
+        groupInfoJson.addProperty("tenantId", tenantId);
+        String requestAddr = "/api/v1/group" ;
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    null,
+                    groupInfoJson,
+                    request.getSession());
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent) ;
+    }
+
+
+
+    @ApiOperation(value="删除设备组", notes="删除设备组")
+    @ApiImplicitParam(name = "deviceGroupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
+    @RequestMapping(value = "/delete/{groupId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String delete(@PathVariable String deviceGroupId) {
+        String requestAddr = String.format("/api/group/%s", deviceGroupId);
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    request.getSession());
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent) ;
+    }
+
     /**
      * @return
      */
@@ -58,57 +109,6 @@ public class GroupController extends DefaultThingsboardAwaredController{
         return retSuccess(groupJsonArr.toString()) ;
     }
 
-    /**
-     * 该接口的requestBody为包含一个groupName的json
-     * @param deviceGroupInfo
-     * @return
-     */
-    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-    public String create(@RequestBody String deviceGroupInfo) {
-
-        JsonObject groupInfoJson = (JsonObject)new JsonParser().parse(deviceGroupInfo);
-        HttpSession session = request.getSession();
-        String res = HttpUtil.getAccessToken(session);
-        JsonObject parsed = (JsonObject)new JsonParser().parse(res);
-        Integer tenantId = parsed.get("tenant_id").getAsInt();
-        groupInfoJson.addProperty("tenantId", tenantId);
-        String requestAddr = "/api/v1/group" ;
-
-        String responseContent = null ;
-        try {
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
-                    null,
-                    groupInfoJson,
-                    request.getSession());
-        } catch (Exception e) {
-            return retFail(e.toString()) ;
-        }
-
-        return retSuccess(responseContent) ;
-    }
-
-    /**
-     * @param deviceGroupId
-     * @return
-     */
-    @ApiOperation(value="删除设备组", notes="删除设备组")
-    @ApiImplicitParam(name = "deviceGroupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
-    @RequestMapping(value = "/delete/{deviceGroupId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-    public String delete(@PathVariable String deviceGroupId) {
-        String requestAddr = String.format("/api/group/%s", deviceGroupId);
-
-        String responseContent = null ;
-        try {
-            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
-                    request.getSession());
-        } catch (Exception e) {
-            return retFail(e.toString()) ;
-        }
-
-        return retSuccess(responseContent) ;
-    }
 
     /**
      * @param gId

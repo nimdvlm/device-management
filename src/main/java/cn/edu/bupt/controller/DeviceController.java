@@ -127,8 +127,9 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         }
 
         try {
-            JsonArray deviceJsonArr = (JsonArray)DeviceInfoDecode.deviceArr(responseContent) ;
-            return retSuccess(deviceJsonArr.toString()) ;
+            JsonObject jsonObject = (JsonObject)new JsonParser().parse(responseContent);
+            String array=jsonObject.getAsJsonArray("data").toString();
+            return retSuccess(array) ;
         } catch (Exception e) {
             return retFail(e.toString()) ;
         }
