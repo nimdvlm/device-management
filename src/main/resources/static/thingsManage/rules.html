@@ -59,7 +59,7 @@
                             <p><span style="vertical-align:top">描&emsp;&emsp;述：</span><textarea name="additional_info"
                                                                                                 ng-model="formData.rule.additional_info"
                                                                                                 placeholder="请添加对规则的描述..."
-                                                                                                style="height:70px;width: 480px;"></textarea>
+                                                                                                style="height:120px;width: 480px;"></textarea>
                             </p>
                             <hr/>
 
@@ -242,31 +242,47 @@
                     <i ng-class="{true:'fa fa-refresh fa-spin',false:'fa fa-refresh'}[isActive]"></i>
                     {{Ruleitem.rule.state}}
                 </span></p>
-                <p>规则描述：{{Ruleitem.rule.additional_info}}<!--规则描述修改按钮
+                <p>规则描述：{{Ruleitem.rule.additional_info}}
+                    <!--规则描述修改按钮
                     <i class="fa fa-pencil-square-o iedit shand" data-toggle="modal"
                        data-target="#editRuleDes"></i>
-                    </p.time}}   无此接口--></p>
-                <!--p>ACTION：{{Ruleitem.action}}</p-->
-                <!--p>创建时间：{{Ruleitem.createdTime}}</p-->
+                    </p.time}}   无此接口-->
+                </p>
                 <!--显示信息待完善-->
             </div>
         </div>
         <div class="DGAssignContainer">
+            <!--filter显示表格-->
             <div class="DGTitle DGminTitle">
-                <span class="RightviewTitle">规则详情</span>
+                <p class="RightviewTitle">过滤器详情</p>
+            </div>
+            <div class="item" ng-controller="RulefilterCtrl">
+                <div class="gridStyle RulegridStyle" ui-grid="gridOptions" style="height: 130px"></div>
+            </div>
+            <hr style="margin-bottom: 5px"/>
+            <!--plugin展示折叠效果-->
+            <div class="DGTitle DGminTitle">
+                <p class="RightviewTitle">插件详情</p>
             </div>
             <div class="item">
-                <!--filter显示表格-->
-                <div class="item" ng-controller="RulefilterCtrl">
-                    <div class="gridStyle RulegridStyle" ui-grid="gridOptions" style="height: 180px"></div>
-                </div>
-
-                <!--plugin显示表格-->
-                <div class="item" ng-controller="RulepluginCtrl">
-                    <div class="gridStyle RulegridStyle" ui-grid="gridOptions"></div>
+                <div class="panel-group" id="showplugin">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#showplugin" class="shand"
+                                   data-target="#showpluginitem">{{Ruleitem.transform.name}}</a>
+                            </h4>
+                        </div>
+                        <div id="showpluginitem" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>收件人：{{Ruleitem.transform.requestBody.to}}</p>
+                                <p>事务：{{Ruleitem.transform.requestBody.subject}}</p>
+                                <p>内容：{{Ruleitem.transform.requestBody.text}}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
 
         <!--modal编辑规则名称-->

@@ -172,7 +172,7 @@ DEVICELIST STYLES
    DeviceGroup
  ============================================================ */
 .LeftView{
-    margin:30px 0 0 35px;
+    margin:0px 0 0 35px;
     float: left;
     width:600px;
 }
@@ -202,8 +202,8 @@ DEVICELIST STYLES
    DeviceGroupAssign
  ============================================================ */
 .RightView{
-    position: fixed;
-    margin:35px 5px 0 670px;
+    margin:40px 5px 0 670px;
+    padding-top: 10px;
     width:500px;
     height:1000px;
 }
@@ -211,7 +211,7 @@ DEVICELIST STYLES
     font-size: 20px;
 }
 .item{
-    margin:10px 10px 0 10px;
+    margin:15px 20px;
 }
 .gridStyle{
     border:1px solid rgb(212,212,212);
