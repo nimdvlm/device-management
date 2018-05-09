@@ -14,21 +14,26 @@
     </div>
 
         <!--模块控件-->
-    <div class="container">
-        <div class="chooseBtn homeBackgroundstyle">
+    <div class="containerSM">
+        <div ng-repeat="serviceManagement in serviceManagements" ng-show="showModel">
+            <div class="chooseBtn homeBackgroundstyle">
                 <span data-toggle="modal" data-target="#SMDetail">
                 <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                <p class="style">厂商：{{vendor}}</p>
-                <p class="style">设备类型：{{equipmentType}}</p>
-                <p class="style"> 设备型号：{{equipmentModel}}</p>
+                <p class="style">厂商：{{serviceManagement.vendor}}</p>
+                <p class="style">设备类型：{{serviceManagement.equipmentType}}</p>
+                <p class="style"> 设备型号：{{serviceManagement.equipmentModel}}</p>
                 <br/></span>
-        <span class="postionOne" data-toggle="modal" data-target="#createSM">
-                        <i class="glyphicon glyphicon-plus" title="创建服务"></i>
-                   </span>
-        <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
-                       <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-                   </span>
+                <span class="postionOne" data-toggle="modal" data-target="#createSM">
+                <i class="glyphicon glyphicon-plus" title="创建服务"></i>
+            </span>
+                <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
+                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
+            </span>
+            </div>
         </div>
+
+
+
         <div class="chooseBtn homeBackgroundstyle">
                 <span data-toggle="modal" data-target="#SMDetail">
                 <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
@@ -43,6 +48,8 @@
                        <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
                    </span>
         </div>
+
+
         <div class="chooseBtn homeBackgroundstyle">
                 <span data-toggle="modal" data-target="#SMDetail">
                 <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
@@ -57,8 +64,9 @@
                        <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
                    </span>
         </div>
-    </div>
 
+
+    </div>
 
     <!----
     <div class="container" id="accordion">
@@ -104,9 +112,9 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title">
+                    <h3 class="modal-title" style="color: #305680;font-weight: 600">
                         创建服务组
-                    </h4>
+                    </h3>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
@@ -147,9 +155,9 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title">
+                    <h3 class="modal-title" style="color: #305680;font-weight: 600">
                         创建服务
-                    </h4>
+                    </h3>
                 </div>
                 <div class="modal-body">
                     <b>服务名称</b>
@@ -183,7 +191,7 @@
                     <span ng-click="">+</span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="addDG()">
+                    <button type="button" class="btn btn-primary" ng-click="addSM()">
                         创建
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -213,7 +221,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消
                     </button>
-                    <button type="button" class="btn btn-primary"  ng-click="delDG()">
+                    <button type="button" class="btn btn-primary"  ng-click="delSM()">
                         确定
                     </button>
                 </div>
@@ -231,7 +239,7 @@
                         &times;
                     </button>
                     <h4 class="modal-title">
-                        <caption><span style="color: #FF0000">{{equipmentType}}</span>设备类型下的服务</caption>
+                        <caption><span style="color: #305680;font-weight: 600;font-size: 22px">{{equipmentType}}设备类型下的服务</span></caption>
                     </h4>
                     <!--<div style="margin-left: 0px">
                         <label>搜索：</label>
