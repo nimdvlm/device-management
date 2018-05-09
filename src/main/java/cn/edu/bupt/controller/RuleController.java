@@ -37,6 +37,45 @@ public class RuleController extends DefaultThingsboardAwaredController{
         return retSuccess(array.toString());
     }
 
+    @RequestMapping(value = "/{ruleId}",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    private String getARules(@PathVariable("ruleId") String ruleId)
+    {
+        String requestAddr = "/api/rule/rule/"+ruleId;
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getSmartRulerServer() + requestAddr,
+                    null,
+                    request.getSession());
+
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/ruleByTenant/{tenantId}",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    private String getRulesByTenantId(@PathVariable("tenantId") String tenantId)
+    {
+        String requestAddr = "/api/rule/ruleByTenant/"+tenantId;
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getSmartRulerServer() + requestAddr,
+                    null,
+                    request.getSession());
+
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
+        return retSuccess(array.toString());
+    }
+
     @RequestMapping(value = "/allFilters",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getFilters()
