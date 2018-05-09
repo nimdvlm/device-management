@@ -28,19 +28,17 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         this.jscode = jscode;
     }
 
-    //获取规则组信息
-    //var RULE = $resource('/api/rule/allRules');
 
-    //解决 Expected response to contain an array but got an object 问题
     var RULE = $resource('/api/rule/allRules',{},{
-        query:{method:'GET',isArray:false}
+        //解决 Expected response to contain an array but got an object 问题
+        query:{method:'GET',isArray:true}
     });//获取所有规则组信息
 
-    /*****报错获取不了rules[0]
-    $scope.Rules = RULE.query(function () {
+
+    //报错获取不了rules[0]
+    $scope.Rules = RULE.query({},function () {
 
         //初始化右侧视图
-
         $scope.Ruleitem = $scope.Rules[0];//Rules[0]获取不到第一个对象咋弄？为啥必须在函数里？
         console.log("query获取的数据："+$scope.Rules);//此时打印是数组
         console.log("取第一个对象：" + $scope.Ruleitem);
@@ -56,10 +54,6 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         }
 
     });
-     ******/
-    $scope.Rules = RULE.query();
-    console.log($scope.Rules);
-
 
     //右侧展示视图
     $scope.showrule = function (rule) {
@@ -122,7 +116,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //删除规则
     $scope.delRule = function () {
-        var delRULE = $resource('/api/rule/delete:id', {id: '@id'});
+        var delRULE = $resource('/api/rule/delete/:id', {id: '@id'});
         delRULE.delete({}, {id: $scope.Ruleitem.id.id}, function (resp) {
             console.log("删除成功:id=" + $scope.Ruleitem.id.id + ";name=" + $scope.Ruleitem.name);
             $("#delDG").modal("hide");
@@ -135,9 +129,10 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //启动规则
     $scope.startRule = function () {
-        $scope.state1 = "ACTIVE";
-        var editRule = $resource('/api/rule/:id/activate', {id: '@id'});
-        editRule.save({id: $scope.Ruleitem.rule.ruleId}, $scope.state1)
+        //$scope.state1 = "ACTIVE";
+        var editRule = $resource('/api/rule/active/:id', {id: '@id'});
+        //editRule.save({id: $scope.Ruleitem.rule.ruleId}, $scope.state1)
+        editRule.save({id: $scope.Ruleitem.rule.ruleId})
             .$promise.then(function (resp) {
             console.log("规则激活成功:id=" + $scope.Ruleitem.rule.ruleId + ";state=" + $scope.Ruleitem.rule.state);
             $("#editDGName").modal("hide");
@@ -147,10 +142,10 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //暂停规则
     $scope.stopRule = function () {
-        $scope.state2 = "UNACTIVE";
-        //此处接口应换成http://localhost:8081/api/rule/:id/suspend
-        var editRule = $resource('/api/rule/:id/activate', {id: '@id'});
-        editRule.save({id: $scope.Ruleitem.rule.ruleId}, $scope.state2)
+        //$scope.state2 = "UNACTIVE";
+        var editRule = $resource('/api/rule/suspend/:id', {id: '@id'});
+        //editRule.save({id: $scope.Ruleitem.rule.ruleId}, $scope.state2)
+        editRule.save({id: $scope.Ruleitem.rule.ruleId})
             .$promise.then(function (resp) {
             console.log("规则激活成功:id=" + $scope.Ruleitem.rule.ruleId + ";state=" + $scope.Ruleitem.rule.state);
             $("#editDGName").modal("hide");
@@ -201,8 +196,10 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         addRULE.save({},$scope.formData)
             .$promise.then(function (resp) {
             console.log("新建设备组成功");
-            //$("#editDGName").modal("hide");
-            //location.reload();
+            /****二级model添加一次后闪退，所以把js命令换成data-dismiss
+            $("#editDGName").modal("hide");
+            location.reload();
+             ****/
     });
     }
 });
