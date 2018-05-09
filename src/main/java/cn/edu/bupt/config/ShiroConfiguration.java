@@ -9,6 +9,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.LinkedHashMap;
 
@@ -18,7 +19,7 @@ import java.util.LinkedHashMap;
  * 认证框架（Shiro）的相关配置
  */
 
-//@Configuration
+@Configuration
 public class ShiroConfiguration {
 
     @Bean(name="shiroFilter")
