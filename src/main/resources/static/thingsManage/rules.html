@@ -50,7 +50,7 @@
                             添加规则
                         </h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="height: 450px;overflow: auto"><!--解决嵌套模态框滚动条bug-->
                         <form>
                             <!--添加规则组基本信息-->
                             <p>规则名称：<input type="text" name="rulename" ng-model="formData.rule.name"
@@ -59,29 +59,25 @@
                             <p><span style="vertical-align:top">描&emsp;&emsp;述：</span><textarea name="additional_info"
                                                                                                 ng-model="formData.rule.additional_info"
                                                                                                 placeholder="请添加对规则的描述..."
-                                                                                                style="height:150px;width: 480px;"></textarea>
+                                                                                                style="height:70px;width: 480px;"></textarea>
                             </p>
                             <hr/>
 
                             <!--添加过滤器-->
                             <h4>添加过滤器</h4>
-                            <!--添加过滤器后显示-->
-                            <table ng-show="showaddFilter">
-                                <thead>
-                                <tr style="font-weight:bold;">
+                            <!--添加过滤器modal后显示-->
+                            <table class="table table-bordered table-hover addfiltertab" ng-show="showaddFilter">
+                                <thead><!--bootstrap的table样式，简单快捷-->
+                                <tr>
                                     <th>过滤器名称</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="filter in formData.filters">
-                                    <th>{{filter.name}}</th>
+                                    <td>{{filter.name}}</td>
                                 </tr>
                                 </tbody>
                             </table>
-                            <!--ui-grid显示filter
-                             <div class="item" ng-controller="RuleaddfilterCtrl" ng-show="showaddFilter">
-                                <div class="gridStyle" ui-grid="gridOptions" ui-grid-auto-resize></div>
-                            </div>  -->
                             <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
                                     data-target="#addruleFilter">+ 添加过滤器
                             </button>
@@ -90,15 +86,24 @@
                             <!--添加插件-->
                             <h4>添加变换</h4>
                             <!--添加插件后显示-->
-                            <table ng-show="showaddTransform">
-                                <thead>
-                                <tr style="font-weight:bold;">
-                                    <th>插件名称</th>
-                                </tr>
-                                </thead>
+                            <table ng-show="showaddTransform" class="table table-bordered table-hover addfiltertab">
                                 <tbody>
                                 <tr>
-                                    <th>{{formData.transform.name}}</th>
+                                    <th style="width: 100px;text-align: center">插件名称</th>
+                                    <td>{{formData.transform.name}}</td>
+                                </tr>
+                                <!--判断插件是邮件的情况下显示-->
+                                <tr ng-show="showsendmail">
+                                    <th style="text-align: center">收件人</th>
+                                    <td>{{formData.transform.requestBody.to}}</td>
+                                </tr>
+                                <tr ng-show="showsendmail">
+                                    <th style="text-align: center">邮件标题</th>
+                                    <td>{{formData.transform.requestBody.subject}}</td>
+                                </tr>
+                                <tr ng-show="showsendmail">
+                                    <th style="text-align: center">邮件内容</th>
+                                    <td>{{formData.transform.requestBody.text}}</td>
                                 </tr>
                                 </tbody>
                             </table>

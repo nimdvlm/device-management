@@ -80,6 +80,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             searchRULE.get({id: $scope.ruleid})
                 .$promise.then(function (person) {
                 console.log("文本框输入内容：" + $scope.ruleid);
+                console.log("返回的数据："+person);
                 if (person.rule.ruleId != undefined) {
                     $scope.showInfoRule = true;
                     $scope.showAllRule = false;
@@ -165,13 +166,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         console.log($scope.formData.filters);
         $("input[type=reset]").trigger("click");
 
-        //把数据发送给表格控制器
-        //$scope.$broadcast('sendaddfilter', $scope.formData.filters);
-
-
-        /****二级model添加一次后闪退，所以把js命令换成data-dismiss
+        /****嵌套model添加一次儿子后闪退bug，所以把js命令换成data-dismiss
          $("#addruleFilter").modal("hide");
-         location.reload();
          *****/
     }
 

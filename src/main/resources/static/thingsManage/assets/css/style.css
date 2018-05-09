@@ -263,6 +263,10 @@ DEVICELIST STYLES
 .stateNActive{
     color: #ff5945;
 }
+.addfiltertab{
+    width:530px;
+    margin-left: 20px;
+}
 
 /* =============================================================
 serviceGroup&pluginsGroup

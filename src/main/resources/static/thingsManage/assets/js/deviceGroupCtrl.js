@@ -107,7 +107,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
             {field: 'id', displayName: '设备id'}
 
 
-            /***嘤嘤嘤舍不得
+            /***暂不需要此功能
             {
                 field: 'isIn', displayName: '操作',
                 cellTemplate: '<div class="container-fluid"><div class="row cell-action-style"><div class="col-xs-3 text-center"><div class="div-click" ng-click="grid.appScope.goToDelete(row)"><span class="glyphicon shand" ng-class="{true: \'glyphicon-minus\', false: \'glyphicon-plus\'}[row.entity.isIn]"></span></div></div><div></div></div></div>'
