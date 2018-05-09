@@ -265,7 +265,7 @@ DEVICELIST STYLES
 }
 
 /* =============================================================
-serviceGroup
+serviceGroup&pluginsGroup
 ============================================================ */
 .homeBackgroundstyle{
     width: 300px;
@@ -275,8 +275,16 @@ serviceGroup
     margin-top: 30px;
     margin-left: 70px;
     float: left;
-
 }
+.positionTwo{
+    margin-left: 25px;
+}
+.postionOne{
+    margin-left: 180px;
+}
+/* =============================================================
+serviceGroup
+============================================================ */
 .homeIconstyle{
 
     color:  #305680;
@@ -290,14 +298,6 @@ serviceGroup
     font-weight: bold;
     margin-left: 15px;
     margin-top: 5px;
-
-
-}
-.positionTwo{
-    margin-left: 25px;
-}
-.postionOne{
-    margin-left: 180px;
 }
 .mainDiv{
     margin: 100px 210px 75px 350px;
@@ -312,11 +312,12 @@ serviceGroup
 .positionFive{
     margin-right: auto;
 }
-
 .span2{
     margin-left: 666px;
     font-weight: initial;
     font-size: inherit;
     border-bottom:1px solid #eeeeee;
-
 }
+/* =============================================================
+pluginsGroup
+============================================================ */
