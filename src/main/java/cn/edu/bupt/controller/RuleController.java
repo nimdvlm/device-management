@@ -24,6 +24,11 @@ public class RuleController extends DefaultThingsboardAwaredController{
     {
         String requestAddr = "/api/rule/rules";
 
+        StringBuffer param = new StringBuffer();
+        param.append("limit").append("=").append("30");
+
+        requestAddr = requestAddr + "?" + param ;
+
         String responseContent = null;
         try{
             responseContent = HttpUtil.sendGetToThingsboard("http://" + getSmartRulerServer() + requestAddr,
@@ -64,6 +69,11 @@ public class RuleController extends DefaultThingsboardAwaredController{
     private String getRulesByTenantId()
     {
         String requestAddr = "/api/rule/ruleByTenant/"+getTenantId();
+
+        StringBuffer param = new StringBuffer();
+        param.append("limit").append("=").append("30");
+
+        requestAddr = requestAddr + "?" + param ;
 
         String responseContent = null;
         try{
