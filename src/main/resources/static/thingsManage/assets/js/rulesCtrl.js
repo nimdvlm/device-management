@@ -167,7 +167,12 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
         //把数据发送给表格控制器
         //$scope.$broadcast('sendaddfilter', $scope.formData.filters);
-        //$("#addruleFilter").modal('hide');
+
+
+        /****二级model添加一次后闪退，所以把js命令换成data-dismiss
+         $("#addruleFilter").modal("hide");
+         location.reload();
+         *****/
     }
 
     //点击添加规则-插件类型判断
@@ -196,10 +201,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         addRULE.save({},$scope.formData)
             .$promise.then(function (resp) {
             console.log("新建设备组成功");
-            /****二级model添加一次后闪退，所以把js命令换成data-dismiss
-            $("#editDGName").modal("hide");
+            $("#addRule").modal("hide");
             location.reload();
-             ****/
     });
     }
 });

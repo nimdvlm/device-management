@@ -34,6 +34,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
             return retFail(e.toString()) ;
         }
 
+        responseContent = encodeJson(responseContent);
         JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
         return retSuccess(array.toString());
     }
@@ -54,6 +55,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
             return retFail(e.toString()) ;
         }
 
+        responseContent = encodeJson(responseContent);
         return retSuccess(responseContent);
     }
 
@@ -73,6 +75,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
             return retFail(e.toString()) ;
         }
 
+        responseContent = encodeJson(responseContent);
         JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
         return retSuccess(array.toString());
     }
@@ -259,5 +262,12 @@ public class RuleController extends DefaultThingsboardAwaredController{
         JsonObject jo = (JsonObject)new JsonParser().parse(res);
         String tenantId = jo.get("tenant_id").getAsString();
         return tenantId;
+    }
+
+    private  String encodeJson(String respondStr){
+        respondStr=respondStr.replaceAll("\"\\{\\\\\"","\\{\\\\\"");
+        respondStr=respondStr.replaceAll("\\\\\"\\}\"","\\\\\"\\}");
+        respondStr=respondStr.replaceAll("\\\\\"","\"");
+        return respondStr;
     }
 }
