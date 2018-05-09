@@ -1,13 +1,8 @@
+mainApp.controller("serviceCtrl",function ($scope,$resource) {
 
-mainApp.controller("serviceCtrl",["$scope","$location",function ($scope,$location) {
-    var mainApp = angular.module("mainApp",["ngRoute","ngAnimate"]);
 
-    $scope.Bmanagement =
-        [{serviceName:216,serviceType:"设备",serviceDescription:"Tpss"},
-        {serviceName:217,serviceType:"设备",serviceDescription:"Tps"},
-        {serviceName:218,serviceType:"设备",serviceDescription:"Tp"},
-        {serviceName:219,serviceType:"设备",serviceDescription:"T"}]
-    /*mainApp.filter('search',function () {
+});
+/*mainApp.filter('search',function () {
         return function (input,serviceName) {
             var result = [];
             console.log("serviceName param=" + serviceName);
@@ -23,9 +18,7 @@ mainApp.controller("serviceCtrl",["$scope","$location",function ($scope,$locatio
             return input;
         };
     });*/
-}]);
-
-/*过滤器
+/*过滤器var mainApp = angular.module("mainApp",[]);
 var mainApp = angular.module("mainApp",[]);
 mainApp.controller("serviceCtrl",function ($scope) {
     $scope.managements = [{vendor:216,equipmentType:"设备1",equipmentModel:"Tpss"},
@@ -48,5 +41,14 @@ app.filter('search',function () {
         }
         return input;
     };
-});*/
+});
+//获取服务管理组展示
+    $scope.showModel = true;
+    var serviceManagement = $resource('/api/service/manufactures');
+    $scope.serviceManagements = serviceManagement.query(function(){
+        //显示模块
+        $scope.item = $scope.serviceManagements[0];
+    });*/
+/*删除服务组的js代码deleteSM()方法*/
+
 
