@@ -1,7 +1,7 @@
 mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     //获取设备组
     $scope.showAll = true;
-    var Devicegroup = $resource('http://localhost:8082/person');
+    var Devicegroup = $resource('/api/group/allgroups');
     $scope.DeviceGroups = Devicegroup.query(function(){
         //初始化右侧视图
         $scope.item = $scope.DeviceGroups[0];
@@ -11,8 +11,8 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     //添加设备组
     $scope.addDG=function () {
         if ($scope.addDGName != "" && $scope.addDGName != null){
-            var addDG = $resource('http://localhost:8082/person');
-            addDG.save({},$scope.addDGName)
+            var addDG = $resource('/api/group/create');
+            addDG.save({},{"name":"$scope.addDGName"})
                 .$promise.then(function (resp) {
                 console.log("新建设备组成功");
                 $("#addRule").modal("hide");
@@ -24,6 +24,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     }
 
     //查找设备组
+    /******暂无此接口
     $scope.searchDG = function () {
         if ($scope.dgname != "" && $scope.dgname != null) {
             var searchDG = $resource('http://localhost:8082/person/:name', {name: '@name'});
@@ -46,10 +47,11 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
             alert("输入不能为空!");
         }
     };
+     *****/
 
     //删除设备组
     $scope.delDG = function () {
-        var delDG = $resource('http://localhost:8082/person/:id', {id: '@id'});
+        var delDG = $resource('/api/group/delete/:id', {id: '@id'});
         delDG.delete({}, {id: $scope.item.id}, function (resp) {
             console.log("删除成功:id=" + $scope.item.id + ";name=" + $scope.item.name);
             $("#delDG").modal("hide");
@@ -60,7 +62,9 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         });
     }
 
+
     //编辑设备组名
+    /****暂无此接口
     $scope.editDGName=function(){
         if ($scope.editdg != "" && $scope.editdg != null){
             var editDG = $resource('http://localhost:8082/person/:id', {id: '@id'});
@@ -74,39 +78,40 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
             alert("输入不能为空!");
         }
     }
+     *****/
 
 
     //右侧视图展示设备组详情
     $scope.show = function (DG) {
         //console.log(DG.name);
         $scope.item = {name: DG.name, time: DG.time, id: DG.id};
+
+        //获取设备组下的设备
+        var DGDEVICES = $resource('/api/group/:id/devices', {id: '@id'});
+        DGDEVICES.query({id: $scope.item.id})
+            .$promise.then(function (person) {
+                $scope.DGDevices=person;
+                console.log("获取设备组下的设备："+$scope.DGDevices);
+        });
     };
 
     //ui-grid的js部分
-    $scope.myData = [{name: "天猫", style: "传感器", isIn: false},
-        {name: "阿里宝宝", style: "传感器", isIn: true},
-        {name: "百度", style: "蓝牙", isIn: true},
-        {name: "京东", style: "传感器", isIn: true},
-        {name: "腾讯", style: "蓝牙", isIn: false},
-        {name: "网易", style: "传感器", isIn: true},
-        {name: "Bilibili", style: "蓝牙", isIn: false},
-        {name: "AcFun", style: "传感器", isIn: false},
-        {name: "新浪", style: "蓝牙", isIn: false},
-        {name: "腾讯", style: "传感器", isIn: true},
-        {name: "京东", style: "传感器", isIn: true},
-        {name: "腾讯", style: "蓝牙", isIn: true},
-        {name: "网易", style: "传感器", isIn: true}];
+    $scope.myData = $scope.DGDevices;
 
     $scope.gridOptions = {
         data: 'myData',
         enableHorizontalScrollbar: 0,
         columnDefs: [
             {field: 'name', displayName: '设备名称'},
-            {field: 'style', displayName: '设备类型'},
+            {field: 'id', displayName: '设备id'}
+
+
+            /***嘤嘤嘤舍不得
             {
                 field: 'isIn', displayName: '操作',
                 cellTemplate: '<div class="container-fluid"><div class="row cell-action-style"><div class="col-xs-3 text-center"><div class="div-click" ng-click="grid.appScope.goToDelete(row)"><span class="glyphicon shand" ng-class="{true: \'glyphicon-minus\', false: \'glyphicon-plus\'}[row.entity.isIn]"></span></div></div><div></div></div></div>'
-            }]
+            } ****/
+             ]
     };
 
     //弹出删除/关联信息modal

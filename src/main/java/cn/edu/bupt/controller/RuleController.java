@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 
 /**
@@ -22,6 +23,45 @@ public class RuleController extends DefaultThingsboardAwaredController{
     private String getRules()
     {
         String requestAddr = "/api/rule/rules";
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getSmartRulerServer() + requestAddr,
+                    null,
+                    request.getSession());
+
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
+        return retSuccess(array.toString());
+    }
+
+    @RequestMapping(value = "/{ruleId}",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    private String getARules(@PathVariable("ruleId") String ruleId)
+    {
+        String requestAddr = "/api/rule/rule/"+ruleId;
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getSmartRulerServer() + requestAddr,
+                    null,
+                    request.getSession());
+
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/ruleByTenant/",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    private String getRulesByTenantId()
+    {
+        String requestAddr = "/api/rule/ruleByTenant/"+getTenantId();
 
         String responseContent = null;
         try{
@@ -211,5 +251,13 @@ public class RuleController extends DefaultThingsboardAwaredController{
         errorInfoJson.addProperty("responce_code", 1);
         errorInfoJson.addProperty("responce_msg", e.toString());
         return errorInfoJson.toString();
+    }
+
+    public String getTenantId(){
+        HttpSession sess = request.getSession();
+        String res = HttpUtil.getAccessToken(sess);
+        JsonObject jo = (JsonObject)new JsonParser().parse(res);
+        String tenantId = jo.get("tenant_id").getAsString();
+        return tenantId;
     }
 }

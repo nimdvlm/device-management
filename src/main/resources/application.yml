@@ -22,7 +22,7 @@ device-access:
  port: 8100
 
 smart_ruler:
-  host: 10.108.218.64
+  host: 10.108.218.108
   port: 8200
 
 service-management:
