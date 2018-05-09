@@ -254,24 +254,20 @@
         <div class="DGAssignContainer">
             <!--filter显示表格-->
             <div class="DGTitle DGminTitle">
-                <p class="RightviewTitle">过滤器详情</p>
+                <p class="RightviewTitle">规则详情</p>
             </div>
             <div class="item" ng-controller="RulefilterCtrl">
                 <div class="gridStyle RulegridStyle" ui-grid="gridOptions" style="height: 130px"></div>
             </div>
-            <hr style="margin-bottom: 5px"/>
             <!--plugin展示折叠效果-->
-            <div class="DGTitle DGminTitle">
-                <p class="RightviewTitle">插件详情</p>
-            </div>
             <div class="item">
                 <div class="panel-group" id="showplugin">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title">
+                            <h3 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#showplugin" class="shand"
-                                   data-target="#showpluginitem">{{Ruleitem.transform.name}}</a>
-                            </h4>
+                                   data-target="#showpluginitem">{{Ruleitem.transform.name}}插件</a>
+                            </h3>
                         </div>
                         <div id="showpluginitem" class="panel-collapse collapse">
                             <div class="panel-body">
