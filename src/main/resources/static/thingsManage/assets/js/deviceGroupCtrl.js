@@ -12,9 +12,10 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     $scope.addDG=function () {
         if ($scope.addDGName != "" && $scope.addDGName != null){
             var addDG = $resource('/api/group/create');
-            addDG.save({},{"name":"$scope.addDGName"})
+            addDG.save({},{"name":$scope.addDGName})
                 .$promise.then(function (resp) {
                 console.log("新建设备组成功");
+                console.log(resp);
                 $("#addRule").modal("hide");
                 location.reload();
             });

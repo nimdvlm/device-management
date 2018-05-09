@@ -3,12 +3,12 @@
         <div style="margin-top: 32px">
             <span class="header-line" style="font-size: 27px;font-weight: 600">插件管理
             <button style="margin-left:10px" class="btn btn-primary btn-sm" data-toggle="modal"
-                    data-target="#addServiceGroup">+ 创建插件
+                    data-target="#addPluginGroup">+ 创建插件
             </button>
             </span>
-            <span>
-                <input class="span2" type="text" placeholder="输入插件名称" ng-model="$parent.dgname">
-                <button><i class="glyphicon glyphicon-search"></i></button>
+            <span class="PMsearch">
+                <input class="span2" type="text" placeholder="输入插件名称">
+                <button><span ng-click="searchDG()" title="搜索"><i class="glyphicon glyphicon-search"></i> </span></button>
             </span>
         </div>
     </div>
@@ -16,93 +16,244 @@
         <!--模块控件-->
     <div class="container">
         <div class="chooseBtn homeBackgroundstyle">
-            <a href="" title="插件管理"><i class="fa fa-plug fa-2x"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>
+            <span data-toggle="modal" data-target="#SMDetail"></span>
+            <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
+            <span style="margin-left: 160px">
                 <i class="glyphicon glyphicon-ok">ACTIVE</i>
             </span>
-            <p class="style">插件名称：{{manufacturer}}</p>
-            <p class="style">插件token：{{deviceType}}</p>
-            <p class="style"> 创建时间：{{unitType}}</p>
-            <br/>
-            <span class="postionOne">
-                       <a href="" title="激活/暂停"><i class="glyphicon glyphicon-off"></i></a>
-                   </span>
-            <span class="positionTwo">
-                       <a href="" title="删除插件"><i class="glyphicon glyphicon-trash"></i></a>
-                   </span>
-        </div>
-        <div class="chooseBtn homeBackgroundstyle">
-            <a href="" title="插件管理"><i class="fa fa-plug fa-2x"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>
-                <i class="glyphicon glyphicon-ok">ACTIVE</i>
-            </span>
-            <p class="style">插件名称：{{manufacturer}}</p>
-            <p class="style">插件token：{{deviceType}}</p>
-            <p class="style"> 创建时间：{{unitType}}</p>
-            <br/>
-            <span class="postionOne">
-                      <a href="" title="激活/暂停"><i class="glyphicon glyphicon-off"></i></a>
-                   </span>
-            <span class="positionTwo">
-                       <a href="" title="删除插件"><i class="glyphicon glyphicon-trash"></i></a>
-                   </span>
-        </div>
-        <div class="chooseBtn homeBackgroundstyle">
-            <a href="" title="插件管理"><i class="fa fa-plug fa-2x"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>
-                <i class="glyphicon glyphicon-remove">SUSPENDED</i>
-            </span>
-            <p class="style">插件名称：{{manufacturer}}</p>
-            <p class="style">插件token：{{deviceType}}</p>
-            <p class="style"> 创建时间：{{unitType}}</p>
-            <br/>
-            <span class="postionOne">
-                       <a href="" title="激活/暂停"><i class="glyphicon glyphicon-off"></i></a>
-                   </span>
-            <span class="positionTwo">
-                       <a href="" title="删除插件"><i class="glyphicon glyphicon-trash"></i></a>
-                   </span>
-        </div>
-        <div class="chooseBtn homeBackgroundstyle">
-            <a href="" title="插件管理"><i class="fa fa-plug fa-2x"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>
-                <i class="glyphicon glyphicon-ok">ACTIVE</i>
-            </span>
-            <p class="style">插件名称：{{manufacturer}}</p>
-            <p class="style">插件token：{{deviceType}}</p>
-            <p class="style"> 创建时间：{{unitType}}</p>
-            <br/>
-            <span class="postionOne">
-                        <a href="" title="激活/暂停"><i class="glyphicon glyphicon-off"></i></a>
-                   </span>
-            <span class="positionTwo">
-                       <a href="" title="删除插件"><i class="glyphicon glyphicon-trash"></i></a>
-                   </span>
-        </div>
-        <div class="chooseBtn homeBackgroundstyle">
-            <a href="" title="插件管理"><i class="fa fa-plug fa-2x"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>
-                <i class="glyphicon glyphicon-remove">SUSPENDED</i>
-            </span>
-            <p class="style">插件名称：{{manufacturer}}</p>
-            <p class="style">插件token：{{deviceType}}</p>
-            <p class="style"> 创建时间：{{unitType}}</p>
-            <br/>
-            <span class="postionOne">
-                        <a href="" title="激活/暂停"><i class="glyphicon glyphicon-off"></i></a>
-                   </span>
-            <span class="positionTwo">
-                       <a href="" title="删除插件"><i class="glyphicon glyphicon-trash"></i></a>
-                   </span>
 
+            <p class="style">插件名称：{{pluginName}}</p>
+            <p class="style">插件token：{{pluginToken}}</p>
+            <p class="style"> 创建时间：{{creationTime}}</p>
+            <br/>
+            <span class="postionOne" data-toggle="modal" data-target="#activationPM">
+                <i class="glyphicon glyphicon-off" title="激活/暂停"></i>
+            </span>
+            <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
+                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
+            </span>
+        </div>
+
+
+        <div class="chooseBtn homeBackgroundstyle">
+            <span data-toggle="modal" data-target="#SMDetail"></span>
+            <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
+            <span style="margin-left: 160px">
+                <i class="glyphicon glyphicon-ok">ACTIVE</i>
+            </span>
+
+            <p class="style">插件名称：{{pluginName}}</p>
+            <p class="style">插件token：{{pluginToken}}</p>
+            <p class="style"> 创建时间：{{creationTime}}</p>
+            <br/>
+            <span class="postionOne" data-toggle="modal" data-target="#activationPM">
+                <i class="glyphicon glyphicon-off" title="激活/暂停"></i>
+            </span>
+            <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
+                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
+            </span>
+        </div>
+        <div class="chooseBtn homeBackgroundstyle">
+            <span data-toggle="modal" data-target="#SMDetail"></span>
+            <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
+            <span style="margin-left: 160px">
+                <i class="glyphicon glyphicon-ok">ACTIVE</i>
+            </span>
+
+            <p class="style">插件名称：{{pluginName}}</p>
+            <p class="style">插件token：{{pluginToken}}</p>
+            <p class="style"> 创建时间：{{creationTime}}</p>
+            <br/>
+            <span class="postionOne" data-toggle="modal" data-target="#activationPM">
+                <i class="glyphicon glyphicon-off" title="激活/暂停"></i>
+            </span>
+            <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
+                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
+            </span>
+        </div>
+        <div class="chooseBtn homeBackgroundstyle">
+            <span data-toggle="modal" data-target="#SMDetail"></span>
+            <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
+            <span style="margin-left: 160px">
+                <i class="glyphicon glyphicon-ok">ACTIVE</i>
+            </span>
+
+            <p class="style">插件名称：{{pluginName}}</p>
+            <p class="style">插件token：{{pluginToken}}</p>
+            <p class="style"> 创建时间：{{creationTime}}</p>
+            <br/>
+            <span class="postionOne" data-toggle="modal" data-target="#activationPM">
+                <i class="glyphicon glyphicon-off" title="激活/暂停"></i>
+            </span>
+            <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
+                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
+            </span>
+        </div>
+        <div class="chooseBtn homeBackgroundstyle">
+            <span data-toggle="modal" data-target="#SMDetail"></span>
+            <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
+            <span style="margin-left: 160px">
+                <i class="glyphicon glyphicon-ok">ACTIVE</i>
+            </span>
+
+            <p class="style">插件名称：{{pluginName}}</p>
+            <p class="style">插件token：{{pluginToken}}</p>
+            <p class="style"> 创建时间：{{creationTime}}</p>
+            <br/>
+            <span class="postionOne" data-toggle="modal" data-target="#activationPM">
+                <i class="glyphicon glyphicon-off" title="激活/暂停"></i>
+            </span>
+            <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
+                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
+            </span>
         </div>
     </div>
 </div>
-<!--made in card-->
+
+<!--创建插件界面-->
+<div class="modal fade" id="addPluginGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title" style="color: #305680;font-weight: 600" >
+                    添加插件
+                </h3>
+            </div>
+            <div class="modal-body">
+                <label class="col-sm-3 control-label" style="text-align: left">
+                    <span style="color: red;">*</span>名称
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" class="add form-control" placeholder="必填" ng-model="$parent.addDGName">
+                </div>
+            </div>
+            <br/><!--此处添加不满足条件时的弹出框-->
+            <div class="modal-body">
+                <label class="col-sm-3 control-label" style="text-align: left">
+                    &nbsp;&nbsp;描述
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" class="add form-control" placeholder="必填" ng-model="$parent.addDGName">
+                </div>
+            </div>
+            <br/>
+            <div class="modal-body">
+                <label class="col-sm-3 control-label" style="text-align: left">
+                    <span style="color: red;">*</span>API令牌
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" class="add form-control" placeholder="必填" ng-model="$parent.addDGName">
+                </div>
+            </div>
+            <br/>
+            <div class="modal-body">
+                <label class="col-sm-3 control-label" style="text-align: left">
+                    <span style="color: red;">*</span>插件类型
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" class="add form-control" style="pixels: 300px" placeholder="REST API Call Plugin" ng-model="$parent.addDGName">
+                </div>
+            </div>
+            <br/>
+            <div class="modal-body">
+                <span style="color: #8a6d3b;font-weight: 600;font-size: 20px">插件管理</span>
+            </div>
+            <div class="modal-body">
+                <label class="col-sm-3 control-label" style="text-align: left">
+                    <span style="color: red;">*</span>URI Scheme name
+                </label>
+                <div class="col-sm-9">
+                    <select class="form-control" type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.add">
+                        <option value="HTTP">HTTP</option>
+                        <option value="HTTPS">HTTPS</option>
+                    </select>
+                </div>
+                <div class="col-sm-9 col-sm-offset-3"></div>
+            </div>
+            <br/>
+            <div class="modal-body">
+                <label class="col-sm-3 control-label" style="text-align: left">
+                    <span style="color: red;">*</span>Host
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" class="add form-control" placeholder="必填" ng-model="$parent.addDGName">
+                </div>
+            </div>
+            <br/>
+            <div class="modal-body">
+                <label class="col-sm-3 control-label" style="text-align: left">
+                    <span style="color: red;">*</span>Port
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" class="add form-control" placeholder="必填" ng-model="$parent.addDGName">
+                </div>
+            </div>
+            <br/>
+            <div class="modal-body">
+                <label class="col-sm-3 control-label" style="text-align: left">
+                    <span style="color: red;">*</span>Base Path
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" class="add form-control" placeholder="必填" ng-model="$parent.addDGName">
+                </div>
+            </div>
+            <br/>
+            <div class="modal-body">
+                <label class="col-sm-3 control-label" style="text-align: left">
+                    <span style="color: red;">*</span>Authentication method
+                </label>
+                <div class="col-sm-9">
+                    <select class="form-control" type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.add">
+                        <option value="No-authentication">No authentication</option>
+                        <option value="Basic-authentication">Basic authentication</option>
+                    </select>
+                </div>
+            </div>
+            <br/><br/>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="addDG()">
+                    创建
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    取消
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!--删除插件界面-->
+<div class="modal fade" id="deletePM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    删除插件
+                </h4>
+            </div>
+            <div class="modal-body">
+                确定删除此插件？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                </button>
+                <button type="button" class="btn btn-primary"  ng-click="delDG()">
+                    确定
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!--激活插件界面-->
+<!--暂停插件界面-->
 
 <!-- CONTENT-WRAPPER SECTION END-->
