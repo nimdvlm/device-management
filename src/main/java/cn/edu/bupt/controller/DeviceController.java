@@ -101,8 +101,6 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @ResponseBody
     public String getDevices() {
 
-
-
         String requestAddr = "/api/v1/tenant/devices/"  + getTenantId() ;
 
         StringBuffer param = new StringBuffer();
@@ -159,8 +157,8 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         }catch(Exception e){
             return retFail(e.toString()) ;
         }
-        JsonObject token = (JsonObject)DeviceTokenInfoDecode.deviceToken(responseContent);
-        return retSuccess(token.toString());
+        // token = (JsonObject)DeviceTokenInfoDecode.deviceToken(responseContent);
+        return retSuccess(responseContent);
     }
 
 
@@ -191,6 +189,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
             return retFail(e.toString()) ;
         }
     }*/
+
    public Integer getTenantId(){
        HttpSession sess = request.getSession();
        String res = HttpUtil.getAccessToken(sess);

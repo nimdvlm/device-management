@@ -84,10 +84,10 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
     //右侧视图展示设备组详情
     $scope.show = function (DG) {
-        //console.log(DG.name);
-        $scope.item = {name: DG.name, time: DG.time, id: DG.id};
+        //item是当前展示的单个设备
+        $scope.item = {name: DG.name, id: DG.id};
 
-        //获取设备组下的设备
+        //获取设备组下的设备接口
         var DGDEVICES = $resource('/api/group/:id/devices', {id: '@id'});
         DGDEVICES.query({id: $scope.item.id})
             .$promise.then(function (person) {
@@ -98,16 +98,21 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
     //ui-grid的js部分
     $scope.myData = $scope.DGDevices;
+    //测试数据
+    //$scope.myData =[{"name":"LIANG","id":5,"l":"lijs"}]
 
     $scope.gridOptions = {
         data: 'myData',
         enableHorizontalScrollbar: 0,
         columnDefs: [
             {field: 'name', displayName: '设备名称'},
-            {field: 'id', displayName: '设备id'}
+            {field: 'id', displayName: '设备id'},
+            {field:'name',displayName:'操作',
+                cellTemplate: '<div class="container-fluid"><div class="row" style="padding-top: 5px"><div class="col-xs-4 text-center"><div class="div-click" ng-click="grid.appScope.goToDelete(row)"><span class="glyphicon glyphicon-minus shand"></span></div></div><div></div></div></div>'
+            }
 
-
-            /***嘤嘤嘤舍不得
+            /***暂不需要此功能
+             * 根据boolean值，同一列中显示不同符号
             {
                 field: 'isIn', displayName: '操作',
                 cellTemplate: '<div class="container-fluid"><div class="row cell-action-style"><div class="col-xs-3 text-center"><div class="div-click" ng-click="grid.appScope.goToDelete(row)"><span class="glyphicon shand" ng-class="{true: \'glyphicon-minus\', false: \'glyphicon-plus\'}[row.entity.isIn]"></span></div></div><div></div></div></div>'
@@ -115,18 +120,22 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
              ]
     };
 
-    //弹出删除/关联信息modal
+    //设备组取消关联某设备-弹出删除提示modal
     $scope.goToDelete = function (row) {
-        if (row.entity.isIn) {
-            angular.element('#warnDelAssign').modal({
-                backdrop: false
-            });
-        } else {
-            angular.element('#warnAddAssign').modal({
-                backdrop: false
-            });
-        }
-        ;
+        console.log("删除确认modal!");
+        console.log(row.entity);
+        $scope.unAssignDevid=row.entity.id;
+        $("#warnDelAssign").modal("show");
     };
 
+    //设备组取消关联某设备
+    $scope.unAssign=function () {
+        console.log("正在向后台发送请求...")
+        var DISASS = $resource('api/group/unassign/:deviceId/:groupId', {deviceId: '@id',groupId:'@id'});
+        DISASS.get({deviceId: $scope.unAssignDevid,groupId:$scope.item.id})
+            .$promise.then(function (person) {
+                alert("取消关联成功");
+            $("#warnDelAssign").modal("hide");
+    });
+    };
 });
