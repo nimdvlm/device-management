@@ -1,5 +1,7 @@
 ﻿<div class="content-wrapper" ng-controller="deviceListCtrl">
     <div class="container">
+
+
         <div class="row" style="margin-top: 20px">
             <div class="col-md-6">
                     <span style="font-size: 30px;">设备列表</span>
@@ -66,7 +68,7 @@
                     <td>{{location}}</td>
                 </tr>
                 <tr>
-                    <td class="attName">操作：</td>
+                    <td class="attName" rowspan="2">操作：</td>
                     <td>
                         <button class="btn btn-primary" data-toggle="modal"
                                 data-target="#refreshDevice">更新设备</button>
@@ -81,158 +83,215 @@
             </table>
         </div>
     </div>
+
+    <!--  CREATE MODEL  -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="createDevice">
+        <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" style="font-weight: bold;">新增设备</h4>
+                </div>
+                <div class="modal-body" id="deviceInfo">
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                        <tr>
+                            <td class="attName"><span style="color: red;font-size: 10px;margin-right: 5px;">*</span>设备名称:</td>
+                            <td><input type="text" class="inputInfo" id="name" placeholder="必填"></td>
+                        </tr>
+                        <tr>
+                            <td class="attName">父类设备:</td>
+                            <td>
+                                <select class="inputInfo" id="parentId">
+                                    <option>------请选择------</option>
+                                    <option ng-repeat="data in deviceList">{{data.name}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="attName">厂商:</td>
+                            <td>
+                                <select class="inputInfo" id="manufacture">
+                                    <option>------请选择------</option>
+                                    <option ng-repeat="data in deviceList">{{data.manufacture}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="attName">设备类型:</td>
+                            <td>
+                                <select class="inputInfo" id="deviceType">
+                                    <option>------请选择------</option>
+                                    <option ng-repeat="data in deviceList">{{data.deviceType}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="attName">型号：</td>
+                            <td>
+                                <select class="inputInfo" id="model">
+                                    <option>------请选择------</option>
+                                    <option ng-repeat="data in deviceList">{{data.model}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="attName">位置：</td>
+                            <td><input type="text" class="inputInfo" id="location"></td>
+                        </tr>
+                        <tr>
+                            <td class="attName">状态：</td>
+                            <td><input type="text" class="inputInfo" id="status"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="modalClose">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalConfirm" ng-click="createDevice()">确定</button>
+
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+    <!--  REFRESH MODEL  -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="refreshDevice">
+        <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" style="font-weight: bold;">更新设备</h4>
+                </div>
+                <div class="modal-body" id="deviceInfoRefresh">
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                        <tr>
+                            <td class="attName">设备名称:</td>
+                            <td><input type="text" class="inputInfo" disabled="disabled" ng-value="deviceName" id="reName"></td>
+                        </tr>
+                        <tr>
+                            <td class="attName">父类设备:</td>
+                            <td>
+                                <select class="inputInfo" id="reParentId">
+                                    <option>------请选择------</option>
+                                    <option ng-repeat="data in deviceList">{{data.name}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="attName">厂商:</td>
+                            <td>
+                                <select class="inputInfo" id="reManufacture">
+                                    <option>------请选择------</option>
+                                    <option ng-repeat="data in deviceList">{{data.manufacture}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="attName">设备类型:</td>
+                            <td>
+                                <select class="inputInfo" id="reDeviceType">
+                                    <option>------请选择------</option>
+                                    <option ng-repeat="data in deviceList">{{data.deviceType}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="attName">型号：</td>
+                            <td>
+                                <select class="inputInfo" id="reModel">
+                                    <option>------请选择------</option>
+                                    <option ng-repeat="data in deviceList">{{data.model}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="attName">位置：</td>
+                            <td><input type="text" class="inputInfo" id="reLocation"></td>
+                        </tr>
+                        <tr>
+                            <td class="attName">状态：</td>
+                            <td><input type="text" class="inputInfo" id="reStatus"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseRefresh">关闭</button>
+                    <button type="button" class="btn btn-primary" id="modalConfirmRefresh" data-dismiss="modal" ng-click="refreshDevice()">更新</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+    <!-- TOKEN MODEL -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="token">
+        <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" style="font-weight: bold;">设备令牌</h4>
+                </div>
+                <div class="modal-body" id="tokenTable">
+                    <p style="text-align: center;">{{token}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseToken">关闭</button>
+                    <button type="button" class="btn btn-primary" id="modalConfirmToken" data-dismiss="modal">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+    <!-- ASSIGN MODEL -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="assign">
+        <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" style="font-weight: bold;">分配设备</h4>
+                </div>
+                <div class="modal-body" id="assignTable">
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                        <tr>
+                            <td class="attName">设备id:</td>
+                            <td>{{ID}}</td>
+                        </tr>
+                        <tr>
+                            <td class="attName">设备名称：</td>
+                            <td>{{deviceName}}</td>
+                        </tr>
+                        <tr>
+                            <td class="attName">请选择设备组：</td>
+                            <td >
+                                <select class="inputInfo" id="deviceGroupSelect">
+                                    <option ng-repeat="deviceGroupInfo in deviceGroup" id="{{deviceGroupInfo.id}}">{{deviceGroupInfo.name}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseAssign">关闭</button>
+                    <button type="button" class="btn btn-primary" id="modalConfirmAssign" data-dismiss="modal" ng-click="assignDeviceGroup()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 </div>
     <!-- CONTENT-WRAPPER SECTION END-->
-
-<!--  CREATE MODEL  -->
-<div class="modal fade" tabindex="-1" role="dialog" id="createDevice" ng-controller="deviceListCtrl">
-    <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                <h4 class="modal-title" style="font-weight: bold;">新增设备</h4>
-            </div>
-            <div class="modal-body" id="deviceInfo">
-                <table class="table table-striped table-hover">
-                    <tbody>
-                    <tr>
-                        <td class="attName">设备名称:</td>
-                        <td><input type="text" class="inputInfo" id="name"></td>
-                    </tr>
-                    <tr>
-                        <td class="attName">父类ID:</td>
-                        <td><input type="text" class="inputInfo" id="parentId"></td>
-                    </tr>
-                    <tr>
-                        <td class="attName">设备类型:</td>
-                        <td><input type="text" class="inputInfo" id="deviceType"></td>
-                    </tr>
-                    <tr>
-                        <td class="attName">厂商:</td>
-                        <td><input type="text" class="inputInfo" id="manufacture"></td>
-                    </tr>
-                    <tr>
-                        <td class="attName">型号：</td>
-                        <td><input type="text" class="inputInfo" id="model"></td>
-                    </tr>
-                    <tr>
-                        <td class="attName">位置：</td>
-                        <td><input type="text" class="inputInfo" id="location"></td>
-                    </tr>
-                    <tr>
-                        <td class="attName">状态：</td>
-                        <td><input type="text" class="inputInfo" id="status"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="modalClose">关闭</button>
-                <button type="button" class="btn btn-primary" id="modalConfirm" data-dismiss="modal" ng-click="createDevice()">确定</button>
-
-            </div>
-
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
-<!--  REFRESH MODEL  -->
-<div class="modal fade" tabindex="-1" role="dialog" id="refreshDevice" ng-controller="deviceListCtrl">
-    <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                <h4 class="modal-title" style="font-weight: bold;">更新设备</h4>
-            </div>
-            <div class="modal-body" id="deviceInfoRefresh">
-                <table class="table table-striped table-hover">
-                    <tbody>
-                    <tr>
-                        <td class="attName">厂商:</td>
-                        <td><input type="text" class="inputInfo" id="reManufacture"></td>
-                    </tr>
-                    <tr>
-                        <td class="attName">型号：</td>
-                        <td><input type="text" class="inputInfo" id="reModel"></td>
-                    </tr>
-                    <tr>
-                        <td class="attName">设备类型：</td>
-                        <td><input type="text" class="inputInfo" id="reType"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseRefresh">关闭</button>
-                <button type="button" class="btn btn-primary" id="modalConfirmRefresh" data-dismiss="modal" ng-click="refreshDevice()">更新</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
-<!-- TOKEN MODEL -->
-<div class="modal fade" tabindex="-1" role="dialog" id="token" ng-controller="deviceListCtrl">
-    <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                <h4 class="modal-title" style="font-weight: bold;">设备令牌</h4>
-            </div>
-            <div class="modal-body" id="tokenTable">
-               <p>{{token}}</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseToken">关闭</button>
-                <button type="button" class="btn btn-primary" id="modalConfirmToken" data-dismiss="modal">确定</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
-<!-- ASSIGN MODEL -->
-<div class="modal fade" tabindex="-1" role="dialog" id="assign" ng-controller="deviceListCtrl">
-    <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                <h4 class="modal-title" style="font-weight: bold;">分配设备</h4>
-            </div>
-            <div class="modal-body" id="assignTable">
-                <table class="table table-striped table-hover">
-                    <tbody>
-                    <tr>
-                        <td class="attName">设备id:</td>
-                        <td>{{ID}}</td>
-                    </tr>
-                    <tr>
-                        <td class="attName">设备名称：</td>
-                        <td>{{deviceName}}</td>
-                    </tr>
-                    <tr>
-                        <td class="attName">请选择设备组：</td>
-                        <td>
-                            <select>
-                                <option>123</option>
-                            </select>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseAssign">关闭</button>
-                <button type="button" class="btn btn-primary" id="modalConfirmAssign" data-dismiss="modal">确定</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
