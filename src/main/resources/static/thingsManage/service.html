@@ -15,13 +15,13 @@
 
         <!--模块控件-->
     <div class="SMContainer">
-        <div ng-repeat="AM in abilityGroups" ng-show="showAbility">
-            <div class="chooseBtn homeBackgroundstyle" ng-click="show(AM)">
-                <span data-toggle="modal" data-target="#SMDetail" class="itemAM">
+        <div ng-repeat="AM in abilityGroups">
+            <div class="chooseBtn homeBackgroundstyle">
+                <span data-toggle="modal" data-target="#SMDetail" class="items">
                 <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                <p class="style">厂商：{{AM.manufacture}}</p>
-                <p class="style">设备类型：{{AM.deviceType}}</p>
-                <p class="style"> 设备型号：{{AM.model}}</p>
+                <p class="style">厂商：{{items.manufacture}}</p>
+                <p class="style">设备类型：{{items.deviceType}}</p>
+                <p class="style"> 设备型号：{{items.model}}</p>
                 <br/></span>
                 <span class="postionOne" data-toggle="modal" data-target="#createSM">
                 <i class="glyphicon glyphicon-plus" title="创建服务"></i>
@@ -78,23 +78,23 @@
                         创建服务组
                     </h3>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="abilityInfo">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>厂商
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.addDGName">
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="manufacturerName">
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>设备类型
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.addDGName">
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="deviceType">
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>设备型号
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.addDGName">
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="model">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" ng-click="addAM()">
