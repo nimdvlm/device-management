@@ -27,6 +27,7 @@ public class GisController {
         map.put("uid1","21c6f6d0-bd45-11e7-b3aa-0bb30bb377bd");//开
         map.put("uid2","21c6f6d0-bd45-11e7-b3aa-0bb30bb377bd");//关
 
+
     }
 
     @RequestMapping(value = "/getmodel.do", method = {RequestMethod.GET, RequestMethod.POST})
@@ -63,6 +64,6 @@ public class GisController {
 //            responce = api.api_RPC(map.get(uid),token,"setValue_1138530",false);
 //        }
 //        System.out.println(responce);
-        return "rpc cpmmd send ok";
+           return "rpc cpmmd send ok";
     }
 }
