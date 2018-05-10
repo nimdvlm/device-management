@@ -103,6 +103,19 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
         }
     }
 
+    @RequestMapping(value = "/ability/{manufacturerName}/{deviceTypeName}/{modelName}", method = RequestMethod.GET)
+    public String serviceTableList(@PathVariable String manufacturerName,@PathVariable String deviceTypeName,
+                                   @PathVariable String modelName ) {
+        String requestAddr = String.format("/api/v1/ability/%s/%s/%s", manufacturerName,deviceTypeName,modelName) ;
+        String url = "http://"+getServiceManagementServer() + requestAddr;
+        try{
+            String response = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
+            return retSuccess(response) ;
+        }catch(Exception e){
+            return retFail("can't link to thingsboard: " + e) ;
+        }
+    }
+
     @ApiOperation(value = "获取所有厂商信息", notes = "获取所有厂商信息")
     @RequestMapping(value = "/abilityGroup/manufactures", method = RequestMethod.GET)
     public String serviceManufacture(@RequestParam(required = false) String keyword){
