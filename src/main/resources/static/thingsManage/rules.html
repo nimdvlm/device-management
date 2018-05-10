@@ -176,11 +176,9 @@
                     </div>
                     <div class="modal-body">
                         <form name="addfilter">
-                            <p>名&emsp;&emsp;称：
-                                <select ng-click="addsendmail()" id="addtransformname">
-                                    <option value="empty">--请选择类型--</option>
-                                    <option value="Sendmail">SendMail</option>
-                                    <option value="bilibili">bilibili</option>
+                            <p>名&emsp;&emsp;称：<select ng-init="addTranName = plugins[0]" ng-model="addTranName"
+                                                      ng-change="change(addTranName)" id="addtransformname"
+                            ng-options="x for x in plugins">
                                 </select>
                             </p>
                             <p>跳转地址：<input type="text" name="url" disabled="disabled" id="addtransformurl"
@@ -193,13 +191,13 @@
                             <!--判断是sendmail后显示-->
                             <div ng-show="showsendmail">
                                 <hr/>
-                                <p>收件人&emsp;：<input type="text" name="mailname"
+                                <p>收件人&emsp;：<input type="text" name="mailname" id="addTranMailTo"
                                                     placeholder="请输入收件人">
                                 </p>
-                                <p>邮件主题：<input type="text" name="mailtitle"
+                                <p>邮件主题：<input type="text" name="mailtitle" id="addTranMailSub"
                                                placeholder="请输入邮件主题">
                                 </p>
-                                <p>邮件内容：<input type="text" name="mailcontext"
+                                <p>邮件内容：<input type="text" name="mailcontext" id="addTranMailText"
                                                style="height:150px;width: 450px"/>
                                 </p>
                             </div>
