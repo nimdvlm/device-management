@@ -57,5 +57,6 @@ mainApp.controller("mainCtrl",["$scope","$location",function ($scope,$location) 
         });
     });
 
-    $scope.num = 1;
 }]);
+
+
