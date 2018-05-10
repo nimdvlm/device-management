@@ -90,7 +90,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         try{
             responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                     null,
-                    new JsonParser().parse(json).getAsJsonObject(),
+                    deviceInfoJson,
                     request.getSession());
         }catch(Exception e){
             return retFail(e.toString()) ;
