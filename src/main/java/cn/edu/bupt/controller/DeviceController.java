@@ -78,6 +78,8 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     }
 
 
+
+
     @ApiImplicitParam(name = "deviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/updatedevice", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -96,6 +98,26 @@ public class DeviceController extends DefaultThingsboardAwaredController {
             return retFail(e.toString()) ;
         }
         return retSuccess(responseContent);
+    }
+
+
+
+    @RequestMapping(value = "name/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String finddeviceName(@PathVariable(DEVICE_ID) String strDeviceId) {
+
+        String requestAddr ="http://"+ getDeviceAccessServer() +String.format("/api/v1/device/%s", strDeviceId);
+        try{
+            String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
+                    null,
+                    request.getSession());
+            JsonObject jsonObject = (JsonObject)new JsonParser().parse(responseContent);
+            String parentname = jsonObject.getAsJsonObject("name").toString();
+
+            return retSuccess(parentname) ;
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
     }
 
 

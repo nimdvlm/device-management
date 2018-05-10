@@ -117,7 +117,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
     }
 
     @ApiOperation(value = "获取所有厂商信息", notes = "获取所有厂商信息")
-    @RequestMapping(value = "/abilityGroup/manufactures", method = RequestMethod.GET)
+    @RequestMapping(value = "/abilityGroup/manufacturers", method = RequestMethod.GET)
     public String serviceManufacture(@RequestParam(required = false) String keyword){
         String url = "http://" + getServiceManagementServer() + "/api/v1/abilityGroup/manufacturers";
         if(keyword!=null) url += "?keyword="+keyword;
