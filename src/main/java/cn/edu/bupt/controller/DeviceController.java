@@ -102,7 +102,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
 
 
-    @RequestMapping(value = "name/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/name/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String finddeviceName(@PathVariable(DEVICE_ID) String strDeviceId) {
 
@@ -112,7 +112,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
                     null,
                     request.getSession());
             JsonObject jsonObject = (JsonObject)new JsonParser().parse(responseContent);
-            String parentname = jsonObject.getAsJsonObject("name").toString();
+            String parentname = jsonObject.get("name").toString();
 
             return retSuccess(parentname) ;
         }catch(Exception e){
