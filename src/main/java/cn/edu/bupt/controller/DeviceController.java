@@ -82,6 +82,9 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @RequestMapping(value = "/updatedevice", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String updateDeviceCoordinate(@RequestBody String json) {
+
+        JsonObject deviceInfoJson = (JsonObject)new JsonParser().parse(json);
+        deviceInfoJson.addProperty("tenantId", getTenantId());
         String requestAddr = "/api/v1/device" ;
         String responseContent = null ;
         try{
