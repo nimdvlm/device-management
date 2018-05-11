@@ -129,11 +129,19 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @ApiOperation(value="获取租户所有设备的信息", notes="获取租户所有设备的信息")
     @RequestMapping(value = "/alldevices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getDevices(@RequestParam int limit, @RequestParam(required = false) String textSearch) {
+    public String getDevices(@RequestParam int limit, @RequestParam(required = false) String textSearch,
+                             @RequestParam(required = false) String idOffset,
+                             @RequestParam(required = false) String textOffset) {
 
         String requestAddr = "/api/v1/tenant/devices/"  + getTenantId() +"?limit=" + limit;
         if(textSearch != null){
             requestAddr = requestAddr + "&textSearch=" + textSearch;
+        }
+        if(idOffset != null){
+            requestAddr = requestAddr + "&idOffset=" + idOffset;
+        }
+        if(textOffset != null){
+            requestAddr = requestAddr + "&textOffset=" + textOffset;
         }
 
         String responseContent = null ;
@@ -160,9 +168,21 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @ApiImplicitParam(name = "parentDeviceId", value = "父设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/parentDevices/{parentDeviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getParentDevices(@PathVariable String parentDeviceId, @RequestParam int limit) {
-        String requestAddr = "http://" + getDeviceAccessServer() + "/api/v1/parentdevices/"+parentDeviceId + "?limit=" + limit;
+    public String getParentDevices(@PathVariable String parentDeviceId, @RequestParam int limit,
+                                   @RequestParam(required = false) String textSearch,
+                                   @RequestParam(required = false) String idOffset,
+                                   @RequestParam(required = false) String textOffset) {
 
+        String requestAddr = "http://" + getDeviceAccessServer() + "/api/v1/parentdevices/"+parentDeviceId + "?limit=" + limit;
+        if(textSearch != null){
+            requestAddr = requestAddr + "&textSearch=" + textSearch;
+        }
+        if(idOffset != null){
+            requestAddr = requestAddr + "&idOffset=" + idOffset;
+        }
+        if(textOffset != null){
+            requestAddr = requestAddr + "&textOffset=" + textOffset;
+        }
         try{
             String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
                     null,
