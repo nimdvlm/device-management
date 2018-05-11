@@ -217,10 +217,42 @@ $scope.searchDevice = function () {
     var searchDeviceObj = $resource("/api/device/alldevices?limit=20&textSearch="+textSearch);
     $scope.searchDeviceInfo = searchDeviceObj.query();
     console.log($scope.searchDeviceInfo);
+    console.log($scope.searchDeviceInfo.length);
+    /*if($scope.searchDeviceInfo.$promise.then(function (value) {
+
+        })){
+        toastr.warning("设备名称输入有误，无此设备！");
+    }*/
+    $scope.searchDeviceInfo.$promise.then(function (value) {
+        if(value == false){
+            toastr.warning("设备名称输入有误，无此设备！");
+            setTimeout(function () {
+                window.location.reload();
+            },1000);
+        }
+        else{
+            $scope.deviceList = $scope.searchDeviceInfo;
+            $("#searchDeviceText").on("focus",function () {
+                $(this).val("");
+            })
+        }
+    });
+
+
 };
 
 
 
+/* HIGHLIGHT效果*/
+$(document).ready(function () {
+    $(".highlight").mouseover(function () {
+        $(this).css("color","#337ab7");
+    });
+    $(".highlight").mouseout(function () {
+        $(this).css("color","#305680");
+    });
+
+});
 
 
 
