@@ -35,6 +35,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
      * @return
      */
 
+    //创建设备
     @ApiImplicitParam(name="deviceInfo", value = "设备信息JSON", required = true, paramType = "body")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -63,6 +64,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
 
 
+    //删除设备
     @ApiOperation(value = "删除设备", notes = "根据deviceId删除设备")
     @ApiImplicitParam(name="deviceId", value = "设备ID", required = true, paramType = "path", dataType = "String")
     @RequestMapping(value = "/delete/{deviceId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
@@ -80,6 +82,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
 
 
+    //更新设备
     @ApiImplicitParam(name = "deviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/updatedevice", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -102,6 +105,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
 
 
+    //通过设备ID获取设备名字
     @RequestMapping(value = "/name/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String finddeviceName(@PathVariable(DEVICE_ID) String strDeviceId) {
@@ -121,17 +125,16 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     }
 
 
+    //获取所有设备，其中limit为必要参数
     @ApiOperation(value="获取租户所有设备的信息", notes="获取租户所有设备的信息")
     @RequestMapping(value = "/alldevices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getDevices() {
+    public String getDevices(@RequestParam int limit, @RequestParam(required = false) String textSearch) {
 
-        String requestAddr = "/api/v1/tenant/devices/"  + getTenantId() ;
-
-        StringBuffer param = new StringBuffer();
-        param.append("limit").append("=").append("30");
-
-        requestAddr = requestAddr + "?" + param ;
+        String requestAddr = "/api/v1/tenant/devices/"  + getTenantId() +"?limit=" + limit;
+        if(textSearch != null){
+            requestAddr = requestAddr + "&textSearch=" + textSearch;
+        }
 
         String responseContent = null ;
         try {
@@ -152,12 +155,13 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
     }
 
+    //通过父设备ID获取其下的设备
     @ApiOperation(value = "得到parentId设备的设备信息", notes = "得到parentId设备的设备信息")
     @ApiImplicitParam(name = "parentDeviceId", value = "父设备ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/parentDevices/{parentDeviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getParentDevices(@PathVariable String parentDeviceId) {
-        String requestAddr = "http://" + getDeviceAccessServer() + "/api/v1/parentdevices/"+parentDeviceId + "?limit=5";
+    public String getParentDevices(@PathVariable String parentDeviceId, @RequestParam int limit) {
+        String requestAddr = "http://" + getDeviceAccessServer() + "/api/v1/parentdevices/"+parentDeviceId + "?limit=" + limit;
 
         try{
             String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,

@@ -78,17 +78,17 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @ApiOperation(value="获取租户所有设备组", notes="获取租户所有设备组")
     @RequestMapping(value = "/allgroups", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String devicegroupList() {
+    public String devicegroupList(@RequestParam int limit, @RequestParam(required = false) String textSearch) {
 
 
-        String requestAddr = "/api/v1/groups/tenant/" + getTenantId() ;
-
-        StringBuffer param = new StringBuffer();
-        param.append("limit").append("=").append("100");
+        String requestAddr = "/api/v1/groups/tenant/" + getTenantId() +"?limit=" + limit;
+        if(textSearch != null){
+            requestAddr = requestAddr + "&textSearch=" + textSearch;
+        }
 
         String responseContent = null ;
         try {
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr + "?" + param.toString(),
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr ,
                     null,
                     request.getSession());
         } catch (Exception e) {
@@ -107,10 +107,10 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @ApiImplicitParam(name = "groupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{groupId}/devices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getDevicesByGroupId(@PathVariable("groupId") String gId) throws Exception {
-        int limit = 1000 ;
+    public String getDevicesByGroupId(@PathVariable("groupId") String gId, @RequestParam int limit) throws Exception {
+
         String requestAddr = String.format("/api/v1/group/devices/%s", gId);
-        requestAddr = requestAddr  + "?limit="+limit;
+        requestAddr = requestAddr  + "?limit=" + limit;
 
         String responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                 null,
