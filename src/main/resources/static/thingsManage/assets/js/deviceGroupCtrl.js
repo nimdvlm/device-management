@@ -5,6 +5,15 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     $scope.DeviceGroups = Devicegroup.query(function(){
         //初始化右侧视图
         $scope.item = $scope.DeviceGroups[0];
+        console.log($scope.item);
+        //初始化设备组的设备视图
+        var DGDEVICES = $resource('/api/group/:id/devices', {id: '@id'});
+        DGDEVICES.query({id: $scope.item.id})
+            .$promise.then(function (person) {
+            $scope.myData=person;
+            console.log("$scope.myData");
+            console.log($scope.myData);
+            });
     });
 
 
@@ -94,8 +103,8 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         });
     };
     //ui-grid的js部分
-    //测试数据
-    //$scope.myData =[{"name":"LIANG","id":5,"l":"lijs"}]
+    //数据初始化
+    $scope.myData =[{"name":"LIANG","id":5,"l":"lijs"}]
 
     $scope.gridOptions = {
         data: 'myData',
