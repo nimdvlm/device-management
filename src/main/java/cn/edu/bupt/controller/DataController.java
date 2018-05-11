@@ -35,7 +35,7 @@ public class DataController extends DefaultThingsboardAwaredController{
         return retSuccess(responseKeyContent);
     }
 
-    //获取所有历史数据
+    //获取所有最新数据
     @RequestMapping(value="/getlatestData/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getlatestData(@PathVariable("deviceId") String deviceId)
     {
