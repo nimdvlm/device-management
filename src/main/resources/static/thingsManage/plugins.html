@@ -1,4 +1,4 @@
-﻿<div ng-controller="abilityCtrl">
+﻿<div ng-controller="pluginCtrl">
     <div clas="PMTitle">
         <div style="margin-top: 32px">
             <span class="header-line" style="font-size: 27px;font-weight: 600">插件管理
@@ -15,45 +15,27 @@
 
         <!--模块控件-->
     <div class="container">
-        <div class="chooseBtn homeBackgroundstyle">
-            <span data-toggle="modal" data-target="#SMDetail"></span>
-            <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
-            <span style="margin-left: 160px">
+        <div ng-repeat="itemp in pluginGroups">
+            <div class="chooseBtn homeBackgroundstyle">
+                <span data-toggle="modal" data-target="#SMDetail" class="itemp"></span>
+                <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
+                <span style="margin-left: 160px">
                 <i class="glyphicon glyphicon-ok">ACTIVE</i>
             </span>
-
-            <p class="style">插件名称：{{pluginName}}</p>
-            <p class="style">插件token：{{pluginToken}}</p>
-            <p class="style"> 创建时间：{{creationTime}}</p>
-            <br/>
-            <span class="postionOne" data-toggle="modal" data-target="#activationPM">
-                <i class="glyphicon glyphicon-off" title="激活/暂停"></i>
+                <p class="style">插件名称：{{itemp.pluginName}}</p>
+                <p class="style">插件token：{{itemp.pluginToken}}</p>
+                <p class="style"> 创建时间：{{itemp.creationTime}}</p>
+                <br/>
+                <span class="postionOne" data-toggle="modal" data-target="#activationPM">
+                <i class="glyphicon glyphicon-off" title="激活/暂停" ng-click="active()"></i>
             </span>
-            <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
+                <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
                 <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
             </span>
+            </div>
         </div>
 
-
-        <div class="chooseBtn homeBackgroundstyle">
-            <span data-toggle="modal" data-target="#SMDetail"></span>
-            <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
-            <span style="margin-left: 160px">
-                <i class="glyphicon glyphicon-ok">ACTIVE</i>
-            </span>
-
-            <p class="style">插件名称：{{pluginName}}</p>
-            <p class="style">插件token：{{pluginToken}}</p>
-            <p class="style"> 创建时间：{{creationTime}}</p>
-            <br/>
-            <span class="postionOne" data-toggle="modal" data-target="#activationPM">
-                <i class="glyphicon glyphicon-off" title="激活/暂停"></i>
-            </span>
-            <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
-                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-            </span>
-        </div>
-        <div class="chooseBtn homeBackgroundstyle">
+        <!--div class="chooseBtn homeBackgroundstyle">
             <span data-toggle="modal" data-target="#SMDetail"></span>
             <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
             <span style="margin-left: 160px">
@@ -107,8 +89,26 @@
                 <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
             </span>
         </div>
+        <div class="chooseBtn homeBackgroundstyle">
+            <span data-toggle="modal" data-target="#SMDetail"></span>
+            <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
+            <span style="margin-left: 160px">
+                <i class="glyphicon glyphicon-ok">ACTIVE</i>
+            </span>
+
+            <p class="style">插件名称：{{pluginName}}</p>
+            <p class="style">插件token：{{pluginToken}}</p>
+            <p class="style"> 创建时间：{{creationTime}}</p>
+            <br/>
+            <span class="postionOne" data-toggle="modal" data-target="#activationPM">
+                <i class="glyphicon glyphicon-off" title="激活/暂停"></i>
+            </span>
+            <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
+                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
+            </span>
+        </div>
+    </div-->
     </div>
-</div>
 
 <!--创建插件界面-->
 <div class="modal fade" id="addPluginGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
