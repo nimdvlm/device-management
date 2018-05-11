@@ -8,9 +8,9 @@
             </div>
             <div class="col-md-5">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
+                    <input type="text" class="form-control" placeholder="请输入设备名称..." id="searchDeviceText">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Go!</button>
+                        <button class="btn btn-default" type="button" ng-click="searchDevice()">搜索</button>
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
@@ -48,7 +48,7 @@
                     <td>{{deviceType}}</td>
                 </tr>
                 <tr>
-                    <td class="attName">父设备ID:</td>
+                    <td class="attName">父类设备:</td>
                     <td>{{parentId}}</td>
                 </tr>
                 <tr>
@@ -72,7 +72,8 @@
                     <td>
                         <button class="btn btn-primary" data-toggle="modal"
                                 data-target="#refreshDevice">更新设备</button>
-                        <button class="btn btn-primary" ng-click="delete()">删除设备</button>
+                        <button class="btn btn-primary" data-toggle="modal"
+                                data-target="#deleteDevice">删除设备</button>
                         <button class="btn btn-primary" data-toggle="modal"
                                 data-target="#token" ng-click="showToken()">查看令牌</button>
                         <button class="btn btn-primary" data-toggle="modal"
@@ -105,34 +106,34 @@
                             <td>
                                 <select class="inputInfo" id="parentId">
                                     <option>------请选择------</option>
-                                    <option ng-repeat="data in deviceList">{{data.name}}</option>
+                                    <option ng-repeat="data in deviceList" class="{{data.id}}">{{data.name}}</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td class="attName">厂商:</td>
                             <td>
-                                <select class="inputInfo" id="manufacture">
+                                <select class="inputInfo" id="manufacture" ng-change="getCreateManufacture()" ng-model="myManufacturer">
                                     <option>------请选择------</option>
-                                    <option ng-repeat="data in deviceList">{{data.manufacture}}</option>
+                                    <option ng-repeat="data in manufacturerInfo" class="{{data.manufacturerId}}">{{data.manufacturerName}}</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td class="attName">设备类型:</td>
                             <td>
-                                <select class="inputInfo" id="deviceType">
+                                <select class="inputInfo" id="deviceType" ng-change="getCreateDeviceType()" ng-model="myDeviceType">
                                     <option>------请选择------</option>
-                                    <option ng-repeat="data in deviceList">{{data.deviceType}}</option>
+                                    <option ng-repeat="data in deviceTypeInfo" class="{{data.deviceTypeId}}">{{data.deviceTypeName}}</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td class="attName">型号：</td>
                             <td>
-                                <select class="inputInfo" id="model">
+                                <select class="inputInfo" id="model" ng-change="getCreateDeviceModel()" ng-model="myDeviceModel">
                                     <option>------请选择------</option>
-                                    <option ng-repeat="data in deviceList">{{data.model}}</option>
+                                    <option ng-repeat="data in deviceModelInfo" class="{{data.modelId}}">{{data.modelName}}</option>
                                 </select>
                             </td>
                         </tr>
@@ -176,38 +177,38 @@
                             <td><input type="text" class="inputInfo" disabled="disabled" ng-value="deviceName" id="reName"></td>
                         </tr>
                         <tr>
-                            <td class="attName">父类设备:</td>
+                            <td class="attName" >父类设备:</td>
                             <td>
                                 <select class="inputInfo" id="reParentId">
                                     <option>------请选择------</option>
-                                    <option ng-repeat="data in deviceList">{{data.name}}</option>
+                                    <option ng-repeat="data in deviceList" class="{{data.id}}">{{data.name}}</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td class="attName">厂商:</td>
                             <td>
-                                <select class="inputInfo" id="reManufacture">
+                                <select class="inputInfo" id="reManufacture" ng-change="getManufacture()" ng-model="myReManufacturer">
                                     <option>------请选择------</option>
-                                    <option ng-repeat="data in deviceList">{{data.manufacture}}</option>
+                                    <option ng-repeat="data in manufacturerInfo" class="{{data.manufacturerId}}">{{data.manufacturerName}}</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td class="attName">设备类型:</td>
                             <td>
-                                <select class="inputInfo" id="reDeviceType">
+                                <select class="inputInfo" id="reDeviceType" ng-change="getDeviceType()" ng-model="myReDeviceType">
                                     <option>------请选择------</option>
-                                    <option ng-repeat="data in deviceList">{{data.deviceType}}</option>
+                                    <option ng-repeat="data in deviceTypeInfo" class="{{data.deviceTypeId}}">{{data.deviceTypeName}}</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td class="attName">型号：</td>
                             <td>
-                                <select class="inputInfo" id="reModel">
+                                <select class="inputInfo" id="reModel"  ng-change="getDeviceModel()" ng-model="myReDeviceModel">
                                     <option>------请选择------</option>
-                                    <option ng-repeat="data in deviceList">{{data.model}}</option>
+                                    <option ng-repeat="data in deviceModelInfo" class="{{data.modelId}}">{{data.modelName}}</option>
                                 </select>
                             </td>
                         </tr>
@@ -293,5 +294,25 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+
+    <!-- DELETE MODEL -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="deleteDevice">
+        <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" style="font-weight: bold;">删除设备</h4>
+                </div>
+                <div class="modal-body" id="deleteTable">
+                    <p style="text-align: center;font-size: 20px;">您真的要删除该设备吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseDelete">取消</button>
+                    <button type="button" class="btn btn-primary" id="modalConfirmDelete" data-dismiss="modal" ng-click="delete()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>
     <!-- CONTENT-WRAPPER SECTION END-->

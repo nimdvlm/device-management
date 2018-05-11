@@ -108,7 +108,7 @@
                                 </tbody>
                             </table>
                             <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#addruleTransform">+ 添加变换
+                                    data-target="#addruleTransform" ng-click="getAllplugin()">+ 添加变换
                             </button>
                         </form>
                     </div>
@@ -171,18 +171,20 @@
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            添加transform
+                            添加变换
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <form name="addfilter">
-                            <p>名&emsp;&emsp;称：<select ng-init="addTranName = plugins[0]" ng-model="addTranName"
-                                                      ng-change="change(addTranName)" id="addtransformname"
-                            ng-options="x for x in plugins">
+                        <form name="addplugin">
+                            <p>名&emsp;&emsp;称：<select ng-model="RuleaddPlugin" ng-change="change(RuleaddPlugin)"
+                            ng-options="x.name for x in Plugin">
                                 </select>
                             </p>
-                            <p>跳转地址：<input type="text" name="url" disabled="disabled" id="addtransformurl"
-                                           placeholder="http://localhost:8080/api/test/send">
+                            <p>跳转地址：<input type="text" name="url" disabled="disabled"
+                                           placeholder="{{RuleaddPlugin.url}}">
+                            </p>
+                            <p>描&emsp;&emsp;述：<input type="text" name="describe" disabled="disabled"
+                                           placeholder="{{RuleaddPlugin.describe}}">
                             </p>
                             <p>请求方式：<input type="text" name="method" disabled="disabled" id="addtransformmethod"
                                            placeholder="POST">

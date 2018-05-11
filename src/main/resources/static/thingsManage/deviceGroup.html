@@ -6,17 +6,16 @@
             <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
                     data-target="#addDeviceGroup">+ 创建设备组
             </button>
-            <!--暂无搜索功能接口
             <div class="SearchDG">
-                <span>搜索：<input type="text" style="width: 130px" placeholder="输入设备组名称" ng-model="$parent.dgname"/></span>
+                <span>搜索：<input type="text" style="width: 130px" placeholder="输入设备组名称"
+                                ng-model="$parent.dgname"/></span>
                 <span class="Searchicon" ng-click="searchDG()" title="搜索">
                     <i class="fa fa-search fa-lg shand" aria-hidden="true"></i>
                 </span>
             </div>
-            -->
 
         </div>
-        <div class="DGContainer" >
+        <div class="DGContainer">
             <div ng-repeat="DG in DeviceGroups" ng-show="showAll">
                 <div class="chooseBtn" ng-click="show(DG)">
                     <div>
@@ -27,11 +26,11 @@
             </div>
 
             <!--搜索展示视图-->
-            <div ng-show="showInfo">
-                <div class="chooseBtn" ng-click="show(searchresult)">
+            <div ng-repeat="result in Searchresults" ng-show="showInfo">
+                <div class="chooseBtn" ng-click="show(result)">
                     <div>
                         <i class="fa fa-sitemap fa-2x "></i>
-                        <p>{{searchresult.name}}</p>
+                        <p>{{result.name}}</p>
                     </div>
                 </div>
             </div>
@@ -51,7 +50,8 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <p>设备组名：<input type="text" style="pixels: 300px" placeholder="LIANG" ng-model="$parent.addDGName"></p>
+                        <p>设备组名：<input type="text" style="pixels: 300px" placeholder="LIANG"
+                                       ng-model="$parent.addDGName"></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭
@@ -139,7 +139,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消
                         </button>
-                        <button type="button" class="btn btn-primary"  ng-click="delDG()">
+                        <button type="button" class="btn btn-primary" ng-click="delDG()">
                             确定
                         </button>
                     </div>
@@ -161,7 +161,8 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <p>设备组名：<input type="text" name="NewDGName" placeholder={{item.name}} ng-model="$parent.editdg"></input>
+                        <p>设备组名：<input type="text" name="NewDGName" placeholder={{item.name}}
+                                       ng-model="$parent.editdg"></input>
                         </p>
                     </div>
                     <div class="modal-footer">
