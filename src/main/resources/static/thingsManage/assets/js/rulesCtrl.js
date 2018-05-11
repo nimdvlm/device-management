@@ -12,9 +12,9 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //数据初始化
     $scope.formData = {
         "rule": {
-            "tenantId": 1,
+            "tenantId": "1",
             "state": "ACTIVE",
-            "ruleId": 24
+            "additional_info":""
         },
         "filters": [],
         "transform": {
@@ -28,7 +28,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     {
         this.name = name;
         this.type = type;
-        this.jscode = jscode;
+        this.jsCode = jscode;
     }
 
 
@@ -92,7 +92,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             searchRULE.get({id: $scope.ruleid})
                 .$promise.then(function (person) {
                 console.log("文本框输入内容：" + $scope.ruleid);
-                console.log("返回的数据：" + person);
+                console.log("返回的数据：");
+                console.log(person);
                 if (person.rule.ruleId != undefined) {
                     $scope.showInfoRule = true;
                     $scope.showAllRule = false;
