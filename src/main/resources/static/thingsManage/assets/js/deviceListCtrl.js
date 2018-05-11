@@ -3,7 +3,7 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     var deviceInfo;//用于记录当前选中的设备
 
     /*设备列表信息获取与展示*/
-    var obj = $resource("/api/device/alldevices");
+    var obj = $resource("/api/device/alldevices?limit=30");
     $scope.deviceList = obj.query();//返回值为整个接口返回的内容
     console.log($scope.deviceList);
     $scope.show = function (data) {
@@ -47,7 +47,7 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
 
 
     /*分配设备*/
-    var deviceGroupObj = $resource("/api/group/allgroups");
+    var deviceGroupObj = $resource("/api/group/allgroups?limit=300");
     var deviceGroupAssignObj = $resource("/api/group/assign/:deviceId/:groupId");
     $scope.deviceGroup = deviceGroupObj.query();
     $scope.assignDeviceGroup = function(){
