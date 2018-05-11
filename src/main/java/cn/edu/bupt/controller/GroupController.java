@@ -32,6 +32,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
      * @param deviceGroupInfo
      * @return
      */
+    //增
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String create(@RequestBody String deviceGroupInfo) {
@@ -52,8 +53,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent) ;
     }
 
-
-
+    //删
     @ApiOperation(value="删除设备组", notes="删除设备组")
     @ApiImplicitParam(name = "deviceGroupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/delete/{groupId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
@@ -75,20 +75,21 @@ public class GroupController extends DefaultThingsboardAwaredController{
     /**
      * @return
      */
+    //查
     @ApiOperation(value="获取租户所有设备组", notes="获取租户所有设备组")
     @RequestMapping(value = "/allgroups", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String devicegroupList() {
+    public String devicegroupList(@RequestParam int limit, @RequestParam(required = false) String textSearch) {
 
 
-        String requestAddr = "/api/v1/groups/tenant/" + getTenantId() ;
-
-        StringBuffer param = new StringBuffer();
-        param.append("limit").append("=").append("100");
+        String requestAddr = "/api/v1/groups/tenant/" + getTenantId() +"?limit=" + limit;
+        if(textSearch != null){
+            requestAddr = requestAddr + "&textSearch=" + textSearch;
+        }
 
         String responseContent = null ;
         try {
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr + "?" + param.toString(),
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr ,
                     null,
                     request.getSession());
         } catch (Exception e) {
@@ -103,14 +104,15 @@ public class GroupController extends DefaultThingsboardAwaredController{
      * @return
      * @throws Exception
      */
+    //获取设备组下的所有设备
     @ApiOperation(value="获取设备组下的所有设备", notes="获取设备组下的所有设备")
     @ApiImplicitParam(name = "groupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{groupId}/devices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getDevicesByGroupId(@PathVariable("groupId") String gId) throws Exception {
-        int limit = 1000 ;
+    public String getDevicesByGroupId(@PathVariable("groupId") String gId, @RequestParam int limit) throws Exception {
+
         String requestAddr = String.format("/api/v1/group/devices/%s", gId);
-        requestAddr = requestAddr  + "?limit="+limit;
+        requestAddr = requestAddr  + "?limit=" + limit;
 
         String responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                 null,
@@ -122,6 +124,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
         }
     }
 
+    //分配设备到设备组
     @ApiOperation(value="分配设备到设备组", notes="分配设备到设备组")
     @ApiImplicitParams({ @ApiImplicitParam(name = "deviceId", value = "设备Id", required = true, dataType = "String",paramType = "path"),
             @ApiImplicitParam(name = "groupId", value = "设备组Id", required = true, dataType = "String",paramType = "path")})
@@ -142,6 +145,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent) ;
     }
 
+    //移除设备组中的设备
     @ApiOperation(value="移除设备组中的设备", notes="移除设备组中的设备")
     @ApiImplicitParams({ @ApiImplicitParam(name = "deviceId", value = "设备Id", required = true, dataType = "String",paramType = "path"),
             @ApiImplicitParam(name = "groupId", value = "设备组Id", required = true, dataType = "String",paramType = "path")})

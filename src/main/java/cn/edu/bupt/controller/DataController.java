@@ -59,6 +59,7 @@ public class DataController extends DefaultThingsboardAwaredController{
     }
 
 
+    //从某时间段的设备历史数据
     @RequestMapping(value="/getHistoricalData/{deviceId}/{startTime}/{endTime}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getHistoricalData(@PathVariable("deviceId") String deviceId,@PathVariable("startTime") String startTime,@PathVariable("endTime") String endTime)
     {

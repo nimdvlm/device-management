@@ -32,13 +32,13 @@ public class PluginController extends DefaultThingsboardAwaredController{
         return retSuccess(array.toString());
     }
 
-    @RequestMapping(value = "/state/{url}",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
-    public String getStates(@PathVariable("url") String url){
+    @RequestMapping(value = "/state/{url}/{port}",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    public String getStates(@PathVariable("url") String url,@PathVariable("port") String port){
         String requestAddr = "/api/plugin/state";
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + url + requestAddr,
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + url +":"+ port + requestAddr,
                     null,
                     request.getSession());
 
@@ -81,13 +81,13 @@ public class PluginController extends DefaultThingsboardAwaredController{
     }
 **/
 
-    @RequestMapping(value = "/suspend/{url}",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public String suspend(@PathVariable("url") String url){
+    @RequestMapping(value = "/suspend/{url}/{port}",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    public String suspend(@PathVariable("url") String url, @PathVariable("port") String port){
         String requestAddr = "/api/plugin/suspend";
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + url + requestAddr,
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + url +":"+ port + requestAddr,
                     null,null,
                     request.getSession());
 
@@ -97,13 +97,13 @@ public class PluginController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent);
     }
 
-    @RequestMapping(value = "/activate/{url}",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public String activate(@PathVariable("url") String url){
+    @RequestMapping(value = "/activate/{url}/{port}",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    public String activate(@PathVariable("url") String url, @PathVariable("port") String port){
         String requestAddr = "/api/plugin/active";
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + url + requestAddr,
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + url +":"+ port + requestAddr,
                     null,null,
                     request.getSession());
 
