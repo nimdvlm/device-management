@@ -23,7 +23,6 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             }
         }
     };
-    $scope.plugins = ["bilibili", "SendMail", "acfun"];
 
     function ObjFilter(name, type, jscode) //声明filter对象
     {
@@ -186,10 +185,13 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //点击添加规则-插件类型判断
     $scope.change = function (data) {
-        if (data == "SendMail") {
-            console.log("判断添加插件类型为SendMail")
+        console.log("传入判断函数值：");
+        console.log(data);
+        if ($scope.RuleaddPlugin.name == "MailPlugin") {
+            console.log("判断添加插件类型为MailPlugin")
             $scope.showsendmail = true;
         } else {
+            console.log("判断添加插件类型为其他")
             $scope.showsendmail = false;
         }
     }
@@ -197,8 +199,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //点击添加规则-添加插件
     $scope.subTransform = function () {
         $scope.showaddTransform = true;
-        $scope.formData.transform.name = $('#addtransformname').val();
-        $scope.formData.transform.url = $('#addtransformurl').val();
+        $scope.formData.transform.name = $scope.RuleaddPlugin.name;
+        $scope.formData.transform.url = $scope.RuleaddPlugin.url;
         $scope.formData.transform.method = $('#addtransformmethod').val();
         $scope.formData.transform.requestBody.to = $('#addTranMailTo').val();
         $scope.formData.transform.requestBody.subject = $('#addTranMailSub').val();
@@ -216,6 +218,24 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             console.log("新建设备组成功");
             $("#addRule").modal("hide");
             location.reload();
+        });
+    }
+
+    //点击[添加变换]按钮时获取所有插件
+    $scope.getAllplugin = function () {
+        var getAllPLUGINS = $resource("/api/plugin/allPlugins");
+        $scope.allPlugins = getAllPLUGINS.query({}, function () {
+            $scope.Plugin = $scope.allPlugins;
+            //初始化select.value，解决显示一行空白项bug
+            $scope.RuleaddPlugin = $scope.Plugin[0];
+            //判断plugin[0]插件类型
+            if ($scope.RuleaddPlugin.name == "MailPlugin") {
+                console.log("判断添加插件类型为MailPlugin")
+                $scope.showsendmail = true;
+            } else {
+                console.log("判断添加插件类型为其他")
+                $scope.showsendmail = false;
+            }
         });
     }
 });
