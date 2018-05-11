@@ -32,6 +32,24 @@ public class PluginController extends DefaultThingsboardAwaredController{
         return retSuccess(array.toString());
     }
 
+    @RequestMapping(value = "/state/{url}/{port}",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    public String getStates(@PathVariable("url") String url,@PathVariable("port") String port){
+        String requestAddr = "/api/plugin/state";
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + url +":"+ port + requestAddr,
+                    null,
+                    request.getSession());
+
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        String responseBody="{\"state\":\""+responseContent+"\"}" ;
+        return retSuccess(responseBody);
+    }
+
     //无前端添加删除插件方式
     /**
     @RequestMapping(value = "/savePlugin",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
@@ -63,13 +81,13 @@ public class PluginController extends DefaultThingsboardAwaredController{
     }
 **/
 
-    @RequestMapping(value = "/{pluginId}/suspend",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public String suspend(@PathVariable String pluginId){
-        String requestAddr = "/api/plugin/"+pluginId+"/suspend";
+    @RequestMapping(value = "/suspend/{url}/{port}",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    public String suspend(@PathVariable("url") String url, @PathVariable("port") String port){
+        String requestAddr = "/api/plugin/suspend";
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + url +":"+ port + requestAddr,
                     null,null,
                     request.getSession());
 
@@ -79,13 +97,13 @@ public class PluginController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent);
     }
 
-    @RequestMapping(value = "/{pluginId}/activate",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public String activate(@PathVariable String pluginId){
-        String requestAddr = "/api/plugin/"+pluginId+"/activate";
+    @RequestMapping(value = "/activate/{url}/{port}",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    public String activate(@PathVariable("url") String url, @PathVariable("port") String port){
+        String requestAddr = "/api/plugin/active";
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + url +":"+ port + requestAddr,
                     null,null,
                     request.getSession());
 

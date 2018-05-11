@@ -9,6 +9,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.index = 0;
     $scope.showsendmail = false;
 
+    //数据初始化
     $scope.formData = {
         "rule": {
             "tenantId": 1,
@@ -18,11 +19,11 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         "filters": [],
         "transform": {
             "requestBody": {
-                "to":[]
+                "to": []
             }
         }
     };
-$scope.plugins=["bilibili","SendMail","acfun"];
+    $scope.plugins = ["bilibili", "SendMail", "acfun"];
 
     function ObjFilter(name, type, jscode) //声明filter对象
     {
@@ -37,14 +38,15 @@ $scope.plugins=["bilibili","SendMail","acfun"];
         query: {method: 'GET', isArray: true}
     });//获取所有规则组信息
 
-
-    //报错获取不了rules[0]
     $scope.Rules = RULE.query({}, function () {
 
         //初始化右侧视图
-        $scope.Ruleitem = $scope.Rules[0];//Rules[0]获取不到第一个对象咋弄？为啥必须在函数里？
-        console.log("query获取的数据：" + $scope.Rules);//此时打印是数组
-        console.log("取第一个对象：" + $scope.Ruleitem);
+        $scope.Ruleitem = $scope.Rules[0];//必须在success函数里才能取到Rules[0]
+        //console.log("query获取的数据："+$scope.Rules);//bug:控制台打印[obj obj]
+        console.log("query函数内的Rules：");
+        console.log($scope.Rules);
+        console.log("取第一个对象：");
+        console.log($scope.Ruleitem);
         $scope.$broadcast('senddata', $scope.Ruleitem);
         if ($scope.Ruleitem.rule.state == "ACTIVE") {
             $scope.isActive = true;
@@ -55,13 +57,21 @@ $scope.plugins=["bilibili","SendMail","acfun"];
             $scope.Rulestart = true;
             $scope.Rulestop = false;
         }
-
     });
+    /******bug:此时取Rules[0]为undefined
+     * 原因：同步打印，还没有从后台取完数据
+     * 在query()里实际上是异步打印
+     * query(params,success,error)第二个参数调用了promise的success***/
+    //console.log("query函数外的Rules：")
+    //console.log($scope.Rules);
+    //console.log("取第一个对象：");
+    //console.log($scope.Rules[0]);
 
     //右侧展示视图
     $scope.showrule = function (rule) {
         $scope.Ruleitem = rule;
-        console.log("rule in rules:" + $scope.Ruleitem);
+        console.log("rule in rules:");
+        console.log($scope.Ruleitem);
         //判断规则运行状态
         if ($scope.Ruleitem.rule.state == "ACTIVE") {
             $scope.isActive = true;
@@ -175,14 +185,14 @@ $scope.plugins=["bilibili","SendMail","acfun"];
     }
 
     //点击添加规则-插件类型判断
-$scope.change=function (data) {
-    if (data == "SendMail") {
-        console.log("判断添加插件类型为SendMail")
-        $scope.showsendmail = true;
-    } else {
-        $scope.showsendmail = false;
+    $scope.change = function (data) {
+        if (data == "SendMail") {
+            console.log("判断添加插件类型为SendMail")
+            $scope.showsendmail = true;
+        } else {
+            $scope.showsendmail = false;
+        }
     }
-}
 
     //点击添加规则-添加插件
     $scope.subTransform = function () {
@@ -193,7 +203,7 @@ $scope.change=function (data) {
         $scope.formData.transform.requestBody.to = $('#addTranMailTo').val();
         $scope.formData.transform.requestBody.subject = $('#addTranMailSub').val();
         $scope.formData.transform.requestBody.text = $('#addTranMailText').val();
-        console.log("新建规则-创建插件:"+$scope.formData.transform);
+        console.log("新建规则-创建插件:" + $scope.formData.transform);
         $("input[type=reset]").trigger("click");
     }
 

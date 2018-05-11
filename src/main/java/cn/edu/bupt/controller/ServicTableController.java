@@ -31,7 +31,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
     }
 
     @RequestMapping(value = "/abilityGroup",method = RequestMethod.GET)
-    public String getGroup(@RequestBody String json) {
+    public String getGroup() {
         String url = "http://"+getServiceManagementServer()+"/api/v1/abilityGroup";
         try{
             String responce = HttpUtil.sendGetToThingsboard(url,null,request.getSession());
@@ -132,8 +132,8 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
     @ApiOperation(value = "返回某一厂商下的所有设备类型", notes = "返回某一厂商下的所有设备类型")
     @ApiImplicitParam(name = "manufacture", value = "厂商", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/abilityGroup/deviceTypes", method = RequestMethod.GET)
-    public String serviceDeviceType(@PathVariable String manufactureId,@RequestParam(required = false) String keyword){
-        String requestAddr = String.format("/api/v1/abilityGroup/deviceTypes?manufactureId=%s", manufactureId) ;
+    public String serviceDeviceType(@RequestParam String manufacturerId,@RequestParam(required = false) String keyword){
+        String requestAddr = String.format("/api/v1/abilityGroup/deviceTypes?manufacturerId=%s", manufacturerId) ;
         String url = "http://" + getServiceManagementServer() + requestAddr;
         if(keyword!=null){
             url +="&keyword="+keyword;
@@ -149,9 +149,9 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
     @ApiOperation(value = "返回固定某一厂商和设备类型下的所有型号", notes = "返回固定某一厂商和设备类型下的所有型号")
     @ApiImplicitParams({ @ApiImplicitParam(name = "manufacture", value = "厂商", required = true, dataType = "String",paramType = "path"),
             @ApiImplicitParam(name = "deviceType", value = "设备类型", required = true, dataType = "String",paramType = "path")})
-    @RequestMapping(value = "/{abilityGroup/models", method = RequestMethod.GET)
-    public String serviceModel(@PathVariable String manufactureId,@PathVariable String deviceTypeId,@RequestParam(required = false)  String keyword){
-        String requestAddr = String.format("/api/v1/abilityGroup/models?manufactureId=%s&deviceTypeId=%s", manufactureId, deviceTypeId) ;
+    @RequestMapping(value = "/abilityGroup/models", method = RequestMethod.GET)
+    public String serviceModel(@RequestParam String manufacturerId,@RequestParam String deviceTypeId,@RequestParam(required = false)  String keyword){
+        String requestAddr = String.format("/api/v1/abilityGroup/models?manufacturerId=%s&deviceTypeId=%s", manufacturerId, deviceTypeId) ;
         String url = "http://"+getServiceManagementServer()+ requestAddr;
         if(keyword!=null){
             url +="&keyword="+keyword;
