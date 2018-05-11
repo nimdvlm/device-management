@@ -86,18 +86,14 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     $scope.show = function (DG) {
         //item是当前展示的单个设备
         $scope.item = {name: DG.name, id: DG.id};
-
         //获取设备组下的设备接口
         var DGDEVICES = $resource('/api/group/:id/devices', {id: '@id'});
         DGDEVICES.query({id: $scope.item.id})
             .$promise.then(function (person) {
-                $scope.DGDevices=person;
-                console.log("获取设备组下的设备："+$scope.DGDevices);
+                $scope.myData=person;
         });
     };
-
     //ui-grid的js部分
-    $scope.myData = $scope.DGDevices;
     //测试数据
     //$scope.myData =[{"name":"LIANG","id":5,"l":"lijs"}]
 
@@ -105,9 +101,9 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         data: 'myData',
         enableHorizontalScrollbar: 0,
         columnDefs: [
-            {field: 'name', displayName: '设备名称'},
+            {field: 'name', width: '25%',displayName: '设备名称'},
             {field: 'id', displayName: '设备id'},
-            {field:'name',displayName:'操作',
+            {field:'name',width: '15%',displayName:'操作',
                 cellTemplate: '<div class="container-fluid"><div class="row" style="padding-top: 5px"><div class="col-xs-4 text-center"><div class="div-click" ng-click="grid.appScope.goToDelete(row)"><span class="glyphicon glyphicon-minus shand"></span></div></div><div></div></div></div>'
             }
 
