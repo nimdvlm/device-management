@@ -19,9 +19,9 @@
             <div class="chooseBtn homeBackgroundstyle">
                 <span data-toggle="modal" data-target="#SMDetail" class="items">
                 <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                <p class="style">厂商：{{items.manufacture}}</p>
-                <p class="style">设备类型：{{items.deviceType}}</p>
-                <p class="style"> 设备型号：{{items.model}}</p>
+                <p class="style">厂商：{{items.manufacturer.manufacturerName}}</p>
+                <p class="style">设备类型：{{items.deviceType.deviceTypeName}}</p>
+                <p class="style"> 设备型号：{{items.model.modelName}}</p>
                 <br/></span>
                 <span class="postionOne" data-toggle="modal" data-target="#createSM">
                 <i class="glyphicon glyphicon-plus" title="创建服务"></i>
@@ -31,37 +31,38 @@
             </span>
             </div>
         </div>
+
+
+               <div class="chooseBtn homeBackgroundstyle">
+                       <span data-toggle="modal" data-target="#SMDetail">
+                       <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
+                       <p class="style">厂商：{{vendor}}</p>
+                       <p class="style">设备类型：{{equipmentType}}</p>
+                       <p class="style"> 设备型号：{{equipmentModel}}</p>
+                       <br/></span>
+                   <span class="postionOne" data-toggle="modal" data-target="#createSM">
+                               <i class="glyphicon glyphicon-plus" title="创建服务"></i>
+                          </span>
+                   <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
+                              <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
+                          </span>
+               </div>
+
         <!--
-        <div class="chooseBtn homeBackgroundstyle">
-                <span data-toggle="modal" data-target="#SMDetail">
-                <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                <p class="style">厂商：{{vendor}}</p>
-                <p class="style">设备类型：{{equipmentType}}</p>
-                <p class="style"> 设备型号：{{equipmentModel}}</p>
-                <br/></span>
-            <span class="postionOne" data-toggle="modal" data-target="#createSM">
-                        <i class="glyphicon glyphicon-plus" title="创建服务"></i>
-                   </span>
-            <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
-                       <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-                   </span>
-        </div>
-
-
-        <div class="chooseBtn homeBackgroundstyle">
-                <span data-toggle="modal" data-target="#SMDetail">
-                <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                <p class="style">厂商：{{vendor}}</p>
-               <p class="style">设备类型：{{equipmentType}}</p>
-                <p class="style"> 设备型号：{{equipmentModel}}</p>
-                <br/></span>
-            <span class="postionOne" data-toggle="modal" data-target="#createSM">
-                        <i class="glyphicon glyphicon-plus" title="创建服务"></i>
-                   </span>
-            <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
-                       <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-                   </span>
-        </div>-->
+                      <div class="chooseBtn homeBackgroundstyle">
+                              <span data-toggle="modal" data-target="#SMDetail">
+                              <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
+                              <p class="style">厂商：{{vendor}}</p>
+                             <p class="style">设备类型：{{equipmentType}}</p>
+                              <p class="style"> 设备型号：{{equipmentModel}}</p>
+                              <br/></span>
+                          <span class="postionOne" data-toggle="modal" data-target="#createSM">
+                                      <i class="glyphicon glyphicon-plus" title="创建服务"></i>
+                                 </span>
+                          <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
+                                     <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
+                                 </span>
+                      </div>-->
     </div>
 
 
@@ -131,26 +132,64 @@
                 </div>
                 <div class="modal-body">
                     <b>服务类型</b>
-                    <select class="form-control" type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.add">
+                    <select class="form-control" id="test">
                         <option value="platform">platform</option>
-                        <option value="thirdparty">thirdparty</option>
+                        <option value="thirdparty" selected="selected">thirdparty</option>
                     </select>
+                </div>
+                <div id="d0">
+                    <div class="modal-body">
+                        <b>协议</b>
+                        <input class="form-control" type="text" style="pixels: 300px" ng-model="$parent.Name">
+                    </div>
+                    <div class="modal-body">
+                        <b>URL</b>
+                        <input class="form-control" type="text" style="pixels: 300px" ng-model="$parent.aDGName">
+                    </div>
                 </div>
                 <div class="modal-body">
                     <b>请求回复</b>
-                    <select class="form-control" type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.ad">
+                    <select class="form-control" type="text">
                         <option value="true">true</option>
                         <option value="false">false</option>
                     </select>
                 </div>
                 <div class="modal-body">
-                    <b>服务体</b>
-                    <input class="form-control" type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.addDGName">
+                    <span style="color: #8a6d3b;font-weight: 600;font-size: 20px">服务体</span>
+                </div>
+                <div class="modal-body">
+                    <b>方法名</b>
+                    <input class="form-control" type="text" style="pixels: 300px" placeholder="必填" ng-model="$nt.addDGName">
                 </div>
                 <div class="modal-body">
                     <b>参数</b>
-                    <input type="text" style="pixels: 300px" placeholder="形如(status:true`)" ng-model="$parent.addDGNae">
-                    <span ng-click="">+</span>
+                    <div style="width: 550px; height: 150px; border: 1px solid #CCCCCC;">
+                        <input type="text" style="width: 33%; height:34px;float: left" placeholder="key" ng-model="$paret.addDGNae">
+                        <select class="form-control"type="text" style="width: 33%" id="testone">
+                                <option value="0" selected="selected"></option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                        </select>
+                        <div style="width: 33%; float: right;margin-top: -34px">
+                            <div id="d1">
+                                <input type="text" style="width: 150px; height:34px" placeholder="value">
+                            </div>
+                            <div id="d2" style="width: 150px; height: 14px; border: 1px solid #CCCCCC">
+                                <input type="text" style="width: 50%;float: left; height:34px" placeholder="on">
+                                <input type="text" style="width: 50%;float: right; height:34px" placeholder="off">
+                            </div>
+                            <div id="d3" style="width: 150px; height: 14px; border: 1px solid #4cff00">
+                                <input type="text" style="width: 50%;float: left; height:34px" placeholder="min:0">
+                                <input type="text" style="width: 50%;float: right; height:34px" placeholder="mix:100">
+                            </div>
+                        </div>
+                        <div style="margin-top: -28px;margin-left: 525px">
+                            <i class="glyphicon glyphicon-plus" ng-click="addPara()"></i>
+                        </div>
+
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" ng-click="addSM()">
@@ -235,6 +274,36 @@
 
 </div>
 	<!--made in card-->
+<script>
+    $('#test').bind('change', function(){
+        var val = $(this).val();
+        switch(val){
+            case 'platform': $('#d0').hide();  break;
+            case 'thirdparty': $('#d0').show();  break;
+            default :$('#d0').hide();
+        }
+    });
 
 
-     <!-- CONTENT-WRAPPER SECTION END-->
+
+    $('#testone').bind('change', function(){
+        var val = $(this).val();
+        switch(val){
+            case '1': $('#d1').show(); $('#d2, #d3').hide(); break;
+            case '2': $('#d2').show(); $('#d1, #d3').hide(); break;
+            case '3': $('#d3').show(); $('#d1, #d2').hide(); break;
+        }
+    });
+</script>
+
+
+     <!--
+     $('#testone').bind('change', function(){
+        var val = $(this).val();
+        switch(val){
+            case '1': $('#d1').show(); $('#d2, #d3').hide(); break;
+            case '2': $('#d2').show(); $('#d1, #d3').hide(); break;
+            case '3': $('#d3').show(); $('#d1, #d2').hide(); break;
+        }
+    });
+     CONTENT-WRAPPER SECTION END-->
