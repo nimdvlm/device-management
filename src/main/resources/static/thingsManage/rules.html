@@ -93,9 +93,9 @@
                                     <td>{{formData.transform.name}}</td>
                                 </tr>
                                 <!--判断插件是邮件的情况下显示-->
-                                <tr ng-show="showsendmail">
-                                    <th style="text-align: center">收件人</th>
-                                    <td>{{formData.transform.requestBody.to}}</td>
+                                <tr ng-show="showsendmail" ng-repeat="mailto in fchat.replies">
+                                    <th style="text-align: center">收件人{{$index+1}}</th>
+                                    <td>{{mailto.value}}</td>
                                 </tr>
                                 <tr ng-show="showsendmail">
                                     <th style="text-align: center">邮件标题</th>
@@ -177,32 +177,46 @@
                     <div class="modal-body">
                         <form name="addplugin">
                             <p>名&emsp;&emsp;称：<select ng-model="RuleaddPlugin" ng-change="change(RuleaddPlugin)"
-                            ng-options="x.name for x in Plugin">
-                                </select>
+                                                      ng-options="x.name for x in Plugin">
+                            </select>
                             </p>
                             <p>跳转地址：<input type="text" name="url" disabled="disabled"
                                            placeholder="{{RuleaddPlugin.url}}">
                             </p>
                             <p>描&emsp;&emsp;述：<input type="text" name="describe" disabled="disabled"
-                                           placeholder="{{RuleaddPlugin.describe}}">
+                                                     placeholder="{{RuleaddPlugin.describe}}">
                             </p>
                             <p>请求方式：<input type="text" name="method" disabled="disabled" id="addtransformmethod"
                                            placeholder="POST">
                             </p>
 
                             <!--判断是sendmail后显示-->
-                            <div ng-show="showsendmail">
+                            <div>
                                 <hr/>
-                                <p>收件人&emsp;：<input type="text" name="mailname" id="addTranMailTo"
-                                                    placeholder="请输入收件人">
-                                </p>
-                                <p>邮件主题：<input type="text" name="mailtitle" id="addTranMailSub"
-                                               placeholder="请输入邮件主题">
-                                </p>
-                                <p>邮件内容：<input type="text" name="mailcontext" id="addTranMailText"
-                                               style="height:150px;width: 450px"/>
-                                </p>
+                                <!--添加多个收件人-->
+                                <div ng-repeat="reply in fchat.replies">
+                                    <p>
+                                        收件人{{$index + 1}}&ensp;：<input type="text" ng-model="reply.value"
+                                                                       id="reply{{$index + 1}}"
+                                                                       name="reply{{$index + 1}}" placeholder="请输入收件人"/>
+                                        <a href="" ng-click="fchat.incrReply($index)">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                        <a href="" ng-click="fchat.decrReply($index)"
+                                           ng-show="fchat.canDescReply">
+                                            <i class="fa fa-minus"></i>
+                                        </a>
+                                        <i class="fa fa-minus" ng-show="!fchat.canDescReply"/></a>
+                                    </p>
+                                </div>
                             </div>
+                            <!--End-->
+                            <p>邮件主题：<input type="text" name="mailtitle" id="addTranMailSub"
+                                           placeholder="请输入邮件主题">
+                            </p>
+                            <p>邮件内容：<input type="text" name="mailcontext" id="addTranMailText"
+                                           style="height:100px;width: 450px"/>
+                            </p>
                             <input type="reset" style="display:none;"/>
                         </form>
                     </div>
