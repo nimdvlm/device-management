@@ -79,12 +79,20 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @ApiOperation(value="获取租户所有设备组", notes="获取租户所有设备组")
     @RequestMapping(value = "/allgroups", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String devicegroupList(@RequestParam int limit, @RequestParam(required = false) String textSearch) {
+    public String devicegroupList(@RequestParam int limit, @RequestParam(required = false) String textSearch,
+                                  @RequestParam(required = false) String idOffset,
+                                  @RequestParam(required = false) String textOffset) {
 
 
         String requestAddr = "/api/v1/groups/tenant/" + getTenantId() +"?limit=" + limit;
         if(textSearch != null){
             requestAddr = requestAddr + "&textSearch=" + textSearch;
+        }
+        if(idOffset != null){
+            requestAddr = requestAddr + "&idOffset=" + idOffset;
+        }
+        if(textOffset != null){
+            requestAddr = requestAddr + "&textOffset=" + textOffset;
         }
 
         String responseContent = null ;
@@ -109,10 +117,22 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @ApiImplicitParam(name = "groupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{groupId}/devices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getDevicesByGroupId(@PathVariable("groupId") String gId, @RequestParam int limit) throws Exception {
+    public String getDevicesByGroupId(@PathVariable("groupId") String gId, @RequestParam int limit,
+                                      @RequestParam(required = false) String textSearch,
+                                      @RequestParam(required = false) String idOffset,
+                                      @RequestParam(required = false) String textOffset) throws Exception {
 
         String requestAddr = String.format("/api/v1/group/devices/%s", gId);
         requestAddr = requestAddr  + "?limit=" + limit;
+        if(textSearch != null){
+            requestAddr = requestAddr + "&textSearch=" + textSearch;
+        }
+        if(idOffset != null){
+            requestAddr = requestAddr + "&idOffset=" + idOffset;
+        }
+        if(textOffset != null){
+            requestAddr = requestAddr + "&textOffset=" + textOffset;
+        }
 
         String responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                 null,
