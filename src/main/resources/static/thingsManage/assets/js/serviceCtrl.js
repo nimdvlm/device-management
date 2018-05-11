@@ -1,6 +1,9 @@
 mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
+
+
     /*var abilityInfo;
+
     var obj = $resource('/api/v1/abilityGroup');
     $scope.abilityGroup = obj.query();
     console.log($scope.abilityGroup);
@@ -46,7 +49,15 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
 
     /*搜索能力组*/
-    /*根据设备型号展示设备*/
+    /*展示platform*/
+    $scope.showURL = function () {
+        if($parent.ad == thirdparty){
+           $scope.myvar = true;
+        }else{
+            $scope.myvar = flase;
+        }
+
+    }
 
 
 
