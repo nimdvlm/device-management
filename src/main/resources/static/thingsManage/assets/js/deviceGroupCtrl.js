@@ -26,7 +26,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                 console.log("新建设备组成功");
                 console.log(resp);
                 $("#addRule").modal("hide");
-                location.reload();
+                //location.reload();
             });
         } else {
             alert("输入不能为空!");

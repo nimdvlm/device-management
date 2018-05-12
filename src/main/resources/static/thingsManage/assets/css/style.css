@@ -172,6 +172,10 @@ DEVICELIST STYLES
 
     border: 2px solid #ff3c3c;
 }
+#detailTable table tbody tr td{
+   width: 30%;
+   text-align: center;
+}
 
 /* =============================================================
    DeviceGroup

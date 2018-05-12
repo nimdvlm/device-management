@@ -12,9 +12,9 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //数据初始化
     $scope.formData = {
         "rule": {
-            "tenantId": 1,
+            "tenantId": "1",
             "state": "ACTIVE",
-            "ruleId": 24
+            "additional_info":""
         },
         "filters": [],
         "transform": {
@@ -28,7 +28,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     {
         this.name = name;
         this.type = type;
-        this.jscode = jscode;
+        this.jsCode = jscode;
     }
 
 
@@ -92,7 +92,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             searchRULE.get({id: $scope.ruleid})
                 .$promise.then(function (person) {
                 console.log("文本框输入内容：" + $scope.ruleid);
-                console.log("返回的数据：" + person);
+                console.log("返回的数据：");
+                console.log(person);
                 if (person.rule.ruleId != undefined) {
                     $scope.showInfoRule = true;
                     $scope.showAllRule = false;
@@ -198,14 +199,21 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //点击添加规则-添加插件
     $scope.subTransform = function () {
+        //解决ng-repeat动态遍历空数组报错bug
+        $scope.mailTo = [];
+        for (var i = 0; i < $scope.fchat.replies.length; i++) {
+            $scope.mailTo.push($scope.fchat.replies[i].value);
+        }
+
         $scope.showaddTransform = true;
         $scope.formData.transform.name = $scope.RuleaddPlugin.name;
         $scope.formData.transform.url = $scope.RuleaddPlugin.url;
         $scope.formData.transform.method = $('#addtransformmethod').val();
-        $scope.formData.transform.requestBody.to = $('#addTranMailTo').val();
+        $scope.formData.transform.requestBody.to = $scope.mailTo;
         $scope.formData.transform.requestBody.subject = $('#addTranMailSub').val();
         $scope.formData.transform.requestBody.text = $('#addTranMailText').val();
-        console.log("新建规则-创建插件:" + $scope.formData.transform);
+        console.log("新建规则-创建插件:");
+        console.log($scope.formData.transform);
         $("input[type=reset]").trigger("click");
     }
 
@@ -238,4 +246,35 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             }
         });
     }
+
+
+    /********添加规则-添加多个MailPlugin收件人*****/
+    $scope.fchat = new Object();
+    $scope.fchat.replies = [{value: ""}];//数据类型为数组
+    // 初始化时由于只有1条回复，所以不允许删除
+    $scope.fchat.canDescReply = false;
+
+    // 增加回复数
+    $scope.fchat.incrReply = function ($index) {
+        $scope.fchat.replies.splice($index + 1, 0, {value: ""});
+        console.log($scope.fchat.replies);
+        // 增加新的回复后允许删除
+        $scope.fchat.canDescReply = true;
+    }
+
+    // 减少回复数
+    $scope.fchat.decrReply = function ($index) {
+        // 如果回复数大于1，删除被点击回复
+        if ($scope.fchat.replies.length > 1) {
+            $scope.fchat.replies.splice($index, 1);
+        }
+        // 如果回复数为1，不允许删除
+        if ($scope.fchat.replies.length == 1) {
+            $scope.fchat.canDescReply = false;
+        }
+    }
+    /***ng-repeat动态遍历空数组会报索引重复的bug
+     * 所以只能设为对象，再取出其中的value发给接口*/
+    /***添加多个收件人END*****/
+
 });
