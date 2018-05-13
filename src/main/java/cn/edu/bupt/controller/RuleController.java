@@ -181,7 +181,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
     }
     **/
 
-    @RequestMapping(value = "/active/{ruleId}",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/active/{ruleId}",method = RequestMethod.POST)
     @ResponseBody
     public String active(@PathVariable("ruleId") String ruleId)
     {
@@ -198,10 +198,10 @@ public class RuleController extends DefaultThingsboardAwaredController{
             return retFail(e.toString()) ;
         }
 
-        return retSuccess(responseContent);
+        return retSuccess("");
     }
 
-    @RequestMapping(value = "/suspend/{ruleId}",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/suspend/{ruleId}",method = RequestMethod.POST)
     @ResponseBody
     public String suspend(@PathVariable("ruleId") String ruleId)
     {
@@ -218,10 +218,10 @@ public class RuleController extends DefaultThingsboardAwaredController{
             return retFail(e.toString()) ;
         }
 
-        return retSuccess(responseContent);
+        return retSuccess("");
     }
 
-    @RequestMapping(value = "/delete/{ruleId}",method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/delete/{ruleId}",method = RequestMethod.DELETE)
     @ResponseBody
     public String deleteRules(@PathVariable("ruleId") String ruleId)
     {
@@ -235,10 +235,10 @@ public class RuleController extends DefaultThingsboardAwaredController{
         }catch(Exception e){
             return retFail(e.toString()) ;
         }
-        return retSuccess(responseContent);
+        return retSuccess("");
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public String createRule(@RequestBody String ruleInfo)
     {
@@ -256,7 +256,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
             return retFail(e.toString()) ;
         }
 
-        return retSuccess(responseContent);
+        return retSuccess("");
     }
 
     private String getErrorMsg(Exception e) {
