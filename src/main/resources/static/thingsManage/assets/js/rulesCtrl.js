@@ -131,8 +131,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //删除规则
     $scope.delRule = function () {
         var delRULE = $resource('/api/rule/delete/:id', {id: '@id'});
-        delRULE.delete({}, {id: $scope.Ruleitem.id.id}, function (resp) {
-            console.log("删除成功:id=" + $scope.Ruleitem.id.id + ";name=" + $scope.Ruleitem.name);
+        delRULE.delete({}, {id: $scope.Ruleitem.rule.ruleId}, function (resp) {
+            console.log("删除成功");
             $("#delDG").modal("hide");
             location.reload();
         }, function (resp) {
