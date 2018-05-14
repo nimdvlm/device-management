@@ -2,9 +2,9 @@
     <div clas="PMTitle">
         <div style="margin-top: 32px">
             <span class="header-line" style="font-size: 27px;font-weight: 600">插件管理
-            <button style="margin-left:10px" class="btn btn-primary btn-sm" data-toggle="modal"
+            <!--button style="margin-left:10px" class="btn btn-primary btn-sm" data-toggle="modal"
                     data-target="#addPluginGroup">+ 创建插件
-            </button>
+            </button-->
             </span>
             <span class="PMsearch">
                 <input class="span2" type="text" placeholder="输入插件名称">
@@ -26,11 +26,11 @@
                 <p class="style">插件token：{{itemp.pluginToken}}</p>
                 <p class="style"> 创建时间：{{itemp.creationTime}}</p>
                 <br/>
-                <span class="postionOne" data-toggle="modal" data-target="#activationPM">
-                <i class="glyphicon glyphicon-off" title="激活/暂停" ng-click="active()"></i>
+                <span class="pluginActiveposition" data-toggle="modal" data-target="#activePG">
+                <i class="glyphicon glyphicon-play" title="激活" ng-click="activePG()"></i>
             </span>
-                <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
-                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
+                <span class="pluginStopposition" data-toggle="modal" data-target="#stopPG">
+                <i class="glyphicon glyphicon-pause" title="暂停"></i>
             </span>
             </div>
         </div>
@@ -111,7 +111,7 @@
     </div>
 
 <!--创建插件界面-->
-<div class="modal fade" id="addPluginGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<!--div class="modal fade" id="addPluginGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -131,7 +131,7 @@
                     <input type="text" class="add form-control" placeholder="必填" ng-model="$parent.addDGName">
                 </div>
             </div>
-            <br/><!--此处添加不满足条件时的弹出框-->
+            <br/>
             <div class="modal-body">
                 <label class="col-sm-3 control-label" style="text-align: left">
                     &nbsp;&nbsp;描述
@@ -222,12 +222,12 @@
                     取消
                 </button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>
+        </div>
+    </div>
+</div-->
 
-<!--删除插件界面-->
-<div class="modal fade" id="deletePM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <!--激活插件界面-->
+<div class="modal fade" id="activePG" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -236,16 +236,16 @@
                     &times;
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                    删除插件
+                    激活插件
                 </h4>
             </div>
             <div class="modal-body">
-                确定删除此插件？
+                确定激活此插件？
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消
                 </button>
-                <button type="button" class="btn btn-primary"  ng-click="delDG()">
+                <button type="button" class="btn btn-primary"  ng-click="activePG()">
                     确定
                 </button>
             </div>
@@ -253,7 +253,32 @@
     </div><!-- /.modal -->
 </div>
 
-<!--激活插件界面-->
+
 <!--暂停插件界面-->
+    <div class="modal fade" id="stopPG" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        暂停插件
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    确定暂停此插件？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                    </button>
+                    <button type="button" class="btn btn-primary"  ng-click="stopPG()">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
 
 <!-- CONTENT-WRAPPER SECTION END-->

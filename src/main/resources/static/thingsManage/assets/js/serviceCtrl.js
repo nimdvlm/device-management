@@ -1,10 +1,7 @@
 mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
 
-
-    /*var abilityInfo;
-
-    var obj = $resource('/api/v1/abilityGroup');
+    /*var obj = $resource('/api/v1/abilityGroup');
     $scope.abilityGroup = obj.query();
     console.log($scope.abilityGroup);
     deviceInfo =*/
@@ -12,7 +9,39 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
     var abilityGroup = $resource('/api/v1/abilityGroup');
     $scope.abilityGroups = abilityGroup.query(function () {
         $scope.items = $scope.abilityGroups[0];
+        console.log($scope.items);
+        $scope.show = function(AG){
+            var abilityG = $resource('/api/v1/ability/:id', {id: '@id'});
+            abilityG.query({id: $scope.items.model.modelId})
+                .$promise.then(function (person) {
+                $scope.serviceName = person.serviceName;
+                $scope.serviceDescription = person.serviceDescription;
+                $scope.deviceType = person.deviceType;
+
+            });
+        }
+
+
     });
+    /*选中左侧图标展示能力详情*/
+    $scope.show = function (AG) {
+        //items是当前展示的单个设备
+        //$scope.item = {serviceName: items.abilityDes.serviceName, serviceDescription: items.abilityDes.serviceDescription,deviceType:items.abilityDes.deviceType};
+        var ABILITY = $resource('/api/v1/ability/:id', {id: '@id'});
+        ABILITY.query({id: $scope.items.model.modelId})
+            .$promise.then(function (person) {
+            $scope.myData = person;
+        });
+    };
+    /*能力信息获取与展示
+    var ability = $resource('/api/v1/ability/{modelId}')
+    $scope.show = function (items){
+        abilityInfo = items;
+        console.log(items);
+        $scope.serviceName = items.serviceName;
+        $scope.serviceDescription = items.serviceDescription;
+        $scope.deviceType = items.deviceType;
+    };*/
 
 
 
@@ -34,25 +63,70 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
         });
     };
 
-    /*删除能
-    $scope.delAM = function () {
-        var delAM = $resource('/api/v1/abilityGroup/:id',{id: '@id'});
-        delAM.delete({}, {id: $scope.items.id}, function (resp) {
-            console.log("删除成功:id=" + $scope.items.id + ";name=" + $scope.items.name);
-            $("#delAM").modal("hide");
+
+    /*创建能力
+    var createAbilityObj =  $resource("/api/v1/ability");
+    $scope.addAbility = function(){
+        $scope.serviceName = $("#serviceName").val();
+        $scope.serviceDescription = $("#serviceDescription").val();
+        $scope.serviceType = $("#serviceType").val();
+        $scope.protocol = $("#protocol").val();
+        $scope.url = $("#url").val();
+        $scope.requireResponce = $("#requireResponce").val();
+        $scope.methodName = $("#methodName").val();
+        $scope.key = $("#key").val();
+        $scope.type = $("#type").val();
+        $scope.value = $("#value").val();
+        $scope.createAbility = '{"serviceName":'+'"'+$scope.serviceName+'"'+',"serviceDescription":'+'"'+$scope.serviceDescription+'"'+',"serviceType":'+'"'+$scope.serviceType+'"'+'}';
+        console.log($scope.createAbility);
+        $scope.ability = createAbilityObj.save({},$scope.createAbility,function (resp) {
+            toastr.success("新增设备成功！");
+            setTimeout(function () {
+                window.location.reload();
+            },500);
+        },function (error) {
+            toastr.error("新增设备失败！");
+        });
+    };*/
+
+
+
+
+
+
+    /*删除能力组*/
+    $scope.delAG = function () {
+        var delAG = $resource('/api/v1/abilityGroup?modelId=&id', {id: '@id'});
+        delAG.delete({}, {id: $scope.items.model.modelId}, function (resp) {
+            console.log("删除成功:modelId=" + $scope.items.model.modelId);
+            $("#deleteSM").modal("hide");
             location.reload();
         }, function (resp) {
-            console.log("1234再来一次");
-            alert("删除失败，请重试！")
+            console.log("删除失败");
+            alert("删除失败！")
         });
-    }力组*/
+    }
 
-
-    var deleteAbilityObj = $resource("/api/v1/abilityGroup/:modelId");
-    $scope.delAM = function(){
+    /*var deleteAbilityObj = $resource('/api/v1/abilityGroup/');
+    $scope.delete = function(){
         console.log(abilityInfo);
         console.log(abilityInfo.id);
-        $scope.deleteAbility = deleteAbilityObj.delAM({modelId:abilityInfo.id},{},function (resp) {
+        $scope.deleteAbility = deleteAbilityObj.delete({modelId:abilityInfo.id},{},function (resp){
+            toastr.success("删除成功！");
+            setTimeout(function () {
+                window.location.reload();
+            },1000);
+        },function (resp) {
+            toastr.error("删除失败！");
+        });
+    }*/
+
+    /*删除能力组
+    var deleteAbilityObj = $resource("/api/v1/abilityGroup?modelId="+ modelId);
+    $scope.delAG = function(){
+        console.log(abilityInfo);
+        console.log(abilityInfo.id);
+        $scope.deleteAbility = deleteAbilityObj.delAG({modelId:abilityInfo.id},{},function (resp) {
             toastr.success("删除设备成功！");
             setTimeout(function () {
                 window.location.reload();
@@ -61,23 +135,47 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
         },function (error) {
             toastr.error("删除设备失败！");
         });
-    };
-    /*搜索能力组
-    *
-    *
-    *
-    * */
-    /*展示platform*/
-    $scope.showURL = function () {
-        if($parent.ad == thirdparty){
-           $scope.myvar = true;
-        }else{
-            $scope.myvar = flase;
-        }
+    };*/
+    /*搜索能力组*/
+    /*$scope.searchAbility = function () {
+        var textSearch = $("#searchAbilityText").val();
+        var searchAbilityObj = $resource("/api/device/alldevices?limit=20&textSearch="+textSearch);
+        $scope.searchAbilityInfo = searchAbilityObj.query();
+        console.log($scope.searchAbilityInfo);
+        console.log($scope.searchAbilityInfo.length);
+        $scope.searchAbilityInfo.$promise.then(function (value) {
+            if(value == false){
+                toastr.warning("无此能力组");
+                setTimeout(function () {
+                    window.location.reload();
+                },1000);
+            }
+            else{
+                $scope.abilityList = $scope.searchAbilityInfo;
+                $("#searchAbilityText").on("focus",function () {
+                    $(this).val("");
+                })
+            }
+        });
 
+
+    };*/
+    /*删除能力*/
+    var deleteAbility = $resource('/api/v1/ability/:id,{id:@id}');
+    $scope.deleteA = function(){
+        deleteA.delete({id:$scope.itema.id},{},function(){
+            toastr.success("删除成功！");
+            setTimeout(function () {
+                window.location.reload();
+            },1000);
+        },function () {
+            toastr.error("删除失败！");
+        });
     }
 
-    /*+号添加参数*/
+
+
+    /*加+号添加参数
     $scope.itemc=[];  //初始化数组，以便为每一个ng-model分配一个对象
     var i=0;
     $scope.CC= {
@@ -92,6 +190,7 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
             //每次删除时得重新计算总值$scope.getResult();
         }
     }
+*/
 
 
 
