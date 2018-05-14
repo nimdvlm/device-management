@@ -14,7 +14,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         "rule": {
             "tenantId": "1",
             "state": "ACTIVE",
-            "additional_info":""
+            "additional_info": ""
         },
         "filters": [],
         "transform": {
@@ -131,8 +131,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //删除规则
     $scope.delRule = function () {
         var delRULE = $resource('/api/rule/delete/:id', {id: '@id'});
-        delRULE.delete({}, {id: $scope.Ruleitem.id.id}, function (resp) {
-            console.log("删除成功:id=" + $scope.Ruleitem.id.id + ";name=" + $scope.Ruleitem.name);
+        delRULE.delete({}, {id: $scope.Ruleitem.rule.ruleId}, function (resp) {
+            console.log("删除成功");
             $("#delDG").modal("hide");
             location.reload();
         }, function (resp) {
@@ -148,7 +148,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         //editRule.save({id: $scope.Ruleitem.rule.ruleId}, $scope.state1)
         editRule.save({id: $scope.Ruleitem.rule.ruleId})
             .$promise.then(function (resp) {
-            console.log("规则激活成功:id=" + $scope.Ruleitem.rule.ruleId + ";state=" + $scope.Ruleitem.rule.state);
+            console.log("规则激活成功:id=" + $scope.Ruleitem.rule.ruleId);
             $("#editDGName").modal("hide");
             location.reload();
         });
@@ -161,7 +161,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         //editRule.save({id: $scope.Ruleitem.rule.ruleId}, $scope.state2)
         editRule.save({id: $scope.Ruleitem.rule.ruleId})
             .$promise.then(function (resp) {
-            console.log("规则激活成功:id=" + $scope.Ruleitem.rule.ruleId + ";state=" + $scope.Ruleitem.rule.state);
+            console.log("规则暂停成功:id=" + $scope.Ruleitem.rule.ruleId);
             $("#editDGName").modal("hide");
             location.reload();
         });

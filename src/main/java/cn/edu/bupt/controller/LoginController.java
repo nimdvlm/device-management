@@ -120,6 +120,7 @@ public class LoginController extends DefaultThingsboardAwaredController {
         String res = HttpUtil.refreshToken(refresh_token);
         JsonObject newAccessTokenJson = (JsonObject) new JsonParser().parse(res);
         session.setAttribute("token",newAccessTokenJson.get("access_token").getAsString());
+        session.setAttribute("refreshToken",newAccessTokenJson.get("refresh_token").getAsString());
         return newAccessTokenJson.get("access_token").getAsString();
     }
 
