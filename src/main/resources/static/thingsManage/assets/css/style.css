@@ -17,6 +17,7 @@
 .content-wrapper {
     min-height:1000px;
     background: rgb(238,238,238);
+    padding-left: 45px;
 }
 
 /* =============================================================

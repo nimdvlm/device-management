@@ -1,29 +1,31 @@
 mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
 
-    /*var obj = $resource('/api/v1/abilityGroup');
-    $scope.abilityGroup = obj.query();
-    console.log($scope.abilityGroup);
-    deviceInfo =*/
     /*能力组信息获取与展示*/
     var abilityGroup = $resource('/api/v1/abilityGroup');
-    $scope.abilityGroups = abilityGroup.query(function () {
+    $scope.abilityGroups = abilityGroup.query();
+    console.log($scope.abilityGroups);
+    $scope.show = function(AG){
+        console.log(AG);
+        var modelId = AG.model.modelId;
+        console.log(modelId);
+        var abilitiesObj = $resource("/api/v1/ability/:modelId");
+        $scope.abilitiesInfo = abilitiesObj.query({modelId:modelId})
+            .$promise.then(function (value) {
+
+                var jsonData = JSON.parse(value[0].abilityDes);
+                $scope.serviceName = jsonData.serviceName;
+                $scope.serviceDescription = jsonData.serviceDescription;
+                $scope.deviceType = jsonData.serviceType;
+            });
+
+    };
+   /* $scope.show = function () {
         $scope.items = $scope.abilityGroups[0];
         console.log($scope.items);
-        $scope.show = function(AG){
-            var abilityG = $resource('/api/v1/ability/:id', {id: '@id'});
-            abilityG.query({id: $scope.items.model.modelId})
-                .$promise.then(function (person) {
-                $scope.serviceName = person.serviceName;
-                $scope.serviceDescription = person.serviceDescription;
-                $scope.deviceType = person.deviceType;
 
-            });
-        }
-
-
-    });
-    /*选中左侧图标展示能力详情*/
+    }*/
+    /*/!*选中左侧图标展示能力详情*!/
     $scope.show = function (AG) {
         //items是当前展示的单个设备
         //$scope.item = {serviceName: items.abilityDes.serviceName, serviceDescription: items.abilityDes.serviceDescription,deviceType:items.abilityDes.deviceType};
@@ -32,7 +34,7 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
             .$promise.then(function (person) {
             $scope.myData = person;
         });
-    };
+    };*/
     /*能力信息获取与展示
     var ability = $resource('/api/v1/ability/{modelId}')
     $scope.show = function (items){
