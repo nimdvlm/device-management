@@ -57,8 +57,9 @@ HEAD MENU STYLES
     }
 
         #side-menu ul li {
-            border-bottom: 1px solid #cccccc;
+            border-bottom: 1px dashed #cccccc;
             padding: 20px 25px;
+            text-align: left;
         }
 
             #side-menu ul li a i {
@@ -74,6 +75,16 @@ HEAD MENU STYLES
 .menu-close-icon, .menu-open-icon {
     cursor: pointer;
 
+}
+.fontStyle{
+    font-size: 20px;
+}
+.textStyle{
+    font-size: 18px;
+    font-weight: bold;
+}
+#searchKey{
+    height: 25px;
 }
 
 
@@ -172,9 +183,15 @@ DEVICELIST STYLES
 
     border: 2px solid #ff3c3c;
 }
-#detailTable table tbody tr td{
+.showForm table tbody tr td{
    width: 30%;
    text-align: center;
+}
+.boldForm{
+    font-weight: bold;
+}
+.divide-line{
+    border-top: 2px solid #c0c0c0;
 }
 
 /* =============================================================

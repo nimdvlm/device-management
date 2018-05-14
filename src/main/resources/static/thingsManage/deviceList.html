@@ -53,7 +53,7 @@
                 </tr>
                 <tr>
                     <td class="attName">父类设备:</td>
-                    <td>{{parentId}}</td>
+                    <td>{{parentName}}</td>
                 </tr>
                 <tr>
                     <td class="attName">厂商：</td>
@@ -75,7 +75,7 @@
                     <td class="attName">操作：</td>
                     <td>
                         <button class="btn btn-primary" data-toggle="modal"
-                                data-target="#refreshDevice">更新设备</button>
+                                data-target="#refreshDevice"  ng-click="setValue()">更新设备</button>
                         <button class="btn btn-primary" data-toggle="modal"
                                 data-target="#token" ng-click="showToken()">查看令牌</button>
                         <button class="btn btn-primary" data-toggle="modal"
@@ -87,7 +87,7 @@
                     <td></td>
                     <td>
                         <span style="float: right;cursor: pointer;color: #305680;" data-toggle="modal"
-                           data-target="#deviceDetail" class="highlight" >
+                           data-target="#deviceDetail" class="highlight" ng-click="showDetail()">
                             了解更多...
                         </span>
                     </td>
@@ -191,6 +191,7 @@
                         <tr>
                             <td class="attName" >父类设备:</td>
                             <td>
+
                                 <select class="inputInfo" id="reParentId">
                                     <option>------请选择------</option>
                                     <option ng-repeat="data in deviceList" class="{{data.id}}">{{data.name}}</option>
@@ -200,6 +201,7 @@
                         <tr>
                             <td class="attName">厂商:</td>
                             <td>
+
                                 <select class="inputInfo" id="reManufacture" ng-change="getManufacture()" ng-model="myReManufacturer">
                                     <option>------请选择------</option>
                                     <option ng-repeat="data in manufacturerInfo" class="{{data.manufacturerId}}">{{data.manufacturerName}}</option>
@@ -209,8 +211,9 @@
                         <tr>
                             <td class="attName">设备类型:</td>
                             <td>
+
                                 <select class="inputInfo" id="reDeviceType" ng-change="getDeviceType()" ng-model="myReDeviceType">
-                                    <option>------请选择------</option>
+
                                     <option ng-repeat="data in deviceTypeInfo" class="{{data.deviceTypeId}}">{{data.deviceTypeName}}</option>
                                 </select>
                             </td>
@@ -218,8 +221,9 @@
                         <tr>
                             <td class="attName">型号：</td>
                             <td>
+
                                 <select class="inputInfo" id="reModel"  ng-change="getDeviceModel()" ng-model="myReDeviceModel">
-                                    <option>------请选择------</option>
+
                                     <option ng-repeat="data in deviceModelInfo" class="{{data.modelId}}">{{data.modelName}}</option>
                                 </select>
                             </td>
@@ -337,7 +341,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                     <h4 class="modal-title" style="font-weight: bold;font-size: 20px;">设备详情</h4>
                 </div>
-                <div class="modal-body" id="detailTable">
+                <div class="modal-body showForm" id="detailTable">
                     <table class="table table-striped table-hover">
                         <thead>
                         <tr>
@@ -346,11 +350,10 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td></td>
-                            <td></td>
+
                             <td>
                                 每页显示
-                                <select>
+                                <select ng-change="showNum()" ng-model="seletValue">
                                     <option>5</option>
                                     <option>10</option>
                                     <option>15</option>
@@ -358,17 +361,25 @@
                                 </select>
                                 条记录
                              </td>
+
+                            <td></td>
+                            <td><input type="text" class="form-control" placeholder="请输入关键字搜索..." id="searchKey"></td>
                         </tr>
-                        <tr>
+                        <tr class="boldForm">
                             <td>最后更新时间</td>
                             <td>键</td>
                             <td>值</td>
                         </tr>
-
+                        <tr ng-repeat="attr in attrDetailInfo">
+                            <td>{{attr.lastUpdateTs | date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                            <td>{{attr.key}}</td>
+                            <td>{{attr.value}}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="modal-body" id="realTimeTable">
+                <div class="divide-line"></div>
+                <div class="modal-body showForm" id="realTimeTable">
                     <table class="table table-striped table-hover">
                         <thead>
                         <tr>
@@ -376,15 +387,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr class="boldForm">
                             <td>最后更新时间</td>
                             <td>键</td>
                             <td>值</td>
                         </tr>
+                        <tr ng-repeat="arr in realTimeInfo">
+                            <td>{{arr.ts | date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                            <td>{{arr.key}}</td>
+                            <td>{{arr.value}}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="modal-body" id="controlTable">
+                <div class="divide-line"></div>
+                <div class="modal-body showForm" id="controlTable">
                     <table class="table table-striped table-hover">
                         <thead>
                         <tr>
@@ -392,11 +409,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+
                         </tbody>
                     </table>
                 </div>
