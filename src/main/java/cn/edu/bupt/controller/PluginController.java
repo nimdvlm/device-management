@@ -81,7 +81,7 @@ public class PluginController extends DefaultThingsboardAwaredController{
     }
 **/
 
-    @RequestMapping(value = "/suspend/{url}/{port}",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/suspend/{url}/{port}",method = RequestMethod.POST)
     public String suspend(@PathVariable("url") String url, @PathVariable("port") String port){
         String requestAddr = "/api/plugin/suspend";
 
@@ -94,10 +94,10 @@ public class PluginController extends DefaultThingsboardAwaredController{
         }catch(Exception e){
             return retFail(e.toString()) ;
         }
-        return retSuccess(responseContent);
+        return retSuccess("");
     }
 
-    @RequestMapping(value = "/activate/{url}/{port}",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/activate/{url}/{port}",method = RequestMethod.POST)
     public String activate(@PathVariable("url") String url, @PathVariable("port") String port){
         String requestAddr = "/api/plugin/active";
 
@@ -110,6 +110,6 @@ public class PluginController extends DefaultThingsboardAwaredController{
         }catch(Exception e){
             return retFail(e.toString()) ;
         }
-        return retSuccess(responseContent);
+        return retSuccess("");
     }
 }
