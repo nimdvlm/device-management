@@ -17,22 +17,6 @@
 
         <!--模块控件-->
     <div class="abilityIcon">
-        <!--div ng-repeat="items in abilityGroups">
-            <div class="chooseBtn homeBackgroundstyle">
-                <span data-toggle="modal" data-target="#SMDetail" class="items">
-                <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                <p class="style">厂商：{{items.manufacturer.manufacturerName}}</p>
-                <p class="style">设备类型：{{items.deviceType.deviceTypeName}}</p>
-                <p class="style"> 设备型号：{{items.model.modelName}}</p>
-                <br/></span>
-                <span class="postionOne" data-toggle="modal" data-target="#createSM">
-                <i class="glyphicon glyphicon-plus" title="创建服务"></i>
-                </span>
-                <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
-                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-            </span>
-            </div>
-        </div-->
         <!--左右分布控件模块-->
         <div ng-repeat="items in abilityGroups" ng-click="show(items)">
             <div class="chooseBtn abilityBackgroundstyle">
@@ -50,70 +34,6 @@
                 </span>
             </div>
         </div>
-        <!--
-                        <div class="chooseBtn abilityBackgroundstyle">
-                            <span title="能力管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                            <span class="abilityPlus" data-toggle="modal" data-target="#createSM">
-                                <i class="glyphicon glyphicon-plus" title="创建能力"></i>
-                                </span>
-                            <span data-toggle="modal" class="abilityDelete" data-target="#deleteSM">
-                                <i class="glyphicon glyphicon-trash" title="删除能力组"></i>
-                                </span>
-                            <span class="items">
-                                <p class="style">厂商：{{items.manufacturer.manufacturerName}}</p>
-                                <p class="style">设备类型：{{items.deviceType.deviceTypeName}}</p>
-                                <p class="style"> 设备型号：{{items.model.modelName}}</p>
-                            </span>
-                        </div>
-
-
-
-
-                                       <div class="chooseBtn abilityBackgroundstyle">
-                                           <span title="能力管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                                           <span class="abilityPlus" data-toggle="modal" data-target="#createSM">
-                                               <i class="glyphicon glyphicon-plus" title="创建能力"></i>
-                                               </span>
-                                           <span data-toggle="modal" class="abilityDelete" data-target="#deleteSM">
-                                               <i class="glyphicon glyphicon-trash" title="删除能力组"></i>
-                                               </span>
-                                           <span>
-                                               <p class="style">厂商：{{items.manufacturer.manufacturerName}}</p>
-                                               <p class="style">设备类型：{{items.deviceType.deviceTypeName}}</p>
-                                               <p class="style"> 设备型号：{{items.model.modelName}}</p>
-                                               </span>
-                                       </div>
-                                       <div class="chooseBtn abilityBackgroundstyle">
-                                           <span title="能力管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                                           <span class="abilityPlus" data-toggle="modal" data-target="#createSM">
-                                               <i class="glyphicon glyphicon-plus" title="创建能力"></i>
-                                               </span>
-                                           <span data-toggle="modal" class="abilityDelete" data-target="#deleteSM">
-                                               <i class="glyphicon glyphicon-trash" title="删除能力组"></i>
-                                               </span>
-                                           <span>
-                                               <p class="style">厂商：{{items.manufacturer.manufacturerName}}</p>
-                                               <p class="style">设备类型：{{items.deviceType.deviceTypeName}}</p>
-                                               <p class="style"> 设备型号：{{items.model.modelName}}</p>
-                                               </span>
-                                       </div>
-
-
-
-                                                                            <div class="chooseBtn homeBackgroundstyle">
-                                                                                    <span data-toggle="modal" data-target="#SMDetail">
-                                                                                    <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                                                                                    <p class="style">厂商：{{vendor}}</p>
-                                                                                   <p class="style">设备类型：{{equipmentType}}</p>
-                                                                                    <p class="style"> 设备型号：{{equipmentModel}}</p>
-                                                                                    <br/></span>
-                                                                                <span class="postionOne" data-toggle="modal" data-target="#createSM">
-                                                                                            <i class="glyphicon glyphicon-plus" title="创建服务"></i>
-                                                                                       </span>
-                                                                                <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
-                                                                                           <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-                                                                                       </span>
-                                                                            </div>-->
     </div>
     <!--右侧表格分布-->
     <div class="abilityChart">
@@ -126,20 +46,18 @@
                     <th>操作</th>
                 </tr>
                 </thead>
-                <div ng-repeat="items in abilityChart">
                 <tbody>
-                <tr>
-                    <td>{{serviceName}}</td>
-                    <td>{{serviceDescription}}</td>
-                    <td>{{deviceType}}</td>
+                <tr ng-repeat="arr in arrs" class="arr">
+                    <td>{{arr.abilityDes.serviceName}}</td>
+                    <td>{{arr.abilityDes.serviceDescription}}</td>
+                    <td>{{arr.abilityDes.deviceType}}</td>
                     <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteAbility">删除</button></td>
                 </tr>
                 </tbody>
-                </div>
             </table>
     </div>
 
-        <!--创建服务组弹出界面-->
+        <!--创建能力组弹出界面-->
     <div class="modal fade" id="addServiceGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -149,7 +67,7 @@
                         &times;
                     </button>
                     <h3 class="modal-title" style="color: #305680;font-weight: 600">
-                        创建服务组
+                        创建能力组
                     </h3>
                 </div>
                 <div class="modal-body" id="abilityInfo">
@@ -182,7 +100,7 @@
         </div><!-- /.modal -->
     </div>
 
-    <!--创建服务弹出界面-->
+    <!--创建能力弹出界面-->
     <div class="modal fade" id="createSM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -323,41 +241,6 @@
         </div><!-- /.modal -->
     </div>
 
-    <!--弹出设备类型详情列表-->
-    <!--div class="modal fade" id="SMDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title">
-                        <caption><span style="color: #305680;font-weight: 600;font-size: 22px">{{equipmentType}}设备类型下的服务</span></caption>
-                    </h4>
-                </div>
-                <table class="table table-hover table-bordered table-striped" id="searchResults">
-                    <thead>
-                    <tr class="bg-info">
-                        <th>服务名称</th>
-                        <th>服务类型</th>
-                        <th>服务描述</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>{{Bmanagement.serviceName}}设置开关状态</td>
-                        <td>{{Bmanagement.serviceType}}打开或者关闭开关</td>
-                        <td>{{Bmanagement.serviceDescription}}platform</td>
-                        <td><button class="btn btn-sm btn-danger">删除</button></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div-->
-
     <!--删除能力界面弹出框-->
     <div class="modal fade" id="deleteAbility" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
@@ -389,34 +272,6 @@
 
 </div>
 	<!--选择框的值显示或隐藏文本框-->
-<!--script type="text/javascript">
-    window.onload =  function(){
-        var select1 = document.getElementById('select1');
-        var select2 = document.getElementById('select2');
-        select1.onchange = function(){
-            if(this.value=='platform'){
-                document.getElementById('div1').style.display = 'none';
-            }else {
-                document.getElementById('div1').style.display = 'block';
-            }
-        }
-        select2.onchange = function(){
-            if(this.value=='1'){
-                document.getElementById('div2').style.display = 'block';
-                document.getElementById('div3').style.display = 'none';
-                document.getElementById('div4').style.display = 'none';
-            }else if(this.value=='2'){
-                document.getElementById('div3').style.display = 'block';
-                document.getElementById('div2').style.display = 'none';
-                document.getElementById('div4').style.display = 'none';
-            }else{
-                document.getElementById('div4').style.display = 'block';
-                document.getElementById('div2').style.display = 'none';
-                document.getElementById('div3').style.display = 'none';
-            }
-        }
-    }
-</script-->
 <script>
     $('#serviceType').bind('change', function(){
         var val = $(this).val();

@@ -43,7 +43,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
 
     @RequestMapping(value="/abilityGroup", method = RequestMethod.DELETE)
     public String deleteGroup(@RequestParam int  modelId) {
-        String url = "http://"+getServiceManagementServer()+"/api/abilityGroup?modelId="+modelId;
+        String url = "http://"+getServiceManagementServer()+"/api/v1/abilityGroup?modelId="+modelId;
         try{
             String responce = HttpUtil.sendDeletToThingsboard(url,request.getSession());
             return retSuccess(responce);
