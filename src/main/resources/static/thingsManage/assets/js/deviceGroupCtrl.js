@@ -26,7 +26,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                 console.log("新建设备组成功");
                 console.log(resp);
                 $("#addRule").modal("hide");
-                //location.reload();
+                location.reload();
             });
         } else {
             alert("输入不能为空!");
@@ -52,7 +52,8 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                 }
             });
         }
-        else {alert("输入不能为空!");
+        else {
+            alert("输入不能为空!");
         }
     };
 
@@ -99,45 +100,146 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
             $scope.myData = person;
         });
     };
-    //ui-grid的js部分
-    //测试数据
-    //$scope.myData =[{"name":"LIANG","id":5,"l":"lijs"}]
 
-    $scope.gridOptions = {
-        data: 'myData',
-        enableHorizontalScrollbar: 0,
-        columnDefs: [
-            {field: 'name', width: '25%', displayName: '设备名称'},
-            {field: 'id', displayName: '设备id'},
-            {
-                field: 'name', width: '15%', displayName: '操作',
-                cellTemplate: '<div class="container-fluid"><div class="row" style="padding-top: 5px"><div class="col-xs-4 text-center"><div class="div-click" ng-click="grid.appScope.goToDelete(row)"><span class="glyphicon glyphicon-minus shand"></span></div></div><div></div></div></div>'
-            }
-            /***暂不需要此功能
-             * 根据boolean值，同一列中显示不同符号
-             {
-                 field: 'isIn', displayName: '操作',
-                 cellTemplate: '<div class="container-fluid"><div class="row cell-action-style"><div class="col-xs-3 text-center"><div class="div-click" ng-click="grid.appScope.goToDelete(row)"><span class="glyphicon shand" ng-class="{true: \'glyphicon-minus\', false: \'glyphicon-plus\'}[row.entity.isIn]"></span></div></div><div></div></div></div>'
-             } ****/
-        ]
+
+    /*******显示设备组内设备********/
+    //点击按钮查看令牌
+    var tokenObj = $resource('/api/device/token/:deviceId', {id: '@id'});
+    $scope.showToken = function (data) {
+        console.log("向后台获取设备Token中...")
+        $scope.tokenJson = tokenObj.get({deviceId: data.id})
+            .$promise.then(function (value) {
+                $scope.token = value.deviceToken;
+                console.log($scope.token);
+            });
     };
+    /****END***/
 
-    //设备组取消关联某设备-弹出删除提示modal
-    $scope.goToDelete = function (row) {
-        console.log("删除确认modal!");
-        console.log(row.entity);
-        $scope.unAssignDevid = row.entity.id;
-        $("#warnDelAssign").modal("show");
-    };
 
-    //设备组取消关联某设备
+    /*****设备组取消关联某设备*****/
+    $scope.giveData = function (data) {
+        console.log("ng-repeat中的data赋值给作用域");
+        $scope.devInGroup = data;
+    }//此方法用于将ng-repeat里的data赋值给作用域。非上策
+
     $scope.unAssign = function () {
-        console.log("正在向后台发送请求...")
-        var DISASS = $resource('api/group/unassign/:deviceId/:groupId', {deviceId: '@id', groupId: '@id'});
-        DISASS.get({deviceId: $scope.unAssignDevid, groupId: $scope.item.id})
+        console.log("正在向后台发送请求...");
+        var DISASS = $resource('/api/group/unassign/:deviceId/:groupId', {deviceId: '@id', groupId: '@id'});
+        DISASS.get({deviceId: $scope.devInGroup.id, groupId: $scope.item.id})
             .$promise.then(function (person) {
-            alert("取消关联成功");
             $("#warnDelAssign").modal("hide");
+            location.reload();
         });
     };
+    /****END*****/
+
+
+    /*************更新设备-copy自deviceList.js***********/
+    //信息初始化
+    var obj = $resource("/api/device/alldevices?limit=30");//获取所有设备信息
+    $scope.deviceList = obj.query();
+    var manufacturerObj = $resource("/api/v1/abilityGroup/manufacturers");//获取所有厂商
+    $scope.manufacturerInfo = manufacturerObj.query();
+
+
+    /*设置初始信息*/
+    $scope.setValue = function (data) {
+        console.log("ng-repeat中的data赋值给作用域");
+        $scope.devInGroup = data;
+
+        //通过父设备ID获取父设备名称
+        $.ajax({
+            url: "/api/device/name/" + data.parentDeviceId,
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            type: "GET",
+            success: function (msg) {
+                parentName = msg;
+            }
+        });
+
+        //设置父类设备初始信息
+        console.log("父类设备名称：" + parentName);
+        $("#reParentId option").each(function () {
+            if ($(this).val() == parentName) {
+                $(this).attr("selected", true);
+            }
+        });
+
+
+        /*设置厂商初始信息*/
+        $("#reManufacture option").each(function () {
+            if ($(this).val() == data.manufacture) {
+                $(this).attr("selected", true);
+            }
+        });
+
+
+        /*设置设备类型初始信息*/
+        $("#reDeviceType").prepend("<option class='select'>" + data.deviceType + "</option>");
+        $("#reDeviceType .select").attr("selected", true);
+
+        /*设置型号初始信息*/
+        $("#reModel").prepend("<option class='select'>" + data.model + "</option>");
+        $("#reModel .select").attr("selected", true);
+
+        /*设置位置初始信息*/
+        $("#reLocation").val(data.location);
+        /*设置状态初始信息*/
+        $("#reStatus").val(data.status);
+
+    };
+
+    $scope.getManufacture = function () {
+        manufacturerId = $("#reManufacture option:selected").attr("class");
+        console.log("厂商：" + manufacturerId);
+        $("#reDeviceType option").remove();
+        $("#reModel option").remove();
+        /*根据厂商查询设备类型*/
+        console.log("/api/v1/abilityGroup/deviceTypes?manufacturerId=" + manufacturerId);
+        var deviceTypeObj = $resource("/api/v1/abilityGroup/deviceTypes?manufacturerId=" + manufacturerId);
+        $scope.deviceTypeInfo = deviceTypeObj.query();
+
+
+        $scope.getDeviceType = function () {
+            deviceTypeId = $("#reDeviceType option:selected").attr("class");
+            console.log("设备类型：" + deviceTypeId);
+
+
+            /*根据厂商和设备类型查询设备型号*/
+            console.log("/api/v1/abilityGroup/models?manufacturerId=" + manufacturerId + "&deviceTypeId=" + deviceTypeId);
+            var deviceModelObj = $resource("/api/v1/abilityGroup/models?manufacturerId=" + manufacturerId + "&deviceTypeId=" + deviceTypeId);
+            $scope.deviceModelInfo = deviceModelObj.query();
+
+            $scope.getDeviceModel = function () {
+                deviceModelId = $("#reModel option:selected").attr("class");
+                console.log("设备型号:" + deviceModelId);
+            };
+        };
+    };
+
+
+    /*更新设备*/
+    var refreshDeviceObj = $resource("/api/device/updatedevice");
+    $scope.refreshDevice = function () {
+        $scope.reName = $("#reName").val();
+        $scope.reParent = $("#reParentId option:selected").attr("class");
+        $scope.reDeviceType = $("#reDeviceType").val();
+        $scope.reManufacture = $("#reManufacture").val();
+        $scope.reModel = $("#reModel").val();
+        $scope.reLocation = $("#reLocation").val();
+        $scope.reStatus = $("#reStatus").val();
+        $scope.refreshDeviceInfo = '{"name":' + '"' + $scope.reName + '"' + ',"Id":' + '"' + $scope.devInGroup.id + '"' + ',"parentDeviceId":' + '"' + $scope.reParent + '"' + ',"deviceType":' + '"' + $scope.reDeviceType + '"' + ',"manufacture":' + '"' + $scope.reManufacture + '"' + ',"model":' + '"' + $scope.reModel + '"' + ',"location":' + '"' + $scope.reLocation + '"' + ',"status":' + '"' + $scope.reStatus + '"' + '}';
+        //字符串类型的数据发送给后台是会自动加上引号
+        console.log($scope.refreshDeviceInfo);
+        $scope.refreshDeviceInformation = refreshDeviceObj.save({}, $scope.refreshDeviceInfo, function (resp) {
+            //toastr.success("更新设备成功！");
+            setTimeout(function () {
+                window.location.reload();
+            }, 1000);
+        }, function (error) {
+            toastr.error("更新设备失败！");
+        });
+    };
+    /**************更新设备END****************/
 });

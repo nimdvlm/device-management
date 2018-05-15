@@ -58,8 +58,8 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @ApiImplicitParam(name = "deviceGroupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/delete/{groupId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String delete(@PathVariable String deviceGroupId) {
-        String requestAddr = String.format("/api/group/%s", deviceGroupId);
+    public String delete(@PathVariable String groupId) {
+        String requestAddr = String.format("/api/v1/group/%s", groupId);
 
         String responseContent = null ;
         try {

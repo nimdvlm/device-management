@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import cn.edu.bupt.utils.HttpUtil;
 
-import java.util.Collection;
 
 /**
  * Created by liyou on 2018/1/15.
