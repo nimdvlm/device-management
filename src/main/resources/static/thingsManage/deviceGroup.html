@@ -123,7 +123,7 @@
                             <p>父类设备：{{data.parentDeviceId}}</p>
                             <p>
                                 <button class="btn btn-primary" data-toggle="modal"
-                                        data-target="#refreshDevice">更新设备</button>
+                                        data-target="#refreshDevice" ng-click="setValue(data)">更新设备</button>
                                 <button class="btn btn-primary" data-toggle="modal"
                                         data-target="#token" ng-click="showToken(data)">查看令牌</button>
                             </p>
@@ -230,7 +230,7 @@
                             <tbody>
                             <tr>
                                 <td class="attName">设备名称:</td>
-                                <td><input type="text" class="inputInfo" disabled="disabled" id="reName">{{data.name}}</td>
+                                <td><input type="text" class="inputInfo" disabled="disabled" id="reName" ng-value="devInGroup.name"></td>
                             </tr>
                             <tr>
                                 <td class="attName" >父类设备:</td>
