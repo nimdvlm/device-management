@@ -1,107 +1,144 @@
-﻿<div ng-controller="serviceCtrl">
+﻿<div ng-controller="abilityCtrl">
+
+
     <div clas="SMTitle">
         <div style="margin-top: 32px">
-            <span class="header-line" style="font-size: 27px;font-weight: 600">服务管理
+            <span class="header-line" style="font-size: 27px;font-weight: 600">能力管理
             <button style="margin-left:10px" class="btn btn-primary btn-sm" data-toggle="modal"
-                    data-target="#addServiceGroup">+ 创建服务组
+                    data-target="#addServiceGroup">+ 创建能力组
             </button>
             </span>
             <span class="SMsearch">
-                <input class="span2" type="text" placeholder="输入设备类型">
-                <button><span ng-click="searchDG()" title="搜索"><i class="glyphicon glyphicon-search"></i> </span></button>
+                <input class="span2" type="text" placeholder="输入设备类型" id="searchAbilityText">
+                <button><span ng-click="searchAbility()" title="搜索"><i class="glyphicon glyphicon-search"></i> </span></button>
             </span>
         </div>
     </div>
 
         <!--模块控件-->
-    <div class="containerSM">
-        <div ng-repeat="serviceManagement in serviceManagements" ng-show="showModel">
+    <div class="abilityIcon">
+        <!--div ng-repeat="items in abilityGroups">
             <div class="chooseBtn homeBackgroundstyle">
-                <span data-toggle="modal" data-target="#SMDetail">
+                <span data-toggle="modal" data-target="#SMDetail" class="items">
                 <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                <p class="style">厂商：{{serviceManagement.vendor}}</p>
-                <p class="style">设备类型：{{serviceManagement.equipmentType}}</p>
-                <p class="style"> 设备型号：{{serviceManagement.equipmentModel}}</p>
+                <p class="style">厂商：{{items.manufacturer.manufacturerName}}</p>
+                <p class="style">设备类型：{{items.deviceType.deviceTypeName}}</p>
+                <p class="style"> 设备型号：{{items.model.modelName}}</p>
                 <br/></span>
                 <span class="postionOne" data-toggle="modal" data-target="#createSM">
                 <i class="glyphicon glyphicon-plus" title="创建服务"></i>
-            </span>
+                </span>
                 <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
                 <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
             </span>
             </div>
+        </div-->
+        <!--左右分布控件模块-->
+        <div ng-repeat="items in abilityGroups" ng-click="show(items)">
+            <div class="chooseBtn abilityBackgroundstyle">
+                <span title="能力管理"><i class="fa fa-cog homeIconstyle"></i></span>
+                <span class="abilityPlus" data-toggle="modal" data-target="#createSM">
+                <i class="glyphicon glyphicon-plus" title="创建能力"></i>
+                </span>
+                <span data-toggle="modal" class="abilityDelete" data-target="#deleteSM">
+                <i class="glyphicon glyphicon-trash" title="删除能力组"></i>
+                </span>
+                <span data-toggle="modal" data-target="#SMDetail" class="items">
+                <p class="style">厂商：{{items.manufacturer.manufacturerName}}</p>
+                <p class="style">设备类型：{{items.deviceType.deviceTypeName}}</p>
+                <p class="style"> 设备型号：{{items.model.modelName}}</p>
+                </span>
+            </div>
         </div>
+        <!--
+                        <div class="chooseBtn abilityBackgroundstyle">
+                            <span title="能力管理"><i class="fa fa-cog homeIconstyle"></i></span>
+                            <span class="abilityPlus" data-toggle="modal" data-target="#createSM">
+                                <i class="glyphicon glyphicon-plus" title="创建能力"></i>
+                                </span>
+                            <span data-toggle="modal" class="abilityDelete" data-target="#deleteSM">
+                                <i class="glyphicon glyphicon-trash" title="删除能力组"></i>
+                                </span>
+                            <span class="items">
+                                <p class="style">厂商：{{items.manufacturer.manufacturerName}}</p>
+                                <p class="style">设备类型：{{items.deviceType.deviceTypeName}}</p>
+                                <p class="style"> 设备型号：{{items.model.modelName}}</p>
+                            </span>
+                        </div>
 
 
 
-        <div class="chooseBtn homeBackgroundstyle">
-                <span data-toggle="modal" data-target="#SMDetail">
-                <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                <p class="style">厂商：{{vendor}}</p>
-                <p class="style">设备类型：{{equipmentType}}</p>
-                <p class="style"> 设备型号：{{equipmentModel}}</p>
-                <br/></span>
-            <span class="postionOne" data-toggle="modal" data-target="#createSM">
-                        <i class="glyphicon glyphicon-plus" title="创建服务"></i>
-                   </span>
-            <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
-                       <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-                   </span>
+
+                                       <div class="chooseBtn abilityBackgroundstyle">
+                                           <span title="能力管理"><i class="fa fa-cog homeIconstyle"></i></span>
+                                           <span class="abilityPlus" data-toggle="modal" data-target="#createSM">
+                                               <i class="glyphicon glyphicon-plus" title="创建能力"></i>
+                                               </span>
+                                           <span data-toggle="modal" class="abilityDelete" data-target="#deleteSM">
+                                               <i class="glyphicon glyphicon-trash" title="删除能力组"></i>
+                                               </span>
+                                           <span>
+                                               <p class="style">厂商：{{items.manufacturer.manufacturerName}}</p>
+                                               <p class="style">设备类型：{{items.deviceType.deviceTypeName}}</p>
+                                               <p class="style"> 设备型号：{{items.model.modelName}}</p>
+                                               </span>
+                                       </div>
+                                       <div class="chooseBtn abilityBackgroundstyle">
+                                           <span title="能力管理"><i class="fa fa-cog homeIconstyle"></i></span>
+                                           <span class="abilityPlus" data-toggle="modal" data-target="#createSM">
+                                               <i class="glyphicon glyphicon-plus" title="创建能力"></i>
+                                               </span>
+                                           <span data-toggle="modal" class="abilityDelete" data-target="#deleteSM">
+                                               <i class="glyphicon glyphicon-trash" title="删除能力组"></i>
+                                               </span>
+                                           <span>
+                                               <p class="style">厂商：{{items.manufacturer.manufacturerName}}</p>
+                                               <p class="style">设备类型：{{items.deviceType.deviceTypeName}}</p>
+                                               <p class="style"> 设备型号：{{items.model.modelName}}</p>
+                                               </span>
+                                       </div>
+
+
+
+                                                                            <div class="chooseBtn homeBackgroundstyle">
+                                                                                    <span data-toggle="modal" data-target="#SMDetail">
+                                                                                    <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
+                                                                                    <p class="style">厂商：{{vendor}}</p>
+                                                                                   <p class="style">设备类型：{{equipmentType}}</p>
+                                                                                    <p class="style"> 设备型号：{{equipmentModel}}</p>
+                                                                                    <br/></span>
+                                                                                <span class="postionOne" data-toggle="modal" data-target="#createSM">
+                                                                                            <i class="glyphicon glyphicon-plus" title="创建服务"></i>
+                                                                                       </span>
+                                                                                <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
+                                                                                           <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
+                                                                                       </span>
+                                                                            </div>-->
+    </div>
+    <!--右侧表格分布-->
+    <div class="abilityChart">
+        <div class="AG">
+            <table class="table table-hover table-bordered table-striped" id="searchTextResults">
+                <thead>
+                <tr class="bg-info">
+                    <th>服务名称</th>
+                    <th>服务描述</th>
+                    <th>服务类型</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{serviceName}}</td>
+                    <td>{{serviceDescription}}</td>
+                    <td>{{deviceType}}</td>
+                    <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteAbility">删除</button></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-
-
-        <div class="chooseBtn homeBackgroundstyle">
-                <span data-toggle="modal" data-target="#SMDetail">
-                <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                <p class="style">厂商：{{vendor}}</p>
-               <p class="style">设备类型：{{equipmentType}}</p>
-                <p class="style"> 设备型号：{{equipmentModel}}</p>
-                <br/></span>
-            <span class="postionOne" data-toggle="modal" data-target="#createSM">
-                        <i class="glyphicon glyphicon-plus" title="创建服务"></i>
-                   </span>
-            <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
-                       <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-                   </span>
-        </div>
-
 
     </div>
-
-    <!----
-    <div class="container" id="accordion">
-        <div class="chooseBtn homeBackgroundstyle">
-                <span data-toggle="collapse" data-parent="#accordion"
-                      href="#detailSM">
-                <span title="服务管理"><i class="fa fa-cog homeIconstyle"></i></span>
-                <p class="style">厂商：{{manufacturer}}</p>
-                <p class="style">设备类型：{{deviceType}}</p>
-                <p class="style"> 设备型号：{{unitType}}</p>
-                <br/></span>
-            <span class="postionOne" data-toggle="modal" data-target="#createSM">
-                        <i class="glyphicon glyphicon-plus" title="创建服务"></i>
-                   </span>
-            <span class="positionTwo" data-toggle="modal" data-target="#deleteSM">
-                       <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-                   </span>
-        </div>
-    </div>
-<!--
-<div class="chooseBtn homeIconBackgroundstyle">
-                    <span data-toggle="collapse" data-parent="#accordion"
-                          data-target="#detailSM">
-                        <span title="服务管理"><i class="fa fa-cog homeIconstyle">
-                    <span class="style">设备类型{{deviceType}}</span></i></span>
-                    </span>
-        <span data-toggle="modal" data-target="#createSM" style="margin-left: 30px">
-                        <i class="glyphicon glyphicon-plus" title="创建服务" style="margin-top: 27px"></i>
-                   </span>
-        <span class="positionT" data-toggle="modal" data-target="#deleteSM" style="margin-left: 17px">
-                       <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-                   </span>
-    </div>
--->
-
 
         <!--创建服务组弹出界面-->
     <div class="modal fade" id="addServiceGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -116,26 +153,26 @@
                         创建服务组
                     </h3>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="abilityInfo">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>厂商
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.addDGName">
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="manufacturerName">
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>设备类型
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.addDGName">
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="deviceType">
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>设备型号
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.addDGName">
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="model">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="addDG()">
+                    <button type="button" class="btn btn-primary" ng-click="addAM()">
                         创建
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -169,29 +206,87 @@
                 </div>
                 <div class="modal-body">
                     <b>服务类型</b>
-                    <select class="form-control" type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.add">
-                        <option value="platform">platform</option>
-                        <option value="thirdparty">thirdparty</option>
+                    <select class="form-control" id="select1">
+                        <option value="platform" selected="selected" id="option1">platform</option>
+                        <option value="thirdparty" id="option2">thirdparty</option>
                     </select>
+                </div>
+                <div id="div1" style="display:none">
+                    <div class="modal-body">
+                        <b>协议</b>
+                        <input class="form-control" type="text" style="pixels: 300px" ng-model="$parent.Name">
+                    </div>
+                    <div class="modal-body">
+                        <b>URL</b>
+                        <input class="form-control" type="text" style="pixels: 300px" ng-model="$parent.aDGName">
+                    </div>
                 </div>
                 <div class="modal-body">
                     <b>请求回复</b>
-                    <select class="form-control" type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.ad">
+                    <select class="form-control" type="text">
                         <option value="true">true</option>
                         <option value="false">false</option>
                     </select>
                 </div>
                 <div class="modal-body">
-                    <b>服务体</b>
-                    <input class="form-control" type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.addDGName">
+                    <span style="color: #8a6d3b;font-weight: 600;font-size: 20px">服务体</span>
+                </div>
+                <div class="modal-body">
+                    <b>方法名</b>
+                    <input class="form-control" type="text" style="pixels: 300px" placeholder="必填">
                 </div>
                 <div class="modal-body">
                     <b>参数</b>
-                    <input type="text" style="pixels: 300px" placeholder="形如(status:true`)" ng-model="$parent.addDGNae">
-                    <span ng-click="">+</span>
-                </div>
+                    <div style="width: 550px; height: 34px; border: 1px solid #ffffff;">
+                        <input type="text" style="width: 33%; height:34px;float: left" placeholder="key">
+                        <select class="form-control"type="text" style="width: 33%" id="select2">
+                            <option value="1" id="option3">1</option>
+                            <option value="2" id="option4">2</option>
+                            <option value="3" id="option5">3</option>
+                        </select>
+                            <div style="width: 33%; float: right;margin-top: -34px">
+                                <div id="div2">
+                                    <input type="text" style="width: 150px; height:34px" placeholder="value">
+                                </div>
+                                <div id="div3" style="width: 150px; height: 14px; border: 1px solid #ffffff;display:none">
+                                    <input type="text" style="width: 50%;float: left; height:34px" placeholder="on">
+                                    <input type="text" style="width: 50%;float: right; height:34px" placeholder="off">
+                                </div>
+                                <div id="div4" style="width: 150px; height: 14px; border: 1px solid #ffffff;display:none">
+                                    <input type="text" style="width: 50%;float: left; height:34px" placeholder="min:0">
+                                    <input type="text" style="width: 50%;float: right; height:34px" placeholder="mix:100">
+                                </div>
+                            </div>
+                        <div style="margin-top: -28px;margin-left: 525px">
+                            <i class="glyphicon glyphicon-plus" ng-click="CC.addPlus()"></i>
+                        </div>
+                        </div>
+                    </div>
+
+                    <!--div style="width: 550px; height: 34px; border: 1px solid #ffffff;" ng-repeat="(key,item) in itemc track by $index">
+                        <input type="text" style="width: 33%; height:34px;float: left" placeholder="key">
+                        <select class="form-control"type="text" style="width: 33%" id="select2">
+                                <option value="1" id="option3">1</option>
+                                <option value="2" id="option4">2</option>
+                                <option value="3" id="option5">3</option>
+                        </select>
+                        <div style="width: 33%; float: right;margin-top: -34px">
+                            <div id="div2">
+                                <input type="text" style="width: 150px; height:34px" placeholder="value">
+                            </div>
+                            <div id="div3" style="width: 150px; height: 14px; border: 1px solid #ffffff;display:none">
+                                <input type="text" style="width: 50%;float: left; height:34px" placeholder="on">
+                                <input type="text" style="width: 50%;float: right; height:34px" placeholder="off">
+                            </div>
+                            <div id="div4" style="width: 150px; height: 14px; border: 1px solid #ffffff;display:none">
+                                <input type="text" style="width: 50%;float: left; height:34px" placeholder="min:0">
+                                <input type="text" style="width: 50%;float: right; height:34px" placeholder="mix:100">
+                            </div>
+                        </div>
+                    </div-->
+
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="addSM()">
+                    <button type="button" class="btn btn-primary" ng-click="addAbility()">
                         创建
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -202,7 +297,7 @@
         </div><!-- /.modal -->
     </div>
 
-    <!--删除界面弹出框-->
+    <!--删除能力组界面弹出框-->
     <div class="modal fade" id="deleteSM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -211,17 +306,17 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        删除服务组
+                    <h4 class="modal-title" id="myModaLabel">
+                        删除能力组
                     </h4>
                 </div>
                 <div class="modal-body">
-                    确定删除此服务组？
+                    确定删除此能力组？
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消
                     </button>
-                    <button type="button" class="btn btn-primary"  ng-click="delSM()">
+                    <button type="button" class="btn btn-primary" ng-click="delAG()">
                         确定
                     </button>
                 </div>
@@ -230,7 +325,7 @@
     </div>
 
     <!--弹出设备类型详情列表-->
-    <div class="modal fade" id="SMDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <!--div class="modal fade" id="SMDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -241,12 +336,8 @@
                     <h4 class="modal-title">
                         <caption><span style="color: #305680;font-weight: 600;font-size: 22px">{{equipmentType}}设备类型下的服务</span></caption>
                     </h4>
-                    <!--<div style="margin-left: 0px">
-                        <label>搜索：</label>
-                        <input type="number" id="mServiceName" ng-model="mServiceName"/>
-                    </div>添加搜索框-->
                 </div>
-                <table class="table table-hover table-bordered table-striped" id="searchTextResults">
+                <table class="table table-hover table-bordered table-striped" id="searchResults">
                     <thead>
                     <tr class="bg-info">
                         <th>服务名称</th>
@@ -257,14 +348,40 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>{{Bmanagement.serviceName}}</td>
-                        <td>{{Bmanagement.serviceType}}</td>
-                        <td>{{Bmanagement.serviceDescription}}</td>
+                        <td>{{Bmanagement.serviceName}}设置开关状态</td>
+                        <td>{{Bmanagement.serviceType}}打开或者关闭开关</td>
+                        <td>{{Bmanagement.serviceDescription}}platform</td>
                         <td><button class="btn btn-sm btn-danger">删除</button></td>
                     </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div-->
 
+    <!--删除能力界面弹出框-->
+    <div class="modal fade" id="deleteAbility" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        删除能力
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    确定删除此能力？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                    </button>
+                    <button type="button" class="btn btn-primary"  ng-click="deleteA()">
+                        确定
+                    </button>
+                </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
@@ -272,7 +389,54 @@
 
 
 </div>
-	<!--made in card-->
+	<!--选择框的值显示或隐藏文本框-->
+<!--script type="text/javascript">
+    window.onload =  function(){
+        var select1 = document.getElementById('select1');
+        var select2 = document.getElementById('select2');
+        select1.onchange = function(){
+            if(this.value=='platform'){
+                document.getElementById('div1').style.display = 'none';
+            }else {
+                document.getElementById('div1').style.display = 'block';
+            }
+        }
+        select2.onchange = function(){
+            if(this.value=='1'){
+                document.getElementById('div2').style.display = 'block';
+                document.getElementById('div3').style.display = 'none';
+                document.getElementById('div4').style.display = 'none';
+            }else if(this.value=='2'){
+                document.getElementById('div3').style.display = 'block';
+                document.getElementById('div2').style.display = 'none';
+                document.getElementById('div4').style.display = 'none';
+            }else{
+                document.getElementById('div4').style.display = 'block';
+                document.getElementById('div2').style.display = 'none';
+                document.getElementById('div3').style.display = 'none';
+            }
+        }
+    }
+</script-->
+<script>
+    $('#select1').bind('change', function(){
+        var val = $(this).val();
+        switch(val){
+            case 'platform': $('#div1').hide();  break;
+            case 'thirdparty': $('#div1').show();  break;
+        }
+    });
 
 
-     <!-- CONTENT-WRAPPER SECTION END-->
+    $('#select2').bind('change', function(){
+        var val = $(this).val();
+        switch(val){
+            case '1': $('#div2').show(); $('#div4, #div3').hide(); break;
+            case '2': $('#div3').show(); $('#div2, #div4').hide(); break;
+            case '3': $('#div4').show(); $('#div2, #div3').hide(); break;
+        }
+    });
+</script>
+
+
+

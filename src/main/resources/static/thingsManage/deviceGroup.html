@@ -7,14 +7,15 @@
                     data-target="#addDeviceGroup">+ 创建设备组
             </button>
             <div class="SearchDG">
-                <span>搜索：<input type="text" style="width: 130px" placeholder="输入设备组名称" ng-model="$parent.dgname"/></span>
+                <span>搜索：<input type="text" style="width: 130px" placeholder="输入设备组名称"
+                                ng-model="$parent.dgname"/></span>
                 <span class="Searchicon" ng-click="searchDG()" title="搜索">
                     <i class="fa fa-search fa-lg shand" aria-hidden="true"></i>
                 </span>
             </div>
 
         </div>
-        <div class="DGContainer" >
+        <div class="DGContainer">
             <div ng-repeat="DG in DeviceGroups" ng-show="showAll">
                 <div class="chooseBtn" ng-click="show(DG)">
                     <div>
@@ -25,11 +26,11 @@
             </div>
 
             <!--搜索展示视图-->
-            <div ng-show="showInfo">
-                <div class="chooseBtn" ng-click="show(searchresult)">
+            <div ng-repeat="result in Searchresults" ng-show="showInfo">
+                <div class="chooseBtn" ng-click="show(result)">
                     <div>
                         <i class="fa fa-sitemap fa-2x "></i>
-                        <p>{{searchresult.name}}</p>
+                        <p>{{result.name}}</p>
                     </div>
                 </div>
             </div>
@@ -49,7 +50,8 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <p>设备组名：<input type="text" style="pixels: 300px" placeholder="LIANG" ng-model="$parent.addDGName"></p>
+                        <p>设备组名：<input type="text" style="pixels: 300px" placeholder="LIANG"
+                                       ng-model="$parent.addDGName"></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭
@@ -74,9 +76,9 @@
             <div class="item">
                 <p>
                     设备组名：{{item.name}}
-                    <i class="fa fa-pencil-square-o iedit shand" data-toggle="modal"
+                    <!--i class="fa fa-pencil-square-o iedit shand" data-toggle="modal"
                        data-target="#editDGName" title="编辑设备组名"></i>
-                    </p.time}}</p>
+                    </p.time}}--></p>
                 <p>设备组ID：{{item.id}}</p>
             </div>
         </div>
@@ -86,7 +88,7 @@
             <div class="DGTitle DGminTitle">
                 <span class="RightviewTitle">关联设备列表</span>
             </div>
-            <!--angular指令-->
+            <!--关联设备显示-->
             <div class="item">
                 <div class="gridStyle DGgridStyle" ui-grid="gridOptions"></div>
             </div>
@@ -110,41 +112,13 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                         </button>
-                        <button type="button" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" ng-click="unAssign()">
                             确定
                         </button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
         </div>
-
-        <!--modal从设备组中添加设备in grid-->
-        <div class="modal fade" id="warnAddAssign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            添加关联
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        将此设备添加到设备组？
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                        </button>
-                        <button type="button" class="btn btn-primary">
-                            确定
-                        </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-
 
         <!--modal删除设备组-->
         <div class="modal fade" id="delDG" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -165,7 +139,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消
                         </button>
-                        <button type="button" class="btn btn-primary"  ng-click="delDG()">
+                        <button type="button" class="btn btn-primary" ng-click="delDG()">
                             确定
                         </button>
                     </div>
@@ -187,7 +161,8 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <p>设备组名：<input type="text" name="NewDGName" placeholder={{item.name}} ng-model="$parent.editdg"></input>
+                        <p>设备组名：<input type="text" name="NewDGName" placeholder={{item.name}}
+                                       ng-model="$parent.editdg"></input>
                         </p>
                     </div>
                     <div class="modal-footer">

@@ -17,6 +17,7 @@
 .content-wrapper {
     min-height:1000px;
     background: rgb(238,238,238);
+    padding-left: 45px;
 }
 
 /* =============================================================
@@ -57,8 +58,9 @@ HEAD MENU STYLES
     }
 
         #side-menu ul li {
-            border-bottom: 1px solid #cccccc;
+            border-bottom: 1px dashed #cccccc;
             padding: 20px 25px;
+            text-align: left;
         }
 
             #side-menu ul li a i {
@@ -74,6 +76,16 @@ HEAD MENU STYLES
 .menu-close-icon, .menu-open-icon {
     cursor: pointer;
 
+}
+.fontStyle{
+    font-size: 20px;
+}
+.textStyle{
+    font-size: 18px;
+    font-weight: bold;
+}
+#searchKey{
+    height: 25px;
 }
 
 
@@ -160,12 +172,27 @@ DEVICELIST STYLES
 
 .attName{
   font-weight: bold;
-  width: 100px;
+  width: 150px;
   text-align: center;
 }
 
 .inputInfo{
     width: 90%;
+}
+
+.input-err{
+
+    border: 2px solid #ff3c3c;
+}
+.showForm table tbody tr td{
+   width: 30%;
+   text-align: center;
+}
+.boldForm{
+    font-weight: bold;
+}
+.divide-line{
+    border-top: 2px solid #c0c0c0;
 }
 
 /* =============================================================
@@ -285,16 +312,38 @@ serviceGroup&pluginsGroup
 }
 .postionOne{
     margin-left: 180px;
+
 }
 /* =============================================================
 serviceGroup
 ============================================================ */
+.abilityBackgroundstyle{
+    width: 235px;
+    height: 145px;
+    background: rgba(255,253,255,0.69);
+    border-radius: 5px;
+    margin-top: 30px;
+    margin-left: 10px;
+    float: left;
+
+}
 .homeIconstyle{
 
     color:  #305680;
     font-size: 30px;
-    margin-top: 0px;
+    margin-top: -7px;
     margin-left: 0px;
+}
+.abilityPlus{
+    float: right;
+    font-size: x-large;
+    color: #FF0000;
+    margin-top: -10px;
+}
+.abilityDelete{
+    font-size: large;
+    margin-top: -10px;
+    margin-left: 8px;
 }
 .style{
     color:  #305680;
@@ -319,6 +368,34 @@ serviceGroup
 .span2{
     margin-left: 666px;
 }
+.abilityChart{
+    margin:40px 0px 0 670px;
+    padding-top: 5px;
+    width:460px;
+    height:1000px;
+    float: right;
+    margin-left: 790px;
+    position: fixed;
+
+}
+.abilityIcon{
+    width: 70%;
+    float: left;
+    padding-top:10px;
+
+}
+
 /* =============================================================
 pluginsGroup
 ============================================================ */
+.pluginActiveposition{
+    margin-left: 180px;
+    color: #FF0000;
+    font-size: large;
+    margin-top: -20px;
+}
+.pluginStopposition{
+    margin-left: 25px;
+    color: #FF0000;
+    font-size: large;
+}
