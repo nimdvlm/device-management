@@ -389,13 +389,20 @@ serviceGroup
 pluginsGroup
 ============================================================ */
 .pluginActiveposition{
-    margin-left: 180px;
+    margin-left: 250px;
     color: #FF0000;
     font-size: large;
-    margin-top: -20px;
+    margin-top: -50px;
 }
 .pluginStopposition{
-    margin-left: 25px;
+    margin-left: 250px;
     color: #FF0000;
     font-size: large;
+}
+.stylePulgin{
+    color:  #305680;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 15px;
+    margin-top: 5px;
 }

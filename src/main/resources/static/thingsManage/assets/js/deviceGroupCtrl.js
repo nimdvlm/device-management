@@ -26,7 +26,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                 console.log("新建设备组成功");
                 console.log(resp);
                 $("#addRule").modal("hide");
-                //location.reload();
+                location.reload();
             });
         } else {
             alert("输入不能为空!");
@@ -52,7 +52,8 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                 }
             });
         }
-        else {alert("输入不能为空!");
+        else {
+            alert("输入不能为空!");
         }
     };
 
@@ -99,10 +100,10 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
             $scope.myData = person;
         });
     };
-    //ui-grid的js部分
-    //测试数据
-    //$scope.myData =[{"name":"LIANG","id":5,"l":"lijs"}]
 
+
+    /*******显示设备组内设备********/
+    //ui-grid的显示设备(停用)
     $scope.gridOptions = {
         data: 'myData',
         enableHorizontalScrollbar: 0,
@@ -121,8 +122,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
              } ****/
         ]
     };
-
-    //设备组取消关联某设备-弹出删除提示modal
+    //ui-grid-设备组取消关联某设备-弹出删除提示modal
     $scope.goToDelete = function (row) {
         console.log("删除确认modal!");
         console.log(row.entity);
@@ -130,14 +130,33 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         $("#warnDelAssign").modal("show");
     };
 
-    //设备组取消关联某设备
+    //点击按钮查看令牌
+    var tokenObj = $resource('/api/device/token/:deviceId', {id: '@id'});
+    $scope.showToken = function (data) {
+        console.log("向后台获取设备Token中...")
+        $scope.tokenJson = tokenObj.get({deviceId: data.id})
+            .$promise.then(function (value) {
+                $scope.token = value.deviceToken;
+                console.log($scope.token);
+            });
+    };
+    /****END***/
+
+
+    /*****设备组取消关联某设备*****/
+    //此方法用于将ng-repeat里的data赋值给作用域。非上策
+    $scope.giveData = function (data) {
+        console.log("ng-repeat data赋值给作用域");
+        $scope.devInGroup = data;
+    }
     $scope.unAssign = function () {
-        console.log("正在向后台发送请求...")
-        var DISASS = $resource('api/group/unassign/:deviceId/:groupId', {deviceId: '@id', groupId: '@id'});
-        DISASS.get({deviceId: $scope.unAssignDevid, groupId: $scope.item.id})
+        console.log("正在向后台发送请求...");
+        var DISASS = $resource('/api/group/unassign/:deviceId/:groupId', {deviceId: '@id', groupId: '@id'});
+        DISASS.get({deviceId: $scope.devInGroup.id, groupId: $scope.item.id})
             .$promise.then(function (person) {
-            alert("取消关联成功");
             $("#warnDelAssign").modal("hide");
+            location.reload();
         });
     };
+    /****END*****/
 });

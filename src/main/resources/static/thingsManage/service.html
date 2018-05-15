@@ -117,7 +117,6 @@
     </div>
     <!--右侧表格分布-->
     <div class="abilityChart">
-        <div class="AG">
             <table class="table table-hover table-bordered table-striped" id="searchTextResults">
                 <thead>
                 <tr class="bg-info">
@@ -127,6 +126,7 @@
                     <th>操作</th>
                 </tr>
                 </thead>
+                <div ng-repeat="items in abilityChart">
                 <tbody>
                 <tr>
                     <td>{{serviceName}}</td>
@@ -135,9 +135,8 @@
                     <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteAbility">删除</button></td>
                 </tr>
                 </tbody>
+                </div>
             </table>
-        </div>
-
     </div>
 
         <!--创建服务组弹出界面-->
@@ -198,15 +197,15 @@
                 </div>
                 <div class="modal-body">
                     <b>服务名称</b>
-                    <input class="form-control" type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.addGName">
+                    <input class="form-control" type="text" style="pixels: 300px" placeholder="必填" id="serviceName">
                 </div>
                 <div class="modal-body">
                     <b>服务描述</b>
-                    <input class="form-control" type="text" style="pixels: 300px" placeholder="必填" ng-model="$parent.addDGName">
+                    <input class="form-control" type="text" style="pixels: 300px" placeholder="必填" id="serviceDescription">
                 </div>
                 <div class="modal-body">
                     <b>服务类型</b>
-                    <select class="form-control" id="select1">
+                    <select class="form-control" id="serviceType">
                         <option value="platform" selected="selected" id="option1">platform</option>
                         <option value="thirdparty" id="option2">thirdparty</option>
                     </select>
@@ -214,16 +213,16 @@
                 <div id="div1" style="display:none">
                     <div class="modal-body">
                         <b>协议</b>
-                        <input class="form-control" type="text" style="pixels: 300px" ng-model="$parent.Name">
+                        <input class="form-control" type="text" style="pixels: 300px" id="protocol">
                     </div>
                     <div class="modal-body">
                         <b>URL</b>
-                        <input class="form-control" type="text" style="pixels: 300px" ng-model="$parent.aDGName">
+                        <input class="form-control" type="text" style="pixels: 300px" id="url">
                     </div>
                 </div>
                 <div class="modal-body">
                     <b>请求回复</b>
-                    <select class="form-control" type="text">
+                    <select class="form-control" type="text" id="requireResponce">
                         <option value="true">true</option>
                         <option value="false">false</option>
                     </select>
@@ -233,18 +232,18 @@
                 </div>
                 <div class="modal-body">
                     <b>方法名</b>
-                    <input class="form-control" type="text" style="pixels: 300px" placeholder="必填">
+                    <input class="form-control" type="text" style="pixels: 300px" placeholder="必填" id="methodName">
                 </div>
                 <div class="modal-body">
                     <b>参数</b>
                     <div style="width: 550px; height: 34px; border: 1px solid #ffffff;">
-                        <input type="text" style="width: 33%; height:34px;float: left" placeholder="key">
-                        <select class="form-control"type="text" style="width: 33%" id="select2">
+                        <input type="text" style="width: 33%; height:34px;float: left" placeholder="key" id="key">
+                        <select class="form-control"type="text" style="width: 33%" id="type">
                             <option value="1" id="option3">1</option>
                             <option value="2" id="option4">2</option>
                             <option value="3" id="option5">3</option>
                         </select>
-                            <div style="width: 33%; float: right;margin-top: -34px">
+                            <div style="width: 33%; float: right;margin-top: -34px" id="value">
                                 <div id="div2">
                                     <input type="text" style="width: 150px; height:34px" placeholder="value">
                                 </div>
@@ -378,7 +377,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消
                     </button>
-                    <button type="button" class="btn btn-primary"  ng-click="deleteA()">
+                    <button type="button" class="btn btn-primary"  ng-click="deleteAA()">
                         确定
                     </button>
                 </div>
@@ -419,7 +418,7 @@
     }
 </script-->
 <script>
-    $('#select1').bind('change', function(){
+    $('#serviceType').bind('change', function(){
         var val = $(this).val();
         switch(val){
             case 'platform': $('#div1').hide();  break;
@@ -428,7 +427,7 @@
     });
 
 
-    $('#select2').bind('change', function(){
+    $('#type').bind('change', function(){
         var val = $(this).val();
         switch(val){
             case '1': $('#div2').show(); $('#div4, #div3').hide(); break;
