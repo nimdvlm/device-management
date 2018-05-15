@@ -41,6 +41,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
         }
     }
 
+
     @RequestMapping(value="/abilityGroup", method = RequestMethod.DELETE)
     public String deleteGroup(@RequestParam int  modelId) {
         String url = "http://"+getServiceManagementServer()+"/api/v1/abilityGroup?modelId="+modelId;

@@ -17,6 +17,8 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
             .promise.then()
         console.log($scope.arrs);
 
+
+
     };
 
 
