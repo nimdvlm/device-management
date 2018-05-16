@@ -259,15 +259,11 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             $scope.formData.transform.method = "POST";
             $scope.formData.transform.requestBody = $scope.MailrequestBody;
         } else if ($scope.RuleaddPlugin.name == "RestfulPlugin") {
-
             $scope.showaddTransform = true;
             $scope.formData.transform.name = $scope.RuleaddPlugin.name;
             $scope.formData.transform.url = $scope.RuleaddPlugin.url;
-            ;
             $scope.formData.transform.method = "POST";
             $scope.formData.transform.requestBody = $scope.RestfulBody;
-
-
         }
         console.log("新建规则-创建插件:");
         console.log($scope.formData.transform);

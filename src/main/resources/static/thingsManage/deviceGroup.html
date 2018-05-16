@@ -96,7 +96,7 @@
 
             <!--纯angular实现-->
             <div class="item">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped" ng-show="!showEmpty">
                     <thead>
                     <tr>
                         <td style="width: 30px"></td>
@@ -131,6 +131,7 @@
                     </tr>
                     </tbody>
                 </table>
+                <div ng-show="showEmpty" id="deviceGroupEmpty">当前设备组下无关联设备</div>
             </div>
         </div>
         <!--modal从设备组中取消关联设备-->

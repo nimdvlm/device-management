@@ -1,6 +1,8 @@
 mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     //获取设备组
     $scope.showAll = true;
+    $scope.showEmpty=false;
+
     var Devicegroup = $resource('/api/group/allgroups?limit=20');
     $scope.DeviceGroups = Devicegroup.query(function () {
         //初始化右侧视图
@@ -93,11 +95,18 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     $scope.show = function (DG) {
         //item是当前展示的单个设备
         $scope.item = {name: DG.name, id: DG.id};
-        //获取设备组下的设备接口
+        //获取设备组下的设备
         var DGDEVICES = $resource('/api/group/:id/devices?limit=20', {id: '@id'});
         DGDEVICES.query({id: $scope.item.id})
             .$promise.then(function (person) {
-            $scope.myData = person;
+                if(person[0]!=null){
+                    $scope.myData = person;
+                    $scope.showEmpty=false;
+                }else {
+                    $scope.showEmpty=true;
+                    console.log("当前设备组下无设备");
+                }
+
         });
     };
 
