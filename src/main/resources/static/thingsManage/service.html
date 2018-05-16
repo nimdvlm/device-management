@@ -46,11 +46,11 @@
                     <th>操作</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr ng-repeat="arr in arrs" class="arr">
-                    <td>{{arr.abilityDes.serviceName}}</td>
-                    <td>{{arr.abilityDes.serviceDescription}}</td>
-                    <td>{{arr.abilityDes.deviceType}}</td>
+                <tbody ng-repeat="arr in result" class="arr">
+                <tr>
+                    <td>{{arr.serviceName}}</td>
+                    <td>{{arr.serviceDescription}}</td>
+                    <td>{{arr.serviceType}}</td>
                     <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteAbility">删除</button></td>
                 </tr>
                 </tbody>
@@ -180,29 +180,6 @@
                         </div>
                         </div>
                     </div>
-
-                    <!--div style="width: 550px; height: 34px; border: 1px solid #ffffff;" ng-repeat="(key,item) in itemc track by $index">
-                        <input type="text" style="width: 33%; height:34px;float: left" placeholder="key">
-                        <select class="form-control"type="text" style="width: 33%" id="select2">
-                                <option value="1" id="option3">1</option>
-                                <option value="2" id="option4">2</option>
-                                <option value="3" id="option5">3</option>
-                        </select>
-                        <div style="width: 33%; float: right;margin-top: -34px">
-                            <div id="div2">
-                                <input type="text" style="width: 150px; height:34px" placeholder="value">
-                            </div>
-                            <div id="div3" style="width: 150px; height: 14px; border: 1px solid #ffffff;display:none">
-                                <input type="text" style="width: 50%;float: left; height:34px" placeholder="on">
-                                <input type="text" style="width: 50%;float: right; height:34px" placeholder="off">
-                            </div>
-                            <div id="div4" style="width: 150px; height: 14px; border: 1px solid #ffffff;display:none">
-                                <input type="text" style="width: 50%;float: left; height:34px" placeholder="min:0">
-                                <input type="text" style="width: 50%;float: right; height:34px" placeholder="mix:100">
-                            </div>
-                        </div>
-                    </div-->
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" ng-click="addAbility()">
                         创建

@@ -1,6 +1,7 @@
 mainApp.controller("abilityCtrl", function ($scope, $resource) {
    var modelId;
-   var abilityId;
+   var abilityId = [];
+   $scope.result = new Array();
 
     /*能力组信息获取与展示*/
     var abilityGroup = $resource('/api/v1/abilityGroup');
@@ -9,26 +10,27 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
 
     $scope.show = function(AG){
+        $scope.result = [];//初始化数组；
         console.log(AG);
         modelId = AG.model.modelId;
         console.log(modelId);
         var abilitiesObj = $resource("/api/v1/ability/:modelId");
-        $scope.arrs = abilitiesObj.query({modelId:modelId})
-            .promise.then()
-        console.log($scope.arrs);
-
-
-
+        $scope.abilitiesInfo = abilitiesObj.query({modelId:modelId})
+            .$promise.then(function (value) {
+                console.log(value);
+                console.log(value.length);
+                for(var i=0;i<value.length;i++) {
+                    abilityId[i] = value[i].abilityId;
+                    console.log(abilityId[i]);
+                    var jsonData = JSON.parse(value[i].abilityDes);
+                    console.log(jsonData);
+                    $scope.result.push(jsonData);
+                    console.log(result);
+                }
+            });
     };
 
 
-/*.$promise.then(function (value) {
-        console.log(value);
-        var jsonData = JSON.parse(value[0].abilityDes);
-        $scope.serviceName = jsonData.serviceName;
-        $scope.serviceDescription = jsonData.serviceDescription;
-        $scope.deviceType = jsonData.serviceType;
-    });*/
 
 
     /*创建能力组*/
@@ -52,7 +54,6 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
 
     /*创建能力*/
-    var createAbilityObj =  $resource("/api/v1/ability");
     $scope.addAbility = function(){
         $scope.serviceName = $("#serviceName").val();
         $scope.serviceDescription = $("#serviceDescription").val();
@@ -75,15 +76,15 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
             +'"methodName":'+'"'+$scope.methodName+'"'
             +',"params":'+'['+'{'
             +'"key":'+'"'+$scope.key+'"'
-            +',"type":'+'"'+$scope.type+'"'
+            +',"type":'+$scope.type
             +',"value":'+'"'+$scope.value+'"'+'}'+']'+'}'+'}'+'}';
         console.log($scope.createAbility);
+
+        var createAbilityObj =  $resource("/api/v1/ability");
         $scope.ability = createAbilityObj.save({},$scope.createAbility,function (resp) {
-            //toastr.success("新增成功！");
-            alert("success");
-            console.log("success");
+            toastr.success("新增成功！");
             setTimeout(function () {
-                //window.location.reload();
+                window.location.reload();
             },500);
         },function (error) {
             toastr.error("新增失败！");
@@ -111,12 +112,10 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
     /*删除能力*/
     $scope.deleteAA = function(){
         var deleteAA = $resource('/api/v1/ability/:abilityId');
-        console.log("liu")
         deleteAA.delete({abilityId:abilityId},{},function(){
-            //toastr.success("删除成功！");
-            alert("sss");
+            toastr.success("删除成功！");
             setTimeout(function () {
-               // window.location.reload();
+                window.location.reload();
             },1000);
         },function () {
             alert("删除失败！")
