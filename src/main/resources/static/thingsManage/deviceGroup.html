@@ -113,19 +113,27 @@
                         </td>
                         <td>{{data.name}}</td>
                         <td>{{data.id}}</td>
-                        <td><i class="fa fa-minus shand" data-toggle="modal" data-target="#warnDelAssign" ng-click="giveData(data)"></i></td>
+                        <td><i class="fa fa-minus shand" data-toggle="modal" data-target="#warnDelAssign"
+                               ng-click="giveData(data)"></i></td>
                     </tr>
                     <tr ng-if="data.expanded" ng-repeat-end="">
                         <td></td>
                         <td colspan="3">
-                            <p>设备名：{{data.name}}</p>
+                            <p>设备名称：{{data.name}}</p>
                             <p>设备ID：{{data.id}}</p>
+                            <p>设备类型：{{data.deviceType}}</p>
                             <p>父类设备：{{data.parentDeviceId}}</p>
+                            <p>厂商：{{data.manufacture}}</p>
+                            <p>型号：{{data.model}}</p>
+                            <p>状态：{{data.status}}</p>
+                            <p>位置：{{data.location}}</p>
                             <p>
                                 <button class="btn btn-primary" data-toggle="modal"
-                                        data-target="#refreshDevice" ng-click="setValue(data)">更新设备</button>
+                                        data-target="#refreshDevice" ng-click="setValue(data)">更新设备
+                                </button>
                                 <button class="btn btn-primary" data-toggle="modal"
-                                        data-target="#token" ng-click="showToken(data)">查看令牌</button>
+                                        data-target="#token" ng-click="showToken(data)">查看令牌
+                                </button>
                             </p>
                         </td>
                     </tr>
@@ -231,15 +239,17 @@
                             <tbody>
                             <tr>
                                 <td class="attName">设备名称:</td>
-                                <td><input type="text" class="inputInfo" disabled="disabled" id="reName" ng-value="devInGroup.name"></td>
+                                <td><input type="text" class="inputInfo" disabled="disabled" id="reName"
+                                           ng-value="devInGroup.name"></td>
                             </tr>
                             <tr>
-                                <td class="attName" >父类设备:</td>
+                                <td class="attName">父类设备:</td>
                                 <td>
 
                                     <select class="inputInfo" id="reParentId">
                                         <option>------请选择------</option>
-                                        <option ng-repeat="data in deviceList" class="{{data.id}}">{{data.name}}</option>
+                                        <option ng-repeat="data in deviceList" class="{{data.id}}">{{data.name}}
+                                        </option>
                                     </select>
                                 </td>
                             </tr>
@@ -247,9 +257,12 @@
                                 <td class="attName">厂商:</td>
                                 <td>
 
-                                    <select class="inputInfo" id="reManufacture" ng-change="getManufacture()" ng-model="myReManufacturer">
+                                    <select class="inputInfo" id="reManufacture" ng-change="getManufacture()"
+                                            ng-model="myReManufacturer">
                                         <option>------请选择------</option>
-                                        <option ng-repeat="data in manufacturerInfo" class="{{data.manufacturerId}}">{{data.manufacturerName}}</option>
+                                        <option ng-repeat="data in manufacturerInfo" class="{{data.manufacturerId}}">
+                                            {{data.manufacturerName}}
+                                        </option>
                                     </select>
                                 </td>
                             </tr>
@@ -257,9 +270,12 @@
                                 <td class="attName">设备类型:</td>
                                 <td>
 
-                                    <select class="inputInfo" id="reDeviceType" ng-change="getDeviceType()" ng-model="myReDeviceType">
+                                    <select class="inputInfo" id="reDeviceType" ng-change="getDeviceType()"
+                                            ng-model="myReDeviceType">
 
-                                        <option ng-repeat="data in deviceTypeInfo" class="{{data.deviceTypeId}}">{{data.deviceTypeName}}</option>
+                                        <option ng-repeat="data in deviceTypeInfo" class="{{data.deviceTypeId}}">
+                                            {{data.deviceTypeName}}
+                                        </option>
                                     </select>
                                 </td>
                             </tr>
@@ -267,9 +283,12 @@
                                 <td class="attName">型号：</td>
                                 <td>
 
-                                    <select class="inputInfo" id="reModel"  ng-change="getDeviceModel()" ng-model="myReDeviceModel">
+                                    <select class="inputInfo" id="reModel" ng-change="getDeviceModel()"
+                                            ng-model="myReDeviceModel">
 
-                                        <option ng-repeat="data in deviceModelInfo" class="{{data.modelId}}">{{data.modelName}}</option>
+                                        <option ng-repeat="data in deviceModelInfo" class="{{data.modelId}}">
+                                            {{data.modelName}}
+                                        </option>
                                     </select>
                                 </td>
                             </tr>
@@ -285,13 +304,15 @@
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseRefresh">关闭</button>
-                        <button type="button" class="btn btn-primary" id="modalConfirmRefresh" data-dismiss="modal" ng-click="refreshDevice()">更新</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseRefresh">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" id="modalConfirmRefresh" data-dismiss="modal"
+                                ng-click="refreshDevice()">更新
+                        </button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-
 
 
         <!-- modal查看令牌 -->
@@ -308,8 +329,10 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseToken">关闭</button>
-                        <button type="button" class="btn btn-primary" id="modalConfirmToken" data-dismiss="modal">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseToken">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" id="modalConfirmToken" data-dismiss="modal">确定
+                        </button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
