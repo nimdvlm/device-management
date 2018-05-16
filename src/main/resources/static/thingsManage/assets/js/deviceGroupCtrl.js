@@ -125,7 +125,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     $scope.unAssign = function () {
         console.log("正在向后台发送请求...");
         var DISASS = $resource('/api/group/unassign/:deviceId/:groupId', {deviceId: '@id', groupId: '@id'});
-        DISASS.get({deviceId: $scope.devInGroup.id, groupId: $scope.item.id})
+        DISASS.delete({deviceId: $scope.devInGroup.id, groupId: $scope.item.id})
             .$promise.then(function (person) {
             $("#warnDelAssign").modal("hide");
             location.reload();
