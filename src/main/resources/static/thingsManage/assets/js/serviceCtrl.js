@@ -18,19 +18,19 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
         $scope.abilitiesInfo = abilitiesObj.query({modelId:modelId})
             .$promise.then(function (value) {
                 console.log(value);
-                console.log(value.length);
                 for(var i=0;i<value.length;i++) {
+                    console.log(value[1]);
                     abilityId[i] = value[i].abilityId;
                     console.log(abilityId[i]);
                     var jsonData = JSON.parse(value[i].abilityDes);
                     console.log(jsonData);
+                    jsonData.abilityId = value[i].abilityId;
+                    console.log(jsonData.abilityId);
                     $scope.result.push(jsonData);
-                    console.log(result);
+                    console.log($scope.result);
                 }
             });
     };
-
-
 
 
     /*创建能力组*/
@@ -96,9 +96,8 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
     /*删除能力组*/
     $scope.delAG = function () {
         var delAGObj = $resource('/api/v1/abilityGroup?modelId=:id');
-        //console.log("shang");
         delAGObj.delete({id: modelId},{} , function (resp) {
-            console.log(resp);
+            //console.log(resp);
             console.log("删除成功:modelId=" + modelId);
             $("#deleteSM").modal("hide");
             location.reload();
@@ -111,14 +110,14 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
     /*删除能力*/
     $scope.deleteAA = function(){
-        var deleteAA = $resource('/api/v1/ability/:abilityId');
-        deleteAA.delete({abilityId:abilityId},{},function(){
+        var deleteAA = $resource('/api/v1/ability/:id');
+        deleteAA.delete({id:abilityId},{},function(){
             toastr.success("删除成功！");
             setTimeout(function () {
                 window.location.reload();
             },1000);
         },function () {
-            alert("删除失败！")
+            alert("删除失败！");
         });
     }
     /*加+号添加参数

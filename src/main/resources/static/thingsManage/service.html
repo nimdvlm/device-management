@@ -46,12 +46,12 @@
                     <th>操作</th>
                 </tr>
                 </thead>
-                <tbody ng-repeat="arr in result" class="arr">
-                <tr>
+                <tbody>
+                <tr ng-repeat="arr in result" class="arr">
                     <td>{{arr.serviceName}}</td>
                     <td>{{arr.serviceDescription}}</td>
                     <td>{{arr.serviceType}}</td>
-                    <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteAbility">删除</button></td>
+                    <td><button class="btn btn-sm btn-danger" ng-click="deleteAA()">删除</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -245,7 +245,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
-
 
 
 </div>
