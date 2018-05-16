@@ -2,9 +2,6 @@
     <div clas="PMTitle">
         <div style="margin-top: 32px">
             <span class="header-line" style="font-size: 27px;font-weight: 600">插件管理
-            <!--button style="margin-left:10px" class="btn btn-primary btn-sm" data-toggle="modal"
-                    data-target="#addPluginGroup">+ 创建插件
-            </button-->
             </span>
             <span class="PMsearch">
                 <input class="span2" type="text" placeholder="输入插件名称">
@@ -14,102 +11,56 @@
     </div>
 
         <!--模块控件-->
-    <div class="container">
-        <div ng-repeat="itemp in pluginGroups">
+    <div class="pluginIcon">
+        <div ng-repeat="item in pluginGroups" ng-click="showAll(item)">
             <div class="chooseBtn homeBackgroundstyle">
                 <span data-toggle="modal" data-target="#SMDetail" class="itemp"></span>
                 <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
-                <span style="margin-left: 160px">
-                <i class="glyphicon glyphicon-ok">{{state}}</i>
-            </span>
-                <p class="stylePulgin">插件名称：{{itemp.name}}</p>
-                <p class="stylePulgin">插件url：{{itemp.url}}</p>
-                <p class="stylePulgin"> 描述：{{itemp.describe}}</p>
-                <span class="pluginActiveposition" data-toggle="modal" data-target="#activePG">
+                <p class="stylePulgin">{{item.name}}</p>
+            </div>
+        </div>
+    </div>
+       <!--右侧表格显示-->
+    <div class="pluginChart">
+        <div class="DGTitle DGminTitle">
+            <span class="RightviewTitle">插件信息</span>
+            <div class="ruleiconcontainer">
+                <i class="fa fa-power-off fa-lg ruleicon shand" ng-show="Rulestart" title="激活插件"
+                   data-toggle="modal" data-target="#startRule"></i>
+                <i class="fa fa-ban fa-lg ruleicon shand" ng-show="Rulestop" title="暂停插件"
+                   data-toggle="modal" data-target="#stopRule"></i>
+            </div>
+        </div>
+        <div class="item">
+            <p>插件名称：{{name}}</p>
+            <p>插件url：{{url}}</p>
+            <p>插件描述：{{describe}}</p>
+            <p>插件状态：{{state}}<!--span ng-class="{true:'stateActive',false:'stateNActive'}[isActive]">
+                        <i ng-class="{true:'fa fa-refresh fa-spin',false:'fa fa-refresh'}[isActive]"></i>
+                        {{state}}
+                        </span-->
+            </p>
+        </div>
+    </div>
+
+<!--创建插
+
+ <span style="margin-left: 160px" ng-init="firstState='SUSPEND'">
+                <i class="glyphicon glyphicon-ok" ng-bind="firstState">{{state}}</i>
+                </span>
+
+<p class="stylePulgin">插件url：{{itemp.url}}</p>
+                    <p class="stylePulgin"> 描述：{{itemp.describe}}</p>
+
+<span class="pluginActiveposition" data-toggle="modal" data-target="#activePG">
                 <i class="glyphicon glyphicon-play" title="激活" ng-click="activePG()"></i>
                 </span>
                 <span class="pluginStopposition" data-toggle="modal" data-target="#stopPG">
                 <i class="glyphicon glyphicon-pause" title="暂停"></i>
             </span>
-            </div>
-        </div>
 
-        <!--div class="chooseBtn homeBackgroundstyle">
-            <span data-toggle="modal" data-target="#SMDetail"></span>
-            <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
-            <span style="margin-left: 160px">
-                <i class="glyphicon glyphicon-ok">ACTIVE</i>
-            </span>
 
-            <p class="style">插件名称：{{pluginName}}</p>
-            <p class="style">插件token：{{pluginToken}}</p>
-            <p class="style"> 创建时间：{{creationTime}}</p>
-            <br/>
-            <span class="postionOne" data-toggle="modal" data-target="#activationPM">
-                <i class="glyphicon glyphicon-off" title="激活/暂停"></i>
-            </span>
-            <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
-                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-            </span>
-        </div>
-        <div class="chooseBtn homeBackgroundstyle">
-            <span data-toggle="modal" data-target="#SMDetail"></span>
-            <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
-            <span style="margin-left: 160px">
-                <i class="glyphicon glyphicon-ok">ACTIVE</i>
-            </span>
-
-            <p class="style">插件名称：{{pluginName}}</p>
-            <p class="style">插件token：{{pluginToken}}</p>
-            <p class="style"> 创建时间：{{creationTime}}</p>
-            <br/>
-            <span class="postionOne" data-toggle="modal" data-target="#activationPM">
-                <i class="glyphicon glyphicon-off" title="激活/暂停"></i>
-            </span>
-            <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
-                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-            </span>
-        </div>
-        <div class="chooseBtn homeBackgroundstyle">
-            <span data-toggle="modal" data-target="#SMDetail"></span>
-            <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
-            <span style="margin-left: 160px">
-                <i class="glyphicon glyphicon-ok">ACTIVE</i>
-            </span>
-
-            <p class="style">插件名称：{{pluginName}}</p>
-            <p class="style">插件token：{{pluginToken}}</p>
-            <p class="style"> 创建时间：{{creationTime}}</p>
-            <br/>
-            <span class="postionOne" data-toggle="modal" data-target="#activationPM">
-                <i class="glyphicon glyphicon-off" title="激活/暂停"></i>
-            </span>
-            <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
-                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-            </span>
-        </div>
-        <div class="chooseBtn homeBackgroundstyle">
-            <span data-toggle="modal" data-target="#SMDetail"></span>
-            <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
-            <span style="margin-left: 160px">
-                <i class="glyphicon glyphicon-ok">ACTIVE</i>
-            </span>
-
-            <p class="style">插件名称：{{pluginName}}</p>
-            <p class="style">插件token：{{pluginToken}}</p>
-            <p class="style"> 创建时间：{{creationTime}}</p>
-            <br/>
-            <span class="postionOne" data-toggle="modal" data-target="#activationPM">
-                <i class="glyphicon glyphicon-off" title="激活/暂停"></i>
-            </span>
-            <span class="positionTwo" data-toggle="modal" data-target="#deletePM">
-                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
-            </span>
-        </div>
-    </div-->
-    </div>
-
-<!--创建插件界面-->
+件界面-->
 <!--div class="modal fade" id="addPluginGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">

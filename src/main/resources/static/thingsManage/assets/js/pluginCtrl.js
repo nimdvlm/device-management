@@ -1,17 +1,35 @@
 mainApp.controller("pluginCtrl", function ($scope, $resource){
 
+    //ng-show初始化
+    $scope.Rulestart = false;
+    $scope.Rulestop = false;
 
 
-    /*插件信息获取与展示*/
+
+    var str =[];
     var pluginGroup = $resource('/api/rule/allPlugins');
-    $scope.pluginGroups = pluginGroup.query(function () {
-        $scope.itemp = $scope.pluginGroups[0];
-    });
+    $scope.pluginGroups = pluginGroup.query();
+
+    $scope.showAll = function (item) {
+        console.log(item);
+        $scope.name = item.name;
+        $scope.url = item.url;
+        $scope.describe = item.describe;
+        console.log($scope.url);
+        str = item.url.split(":");
+        console.log(str);
+        var pluginState = $resource('/api/plugin/state/:urlId/:portId',{urlId: '@id', portId: '@id'});
+        $scope.pluginStateDisply = pluginState.get({urlId:str[0],portId:str[1]})
+        console.log($scope.pluginStateDisply);
+        $scope.state = $scope.pluginStateDisply;
+        console.log($scope.state);
+
+    }
 
 
 
 
-    /*激活插件*/
+    /*激活插件
     $scope.activePlugin = function(){
         var changePlugin = $resource('/api/plugin/activate/:url/:port');
         var arr= new Array;
@@ -24,8 +42,8 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
             $("#activePG").modal("hide");
             location.reload();
         });
-    }
-    /*暂停插件*/
+    }*/
+    /*暂停插件
     $scope.stopPlugin = function () {
         var changePlugin = $resource('/api/plugin/suspend/:url/:port');
         $scope.mySplit = function (string,nb) {
@@ -40,11 +58,8 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
             $("#stopPG").modal("hide");
             location.reload();
         });
-    }
+    }*/
 
-    /*显示插件状态*/
-
-    //var pluginState = $resource('/api/plugin/state/:url/:port');
 
 
 });
