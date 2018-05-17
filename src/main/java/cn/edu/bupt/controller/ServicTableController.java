@@ -104,7 +104,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
         }
     }
 
-    @RequestMapping(value = "/ability/{manufacturerName}/{deviceTypeName}/{modelName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/ability/{manufacturerName}/{deviceTypeName}/{modelName:.+}", method = RequestMethod.GET)
     public String serviceTableList(@PathVariable String manufacturerName,@PathVariable String deviceTypeName,
                                    @PathVariable String modelName ) {
         String requestAddr = String.format("/api/v1/ability/%s/%s/%s", manufacturerName,deviceTypeName,modelName) ;
