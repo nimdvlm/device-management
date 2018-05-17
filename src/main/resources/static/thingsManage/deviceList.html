@@ -48,16 +48,16 @@
                     <td>{{ID}}</td>
                 </tr>
                 <tr>
-                    <td class="attName">设备类型:</td>
-                    <td>{{deviceType}}</td>
-                </tr>
-                <tr>
                     <td class="attName">父类设备:</td>
                     <td>{{parentName}}</td>
                 </tr>
                 <tr>
                     <td class="attName">厂商：</td>
                     <td>{{manufacture}}</td>
+                </tr>
+                <tr>
+                    <td class="attName">设备类型:</td>
+                    <td>{{deviceType}}</td>
                 </tr>
                 <tr>
                     <td class="attName">型号：</td>
@@ -117,7 +117,7 @@
                             <td class="attName">父类设备:</td>
                             <td>
                                 <select class="inputInfo" id="parentId">
-                                    <option>------请选择------</option>
+                                    <option></option>
                                     <option ng-repeat="data in deviceList" class="{{data.id}}">{{data.name}}</option>
                                 </select>
                             </td>
@@ -126,7 +126,7 @@
                             <td class="attName">厂商:</td>
                             <td>
                                 <select class="inputInfo" id="manufacture" ng-change="getCreateManufacture()" ng-model="myManufacturer">
-                                    <option>------请选择------</option>
+
                                     <option ng-repeat="data in manufacturerInfo" class="{{data.manufacturerId}}">{{data.manufacturerName}}</option>
                                 </select>
                             </td>
@@ -135,7 +135,7 @@
                             <td class="attName">设备类型:</td>
                             <td>
                                 <select class="inputInfo" id="deviceType" ng-change="getCreateDeviceType()" ng-model="myDeviceType">
-                                    <option>------请选择------</option>
+
                                     <option ng-repeat="data in deviceTypeInfo" class="{{data.deviceTypeId}}">{{data.deviceTypeName}}</option>
                                 </select>
                             </td>
@@ -144,7 +144,7 @@
                             <td class="attName">型号：</td>
                             <td>
                                 <select class="inputInfo" id="model" ng-change="getCreateDeviceModel()" ng-model="myDeviceModel">
-                                    <option>------请选择------</option>
+
                                     <option ng-repeat="data in deviceModelInfo" class="{{data.modelId}}">{{data.modelName}}</option>
                                 </select>
                             </td>
@@ -193,7 +193,7 @@
                             <td>
 
                                 <select class="inputInfo" id="reParentId">
-                                    <option>------请选择------</option>
+                                    <option></option>
                                     <option ng-repeat="data in deviceList" class="{{data.id}}">{{data.name}}</option>
                                 </select>
                             </td>
@@ -203,7 +203,7 @@
                             <td>
 
                                 <select class="inputInfo" id="reManufacture" ng-change="getManufacture()" ng-model="myReManufacturer">
-                                    <option>------请选择------</option>
+
                                     <option ng-repeat="data in manufacturerInfo" class="{{data.manufacturerId}}">{{data.manufacturerName}}</option>
                                 </select>
                             </td>
@@ -380,10 +380,10 @@
                 </div>
                 <div class="divide-line"></div>
                 <div class="modal-body showForm" id="realTimeTable">
-                    <table class="table table-striped table-hover">
+                    <!--<table class="table table-striped table-hover">
                         <thead>
                         <tr>
-                            <th class="attName" style="text-align: left;font-size: 16px;">-----遥测数据-----</th>
+                            <th class="attName" style="text-align: left;font-size: 16px;">-&#45;&#45;&#45;&#45;遥测数据-&#45;&#45;&#45;&#45;</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -391,27 +391,61 @@
                             <td>最后更新时间</td>
                             <td>键</td>
                             <td>值</td>
+                            <td>{{wsData[0].ts}}</td>
                         </tr>
-                        <tr ng-repeat="arr in realTimeInfo">
+                        <tr ng-repeat="arr in wsData">
                             <td>{{arr.ts | date:'yyyy-MM-dd hh:mm:ss'}}</td>
                             <td>{{arr.key}}</td>
                             <td>{{arr.value}}</td>
                         </tr>
                         </tbody>
-                    </table>
+                    </table>-->
+                    <h4 class="detail-block-header">-----最新遥测-----</h4>
+                    <div class="row">
+                        <div>
+                            <table id="realtime_data_table" class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="width: 30%; text-align: center;">最后更新时间</th>
+                                    <th style="width: 30%; text-align: center;">键</th>
+                                    <th style="width: 30%; text-align: center;">值</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <div class="divide-line"></div>
                 <div class="modal-body showForm" id="controlTable">
-                    <table class="table table-striped table-hover">
+                    <!--<table class="table table-striped table-hover">
                         <thead>
                         <tr>
-                            <th class="attName" style="text-align: left;font-size: 16px;">-----控制面板-----</th>
+                            <th class="attName" style="text-align: left;font-size: 16px;">-&#45;&#45;&#45;&#45;控制面板-&#45;&#45;&#45;&#45;</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="ctrlTableInfo">
+                            &lt;!&ndash;<tr>
+                                <td ng-repeat="arr in abilityDesInfo" ng-init="outerIndex = $index">
+                                    <div id="ctrlDiv{{outerIndex}}">
+                                        <h3>{{arr.serviceName}}</h3>
+                                        <p ng-repeat="param in arr.serviceBody.params track by $index" ng-init="operate(param.type,outerIndex,$index)" >{{param.key}}:
 
+                                        </p>
+                                        <button id="confirmCtrlBtn{{outerIndex}}" class="btn btn-primary">应用</button>
+                                    </div>
+                                </td>
+                            </tr>&ndash;&gt;
                         </tbody>
-                    </table>
+                    </table>-->
+                    <h4 class="detail-block-header">控制</h4>
+                    <div class="row">
+                        <div class="control-panel" id="control_panel">
+
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseDetail">关闭</button>
