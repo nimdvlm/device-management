@@ -178,46 +178,54 @@
                         <form name="addplugin">
                             <p>名&emsp;&emsp;称：<select ng-model="RuleaddPlugin" ng-change="change(RuleaddPlugin)"
                                                       ng-options="x.name for x in Plugin">
+                                <option value="" disabled>--请选择插件--</option>
                             </select>
                             </p>
-                            <p>跳转地址：<input type="text" name="url" disabled="disabled"
-                                           placeholder="{{RuleaddPlugin.url}}">
+                            <p>跳转地址：{{RuleaddPlugin.url}}</p>
+                            <p>描&emsp;&emsp;述：{{RuleaddPlugin.describe}}</p>
+                            <p ng-show="showsendmail">请求方式：<input type="text" name="method" disabled="disabled"
+                                                                  id="pluginmethodMail"
+                                                                  value="POST"/>
                             </p>
-                            <p>描&emsp;&emsp;述：<input type="text" name="describe" disabled="disabled"
-                                                     placeholder="{{RuleaddPlugin.describe}}">
+                            <p ng-show="showrestful">请求方式：<select id="pluginmethodRest" ng-model="RuleaddPlugin.method"
+                                                                  ng-options="x for x in RESTMethod"
+                                                                  ng-change="changemethod(RuleaddPlugin.method)">
+                                <option value="" disabled>--请选择请求方式--</option>
+                            </select>
                             </p>
-                            <p>请求方式：<input type="text" name="method" disabled="disabled" id="addtransformmethod"
-                                           placeholder="POST">
-                            </p>
+                            <p ng-show="showrestful">请求地址：{{RestfulBody.url}}</p>
 
                             <!--判断是sendmail后显示-->
-                            <div>
-                                <hr/>
-                                <!--添加多个收件人-->
-                                <div ng-repeat="reply in fchat.replies">
-                                    <p>
-                                        收件人{{$index + 1}}&ensp;：<input type="text" ng-model="reply.value"
-                                                                       id="reply{{$index + 1}}"
-                                                                       name="reply{{$index + 1}}" placeholder="请输入收件人"/>
-                                        <a href="" ng-click="fchat.incrReply($index)">
-                                            <i class="fa fa-plus"></i>
-                                        </a>
-                                        <a href="" ng-click="fchat.decrReply($index)"
-                                           ng-show="fchat.canDescReply">
-                                            <i class="fa fa-minus"></i>
-                                        </a>
-                                        <i class="fa fa-minus" ng-show="!fchat.canDescReply"/></a>
+                            <div ng-show="showsendmail">
+                                <div>
+                                    <hr/>
+                                    <!--添加多个收件人-->
+                                    <div ng-repeat="reply in fchat.replies">
+                                        <p>
+                                            收件人{{$index + 1}}&ensp;：<input type="text" ng-model="reply.value"
+                                                                           id="reply{{$index + 1}}"
+                                                                           name="reply{{$index + 1}}"
+                                                                           placeholder="请输入收件人"/>
+                                            <a href="" ng-click="fchat.incrReply($index)">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                            <a href="" ng-click="fchat.decrReply($index)"
+                                               ng-show="fchat.canDescReply">
+                                                <i class="fa fa-minus"></i>
+                                            </a>
+                                            <i class="fa fa-minus" ng-show="!fchat.canDescReply"/></a>
+                                        </p>
+                                    </div>
+                                    <!--添加多个收件人End-->
+                                    <p>邮件主题：<input type="text" name="mailtitle" id="addTranMailSub"
+                                                   placeholder="请输入邮件主题">
                                     </p>
+                                    <p>邮件内容：<input type="text" name="mailcontext" id="addTranMailText"
+                                                   style="height:100px;width: 450px"/>
+                                    </p>
+                                    <input type="reset" style="display:none;"/>
                                 </div>
                             </div>
-                            <!--End-->
-                            <p>邮件主题：<input type="text" name="mailtitle" id="addTranMailSub"
-                                           placeholder="请输入邮件主题">
-                            </p>
-                            <p>邮件内容：<input type="text" name="mailcontext" id="addTranMailText"
-                                           style="height:100px;width: 450px"/>
-                            </p>
-                            <input type="reset" style="display:none;"/>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -285,11 +293,19 @@
                         </div>
                         <div id="showpluginitem" class="panel-collapse collapse in">
                             <div class="panel-body">
-                                <p>收件人：{{Ruleitem.transform.requestBody.to}}</p>
-                                <p>事务：{{Ruleitem.transform.requestBody.subject}}</p>
-                                <p>内容：{{Ruleitem.transform.requestBody.text}}</p>
+                                <p>跳转地址：{{Ruleitem.transform.url}}</p>
+                                <div ng-show="!showPluginMail">
+                                    <p>Method：{{Ruleitem.transform.requestBody.method}}</p>
+                                    <p>请求地址：{{Ruleitem.transform.requestBody.url}}</p>
+                                </div>
+                                <div ng-show="showPluginMail">
+                                    <p>收件人：{{Ruleitem.transform.requestBody.to}}</p>
+                                    <p>事务：{{Ruleitem.transform.requestBody.subject}}</p>
+                                    <p>内容：{{Ruleitem.transform.requestBody.text}}</p>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -8,6 +8,10 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.showaddTransform = false;
     $scope.index = 0;
     $scope.showsendmail = false;
+    $scope.showrestful = false;
+    $scope.showPluginMail = false;
+    $scope.RESTMethod = ["POST", "DELETE", "GET"];
+    $scope.RestfulBody = {};
 
     //数据初始化
     $scope.formData = {
@@ -18,9 +22,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         },
         "filters": [],
         "transform": {
-            "requestBody": {
-                "to": []
-            }
+            "requestBody": {}
         }
     };
 
@@ -80,6 +82,13 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             $scope.isActive = false;
             $scope.Rulestart = true;
             $scope.Rulestop = false;
+        }
+
+        //判断规则中插件类型
+        if ($scope.Ruleitem.transform.name == "MailPlugin") {
+            $scope.showPluginMail = true;
+        } else {
+            $scope.showPluginMail = false;
         }
         //把数据发送给表格控制器
         $scope.$broadcast('senddata', $scope.Ruleitem);
@@ -167,51 +176,95 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         });
     }
 
+    /* =============================================================
+     添加规则
+     ============================================================ */
+
     //点击添加规则-添加过滤器，跳转到添加规则组页
     $scope.subFilter = function () {
         $scope.showaddFilter = true;
-        //每次弹出添加过滤器，生成单独的对象filter，在js里将其添加到formData。以此解决index问题
-        //$scope.formData.filters[$scope.index].name=addfilter.name.value;
-        ///$scope.formData.filters[$scope.index].jscode=$('#addfilterjs').val();
-        //$scope.index++;
 
         $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(), $('#addfiltertype').val(), $('#addfilterjs').val()));
         console.log($scope.formData.filters);
         $("input[type=reset]").trigger("click");
-
         /****嵌套model添加一次儿子后闪退bug，所以把js命令换成data-dismiss
          $("#addruleFilter").modal("hide");
          *****/
     }
 
-    //点击添加规则-插件类型判断
+    //点击添加规则-点击[添加变换]按钮时获取所有插件
+    $scope.getAllplugin = function () {
+        var getAllPLUGINS = $resource("/api/plugin/allPlugins");
+        $scope.allPlugins = getAllPLUGINS.query({}, function () {
+            $scope.Plugin = $scope.allPlugins;
+            //初始化select.value，解决显示一行空白项bug
+            //若初始化为第一个插件信息，判断插件类型的函数要写双份(待改)
+            //$scope.RuleaddPlugin=$scope.Plugin[0];
+        });
+    }
+
+    var tempurl;
+
+    //点击添加规则-根据插件名判断插件类型
     $scope.change = function (data) {
-        console.log("传入判断函数值：");
-        console.log(data);
-        if ($scope.RuleaddPlugin.name == "MailPlugin") {
-            console.log("判断添加插件类型为MailPlugin")
+        if (data.name == "MailPlugin") {
+            console.log("判断添加插件类型为MailPlugin");
             $scope.showsendmail = true;
+            $scope.showrestful = false;
+            data.method = "POST";
+            data.url = "http://" + data.url + "/api/plugin/sendMail";
+            console.log("MailUrl：" + data.url);
+        } else if (data.name == "RestfulPlugin") {
+            console.log("判断添加插件类型为RestfulPlugin");
+            $scope.showrestful = true;
+            $scope.showsendmail = false;
+            tempurl = data.url;
+            data.url = "http://" + data.url + "/api/restful/sendRequest";
         } else {
             console.log("判断添加插件类型为其他")
             $scope.showsendmail = false;
         }
     }
 
+    //点击添加规则-RestfulRequest插件-判断方法
+    $scope.changemethod = function (method) {
+        if (method == "POST") {
+            $scope.RestfulBody.body = {"result": "success"};
+        } else {
+            $scope.RestfulBody.body = "";
+        }
+        $scope.RestfulBody.method = method;
+        $scope.RestfulBody.url = tempurl + "/api/test/send" + method + "Request";
+    }
+
     //点击添加规则-添加插件
     $scope.subTransform = function () {
-        //解决ng-repeat动态遍历空数组报错bug
-        $scope.mailTo = [];
-        for (var i = 0; i < $scope.fchat.replies.length; i++) {
-            $scope.mailTo.push($scope.fchat.replies[i].value);
-        }
+        //判断添加类型为MailPlugin
+        if ($scope.RuleaddPlugin.name == "MailPlugin") {
+            //解决ng-repeat动态遍历空数组报错bug
+            $scope.mailTo = [];
+            for (var i = 0; i < $scope.fchat.replies.length; i++) {
+                $scope.mailTo.push($scope.fchat.replies[i].value);
+            }
 
-        $scope.showaddTransform = true;
-        $scope.formData.transform.name = $scope.RuleaddPlugin.name;
-        $scope.formData.transform.url = $scope.RuleaddPlugin.url;
-        $scope.formData.transform.method = $('#addtransformmethod').val();
-        $scope.formData.transform.requestBody.to = $scope.mailTo;
-        $scope.formData.transform.requestBody.subject = $('#addTranMailSub').val();
-        $scope.formData.transform.requestBody.text = $('#addTranMailText').val();
+            //插件为Mail时requestbody
+            $scope.MailrequestBody = {to: []};
+            $scope.MailrequestBody.to = $scope.mailTo;
+            $scope.MailrequestBody.subject = $('#addTranMailSub').val();
+            $scope.MailrequestBody.text = $('#addTranMailText').val();
+
+            $scope.showaddTransform = true;
+            $scope.formData.transform.name = $scope.RuleaddPlugin.name;
+            $scope.formData.transform.url = $scope.RuleaddPlugin.url;
+            $scope.formData.transform.method = "POST";
+            $scope.formData.transform.requestBody = $scope.MailrequestBody;
+        } else if ($scope.RuleaddPlugin.name == "RestfulPlugin") {
+            $scope.showaddTransform = true;
+            $scope.formData.transform.name = $scope.RuleaddPlugin.name;
+            $scope.formData.transform.url = $scope.RuleaddPlugin.url;
+            $scope.formData.transform.method = "POST";
+            $scope.formData.transform.requestBody = $scope.RestfulBody;
+        }
         console.log("新建规则-创建插件:");
         console.log($scope.formData.transform);
         $("input[type=reset]").trigger("click");
@@ -223,27 +276,9 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         var addRULE = $resource('/api/rule/create');
         addRULE.save({}, $scope.formData)
             .$promise.then(function (resp) {
-            console.log("新建设备组成功");
+            console.log("新建规则成功");
             $("#addRule").modal("hide");
             location.reload();
-        });
-    }
-
-    //点击[添加变换]按钮时获取所有插件
-    $scope.getAllplugin = function () {
-        var getAllPLUGINS = $resource("/api/plugin/allPlugins");
-        $scope.allPlugins = getAllPLUGINS.query({}, function () {
-            $scope.Plugin = $scope.allPlugins;
-            //初始化select.value，解决显示一行空白项bug
-            $scope.RuleaddPlugin = $scope.Plugin[0];
-            //判断plugin[0]插件类型
-            if ($scope.RuleaddPlugin.name == "MailPlugin") {
-                console.log("判断添加插件类型为MailPlugin")
-                $scope.showsendmail = true;
-            } else {
-                console.log("判断添加插件类型为其他")
-                $scope.showsendmail = false;
-            }
         });
     }
 
@@ -276,5 +311,9 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     /***ng-repeat动态遍历空数组会报索引重复的bug
      * 所以只能设为对象，再取出其中的value发给接口*/
     /***添加多个收件人END*****/
+
+    /* =============================================================
+     添加规则END
+     ============================================================ */
 
 });

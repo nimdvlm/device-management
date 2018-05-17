@@ -259,6 +259,13 @@ DEVICELIST STYLES
 .iedit{
     margin-left:5px;
 }
+#deviceGroupEmpty{
+    color: #adadad;
+    font-size: large;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+}
 /* =============================================================
    Rule
  ============================================================ */
@@ -295,26 +302,6 @@ DEVICELIST STYLES
     width:530px;
     margin-left: 20px;
 }
-
-/* =============================================================
-serviceGroup&pluginsGroup
-============================================================ */
-.homeBackgroundstyle{
-    width: 300px;
-    height: 190px;
-    background: rgba(255,253,255,0.69);
-    border-radius: 5px;
-    margin-top: 30px;
-    margin-left: 70px;
-    float: left;
-}
-.positionTwo{
-    margin-left: 25px;
-}
-.postionOne{
-    margin-left: 180px;
-
-}
 /* =============================================================
 serviceGroup
 ============================================================ */
@@ -326,7 +313,6 @@ serviceGroup
     margin-top: 30px;
     margin-left: 10px;
     float: left;
-
 }
 .homeIconstyle{
 
@@ -338,7 +324,7 @@ serviceGroup
 .abilityPlus{
     float: right;
     font-size: x-large;
-    color: #FF0000;
+    color: #305680;
     margin-top: -10px;
 }
 .abilityDelete{
@@ -390,13 +376,46 @@ serviceGroup
 pluginsGroup
 ============================================================ */
 .pluginActiveposition{
-    margin-left: 180px;
-    color: #FF0000;
+    margin-left: 250px;
+    color: #305680;
     font-size: large;
-    margin-top: -20px;
+    margin-top: -50px;
 }
 .pluginStopposition{
-    margin-left: 25px;
-    color: #FF0000;
+    margin-left: 250px;
+    color: #305680;
     font-size: large;
+}
+.stylePulgin{
+    color:  #305680;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+.homeBackgroundstyle{
+    margin: 30px 10px 0 20px;
+
+}
+.pluginChart{
+    background: #feffff;
+    margin:20px 0px 0 670px;
+    padding-top: 5px;
+    width:450px;
+    height:250px;
+    float: right;
+    margin-left: 790px;
+    position: fixed;
+}
+.pluginIcon{
+    width: 70%;
+    float: left;
+    padding-top:10px;
+}
+.positionTwo{
+    margin-left: 25px;
+}
+.postionOne{
+    margin-left: 180px;
+
 }

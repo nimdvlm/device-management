@@ -58,8 +58,8 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @ApiImplicitParam(name = "deviceGroupId", value = "设备组ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/delete/{groupId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String delete(@PathVariable String deviceGroupId) {
-        String requestAddr = String.format("/api/group/%s", deviceGroupId);
+    public String delete(@PathVariable String groupId) {
+        String requestAddr = String.format("/api/v1/group/%s", groupId);
 
         String responseContent = null ;
         try {
@@ -169,15 +169,14 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @ApiOperation(value="移除设备组中的设备", notes="移除设备组中的设备")
     @ApiImplicitParams({ @ApiImplicitParam(name = "deviceId", value = "设备Id", required = true, dataType = "String",paramType = "path"),
             @ApiImplicitParam(name = "groupId", value = "设备组Id", required = true, dataType = "String",paramType = "path")})
-    @RequestMapping(value = "/unassign/{deviceId}/{groupId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/unassign/{deviceId}/{groupId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String unAssignDeviceFromGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {
         String requestAddr = String.format("/api/v1/unassign/group/%s/%s", gId,dId);
 
         String responseContent = null ;
         try {
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
-                    null,
+            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                     request.getSession()) ;
         } catch (Exception e) {
             return retFail(e.toString()) ;
