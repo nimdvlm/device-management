@@ -467,7 +467,7 @@ $scope.showDetail = function () {
     $scope.controlInfo = controlObject.query({manufacturerName:$scope.deviceInfo.manufacture,deviceTypeName:$scope.deviceInfo.deviceType,modelName:$scope.deviceInfo.model});
     $scope.controlInfo.$promise.then(function (value) {
 
-        console.log( $scope.deviceInfo.id);
+
         $('#control_panel').empty();
         console.log(value);
 
@@ -545,44 +545,105 @@ $scope.showDetail = function () {
 
         }
 
-        for(var i = 0;i<value.length;i++) {
-            /*console.log("serviceName:" + serviceName[i]);
-            console.log("methodName:" + methodName[i]);*/
-            console.log("maxi:"+value.length);
-            //console.log(abilityDesArr[i].serviceBody.params);
-            var params = abilityDesArr[i].serviceBody.params;//用于记录每个serviceBody的params（在变化！！）
-            /*console.log(params);*/
-            console.log(params.length+"----"+i);
-            console.log(abilityDesArr[i].serviceBody.params.length);
-            var valueInfo = new Array();
-            var key = new Array();
+
+        $(".ctrlDivBtn").on("click",function () {
+
+            var valueArr = new Array();
+            var keyArr = new Array();
+            for(var i = 0;i<value.length;i++) {
+                /*console.log("serviceName:" + serviceName[i]);
+                console.log("methodName:" + methodName[i]);*/
+                console.log("maxi:"+value.length);
+                //console.log(abilityDesArr[i].serviceBody.params);
+                var params = abilityDesArr[i].serviceBody.params;//用于记录每个serviceBody的params（在变化！！）
+                /*console.log(params);*/
+                console.log(params.length+"----"+i);
+                console.log(abilityDesArr[i].serviceBody.params.length);
+                valueArr[i] = new Array();
+                keyArr[i] = new Array();
+
                 for(var j = 0;j<params.length;j++){
                     console.log(params[j].key);
                     console.log(params[j].type);
-                    valueInfo[i] = new Array();
-                    key[i] = new Array();
+
                     if(params[j].type == 2){
-                        valueInfo[i][j] = $("#param"+i+j).attr("class");
-                        if($("#param"+i+j).attr("class") == undefined){
-                            valueInfo[i][j] = false;
+
+                        // valueArr[i][j] = $("#param"+i+j).attr("class");
+                        if($("#param"+i+j).attr("src") == "assets/img/off.png"){
+                            valueArr[i][j] = false;
+                        }
+                        else if($("#param"+i+j).attr("src") == "assets/img/on.png"){
+                            valueArr[i][j] = true;
                         }
                     }
                     else{
-                        valueInfo[i][j] = $("#param"+i+j).val();
+                        valueArr[i][j] = $("#param"+i+j).val();
                     }
-                    key[i][j] = params[j].key;
-                    console.log("=======================");
-                    console.log("valueInfo:"+ valueInfo[i][j]);
-                    console.log("key:"+ key[i][j]);
-                    console.log("=======================");
-                }
-        }
-        for(var i=0;i<value.length;i++){
-            for(var j=0;j < abilityDesArr[i].serviceBody.params.length;j++){
-                console.log("double:"+key[i][j]);
+                    keyArr[i][j] = params[j].key;
+                    console.log("=========="+i+j+"=============");
+                    console.log("valueInfo:"+ valueArr[i][j]);
+                    console.log("key:"+ keyArr[i][j]);
+                    console.log("==========="+i+j+"============");
 
+                }
+                console.log(abilityDesArr[i].serviceBody.params.length);
             }
-        }
+
+
+
+
+
+
+
+
+
+
+            console.log(this.id);
+            var index = this.id;
+            console.log(serviceName[index]);
+            console.log(methodName[index]);
+            // var jsonObj = {};
+            var keys = [];
+            var values = [];
+            keys.push("serviceName");
+            values.push(serviceName[index]);
+            keys.push("methodName");
+            values.push(methodName[index]);
+            /*jsonObj.serviceName = serviceName[index];
+            jsonObj.methodName = methodName[index];*/
+            for(var i = 0;i < abilityDesArr[index].serviceBody.params.length;i++){
+
+                // jsonObj.keyArr[index][i] = valueArr[index][i];
+                var type = document.getElementById("param"+index+i).tagName;
+                if(type == "IMG"){
+                    var tag = $("#param"+index+i).attr("src");
+                    if(tag == "assets/img/off.png"){
+                        valueArr[index][i] = false;
+                    }else if(tag == "assets/img/on.png"){
+                        valueArr[index][i] = true;
+                    }
+                }
+
+                keys.push(keyArr[index][i]);
+                values.push(valueArr[index][i]);
+                console.log("value"+index+i+":"+valueArr[index][i]);
+                console.log("key"+index+i+":"+keyArr[index][i]);
+                var json = '{';
+                for (var j = 0; j < keys.length; j++) {
+                    json += '"' + keys[j] +'":"' + values[j] + '",';
+                }
+                json = json.slice(0,json.length-1);
+                json += '}';
+            }
+            console.log("json:"+json);
+            console.log( $scope.deviceInfo.id);
+            var subObj = $resource("/api/shadow/control/:deviceId");
+            var subInfo = subObj.save({deviceId:$scope.deviceInfo.id},json,function (resp) {
+                toastr.success("应用成功！");
+            },function (error) {
+                toastr.error("应用失败！");
+            });
+        });
     });
 
 };
@@ -603,12 +664,6 @@ $scope.showDetail = function () {
 
 
     });
-
-
-
-
-
-
 
 }]);
 
