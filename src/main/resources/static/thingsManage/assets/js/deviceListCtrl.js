@@ -433,17 +433,6 @@ $scope.searchDevice = function () {
     /*    webSocket end   */
     /*--------显示遥测数据end-------------*/
 
-    // 改变on/off开关图片
-    function changeImg(index) {
-        // console.log(index);
-        if($('#' + index).attr('src') === '../img/off.png'){
-            console.log("off->on");
-            $('#' + index).attr('src','img/on.png');
-        }else{
-            $('#' + index).attr('src','img/off.png');
-            console.log("on->off");
-        }
-    }
 
 /*显示详情*/
 $scope.showDetail = function () {
@@ -454,9 +443,22 @@ $scope.showDetail = function () {
 
     /*调用函数，显示遥测数据*/
     realtimeDevice($scope.deviceInfo.id);
+/*
+    function changeImg(index) {
+        // console.log(index);
+        if($('#' + index).attr('src') === 'assets/img/off.png'){
+            console.log("off->on");
+            $('#' + index).attr('src','assets/img/on.png');
+        }else{
+            $('#' + index).attr('src','assets/img/off.png');
+            console.log("on->off");
+        }
+    }*/
 
 
-
+    var abilityDesArr = new Array();
+    var serviceName = new Array();
+    var methodName = new Array();
 
 
     /*控制面板*/
@@ -464,99 +466,125 @@ $scope.showDetail = function () {
     var controlObject = $resource("/api/v1/ability/:manufacturerName/:deviceTypeName/:modelName");
     $scope.controlInfo = controlObject.query({manufacturerName:$scope.deviceInfo.manufacture,deviceTypeName:$scope.deviceInfo.deviceType,modelName:$scope.deviceInfo.model});
     $scope.controlInfo.$promise.then(function (value) {
+
+        console.log( $scope.deviceInfo.id);
         $('#control_panel').empty();
         console.log(value);
-        var abilityDesArr = new Array();
-        var serviceName = new Array();
+
         for(var i = 0;i<value.length;i++){
             var abilityDesJson = JSON.parse(value[i].abilityDes);//将所有abilityDes转成JSON
             abilityDesArr.push(abilityDesJson);//把abilityDesJson存进数组
-            serviceName.push(abilityDesJson.serviceName);
-            $('#control_panel').append('<div class="col-xs-10 col-sm-6 col-md-4 service-panel"><form id="service-control-form"><fieldset id="' + serviceName[i] + '"><legend class="service-control-legend">' + serviceName[i] + '</legend></fieldset></form></div>');
-            console.log(serviceName[i]);
-            var params = abilityDesJson.serviceBody.params;
-            console.log(params);
-            console.log(params.length);
+            serviceName.push(abilityDesJson.serviceName);//用于记录所有的服务名（有多少个小控制面板）
+            methodName.push(abilityDesJson.serviceBody.methodName);//用于记录所有的方法名，用于传回数据
+            //注意：小控制面板、serviceName、methodName以及各控制按钮的id编号都是一一对应的（用i循环即可），这样方便取值
+
+
+            //每个小控制面板的id为ctrlDiv{{i}}
+            $('#control_panel').append('<div class="col-xs-10 col-sm-6 col-md-4 service-panel"><form><fieldset id="ctrlDiv' + i + '"><legend class="service-control-legend">' + serviceName[i] + '</legend></fieldset></form></div>');
+            console.log("serviceName:"+serviceName[i]);
+            var params = abilityDesJson.serviceBody.params;//用于记录每一个小控制面板下有多少个控制选项
+            console.log("params"+params);
+            console.log("params.length"+params.length);
             for(var j = 0;j < params.length;j++){
                 console.log(params[j]);
                 console.log(params[j].value);
-                var temp = params[j].value.split(" ");
-                console.log(temp);
-                var type = params[j].type;
-                var key = params[j].key;
-                var valueInfo = params[j].value;
+
+                var type = params[j].type;//控制类型
+                var key = params[j].key;//控制名称
+                var valueInfo = params[j].value;//控制默认值或范围
+
+
+                //每个小控制面板下的控制按钮id为parma
                 if(type == 1){
-                    $('#' + serviceName[i]).append('<div class="form-group"><label class="col-sm-3 control-label" for="param' + j + '" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="text" class="form-control" id="param' + j + '" name="" value="' + valueInfo +'"/></div></div>');
+                    $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="text" class="form-control" id="param'+ i + j +'"  value="' + valueInfo +'"/></div></div>');
                 }
                 else if(type == 2){
-                    var leftStatus = "true";
-                    var rightStatus = "false";
-                    var curStatus = rightStatus;
+                    /* var temp = params[j].value.split(" ");
+                    var leftStatus = temp[0];
+                     var rightStatus = temp[1];
+                     var curStatus = rightStatus;
+                     console.log("0:"+temp[0]);
+                     console.log("1:"+temp[1]);*/
+                    /*var leftStatus = true;
+                    var rightStatus = false;*/
+                    $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key +  '</label><div class="col-sm-9"><image src="assets/img/off.png" id="param'+i+j+ '" style="cursor: pointer; width: 80px; height: 30px; margin: 0 10px;"></image></div></div>');
+                   /* var img = document.getElementById("param"+i+j);
+                    img.setAttribute('on', true);
+                    img.setAttribute('off', false);*/
+                    $("#param"+i+j).click(function () {
+                        if($(this).attr("src") == "assets/img/off.png"){
+                            console.log("off->on");
+                            $(this).removeClass();
+                            $(this).addClass("true");
+                            $(this).attr("src","assets/img/on.png");
 
-                    $('#' + serviceName[i]).append('<div class="form-group"><label class="col-sm-3 control-label" for="' + key + '" style="text-align: left;">' + key +  '</label><div class="col-sm-9"><image src="img/off.png" id="' + key + '" onclick="changeImg(this.id)" style="cursor: pointer; width: 80px; height: 30px; margin: 0 10px;"></image></div></div>');
-                    var img = document.getElementById(key);
-                    img.setAttribute('on', leftStatus);
-                    img.setAttribute('off', rightStatus);
+                        }else{
+                            console.log("on->off");
+                            $(this).removeClass();
+                            $(this).addClass("false");
+                            $(this).attr("src","assets/img/off.png");
+                        }
+
+                    });
                 }
-                /*else if(type == 3){
-                    var paramName = j;
-                    var lowerBound = paramType[1];
-                    var upperBound = paramType[2];
-                    $('#' + serviceName[i]).append('<div class="form-group"><label class="col-sm-3 control-label" for="param' + j + '" style="text-align: left;">' + paramName + '</label><div class="col-sm-9"><input type="number" class="form-control range-input" id="param' + j + '" name="rangeInput" min="' + lowerBound + '" max="' + upperBound + '" value="' + lowerBound +'" step="1"/><a>(' + lowerBound + '-' + upperBound + ')</a></div></div>');
-                }*/
+                else if(type == 3){
+
+                    /*var temp = params[j].value.split(" ");
+                    var lowerBound = temp[0];
+                    var upperBound = temp[1];*/
+                    var lowerBound = 10;
+                    var upperBound = 20;
+                    console.log(lowerBound);
+                    console.log(upperBound);
+                    //html5标签 <input type="number" min="" max="" step="" value=""/>
+                    $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="number" class="form-control" id="param'+ i + j +'" name="rangeInput" min="' + lowerBound + '" max="' + upperBound + '" value="' + lowerBound +'" step="1"/><span>(' + lowerBound + '-' + upperBound + ')</span></div></div>');
+                    console.log("number:"+$("#param"+i+j).val());
+                }
             }
+            $('#ctrlDiv' + i).append('<button class="btn btn-primary ctrlDivBtn" id="'+i+ '" type="button">应用</button>');
+
         }
 
-        for(var i = 0;i < abilityDesArr.length;i++ ){
-            //abilityDesArr = [{...[{}]},{...[{}]},{...[{}]}]
-            //abilityDesArr[i] = {...[{}]}
-            //abilityDesArr[i].params = [{},{},...]
-            //abilityDesArr[i].params.length
-           /* $("#control-panel").append("<tr><td><div id=abilityDesArr[i].serviceName><h3>abilityDesArr[i].serviceName</h3></div></td></tr>");
-            for(var j = 0;j < abilityDesArr[i].params.length;j++){
-                if(abilityDesArr[i].params.type == 1){
-                    $("#"+abilityDesArr[i].serviceName).append("<p>abilityDesArr[i].params.key<input value=abilityDesArr[i].params.value></p>");
-                }else if(abilityDesArr[i].params.type == 2){
-                    $("#"+abilityDesArr[i].serviceName).append("<p>abilityDesArr[i].params.key<select><option>abilityDesArr[i].params.value</option><option>abilityDesArr[i].params.value</option></select></p>");
-                }else if(abilityDesArr[i].params.type == 3){
-                    $("#"+abilityDesArr[i].serviceName).append("<p>abilityDesArr[i].params.key<button>abilityDesArr[i].params.value</button></p>");
+        for(var i = 0;i<value.length;i++) {
+            /*console.log("serviceName:" + serviceName[i]);
+            console.log("methodName:" + methodName[i]);*/
+            console.log("maxi:"+value.length);
+            //console.log(abilityDesArr[i].serviceBody.params);
+            var params = abilityDesArr[i].serviceBody.params;//用于记录每个serviceBody的params（在变化！！）
+            /*console.log(params);*/
+            console.log(params.length+"----"+i);
+            console.log(abilityDesArr[i].serviceBody.params.length);
+            var valueInfo = new Array();
+            var key = new Array();
+                for(var j = 0;j<params.length;j++){
+                    console.log(params[j].key);
+                    console.log(params[j].type);
+                    valueInfo[i] = new Array();
+                    key[i] = new Array();
+                    if(params[j].type == 2){
+                        valueInfo[i][j] = $("#param"+i+j).attr("class");
+                        if($("#param"+i+j).attr("class") == undefined){
+                            valueInfo[i][j] = false;
+                        }
+                    }
+                    else{
+                        valueInfo[i][j] = $("#param"+i+j).val();
+                    }
+                    key[i][j] = params[j].key;
+                    console.log("=======================");
+                    console.log("valueInfo:"+ valueInfo[i][j]);
+                    console.log("key:"+ key[i][j]);
+                    console.log("=======================");
                 }
-            }
-            $("#"+abilityDesArr[i].serviceName).append("<button class='btn btn-primary'id=i>应用</button>");*/
         }
+        for(var i=0;i<value.length;i++){
+            for(var j=0;j < abilityDesArr[i].serviceBody.params.length;j++){
+                console.log("double:"+key[i][j]);
 
-
-
-
-        /*  console.log("arr:"+abilityDesArr[0].serviceName);
-                  console.log($scope.abilityDesInfo);
-          $scope.operate = function (type,outerIndex,innerIndex) {
-              console.log("type:"+type);
-              console.log("div:"+outerIndex);
-              console.log("p:"+innerIndex);
-
-                  if(type == 1){
-
-                      $(document).ready(function () {
-                          alert("111");
-                          $("#operateTable"+outerIndex+innerIndex).css("background","red");
-                          //append("<input type='text' class='ctrlInfo'>");
-                      });
-
-
-                  }
-                  else if(type == 2){
-                      alert("222");
-                      $("#operateTable"+outerIndex+innerIndex).append("<select><option>on</option><option>off</option></select>");
-                  }
-                  else if(type == 3){
-                      $("#operateTable"+outerIndex+innerIndex).append();
-                  }
-          }*/
-
-
-
+            }
+        }
     });
+
 };
 
 

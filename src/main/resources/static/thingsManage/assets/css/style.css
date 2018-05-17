@@ -195,7 +195,10 @@ DEVICELIST STYLES
 .divide-line{
     border-top: 2px solid #c0c0c0;
 }
-
+.ctrlDivBtn{
+    margin-left: 60px;
+    margin-top: 5px;
+}
 /* =============================================================
    DeviceGroup
  ============================================================ */
