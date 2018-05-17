@@ -83,12 +83,11 @@
             </div>
         </div>
 
-
+        <!--关联设备显示-->
         <div class="DGAssignContainer">
             <div class="DGTitle DGminTitle">
                 <span class="RightviewTitle">关联设备列表</span>
             </div>
-            <!--关联设备显示-->
             <!--ui-grid实现
             <div class="item">
                 <div class="gridStyle DGgridStyle" ui-grid="gridOptions"></div>
@@ -113,7 +112,7 @@
                         </td>
                         <td>{{data.name}}</td>
                         <td>{{data.id}}</td>
-                        <td><i class="fa fa-minus shand" data-toggle="modal" data-target="#warnDelAssign"
+                        <td style="text-align: center"><i class="fa fa-minus shand" data-toggle="modal" data-target="#warnDelAssign"
                                ng-click="giveData(data)"></i></td>
                     </tr>
                     <tr ng-if="data.expanded" ng-repeat-end="">
