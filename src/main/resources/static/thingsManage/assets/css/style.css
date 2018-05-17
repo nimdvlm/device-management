@@ -422,3 +422,20 @@ pluginsGroup
     margin-left: 180px;
 
 }
+.btnPosition{
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.PluginInfo{
+    font-size: 28px;
+    color: #305680;
+    font-weight: 600;
+    padding-bottom: 20px;
+}
+.displayPosition{
+    margin-top: 40px;
+    margin-left: 20px;
+    font-size: 15px;
+    color: #0f0f0f;
+    font-weight: 400;
+}

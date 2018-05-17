@@ -1,64 +1,61 @@
 mainApp.controller("pluginCtrl", function ($scope, $resource){
 
-    //ng-show初始化
-    $scope.Rulestart = false;
-    $scope.Rulestop = false;
+    var str = new Array();
 
-
-
-    var str =[];
     var pluginGroup = $resource('/api/rule/allPlugins');
     $scope.pluginGroups = pluginGroup.query();
 
     $scope.showAll = function (item) {
+        str = [];//初始化数组；
+        console.log(str);
         console.log(item);
         $scope.name = item.name;
         $scope.url = item.url;
         $scope.describe = item.describe;
         console.log($scope.url);
         str = item.url.split(":");
-        console.log(str);
+        //console.log(str);
         var pluginState = $resource('/api/plugin/state/:urlId/:portId',{urlId: '@id', portId: '@id'});
-        $scope.pluginStateDisply = pluginState.get({urlId:str[0],portId:str[1]})
-        console.log($scope.pluginStateDisply);
-        $scope.state = $scope.pluginStateDisply;
-        console.log($scope.state);
+        $scope.pluginStateDisplay = pluginState.get({urlId:str[0],portId:str[1]})
+        console.log($scope.pluginStateDisplay);
 
+        //插件状态展现(暂时未使用)
+        if ($scope.pluginStateDisplay.state == "ACTIVE") {
+            $scope.isActive = true;
+        } else {
+            $scope.isActive = false;
+        }
     }
 
 
-
-
-    /*激活插件
+    /*激活插件*/
     $scope.activePlugin = function(){
-        var changePlugin = $resource('/api/plugin/activate/:url/:port');
-        var arr= new Array;
-        arr = $scope.url.split(":");
-        console.log($scope.arr[0]);
-        console.log($scope.arr[1]);
-        changePlugin.save({url:arr[0],port:arr[1]})
+        //console.log(str[0]);
+        var changePlugin = $resource('/api/plugin/activate/:urlNum/:portNum',{urlNum: str[0], portNum:str[1]});
+        changePlugin.save({urlNum:str[0],portNum:str[1]})
             .$promise.then(function (resp) {
-            console.log("激活成功" + $scope.url);
-            $("#activePG").modal("hide");
-            location.reload();
+            //alert("sssss")
+            console.log(resp);
+            toastr.success("激活成功！");
+            setTimeout(function () {
+                window.location.reload();
+            },500);
         });
-    }*/
-    /*暂停插件
+    }
+    /*暂停插件*/
     $scope.stopPlugin = function () {
-        var changePlugin = $resource('/api/plugin/suspend/:url/:port');
-        $scope.mySplit = function (string,nb) {
-            var array = string.split(":");
-            return array[nb];
-        }
-       // var arr= new Array;
-       // arr = url.split(":");
-        changePlugin.save({url:mySplit(string,0),port:mySplit(string,1)})
+        console.log(str[0]);
+        var changePlugin = $resource('/api/plugin/suspend/:urlDig/:portDig',{urlDig: str[0], portDig: str[1]})
+        changePlugin.save({urlDig:str[0],portDig:str[1]})
             .$promise.then(function (resp) {
-            console.log("激活成功" + $scope.url);
-            $("#stopPG").modal("hide");
-            location.reload();
+            //alert("sssss")
+            console.log(resp);
+            toastr.success("暂停成功！");
+            setTimeout(function () {
+                window.location.reload();
+            },500);
         });
-    }*/
+    }
 
 
 

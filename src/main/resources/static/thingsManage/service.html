@@ -47,11 +47,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="arr in result" class="arr">
+                <tr ng-repeat="arr in result">
                     <td>{{arr.serviceName}}</td>
                     <td>{{arr.serviceDescription}}</td>
                     <td>{{arr.serviceType}}</td>
-                    <td><button class="btn btn-sm btn-danger" ng-click="deleteAA()">删除</button></td>
+                    <td><button class="btn btn-sm btn-danger" ng-click="deleteAA(arr)">删除</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -155,31 +155,45 @@
                 </div>
                 <div class="modal-body">
                     <b>参数</b>
-                    <div style="width: 550px; height: 34px; border: 1px solid #ffffff;">
-                        <input type="text" style="width: 33%; height:34px;float: left" placeholder="key" id="key">
-                        <select class="form-control"type="text" style="width: 33%" id="type">
-                            <option value="1" id="option3">1</option>
-                            <option value="2" id="option4">2</option>
-                            <option value="3" id="option5">3</option>
-                        </select>
-                            <div style="width: 33%; float: right;margin-top: -34px" id="value">
-                                <div id="div2">
-                                    <input type="text" style="width: 150px; height:34px" placeholder="value">
-                                </div>
-                                <div id="div3" style="width: 150px; height: 14px; border: 1px solid #ffffff;display:none">
+                    <div ng-repeat="reply in fchat.replies">
+                        <div style="width: 550px; height: 34px; border: 1px solid #ffffff;">
+                            <input type="text" style="width: 33%; height:34px;float: left" placeholder="key" ng-model="reply.key" id="reply{{$index+1}}" name="replyOne{{$index+1}}">
+                            <select class="form-control" type="text" style="width: 33%" ng-model="reply.type" id="replyTwo{{$index+1}}" name="replyTwo{{$index+1}}">
+                                <option value="1" id="option3">1</option>
+                                <option value="2" id="option4">2</option>
+                                <option value="3" id="option5">3</option>
+                            </select>
+                            <div style="width: 33%; float: right;margin-top: -34px">
+                                <!--div id="div2"-->
+                                    <input type="text" style="width: 150px; height:34px" placeholder="value" ng-model="reply.value" id="replyThree{{$index+1}}" name="replyThree{{$index+1}}">
+                                <!--/div-->
+                                <!--div id="div3" style="width: 150px; height: 14px; border: 1px solid #ffffff;display:none">
                                     <input type="text" style="width: 50%;float: left; height:34px" placeholder="on">
                                     <input type="text" style="width: 50%;float: right; height:34px" placeholder="off">
-                                </div>
+                                </div>暂时不展现
                                 <div id="div4" style="width: 150px; height: 14px; border: 1px solid #ffffff;display:none">
                                     <input type="text" style="width: 50%;float: left; height:34px" placeholder="min:0">
                                     <input type="text" style="width: 50%;float: right; height:34px" placeholder="mix:100">
-                                </div>
+                                </div-->
                             </div>
-                        <div style="margin-top: -28px;margin-left: 525px">
-                            <i class="glyphicon glyphicon-plus" ng-click="CC.addPlus()"></i>
+                            <div style="margin-top: -33px;margin-left: 504px" class="col-md-2 img-link">
+                            <span style="width: 50%;float: left; height:34px">
+                                <a href="" ng-click="fchat.incrReply($index)">
+                                <img src="assets/img/plus.png" alt="plus" width="30px" height="30px" />
+                            </a>
+                            </span>
+                                <span style="width: 50%;float: right; height:34px">
+                                <a href="" ng-click="fchat.decrReply($index)" ng-show="fchat.canDescReply">
+                                <img src="assets/img/minus.png" alt="minus" width="30px" height="30px"/>
+                            </a>
+                                <img src="assets/img/dis_minus.png" alt="minus" width="30px" height="30px"
+                                     ng-show="!fchat.canDescReply"/>
+                            </span>
+                            </div>
                         </div>
-                        </div>
+                        <input type="hidden" id="replies" name="replies" value="{{fchat.combineReplies()}}" />
                     </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" ng-click="addAbility()">
                         创建

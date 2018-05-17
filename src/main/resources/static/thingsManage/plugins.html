@@ -23,23 +23,23 @@
        <!--右侧表格显示-->
     <div class="pluginChart">
         <div class="DGTitle DGminTitle">
-            <span class="RightviewTitle">插件信息</span>
-            <div class="ruleiconcontainer">
-                <i class="fa fa-power-off fa-lg ruleicon shand" ng-show="Rulestart" title="激活插件"
-                   data-toggle="modal" data-target="#startRule"></i>
-                <i class="fa fa-ban fa-lg ruleicon shand" ng-show="Rulestop" title="暂停插件"
-                   data-toggle="modal" data-target="#stopRule"></i>
-            </div>
+            <span class="PluginInfo">插件信息</span>
         </div>
-        <div class="item">
+        <div class="displayPosition">
             <p>插件名称：{{name}}</p>
             <p>插件url：{{url}}</p>
             <p>插件描述：{{describe}}</p>
-            <p>插件状态：{{state}}<!--span ng-class="{true:'stateActive',false:'stateNActive'}[isActive]">
-                        <i ng-class="{true:'fa fa-refresh fa-spin',false:'fa fa-refresh'}[isActive]"></i>
-                        {{state}}
-                        </span-->
+            <p id="changeState">插件状态：<span ng-class="{true:'stateActive',false:'stateNActive'}[isActive]">
+                        <!--i ng-class="{true:'fa fa-refresh fa-spin',false:'fa fa-refresh'}[isActive]"></i-->
+                        {{pluginStateDisplay.state}}
+                        </span>
             </p>
+        </div>
+        <div class="btnPosition">
+            <button class="btn btn-success" data-toggle="modal"
+                    data-target="#refreshDevice"  ng-click="activePlugin()">激活插件</button>
+            <button class="btn btn-danger" data-toggle="modal"
+                    data-target="#refreshDevice"  ng-click="stopPlugin()">暂停插件</button>
         </div>
     </div>
 
@@ -177,7 +177,7 @@
 </div-->
 
     <!--激活插件界面-->
-<div class="modal fade" id="activePG" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<!--div class="modal fade" id="activePG" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -199,13 +199,13 @@
                     确定
                 </button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>
+        </div>
+    </div>
+</div-->
 
 
 <!--暂停插件界面-->
-    <div class="modal fade" id="stopPG" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <!--div class="modal fade" id="stopPG" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -227,7 +227,7 @@
                         确定
                     </button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
+            </div>
+        </div>
+    </div-->
 </div>
