@@ -361,10 +361,9 @@ $scope.searchDevice = function () {
 
     /*    webSocket start  */
     var ws;
-    var keys = [];
     function realtimeDevice(deviceId) {
         var url = 'ws://39.104.186.210:8100/websocket';
-
+        var keys = [];
         listenWs(url);
 
 
@@ -393,6 +392,7 @@ $scope.searchDevice = function () {
                 //e是返回体
                 log("Message received: " + e.data);
                 var message = JSON.parse(e.data);
+
                 for(var i in message.data) {
                     console.log(message.data[i].ts);
                     console.log(message.data[i].key);
@@ -450,6 +450,7 @@ $scope.showDetail = function () {
 
 
     /*调用函数，显示遥测数据*/
+    $('#realtime_data_table tr td').remove();
     realtimeDevice($scope.deviceInfo.id);
     $("#modalCloseDetail,#modalConfirmDetail,#modalCloseTagDetail").click(function () {
         ws.close();
