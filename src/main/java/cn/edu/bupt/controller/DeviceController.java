@@ -47,6 +47,12 @@ public class DeviceController extends DefaultThingsboardAwaredController {
          * {"name":"test0name","type":"default","additionalInfo":{"description":"jhdajd"}}
          */
         JsonObject deviceInfoJson = (JsonObject)new JsonParser().parse(deviceInfo);
+
+        if(deviceInfoJson.has("parentDeviceId") && deviceInfoJson.get("parentDeviceId").getAsString().equals("undefined")){
+            deviceInfoJson.remove("parentDeviceId");
+            deviceInfoJson.addProperty("parentDeviceId","");
+        }
+
         deviceInfoJson.addProperty("tenantId", getTenantId());
 
         String responseContent = null ;
