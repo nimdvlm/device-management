@@ -359,7 +359,7 @@ $scope.searchDevice = function () {
     var ws;
     var keys = [];
     function realtimeDevice(deviceId) {
-        var url = 'ws://10.108.218.108:8100/websocket';
+        var url = 'ws://39.104.186.210:8100/websocket';
 
         listenWs(url);
 
