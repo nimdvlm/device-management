@@ -11,8 +11,9 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
 
     /*在右侧表格中显示各个设备的信息*/
     $scope.show = function (data) {
+        console.log(data.parentDeviceId);
         //如果父设备ID为undefined，直接显示null
-        if(data.parentDeviceId == "undefined"){
+        if(data.parentDeviceId == null || "undefined"){
             parentName = "";
         }
         else{
@@ -23,6 +24,9 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                 type:"GET",
                 success:function(msg) {
                     parentName = msg;
+                },
+                error:function (err) {
+                    parentName = "";
                 }
             });
         }
@@ -447,7 +451,9 @@ $scope.showDetail = function () {
 
     /*调用函数，显示遥测数据*/
     realtimeDevice($scope.deviceInfo.id);
-
+    $("#modalCloseDetail,#modalConfirmDetail,#modalCloseTagDetail").click(function () {
+        ws.close();
+    });
 
 
     /*控制面板*/
