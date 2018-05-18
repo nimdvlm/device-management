@@ -18,7 +18,7 @@ function getdata() {
     myXmlHttpRequest = getXmlHttpObject();
     if (myXmlHttpRequest) {
         //var url = "toajax?username=" + document.getElementById("username").value;
-        var url = "/api/device/alldevices?limit=30";//http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
+        var url = "/api/device/alldevices?limit=20";//http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
         //var data = null;
         //myXmlHttpRequest.open("get",url,true);
         myXmlHttpRequest.open("get", url, true);//url="http://10.108.218.64:8090/api/analysis/device"
@@ -31,7 +31,6 @@ function getdata() {
     function proce() {
 
         if (myXmlHttpRequest.readyState == 4) {
-
             var mes = myXmlHttpRequest.responseText;
             var meso = eval("("+mes+")");
             //window.alert(meso.datagroup[0].deviceId);

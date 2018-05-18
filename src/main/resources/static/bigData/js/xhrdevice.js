@@ -18,7 +18,7 @@ function getdata() {
     myXmlHttpRequest = getXmlHttpObject();
     if (myXmlHttpRequest) {
         //var url = "toajax?username=" + document.getElementById("username").value;
-        var url = "/api/device/alldevices?limit=30";
+        var url = "/api/device/alldevices?limit=20";
         //var data = "deviceId=" + deviceId;
         //myXmlHttpRequest.open("get",url,true);
         myXmlHttpRequest.open("get", url, true);//url="http://10.108.218.64:8090/api/analysis/device"
