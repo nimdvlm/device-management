@@ -6,7 +6,7 @@ spring.thymeleaf.cache: true
 security.basic.enabled: false
 
 server:
-    port: 80
+    port: 8080
 
 # OpenIoT 配置
 bupt.thingsboard:
@@ -18,19 +18,19 @@ bupt.thingsboard:
 
 
 device-access:
- host: 10.108.218.108
+ host: 39.104.186.210
  port: 8100
 
 smart_ruler:
-  host: 10.108.218.108
+  host: 39.104.186.210
   port: 8200
 
 service-management:
-  host: 10.108.218.108
+  host: 39.104.186.210
   port: 8000
 
 account:
-  host: 10.112.233.200
+  host: 39.104.165.155
   port: 8081
   login_url: http://${account.host}:${account.port}/api/v1/auth/login
   logout_url: http://${account.host}:${account.port}/api/v1/auth/logout
