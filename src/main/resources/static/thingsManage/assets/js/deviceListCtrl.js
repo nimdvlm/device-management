@@ -440,39 +440,32 @@ $scope.showDetail = function () {
     var attrDetailObj = $resource("/api/data/getKeyAttribute/:deviceId");
     $scope.attrDetailInfo = attrDetailObj.query({deviceId:$scope.deviceInfo.id});
     //console.log($scope.attrDetailInfo);
+    $scope.showNum = function () {
+
+    };
+
 
     /*调用函数，显示遥测数据*/
     realtimeDevice($scope.deviceInfo.id);
-/*
-    function changeImg(index) {
-        // console.log(index);
-        if($('#' + index).attr('src') === 'assets/img/off.png'){
-            console.log("off->on");
-            $('#' + index).attr('src','assets/img/on.png');
-        }else{
-            $('#' + index).attr('src','assets/img/off.png');
-            console.log("on->off");
-        }
-    }*/
 
-
-    var abilityDesArr = new Array();
-    var serviceName = new Array();
-    var methodName = new Array();
 
 
     /*控制面板*/
+
+    var abilityDesArr = new Array();//用于记录所有aibilityDes转换成json后的数据[{},{},...]
+    var serviceName = new Array();//用于记录所有的serviceName
+    var methodName = new Array();//用于记录所有的methodName
 
     var controlObject = $resource("/api/v1/ability/:manufacturerName/:deviceTypeName/:modelName");
     $scope.controlInfo = controlObject.query({manufacturerName:$scope.deviceInfo.manufacture,deviceTypeName:$scope.deviceInfo.deviceType,modelName:$scope.deviceInfo.model});
     $scope.controlInfo.$promise.then(function (value) {
 
 
-        $('#control_panel').empty();
+        $('#control_panel').empty();//每次将控制面板清空再渲染
         console.log(value);
 
         for(var i = 0;i<value.length;i++){
-            var abilityDesJson = JSON.parse(value[i].abilityDes);//将所有abilityDes转成JSON
+            var abilityDesJson = JSON.parse(value[i].abilityDes);//将所有abilityDes（string）转成JSON
             abilityDesArr.push(abilityDesJson);//把abilityDesJson存进数组
             serviceName.push(abilityDesJson.serviceName);//用于记录所有的服务名（有多少个小控制面板）
             methodName.push(abilityDesJson.serviceBody.methodName);//用于记录所有的方法名，用于传回数据
@@ -482,7 +475,7 @@ $scope.showDetail = function () {
             //每个小控制面板的id为ctrlDiv{{i}}
             $('#control_panel').append('<div class="col-xs-10 col-sm-6 col-md-4 service-panel"><form><fieldset id="ctrlDiv' + i + '"><legend class="service-control-legend">' + serviceName[i] + '</legend></fieldset></form></div>');
             console.log("serviceName:"+serviceName[i]);
-            var params = abilityDesJson.serviceBody.params;//用于记录每一个小控制面板下有多少个控制选项
+            var params = abilityDesJson.serviceBody.params;//用于记录每一个小控制面板下有多少个控制选项,随i的取值变化而变化
             console.log("params"+params);
             console.log("params.length"+params.length);
             for(var j = 0;j < params.length;j++){
@@ -547,18 +540,18 @@ $scope.showDetail = function () {
 
 
         $(".ctrlDivBtn").on("click",function () {
-
+            //注意二维数组的定义方式！！一定要定义在对应循环的上一层
             var valueArr = new Array();
             var keyArr = new Array();
             for(var i = 0;i<value.length;i++) {
                 /*console.log("serviceName:" + serviceName[i]);
-                console.log("methodName:" + methodName[i]);*/
-                console.log("maxi:"+value.length);
+                console.log("methodName:" + methodName[i]);
+                console.log("maxi:"+value.length);*/
                 //console.log(abilityDesArr[i].serviceBody.params);
-                var params = abilityDesArr[i].serviceBody.params;//用于记录每个serviceBody的params（在变化！！）
+                var params = abilityDesArr[i].serviceBody.params;//用于记录每个serviceBody的params（随i变化而变化！！）
                 /*console.log(params);*/
-                console.log(params.length+"----"+i);
-                console.log(abilityDesArr[i].serviceBody.params.length);
+                //console.log(params.length+"----"+i);
+                //console.log(abilityDesArr[i].serviceBody.params.length);
                 valueArr[i] = new Array();
                 keyArr[i] = new Array();
 
@@ -568,7 +561,6 @@ $scope.showDetail = function () {
 
                     if(params[j].type == 2){
 
-                        // valueArr[i][j] = $("#param"+i+j).attr("class");
                         if($("#param"+i+j).attr("src") == "assets/img/off.png"){
                             valueArr[i][j] = false;
                         }
@@ -586,16 +578,8 @@ $scope.showDetail = function () {
                     console.log("==========="+i+j+"============");
 
                 }
-                console.log(abilityDesArr[i].serviceBody.params.length);
+                // console.log(abilityDesArr[i].serviceBody.params.length);
             }
-
-
-
-
-
-
-
-
 
 
             console.log(this.id);
