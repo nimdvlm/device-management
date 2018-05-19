@@ -11,9 +11,11 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
 
     /*在右侧表格中显示各个设备的信息*/
     $scope.show = function (data) {
-        console.log(data.parentDeviceId);
+        console.log(data.id);
+        console.log(data);
+        console.log(data.parentDeviceId)
         //如果父设备ID为undefined，直接显示null
-        if(data.parentDeviceId == null || "undefined"){
+        if(data.parentDeviceId == null || data.parentDeviceId =="undefined"){
             parentName = "";
         }
         else{
@@ -438,20 +440,97 @@ $scope.searchDevice = function () {
     /*--------显示遥测数据end-------------*/
 
 
-/*显示详情*/
-$scope.showDetail = function () {
-    /*显示属性*/
-    var attrDetailObj = $resource("/api/data/getKeyAttribute/:deviceId");
-    $scope.attrDetailInfo = attrDetailObj.query({deviceId:$scope.deviceInfo.id});
-    //console.log($scope.attrDetailInfo);
-    $scope.showNum = function () {
+    /*function pre() {
+        if(index == 1){
+            $(this).addClass("disabled");
+        }else{
+            index--;
+            console.log(index);
+        }
+    }
+    function next() {
+        if(index == pagesNum){
+            $(this).addClass("disabled");
+        }else{
+            index++;
+            console.log(index);
+        }
+    }
+*/
 
+    /*显示详情*/
+    var num;//页数
+    var size;//每页显示的数据个数，如果不设置，则最后一页少于pageSize后,再往前翻就只显示最后一页的数据个数
+$scope.showDetail = function () {
+    var attrDetailObj = $resource("/api/data/getKeyAttribute/:deviceId");
+    var attrDetailInfo = attrDetailObj.query({deviceId:$scope.deviceInfo.id},function (resp) {
+        num = Math.ceil(attrDetailInfo.length / 5);
+        size = 5;
+        initUI(1,5);
+    });
+    console.log(attrDetailInfo);//获取的所有数据，格式为[{},{}]
+
+    /*==========显示属性==========*/
+    //分页功能实现
+    function initUI(pageNo, pageSize) {
+        console.log(pageNo);
+        console.log(pageSize);
+        //pageNo 当前页号
+        //pageSize 页面展示数据个数
+        var html = '';
+        for(var i = (pageNo-1)*pageSize; i < pageNo*pageSize; i++) {
+            var item = attrDetailInfo[i];
+            console.log(attrDetailInfo[i]);
+            var latestTs = formatDate(new Date(attrDetailInfo[i].lastUpdateTs));
+            html += '<tr>'+'<td class="list-item">'+latestTs+'</td>'+'<td class="list-item">'+item.key+'</td>'+'<td class="list-item">'+item.value+'</td>'+'</tr>';
+        }
+        document.getElementsByClassName('data-list')[0].innerHTML = html;
+        pagination({
+            cur: pageNo,
+            total: num,//总共多少页
+            len: 5,//显示出来的点击按钮个数
+            targetId: 'pagination',
+            callback: function() {
+                var me = this;
+                var oPages = document.getElementsByClassName('page-index');
+                for(var i = 0; i < oPages.length; i++) {
+                    oPages[i].onclick=function() {
+                        if(this.getAttribute('data-index')*pageSize>attrDetailInfo.length){
+                            initUI(this.getAttribute('data-index'),pageSize-this.getAttribute('data-index')*pageSize+attrDetailInfo.length);
+                        }else{
+                            initUI(this.getAttribute('data-index'), size);
+                        }
+                    }
+                }
+                var goPage = document.getElementById('go-search');
+                goPage.onclick = function() {
+                    var index = document.getElementById('yeshu').value;
+                    if(!index || (+index > me.total) || (+index < 1)) {
+                        return;
+                    }
+                    initUI(index, size);
+                }
+            }
+        });
     };
+    //每次显示数据数量发生变化都重新分页
+    $scope.showNum = function () {
+        $(".pagination li,#attrDisplay tr").remove();
+        var limit = $("#attrSelectInfo option:selected").text();
+        num = Math.ceil(attrDetailInfo.length / limit);
+        size = limit;
+        initUI(1,limit);
+    };
+    /*===================================================================*/
+
+
+
+
 
 
     /*调用函数，显示遥测数据*/
-    $('#realtime_data_table tr td').remove();
-    realtimeDevice($scope.deviceInfo.id);
+    $('#realtime_data_table tr td').remove();//在显示遥测数据之前清空遥测数据表
+    realtimeDevice($scope.deviceInfo.id);//建立websocket连接
     $("#modalCloseDetail,#modalConfirmDetail,#modalCloseTagDetail").click(function () {
         ws.close();
     });
@@ -652,7 +731,6 @@ $scope.showDetail = function () {
         $(".highlight").mouseout(function () {
             $(this).css("color","#305680");
         });
-
 
     });
 
