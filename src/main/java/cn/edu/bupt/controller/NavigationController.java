@@ -29,11 +29,15 @@ public class NavigationController {
         return "static/login/index";
     }
 
-    @RequestMapping("/signup")
-    public String  logout() {
-        return "signup";
+    @RequestMapping("/modifyPassword")
+    public String  modifyPassword() {
+        return "static/login/modifyPassword";
     }
 
+    @RequestMapping("/home")
+    public String  getHomepage() {
+        return "static/login/chooseIndex";
+    }
     @RequestMapping("/device_group")
     public String  device_group() {
         return "device_group";
