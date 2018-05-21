@@ -86,10 +86,10 @@
                 <tr>
                     <td></td>
                     <td>
-                        <span style="float: right;cursor: pointer;color: #305680;" data-toggle="modal"
-                           data-target="#deviceDetail" class="highlight" ng-click="showDetail()">
+                        <button style="float: right;" data-toggle="modal"
+                           data-target="#deviceDetail" class="highlight btn btn-default" ng-click="showDetail()">
                             了解更多...
-                        </span>
+                        </button>
                     </td>
                 </tr>
                 </tbody>
@@ -338,7 +338,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalCloseTagDetail">&times;</button>
                     <h4 class="modal-title" style="font-weight: bold;font-size: 20px;">设备详情</h4>
                 </div>
                 <div class="modal-body showForm" id="detailTable">
@@ -347,36 +347,31 @@
                         <tr>
                             <th class="attName" style="text-align: left;font-size: 16px;">-----属性-----</th>
                         </tr>
-                        </thead>
-                        <tbody>
                         <tr>
 
                             <td>
                                 每页显示
-                                <select ng-change="showNum()" ng-model="seletValue">
-                                    <option>5</option>
+                                <select id="attrSelectInfo" ng-change="showNum()" ng-model="myNum">
+                                    <option value="">5</option>
                                     <option>10</option>
                                     <option>15</option>
                                     <option>20</option>
                                 </select>
                                 条记录
-                             </td>
-
+                            </td>
                             <td></td>
                             <td><input type="text" class="form-control" placeholder="请输入关键字搜索..." id="searchKey"></td>
                         </tr>
+
                         <tr class="boldForm">
-                            <td>最后更新时间</td>
-                            <td>键</td>
-                            <td>值</td>
+                            <td style="width: 30%; text-align: center;">最后更新时间</td>
+                            <td style="width: 30%; text-align: center;">键</td>
+                            <td style="width: 30%; text-align: center;">值</td>
                         </tr>
-                        <tr ng-repeat="attr in attrDetailInfo">
-                            <td>{{attr.lastUpdateTs | date:'yyyy-MM-dd hh:mm:ss'}}</td>
-                            <td>{{attr.key}}</td>
-                            <td>{{attr.value}}</td>
-                        </tr>
-                        </tbody>
+                        </thead>
+                        <tbody id="attrDisplay" class="data-list"></tbody>
                     </table>
+                    <div id="pagination" class="pagination"></div>
                 </div>
                 <div class="divide-line"></div>
                 <div class="modal-body showForm" id="realTimeTable">
@@ -439,7 +434,7 @@
                             </tr>&ndash;&gt;
                         </tbody>
                     </table>-->
-                    <h4 class="detail-block-header">控制</h4>
+                    <h4 class="detail-block-header">-----控制-----</h4>
                     <div class="row">
                         <div class="control-panel" id="control_panel">
 

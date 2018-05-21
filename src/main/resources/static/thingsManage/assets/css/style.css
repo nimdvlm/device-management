@@ -199,6 +199,9 @@ DEVICELIST STYLES
     margin-left: 60px;
     margin-top: 5px;
 }
+.pagination li{
+    cursor: pointer;
+}
 /* =============================================================
    DeviceGroup
  ============================================================ */

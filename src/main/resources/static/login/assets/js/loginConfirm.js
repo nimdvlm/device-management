@@ -22,7 +22,7 @@ $(document).ready(function () {
                     console.log(password);
                     console.log(msg);*/
 
-                    window.location.href = "chooseIndex.html";
+                    window.location.href = "/home";
                 },
                 error:function () {
                     toastr.error("用户名或密码错误！");
@@ -49,7 +49,7 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8",//post请求必须
                 type:"POST",
                 success:function(msg){
-                    window.location.href = "modifyPassword.html";
+                    window.location.href = "/modifyPassword";
                 },
                 error:function () {
                     toastr.error("用户名或密码错误！");
@@ -63,7 +63,7 @@ $(document).ready(function () {
         返回按钮
     */
     $("#cancel").click(function () {
-        window.location.href="index.html";//原窗口打开
+        window.location.href="/signin";//原窗口打开
     });
 
     /*
@@ -85,7 +85,7 @@ $(document).ready(function () {
                     success:function(msg) {
                         toastr.success("修改成功！3秒后将为您跳转到登录页面");
                         setTimeout(function () {
-                            window.location.href = "index.html";
+                            window.location.href = "/signin";
                         }, 2000);
                     },
                     error:function (msg) {

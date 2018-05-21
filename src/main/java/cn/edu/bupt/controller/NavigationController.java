@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -22,50 +21,60 @@ public class NavigationController {
 
     @RequestMapping("/")
     public String  index() {
-        return "home";
+        return "template/home";
     }
 
     @RequestMapping("/signin")
     public String  login() {
-        return "signin";
+        return "static/login/index";
     }
 
-    @RequestMapping("/signup")
-    public String  logout() {
-        return "signup";
+    @RequestMapping("/modifyPassword")
+    public String  modifyPassword() {
+        return "static/login/modifyPassword";
     }
 
-    @RequestMapping("/device_group")
+    @RequestMapping("/home")
+    public String  getHomepage() {
+        return "static/login/chooseIndex";
+    }
+
+    @RequestMapping("/thingsManager")
+    public String  getThingManager() {
+        return "static/thingsManage/side-menu-user";
+    }
+
+    @RequestMapping("/homePage")
     public String  device_group() {
-        return "device_group";
+        return "static/thingsManage/homePage";
     }
 
-    @RequestMapping("/homepages")
+    @RequestMapping("/deviceList")
     public String  homepages() {
-        return "homepages";
+        return "static/thingsManage/deviceList";
     }
 
-    @RequestMapping("/homepage")
+    @RequestMapping("/deviceGroup")
     public String  homepage() {
-        return "device";
+        return "static/thingsManage/deviceGroup";
     }
 
-    @RequestMapping("/services")
+    @RequestMapping("/service")
     public String  services() {
-        return "services";
+        return "static/thingsManage/service";
     }
 
     @RequestMapping("/rules")
     public String  rules() {
-        return "rules";
+        return "static/thingsManage/rules";
     }
 
     @RequestMapping("/plugins")
-    public String  plugins() { return "plugins"; }
+    public String  plugins() { return "static/thingsManage/plugins"; }
 
-    @RequestMapping("/assess")
+    @RequestMapping("/evaluate")
     public String  assess() {
-        return "assess";
+        return "static/thingsManage/evaluate";
     }
 
 }

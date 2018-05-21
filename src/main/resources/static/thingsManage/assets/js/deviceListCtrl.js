@@ -11,8 +11,11 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
 
     /*在右侧表格中显示各个设备的信息*/
     $scope.show = function (data) {
+        console.log(data.id);
+        console.log(data);
+        console.log(data.parentDeviceId)
         //如果父设备ID为undefined，直接显示null
-        if(data.parentDeviceId == "undefined"){
+        if(data.parentDeviceId == null || data.parentDeviceId =="undefined"){
             parentName = "";
         }
         else{
@@ -23,6 +26,9 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                 type:"GET",
                 success:function(msg) {
                     parentName = msg;
+                },
+                error:function (err) {
+                    parentName = "";
                 }
             });
         }
@@ -357,10 +363,9 @@ $scope.searchDevice = function () {
 
     /*    webSocket start  */
     var ws;
-    var keys = [];
     function realtimeDevice(deviceId) {
-        var url = 'ws://10.108.218.108:8100/websocket';
-
+        var url = 'ws://39.104.186.210:8100/websocket';
+        var keys = [];
         listenWs(url);
 
 
@@ -389,6 +394,7 @@ $scope.searchDevice = function () {
                 //e是返回体
                 log("Message received: " + e.data);
                 var message = JSON.parse(e.data);
+
                 for(var i in message.data) {
                     console.log(message.data[i].ts);
                     console.log(message.data[i].key);
@@ -434,45 +440,118 @@ $scope.searchDevice = function () {
     /*--------显示遥测数据end-------------*/
 
 
-/*显示详情*/
+    /*function pre() {
+        if(index == 1){
+            $(this).addClass("disabled");
+        }else{
+            index--;
+            console.log(index);
+        }
+    }
+    function next() {
+        if(index == pagesNum){
+            $(this).addClass("disabled");
+        }else{
+            index++;
+            console.log(index);
+        }
+    }
+*/
+
+    /*显示详情*/
+    var num;//页数
+    var size;//每页显示的数据个数，如果不设置，则最后一页少于pageSize后,再往前翻就只显示最后一页的数据个数
 $scope.showDetail = function () {
-    /*显示属性*/
     var attrDetailObj = $resource("/api/data/getKeyAttribute/:deviceId");
-    $scope.attrDetailInfo = attrDetailObj.query({deviceId:$scope.deviceInfo.id});
-    //console.log($scope.attrDetailInfo);
+    var attrDetailInfo = attrDetailObj.query({deviceId:$scope.deviceInfo.id},function (resp) {
+        num = Math.ceil(attrDetailInfo.length / 5);
+        size = 5;
+        initUI(1,5);
+    });
+    console.log(attrDetailInfo);//获取的所有数据，格式为[{},{}]
+
+    /*==========显示属性==========*/
+    //分页功能实现
+    function initUI(pageNo, pageSize) {
+        console.log(pageNo);
+        console.log(pageSize);
+        //pageNo 当前页号
+        //pageSize 页面展示数据个数
+        var html = '';
+        for(var i = (pageNo-1)*pageSize; i < pageNo*pageSize; i++) {
+            var item = attrDetailInfo[i];
+            console.log(attrDetailInfo[i]);
+            var latestTs = formatDate(new Date(attrDetailInfo[i].lastUpdateTs));
+            html += '<tr>'+'<td class="list-item">'+latestTs+'</td>'+'<td class="list-item">'+item.key+'</td>'+'<td class="list-item">'+item.value+'</td>'+'</tr>';
+        }
+        document.getElementsByClassName('data-list')[0].innerHTML = html;
+        pagination({
+            cur: pageNo,
+            total: num,//总共多少页
+            len: 5,//显示出来的点击按钮个数
+            targetId: 'pagination',
+            callback: function() {
+                var me = this;
+                var oPages = document.getElementsByClassName('page-index');
+                for(var i = 0; i < oPages.length; i++) {
+                    oPages[i].onclick=function() {
+                        if(this.getAttribute('data-index')*pageSize>attrDetailInfo.length){
+                            initUI(this.getAttribute('data-index'),pageSize-this.getAttribute('data-index')*pageSize+attrDetailInfo.length);
+                        }else{
+                            initUI(this.getAttribute('data-index'), size);
+                        }
+                    }
+                }
+                var goPage = document.getElementById('go-search');
+                goPage.onclick = function() {
+                    var index = document.getElementById('yeshu').value;
+                    if(!index || (+index > me.total) || (+index < 1)) {
+                        return;
+                    }
+                    initUI(index, size);
+                }
+            }
+        });
+    };
+    //每次显示数据数量发生变化都重新分页
+    $scope.showNum = function () {
+        $(".pagination li,#attrDisplay tr").remove();
+        var limit = $("#attrSelectInfo option:selected").text();
+        num = Math.ceil(attrDetailInfo.length / limit);
+        size = limit;
+        initUI(1,limit);
+    };
+    /*===================================================================*/
+
+
+
+
+
 
     /*调用函数，显示遥测数据*/
-    realtimeDevice($scope.deviceInfo.id);
-/*
-    function changeImg(index) {
-        // console.log(index);
-        if($('#' + index).attr('src') === 'assets/img/off.png'){
-            console.log("off->on");
-            $('#' + index).attr('src','assets/img/on.png');
-        }else{
-            $('#' + index).attr('src','assets/img/off.png');
-            console.log("on->off");
-        }
-    }*/
-
-
-    var abilityDesArr = new Array();
-    var serviceName = new Array();
-    var methodName = new Array();
+    $('#realtime_data_table tr td').remove();//在显示遥测数据之前清空遥测数据表
+    realtimeDevice($scope.deviceInfo.id);//建立websocket连接
+    $("#modalCloseDetail,#modalConfirmDetail,#modalCloseTagDetail").click(function () {
+        ws.close();
+    });
 
 
     /*控制面板*/
+
+    var abilityDesArr = new Array();//用于记录所有aibilityDes转换成json后的数据[{},{},...]
+    var serviceName = new Array();//用于记录所有的serviceName
+    var methodName = new Array();//用于记录所有的methodName
 
     var controlObject = $resource("/api/v1/ability/:manufacturerName/:deviceTypeName/:modelName");
     $scope.controlInfo = controlObject.query({manufacturerName:$scope.deviceInfo.manufacture,deviceTypeName:$scope.deviceInfo.deviceType,modelName:$scope.deviceInfo.model});
     $scope.controlInfo.$promise.then(function (value) {
 
-        console.log( $scope.deviceInfo.id);
-        $('#control_panel').empty();
+
+        $('#control_panel').empty();//每次将控制面板清空再渲染
         console.log(value);
 
         for(var i = 0;i<value.length;i++){
-            var abilityDesJson = JSON.parse(value[i].abilityDes);//将所有abilityDes转成JSON
+            var abilityDesJson = JSON.parse(value[i].abilityDes);//将所有abilityDes（string）转成JSON
             abilityDesArr.push(abilityDesJson);//把abilityDesJson存进数组
             serviceName.push(abilityDesJson.serviceName);//用于记录所有的服务名（有多少个小控制面板）
             methodName.push(abilityDesJson.serviceBody.methodName);//用于记录所有的方法名，用于传回数据
@@ -482,7 +561,7 @@ $scope.showDetail = function () {
             //每个小控制面板的id为ctrlDiv{{i}}
             $('#control_panel').append('<div class="col-xs-10 col-sm-6 col-md-4 service-panel"><form><fieldset id="ctrlDiv' + i + '"><legend class="service-control-legend">' + serviceName[i] + '</legend></fieldset></form></div>');
             console.log("serviceName:"+serviceName[i]);
-            var params = abilityDesJson.serviceBody.params;//用于记录每一个小控制面板下有多少个控制选项
+            var params = abilityDesJson.serviceBody.params;//用于记录每一个小控制面板下有多少个控制选项,随i的取值变化而变化
             console.log("params"+params);
             console.log("params.length"+params.length);
             for(var j = 0;j < params.length;j++){
@@ -545,44 +624,96 @@ $scope.showDetail = function () {
 
         }
 
-        for(var i = 0;i<value.length;i++) {
-            /*console.log("serviceName:" + serviceName[i]);
-            console.log("methodName:" + methodName[i]);*/
-            console.log("maxi:"+value.length);
-            //console.log(abilityDesArr[i].serviceBody.params);
-            var params = abilityDesArr[i].serviceBody.params;//用于记录每个serviceBody的params（在变化！！）
-            /*console.log(params);*/
-            console.log(params.length+"----"+i);
-            console.log(abilityDesArr[i].serviceBody.params.length);
-            var valueInfo = new Array();
-            var key = new Array();
+
+        $(".ctrlDivBtn").on("click",function () {
+            //注意二维数组的定义方式！！一定要定义在对应循环的上一层
+            var valueArr = new Array();
+            var keyArr = new Array();
+            for(var i = 0;i<value.length;i++) {
+                /*console.log("serviceName:" + serviceName[i]);
+                console.log("methodName:" + methodName[i]);
+                console.log("maxi:"+value.length);*/
+                //console.log(abilityDesArr[i].serviceBody.params);
+                var params = abilityDesArr[i].serviceBody.params;//用于记录每个serviceBody的params（随i变化而变化！！）
+                /*console.log(params);*/
+                //console.log(params.length+"----"+i);
+                //console.log(abilityDesArr[i].serviceBody.params.length);
+                valueArr[i] = new Array();
+                keyArr[i] = new Array();
+
                 for(var j = 0;j<params.length;j++){
                     console.log(params[j].key);
                     console.log(params[j].type);
-                    valueInfo[i] = new Array();
-                    key[i] = new Array();
+
                     if(params[j].type == 2){
-                        valueInfo[i][j] = $("#param"+i+j).attr("class");
-                        if($("#param"+i+j).attr("class") == undefined){
-                            valueInfo[i][j] = false;
+
+                        if($("#param"+i+j).attr("src") == "assets/img/off.png"){
+                            valueArr[i][j] = false;
+                        }
+                        else if($("#param"+i+j).attr("src") == "assets/img/on.png"){
+                            valueArr[i][j] = true;
                         }
                     }
                     else{
-                        valueInfo[i][j] = $("#param"+i+j).val();
+                        valueArr[i][j] = $("#param"+i+j).val();
                     }
-                    key[i][j] = params[j].key;
-                    console.log("=======================");
-                    console.log("valueInfo:"+ valueInfo[i][j]);
-                    console.log("key:"+ key[i][j]);
-                    console.log("=======================");
-                }
-        }
-        for(var i=0;i<value.length;i++){
-            for(var j=0;j < abilityDesArr[i].serviceBody.params.length;j++){
-                console.log("double:"+key[i][j]);
+                    keyArr[i][j] = params[j].key;
+                    console.log("=========="+i+j+"=============");
+                    console.log("valueInfo:"+ valueArr[i][j]);
+                    console.log("key:"+ keyArr[i][j]);
+                    console.log("==========="+i+j+"============");
 
+                }
+                // console.log(abilityDesArr[i].serviceBody.params.length);
             }
-        }
+
+
+            console.log(this.id);
+            var index = this.id;
+            console.log(serviceName[index]);
+            console.log(methodName[index]);
+            // var jsonObj = {};
+            var keys = [];
+            var values = [];
+            keys.push("serviceName");
+            values.push(serviceName[index]);
+            keys.push("methodName");
+            values.push(methodName[index]);
+            /*jsonObj.serviceName = serviceName[index];
+            jsonObj.methodName = methodName[index];*/
+            for(var i = 0;i < abilityDesArr[index].serviceBody.params.length;i++){
+
+                // jsonObj.keyArr[index][i] = valueArr[index][i];
+                var type = document.getElementById("param"+index+i).tagName;
+                if(type == "IMG"){
+                    var tag = $("#param"+index+i).attr("src");
+                    if(tag == "assets/img/off.png"){
+                        valueArr[index][i] = false;
+                    }else if(tag == "assets/img/on.png"){
+                        valueArr[index][i] = true;
+                    }
+                }
+
+                keys.push(keyArr[index][i]);
+                values.push(valueArr[index][i]);
+                console.log("value"+index+i+":"+valueArr[index][i]);
+                console.log("key"+index+i+":"+keyArr[index][i]);
+                var json = '{';
+                for (var j = 0; j < keys.length; j++) {
+                    json += '"' + keys[j] +'":"' + values[j] + '",';
+                }
+                json = json.slice(0,json.length-1);
+                json += '}';
+            }
+            console.log("json:"+json);
+            console.log( $scope.deviceInfo.id);
+            var subObj = $resource("/api/shadow/control/:deviceId");
+            var subInfo = subObj.save({deviceId:$scope.deviceInfo.id},json,function (resp) {
+                toastr.success("应用成功！");
+            },function (error) {
+                toastr.error("应用失败！");
+            });
+        });
     });
 
 };
@@ -601,14 +732,7 @@ $scope.showDetail = function () {
             $(this).css("color","#305680");
         });
 
-
     });
-
-
-
-
-
-
 
 }]);
 
