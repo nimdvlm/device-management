@@ -17,7 +17,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //数据初始化
     $scope.formData = {
         "rule": {
-            "tenantId": "1",
+            //"tenantId": "1",
             "state": "ACTIVE",
             "additional_info": ""
         },
@@ -34,6 +34,12 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         this.jsCode = jscode;
     }
 
+    //获取当前租户ID
+    var TenantId=$resource('/api/rule/tenant');
+    TenantId.get().$promise.then(function (resp) {
+        $scope.formData.rule.tenantId=resp.tenantId;
+        console.log("tenantid:"+$scope.formData.rule.tenantId);
+    });
 
     //获取当前租户规则
     var RULE = $resource('/api/rule/ruleByTenant', {}, {
