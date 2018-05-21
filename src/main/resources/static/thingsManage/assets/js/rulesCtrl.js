@@ -10,6 +10,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.showsendmail = false;
     $scope.showrestful = false;
     $scope.showPluginMail = false;
+    $scope.showrestfulPOST=false;
     $scope.RESTMethod = ["POST", "DELETE", "GET"];
     $scope.RestfulBody = {};
 
@@ -34,7 +35,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     }
 
 
-    var RULE = $resource('/api/rule/allRules', {}, {
+    //获取当前租户规则
+    var RULE = $resource('/api/rule/ruleByTenant', {}, {
         //解决 Expected response to contain an array but got an object 问题
         query: {method: 'GET', isArray: true}
     });//获取所有规则组信息
@@ -229,8 +231,10 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //点击添加规则-RestfulRequest插件-判断方法
     $scope.changemethod = function (method) {
         if (method == "POST") {
-            $scope.RestfulBody.body = {"result": "success"};
+            $scope.showrestfulPOST=true;
+            $scope.RestfulBody.body = "{\"result\": \"success\"}";
         } else {
+            $scope.showrestfulPOST=false;
             $scope.RestfulBody.body = "";
         }
         $scope.RestfulBody.method = method;
@@ -261,7 +265,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         } else if ($scope.RuleaddPlugin.name == "RestfulPlugin") {
             $scope.showaddTransform = true;
             $scope.formData.transform.name = $scope.RuleaddPlugin.name;
-            $scope.formData.transform.url = $scope.RuleaddPlugin.url;
+            $scope.formData.transform.url =  $scope.RuleaddPlugin.url;
             $scope.formData.transform.method = "POST";
             $scope.formData.transform.requestBody = $scope.RestfulBody;
         }
