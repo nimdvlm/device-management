@@ -38,37 +38,43 @@ public class NavigationController {
     public String  getHomepage() {
         return "static/login/chooseIndex";
     }
-    @RequestMapping("/device_group")
+
+    @RequestMapping("/thingsManager")
+    public String  getThingManager() {
+        return "static/thingsManage/side-menu-user";
+    }
+
+    @RequestMapping("/homePage")
     public String  device_group() {
-        return "device_group";
+        return "static/thingsManage/homePage";
     }
 
-    @RequestMapping("/homepages")
+    @RequestMapping("/deviceList")
     public String  homepages() {
-        return "homepages";
+        return "static/thingsManage/deviceList";
     }
 
-    @RequestMapping("/homepage")
+    @RequestMapping("/deviceGroup")
     public String  homepage() {
-        return "device";
+        return "static/thingsManage/deviceGroup";
     }
 
-    @RequestMapping("/services")
+    @RequestMapping("/service")
     public String  services() {
-        return "services";
+        return "static/thingsManage/service";
     }
 
     @RequestMapping("/rules")
     public String  rules() {
-        return "rules";
+        return "static/thingsManage/rules";
     }
 
     @RequestMapping("/plugins")
-    public String  plugins() { return "plugins"; }
+    public String  plugins() { return "static/thingsManage/plugins"; }
 
-    @RequestMapping("/assess")
+    @RequestMapping("/evaluate")
     public String  assess() {
-        return "assess";
+        return "static/thingsManage/evaluate";
     }
 
 }
