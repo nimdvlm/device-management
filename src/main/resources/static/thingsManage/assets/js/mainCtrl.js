@@ -55,8 +55,12 @@ mainApp.controller("mainCtrl",["$scope","$location",function ($scope,$location) 
         $(".homeIconBackground,.side-menu-icon,.chooseBtn").mouseout(function () {
             $(this).siblings().stop().fadeTo(300, 1);
         });
+
     });
 
+
 }]);
+
+
 
 

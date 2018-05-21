@@ -3,14 +3,32 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     $scope.deviceInfo;//用于记录当前选中的设备
     var parentName;//用于记录父设备名称
 
-
     /*设备列表信息获取与展示*/
-    var obj = $resource("/api/device/alldevices?limit=30");
+    var obj = $resource("/api/device/alldevices?limit=9");
     $scope.deviceList = obj.query();//返回值为限制个数的所有设备信息
-    //console.log($scope.deviceList);
 
+
+    /*鼠标移入动画效果*/
+    $scope.fadeSiblings = function () {
+        $(".chooseBtn").mouseover(function () {
+            $(this).siblings().stop().fadeTo(300, 0.3);
+        });
+    };
+    /*鼠标移出动画效果*/
+    $scope.reSiblings = function () {
+        $(".chooseBtn").mouseout(function () {
+            $(this).siblings().stop().fadeTo(300, 1);
+        });
+    };
     /*在右侧表格中显示各个设备的信息*/
     $scope.show = function (data) {
+        /*除点击元素外其他元素均无特殊样式*/
+        $scope.deviceList.forEach(function (items) {
+            if(data != items) items.style = {}
+        });
+        /*给点击元素加上特定样式*/
+        data.style = {"border": "2px solid #305680"};
+
         console.log(data.id);
         console.log(data);
         console.log(data.parentDeviceId)
@@ -53,6 +71,7 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         //console.log("$scope.parentName:"+$scope.parentName);
         $scope.model = data.model;
     };
+
 
 
 
@@ -578,6 +597,8 @@ $scope.showDetail = function () {
                     $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="text" class="form-control" id="param'+ i + j +'"  value="' + valueInfo +'"/></div></div>');
                 }
                 else if(type == 2){
+                    /*函数：split()
+                    功能：使用一个指定的分隔符把一个字符串分割存储到数组*/
                     /* var temp = params[j].value.split(" ");
                     var leftStatus = temp[0];
                      var rightStatus = temp[1];
@@ -731,7 +752,12 @@ $scope.showDetail = function () {
         $(".highlight").mouseout(function () {
             $(this).css("color","#305680");
         });
-
+        $("#preDevice,#nextDevice").mouseover(function () {
+            $(this).css("opacity","1");
+        });
+        $("#preDevice,#nextDevice").mouseout(function () {
+            $(this).css("opacity","0.3");
+        });
     });
 
 }]);
