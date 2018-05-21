@@ -64,7 +64,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent);
     }
 
-    @RequestMapping(value = "/ruleByTenant/",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/ruleByTenant",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     private String getRulesByTenantId()
     {
