@@ -23,11 +23,13 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         type:"GET",
         success:function(msg) {
             $scope.deviceList = msg;
+            var last = $scope.deviceList.length - 1;
             console.log($scope.deviceList);
-            nextDeviceId = $scope.deviceList[8].id;
-            nextDeviceName = $scope.deviceList[8].name;
-            preDeviceIdArr.push($scope.deviceList[8].id);
-            preDeviceNameArr.push($scope.deviceList[8].name);
+            console.log($scope.deviceList.length);
+            nextDeviceId = $scope.deviceList[last].id;
+            nextDeviceName = $scope.deviceList[last].name;
+            preDeviceIdArr.push($scope.deviceList[last].id);
+            preDeviceNameArr.push($scope.deviceList[last].name);
         }
     });
 
@@ -53,7 +55,7 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         data.style = {"border": "2px solid #305680"};
 
         //如果父设备ID为undefined，直接显示null
-        if(data.parentDeviceId == null || data.parentDeviceId =="undefined"){
+        if(data.parentDeviceId == null || data.parentDeviceId =="undefined" || data.parentDeviceId == ""){
             parentName = "";
         }
         else{
@@ -77,6 +79,7 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         $scope.parentName = parentNameObj.get({parentId:data.parentDeviceId});
         */
         $scope.deviceInfo = data;
+        console.log(data);
         $scope.ID = data.id;
         $scope.deviceName = data.name;
         $scope.deviceType = data.deviceType;
@@ -99,13 +102,25 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
             type:"GET",
             success:function(msg) {
 
-                pageNum++;
-                $scope.deviceList = msg;
-                console.log($scope.deviceList);
-                nextDeviceId = $scope.deviceList[8].id;
-                nextDeviceName = $scope.deviceList[8].name;
-                preDeviceIdArr.push($scope.deviceList[8].id);
-                preDeviceNameArr.push($scope.deviceList[8].name);
+
+                if(msg == ""){
+                    toastr.warning("当前已是最后一页！");
+                }
+                else{
+                    pageNum++;
+                    $scope.deviceList = msg;
+                    var last = $scope.deviceList.length - 1;
+                    console.log($scope.deviceList);
+                    nextDeviceId = $scope.deviceList[last].id;
+                    nextDeviceName = $scope.deviceList[last].name;
+                    preDeviceIdArr.push($scope.deviceList[last].id);
+                    preDeviceNameArr.push($scope.deviceList[last].name);
+                }
+
+
+            },
+            error:function (err) {
+                toastr.warning("当前已是最后一页！");
             }
          });
     };
@@ -132,9 +147,10 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                 success:function(msg) {
                     pageNum--;
                     $scope.deviceList = msg;
+                    var last = $scope.deviceList.length - 1;
                     console.log($scope.deviceList);
-                    nextDeviceId = $scope.deviceList[8].id;
-                    nextDeviceName = $scope.deviceList[8].name;
+                    nextDeviceId = $scope.deviceList[last].id;
+                    nextDeviceName = $scope.deviceList[last].name;
                 }
             });
         }
@@ -527,35 +543,24 @@ $scope.searchDevice = function () {
     /*    webSocket end   */
     /*--------显示遥测数据end-------------*/
 
-
-    /*function pre() {
-        if(index == 1){
-            $(this).addClass("disabled");
-        }else{
-            index--;
-            console.log(index);
-        }
-    }
-    function next() {
-        if(index == pagesNum){
-            $(this).addClass("disabled");
-        }else{
-            index++;
-            console.log(index);
-        }
-    }
-*/
-
     /*显示详情*/
     var num;//页数
     var size;//每页显示的数据个数，如果不设置，则最后一页少于pageSize后,再往前翻就只显示最后一页的数据个数
 $scope.showDetail = function () {
+    $("#attrSelectInfo option:first").prop("selected","selected");
     var attrDetailObj = $resource("/api/data/getKeyAttribute/:deviceId");
     var attrDetailInfo = attrDetailObj.query({deviceId:$scope.deviceInfo.id},function (resp) {
+        console.log(resp);
         num = Math.ceil(attrDetailInfo.length / 5);
         size = 5;
         initUI(1,5);
     });
+
+
+    /*按键值搜索*/
+    $scope.findKey = function () {
+
+    };
 
     console.log(attrDetailInfo);//获取的所有数据，格式为[{},{}]
 
@@ -567,7 +572,8 @@ $scope.showDetail = function () {
         //pageNo 当前页号
         //pageSize 页面展示数据个数
         var html = '';
-        for(var i = (pageNo-1)*pageSize; i < pageNo*pageSize; i++) {
+        for(var i=(pageNo-1)*size; i<((pageNo-1)*size+pageSize); i++) {
+            // console.log(i+"|"+Number((pageNo-1)*size+pageSize));
             var item = attrDetailInfo[i];
             console.log(attrDetailInfo[i]);
             var latestTs = formatDate(new Date(attrDetailInfo[i].lastUpdateTs));
@@ -597,7 +603,14 @@ $scope.showDetail = function () {
                     if(!index || (+index > me.total) || (+index < 1)) {
                         return;
                     }
-                    initUI(index, size);
+                    //若不加此判断，pageSize仍为传进来的原值，若最后一页数值不够，则会产生undefined错误
+                    if(pageSize*index > attrDetailInfo.length){
+                        pageSize = attrDetailInfo.length-pageSize*(index-1);
+                        initUI(index, pageSize);
+                    }else{
+                        initUI(index, size);
+                    }
+
                 }
             }
         });
@@ -605,7 +618,8 @@ $scope.showDetail = function () {
     //每次显示数据数量发生变化都重新分页
     $scope.showNum = function () {
         $(".pagination li,#attrDisplay tr").remove();
-        var limit = $("#attrSelectInfo option:selected").text();
+        var limit = Number($("#attrSelectInfo option:selected").text());
+        //使用.text()取出的数据是字符型！！！！
         num = Math.ceil(attrDetailInfo.length / limit);
         size = limit;
         initUI(1,limit);
