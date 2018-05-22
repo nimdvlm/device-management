@@ -108,7 +108,7 @@
                                 </tbody>
                             </table>
                             <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#addruleTransform" ng-click="getAllplugin()">+ 添加变换
+                                    data-target="#addruleTransform" ng-click="getAllplugin()">+ 添加插件
                             </button>
                         </form>
                     </div>
@@ -145,7 +145,7 @@
                                             placeholder="待定">
                             </p>
                             <p>JS&emsp;代&emsp;码：<textarea name="addjscode" id="addfilterjs"
-                                                          style="height:150px;width: 470px">function filter(key,value){if(key=='x' && value>1){return true;}  else{return false;}}</textarea>
+                                                          style="height:150px;width: 470px">function filter(deviceId,key,value){if(deviceId=='35818ec0-5a65-11e8-b66a-e5d2dad89b7c'&&key=='1231' && value>101){return true;}  else{return false;}}</textarea>
                             </p>
                             <input type="reset" style="display:none;"/>
                         </form>
@@ -193,7 +193,9 @@
                                 <option value="" disabled>--请选择请求方式--</option>
                             </select>
                             </p>
-                            <p ng-show="showrestful">请求地址：{{RestfulBody.url}}</p>
+                            <p ng-show="showrestful">请求地址：<input type="text" ng-model="RestfulBody.url" style="width: 70%;"></p>
+                            <p ng-show="showrestfulPOST">Requestbody：<input type="text" ng-model="RestfulBody.body" style="width: 70%;">
+                            </p>
 
                             <!--判断是sendmail后显示-->
                             <div ng-show="showsendmail">

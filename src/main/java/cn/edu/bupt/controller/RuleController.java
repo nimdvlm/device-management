@@ -18,6 +18,9 @@ import java.text.SimpleDateFormat;
 @RequestMapping("/api/rule")
 public class RuleController extends DefaultThingsboardAwaredController{
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
+
     @RequestMapping(value = "/allRules",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     private String getRules()
@@ -88,6 +91,14 @@ public class RuleController extends DefaultThingsboardAwaredController{
         responseContent = encodeJson(responseContent);
         JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
         return retSuccess(array.toString());
+    }
+
+    @RequestMapping(value = "/tenant",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getTenant()
+    {
+        String responseBody = "{\"tenantId\":\""+getTenantId()+"\"}";
+        return responseBody;
     }
 
     @RequestMapping(value = "/allFilters",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
