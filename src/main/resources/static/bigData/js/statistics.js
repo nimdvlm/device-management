@@ -143,7 +143,6 @@ sectionA.setAttribute("href","dydata.html?deviceId="+deviceId+"&deviceNum="+devi
                 }
             };
 
-            // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
         }
     }
@@ -282,10 +281,8 @@ option = {
     }
 };
 
-// 使用刚指定的配置项和数据显示图表。
 myChart.setOption(option);
 
-// 基于准备好的dom，初始化echarts实例
 var inputStartDate = "";
 var inputEndDate = "";
 var splitNum = 7;
@@ -310,7 +307,7 @@ function showData() {
         myXmlHttpRequest = getXmlHttpObject();
         if(myXmlHttpRequest){
             //var url = "toajax?username=" + document.getElementById("username").value;
-            var url = "http://10.108.218.64:8090/api/analysis/data";//url="http://10.108.218.64:8090/api/analysis/data";getselectdata
+            var url = "http://39.104.186.210:8090/api/analysis/data";//url="http://10.108.218.64:8090/api/analysis/data";getselectdata
             var startTime = new Date(inputStartDate);
             var startTimeChuo = startTime.getTime();
             var endTime = new Date(inputEndDate);
@@ -482,7 +479,6 @@ function showData() {
                     }
                 };
 
-                // 使用刚指定的配置项和数据显示图表。
                 myChart.setOption(option);
             }
         }
