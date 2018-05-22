@@ -1,4 +1,3 @@
-// 基于准备好的dom，初始化echarts实例
 var deviceId = UrlParm.parm("deviceId");
 var deviceNum = UrlParm.parm("deviceNum");
 var sectionA = document.getElementById("transportId");
@@ -189,7 +188,6 @@ function getdata(deviceId) {
 
                         myChart.setOption(option);}}
             }, 2100);
-            // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
 
 

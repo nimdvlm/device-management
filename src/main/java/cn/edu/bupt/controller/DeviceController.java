@@ -246,12 +246,12 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         }
     }*/
 
-   public Integer getTenantId(){
+   /*public Integer getTenantId(){
        HttpSession sess = request.getSession();
        String res = HttpUtil.getAccessToken(sess);
        JsonObject jo = (JsonObject)new JsonParser().parse(res);
        Integer tenantId = jo.get("tenant_id").getAsInt();
        return tenantId;
-   }
+   }*/
 
 }
