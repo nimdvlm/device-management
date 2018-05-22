@@ -2,11 +2,34 @@
 mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$resource) {
     $scope.deviceInfo;//用于记录当前选中的设备
     var parentName;//用于记录父设备名称
-
+    var preDeviceIdArr = [];//用于记录设备列表展示时向前翻页
+    var preDeviceNameArr = [];//用于设备列表展示时向前翻页
+    var preDeviceId;//用于设备列表展示时向前翻页
+    var preDeviceName;//用于设备列表展示时向前翻页
+    var nextDeviceId;//用于设备列表展示时向后翻页
+    var nextDeviceName;//用于设备列表展示时向后翻页
+    var pageNum = 1;//用于记录当前页号
     /*设备列表信息获取与展示*/
-    var obj = $resource("/api/device/alldevices?limit=9");
-    $scope.deviceList = obj.query();//返回值为限制个数的所有设备信息
 
+    /*返回值为所有设备信息*/
+    var obj = $resource("/api/device/alldevices?limit=1000");
+    $scope.deviceListAll = obj.query();
+
+   /*返回值为限制个数的所有设备信息*/
+    $.ajax({
+        url:"/api/device/alldevices?limit=9",
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        type:"GET",
+        success:function(msg) {
+            $scope.deviceList = msg;
+            console.log($scope.deviceList);
+            nextDeviceId = $scope.deviceList[8].id;
+            nextDeviceName = $scope.deviceList[8].name;
+            preDeviceIdArr.push($scope.deviceList[8].id);
+            preDeviceNameArr.push($scope.deviceList[8].name);
+        }
+    });
 
     /*鼠标移入动画效果*/
     $scope.fadeSiblings = function () {
@@ -29,14 +52,12 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         /*给点击元素加上特定样式*/
         data.style = {"border": "2px solid #305680"};
 
-        console.log(data.id);
-        console.log(data);
-        console.log(data.parentDeviceId)
         //如果父设备ID为undefined，直接显示null
         if(data.parentDeviceId == null || data.parentDeviceId =="undefined"){
             parentName = "";
         }
         else{
+            //通过父设备ID获取父设备名称
             $.ajax({
                 url:"/api/device/name/"+data.parentDeviceId,
                 contentType: "application/json; charset=utf-8",
@@ -50,17 +71,12 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                 }
             });
         }
-        //通过父设备ID获取父设备名称
-
-
         /*
        //angularjs会将string类型变量解析成object
        var parentNameObj = $resource("/api/device/name/:parentId");
         $scope.parentName = parentNameObj.get({parentId:data.parentDeviceId});
         */
-
         $scope.deviceInfo = data;
-        //console.log(data);
         $scope.ID = data.id;
         $scope.deviceName = data.name;
         $scope.deviceType = data.deviceType;
@@ -68,9 +84,62 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         $scope.manufacture = data.manufacture;
         $scope.status = data.status;
         $scope.parentName = parentName;//父设备名
-        //console.log("$scope.parentName:"+$scope.parentName);
         $scope.model = data.model;
     };
+
+
+    /*查看下一页设备*/
+    $scope.nextDeviceInfo = function () {
+        console.log(nextDeviceId);
+        console.log(nextDeviceName);
+        $.ajax({
+            url:"/api/device/alldevices?limit=9&idOffset="+nextDeviceId+"&textOffset="+nextDeviceName,
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            type:"GET",
+            success:function(msg) {
+
+                pageNum++;
+                $scope.deviceList = msg;
+                console.log($scope.deviceList);
+                nextDeviceId = $scope.deviceList[8].id;
+                nextDeviceName = $scope.deviceList[8].name;
+                preDeviceIdArr.push($scope.deviceList[8].id);
+                preDeviceNameArr.push($scope.deviceList[8].name);
+            }
+         });
+    };
+
+    /*查看上一页设备*/
+    $scope.preDeviceInfo = function () {
+        var url;
+        if(pageNum == 1){/*pageNum == 1的时候不发送ajax请求*/
+            toastr.warning("当前已是第一页！");
+        }
+        else{
+            if(pageNum == 2){
+                url = "/api/device/alldevices?limit=9";
+            }else{
+                preDeviceId = preDeviceIdArr[pageNum-3];
+                preDeviceName = preDeviceNameArr[pageNum - 3];
+                url = "/api/device/alldevices?limit=9&idOffset="+preDeviceId+"&textOffset="+preDeviceName;
+            }
+            $.ajax({
+                url:url,
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                type:"GET",
+                success:function(msg) {
+                    pageNum--;
+                    $scope.deviceList = msg;
+                    console.log($scope.deviceList);
+                    nextDeviceId = $scope.deviceList[8].id;
+                    nextDeviceName = $scope.deviceList[8].name;
+                }
+            });
+        }
+    };
+
 
 
 
@@ -383,7 +452,7 @@ $scope.searchDevice = function () {
     /*    webSocket start  */
     var ws;
     function realtimeDevice(deviceId) {
-        var url = 'ws://39.104.186.210:8100/websocket';
+        var url = 'ws://39.104.84.131:8100/websocket';
         var keys = [];
         listenWs(url);
 
@@ -487,6 +556,7 @@ $scope.showDetail = function () {
         size = 5;
         initUI(1,5);
     });
+
     console.log(attrDetailInfo);//获取的所有数据，格式为[{},{}]
 
     /*==========显示属性==========*/
@@ -560,13 +630,13 @@ $scope.showDetail = function () {
     var abilityDesArr = new Array();//用于记录所有aibilityDes转换成json后的数据[{},{},...]
     var serviceName = new Array();//用于记录所有的serviceName
     var methodName = new Array();//用于记录所有的methodName
-
+    $('#control_panel').empty();//每次将控制面板清空再渲染
     var controlObject = $resource("/api/v1/ability/:manufacturerName/:deviceTypeName/:modelName");
     $scope.controlInfo = controlObject.query({manufacturerName:$scope.deviceInfo.manufacture,deviceTypeName:$scope.deviceInfo.deviceType,modelName:$scope.deviceInfo.model});
     $scope.controlInfo.$promise.then(function (value) {
 
 
-        $('#control_panel').empty();//每次将控制面板清空再渲染
+
         console.log(value);
 
         for(var i = 0;i<value.length;i++){
@@ -607,22 +677,22 @@ $scope.showDetail = function () {
                      console.log("1:"+temp[1]);*/
                     /*var leftStatus = true;
                     var rightStatus = false;*/
-                    $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key +  '</label><div class="col-sm-9"><image src="assets/img/off.png" id="param'+i+j+ '" style="cursor: pointer; width: 80px; height: 30px; margin: 0 10px;"></image></div></div>');
+                    $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key +  '</label><div class="col-sm-9"><image src="static/thingsManage/assets/img/off.png" id="param'+i+j+ '" style="cursor: pointer; width: 80px; height: 30px; margin: 0 10px;"></image></div></div>');
                    /* var img = document.getElementById("param"+i+j);
                     img.setAttribute('on', true);
                     img.setAttribute('off', false);*/
                     $("#param"+i+j).click(function () {
-                        if($(this).attr("src") == "assets/img/off.png"){
+                        if($(this).attr("src") == "static/thingsManage/assets/img/off.png"){
                             console.log("off->on");
                             $(this).removeClass();
                             $(this).addClass("true");
-                            $(this).attr("src","assets/img/on.png");
+                            $(this).attr("src","static/thingsManage/assets/img/on.png");
 
                         }else{
                             console.log("on->off");
                             $(this).removeClass();
                             $(this).addClass("false");
-                            $(this).attr("src","assets/img/off.png");
+                            $(this).attr("src","static/thingsManage/assets/img/off.png");
                         }
 
                     });
@@ -668,10 +738,10 @@ $scope.showDetail = function () {
 
                     if(params[j].type == 2){
 
-                        if($("#param"+i+j).attr("src") == "assets/img/off.png"){
+                        if($("#param"+i+j).attr("src") == "static/thingsManage/assets/img/off.png"){
                             valueArr[i][j] = false;
                         }
-                        else if($("#param"+i+j).attr("src") == "assets/img/on.png"){
+                        else if($("#param"+i+j).attr("src") == "static/thingsManage/assets/img/on.png"){
                             valueArr[i][j] = true;
                         }
                     }
@@ -708,9 +778,9 @@ $scope.showDetail = function () {
                 var type = document.getElementById("param"+index+i).tagName;
                 if(type == "IMG"){
                     var tag = $("#param"+index+i).attr("src");
-                    if(tag == "assets/img/off.png"){
+                    if(tag == "static/thingsManage/assets/img/off.png"){
                         valueArr[index][i] = false;
-                    }else if(tag == "assets/img/on.png"){
+                    }else if(tag == "static/thingsManage/assets/img/on.png"){
                         valueArr[index][i] = true;
                     }
                 }
