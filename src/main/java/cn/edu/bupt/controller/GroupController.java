@@ -192,13 +192,13 @@ public class GroupController extends DefaultThingsboardAwaredController{
         return a;
     }
 
-    public Integer getTenantId(){
+   /* public Integer getTenantId(){
         HttpSession session = request.getSession();
         String res = HttpUtil.getAccessToken(session);
         JsonObject parsed = (JsonObject)new JsonParser().parse(res);
         Integer tenantId = parsed.get("tenant_id").getAsInt();
         return tenantId;
     }
-
+*/
 
 }
