@@ -55,6 +55,7 @@
                             <!--添加规则组基本信息-->
                             <p>规则名称：<input type="text" name="rulename" ng-model="formData.rule.name"
                                            placeholder="请输入规则组名称">
+                                <span class="StarMark">*</span><span class="alertempty" id="rulenamealert">请输入规则名称</span>
                             </p>
                             <p><span style="vertical-align:top">描&emsp;&emsp;述：</span><textarea name="additional_info"
                                                                                                 ng-model="formData.rule.additional_info"
@@ -136,13 +137,16 @@
                             添加过滤器
                         </h4>
                     </div>
+
                     <div class="modal-body">
                         <form name="addfilter">
                             <p>过滤器名称：<input type="text" name="addname" id="addfiltername"
-                                            placeholder="请输入过滤器名称">
+                                            placeholder="请输入过滤器名称" required/>
+                                <span class="StarMark">*</span><span class="alertempty"
+                                                                     id="filternamealert">请输入过滤器名称</span>
                             </p>
                             <p>过滤器类型：<input type="text" name="addtype" disabled="disabled" id="addfiltertype"
-                                            placeholder="待定">
+                                            placeholder="待定"/>
                             </p>
                             <p>JS&emsp;代&emsp;码：<textarea name="addjscode" id="addfilterjs"
                                                           style="height:150px;width: 470px">function filter(deviceId,key,value){if(deviceId=='35818ec0-5a65-11e8-b66a-e5d2dad89b7c'&&key=='1231' && value>101){return true;}  else{return false;}}</textarea>
@@ -153,10 +157,11 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                         </button>
-                        <button type="button" class="btn btn-primary" ng-click="subFilter()" data-dismiss="modal">
+                        <button type="button" class="btn btn-primary" ng-click="subFilter()">
                             确定
                         </button>
                     </div>
+
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
         </div>
@@ -193,8 +198,10 @@
                                 <option value="" disabled>--请选择请求方式--</option>
                             </select>
                             </p>
-                            <p ng-show="showrestful">请求地址：<input type="text" ng-model="RestfulBody.url" style="width: 70%;"></p>
-                            <p ng-show="showrestfulPOST">Requestbody：<input type="text" ng-model="RestfulBody.body" style="width: 70%;">
+                            <p ng-show="showrestful">请求地址：<input type="text" ng-model="RestfulBody.url"
+                                                                 style="width: 70%;"></p>
+                            <p ng-show="showrestfulPOST">Requestbody：<input type="text" ng-model="RestfulBody.body"
+                                                                            style="width: 70%;">
                             </p>
 
                             <!--判断是sendmail后显示-->
