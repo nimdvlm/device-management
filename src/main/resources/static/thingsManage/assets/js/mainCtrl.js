@@ -47,6 +47,26 @@ mainApp.controller("mainCtrl",["$scope","$location",function ($scope,$location) 
     /*路由跳转*/
     $scope.$location = $location;
 
+    /*退出登录*/
+    $scope.logout = function () {
+       /* var logoutObj = $resource("/api/user/logout");
+        $scope.logoutInfo = logoutObj.get({},function (resp) {
+            alert(resp);
+        });*/
+        $.ajax({
+            url:"/api/user/logout",
+            contentType: "application/json; charset=utf-8",
+            type:"GET",
+            success:function(msg) {
+                console.log(msg);
+                window.location.href="/";
+            }
+        });
+    };
+
+
+
+
     /*突出显示效果*/
     $(document).ready(function(){
         $(".homeIconBackground,.side-menu-icon,.chooseBtn").mouseover(function(){
@@ -55,8 +75,12 @@ mainApp.controller("mainCtrl",["$scope","$location",function ($scope,$location) 
         $(".homeIconBackground,.side-menu-icon,.chooseBtn").mouseout(function () {
             $(this).siblings().stop().fadeTo(300, 1);
         });
+
     });
 
+
 }]);
+
+
 
 

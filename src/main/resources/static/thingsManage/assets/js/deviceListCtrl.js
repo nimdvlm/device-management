@@ -2,23 +2,64 @@
 mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$resource) {
     $scope.deviceInfo;//用于记录当前选中的设备
     var parentName;//用于记录父设备名称
-
-
+    var preDeviceIdArr = [];//用于记录设备列表展示时向前翻页
+    var preDeviceNameArr = [];//用于设备列表展示时向前翻页
+    var preDeviceId;//用于设备列表展示时向前翻页
+    var preDeviceName;//用于设备列表展示时向前翻页
+    var nextDeviceId;//用于设备列表展示时向后翻页
+    var nextDeviceName;//用于设备列表展示时向后翻页
+    var pageNum = 1;//用于记录当前页号
     /*设备列表信息获取与展示*/
-    var obj = $resource("/api/device/alldevices?limit=30");
-    $scope.deviceList = obj.query();//返回值为限制个数的所有设备信息
-    //console.log($scope.deviceList);
 
+    /*返回值为所有设备信息*/
+    var obj = $resource("/api/device/alldevices?limit=1000");
+    $scope.deviceListAll = obj.query();
+
+   /*返回值为限制个数的所有设备信息*/
+    $.ajax({
+        url:"/api/device/alldevices?limit=9",
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        type:"GET",
+        success:function(msg) {
+            $scope.deviceList = msg;
+            var last = $scope.deviceList.length - 1;
+            console.log($scope.deviceList);
+            console.log($scope.deviceList.length);
+            nextDeviceId = $scope.deviceList[last].id;
+            nextDeviceName = $scope.deviceList[last].name;
+            preDeviceIdArr.push($scope.deviceList[last].id);
+            preDeviceNameArr.push($scope.deviceList[last].name);
+        }
+    });
+
+    /*鼠标移入动画效果*/
+    $scope.fadeSiblings = function () {
+        $(".chooseBtn").mouseover(function () {
+            $(this).siblings().stop().fadeTo(300, 0.3);
+        });
+    };
+    /*鼠标移出动画效果*/
+    $scope.reSiblings = function () {
+        $(".chooseBtn").mouseout(function () {
+            $(this).siblings().stop().fadeTo(300, 1);
+        });
+    };
     /*在右侧表格中显示各个设备的信息*/
     $scope.show = function (data) {
-        console.log(data.id);
-        console.log(data);
-        console.log(data.parentDeviceId)
+        /*除点击元素外其他元素均无特殊样式*/
+        $scope.deviceList.forEach(function (items) {
+            if(data != items) items.style = {}
+        });
+        /*给点击元素加上特定样式*/
+        data.style = {"border": "2px solid #305680"};
+
         //如果父设备ID为undefined，直接显示null
-        if(data.parentDeviceId == null || data.parentDeviceId =="undefined"){
+        if(data.parentDeviceId == null || data.parentDeviceId =="undefined" || data.parentDeviceId == ""){
             parentName = "";
         }
         else{
+            //通过父设备ID获取父设备名称
             $.ajax({
                 url:"/api/device/name/"+data.parentDeviceId,
                 contentType: "application/json; charset=utf-8",
@@ -32,17 +73,13 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                 }
             });
         }
-        //通过父设备ID获取父设备名称
-
-
         /*
        //angularjs会将string类型变量解析成object
        var parentNameObj = $resource("/api/device/name/:parentId");
         $scope.parentName = parentNameObj.get({parentId:data.parentDeviceId});
         */
-
         $scope.deviceInfo = data;
-        //console.log(data);
+        console.log(data);
         $scope.ID = data.id;
         $scope.deviceName = data.name;
         $scope.deviceType = data.deviceType;
@@ -50,9 +87,76 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         $scope.manufacture = data.manufacture;
         $scope.status = data.status;
         $scope.parentName = parentName;//父设备名
-        //console.log("$scope.parentName:"+$scope.parentName);
         $scope.model = data.model;
     };
+
+
+    /*查看下一页设备*/
+    $scope.nextDeviceInfo = function () {
+        console.log(nextDeviceId);
+        console.log(nextDeviceName);
+        $.ajax({
+            url:"/api/device/alldevices?limit=9&idOffset="+nextDeviceId+"&textOffset="+nextDeviceName,
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            type:"GET",
+            success:function(msg) {
+
+
+                if(msg == ""){
+                    toastr.warning("当前已是最后一页！");
+                }
+                else{
+                    pageNum++;
+                    $scope.deviceList = msg;
+                    var last = $scope.deviceList.length - 1;
+                    console.log($scope.deviceList);
+                    nextDeviceId = $scope.deviceList[last].id;
+                    nextDeviceName = $scope.deviceList[last].name;
+                    preDeviceIdArr.push($scope.deviceList[last].id);
+                    preDeviceNameArr.push($scope.deviceList[last].name);
+                }
+
+
+            },
+            error:function (err) {
+                toastr.warning("当前已是最后一页！");
+            }
+         });
+    };
+
+    /*查看上一页设备*/
+    $scope.preDeviceInfo = function () {
+        var url;
+        if(pageNum == 1){/*pageNum == 1的时候不发送ajax请求*/
+            toastr.warning("当前已是第一页！");
+        }
+        else{
+            if(pageNum == 2){
+                url = "/api/device/alldevices?limit=9";
+            }else{
+                preDeviceId = preDeviceIdArr[pageNum-3];
+                preDeviceName = preDeviceNameArr[pageNum - 3];
+                url = "/api/device/alldevices?limit=9&idOffset="+preDeviceId+"&textOffset="+preDeviceName;
+            }
+            $.ajax({
+                url:url,
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                type:"GET",
+                success:function(msg) {
+                    pageNum--;
+                    $scope.deviceList = msg;
+                    var last = $scope.deviceList.length - 1;
+                    console.log($scope.deviceList);
+                    nextDeviceId = $scope.deviceList[last].id;
+                    nextDeviceName = $scope.deviceList[last].name;
+                }
+            });
+        }
+    };
+
+
 
 
 
@@ -364,7 +468,7 @@ $scope.searchDevice = function () {
     /*    webSocket start  */
     var ws;
     function realtimeDevice(deviceId) {
-        var url = 'ws://39.104.186.210:8100/websocket';
+        var url = 'ws://39.104.84.131:8100/websocket';
         var keys = [];
         listenWs(url);
 
@@ -439,35 +543,25 @@ $scope.searchDevice = function () {
     /*    webSocket end   */
     /*--------显示遥测数据end-------------*/
 
-
-    /*function pre() {
-        if(index == 1){
-            $(this).addClass("disabled");
-        }else{
-            index--;
-            console.log(index);
-        }
-    }
-    function next() {
-        if(index == pagesNum){
-            $(this).addClass("disabled");
-        }else{
-            index++;
-            console.log(index);
-        }
-    }
-*/
-
     /*显示详情*/
     var num;//页数
     var size;//每页显示的数据个数，如果不设置，则最后一页少于pageSize后,再往前翻就只显示最后一页的数据个数
 $scope.showDetail = function () {
+    $("#attrSelectInfo option:first").prop("selected","selected");
     var attrDetailObj = $resource("/api/data/getKeyAttribute/:deviceId");
     var attrDetailInfo = attrDetailObj.query({deviceId:$scope.deviceInfo.id},function (resp) {
+        console.log(resp);
         num = Math.ceil(attrDetailInfo.length / 5);
         size = 5;
         initUI(1,5);
     });
+
+
+    /*按键值搜索*/
+    $scope.findKey = function () {
+
+    };
+
     console.log(attrDetailInfo);//获取的所有数据，格式为[{},{}]
 
     /*==========显示属性==========*/
@@ -478,7 +572,8 @@ $scope.showDetail = function () {
         //pageNo 当前页号
         //pageSize 页面展示数据个数
         var html = '';
-        for(var i = (pageNo-1)*pageSize; i < pageNo*pageSize; i++) {
+        for(var i=(pageNo-1)*size; i<((pageNo-1)*size+pageSize); i++) {
+            // console.log(i+"|"+Number((pageNo-1)*size+pageSize));
             var item = attrDetailInfo[i];
             console.log(attrDetailInfo[i]);
             var latestTs = formatDate(new Date(attrDetailInfo[i].lastUpdateTs));
@@ -508,7 +603,14 @@ $scope.showDetail = function () {
                     if(!index || (+index > me.total) || (+index < 1)) {
                         return;
                     }
-                    initUI(index, size);
+                    //若不加此判断，pageSize仍为传进来的原值，若最后一页数值不够，则会产生undefined错误
+                    if(pageSize*index > attrDetailInfo.length){
+                        pageSize = attrDetailInfo.length-pageSize*(index-1);
+                        initUI(index, pageSize);
+                    }else{
+                        initUI(index, size);
+                    }
+
                 }
             }
         });
@@ -516,7 +618,8 @@ $scope.showDetail = function () {
     //每次显示数据数量发生变化都重新分页
     $scope.showNum = function () {
         $(".pagination li,#attrDisplay tr").remove();
-        var limit = $("#attrSelectInfo option:selected").text();
+        var limit = Number($("#attrSelectInfo option:selected").text());
+        //使用.text()取出的数据是字符型！！！！
         num = Math.ceil(attrDetailInfo.length / limit);
         size = limit;
         initUI(1,limit);
@@ -541,13 +644,13 @@ $scope.showDetail = function () {
     var abilityDesArr = new Array();//用于记录所有aibilityDes转换成json后的数据[{},{},...]
     var serviceName = new Array();//用于记录所有的serviceName
     var methodName = new Array();//用于记录所有的methodName
-
+    $('#control_panel').empty();//每次将控制面板清空再渲染
     var controlObject = $resource("/api/v1/ability/:manufacturerName/:deviceTypeName/:modelName");
     $scope.controlInfo = controlObject.query({manufacturerName:$scope.deviceInfo.manufacture,deviceTypeName:$scope.deviceInfo.deviceType,modelName:$scope.deviceInfo.model});
     $scope.controlInfo.$promise.then(function (value) {
 
 
-        $('#control_panel').empty();//每次将控制面板清空再渲染
+
         console.log(value);
 
         for(var i = 0;i<value.length;i++){
@@ -578,6 +681,8 @@ $scope.showDetail = function () {
                     $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="text" class="form-control" id="param'+ i + j +'"  value="' + valueInfo +'"/></div></div>');
                 }
                 else if(type == 2){
+                    /*函数：split()
+                    功能：使用一个指定的分隔符把一个字符串分割存储到数组*/
                     /* var temp = params[j].value.split(" ");
                     var leftStatus = temp[0];
                      var rightStatus = temp[1];
@@ -586,22 +691,22 @@ $scope.showDetail = function () {
                      console.log("1:"+temp[1]);*/
                     /*var leftStatus = true;
                     var rightStatus = false;*/
-                    $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key +  '</label><div class="col-sm-9"><image src="assets/img/off.png" id="param'+i+j+ '" style="cursor: pointer; width: 80px; height: 30px; margin: 0 10px;"></image></div></div>');
+                    $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key +  '</label><div class="col-sm-9"><image src="static/thingsManage/assets/img/off.png" id="param'+i+j+ '" style="cursor: pointer; width: 80px; height: 30px; margin: 0 10px;"></image></div></div>');
                    /* var img = document.getElementById("param"+i+j);
                     img.setAttribute('on', true);
                     img.setAttribute('off', false);*/
                     $("#param"+i+j).click(function () {
-                        if($(this).attr("src") == "assets/img/off.png"){
+                        if($(this).attr("src") == "static/thingsManage/assets/img/off.png"){
                             console.log("off->on");
                             $(this).removeClass();
                             $(this).addClass("true");
-                            $(this).attr("src","assets/img/on.png");
+                            $(this).attr("src","static/thingsManage/assets/img/on.png");
 
                         }else{
                             console.log("on->off");
                             $(this).removeClass();
                             $(this).addClass("false");
-                            $(this).attr("src","assets/img/off.png");
+                            $(this).attr("src","static/thingsManage/assets/img/off.png");
                         }
 
                     });
@@ -647,10 +752,10 @@ $scope.showDetail = function () {
 
                     if(params[j].type == 2){
 
-                        if($("#param"+i+j).attr("src") == "assets/img/off.png"){
+                        if($("#param"+i+j).attr("src") == "static/thingsManage/assets/img/off.png"){
                             valueArr[i][j] = false;
                         }
-                        else if($("#param"+i+j).attr("src") == "assets/img/on.png"){
+                        else if($("#param"+i+j).attr("src") == "static/thingsManage/assets/img/on.png"){
                             valueArr[i][j] = true;
                         }
                     }
@@ -687,9 +792,9 @@ $scope.showDetail = function () {
                 var type = document.getElementById("param"+index+i).tagName;
                 if(type == "IMG"){
                     var tag = $("#param"+index+i).attr("src");
-                    if(tag == "assets/img/off.png"){
+                    if(tag == "static/thingsManage/assets/img/off.png"){
                         valueArr[index][i] = false;
-                    }else if(tag == "assets/img/on.png"){
+                    }else if(tag == "static/thingsManage/assets/img/on.png"){
                         valueArr[index][i] = true;
                     }
                 }
@@ -731,7 +836,12 @@ $scope.showDetail = function () {
         $(".highlight").mouseout(function () {
             $(this).css("color","#305680");
         });
-
+        $("#preDevice,#nextDevice").mouseover(function () {
+            $(this).css("opacity","1");
+        });
+        $("#preDevice,#nextDevice").mouseout(function () {
+            $(this).css("opacity","0.3");
+        });
     });
 
 }]);

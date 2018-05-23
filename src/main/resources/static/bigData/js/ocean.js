@@ -40,10 +40,8 @@ option = {
     ]
 };
 
-// 使用刚指定的配置项和数据显示图表。
 myChart.setOption(option);
 
-// 基于准备好的dom，初始化echarts实例
 var myChart1 = echarts.init(document.getElementById('main1'));
 
 option1 = {
@@ -86,10 +84,8 @@ option1 = {
     ]
 };
 
-// 使用刚指定的配置项和数据显示图表。
 myChart1.setOption(option1);
 
-// 基于准备好的dom，初始化echarts实例
 var myChart2 = echarts.init(document.getElementById('main2'));
 
 option2 = {
@@ -132,10 +128,8 @@ option2 = {
     ]
 };
 
-// 使用刚指定的配置项和数据显示图表。
 myChart2.setOption(option2);
 
-// 基于准备好的dom，初始化echarts实例
 var myChart3 = echarts.init(document.getElementById('main3'));
 
 option3 = {
@@ -178,7 +172,6 @@ option3 = {
     ]
 };
 
-// 使用刚指定的配置项和数据显示图表。
 myChart3.setOption(option3);
 
 function getData() {
@@ -201,7 +194,7 @@ function getData() {
     myXmlHttpRequest = getXmlHttpObject();
     if(myXmlHttpRequest){
         //var url = "toajax?username=" + document.getElementById("username").value;
-        var url = "http://10.108.218.64:8090/api/analysis/device";//url="http://10.108.218.64:8090/api/analysis/device?tenantId=200";getpiedata
+        var url = "http://39.104.186.210:8090/api/analysis/device";//url="http://10.108.218.64:8090/api/analysis/device?tenantId=200";getpiedata
         var data = "tenantId=200";
         //myXmlHttpRequest.open("get",url,true);
         myXmlHttpRequest.open("post",url,true);
@@ -219,7 +212,7 @@ function getData() {
             window.alert(mes);
             var mes1 = JSON.parse(mes);
             meso = eval("(" + mes1 + ")");
-            // 基于准备好的dom，初始化echarts实例
+
             var myChart = echarts.init(document.getElementById('main'));
 
             option = {
@@ -262,10 +255,8 @@ function getData() {
                 ]
             };
 
-            // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
 
-            // 基于准备好的dom，初始化echarts实例
             var myChart1 = echarts.init(document.getElementById('main1'));
 
             option1 = {
@@ -308,10 +299,8 @@ function getData() {
                 ]
             };
 
-            // 使用刚指定的配置项和数据显示图表。
             myChart1.setOption(option1);
 
-            // 基于准备好的dom，初始化echarts实例
             var myChart2 = echarts.init(document.getElementById('main2'));
 
             option2 = {
@@ -354,10 +343,8 @@ function getData() {
                 ]
             };
 
-            // 使用刚指定的配置项和数据显示图表。
             myChart2.setOption(option2);
 
-            // 基于准备好的dom，初始化echarts实例
             var myChart3 = echarts.init(document.getElementById('main3'));
 
             option3 = {
@@ -400,7 +387,6 @@ function getData() {
                 ]
             };
 
-            // 使用刚指定的配置项和数据显示图表。
             myChart3.setOption(option3);
             //window.alert(meso.data[0]["0"]);
             //window.alert(Object.keys(meso.data).length);

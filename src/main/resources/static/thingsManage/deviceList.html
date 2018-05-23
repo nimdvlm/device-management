@@ -21,15 +21,16 @@
             </div><!-- /.col-lg-6 -->
 
         </div><!-- /.row -->
-
+        <div id="preDevice" ng-click="preDeviceInfo()"><i class="fa fa-chevron-left"></i></div>
         <div id="deviceListIcon">
-          <div class="chooseBtn" ng-repeat="data in deviceList" ng-click="show(data)">
-                 <div title="{{data.name}}">
-                     <i class="fa fa-file-text-o fa-2x"></i>
-                     <p>{{data.name}}</p>
-                 </div>
+          <div class="chooseBtn" ng-repeat="data in deviceList" ng-click="show(data)" ng-style="data.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+              <div title="{{data.name}}">
+                  <i class="fa fa-file-text-o fa-2x"></i>
+                  <p>{{data.name}}</p>
+              </div>
           </div>
         </div>
+        <div id="nextDevice" ng-click="nextDeviceInfo()"><i class="fa  fa-chevron-right"></i></div>
         <div id="deviceListChart">
             <table class="table table-striped table-hover">
                 <thead>
@@ -88,7 +89,7 @@
                     <td>
                         <button style="float: right;" data-toggle="modal"
                            data-target="#deviceDetail" class="highlight btn btn-default" ng-click="showDetail()">
-                            了解更多...
+                            查看详情
                         </button>
                     </td>
                 </tr>
@@ -118,7 +119,7 @@
                             <td>
                                 <select class="inputInfo" id="parentId">
                                     <option></option>
-                                    <option ng-repeat="data in deviceList" class="{{data.id}}">{{data.name}}</option>
+                                    <option ng-repeat="data in deviceListAll" class="{{data.id}}">{{data.name}}</option>
                                 </select>
                             </td>
                         </tr>
@@ -194,7 +195,7 @@
 
                                 <select class="inputInfo" id="reParentId">
                                     <option></option>
-                                    <option ng-repeat="data in deviceList" class="{{data.id}}">{{data.name}}</option>
+                                    <option ng-repeat="data in deviceListAll" class="{{data.id}}">{{data.name}}</option>
                                 </select>
                             </td>
                         </tr>
@@ -360,7 +361,7 @@
                                 条记录
                             </td>
                             <td></td>
-                            <td><input type="text" class="form-control" placeholder="请输入关键字搜索..." id="searchKey"></td>
+                            <td><input type="text" class="form-control" placeholder="请输入键值搜索..." id="searchKey" ng-change="findKey()" ng-model="myKey"></td>
                         </tr>
 
                         <tr class="boldForm">
@@ -375,26 +376,6 @@
                 </div>
                 <div class="divide-line"></div>
                 <div class="modal-body showForm" id="realTimeTable">
-                    <!--<table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th class="attName" style="text-align: left;font-size: 16px;">-&#45;&#45;&#45;&#45;遥测数据-&#45;&#45;&#45;&#45;</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="boldForm">
-                            <td>最后更新时间</td>
-                            <td>键</td>
-                            <td>值</td>
-                            <td>{{wsData[0].ts}}</td>
-                        </tr>
-                        <tr ng-repeat="arr in wsData">
-                            <td>{{arr.ts | date:'yyyy-MM-dd hh:mm:ss'}}</td>
-                            <td>{{arr.key}}</td>
-                            <td>{{arr.value}}</td>
-                        </tr>
-                        </tbody>
-                    </table>-->
                     <h4 class="detail-block-header">-----最新遥测-----</h4>
                     <div class="row">
                         <div>
@@ -412,28 +393,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="divide-line"></div>
-                <div class="modal-body showForm" id="controlTable">
-                    <!--<table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th class="attName" style="text-align: left;font-size: 16px;">-&#45;&#45;&#45;&#45;控制面板-&#45;&#45;&#45;&#45;</th>
-                        </tr>
-                        </thead>
-                        <tbody id="ctrlTableInfo">
-                            &lt;!&ndash;<tr>
-                                <td ng-repeat="arr in abilityDesInfo" ng-init="outerIndex = $index">
-                                    <div id="ctrlDiv{{outerIndex}}">
-                                        <h3>{{arr.serviceName}}</h3>
-                                        <p ng-repeat="param in arr.serviceBody.params track by $index" ng-init="operate(param.type,outerIndex,$index)" >{{param.key}}:
 
-                                        </p>
-                                        <button id="confirmCtrlBtn{{outerIndex}}" class="btn btn-primary">应用</button>
-                                    </div>
-                                </td>
-                            </tr>&ndash;&gt;
-                        </tbody>
-                    </table>-->
+                <div class="divide-line"></div>
+
+                <div class="modal-body showForm" id="controlTable">
                     <h4 class="detail-block-header">-----控制-----</h4>
                     <div class="row">
                         <div class="control-panel" id="control_panel">

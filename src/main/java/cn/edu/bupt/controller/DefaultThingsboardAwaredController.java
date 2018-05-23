@@ -1,10 +1,14 @@
 package cn.edu.bupt.controller;
 
+import cn.edu.bupt.utils.HttpUtil;
 import cn.edu.bupt.utils.ResponceUtil;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by tangjialiang on 2018/1/10.
@@ -78,5 +82,13 @@ public class DefaultThingsboardAwaredController {
 
     protected String retFail(String msg) {
         return responceUtil.onFail(msg) ;
+    }
+
+    public Integer getTenantId(){
+        HttpSession sess = request.getSession();
+        String res = HttpUtil.getAccessToken(sess);
+        JsonObject jo = (JsonObject)new JsonParser().parse(res);
+        Integer tenantId = jo.get("tenant_id").getAsInt();
+        return tenantId;
     }
 }

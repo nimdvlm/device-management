@@ -277,13 +277,13 @@ public class RuleController extends DefaultThingsboardAwaredController{
         return errorInfoJson.toString();
     }
 
-    public String getTenantId(){
+    /*public String getTenantId(){
         HttpSession sess = request.getSession();
         String res = HttpUtil.getAccessToken(sess);
         JsonObject jo = (JsonObject)new JsonParser().parse(res);
         String tenantId = jo.get("tenant_id").getAsString();
         return tenantId;
-    }
+    }*/
 
     private  String encodeJson(String respondStr){
         respondStr=respondStr.replaceAll("\"\\{\\\\\"","\\{\\\\\"");
