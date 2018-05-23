@@ -300,7 +300,7 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
 
 
     /*更新设备*/
-    var refreshDeviceObj = $resource("/api/device/updatedevice");
+    // var refreshDeviceObj = $resource("/api/device/updatedevice");
     $scope.refreshDevice = function () {
         $scope.reName = $("#reName").val();
         $scope.reParent = $("#reParentId option:selected").attr("class");
@@ -312,13 +312,29 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         $scope.refreshDeviceInfo = '{"name":'+'"'+$scope.reName+'"'+',"Id":'+'"'+$scope.deviceInfo.id+'"'+',"parentDeviceId":'+'"'+$scope.reParent+'"'+',"deviceType":'+'"'+$scope.reDeviceType+'"'+',"manufacture":'+'"'+$scope.reManufacture+'"'+',"model":'+'"'+$scope.reModel+'"'+',"location":'+'"'+$scope.reLocation+'"'+',"status":'+'"'+$scope.reStatus+'"'+'}';
         //字符串类型的数据发送给后台是会自动加上引号
         //console.log($scope.refreshDeviceInfo);
-        $scope.refreshDeviceInformation = refreshDeviceObj.save({},$scope.refreshDeviceInfo,function (resp) {
+        /*$scope.refreshDeviceInformation = refreshDeviceObj.save({},$scope.refreshDeviceInfo,function (resp) {
             toastr.success("更新设备成功！");
             setTimeout(function () {
                 window.location.reload();
             },1000);
         },function (error) {
             toastr.error("更新设备失败！");
+        });*/
+        $.ajax({
+            url:"/api/device/updatedevice",
+            data:$scope.refreshDeviceInfo,
+            contentType: "application/json; charset=utf-8",//post请求必须
+            dataType:"text",
+            type:"POST",
+            success:function(msg){
+                toastr.success("更新设备成功！");
+                setTimeout(function () {
+                    window.location.reload();
+                },1000);
+            },
+            error:function (err) {
+                toastr.error("更新设备失败！");
+            }
         });
     };
     /* =============================================================
@@ -362,7 +378,7 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     };
 
     /*创建设备*/
-    var createDeviceObj =  $resource("/api/device/create");
+    // var createDeviceObj =  $resource("/api/device/create");
     $scope.createDevice = function(){
         if($("#name").val()){
             $scope.name = $("#name").val();
@@ -387,10 +403,23 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
             $scope.createDeviceInfo = '{"name":'+'"'+$scope.name+'"'+',"parentDeviceId":'+'"'+$scope.parent+'"'+',"deviceType":'+'"'+$scope.deviceType+'"'+',"manufacture":'+'"'+$scope.manufacture+'"'+',"model":'+'"'+$scope.model+'"'+',"location":'+'"'+$scope.location+'"'+',"status":'+'"'+$scope.status+'"'+'}';
             //字符串类型的数据发送给后台是会自动加上引号
             console.log($scope.createDeviceInfo);
-            $scope.deviceInformation = createDeviceObj.save({},$scope.createDeviceInfo,function (resp) {
+            /*$scope.deviceInformation = createDeviceObj.save({},$scope.createDeviceInfo,function (resp) {
                 window.location.reload();
             },function (error) {
                 toastr.error("新增设备失败！");
+            });*/
+            $.ajax({
+                url:"/api/device/create",
+                data:$scope.createDeviceInfo,
+                contentType: "application/json; charset=utf-8",//post请求必须
+                dataType:"text",
+                type:"POST",
+                success:function(msg){
+                    window.location.reload();
+                },
+                error:function (err) {
+                    toastr.error("新增设备失败！");
+                }
             });
         }
         else{
