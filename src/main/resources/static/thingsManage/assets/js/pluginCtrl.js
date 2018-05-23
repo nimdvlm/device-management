@@ -7,18 +7,17 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
 
     $scope.showAll = function (item) {
         str = [];//初始化数组；
-        console.log(str);
+        //console.log(str);
         console.log(item);
         $scope.name = item.name;
         $scope.url = item.url;
         $scope.describe = item.describe;
         console.log($scope.url);
         str = item.url.split(":");
-        //console.log(str);
-        var pluginState = $resource('/api/plugin/state/:urlId/:portId',{urlId: '@id', portId: '@id'});
-        $scope.pluginStateDisplay = pluginState.get({urlId:str[0],portId:str[1]})
+        console.log(str);//正常显示str数组
+        var pluginState = $resource('/api/plugin/state/39.104.186.210/:portId',{ portId: '@id'});
+        $scope.pluginStateDisplay = pluginState.get({portId:str[1]})
         console.log($scope.pluginStateDisplay);
-
         //插件状态展现(暂时未使用)
         if ($scope.pluginStateDisplay.state == "ACTIVE") {
             $scope.isActive = true;
