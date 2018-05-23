@@ -10,7 +10,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.showsendmail = false;
     $scope.showrestful = false;
     $scope.showPluginMail = false;
-    $scope.showrestfulPOST=false;
+    $scope.showrestfulPOST = false;
     $scope.RESTMethod = ["POST", "DELETE", "GET"];
     $scope.RestfulBody = {};
 
@@ -35,10 +35,10 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     }
 
     //获取当前租户ID
-    var TenantId=$resource('/api/rule/tenant');
+    var TenantId = $resource('/api/rule/tenant');
     TenantId.get().$promise.then(function (resp) {
-        $scope.formData.rule.tenantId=resp.tenantId;
-        console.log("tenantid:"+$scope.formData.rule.tenantId);
+        $scope.formData.rule.tenantId = resp.tenantId;
+        console.log("tenantid:" + $scope.formData.rule.tenantId);
     });
 
     //获取当前租户规则
@@ -190,14 +190,18 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //点击添加规则-添加过滤器，跳转到添加规则组页
     $scope.subFilter = function () {
-        $scope.showaddFilter = true;
-
-        $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(), $('#addfiltertype').val(), $('#addfilterjs').val()));
-        console.log($scope.formData.filters);
-        $("input[type=reset]").trigger("click");
-        /****嵌套model添加一次儿子后闪退bug，所以把js命令换成data-dismiss
-         $("#addruleFilter").modal("hide");
-         *****/
+        //H5 required属性无效bug
+        if ($('#addfiltername').val() != "") {
+            $('#filternamealert').hide();
+            $scope.showaddFilter = true;
+            $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(), $('#addfiltertype').val(), $('#addfilterjs').val()));
+            console.log($scope.formData.filters);
+            $("input[type=reset]").trigger("click");
+            /****若出现嵌套model添加一次儿子后闪退bug，把js命令换成data-dismiss*****/
+            $("#addruleFilter").modal("hide");
+        } else {
+            $('#filternamealert').show();
+        }
     }
 
     //点击添加规则-点击[添加变换]按钮时获取所有插件
@@ -237,10 +241,10 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //点击添加规则-RestfulRequest插件-判断方法
     $scope.changemethod = function (method) {
         if (method == "POST") {
-            $scope.showrestfulPOST=true;
+            $scope.showrestfulPOST = true;
             $scope.RestfulBody.body = "{\"result\": \"success\"}";
         } else {
-            $scope.showrestfulPOST=false;
+            $scope.showrestfulPOST = false;
             $scope.RestfulBody.body = "";
         }
         $scope.RestfulBody.method = method;
@@ -271,7 +275,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         } else if ($scope.RuleaddPlugin.name == "RestfulPlugin") {
             $scope.showaddTransform = true;
             $scope.formData.transform.name = $scope.RuleaddPlugin.name;
-            $scope.formData.transform.url =  $scope.RuleaddPlugin.url;
+            $scope.formData.transform.url = $scope.RuleaddPlugin.url;
             $scope.formData.transform.method = "POST";
             $scope.formData.transform.requestBody = $scope.RestfulBody;
         }
@@ -282,14 +286,19 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //添加规则
     $scope.createRule = function () {
-        console.log($scope.formData);
-        var addRULE = $resource('/api/rule/create');
-        addRULE.save({}, $scope.formData)
-            .$promise.then(function (resp) {
-            console.log("新建规则成功");
-            $("#addRule").modal("hide");
-            location.reload();
-        });
+        if ($scope.formData.rule.name != "" && $scope.formData.rule.name != null) {
+            $('#rulenamealert').hide();
+            console.log($scope.formData);
+            var addRULE = $resource('/api/rule/create');
+            addRULE.save({}, $scope.formData)
+                .$promise.then(function (resp) {
+                console.log("新建规则成功");
+                $("#addRule").modal("hide");
+                location.reload();
+            });
+        } else {
+            $('#rulenamealert').show();
+        }
     }
 
 
