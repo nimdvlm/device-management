@@ -34,18 +34,27 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
         $scope.manufacturerName = $("#manufacturerName").val();
         $scope.deviceType = $("#deviceType").val();
         $scope.model = $("#model").val();
-        $scope.createAbilityInfo = '{"manufacturerName":'+'"'+$scope.manufacturerName+'"'+',"deviceType":'+'"'+$scope.deviceType+'"'+',"model":'+'"'+$scope.model+'"'+'}';
-        console.log($scope.createAbilityInfo);
+        console.log($scope.manufacturerName);
+        if($scope.manufacturerName=="" || $scope.manufacturerName==null){
+            alert("厂商不能为空！");
+        }else if($scope.deviceType=="" || $scope.deviceType==null){
+            alert("设备类型不能为空！");
+        }else if($scope.model==""|| $scope.model==null){
+            alert("设备型号不能为空！");
+        }else {
+            $scope.createAbilityInfo = '{"manufacturerName":'+'"'+$scope.manufacturerName+'"'+',"deviceType":'+'"'+$scope.deviceType+'"'+',"model":'+'"'+$scope.model+'"'+'}';
+            console.log($scope.createAbilityInfo);
+            var createAbilityGroupObj =  $resource("/api/v1/abilityGroup");
+            $scope.abilityInformation = createAbilityGroupObj.save({},$scope.createAbilityInfo,function (resp) {
+               toastr.success("新增设备成功！");
+                setTimeout(function () {
+                    window.location.reload();
+                },500);
+            },function (error) {
+                toastr.error("新增设备失败！");
+            });
+        }
 
-        var createAbilityGroupObj =  $resource("/api/v1/abilityGroup");
-        $scope.abilityInformation = createAbilityGroupObj.save({},$scope.createAbilityInfo,function (resp) {
-            toastr.success("新增设备成功！");
-            setTimeout(function () {
-                window.location.reload();
-            },500);
-        },function (error) {
-            toastr.error("新增设备失败！");
-        });
     };
 
 
@@ -58,6 +67,11 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
         $scope.protocol = $("#protocol").val();
         $scope.url = $("#url").val();
         $scope.requireResponce = $("#requireResponce").val();
+        if($scope.requireResponce=="true"){
+            $scope.requireResponce = true;
+        }else{
+            $scope.requireResponce = false;
+        }
         $scope.methodName = $("#methodName").val();
 
         for (var i = 0; i < $scope.fchat.replies.length; i++) {
@@ -65,8 +79,7 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
                 "type":new Number($scope.fchat.replies[i].type),
                 "value":$scope.fchat.replies[i].value});
         }
-
-
+        console.log($scope.requireResponce);
         $scope.createAbilityGroup = {
             modelId: modelId,
             abilityDes: {
@@ -83,8 +96,6 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
             }
         }
 
-
-        console.log($scope.requireResponce);
         $scope.createAbility = JSON.stringify(
             {
                 modelId: modelId,
@@ -94,7 +105,7 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
                     serviceType: $scope.serviceType,
                     protocol: $scope.protocol,
                     url: $scope.url,
-                    requireResponce: new Boolean($scope.requireResponce),
+                    requireResponce: $scope.requireResponce,
                     serviceBody: {
                         methodName: $scope.methodName,
                         params: params
@@ -102,13 +113,13 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
                 }
             }
         )
-
+        console.log($scope.createAbility);
         var createAbilityObj =  $resource("/api/v1/ability");
         $scope.ability = createAbilityObj.save({},$scope.createAbility,function (resp) {
             toastr.success("新增成功！");
-            console.log($scope.ability);
+            //console.log($scope.ability);
             setTimeout(function () {
-                $("#createSM").modal("hide");
+               $("#createSM").modal("hide");
                 location.reload();
             },500);
         },function (error) {
