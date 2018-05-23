@@ -199,9 +199,8 @@
                             </select>
                             </p>
                             <p ng-show="showrestful">请求地址：<input type="text" ng-model="RestfulBody.url"
-                                                                 style="width: 70%;"></p>
-                            <p ng-show="showrestfulPOST">Requestbody：<input type="text" ng-model="RestfulBody.body"
-                                                                            style="width: 70%;">
+                                                                 style="width: 75%;"></p>
+                            <p ng-show="showrestfulPOST"><span style="vertical-align:top">Requestbody：</span><textarea style="height:120px;width: 70%;" ng-model="RestfulBody.body"></textarea>
                             </p>
 
                             <!--判断是sendmail后显示-->
