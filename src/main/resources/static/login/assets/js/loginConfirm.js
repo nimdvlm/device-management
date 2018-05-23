@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
 
     /*
@@ -19,9 +20,11 @@ $(document).ready(function () {
                 type:"POST",
                 success:function(msg){
                     /*console.log(userName);
-                    console.log(password);
-                    console.log(msg);*/
-
+                    console.log(password);*/
+                    console.log(msg);
+                    /*var msgJson = JSON.parse(msg);
+                    console.log(msgJson.authority);
+                    userLevel = msgJson.authority;*/
                     window.location.href = "/home";
                 },
                 error:function () {

@@ -350,7 +350,7 @@
                         </tr>
                         <tr>
 
-                            <td>
+                            <td id="attrSelectInfoTd">
                                 每页显示
                                 <select id="attrSelectInfo" ng-change="showNum()" ng-model="myNum">
                                     <option value="">5</option>
@@ -361,7 +361,15 @@
                                 条记录
                             </td>
                             <td></td>
-                            <td><input type="text" class="form-control" placeholder="请输入键值搜索..." id="searchKey" ng-change="findKey()" ng-model="myKey"></td>
+                            <td>
+                                <div class="input-group">
+                                      <input type="text" class="form-control" placeholder="请输入设备名称..." id="searchKey">
+                                       <span class="input-group-btn">
+                                             <button class="btn btn-primary" type="button" ng-click="findKey()"><i class="fa fa-search"></i></button>
+                                       </span>
+                                </div>
+                                <!--<input type="text" class="form-control" placeholder="请输入键值搜索..." id="searchKey" ng-change="findKey()" ng-model="myKey">-->
+                            </td>
                         </tr>
 
                         <tr class="boldForm">

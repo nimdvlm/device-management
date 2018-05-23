@@ -85,7 +85,10 @@ HEAD MENU STYLES
     font-weight: bold;
 }
 #searchKey{
-    height: 25px;
+    height: 34px;
+}
+#attrSelectInfoTd{
+    vertical-align: middle;
 }
 
 
