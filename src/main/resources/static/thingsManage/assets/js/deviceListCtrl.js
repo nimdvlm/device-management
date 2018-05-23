@@ -547,22 +547,31 @@ $scope.searchDevice = function () {
     var num;//页数
     var size;//每页显示的数据个数，如果不设置，则最后一页少于pageSize后,再往前翻就只显示最后一页的数据个数
 $scope.showDetail = function () {
+    $(".pagination li,#attrDisplay tr").remove();//清空属性展示列表和分页按钮
     $("#attrSelectInfo option:first").prop("selected","selected");
     var attrDetailObj = $resource("/api/data/getKeyAttribute/:deviceId");
     var attrDetailInfo = attrDetailObj.query({deviceId:$scope.deviceInfo.id},function (resp) {
         console.log(resp);
-        num = Math.ceil(attrDetailInfo.length / 5);
-        size = 5;
-        initUI(1,5);
+        if(attrDetailInfo.length != 0){
+            num = Math.ceil(attrDetailInfo.length / 5);
+            size = 5;
+            initUI(1,5);
+        }else{
+            num = 0;
+            size = 0;
+            initUI(0,0);
+        }
+
     });
 
 
     /*按键值搜索*/
     $scope.findKey = function () {
+        console.log(attrDetailInfo[0]);
 
     };
 
-    console.log(attrDetailInfo);//获取的所有数据，格式为[{},{}]
+    // console.log(attrDetailInfo);//获取的所有数据，格式为[{},{}]
 
     /*==========显示属性==========*/
     //分页功能实现
@@ -617,7 +626,7 @@ $scope.showDetail = function () {
     };
     //每次显示数据数量发生变化都重新分页
     $scope.showNum = function () {
-        $(".pagination li,#attrDisplay tr").remove();
+        $(".pagination li,#attrDisplay tr").remove();//每次清空属性展示列表和分页按钮
         var limit = Number($("#attrSelectInfo option:selected").text());
         //使用.text()取出的数据是字符型！！！！
         num = Math.ceil(attrDetailInfo.length / limit);
@@ -812,11 +821,21 @@ $scope.showDetail = function () {
             }
             console.log("json:"+json);
             console.log( $scope.deviceInfo.id);
-            var subObj = $resource("/api/shadow/control/:deviceId");
-            var subInfo = subObj.save({deviceId:$scope.deviceInfo.id},json,function (resp) {
-                toastr.success("应用成功！");
-            },function (error) {
-                toastr.error("应用失败！");
+           /* var subObj = $resource("/api/shadow/control/:deviceId");
+            var subInfo = subObj.save({deviceId:$scope.deviceInfo.id},json);
+            console.log(subInfo);*/
+            $.ajax({
+                url:"/api/shadow/control/"+$scope.deviceInfo.id,
+                data:json,
+                contentType: "application/json; charset=utf-8",//post请求必须
+                dataType:"text",
+                type:"POST",
+                success:function(msg){
+                    toastr.success("应用成功！");
+                },
+                error:function (err) {
+                    toastr.error("应用失败！");
+                }
             });
         });
     });
