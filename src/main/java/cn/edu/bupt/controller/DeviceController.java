@@ -126,7 +126,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
             return retSuccess(parentname) ;
         }catch(Exception e){
-            return retFail(e.toString()) ;
+            return null ;
         }
     }
 

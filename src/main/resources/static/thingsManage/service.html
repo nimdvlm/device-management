@@ -76,19 +76,19 @@
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>厂商
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" id="manufacturerName">
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="manufacturerName" required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>设备类型
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" id="deviceType">
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="deviceType" required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>设备型号
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" id="model">
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="model" required/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" ng-click="addAM()">
@@ -192,7 +192,6 @@
                             </span>
                             </div>
                         </div>
-                        <input type="hidden" id="replies" name="replies" value="{{fchat.combineReplies()}}" />
                     </div>
                 </div>
                 <div class="modal-footer">
