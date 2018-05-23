@@ -85,7 +85,10 @@ HEAD MENU STYLES
     font-weight: bold;
 }
 #searchKey{
-    height: 25px;
+    height: 34px;
+}
+#attrSelectInfoTd{
+    vertical-align: middle;
 }
 
 
@@ -322,6 +325,15 @@ DEVICELIST STYLES
 .addfiltertab{
     width:530px;
     margin-left: 20px;
+}
+.StarMark{
+    font-size:15px;
+    color: red;
+    padding-left: 5px;
+}
+.alertempty{
+    display:none;
+    color: red;
 }
 /* =============================================================
 serviceGroup
