@@ -25,10 +25,14 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
             var addDG = $resource('/api/group/create');
             addDG.save({}, {"name": $scope.addDGName})
                 .$promise.then(function (resp) {
-                console.log("新建设备组成功");
+                console.log("新建设备组接口连接成功");
                 console.log(resp);
                 $("#addRule").modal("hide");
-                location.reload();
+                if(resp.id!=""){
+                    location.reload();
+                }else{
+                    toastr.warning("不允许创建同名设备！");
+                }
             });
         } else {
             alert("输入不能为空!");
@@ -95,6 +99,12 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     $scope.show = function (DG) {
         //item是当前展示的单个设备
         $scope.item = {name: DG.name, id: DG.id};
+
+        //展示视图添加样式
+        $scope.DeviceGroups.forEach(function (items) {
+            if(DG != items) items.style = {}
+        });
+        DG.style = {"border": "2px solid #305680"};
         //获取设备组下的设备
         var DGDEVICES = $resource('/api/group/:id/devices?limit=20', {id: '@id'});
         DGDEVICES.query({id: $scope.item.id})
@@ -607,4 +617,19 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         });
     };
     /**************更新设备END****************/
+
+
+    /*鼠标移入动画效果*/
+    $scope.fadeSiblings = function () {
+        console.log("666");
+        $(".chooseBtn").mouseover(function () {
+            $(this).siblings().stop().fadeTo(300, 0.3);
+        });
+    };
+    /*鼠标移出动画效果*/
+    $scope.reSiblings = function () {
+        $(".chooseBtn").mouseout(function () {
+            $(this).siblings().stop().fadeTo(300, 1);
+        });
+    };
 });

@@ -59,7 +59,7 @@ HEAD MENU STYLES
 
         #side-menu ul li {
             border-bottom: 1px dashed #cccccc;
-            padding: 25px 25px;
+            padding: 21px 25px;
             text-align: left;
         }
 
@@ -327,9 +327,9 @@ DEVICELIST STYLES
     margin-left: 20px;
 }
 .StarMark{
-    font-size:15px;
+    font-size: 15px;
+    margin-right:5px;
     color: red;
-    padding-left: 5px;
 }
 .alertempty{
     display:none;

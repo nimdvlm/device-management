@@ -584,6 +584,7 @@ $scope.searchDevice = function () {
     var num;//页数
     var size;//每页显示的数据个数，如果不设置，则最后一页少于pageSize后,再往前翻就只显示最后一页的数据个数
 $scope.showDetail = function () {
+    $("#searchKey").val("");//清空搜索框
     $(".pagination li,#attrDisplay tr").remove();//清空属性展示列表和分页按钮
     $("#attrSelectInfo option:first").prop("selected","selected");
     var attrDetailObj = $resource("/api/data/getKeyAttribute/:deviceId");
