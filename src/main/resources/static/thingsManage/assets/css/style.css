@@ -341,11 +341,16 @@ serviceGroup
 .abilityBackgroundstyle{
     width: 235px;
     height: 145px;
-    background: rgba(255,253,255,0.69);
     border-radius: 5px;
     margin-top: 30px;
     margin-left: 15px;
     float: left;
+
+    cursor: pointer;
+    padding: 20px;
+    border: 2px solid #c0c0c0;
+    background: white;
+
 }
 .homeIconstyle{
 

@@ -19,7 +19,7 @@
     <div class="abilityIcon">
         <!--左右分布控件模块-->
         <div ng-repeat="items in abilityGroups" ng-click="show(items)">
-            <div class="chooseBtn abilityBackgroundstyle">
+            <div class="abilityBackgroundstyle" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()" ng-style="items.style">
                 <span title="能力管理"><i class="fa fa-cog homeIconstyle"></i></span>
                 <span class="abilityPlus" data-toggle="modal" data-target="#createSM">
                 <i class="glyphicon glyphicon-plus" title="创建能力"></i>

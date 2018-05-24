@@ -15,15 +15,17 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
         console.log($scope.url);
         str = item.url.split(":");
         console.log(str);//正常显示str数组
-        var pluginState = $resource('/api/plugin/state/39.104.186.210/:portId',{ portId: '@id'});
-        $scope.pluginStateDisplay = pluginState.get({portId:str[1]})
-        console.log($scope.pluginStateDisplay);
-        //插件状态展现(暂时未使用)
-        if ($scope.pluginStateDisplay.state == "ACTIVE") {
-            $scope.isActive = true;
-        } else {
-            $scope.isActive = false;
-        }
+        var pluginState = $resource('/api/plugin/state/:urlId/:portId',{urlId: '@id', portId: '@id'});
+        pluginState.get({urlId:str[0],portId:str[1]}).$promise.then(function (resp) {
+        $scope.pluginStateDisplay=resp;
+            //插件状态展现
+            if (resp.state == "ACTIVE") {
+                $scope.isActive = true;
+            } else {
+                $scope.isActive = false;
+            }
+        })
+
     }
 
 

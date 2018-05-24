@@ -11,9 +11,9 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
 
     /*右侧信息显示*/
-    $scope.show = function(AG){
+    $scope.show = function(items){
         $scope.result = [];//初始化数组；
-        modelId = AG.model.modelId;
+        modelId = items.model.modelId;
         var abilitiesObj = $resource("/api/v1/ability/:modelId");
         $scope.abilitiesInfo = abilitiesObj.query({modelId:modelId})
             .$promise.then(function (value) {
@@ -105,7 +105,7 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
                     }
                 }
             }
-
+            //将json对象转换成json字符串
             $scope.createAbility = JSON.stringify(
                 {
                     modelId: modelId,
