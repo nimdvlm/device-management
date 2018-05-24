@@ -8,10 +8,10 @@
     <meta name="robots" content="" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/style.css" media="all" />
-    <script src="js/jquery-3.3.1.js"></script>
 
 </head>
 <body>
+
 <div class="testing">
     <header class="main">
         <h1><strong>大数据平台</strong> </h1>
@@ -24,8 +24,10 @@
         <div class="buttons">
             <button class="ico-font">&#9206;</button>
             <input type="button" value="更多皮肤" id="test"/>
-            <a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>
-            <a href="../login/index.html"><span class="button blue">退出</span></a>
+            <input type="button" style="width: 100px" class="button" value="返回物管理" id="backThings"/>
+            <input type="button" class="button blue" value="退出" onclick="logout()" />
+            <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
+            <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
         </div>
     </section>
 </div>
@@ -60,8 +62,8 @@
 
     }
 </script>-->
-
-
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/common.js"></script>
 <script src="js/getUrlParam.js"></script>
 <script src="js/starttoend.js"></script>
 <script src="js/echarts.common.min.js"></script>
