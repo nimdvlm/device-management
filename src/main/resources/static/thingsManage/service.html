@@ -18,8 +18,7 @@
         <!--模块控件-->
     <div class="abilityIcon">
         <!--左右分布控件模块-->
-        <div ng-repeat="items in abilityGroups" ng-click="show(items)">
-            <div class="abilityBackgroundstyle" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()" ng-style="items.style">
+        <div ng-repeat="items in abilityGroups" class="abilityBackgroundstyle" ng-click="show(items)" ng-style="items.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                 <span title="能力管理"><i class="fa fa-cog homeIconstyle"></i></span>
                 <span class="abilityPlus" data-toggle="modal" data-target="#createSM">
                 <i class="glyphicon glyphicon-plus" title="创建能力"></i>
@@ -32,7 +31,6 @@
                 <p class="style">设备类型：{{items.deviceType.deviceTypeName}}</p>
                 <p class="style"> 设备型号：{{items.model.modelName}}</p>
                 </span>
-            </div>
         </div>
     </div>
 
