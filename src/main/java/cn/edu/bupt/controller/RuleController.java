@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 
 /**
@@ -286,9 +285,9 @@ public class RuleController extends DefaultThingsboardAwaredController{
     }*/
 
     private  String encodeJson(String respondStr){
-        respondStr=respondStr.replaceAll("\"\\{\\\\\"","\\{\\\\\"");
-        respondStr=respondStr.replaceAll("\\\\\"\\}\"","\\\\\"\\}");
-        respondStr=respondStr.replaceAll("\\\\\"","\"");
+        respondStr=respondStr.replaceAll("\\\\","");
+        respondStr=respondStr.replaceAll("\"\\{","\\{");
+        respondStr=respondStr.replaceAll("\"\\}\"","\"\\}");
         return respondStr;
     }
 }

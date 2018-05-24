@@ -54,7 +54,6 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
                 toastr.error("新增设备失败！");
             });
         }
-
     };
 
 
@@ -79,25 +78,19 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
                 "type":new Number($scope.fchat.replies[i].type),
                 "value":$scope.fchat.replies[i].value});
         }
-        console.log($scope.requireResponce);
-        $scope.createAbilityGroup = {
-            modelId: modelId,
-            abilityDes: {
-                serviceName: $scope.serviceName,
-                serviceDescription: $scope.serviceDescription,
-                serviceType: $scope.serviceType,
-                protocol: $scope.protocol,
-                url: $scope.url,
-                requireResponce: $scope.requireResponce,
-                serviceBody: {
-                    methodName: $scope.methodName,
-                    params: params
-                }
-            }
-        }
-
-        $scope.createAbility = JSON.stringify(
-            {
+        console.log(params);
+        if($scope.serviceName=="" || $scope.serviceName==null){
+            alert("服务名称不能为空！");
+        }else if($scope.serviceDescription=="" || $scope.serviceDescription==null){
+            alert("服务描述不能为空！");
+        }else if($scope.methodName=="" || $scope.methodName==null){
+            alert("方法名不能为空！");
+        } else if(params[0].key=="" || params[0].type=="" || params[0].value=="") {
+            alert("参数必须全部填写！");
+            location.reload();
+        } else{
+            console.log("params:"+params[0].key);
+            $scope.createAbilityGroup = {
                 modelId: modelId,
                 abilityDes: {
                     serviceName: $scope.serviceName,
@@ -112,19 +105,37 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
                     }
                 }
             }
-        )
-        console.log($scope.createAbility);
-        var createAbilityObj =  $resource("/api/v1/ability");
-        $scope.ability = createAbilityObj.save({},$scope.createAbility,function (resp) {
-            toastr.success("新增成功！");
-            //console.log($scope.ability);
-            setTimeout(function () {
-               $("#createSM").modal("hide");
-                location.reload();
-            },500);
-        },function (error) {
-            toastr.error("新增失败！");
-        });
+
+            $scope.createAbility = JSON.stringify(
+                {
+                    modelId: modelId,
+                    abilityDes: {
+                        serviceName: $scope.serviceName,
+                        serviceDescription: $scope.serviceDescription,
+                        serviceType: $scope.serviceType,
+                        protocol: $scope.protocol,
+                        url: $scope.url,
+                        requireResponce: $scope.requireResponce,
+                        serviceBody: {
+                            methodName: $scope.methodName,
+                            params: params
+                        }
+                    }
+                }
+            )
+            console.log($scope.createAbility);
+            var createAbilityObj =  $resource("/api/v1/ability");
+            $scope.ability = createAbilityObj.save({},$scope.createAbility,function (resp) {
+                toastr.success("新增成功！");
+                //console.log($scope.ability);
+                setTimeout(function () {
+                    $("#createSM").modal("hide");
+                    location.reload();
+                },500);
+            },function (error) {
+                toastr.error("新增失败！");
+            });
+        }
     };
 
 
@@ -139,7 +150,7 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
             {key: "",type:1,value: ""}); // 用时间戳作为每个item的key
         // 增加新的参数后允许删除
         $scope.fchat.canDescReply = true;
-        console.log("增加一行");
+       // console.log("增加一行");
         console.log($scope.fchat.replies);
     }
     // 减少参数
@@ -171,6 +182,7 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
     /*删除能力*/
     $scope.deleteAA = function(data){
+        alert("确定删除此能力？");
         var deleteAA = $resource('/api/v1/ability/:id');
         deleteAA.delete({id:data.abilityId},{},function(){
             toastr.success("删除成功！");

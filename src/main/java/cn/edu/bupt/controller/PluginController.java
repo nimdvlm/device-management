@@ -34,11 +34,11 @@ public class PluginController extends DefaultThingsboardAwaredController{
 
     @RequestMapping(value = "/state/{url}/{port}",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getStates(@PathVariable("url") String url,@PathVariable("port") String port){
-        String requestAddr = "/api/plugin/state";
+        String requestAddr = "/api/plugin/state/";
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + url +":"+ port + requestAddr,
+            responseContent = HttpUtil.sendGetToThingsboard("http://" +  getSmartRulerServer() + requestAddr+url+"/"+port,
                     null,
                     request.getSession());
 
@@ -83,11 +83,11 @@ public class PluginController extends DefaultThingsboardAwaredController{
 
     @RequestMapping(value = "/suspend/{url}/{port}",method = RequestMethod.POST)
     public String suspend(@PathVariable("url") String url, @PathVariable("port") String port){
-        String requestAddr = "/api/plugin/suspend";
+        String requestAddr = "/api/plugin/suspend/";
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + url +":"+ port + requestAddr,
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getSmartRulerServer() + requestAddr+url+"/"+port,
                     null,null,
                     request.getSession());
 
@@ -99,11 +99,11 @@ public class PluginController extends DefaultThingsboardAwaredController{
 
     @RequestMapping(value = "/activate/{url}/{port}",method = RequestMethod.POST)
     public String activate(@PathVariable("url") String url, @PathVariable("port") String port){
-        String requestAddr = "/api/plugin/active";
+        String requestAddr = "/api/plugin/active/";
 
         String responseContent = null;
         try{
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + url +":"+ port + requestAddr,
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getSmartRulerServer() + requestAddr+url+"/"+port,
                     null,null,
                     request.getSession());
 

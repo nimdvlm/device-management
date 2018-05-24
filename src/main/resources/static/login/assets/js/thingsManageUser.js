@@ -4,44 +4,31 @@
 //async:true  表示异步加载，可能会在ajax执行完成之后，就执行下面的方法，从而导致data中没有值；
 $(document).ready(function () {
     var href = window.location.search;/* 获取属性（“?”后面的分段） */
-    var level = href.substring(href.indexOf("?")+1)
-    console.log(level);
+    var attr = href.substring(href.indexOf("?")+1);
+    var attrs = attr.split("&");
+    var level = attrs[0];
+    var tenant = attrs[1];
     $("#thingsManage").click(function () {
-        if(level == "TENANT_ADMIN"){
+        if(level == "CUSTOMER_USER"){
             $("#thingsManage").click(function () {
-                window.location.href = "/thingsManager";
+                window.location.href = "/thingsManager/user";
             });
         }
-        else if(level == "CUSTOMER_USER"){
+        else if(level == "TENANT_ADMIN"){
             $("#thingsManage").click(function () {
-                window.location.href = "../thingsManage/side-menu-tenantManager.html";
+                window.location.href = "/thingsManager/tenant";
             });
         }
         else if(level == "SYS_ADMIN"){
             $("#thingsManage").click(function () {
-                window.location.href = "../thingsManage/side-menu-systemManager.html";
+                window.location.href = "/thingsManager/system";
             });
         }
     });
-    $.ajax({
-        url:"/api/user/login",
-        data:dataString,
-        contentType: "application/json; charset=utf-8",//post请求必须
-        dataType:"text",
-        type:"POST",
-        success:function(msg){
-            /*console.log(userName);
-            console.log(password);*/
-            console.log(msg);
-            var msgJson = JSON.parse(msg);
-            console.log(msgJson.authority);
-            userLevel = msgJson.authority;
-            window.location.href = "/home?"+userLevel;
-        },
-        error:function () {
-            toastr.error("用户名或密码错误！");
-        }
+    $("#3dPages").click(function () {
+        window.location.href = "http://39.104.189.84:8800?id="+tenant;
     });
+
 
 
 });
