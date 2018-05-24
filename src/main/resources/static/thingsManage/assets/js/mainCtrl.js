@@ -64,17 +64,26 @@ mainApp.controller("mainCtrl",["$scope","$location",function ($scope,$location) 
         });
     };
 
+    $("#backIcon").click(function () {
+        var href = window.location.search;
+        console.log(href);
+        var attr = href.substring(href.indexOf("?")+1);
+        console.log(attr);
+        window.location.href = "/home?"+attr;
+    });
+
 
 
 
     /*突出显示效果*/
     $(document).ready(function(){
-        $(".homeIconBackground,.side-menu-icon,.chooseBtn").mouseover(function(){
+        $(".homeIconBackground,.side-menu-icon").mouseover(function(){
             $(this).siblings().stop().fadeTo(300, 0.3);//动画速度用数字表示时不需加引号
         });
-        $(".homeIconBackground,.side-menu-icon,.chooseBtn").mouseout(function () {
+        $(".homeIconBackground,.side-menu-icon").mouseout(function () {
             $(this).siblings().stop().fadeTo(300, 1);
         });
+
 
     });
 
