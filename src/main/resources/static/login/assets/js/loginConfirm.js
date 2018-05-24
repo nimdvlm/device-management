@@ -1,4 +1,4 @@
-
+var userLevel;
 $(document).ready(function () {
 
     /*
@@ -22,10 +22,10 @@ $(document).ready(function () {
                     /*console.log(userName);
                     console.log(password);*/
                     console.log(msg);
-                    /*var msgJson = JSON.parse(msg);
+                    var msgJson = JSON.parse(msg);
                     console.log(msgJson.authority);
-                    userLevel = msgJson.authority;*/
-                    window.location.href = "/home";
+                    userLevel = msgJson.authority;
+                    window.location.href = "/home?"+userLevel;
                 },
                 error:function () {
                     toastr.error("用户名或密码错误！");
