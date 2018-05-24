@@ -1,3 +1,4 @@
+// 基于准备好的dom，初始化echarts实例
 var deviceId = UrlParm.parm("deviceId");
 var deviceNum = UrlParm.parm("deviceNum");
 var sectionA = document.getElementById("transportId");
@@ -21,7 +22,7 @@ function getdata(deviceId) {
     myXmlHttpRequest = getXmlHttpObject();
     if (myXmlHttpRequest) {
         //var url = "toajax?username=" + document.getElementById("username").value;
-        var url = "http://39.105.71.29:8080/db6/toajax1";
+        var url = "toajax1";
         var data = "deviceId=" + deviceId;
         //myXmlHttpRequest.open("get",url,true);
         myXmlHttpRequest.open("post", url, true);//url="http://10.108.218.64:8090/api/analysis/device"
@@ -35,10 +36,11 @@ function getdata(deviceId) {
         if (myXmlHttpRequest.readyState == 4) {
             var myChart = echarts.init(document.getElementById('main1'));
             var mes = myXmlHttpRequest.responseText;
-            var meso = eval("(" + mes + ")");
+            var mes1 = JSON.parse(mes);
+            var meso = eval("(" + mes1 + ")");
             option = {
                 title: {
-                    text: '实时数据'+"  设备"+deviceNum
+                    text: '实时数据'+"  设备"+deviceNum+"  ID:"+ deviceId,
                 },
                 tooltip: {
                     trigger: 'axis',
@@ -157,7 +159,7 @@ function getdata(deviceId) {
                 myXmlHttpRequest = getXmlHttpObject();
                 if (myXmlHttpRequest) {
                     //var url = "toajax?username=" + document.getElementById("username").value;
-                    var url = "http://39.105.71.29:8080/db6/toajax1";
+                    var url = "toajax1";
                     var data = "deviceId=" + deviceId;
                     //myXmlHttpRequest.open("get",url,true);
                     myXmlHttpRequest.open("post", url, true);//url="http://10.108.218.64:8090/api/analysis/device"
@@ -171,7 +173,8 @@ function getdata(deviceId) {
                     if (myXmlHttpRequest.readyState == 4) {
                         var myChart = echarts.init(document.getElementById('main1'));
                         var mes = myXmlHttpRequest.responseText;
-                        var meso = eval("(" + mes + ")");
+                        var mes1 = JSON.parse(mes);
+                        var meso = eval("(" + mes1 + ")");
                         axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
 
                         var data0 = option.series[0].data;
@@ -188,6 +191,7 @@ function getdata(deviceId) {
 
                         myChart.setOption(option);}}
             }, 2100);
+            // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
 
 
