@@ -9,10 +9,30 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
     $scope.abilityGroups = abilityGroup.query();
     //console.log($scope.abilityGroups);
 
+    /*鼠标移入动画效果*/
+    $scope.fadeSiblings = function () {
+        $(".abilityBackgroundstyle").mouseover(function () {
+            $(this).siblings().stop().fadeTo(300, 0.3);
+        });
+    };
+    /*鼠标移出动画效果*/
+    $scope.reSiblings = function () {
+        $(".abilityBackgroundstyle").mouseout(function () {
+            $(this).siblings().stop().fadeTo(300, 1);
+        });
+    };
+
 
     /*右侧信息显示*/
     $scope.show = function(items){
         $scope.result = [];//初始化数组；
+        /*除点击元素外其他元素均无特殊样式*/
+        $scope.abilityGroups.forEach(function (item) {
+            if(items != item) item.style = {}
+        });
+        /*给点击元素加上特定样式*/
+        items.style = {"border": "2px solid #305680"};
+
         modelId = items.model.modelId;
         var abilitiesObj = $resource("/api/v1/ability/:modelId");
         $scope.abilitiesInfo = abilitiesObj.query({modelId:modelId})
@@ -182,7 +202,7 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
     /*删除能力*/
     $scope.deleteAA = function(data){
-        alert("确定删除此能力？");
+        alert("确定删除此服务？");
         var deleteAA = $resource('/api/v1/ability/:id');
         deleteAA.delete({id:data.abilityId},{},function(){
             toastr.success("删除成功！");

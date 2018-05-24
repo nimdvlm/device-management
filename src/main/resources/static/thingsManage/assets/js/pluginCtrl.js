@@ -5,10 +5,30 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
     var pluginGroup = $resource('/api/rule/allPlugins');
     $scope.pluginGroups = pluginGroup.query();
 
+    /*鼠标移入动画效果*/
+    $scope.fadeSiblings = function () {
+        $(".homeBackgroundstyle").mouseover(function () {
+            $(this).siblings().stop().fadeTo(300, 0.3);
+        });
+    };
+    /*鼠标移出动画效果*/
+    $scope.reSiblings = function () {
+        $(".homeBackgroundstyle").mouseout(function () {
+            $(this).siblings().stop().fadeTo(300, 1);
+        });
+    };
+
     $scope.showAll = function (item) {
         str = [];//初始化数组；
         //console.log(str);
-        console.log(item);
+        //console.log(item);
+        /*除点击元素外其他元素均无特殊样式*/
+        $scope.pluginGroups.forEach(function (items) {
+            if(item != items) items.style = {}
+        });
+        /*给点击元素加上特定样式*/
+        item.style = {"border": "2px solid #305680"};
+
         $scope.name = item.name;
         $scope.url = item.url;
         $scope.describe = item.describe;
