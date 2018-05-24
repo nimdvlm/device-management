@@ -16,14 +16,11 @@
 
         </div>
         <div class="DGContainer" style="margin-left: -15px">
-            <div ng-repeat="rule in Rules" ng-show="showAllRule">
-                <!--由于jq选择器和ng-repeat执行顺序问题，此处jq里定义的mousemove动画失效-->
-                <div class="chooseBtn RuleBtn" ng-click="showrule(rule)">
+            <div ng-repeat="rule in Rules" ng-show="showAllRule" class="chooseBtn RuleBtn" ng-click="showrule(rule)" ng-style="rule.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                     <div>
                         <i class="fa fa-puzzle-piece fa-2x "></i>
                         <p>{{rule.rule.name}}</p>
                     </div>
-                </div>
             </div>
 
             <!--搜索展示视图-->

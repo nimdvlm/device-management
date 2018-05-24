@@ -78,6 +78,13 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //右侧展示视图
     $scope.showrule = function (rule) {
+        //展示视图添加样式
+        $scope.Rules.forEach(function (items) {
+            if(rule != items) items.style = {}
+        });
+        rule.style = {"border": "2px solid #305680"};
+
+
         $scope.Ruleitem = rule;
         console.log("rule in rules:");
         console.log($scope.Ruleitem);
@@ -335,4 +342,17 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
      添加规则END
      ============================================================ */
 
+    /*鼠标移入动画效果*/
+    $scope.fadeSiblings = function () {
+        console.log("666");
+        $(".chooseBtn").mouseover(function () {
+            $(this).siblings().stop().fadeTo(300, 0.3);
+        });
+    };
+    /*鼠标移出动画效果*/
+    $scope.reSiblings = function () {
+        $(".chooseBtn").mouseout(function () {
+            $(this).siblings().stop().fadeTo(300, 1);
+        });
+    };
 });
