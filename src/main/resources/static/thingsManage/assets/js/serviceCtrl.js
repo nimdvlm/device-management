@@ -202,7 +202,7 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
     /*删除能力*/
     $scope.deleteAA = function(data){
-        alert("确定删除此能力？");
+        alert("确定删除此服务？");
         var deleteAA = $resource('/api/v1/ability/:id');
         deleteAA.delete({id:data.abilityId},{},function(){
             toastr.success("删除成功！");
