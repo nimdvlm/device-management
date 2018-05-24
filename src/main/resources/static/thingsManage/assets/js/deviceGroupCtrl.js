@@ -25,10 +25,14 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
             var addDG = $resource('/api/group/create');
             addDG.save({}, {"name": $scope.addDGName})
                 .$promise.then(function (resp) {
-                console.log("新建设备组成功");
+                console.log("新建设备组接口连接成功");
                 console.log(resp);
                 $("#addRule").modal("hide");
-                location.reload();
+                if(resp.id!=""){
+                    location.reload();
+                }else{
+                    toastr.warning("不允许创建同名设备！");
+                }
             });
         } else {
             alert("输入不能为空!");
