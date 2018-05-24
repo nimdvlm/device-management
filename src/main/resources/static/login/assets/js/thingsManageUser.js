@@ -10,13 +10,13 @@ $(document).ready(function () {
     var tenant = attrs[1];
     $("#thingsManage").click(function () {
         if(level == "CUSTOMER_USER"){
-                window.location.href = "/thingsUserManager?"+level;
+                window.location.href = "/thingsUserManager?"+level+"&"+tenant;
         }
         else if(level == "TENANT_ADMIN"){
-                window.location.href = "/thingsTenantManager?"+level;
+                window.location.href = "/thingsTenantManager?"+level+"&"+tenant;
         }
         else if(level == "SYS_ADMIN"){
-                window.location.href = "/thingsSystemManager?"+level;
+                window.location.href = "/thingsSystemManager?"+level+"&"+tenant;
         }
     });
     $("#3dPages").click(function () {

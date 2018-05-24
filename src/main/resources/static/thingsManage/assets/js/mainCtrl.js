@@ -65,11 +65,12 @@ mainApp.controller("mainCtrl",["$scope","$location",function ($scope,$location) 
     };
 
     $("#backIcon").click(function () {
-        var href = window.location.search;
+        var href = window.location.search;//取?后的参数
         console.log(href);
         var attr = href.substring(href.indexOf("?")+1);
         console.log(attr);
-        window.location.href = "/home?"+attr;
+        var attrs = attr.split("&");
+        window.location.href = "/home?"+attrs[0]+"&"+attrs[1];
     });
 
 
