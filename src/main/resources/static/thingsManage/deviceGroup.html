@@ -16,13 +16,12 @@
 
         </div>
         <div class="DGContainer">
-            <div ng-repeat="DG in DeviceGroups" ng-show="showAll">
-                <div class="chooseBtn" ng-click="show(DG)">
+            <div ng-repeat="DG in DeviceGroups" ng-show="showAll" class="chooseBtn" ng-click="show(DG)" ng-style="DG.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                     <div>
                         <i class="fa fa-sitemap fa-2x "></i>
                         <p>{{DG.name}}</p>
                     </div>
-                </div>
+
             </div>
 
             <!--搜索展示视图-->
