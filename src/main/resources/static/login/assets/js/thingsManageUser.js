@@ -11,17 +11,17 @@ $(document).ready(function () {
     $("#thingsManage").click(function () {
         if(level == "CUSTOMER_USER"){
             $("#thingsManage").click(function () {
-                window.location.href = "/thingsManager/user";
+                window.location.href = "/thingsUserManager";
             });
         }
         else if(level == "TENANT_ADMIN"){
             $("#thingsManage").click(function () {
-                window.location.href = "/thingsManager/tenant";
+                window.location.href = "/thingsTenantManager";
             });
         }
         else if(level == "SYS_ADMIN"){
             $("#thingsManage").click(function () {
-                window.location.href = "/thingsManager/system";
+                window.location.href = "/thingsSystemManager";
             });
         }
     });

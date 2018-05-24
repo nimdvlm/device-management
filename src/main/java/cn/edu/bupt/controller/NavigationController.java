@@ -39,17 +39,17 @@ public class NavigationController {
         return "static/login/chooseIndex";
     }
 
-    @RequestMapping("thingsUserManager")
+    @RequestMapping("/thingsUserManager")
     public String  getUserThingManager() {
         return "static/thingsManage/side-menu-user";
     }
 
-    @RequestMapping("thingsTenantManager")
+    @RequestMapping("/thingsTenantManager")
     public String  getTenantThingManager() {
         return "static/thingsManage/side-menu-tenantManager";
     }
 
-    @RequestMapping("thingsSystemManager")
+    @RequestMapping("/thingsSystemManager")
     public String  getSystemThingManager() {
         return "static/thingsManage/side-menu-systemManager";
     }

@@ -24,11 +24,8 @@ $(document).ready(function () {
                     console.log(password);*/
                     console.log(msg);
                     var msgJson = JSON.parse(msg);
-
                     userLevel = msgJson.authority;
-                    alert(userLevel);
                     tenant = msgJson.tenant_id;
-                    alert(tenant);
                    window.location.href = "/home?"+userLevel+"&"+tenant;
                 },
                 error:function () {
