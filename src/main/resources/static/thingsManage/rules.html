@@ -53,11 +53,11 @@
                     <div class="modal-body" style="height: 450px;overflow: auto"><!--解决嵌套模态框滚动条bug-->
                         <form>
                             <!--添加规则组基本信息-->
-                            <p>规则名称：<input type="text" name="rulename" ng-model="formData.rule.name"
+                            <p><span class="StarMark">*</span>规则名称：<input type="text" name="rulename" ng-model="formData.rule.name"
                                            placeholder="请输入规则组名称">
-                                <span class="StarMark">*</span><span class="alertempty" id="rulenamealert">请输入规则名称</span>
+                                <span class="alertempty" id="rulenamealert">请输入规则名称</span>
                             </p>
-                            <p><span style="vertical-align:top">描&emsp;&emsp;述：</span><textarea name="additional_info"
+                            <p><span style="vertical-align:top;margin-left: 10px">描&emsp;&emsp;述：</span><textarea name="additional_info"
                                                                                                 ng-model="formData.rule.additional_info"
                                                                                                 placeholder="请添加对规则的描述..."
                                                                                                 style="height:120px;width: 480px;"></textarea>
@@ -140,15 +140,14 @@
 
                     <div class="modal-body">
                         <form name="addfilter">
-                            <p>过滤器名称：<input type="text" name="addname" id="addfiltername"
+                            <p><span class="StarMark">*</span>过滤器名称：<input type="text" name="addname" id="addfiltername"
                                             placeholder="请输入过滤器名称" required/>
-                                <span class="StarMark">*</span><span class="alertempty"
-                                                                     id="filternamealert">请输入过滤器名称</span>
+                                <span class="alertempty" id="filternamealert">请输入过滤器名称</span>
                             </p>
-                            <p>过滤器类型：<input type="text" name="addtype" disabled="disabled" id="addfiltertype"
+                            <p style="margin-left: 10px">过滤器类型：<input type="text" name="addtype" disabled="disabled" id="addfiltertype"
                                             placeholder="待定"/>
                             </p>
-                            <p>JS&emsp;代&emsp;码：<textarea name="addjscode" id="addfilterjs"
+                            <p style="margin-left: 10px;vertical-align:top;">JS&emsp;代&emsp;码：<textarea name="addjscode" id="addfilterjs"
                                                           style="height:150px;width: 470px">function filter(deviceId,key,value){if(deviceId=='35818ec0-5a65-11e8-b66a-e5d2dad89b7c'&&key=='1231' && value>101){return true;}  else{return false;}}</textarea>
                             </p>
                             <input type="reset" style="display:none;"/>

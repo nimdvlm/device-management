@@ -8,10 +8,10 @@
                     data-target="#addServiceGroup">+ 创建能力组
             </button>
             </span>
-            <span class="SMsearch">
+            <!--span class="SMsearch">
                 <input class="span2" type="text" placeholder="输入设备类型" id="searchAbilityText">
                 <button><span ng-click="searchAbility()" title="搜索"><i class="glyphicon glyphicon-search"></i> </span></button>
-            </span>
+            </span-->
         </div>
     </div>
 
@@ -233,32 +233,6 @@
         </div><!-- /.modal -->
     </div>
 
-    <!--删除能力界面弹出框-->
-    <div class="modal fade" id="deleteAbility" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        删除能力
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    确定删除此能力？
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消
-                    </button>
-                    <button type="button" class="btn btn-primary"  ng-click="deleteAA()">
-                        确定
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
 
 </div>
 	<!--选择框的值显示或隐藏文本框-->
@@ -271,15 +245,6 @@
         }
     });
 
-
-    $('#type').bind('change', function(){
-        var val = $(this).val();
-        switch(val){
-            case '1': $('#div2').show(); $('#div4, #div3').hide(); break;
-            case '2': $('#div3').show(); $('#div2, #div4').hide(); break;
-            case '3': $('#div4').show(); $('#div2, #div3').hide(); break;
-        }
-    });
 </script>
 
 
