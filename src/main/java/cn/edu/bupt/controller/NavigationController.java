@@ -87,4 +87,14 @@ public class NavigationController {
         return "static/thingsManage/evaluate";
     }
 
+    @RequestMapping("/customer")
+    public String  customer() {
+        return "static/thingsManage/customer";
+    }
+
+    @RequestMapping("/tenant")
+    public String  tenant() {
+        return "static/thingsManage/tenant";
+    }
+
 }
