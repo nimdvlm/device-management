@@ -33,7 +33,7 @@ websocket.onerror = function () {
 
 //连接成功建立的回调方法
 websocket.onopen = function () {
-    window.alert("WebSocket连接成功");
+    //window.alert("WebSocket连接成功");
 };
 
 //接收到消息的回调方法
