@@ -1,5 +1,5 @@
 function timestampToTime(timestamp) {
-    var date = new Date(timestamp * 1000);
+    var date = new Date(timestamp);
     Y = date.getFullYear() + '-';
     M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
     D = date.getDate() + ' ';
@@ -26,7 +26,7 @@ var myXmlHttpRequest="";
 var deviceId = UrlParm.parm("deviceId");
 var deviceNum = UrlParm.parm("deviceNum");
 var sectionA = document.getElementById("transportId");
-sectionA.setAttribute("href","dydata.html?deviceId="+deviceId+"&deviceNum="+deviceNum);
+sectionA.setAttribute("href","dydatatrue.html?deviceId="+deviceId+"&deviceNum="+deviceNum);
 
 /*function getdata() {
 
@@ -143,6 +143,7 @@ sectionA.setAttribute("href","dydata.html?deviceId="+deviceId+"&deviceNum="+devi
                 }
             };
 
+            // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
         }
     }
@@ -281,8 +282,10 @@ option = {
     }
 };
 
+// 使用刚指定的配置项和数据显示图表。
 myChart.setOption(option);
 
+// 基于准备好的dom，初始化echarts实例
 var inputStartDate = "";
 var inputEndDate = "";
 var splitNum = 7;
@@ -307,12 +310,12 @@ function showData() {
         myXmlHttpRequest = getXmlHttpObject();
         if(myXmlHttpRequest){
             //var url = "toajax?username=" + document.getElementById("username").value;
-            var url = "http://39.104.186.210:8090/api/analysis/data";//url="http://10.108.218.64:8090/api/analysis/data";getselectdata
+            var url = "http://39.104.186.210:8090/api/analysis/data";//url="http://39.104.186.210:8090/api/analysis/data";getselectdata
             var startTime = new Date(inputStartDate);
             var startTimeChuo = startTime.getTime();
             var endTime = new Date(inputEndDate);
             var endTimeChuo = endTime.getTime();
-            var data = "tenantId=200"+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum;
+            var data = "tenantId=1"+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum;
             //myXmlHttpRequest.open("get",url,true);
             myXmlHttpRequest.open("post",url,true);
             myXmlHttpRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -479,6 +482,7 @@ function showData() {
                     }
                 };
 
+                // 使用刚指定的配置项和数据显示图表。
                 myChart.setOption(option);
             }
         }

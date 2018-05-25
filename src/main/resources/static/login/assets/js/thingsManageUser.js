@@ -20,7 +20,10 @@ $(document).ready(function () {
         }
     });
     $("#3dPages").click(function () {
-        window.location.href = "http://39.104.189.84:8800?id="+tenant;
+        window.open("http://39.104.189.84:8800?id="+tenant);
+    });
+    $("#bigData").click(function () {
+       window.open("../bigData/index.html");
     });
 
 

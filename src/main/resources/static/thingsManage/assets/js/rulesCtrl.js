@@ -14,18 +14,23 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.RESTMethod = ["POST", "DELETE", "GET"];
     $scope.RestfulBody = {};
 
-    //数据初始化
-    $scope.formData = {
-        "rule": {
-            //"tenantId": "1",
-            "state": "ACTIVE",
-            "additional_info": ""
-        },
-        "filters": [],
-        "transform": {
-            "requestBody": {}
-        }
-    };
+    InitformData();
+
+    function InitformData() {
+        //数据初始化
+        $scope.formData = {
+            "rule": {
+                //"tenantId": "1",
+                "state": "ACTIVE",
+                "additional_info": ""
+            },
+            "filters": [],
+            "transform": {
+                "requestBody": {}
+            }
+        };
+        console.log("提交表单初始化");
+    }
 
     function ObjFilter(name, type, jscode) //声明filter对象
     {
@@ -80,7 +85,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.showrule = function (rule) {
         //展示视图添加样式
         $scope.Rules.forEach(function (items) {
-            if(rule != items) items.style = {}
+            if (rule != items) items.style = {}
         });
         rule.style = {"border": "2px solid #305680"};
 
@@ -194,8 +199,11 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     /* =============================================================
      添加规则
      ============================================================ */
+    //"js代码"文本框初始化
+    var addfilterJS = "function filter(deviceId,key,value){if(deviceId=='35818ec0-5a65-11e8-b66a-e5d2dad89b7c'&&key=='1231' && value>101){return true;}  else{return false;}}";
+    document.getElementById('addfilterjs').value = addfilterJS;
 
-    //点击添加规则-添加过滤器，跳转到添加规则组页
+    //点击添加规则-添加过滤器
     $scope.subFilter = function () {
         //H5 required属性无效bug
         if ($('#addfiltername').val() != "") {
@@ -204,6 +212,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(), $('#addfiltertype').val(), $('#addfilterjs').val()));
             console.log($scope.formData.filters);
             $("input[type=reset]").trigger("click");
+            document.getElementById('addfilterjs').value = addfilterJS;
             /****若出现嵌套model添加一次儿子后闪退bug，把js命令换成data-dismiss*****/
             $("#addruleFilter").modal("hide");
         } else {
@@ -211,7 +220,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         }
     }
 
-    //点击添加规则-点击[添加变换]按钮时获取所有插件
+    //点击添加规则-点击添加插件,获取所有插件
     $scope.getAllplugin = function () {
         var getAllPLUGINS = $resource("/api/plugin/allPlugins");
         $scope.allPlugins = getAllPLUGINS.query({}, function () {
@@ -344,7 +353,6 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     /*鼠标移入动画效果*/
     $scope.fadeSiblings = function () {
-        console.log("666");
         $(".chooseBtn").mouseover(function () {
             $(this).siblings().stop().fadeTo(300, 0.3);
         });
@@ -354,5 +362,41 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         $(".chooseBtn").mouseout(function () {
             $(this).siblings().stop().fadeTo(300, 1);
         });
+    };
+
+    /******modal关闭后清除数据******/
+    $scope.clearFilterPlugin = function () {
+        $(':input').each(function () {
+            var type = this.type;
+            var tag = this.tagName.toLowerCase(); // normalize case
+            if (type == 'text' || type == 'password' || tag == 'textarea')
+                this.value = "";
+            else if (tag == 'select')
+                this.selectedIndex = 1;
+        });
+
+        //恢复现场
+        document.getElementById('addfilterjs').value = addfilterJS;
+        $('#filternamealert').hide();
+        $scope.showsendmail = false;
+        $scope.showrestful = false;
+        $scope.showPluginMail = false;
+        $scope.showrestfulPOST = false;
+    };
+
+    $scope.clearForm = function () {
+        $(':input').each(function () {
+            var type = this.type;
+            var tag = this.tagName.toLowerCase(); // normalize case
+            if (type == 'text' || type == 'password' || tag == 'textarea')
+                this.value = "";
+        });
+
+        //恢复现场
+        document.getElementById('addfilterjs').value = addfilterJS;
+        $('#rulenamealert').hide();
+        InitformData();
+        $scope.showaddFilter = false;
+        $scope.showaddTransform = false;
     };
 });
