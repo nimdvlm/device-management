@@ -97,4 +97,18 @@ public class NavigationController {
         return "static/thingsManage/tenant";
     }
 
+    @RequestMapping("/statisticsDevice")
+    public String statisticsDevice() { return  "static/bigData/device1"; }
+
+    @RequestMapping("/statisticsData")
+    public String statisticsData() {return  "static/bigData/statisticsdata";}
+
+    @RequestMapping("/realtimeDevice")
+    public String realtimeDevice() {return "static/bigData/device2";}
+
+    @RequestMapping("/realtimeData")
+    public String realtimeData() {return "static/bigData/dydata";}
+
+    @RequestMapping("/historicalData")
+    public String historicalData() {return "static/bigData/hisdata";}
 }
