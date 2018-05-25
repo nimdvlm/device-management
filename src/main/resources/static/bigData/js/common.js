@@ -1,4 +1,4 @@
-function logout() {
+function quitThings() {
     $.ajax({
         url:"/api/user/logout",
         contentType: "application/json; charset=utf-8",
@@ -7,8 +7,7 @@ function logout() {
             console.log(msg);
             window.location.href="/";
         }
-    });
-}
+    });}
 
 $("#backThings").click(function () {
     var href = window.location.search;//取?后的参数
@@ -16,5 +15,4 @@ $("#backThings").click(function () {
     var attr = href.substring(href.indexOf("?")+1);
     console.log(attr);
     var attrs = attr.split("&");
-    window.location.href = "/home?"+attrs[0]+"&"+attrs[1];
-});
+    window.location.href = "/home?"+attrs[0]+"&"+attrs[1];});
