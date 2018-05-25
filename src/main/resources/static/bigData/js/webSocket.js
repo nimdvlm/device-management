@@ -42,25 +42,27 @@ websocket.onmessage = function (event) {
         websocket.send('{"deviceId":'+deviceId+'}');
     }
     var message =JSON.parse(event.data);
-    var a=message.data[2].ts;
-    var a1=timestampToTime(a);
-    //window.alert(timestampToTime(a));
-    var b=message.data[2].key;
-    var c=message.data[2].value;
-    var tr = document.createElement("tr");
-    var td1 = document.createElement("td");
-    td1.setAttribute("style","text-align: center;");
-    td1.innerHTML=a1;
-    var td2 = document.createElement("td");
-    td2.setAttribute("style","text-align: center;");
-    td2.innerHTML=b;
-    var td3 = document.createElement("td");
-    td3.setAttribute("style","text-align: center;");
-    td3.innerHTML=c;
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-    tBody.appendChild(tr);
+    for(var j=0; j<message.data.length; j++){
+        var a=message.data[j].ts;
+        var a1=timestampToTime(a);
+        //window.alert(timestampToTime(a));
+        var b=message.data[j].key;
+        var c=message.data[j].value;
+        var tr = document.createElement("tr");
+        var td1 = document.createElement("td");
+        td1.setAttribute("style","text-align: center;");
+        td1.innerHTML=a1;
+        var td2 = document.createElement("td");
+        td2.setAttribute("style","text-align: center;");
+        td2.innerHTML=b;
+        var td3 = document.createElement("td");
+        td3.setAttribute("style","text-align: center;");
+        td3.innerHTML=c;
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tBody.appendChild(tr);
+    }
     i++;
 
 };
