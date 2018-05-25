@@ -12,8 +12,8 @@
 
         <!--模块控件-->
     <div class="pluginIcon">
-        <div ng-repeat="item in pluginGroups" ng-click="showAll(item)">
-            <div class="chooseBtn homeBackgroundstyle">
+        <div ng-repeat="item in pluginGroups" ng-click="showAll(item)" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+            <div>
                 <span data-toggle="modal" data-target="#SMDetail" class="itemp"></span>
                 <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
                 <p class="stylePulgin">{{item.name}}</p>
@@ -30,7 +30,7 @@
             <p>插件url：{{url}}</p>
             <p>插件描述：{{describe}}</p>
             <p id="changeState">插件状态：<span ng-class="{true:'stateActive',false:'stateNActive'}[isActive]">
-                        <!--i ng-class="{true:'fa fa-refresh fa-spin',false:'fa fa-refresh'}[isActive]"></i-->
+                        <i ng-class="{true:'fa fa-refresh fa-spin',false:'fa fa-refresh'}[isActive]"></i>
                         {{pluginStateDisplay.state}}
                         </span>
             </p>

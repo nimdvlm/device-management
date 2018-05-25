@@ -57,7 +57,7 @@
                             <p><span style="vertical-align:top;margin-left: 10px">描&emsp;&emsp;述：</span><textarea name="additional_info"
                                                                                                 ng-model="formData.rule.additional_info"
                                                                                                 placeholder="请添加对规则的描述..."
-                                                                                                style="height:120px;width: 480px;"></textarea>
+                                                                                                style="height:120px;width: 450px;"></textarea>
                             </p>
                             <hr/>
 
@@ -111,7 +111,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearForm()">关闭
                         </button>
                         <button type="button" class="btn btn-primary" ng-click="createRule()">
                             确定
@@ -145,13 +145,13 @@
                                             placeholder="待定"/>
                             </p>
                             <p style="margin-left: 10px;vertical-align:top;">JS&emsp;代&emsp;码：<textarea name="addjscode" id="addfilterjs"
-                                                          style="height:150px;width: 470px">function filter(deviceId,key,value){if(deviceId=='35818ec0-5a65-11e8-b66a-e5d2dad89b7c'&&key=='1231' && value>101){return true;}  else{return false;}}</textarea>
+                                                          style="height:150px;width: 470px"/>
                             </p>
                             <input type="reset" style="display:none;"/>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearFilterPlugin()">关闭
                         </button>
                         <button type="button" class="btn btn-primary" ng-click="subFilter()">
                             确定
@@ -177,7 +177,7 @@
                     </div>
                     <div class="modal-body">
                         <form name="addplugin">
-                            <p>名&emsp;&emsp;称：<select ng-model="RuleaddPlugin" ng-change="change(RuleaddPlugin)"
+                            <p>名&emsp;&emsp;称：<select ng-model="RuleaddPlugin" ng-change="change(RuleaddPlugin)" id="addpluginselect"
                                                       ng-options="x.name for x in Plugin">
                                 <option value="" disabled>--请选择插件--</option>
                             </select>
@@ -195,7 +195,7 @@
                             </select>
                             </p>
                             <p ng-show="showrestful">请求地址：<input type="text" ng-model="RestfulBody.url"
-                                                                 style="width: 75%;"></p>
+                                                                 style="width: 75%;"/></p>
                             <p ng-show="showrestfulPOST"><span style="vertical-align:top">Requestbody：</span><textarea style="height:120px;width: 70%;" ng-model="RestfulBody.body"></textarea>
                             </p>
 
@@ -233,7 +233,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearFilterPlugin()">关闭
                         </button>
                         <button type="button" class="btn btn-primary" ng-click="subTransform()" data-dismiss="modal">
                             确定

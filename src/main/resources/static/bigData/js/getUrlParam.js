@@ -52,3 +52,51 @@ UrlParm = function() { // url参数
         }
     }
 }();
+
+function showTheme() {
+
+    if(themeCount%2==1){
+        $('header.main').css({"background":"linear-gradient(to bottom, #e53831 0%,#ae2a24 100%)","border-bottom":"1px solid #ae2a24"});
+        $('.card').css("background-image","url(images/ting4.png)");
+        $('.blue').css({"border":"1px solid #ae2a24","background":"linear-gradient(to bottom, #e53831 0%,#ae2a24 100%)"});
+        $('nav ul li.section').css({"background":"linear-gradient(to bottom, #e53831 0%,#ae2a24 100%)","border-top":"1px solid #ae2a24"});
+        //此句无效，猜测必须放在hover事件中才可以 $('nav ul li:hover').css({"background":"linear-gradient(to bottom, #e53831 0%,#ae2a24 100%)","border-top":"1px solid #ae2a24"});
+        $('nav ul li').hover( //只有在触发click时才会加载，这也解释了为什么此段可以放在<nav>之前
+            function () {
+                $('nav ul li:hover').css({"background":"linear-gradient(to bottom, #e53831 0%,#ae2a24 100%)","border-top":"1px solid #ae2a24"});
+            },function () {
+                $('nav ul li').css({"background":"#3B3E40","border-top":"1px solid #46494b"});
+                $('nav ul li.section').css({"background":"linear-gradient(to bottom, #e53831 0%,#ae2a24 100%)","border-top":"1px solid #ae2a24"});
+            }
+        );
+    }else {
+        $('header.main').css({"background":"linear-gradient(to bottom, #208ed3 0%,#0272bd 100%)","border-bottom":"1px solid #5daced"});
+        $('.card').css("background-image","url(images/timg3.png)");
+        $('.blue').css({"border":"1px solid #0f70ad","background":"linear-gradient(to bottom, #208ed3 0%,#0272bd 100%)"});
+        $('nav ul li.section').css({"background":"linear-gradient(to bottom, #208ed3 0%,#0272bd 100%)","border-top":"1px solid #5daced"});
+        //此句无效，猜测必须放在hover事件中才可以 $('nav ul li:hover').css({"background":"linear-gradient(to bottom, #e53831 0%,#ae2a24 100%)","border-top":"1px solid #ae2a24"});
+        $('nav ul li').hover( //只有在触发click时才会加载，这也解释了为什么此段可以放在<nav>之前
+            function () {
+                $('nav ul li:hover').css({"background":"linear-gradient(to bottom, #208ed3 0%,#0272bd 100%)","border-top":"1px solid #5daced"});
+            },function () {
+                $('nav ul li').css({"background":"#3B3E40","border-top":"1px solid #46494b"});
+                $('nav ul li.section').css({"background":"linear-gradient(to bottom, #208ed3 0%,#0272bd 100%)","border-top":"1px solid #5daced"});
+            }
+        );
+    }
+}
+var themeCount;
+themeCount=localStorage.getItem("themeCount");
+if(themeCount==null){
+    themeCount=0;
+}
+showTheme();
+$('#test').click(
+    function () {
+        themeCount++;
+        showTheme();
+        localStorage.setItem("themeCount",themeCount);
+    }
+);
+
+
