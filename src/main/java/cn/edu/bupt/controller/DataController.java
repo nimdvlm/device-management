@@ -67,7 +67,7 @@ public class DataController extends DefaultThingsboardAwaredController{
         responseKeyContent=responseKeyContent.replaceAll("[\\[\\]]","");
         responseKeyContent=responseKeyContent.replaceAll("\"","");*/
 
-        String requestHistoricalDataAddr = "/api/v1/data/alldata"+ deviceId
+        String requestHistoricalDataAddr = "/api/v1/data/alldata/"+ deviceId
                 + "?keys=" + key
                 + "&startTs="+ startTs
                 + "&endTs="+ endTs
