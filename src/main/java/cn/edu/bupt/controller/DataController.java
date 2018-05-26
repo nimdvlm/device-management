@@ -57,17 +57,21 @@ public class DataController extends DefaultThingsboardAwaredController{
 
     //从某时间段的设备历史数据,device-access不一定能用
     @RequestMapping(value="/getHistoricalData/{deviceId}/{startTime}/{endTime}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
-    public String getHistoricalData(@PathVariable("deviceId") String deviceId,@PathVariable("startTime") String startTime,@PathVariable("endTime") String endTime)
+    public String getHistoricalData(@PathVariable("deviceId") String deviceId,
+                                    @RequestParam String key,
+                                    @RequestParam String startTs,
+                                    @RequestParam String endTs,
+                                    @RequestParam int limit)
     {
         /*String responseKeyContent=getKeyData(deviceId);
         responseKeyContent=responseKeyContent.replaceAll("[\\[\\]]","");
         responseKeyContent=responseKeyContent.replaceAll("\"","");*/
 
         String requestHistoricalDataAddr = "/api/v1/data/alldata"+ deviceId
-                + "?keys="
-                + "&startTs="+startTime
-                + "&endTs="+endTime
-                + "&interval=0&limit=100";
+                + "?keys=" + key
+                + "&startTs="+ startTs
+                + "&endTs="+ endTs
+                + "limit=" + limit;
 
         String responseHistoricalDataContent = null ;
         try {
