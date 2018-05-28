@@ -6,6 +6,7 @@
             <div class="col-md-6">
                     <span style="font-size: 30px;">设备列表</span>
             </div>
+
             <div class="col-md-1">
                 <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
                         data-target="#createDevice">+ 创建设备
@@ -21,6 +22,17 @@
             </div><!-- /.col-lg-6 -->
 
         </div><!-- /.row -->
+        <div class="row" style="margin-top: 15px;margin-left: 35px;">
+            <div class="col-md-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="每页显示设备数量" id="deviceListNum">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-click="deviceListNumChoose()">确定</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
         <div id="preDevice" ng-click="preDeviceInfo()"><i class="fa fa-chevron-left"></i></div>
         <div id="deviceListIcon">
           <div class="chooseBtn" ng-repeat="data in deviceList" ng-click="show(data)" ng-style="data.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
@@ -85,9 +97,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td></td>
+                    <td class="attName">查看：</td>
                     <td>
-                        <button style="float: right;" data-toggle="modal"
+                        <button data-toggle="modal"
+                                data-target="#deviceEvent" class="highlight btn btn-default" ng-click="showEvent()">
+                            查看事件
+                        </button>
+                        <button data-toggle="modal"
                            data-target="#deviceDetail" class="highlight btn btn-default" ng-click="showDetail()">
                             查看详情
                         </button>
@@ -363,7 +379,7 @@
                             <td></td>
                             <td>
                                 <div class="input-group">
-                                      <input type="text" class="form-control" placeholder="请输入设备名称..." id="searchKey">
+                                      <input type="text" class="form-control" placeholder="请输入键值查找..." id="searchKey">
                                        <span class="input-group-btn">
                                              <button class="btn btn-primary" type="button" ng-click="findKey()"><i class="fa fa-search"></i></button>
                                        </span>
@@ -401,18 +417,32 @@
                         </div>
                     </div>
                 </div>
+                <div class="divide-line"></div>
+
+                <div class="modal-body showHistoryData" id="historyDataTable">
+                    <h4 class="detail-block-header">-----历史数据-----</h4>
+
+                     <label>起始时间：</label>
+                     <input type="datetime-local" id="startTime"/>
+
+                     <label>终止时间：</label>
+                     <input type="datetime-local" id="endTime"/>
+
+                     <i class="fa fa-search" id="showHistory" ng-click="subTime()"></i>
+
+                </div>
 
                 <div class="divide-line"></div>
 
                 <div class="modal-body showForm" id="controlTable">
-                    <h4 class="detail-block-header">-----控制-----</h4>
+                    <h4 class="detail-block-header">-----控制面板-----</h4>
                     <div class="row">
                         <div class="control-panel" id="control_panel">
 
                         </div>
                     </div>
-
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseDetail">关闭</button>
                     <button type="button" class="btn btn-primary" id="modalConfirmDetail" data-dismiss="modal">确定</button>
@@ -421,6 +451,25 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!-- DEVICE EVENT -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="deviceEvent">
+        <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" style="font-weight: bold;">设备事件</h4>
+                </div>
+                <div class="modal-body" id="eventTable">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseEvent">关闭</button>
+                    <button type="button" class="btn btn-primary" id="modalConfirmEvent" data-dismiss="modal">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 </div>
     <!-- CONTENT-WRAPPER SECTION END-->

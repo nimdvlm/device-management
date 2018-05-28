@@ -23,7 +23,7 @@ $(document).ready(function () {
         window.open("http://39.104.189.84:8800?id="+tenant);
     });
     $("#bigData").click(function () {
-       window.open("../bigData/index.html");
+       window.open("../bigData/device1.html");
     });
 
 

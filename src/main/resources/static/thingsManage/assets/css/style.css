@@ -159,14 +159,15 @@ DEVICELIST STYLES
 #deviceListIcon{
     width: 48%;
     float: left;
-    padding-top:10px;
     padding-left: 10px;
 }
 
 #deviceListChart{
     width: 40%;
     float: left;
-    margin-top: 20px;
+    /*position: fixed;*/
+    /*right: 30px;*/
+    /*margin-top: 20px;*/
     border: 1px solid #c0c0c0;
     border-radius: 10px;
 
@@ -194,6 +195,9 @@ DEVICELIST STYLES
     font-weight: bold;
 
 }
+.highlight{
+    color: #305680;
+}
 .divide-line{
     border-top: 2px solid #c0c0c0;
 }
@@ -219,6 +223,19 @@ DEVICELIST STYLES
 }
 #nextDevice{
     margin-right: 40px;
+}
+.service-panel{
+    background: #c0c0c036;
+    border-radius: 10px;
+}
+.service-panel legend{
+    text-align: center;
+}
+#showHistory{
+    font-size:20px;
+    margin-left:10px;
+    cursor:pointer;
+    color:#305680;
 }
 /* =============================================================
    DeviceGroup
