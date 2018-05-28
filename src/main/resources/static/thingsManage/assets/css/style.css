@@ -164,7 +164,7 @@ DEVICELIST STYLES
 
 #deviceListChart{
     width: 40%;
-    float: left;
+    float: right;
     /*position: fixed;*/
     /*right: 30px;*/
     /*margin-top: 20px;*/

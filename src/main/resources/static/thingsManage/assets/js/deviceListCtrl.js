@@ -22,14 +22,17 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         async: false,
         type:"GET",
         success:function(msg) {
-            $scope.deviceList = msg;
-            var last = $scope.deviceList.length - 1;
-            console.log($scope.deviceList);
-            console.log($scope.deviceList.length);
-            nextDeviceId = $scope.deviceList[last].id;
-            nextDeviceName = $scope.deviceList[last].name;
-            preDeviceIdArr.push($scope.deviceList[last].id);
-            preDeviceNameArr.push($scope.deviceList[last].name);
+           if(msg.length != 0){
+               $scope.deviceList = msg;
+               var last = $scope.deviceList.length - 1;
+               console.log($scope.deviceList);
+               console.log($scope.deviceList.length);
+               nextDeviceId = $scope.deviceList[last].id;
+               nextDeviceName = $scope.deviceList[last].name;
+               preDeviceIdArr.push($scope.deviceList[last].id);
+               preDeviceNameArr.push($scope.deviceList[last].name);
+           }
+
         }
     });
 
@@ -124,34 +127,39 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     $scope.nextDeviceInfo = function () {
         console.log(nextDeviceId);
         console.log(nextDeviceName);
-        $.ajax({
-            url:"/api/device/alldevices?limit="+showNum+"&idOffset="+nextDeviceId+"&textOffset="+nextDeviceName,
-            contentType: "application/json; charset=utf-8",
-            async: false,
-            type:"GET",
-            success:function(msg) {
+        if(nextDeviceId && nextDeviceName){
+            $.ajax({
+                url:"/api/device/alldevices?limit="+showNum+"&idOffset="+nextDeviceId+"&textOffset="+nextDeviceName,
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                type:"GET",
+                success:function(msg) {
 
 
-                if(msg == ""){
+                    if(msg.length == 0){
+                        toastr.warning("当前已是最后一页！");
+                    }
+                    else{
+                        pageNum++;
+                        $scope.deviceList = msg;
+                        var last = $scope.deviceList.length - 1;
+                        console.log($scope.deviceList);
+                        nextDeviceId = $scope.deviceList[last].id;
+                        nextDeviceName = $scope.deviceList[last].name;
+                        preDeviceIdArr.push($scope.deviceList[last].id);
+                        preDeviceNameArr.push($scope.deviceList[last].name);
+                    }
+
+
+                },
+                error:function (err) {
                     toastr.warning("当前已是最后一页！");
                 }
-                else{
-                    pageNum++;
-                    $scope.deviceList = msg;
-                    var last = $scope.deviceList.length - 1;
-                    console.log($scope.deviceList);
-                    nextDeviceId = $scope.deviceList[last].id;
-                    nextDeviceName = $scope.deviceList[last].name;
-                    preDeviceIdArr.push($scope.deviceList[last].id);
-                    preDeviceNameArr.push($scope.deviceList[last].name);
-                }
+            });
+        }else{
+            toastr.warning("当前已是最后一页！");
+        }
 
-
-            },
-            error:function (err) {
-                toastr.warning("当前已是最后一页！");
-            }
-         });
     };
 
     /*查看上一页设备*/
