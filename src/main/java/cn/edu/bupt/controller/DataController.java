@@ -56,7 +56,7 @@ public class DataController extends DefaultThingsboardAwaredController{
 
 
     //从某时间段的设备历史数据,device-access不一定能用
-    @RequestMapping(value="/getHistoricalData/{deviceId}/{startTime}/{endTime}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value="/getHistoricalData/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getHistoricalData(@PathVariable("deviceId") String deviceId,
                                     @RequestParam String key,
                                     @RequestParam String startTs,
@@ -84,6 +84,25 @@ public class DataController extends DefaultThingsboardAwaredController{
 
         return retSuccess(responseHistoricalDataContent);
     }
+
+
+    //获取所有遥测数据的key
+    @RequestMapping(value="/allKeys/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    public String getAllKeys(@PathVariable("deviceId") String deviceId) {
+        String requestKeyAddr = "/api/v1/allKeys/" + deviceId ;
+
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestKeyAddr,
+                    null,
+                    request.getSession());
+        } catch (Exception e) {
+            return retFail(e.toString());
+        }
+        return retSuccess(responseContent);
+    }
+
+
 
     //获取所有属性
     @RequestMapping(value="/getKeyAttribute/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
