@@ -68,10 +68,10 @@ public class DataController extends DefaultThingsboardAwaredController{
         responseKeyContent=responseKeyContent.replaceAll("\"","");*/
 
         String requestHistoricalDataAddr = "/api/v1/data/alldata/"+ deviceId
-                + "?keys=" + key
+                + "?key=" + key
                 + "&startTs="+ startTs
                 + "&endTs="+ endTs
-                + "limit=" + limit;
+                + "&limit=" + limit;
 
         String responseHistoricalDataContent = null ;
         try {
@@ -89,7 +89,7 @@ public class DataController extends DefaultThingsboardAwaredController{
     //获取所有遥测数据的key
     @RequestMapping(value="/allKeys/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getAllKeys(@PathVariable("deviceId") String deviceId) {
-        String requestKeyAddr = "/api/v1/allKeys/" + deviceId ;
+        String requestKeyAddr = "/api/v1/data/allKeys/" + deviceId ;
 
         String responseContent = null;
         try {
