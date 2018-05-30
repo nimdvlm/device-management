@@ -202,16 +202,20 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
     /*删除能力*/
     $scope.deleteAA = function(data){
-        alert("确定删除此服务？");
-        var deleteAA = $resource('/api/v1/ability/:id');
-        deleteAA.delete({id:data.abilityId},{},function(){
-            toastr.success("删除成功！");
-            setTimeout(function () {
-                window.location.reload();
-            },1000);
-        },function () {
-            alert("删除失败！");
-        });
+        var result = confirm("确定删除此能力？");
+        if(result){
+            var deleteAA = $resource('/api/v1/ability/:id');
+            deleteAA.delete({id:data.abilityId},{},function(){
+                toastr.success("删除成功！");
+                setTimeout(function () {
+                    window.location.reload();
+                },1000);
+            },function () {
+                alert("删除失败！");
+            });
+        }else {
+            alert("不删除?");
+        }
     }
 
 
