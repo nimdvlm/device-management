@@ -621,6 +621,8 @@ $scope.searchDevice = function () {
     var num;//页数
     var size;//每页显示的数据个数，如果不设置，则最后一页少于pageSize后,再往前翻就只显示最后一页的数据个数
 $scope.showDetail = function () {
+    $("#startTime").val("");//清空起始时间
+    $("#endTime").val("");//清空终止时间
     $("#searchKey").val("");//清空搜索框
     $(".pagination li,#attrDisplay tr").remove();//清空属性展示列表和分页按钮
     $("#attrSelectInfo option:first").prop("selected","selected");
@@ -744,7 +746,8 @@ $scope.showDetail = function () {
     /*显示历史数据*/
     //获取起止时间
     $scope.subTime = function () {
-        if($("#startTime").val()=="" || $("#endTime").val()==""){
+
+        if($("#startTime").val()==="" || $("#endTime").val()===""){
             toastr.warning("起始时间无效！");
         }else{
             var start = $("#startTime").val();
@@ -760,6 +763,21 @@ $scope.showDetail = function () {
                 console.log(endStamp);
             }
         }
+        /*var allKeyObj =  $resource("/api/data/allKeys/:deviceId");
+        var allKey = allKeyObj.query({deviceId:$scope.deviceInfo.id});*/
+        $.ajax({
+            url:"/api/data/allKeys/"+$scope.deviceInfo.id,
+            contentType: "application/json; charset=utf-8",//post请求必须
+            dataType:"text",
+            type:"GET",
+            success:function(msg){
+               console.log(msg);
+            },
+            error:function (err) {
+                console.log(err);
+            }
+        });
+
 
     };
 
