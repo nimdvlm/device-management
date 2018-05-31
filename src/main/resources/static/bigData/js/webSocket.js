@@ -23,7 +23,7 @@ if ('WebSocket' in window) {
     websocket = new WebSocket("ws://39.104.84.131:8100/websocket");
 }
 else {
-    alert('当前浏览器 Not support websocket')
+    alert('当前浏览器 Not support websocket');
 }
 
 //连接发生错误的回调方法
@@ -42,6 +42,7 @@ websocket.onmessage = function (event) {
         websocket.send('{"deviceId":'+deviceId+'}');
     }
     var message =JSON.parse(event.data);
+    window.alert(message);
     for(var j=0; j<message.data.length; j++){
         var a=message.data[j].ts;
         var a1=timestampToTime(a);
