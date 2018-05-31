@@ -18,7 +18,7 @@ function getdata() {
     myXmlHttpRequest = getXmlHttpObject();
     if (myXmlHttpRequest) {
         //var url = "toajax?username=" + document.getElementById("username").value;
-        var url = "/api/device/alldevices?limit=20";//http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
+        var url = "/api/device/alldevices?limit=20";// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
         //myXmlHttpRequest.open("get",url,true);
         myXmlHttpRequest.open("get", url, true);//url="http://10.108.218.64:8090/api/analysis/device"
         myXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

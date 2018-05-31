@@ -2,7 +2,7 @@ function timestampToTime(timestamp) {
     var date = new Date(timestamp);
     Y = date.getFullYear() + '-';
     M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-    D = date.getDate() + ' ';
+    D = (date.getDate()+1 < 10 ? '0'+(date.getDate()) : date.getDate()) + ' ';
     h = date.getHours() + ':';
     m = date.getMinutes() + ':';
     s = date.getSeconds();
@@ -303,11 +303,27 @@ function starttoend(dateId) {
         splitNum = document.getElementById(dateId).value;
     }
 }
+myXmlHttpRequest = getXmlHttpObject();
+var tenantId;
+if(myXmlHttpRequest){
+    var url = "/api/rule/tenant";
+    myXmlHttpRequest.open("get",url,true);
+    myXmlHttpRequest.onreadystatechange = proce;
+    myXmlHttpRequest.send(null);
+}
+function  proce() {
+    if(myXmlHttpRequest.readyState == 4){
+
+        var tenantIdj = myXmlHttpRequest.responseText;
+        var tenantIde = JSON.parse(tenantIdj);
+        //var tenantIde = eval("("+tenantId+")");
+        tenantId = tenantIde.tenantId;
+    }
+}
 function showData() {
 
     if((inputStartDate != "") && (inputEndDate != "")){
         window.alert("数据分析中···，请耐心等待");
-        myXmlHttpRequest = getXmlHttpObject();
         if(myXmlHttpRequest){
             //var url = "toajax?username=" + document.getElementById("username").value;
             var url = "http://39.104.186.210:8090/api/analysis/data";//url="http://39.104.186.210:8090/api/analysis/data";getselectdata
@@ -315,7 +331,7 @@ function showData() {
             var startTimeChuo = startTime.getTime();
             var endTime = new Date(inputEndDate);
             var endTimeChuo = endTime.getTime();
-            var data = "tenantId=1"+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum;
+            var data = "tenantId="+tenantId+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum;
             //myXmlHttpRequest.open("get",url,true);
             myXmlHttpRequest.open("post",url,true);
             myXmlHttpRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -341,7 +357,8 @@ function showData() {
                 var mes1 = JSON.parse(mes);
                 meso = eval("("+mes1+")");
                 for (var item in meso.data[0]){
-                    xAxisData.push(timestampToTime(item));
+                    var item1 = parseInt(item);
+                    xAxisData.push(timestampToTime(item1));
                     data1.push(meso.data[0][item]);
                 }
                 for (var item in meso.data[2]){
