@@ -61,7 +61,9 @@ public class DataController extends DefaultThingsboardAwaredController{
                                     @RequestParam String key,
                                     @RequestParam String startTs,
                                     @RequestParam String endTs,
-                                    @RequestParam int limit)
+                                    @RequestParam int interval,
+                                    @RequestParam int limit,
+                                    @RequestParam String aggregation)
     {
         /*String responseKeyContent=getKeyData(deviceId);
         responseKeyContent=responseKeyContent.replaceAll("[\\[\\]]","");
@@ -71,7 +73,9 @@ public class DataController extends DefaultThingsboardAwaredController{
                 + "?key=" + key
                 + "&startTs="+ startTs
                 + "&endTs="+ endTs
-                + "&limit=" + limit;
+                + "&interval="+ interval
+                + "&limit=" + limit
+                + "&aggregation="+ aggregation;
 
         String responseHistoricalDataContent = null ;
         try {
