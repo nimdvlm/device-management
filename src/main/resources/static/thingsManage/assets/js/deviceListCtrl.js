@@ -621,6 +621,8 @@ $scope.searchDevice = function () {
     var num;//页数
     var size;//每页显示的数据个数，如果不设置，则最后一页少于pageSize后,再往前翻就只显示最后一页的数据个数
 $scope.showDetail = function () {
+    $("#historyEcharts").removeAttr("_echarts_instance_");//echarts表格重新加载前清除之前的init
+    $("#historyEcharts").empty();//清空历史数据表
     $("#startTime").val("");//清空起始时间
     $("#endTime").val("");//清空终止时间
     $("#searchKey").val("");//清空搜索框
@@ -671,8 +673,8 @@ $scope.showDetail = function () {
     /*==========显示属性==========*/
     //分页功能实现
     function initUI(pageNo, pageSize) {
-        console.log(pageNo);
-        console.log(pageSize);
+        // console.log(pageNo);
+        // console.log(pageSize);
         //pageNo 当前页号
         //pageSize 页面展示数据个数
         var html = '';
@@ -746,14 +748,15 @@ $scope.showDetail = function () {
     /*显示历史数据*/
     //获取起止时间
     $scope.subTime = function () {
-
+        $("#historyEcharts").empty();//清空历史数据表
+        $("#historyEcharts").removeAttr("_echarts_instance_");//echarts表格重新加载前清除之前的init
         if($("#startTime").val()==="" || $("#endTime").val()===""){
             toastr.warning("起始时间无效！");
         }else{
             var start = $("#startTime").val();
             var end = $("#endTime").val();
-            var startStamp = new Date(start).getTime()/1000;
-            var endStamp = new Date(end).getTime()/1000;
+            var startStamp = new Date(start).getTime();
+            var endStamp = new Date(end).getTime();
             if(startStamp > endStamp){
                 toastr.warning("起始时间无效！");
             }else{
@@ -761,22 +764,104 @@ $scope.showDetail = function () {
                 console.log(startStamp);
                 console.log(end);
                 console.log(endStamp);
+
+                var allKey;
+                // console.log(allKey);
+                $.ajax({
+                    url:"/api/data/allKeys/"+$scope.deviceInfo.id,
+                    type:"GET",
+                    dataType:"json",
+                    async:false,
+                    success:function (msg) {
+                        allKey = msg;//用于记录所有键值
+                        console.log(allKey);
+                    },
+                    error:function (err) {
+                        console.log(err);
+                    }
+                });
+                // console.log(allKey);
+                // console.log(allKey.length);
+                /*
+                historyValue[i][] --- allKey[i]
+                historyTime是相同的
+                */
+                var historyValue = new Array();
+                var historyTime = new Array();
+                for(var i = 0;i < allKey.length;i++){
+                    historyValue[i] = new Array();
+
+                    // console.log("/api/data/getHistoricalData/"+$scope.deviceInfo.id+"?key="+allKey[i]+"&startTs="+startStamp+"&endTs="+endStamp+"&limit=1000");
+                    $.ajax({
+                        url:"/api/data/getHistoricalData/"+$scope.deviceInfo.id+"?key="+allKey[i]+"&startTs="+startStamp+"&endTs="+endStamp+"&limit=1000",
+                        dataType:"json",
+                        async:false,
+                        type:"GET",
+                        success:function (msg) {
+                            // console.log(msg);
+                            //数据反向存储
+                            for(var j =0,k=msg.length-1;j<msg.length,k>=0;j++,k--){
+                                historyValue[i][j] = msg[k].value;
+                                historyTime[j] = formatDate(new Date(msg[k].ts));
+                            }
+                            console.log(historyValue[i]);
+                            console.log(historyTime);
+                        },
+                        error:function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
             }
+
+
+            /*series动态push*/
+            var seriesArr = [];
+            for(var i = 0;i<allKey.length;i++ ){
+                seriesArr.push({
+                    name:allKey[i],
+                    type:'line',
+                    data:historyValue[i]
+                });
+            }
+
+            var myChart = echarts.init(document.getElementById('historyEcharts'));
+            var option = {
+                title: {
+                    text: '历史数据'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:allKey,
+                    right:20,
+                    padding:10,
+                    itemGap :20,
+
+                },
+                grid: {
+                    left: '5%',
+                    right: '5%',
+                    bottom: '5%',
+                    containLabel: true,
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: historyTime,
+                },
+                yAxis: {
+                    type: 'value',
+                },
+                series: seriesArr
+
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+
         }
-        /*var allKeyObj =  $resource("/api/data/allKeys/:deviceId");
-        var allKey = allKeyObj.query({deviceId:$scope.deviceInfo.id});*/
-        $.ajax({
-            url:"/api/data/allKeys/"+$scope.deviceInfo.id,
-            contentType: "application/json; charset=utf-8",//post请求必须
-            dataType:"text",
-            type:"GET",
-            success:function(msg){
-               console.log(msg);
-            },
-            error:function (err) {
-                console.log(err);
-            }
-        });
 
 
     };
@@ -806,13 +891,13 @@ $scope.showDetail = function () {
 
             //每个小控制面板的id为ctrlDiv{{i}}
             $('#control_panel').append('<div class="col-xs-10 col-sm-6 col-md-4 service-panel"><form><fieldset id="ctrlDiv' + i + '"><legend class="service-control-legend">' + serviceName[i] + '</legend></fieldset></form></div>');
-            console.log("serviceName:"+serviceName[i]);
+            // console.log("serviceName:"+serviceName[i]);
             var params = abilityDesJson.serviceBody.params;//用于记录每一个小控制面板下有多少个控制选项,随i的取值变化而变化
-            console.log("params"+params);
-            console.log("params.length"+params.length);
+            // console.log("params"+params);
+            // console.log("params.length"+params.length);
             for(var j = 0;j < params.length;j++){
-                console.log(params[j]);
-                console.log(params[j].value);
+                // console.log(params[j]);
+                // console.log(params[j].value);
 
                 var type = params[j].type;//控制类型
                 var key = params[j].key;//控制名称
@@ -861,8 +946,8 @@ $scope.showDetail = function () {
                     var upperBound = temp[1];
                    /* var lowerBound = 10;
                     var upperBound = 20;*/
-                    console.log(lowerBound);
-                    console.log(upperBound);
+                    // console.log(lowerBound);
+                    // console.log(upperBound);
                     //html5标签 <input type="number" min="" max="" step="" value=""/>
                     $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="number" class="form-control" id="param'+ i + j +'" name="rangeInput" min="' + lowerBound + '" max="' + upperBound + '" value="' + lowerBound +'" step="1"/><span>(' + lowerBound + '-' + upperBound + ')</span></div></div>');
                     console.log("number:"+$("#param"+i+j).val());
@@ -890,8 +975,8 @@ $scope.showDetail = function () {
                 keyArr[i] = new Array();
 
                 for(var j = 0;j<params.length;j++){
-                    console.log(params[j].key);
-                    console.log(params[j].type);
+                    // console.log(params[j].key);
+                    // console.log(params[j].type);
 
                     if(params[j].type == 2){
 
@@ -906,10 +991,10 @@ $scope.showDetail = function () {
                         valueArr[i][j] = $("#param"+i+j).val();
                     }
                     keyArr[i][j] = params[j].key;
-                    console.log("=========="+i+j+"=============");
-                    console.log("valueInfo:"+ valueArr[i][j]);
-                    console.log("key:"+ keyArr[i][j]);
-                    console.log("==========="+i+j+"============");
+                    // console.log("=========="+i+j+"=============");
+                    // console.log("valueInfo:"+ valueArr[i][j]);
+                    // console.log("key:"+ keyArr[i][j]);
+                    // console.log("==========="+i+j+"============");
 
                 }
                 // console.log(abilityDesArr[i].serviceBody.params.length);
@@ -918,8 +1003,8 @@ $scope.showDetail = function () {
 
             console.log(this.id);
             var index = this.id;
-            console.log(serviceName[index]);
-            console.log(methodName[index]);
+            // console.log(serviceName[index]);
+            // console.log(methodName[index]);
             // var jsonObj = {};
             var keys = [];
             var values = [];
@@ -940,8 +1025,8 @@ $scope.showDetail = function () {
 
                 keys.push(keyArr[index][i]);
                 values.push(valueArr[index][i]);
-                console.log("value"+index+i+":"+valueArr[index][i]);
-                console.log("key"+index+i+":"+keyArr[index][i]);
+                // console.log("value"+index+i+":"+valueArr[index][i]);
+                // console.log("key"+index+i+":"+keyArr[index][i]);
                 var json = '{';
                 for (var j = 0; j < keys.length; j++) {
                     json += '"' + keys[j] +'":"' + values[j] + '",';
