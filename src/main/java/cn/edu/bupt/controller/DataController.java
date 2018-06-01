@@ -61,7 +61,8 @@ public class DataController extends DefaultThingsboardAwaredController{
                                     @RequestParam String key,
                                     @RequestParam String startTs,
                                     @RequestParam String endTs,
-                                    @RequestParam int limit)
+                                    @RequestParam int limit
+    )
     {
         /*String responseKeyContent=getKeyData(deviceId);
         responseKeyContent=responseKeyContent.replaceAll("[\\[\\]]","");
@@ -71,7 +72,9 @@ public class DataController extends DefaultThingsboardAwaredController{
                 + "?key=" + key
                 + "&startTs="+ startTs
                 + "&endTs="+ endTs
-                + "&limit=" + limit;
+                + "&interval="+ (Long.parseLong(endTs)-Long.parseLong(startTs))/limit
+                + "&limit=" + limit
+                + "&aggregation=AVG";
 
         String responseHistoricalDataContent = null ;
         try {
@@ -84,7 +87,6 @@ public class DataController extends DefaultThingsboardAwaredController{
 
         return retSuccess(responseHistoricalDataContent);
     }
-
 
     //获取所有遥测数据的key
     @RequestMapping(value="/allKeys/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
