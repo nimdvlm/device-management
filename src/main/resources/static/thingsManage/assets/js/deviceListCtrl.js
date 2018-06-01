@@ -800,10 +800,14 @@ $scope.showDetail = function () {
                         type:"GET",
                         success:function (msg) {
                             console.log(msg);
-                            //数据反向存储
-                            for(var j =0,k=msg.length-1;j<msg.length,k>=0;j++,k--){
+                            /* //数据反向存储
+                           for(var j =0,k=msg.length-1;j<msg.length,k>=0;j++,k--){
                                 historyValue[i][j] = msg[k].value;
                                 historyTime[j] = formatDate(new Date(msg[k].ts));
+                            }*/
+                            for(var j =0;j<msg.length;j++){
+                                historyValue[i][j] = msg[j].value;
+                                historyTime[j] = formatDate(new Date(msg[j].ts));
                             }
                             console.log(historyValue[i]);
                             console.log(historyTime);
@@ -1060,7 +1064,7 @@ $scope.showDetail = function () {
 
 
 /*设备事件*/
-$("#modalCloseEven,closeEvent").click(function () {
+$("#modalCloseEvent,#closeEvent").click(function () {
     $("#eventStartTime").val("");//清空起始时间
     $("#eventEndTime").val("");//清空终止时间
 });
@@ -1089,13 +1093,13 @@ $scope.subEventTime = function () {
                 contentType: "application/json; charset=utf-8",
                 success:function (msg) {
                     console.log(msg);
+                    $scope.eventInfo = msg;
                 },
                 error:function (err) {
                     console.log(err);
-
                 }
-
-            })
+            });
+            console.log($scope.eventInfo);
         }
     }
 };
