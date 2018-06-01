@@ -1067,6 +1067,7 @@ $scope.showDetail = function () {
 $("#modalCloseEvent,#closeEvent").click(function () {
     $("#eventStartTime").val("");//清空起始时间
     $("#eventEndTime").val("");//清空终止时间
+    $("#showEventTable tbody").empty();
 });
 $scope.subEventTime = function () {
     console.log($scope.deviceInfo.id);
