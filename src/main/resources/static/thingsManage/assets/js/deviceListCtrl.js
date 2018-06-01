@@ -1060,7 +1060,7 @@ $scope.showDetail = function () {
 
 
 /*设备事件*/
-$("#modalCloseEven,#modalConfirmEvent,closeEvent").click(function () {
+$("#modalCloseEven,closeEvent").click(function () {
     $("#eventStartTime").val("");//清空起始时间
     $("#eventEndTime").val("");//清空终止时间
 });
