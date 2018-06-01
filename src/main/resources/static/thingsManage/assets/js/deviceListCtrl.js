@@ -798,7 +798,7 @@ $scope.showDetail = function () {
                         async:false,
                         type:"GET",
                         success:function (msg) {
-                            // console.log(msg);
+                            console.log(msg);
                             //数据反向存储
                             for(var j =0,k=msg.length-1;j<msg.length,k>=0;j++,k--){
                                 historyValue[i][j] = msg[k].value;
