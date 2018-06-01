@@ -38,8 +38,9 @@ public class EventController extends DefaultThingsboardAwaredController {
         try {
             JsonObject j = (JsonObject)new JsonParser().parse(responseContent);
             String a = j.getAsJsonArray("data").toString();
-            a = a.replace("\"\\{","\\{");
-            a = a.replace("\\}\"","\\}");
+            a = a.replaceAll("\"\\{","\\{");
+            a = a.replaceAll("\\}\"","\\}");
+            a = a.replaceAll("\\\\","");
             return retSuccess(a);
         } catch (Exception e) {
             return retFail(e.toString());
