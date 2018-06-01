@@ -460,11 +460,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeEvent">&times;</button>
                     <h4 class="modal-title" style="font-weight: bold;">设备事件</h4>
                 </div>
                 <div class="modal-body" id="eventTable">
+                    <label>起始时间：</label>
+                    <input type="datetime-local" id="eventStartTime"/>
 
+                    <label>终止时间：</label>
+                    <input type="datetime-local" id="eventEndTime"/>
+
+                    <i class="fa fa-search" id="showEvent" ng-click="subEventTime()"></i>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseEvent">关闭</button>

@@ -231,7 +231,7 @@ DEVICELIST STYLES
 .service-panel legend{
     text-align: center;
 }
-#showHistory{
+#showHistory,#showEvent{
     font-size:20px;
     margin-left:10px;
     cursor:pointer;
