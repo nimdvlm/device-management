@@ -1,458 +1,473 @@
 ﻿<div ng-controller="RuleCtrl">
-    <!--左侧视图-->
-    <div class="LeftView">
-        <div class="DGTitle">
-            <span style="font-size:30px">规则管理</span>
-            <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
-                    data-target="#addRule">+ 创建规则
-            </button>
-            <div class="SearchDG">
-                <span>搜索：<input type="text" style="width: 130px" placeholder="请输入规则id"
-                                ng-model="$parent.ruleid"/></span>
-                <span class="Searchicon" ng-click="searchRule()" title="搜索">
-                    <i class="fa fa-search fa-lg shand" aria-hidden="true"></i>
-                </span>
-            </div>
-
-        </div>
-        <div class="DGContainer" style="margin-left: -15px">
-            <div ng-repeat="rule in Rules" ng-show="showAllRule" class="chooseBtn RuleBtn" ng-click="showrule(rule)" ng-style="rule.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
-                    <div>
-                        <i class="fa fa-puzzle-piece fa-2x "></i>
-                        <p>{{rule.rule.name}}</p>
-                    </div>
-            </div>
-
-            <!--搜索展示视图-->
-            <div ng-show="showInfoRule">
-                <div class="chooseBtn RuleBtn" ng-click="showrule(searchresult)">
-                    <div>
-                        <i class="fa fa-puzzle-piece fa-2x "></i>
-                        <p>{{searchresult.rule.name}}</p>
+    <div class="DG_Main_View">
+        <!--右侧视图-->
+        <div class="RightView">
+            <div class="DGAssignContainer">
+                <div class="DGTitle DGminTitle">
+                    <span class="RightviewTitle">规则信息</span>
+                    <div class="ruleiconcontainer">
+                        <i class="fa fa-power-off fa-lg ruleicon shand" ng-show="Rulestart" title="激活规则"
+                           data-toggle="modal" data-target="#startRule"></i>
+                        <i class="fa fa-ban fa-lg ruleicon shand" ng-show="Rulestop" title="暂停规则"
+                           data-toggle="modal" data-target="#stopRule"></i>
+                        <i class="fa fa-trash-o fa-lg ruleicon shand" title="删除此规则"
+                           data-toggle="modal" data-target="#delRule"></i>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!--modal创建规则-->
-        <div class="modal fade" id="addRule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title">
-                            添加规则
-                        </h4>
-                    </div>
-                    <div class="modal-body" style="height: 450px;overflow: auto"><!--解决嵌套模态框滚动条bug-->
-                        <form>
-                            <!--添加规则组基本信息-->
-                            <p><span class="StarMark">*</span>规则名称：<input type="text" name="rulename" ng-model="formData.rule.name"
-                                           placeholder="请输入规则组名称">
-                                <span class="alertempty" id="rulenamealert">请输入规则名称</span>
-                            </p>
-                            <p><span style="vertical-align:top;margin-left: 10px">描&emsp;&emsp;述：</span><textarea name="additional_info"
-                                                                                                ng-model="formData.rule.additional_info"
-                                                                                                placeholder="请添加对规则的描述..."
-                                                                                                style="height:120px;width: 450px;"></textarea>
-                            </p>
-                            <hr/>
-
-                            <!--添加过滤器-->
-                            <h4>添加过滤器</h4>
-                            <!--添加过滤器modal后显示-->
-                            <table class="table table-bordered table-hover addfiltertab" ng-show="showaddFilter">
-                                <thead><!--bootstrap的table样式，简单快捷-->
-                                <tr>
-                                    <th>过滤器名称</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="filter in formData.filters">
-                                    <td>{{filter.name}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#addruleFilter">+ 添加过滤器
-                            </button>
-                            <hr/>
-
-                            <!--添加插件-->
-                            <h4>添加插件</h4>
-                            <!--添加插件后显示-->
-                            <table ng-show="showaddTransform" class="table table-bordered table-hover addfiltertab">
-                                <tbody>
-                                <tr>
-                                    <th style="width: 100px;text-align: center">插件名称</th>
-                                    <td>{{formData.transform.name}}</td>
-                                </tr>
-                                <!--判断插件是邮件的情况下显示-->
-                                <tr ng-show="showsendmail" ng-repeat="mailto in fchat.replies">
-                                    <th style="text-align: center">收件人{{$index+1}}</th>
-                                    <td>{{mailto.value}}</td>
-                                </tr>
-                                <tr ng-show="showsendmail">
-                                    <th style="text-align: center">邮件标题</th>
-                                    <td>{{formData.transform.requestBody.subject}}</td>
-                                </tr>
-                                <tr ng-show="showsendmail">
-                                    <th style="text-align: center">邮件内容</th>
-                                    <td>{{formData.transform.requestBody.text}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#addruleTransform" ng-click="getAllplugin()">+ 添加插件
-                            </button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearForm()">关闭
-                        </button>
-                        <button type="button" class="btn btn-primary" ng-click="createRule()">
-                            确定
-                        </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-
-        <!--model创建规则-添加过滤器-->
-        <div class="modal fade" id="addruleFilter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title">
-                            添加过滤器
-                        </h4>
-                    </div>
-
-                    <div class="modal-body">
-                        <form name="addfilter">
-                            <p><span class="StarMark">*</span>过滤器名称：<input type="text" name="addname" id="addfiltername"
-                                            placeholder="请输入过滤器名称" required/>
-                                <span class="alertempty" id="filternamealert">请输入过滤器名称</span>
-                            </p>
-                            <p style="margin-left: 10px">过滤器类型：<input type="text" name="addtype" disabled="disabled" id="addfiltertype"
-                                            placeholder="待定"/>
-                            </p>
-                            <p style="margin-left: 10px;vertical-align:top;">JS&emsp;代&emsp;码：<textarea name="addjscode" id="addfilterjs"
-                                                          style="height:150px;width: 470px"/>
-                            </p>
-                            <input type="reset" style="display:none;"/>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearFilterPlugin()">关闭
-                        </button>
-                        <button type="button" class="btn btn-primary" ng-click="subFilter()">
-                            确定
-                        </button>
-                    </div>
-
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-
-        <!--model创建规则-添加插件-->
-        <div class="modal fade" id="addruleTransform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title">
-                            添加插件
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <form name="addplugin">
-                            <p>名&emsp;&emsp;称：<select ng-model="RuleaddPlugin" ng-change="change(RuleaddPlugin)" id="addpluginselect"
-                                                      ng-options="x.name for x in Plugin">
-                                <option value="" disabled>--请选择插件--</option>
-                            </select>
-                            </p>
-                            <p>跳转地址：{{RuleaddPlugin.url}}</p>
-                            <p>描&emsp;&emsp;述：{{RuleaddPlugin.describe}}</p>
-                            <p ng-show="showsendmail">请求方式：<input type="text" name="method" disabled="disabled"
-                                                                  id="pluginmethodMail"
-                                                                  value="POST"/>
-                            </p>
-                            <p ng-show="showrestful">请求方式：<select id="pluginmethodRest" ng-model="RuleaddPlugin.method"
-                                                                  ng-options="x for x in RESTMethod"
-                                                                  ng-change="changemethod(RuleaddPlugin.method)">
-                                <option value="" disabled>--请选择请求方式--</option>
-                            </select>
-                            </p>
-                            <p ng-show="showrestful">请求地址：<input type="text" ng-model="RestfulBody.url"
-                                                                 style="width: 75%;"/></p>
-                            <p ng-show="showrestfulPOST"><span style="vertical-align:top">Requestbody：</span><textarea style="height:120px;width: 70%;" ng-model="RestfulBody.body"></textarea>
-                            </p>
-
-                            <!--判断是sendmail后显示-->
-                            <div ng-show="showsendmail">
-                                <div>
-                                    <hr/>
-                                    <!--添加多个收件人-->
-                                    <div ng-repeat="reply in fchat.replies">
-                                        <p>
-                                            收件人{{$index + 1}}&ensp;：<input type="text" ng-model="reply.value"
-                                                                           id="reply{{$index + 1}}"
-                                                                           name="reply{{$index + 1}}"
-                                                                           placeholder="请输入收件人"/>
-                                            <a href="" ng-click="fchat.incrReply($index)">
-                                                <i class="fa fa-plus"></i>
-                                            </a>
-                                            <a href="" ng-click="fchat.decrReply($index)"
-                                               ng-show="fchat.canDescReply">
-                                                <i class="fa fa-minus"></i>
-                                            </a>
-                                            <i class="fa fa-minus" ng-show="!fchat.canDescReply"/></a>
-                                        </p>
-                                    </div>
-                                    <!--添加多个收件人End-->
-                                    <p>邮件主题：<input type="text" name="mailtitle" id="addTranMailSub"
-                                                   placeholder="请输入邮件主题">
-                                    </p>
-                                    <p>邮件内容：<input type="text" name="mailcontext" id="addTranMailText"
-                                                   style="height:100px;width: 450px"/>
-                                    </p>
-                                    <input type="reset" style="display:none;"/>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearFilterPlugin()">关闭
-                        </button>
-                        <button type="button" class="btn btn-primary" ng-click="subTransform()" data-dismiss="modal">
-                            确定
-                        </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-    </div>
-    <!--右侧视图-->
-    <div class="RightView">
-        <div class="DGAssignContainer">
-            <div class="DGTitle DGminTitle">
-                <span class="RightviewTitle">规则信息</span>
-                <div class="ruleiconcontainer">
-                    <i class="fa fa-power-off fa-lg ruleicon shand" ng-show="Rulestart" title="激活规则"
-                       data-toggle="modal" data-target="#startRule"></i>
-                    <i class="fa fa-ban fa-lg ruleicon shand" ng-show="Rulestop" title="暂停规则"
-                       data-toggle="modal" data-target="#stopRule"></i>
-                    <i class="fa fa-trash-o fa-lg ruleicon shand" title="删除此规则"
-                       data-toggle="modal" data-target="#delRule"></i>
-                </div>
-            </div>
-            <div class="item">
-                <p>规则名称：{{Ruleitem.rule.name}}<!--规则名称修改按钮
+                <div class="item">
+                    <p>规则名称：{{Ruleitem.rule.name}}<!--规则名称修改按钮
                     <i class="fa fa-pencil-square-o iedit shand" data-toggle="modal"
                        data-target="#editRuleName"></i>
                     </p.time}}  无此接口--></p>
-                <p>规则ID：{{Ruleitem.rule.ruleId}}</p>
-                <p>状态：<span ng-class="{true:'stateActive',false:'stateNActive'}[isActive]">
+                    <p>规则ID：{{Ruleitem.rule.ruleId}}</p>
+                    <p>状态：<span ng-class="{true:'stateActive',false:'stateNActive'}[isActive]">
 
                     <i ng-class="{true:'fa fa-refresh fa-spin',false:'fa fa-refresh'}[isActive]"></i>
                     {{Ruleitem.rule.state}}
                 </span></p>
-                <p>规则描述：{{Ruleitem.rule.additional_info}}
-                    <!--规则描述修改按钮
-                    <i class="fa fa-pencil-square-o iedit shand" data-toggle="modal"
-                       data-target="#editRuleDes"></i>
-                    </p.time}}   无此接口-->
-                </p>
-                <!--显示信息待完善-->
+                    <p>规则描述：{{Ruleitem.rule.additional_info}}
+                        <!--规则描述修改按钮
+                        <i class="fa fa-pencil-square-o iedit shand" data-toggle="modal"
+                           data-target="#editRuleDes"></i>
+                        </p.time}}   无此接口-->
+                    </p>
+                    <!--显示信息待完善-->
+                </div>
             </div>
-        </div>
-        <div class="DGAssignContainer">
-            <!--filter显示表格-->
-            <div class="DGTitle DGminTitle">
-                <p class="RightviewTitle">规则详情</p>
-            </div>
-            <div class="item" ng-controller="RulefilterCtrl">
-                <div class="gridStyle RulegridStyle" ui-grid="gridOptions" style="height: 130px"></div>
-            </div>
-            <!--plugin展示折叠效果-->
-            <div class="item">
-                <div class="panel-group" id="showplugin">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">{{Ruleitem.transform.name}}插件
-                                <i data-toggle="collapse" data-parent="#showplugin" class="shand fa fa-angle-up"
-                                   data-target="#showpluginitem" style="float: right"></i>
-                            </h3>
-                        </div>
-                        <div id="showpluginitem" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <p>跳转地址：{{Ruleitem.transform.url}}</p>
-                                <div ng-show="!showPluginMail">
-                                    <p>Method：{{Ruleitem.transform.requestBody.method}}</p>
-                                    <p>请求地址：{{Ruleitem.transform.requestBody.url}}</p>
-                                </div>
-                                <div ng-show="showPluginMail">
-                                    <p>收件人：{{Ruleitem.transform.requestBody.to}}</p>
-                                    <p>事务：{{Ruleitem.transform.requestBody.subject}}</p>
-                                    <p>内容：{{Ruleitem.transform.requestBody.text}}</p>
+            <div class="DGAssignContainer">
+                <!--filter显示表格-->
+                <div class="DGTitle DGminTitle">
+                    <p class="RightviewTitle">规则详情</p>
+                </div>
+                <div class="item" ng-controller="RulefilterCtrl">
+                    <div class="gridStyle RulegridStyle" ui-grid="gridOptions" style="height: 130px"></div>
+                </div>
+                <!--plugin展示折叠效果-->
+                <div class="item">
+                    <div class="panel-group" id="showplugin">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{Ruleitem.transform.name}}插件
+                                    <i data-toggle="collapse" data-parent="#showplugin" class="shand fa fa-angle-up"
+                                       data-target="#showpluginitem" style="float: right"></i>
+                                </h3>
+                            </div>
+                            <div id="showpluginitem" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <p>跳转地址：{{Ruleitem.transform.url}}</p>
+                                    <div ng-show="!showPluginMail">
+                                        <p>Method：{{Ruleitem.transform.requestBody.method}}</p>
+                                        <p>请求地址：{{Ruleitem.transform.requestBody.url}}</p>
+                                    </div>
+                                    <div ng-show="showPluginMail">
+                                        <p>收件人：{{Ruleitem.transform.requestBody.to}}</p>
+                                        <p>事务：{{Ruleitem.transform.requestBody.subject}}</p>
+                                        <p>内容：{{Ruleitem.transform.requestBody.text}}</p>
+                                    </div>
                                 </div>
                             </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--modal编辑规则名称-->
+            <!--div class="modal fade" id="editRuleName" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                编辑规则名称
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>规则名：<input type="text" placeholder="{{Ruleitem.name}}"
+                                          ng-model="$parent.editrulename"></input>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" ng-click="editRuleName()">
+                                确定
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div-->
+
+            <!--modal编辑规则描述-->
+            <!--div class="modal fade" id="editRuleDes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                编辑规则描述
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>规则名称：System Telemetry Rule</p>
+                            <p>规则描述：<input type="text" name="NewDGName" id="RuleModalInput"></input>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary">
+                                确定
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div-->
+
+            <!--modal删除规则-->
+            <div class="modal fade" id="delRule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                删除规则
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            确定删除此规则？
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" ng-click="delRule()">
+                                确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+            <!--modal运行-激活规则-->
+            <div class="modal fade" id="startRule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                激活规则
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            确定激活此规则？
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" ng-click="startRule()">
+                                确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+            <!--modal运行-暂停规则-->
+            <div class="modal fade" id="stopRule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                暂停规则
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            确定停止运行此规则？
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" ng-click="stopRule()">
+                                确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+        </div>
+        <!--左侧视图-->
+        <div class="LeftView">
+            <div class="DGTitle">
+                <span style="font-size:30px">规则管理</span>
+                <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#addRule">+ 创建规则
+                </button>
+                <div class="SearchDG">
+                <span>搜索：<input type="text" style="width: 130px" placeholder="请输入规则id"
+                                ng-model="$parent.ruleid"/></span>
+                    <span class="Searchicon" ng-click="searchRule()" title="搜索">
+                    <i class="fa fa-search fa-lg shand" aria-hidden="true"></i>
+                </span>
+                </div>
+
+            </div>
+            <div class="DGContainer" style="margin-left: -15px">
+                <div ng-repeat="rule in Rules" ng-show="showAllRule" class="chooseBtn RuleBtn" ng-click="showrule(rule)"
+                     ng-style="rule.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                    <div>
+                        <i class="fa fa-puzzle-piece fa-2x "></i>
+                        <p>{{rule.rule.name}}</p>
+                    </div>
+                </div>
+
+                <!--搜索展示视图-->
+                <div ng-show="showInfoRule">
+                    <div class="chooseBtn RuleBtn" ng-click="showrule(searchresult)">
+                        <div>
+                            <i class="fa fa-puzzle-piece fa-2x "></i>
+                            <p>{{searchresult.rule.name}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--modal创建规则-->
+            <div class="modal fade" id="addRule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                添加规则
+                            </h4>
+                        </div>
+                        <div class="modal-body" style="height: 450px;overflow: auto"><!--解决嵌套模态框滚动条bug-->
+                            <form>
+                                <!--添加规则组基本信息-->
+                                <p><span class="StarMark">*</span>规则名称：<input type="text" name="rulename"
+                                                                              ng-model="formData.rule.name"
+                                                                              placeholder="请输入规则组名称">
+                                    <span class="alertempty" id="rulenamealert">请输入规则名称</span>
+                                </p>
+                                <p><span style="vertical-align:top;margin-left: 10px">描&emsp;&emsp;述：</span><textarea
+                                        name="additional_info"
+                                        ng-model="formData.rule.additional_info"
+                                        placeholder="请添加对规则的描述..."
+                                        style="height:120px;width: 450px;"></textarea>
+                                </p>
+                                <hr/>
+
+                                <!--添加过滤器-->
+                                <h4>添加过滤器</h4>
+                                <!--添加过滤器modal后显示-->
+                                <table class="table table-bordered table-hover addfiltertab" ng-show="showaddFilter">
+                                    <thead><!--bootstrap的table样式，简单快捷-->
+                                    <tr>
+                                        <th>过滤器名称</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="filter in formData.filters">
+                                        <td>{{filter.name}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#addruleFilter">+ 添加过滤器
+                                </button>
+                                <hr/>
+
+                                <!--添加插件-->
+                                <h4>添加插件</h4>
+                                <!--添加插件后显示-->
+                                <table ng-show="showaddTransform" class="table table-bordered table-hover addfiltertab">
+                                    <tbody>
+                                    <tr>
+                                        <th style="width: 100px;text-align: center">插件名称</th>
+                                        <td>{{formData.transform.name}}</td>
+                                    </tr>
+                                    <!--判断插件是邮件的情况下显示-->
+                                    <tr ng-show="showsendmail" ng-repeat="mailto in fchat.replies">
+                                        <th style="text-align: center">收件人{{$index+1}}</th>
+                                        <td>{{mailto.value}}</td>
+                                    </tr>
+                                    <tr ng-show="showsendmail">
+                                        <th style="text-align: center">邮件标题</th>
+                                        <td>{{formData.transform.requestBody.subject}}</td>
+                                    </tr>
+                                    <tr ng-show="showsendmail">
+                                        <th style="text-align: center">邮件内容</th>
+                                        <td>{{formData.transform.requestBody.text}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#addruleTransform" ng-click="getAllplugin()">+ 添加插件
+                                </button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearForm()">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" ng-click="createRule()">
+                                确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+            <!--model创建规则-添加过滤器-->
+            <div class="modal fade" id="addruleFilter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                添加过滤器
+                            </h4>
                         </div>
 
-                    </div>
-                </div>
+                        <div class="modal-body">
+                            <form name="addfilter">
+                                <p><span class="StarMark">*</span>过滤器名称：<input type="text" name="addname"
+                                                                               id="addfiltername"
+                                                                               placeholder="请输入过滤器名称" required/>
+                                    <span class="alertempty" id="filternamealert">请输入过滤器名称</span>
+                                </p>
+                                <p style="margin-left: 10px">过滤器类型：<input type="text" name="addtype" disabled="disabled"
+                                                                          id="addfiltertype"
+                                                                          placeholder="待定"/>
+                                </p>
+                                <p style="margin-left: 10px;vertical-align:top;">JS&emsp;代&emsp;码：<textarea
+                                        name="addjscode" id="addfilterjs"
+                                        style="height:150px;width: 470px"/>
+                                </p>
+                                <input type="reset" style="display:none;"/>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    ng-click="clearFilterPlugin()">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" ng-click="subFilter()">
+                                确定
+                            </button>
+                        </div>
+
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+            <!--model创建规则-添加插件-->
+            <div class="modal fade" id="addruleTransform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                添加插件
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form name="addplugin">
+                                <p>名&emsp;&emsp;称：<select ng-model="RuleaddPlugin" ng-change="change(RuleaddPlugin)"
+                                                          id="addpluginselect"
+                                                          ng-options="x.name for x in Plugin">
+                                    <option value="" disabled>--请选择插件--</option>
+                                </select>
+                                </p>
+                                <p>跳转地址：{{RuleaddPlugin.url}}</p>
+                                <p>描&emsp;&emsp;述：{{RuleaddPlugin.describe}}</p>
+                                <p ng-show="showsendmail">请求方式：<input type="text" name="method" disabled="disabled"
+                                                                      id="pluginmethodMail"
+                                                                      value="POST"/>
+                                </p>
+                                <p ng-show="showrestful">请求方式：<select id="pluginmethodRest"
+                                                                      ng-model="RuleaddPlugin.method"
+                                                                      ng-options="x for x in RESTMethod"
+                                                                      ng-change="changemethod(RuleaddPlugin.method)">
+                                    <option value="" disabled>--请选择请求方式--</option>
+                                </select>
+                                </p>
+                                <p ng-show="showrestful">请求地址：<input type="text" ng-model="RestfulBody.url"
+                                                                     style="width: 75%;"/></p>
+                                <p ng-show="showrestfulPOST"><span
+                                        style="vertical-align:top">Requestbody：</span><textarea
+                                        style="height:120px;width: 70%;" ng-model="RestfulBody.body"></textarea>
+                                </p>
+
+                                <!--判断是sendmail后显示-->
+                                <div ng-show="showsendmail">
+                                    <div>
+                                        <hr/>
+                                        <!--添加多个收件人-->
+                                        <div ng-repeat="reply in fchat.replies">
+                                            <p>
+                                                收件人{{$index + 1}}&ensp;：<input type="text" ng-model="reply.value"
+                                                                               id="reply{{$index + 1}}"
+                                                                               name="reply{{$index + 1}}"
+                                                                               placeholder="请输入收件人"/>
+                                                <a href="" ng-click="fchat.incrReply($index)">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                                <a href="" ng-click="fchat.decrReply($index)"
+                                                   ng-show="fchat.canDescReply">
+                                                    <i class="fa fa-minus"></i>
+                                                </a>
+                                                <i class="fa fa-minus" ng-show="!fchat.canDescReply"/></a>
+                                            </p>
+                                        </div>
+                                        <!--添加多个收件人End-->
+                                        <p>邮件主题：<input type="text" name="mailtitle" id="addTranMailSub"
+                                                       placeholder="请输入邮件主题">
+                                        </p>
+                                        <p>邮件内容：<input type="text" name="mailcontext" id="addTranMailText"
+                                                       style="height:100px;width: 450px"/>
+                                        </p>
+                                        <input type="reset" style="display:none;"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    ng-click="clearFilterPlugin()">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" ng-click="subTransform()"
+                                    data-dismiss="modal">
+                                确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
             </div>
         </div>
-
-        <!--modal编辑规则名称-->
-        <!--div class="modal fade" id="editRuleName" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title">
-                            编辑规则名称
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>规则名：<input type="text" placeholder="{{Ruleitem.name}}"
-                                      ng-model="$parent.editrulename"></input>
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                        </button>
-                        <button type="button" class="btn btn-primary" ng-click="editRuleName()">
-                            确定
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div-->
-
-        <!--modal编辑规则描述-->
-        <!--div class="modal fade" id="editRuleDes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title">
-                            编辑规则描述
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>规则名称：System Telemetry Rule</p>
-                        <p>规则描述：<input type="text" name="NewDGName" id="RuleModalInput"></input>
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                        </button>
-                        <button type="button" class="btn btn-primary">
-                            确定
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div-->
-
-        <!--modal删除规则-->
-        <div class="modal fade" id="delRule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            删除规则
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        确定删除此规则？
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                        </button>
-                        <button type="button" class="btn btn-primary" ng-click="delRule()">
-                            确定
-                        </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-
-        <!--modal运行-激活规则-->
-        <div class="modal fade" id="startRule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            激活规则
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        确定激活此规则？
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                        </button>
-                        <button type="button" class="btn btn-primary" ng-click="startRule()">
-                            确定
-                        </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-
-        <!--modal运行-暂停规则-->
-        <div class="modal fade" id="stopRule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            暂停规则
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        确定停止运行此规则？
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                        </button>
-                        <button type="button" class="btn btn-primary" ng-click="stopRule()">
-                            确定
-                        </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-
     </div>
 </div>
