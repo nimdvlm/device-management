@@ -231,11 +231,15 @@ DEVICELIST STYLES
 .service-panel legend{
     text-align: center;
 }
-#showHistory{
+#showHistory,#showEvent{
     font-size:20px;
     margin-left:10px;
     cursor:pointer;
     color:#305680;
+}
+#showEventTable th,#showEventTable tr{
+    width: 20%;
+    text-align: center;
 }
 
 /* =============================================================

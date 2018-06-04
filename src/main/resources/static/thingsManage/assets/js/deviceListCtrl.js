@@ -775,6 +775,7 @@ $scope.showDetail = function () {
                     success:function (msg) {
                         allKey = msg;//用于记录所有键值
                         console.log(allKey);
+
                     },
                     error:function (err) {
                         console.log(err);
@@ -799,10 +800,14 @@ $scope.showDetail = function () {
                         type:"GET",
                         success:function (msg) {
                             console.log(msg);
-                            //数据反向存储
-                            for(var j =0,k=msg.length-1;j<msg.length,k>=0;j++,k--){
+                            /* //数据反向存储
+                           for(var j =0,k=msg.length-1;j<msg.length,k>=0;j++,k--){
                                 historyValue[i][j] = msg[k].value;
                                 historyTime[j] = formatDate(new Date(msg[k].ts));
+                            }*/
+                            for(var j =0;j<msg.length;j++){
+                                historyValue[i][j] = msg[j].value;
+                                historyTime[j] = formatDate(new Date(msg[j].ts));
                             }
                             console.log(historyValue[i]);
                             console.log(historyTime);
@@ -906,7 +911,7 @@ $scope.showDetail = function () {
 
                 //每个小控制面板下的控制按钮id为parma
                 if(type == 1){
-                    $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="text" class="form-control" id="param'+ i + j +'"  value="' + valueInfo +'"/></div></div>');
+                    $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="text" class="form-control" id="param'+ i + j +'"  placeholder="' + valueInfo +'"/></div></div>');
                 }
                 else if(type == 2){
                     /*函数：split()
@@ -1058,6 +1063,49 @@ $scope.showDetail = function () {
 };
 
 
+/*设备事件*/
+$("#modalCloseEvent,#closeEvent").click(function () {
+    $("#eventStartTime").val("");//清空起始时间
+    $("#eventEndTime").val("");//清空终止时间
+    $("#showEventTable tbody").empty();
+});
+$scope.subEventTime = function () {
+    console.log($scope.deviceInfo.id);
+    if($("#eventStartTime").val()==="" || $("#eventEndTime").val()==="" ){
+        toastr.warning("起始时间无效!");
+    }else{
+        console.log($("#eventStartTime").val());
+        console.log($("#eventEndTime").val());
+        var eventStart = $("#eventStartTime").val();
+        var eventEnd = $("#eventEndTime").val();
+        var eventStartStamp = new Date(eventStart).getTime();
+        var eventEndStamp = new Date(eventEnd).getTime();
+        if(eventStartStamp > eventEndStamp){
+            toastr.warning("起始时间无效!");
+        }else{
+            /*var eventObj = $resource("/api/event/:deviceId?limit=20&startTime=:eventStartTime&endTime=:eventEndTime");
+            $scope.eventInfo = eventObj.query({deviceId:$scope.deviceInfo.id,eventStartTime:eventStartStamp,eventEndTime:eventEndStamp});
+            console.log($scope.eventInfo);*/
+            $.ajax({
+                url:"/api/event/"+$scope.deviceInfo.id+"?limit=20&startTime="+eventStartStamp+"&endTime="+eventEndStamp,
+                type:"GET",
+                dataType:"json",
+                async:false,
+                contentType: "application/json; charset=utf-8",
+                success:function (msg) {
+                    console.log(msg);
+                    $scope.eventInfo = msg;
+                },
+                error:function (err) {
+                    console.log(err);
+                }
+            });
+            console.log($scope.eventInfo);
+        }
+    }
+};
+
+
     /* =============================================================
          jquery动画效果
        ============================================================ */
@@ -1076,10 +1124,10 @@ $scope.showDetail = function () {
         $("#preDevice,#nextDevice").mouseout(function () {
             $(this).css("opacity","0.3");
         });
-        $("#showHistory").mouseover(function () {
+        $("#showHistory,#showEvent").mouseover(function () {
             $(this).css("color","#337ab7");
         });
-        $("#showHistory").mouseout(function () {
+        $("#showHistory,#showEvent").mouseout(function () {
             $(this).css("color","#305680");
         });
     });
