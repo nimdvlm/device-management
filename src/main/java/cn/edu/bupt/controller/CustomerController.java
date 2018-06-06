@@ -109,7 +109,6 @@ public class CustomerController extends DefaultThingsboardAwaredController{
             responseContent = HttpUtil.sendGetToThingsboard("http://" + getAccountServer() + requestAddr,
                     null,
                     request.getSession()) ;
-            ResStatus(responseContent);
             return responseContent;
         } catch (Exception e) {
             return retFail(e.toString()) ;
