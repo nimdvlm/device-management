@@ -70,7 +70,7 @@ mainApp.controller("mainCtrl",["$scope","$location",function ($scope,$location) 
         var attr = href.substring(href.indexOf("?")+1);
         console.log(attr);
         var attrs = attr.split("&");
-        window.location.href = "/home?"+attrs[0]+"&"+attrs[1];
+        window.location.href = "/home?"+attrs[0]+"&"+attrs[1]+"&"+attrs[2];
     });
 
 
