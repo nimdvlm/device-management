@@ -416,7 +416,11 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
 
     /*创建设备*/
     // var createDeviceObj =  $resource("/api/device/create");
+    $("#addDevice").click(function () {
+        $("#name").removeClass("input-err");
+    });
     $scope.createDevice = function(){
+
         if($("#name").val()){
             $scope.name = $("#name").val();
             $scope.parent = $("#parentId option:selected").attr("class");

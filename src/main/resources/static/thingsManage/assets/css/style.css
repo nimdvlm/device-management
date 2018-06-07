@@ -156,13 +156,13 @@ ul,li{
 /* =============================================================
 DEVICELIST STYLES
 ============================================================ */
-#deviceListIcon{
+#deviceListIcon,#customerIcon{
     width: 48%;
     float: left;
     padding-left: 10px;
 }
 
-#deviceListChart{
+#deviceListChart,#customerChart{
     width: 40%;
     float: right;
     /*position: fixed;*/
