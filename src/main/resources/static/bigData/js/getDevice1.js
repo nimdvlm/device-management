@@ -18,7 +18,7 @@ function getdata() {
     myXmlHttpRequest = getXmlHttpObject();
     if (myXmlHttpRequest) {
         //var url = "toajax?username=" + document.getElementById("username").value;
-        var url = "/api/device/alldevices?limit=20";// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
+        var url = "/api/device/alldevices?limit=30";// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
         //myXmlHttpRequest.open("get",url,true);
         myXmlHttpRequest.open("get", url, true);//url="http://10.108.218.64:8090/api/analysis/device"
         myXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -35,7 +35,10 @@ function getdata() {
             var meso = eval("("+mes+")");
             //window.alert(meso.datagroup[0].deviceId);
             //window.alert(meso.datagroup.length);
-            for(var i=0; i<meso.length; i++){
+            for(var i=1; i<meso.length; i++){
+                if(i==7){
+                    continue;
+                }
                 var div = document.createElement("div");
                 div.setAttribute("class","card");
                 div.setAttribute("id","divcard");
@@ -49,9 +52,10 @@ function getdata() {
                 var div1 = document.createElement("div");
                 div1.setAttribute("class","header");
                 var p = document.createElement("p");
-                p.setAttribute("style","font-size: 19px;margin-top: 25px");
-                p.innerHTML = "设备 No-"+(i+1);
-                var p0 = document.createElement("p");
+                p.setAttribute("style","font-size: 20px;margin-top: 55px;word-break:normal;");
+                p.innerHTML = meso[i].name;
+                //p.innerHTML = "设备 No-"+(i+1);
+                /*var p0 = document.createElement("p");
                 p0.setAttribute("style","font-size: 9px");
                 p0.innerHTML = "统计数据";
                 var div2 = document.createElement("div");
@@ -63,23 +67,23 @@ function getdata() {
                 p2.setAttribute("style","color:white");
                 p2.innerHTML = "设备类型："+ meso[i].deviceType;
                 var p3 = document.createElement("p");
-                p3.setAttribute("style","color:white");
-                p3.innerHTML = "设备名称："+ meso[i].name;
+                p3.setAttribute("style","color:white;font-size: 19px;");
+                p3.innerHTML = meso[i].name;
                 var p4 = document.createElement("p");
                 p4.setAttribute("style","color:white");
                 p4.innerHTML = "设备状态："+ meso[i].status;
                 var p5 = document.createElement("p");
                 p5.setAttribute("style","color:white");
-                p5.innerHTML = "设备位置："+ meso[i].location;
+                p5.innerHTML = "设备位置："+ meso[i].location;*/
                 div1.appendChild(p);
-                div1.appendChild(p0);
-                div2.appendChild(p1);
-                div2.appendChild(p2);
-                div2.appendChild(p3);
-                div2.appendChild(p4);
-                div2.appendChild(p5);
+                //div1.appendChild(p0);
+                //div2.appendChild(p1);
+                //div2.appendChild(p2);
+                //div2.appendChild(p3);
+                //div2.appendChild(p4);
+                //div2.appendChild(p5);
                 a.appendChild(div1);
-                a.appendChild(div2);
+                //a.appendChild(div2);
                 div.appendChild(a);
                 document.body.appendChild(div);
             }
