@@ -6,7 +6,7 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
     var userLevel = attrs[0];
     var tenantId = attrs[1];
     var userId = attrs[2];
-    var customId;
+  
     //getUserById
     /*var userObj = $resource("/api/account/user?userId=:userId");
     var userInfo = userObj.get({userId:userId});
@@ -22,7 +22,8 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
             customId = msg.customer_id;
         }
     });*/
-
+    var currentPage;//用于记录当前页号
+    
 
 
     $scope.limit = function () {
@@ -72,7 +73,8 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
     $(".addActive").click(function () {
         $(this).addClass("active");
         $(this).siblings().removeClass("active");
-        var pageIndex = Number($(this).text());
+        currentPage = Number($(this).text());
+        console.log(currentPage);
     });
 
 

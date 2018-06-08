@@ -1,7 +1,7 @@
 <div class="content-wrapper" ng-controller="customerCtrl">
     <div class="container">
         <div class="row" style="margin-bottom: 10px;">
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <h2>客户组</h2>
             </div>
             <div class="col-md-1" style="margin-top: 23px;">
@@ -69,7 +69,8 @@
                         <button class="btn btn-primary" data-toggle="modal"
                                 data-target="#refreshCustomer" ng-click="setCustomerInfo()">修改客户组信息</button>
 
-
+                        <button class="btn btn-primary">查看客户组用户信息</button>
+                        <!--ng-click="seeUser()"-->
                     </td>
                 </tr>
 
@@ -80,7 +81,7 @@
             <div class="col-md-3">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
-                        <li>
+                        <li id="prePage">
                                 <span aria-hidden="true">&laquo;</span>
                         </li>
                         <li class="addActive active"><span>1</span></li>
@@ -88,7 +89,7 @@
                         <li class="addActive"><span>3</span></li>
                         <li class="addActive"><span>4</span></li>
                         <li class="addActive"><span>5</span></li>
-                        <li>
+                        <li id="nextPage">
                                 <span aria-hidden="true">&raquo;</span>
                         </li>
                     </ul>

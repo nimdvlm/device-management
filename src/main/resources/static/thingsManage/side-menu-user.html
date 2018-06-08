@@ -67,28 +67,18 @@
                         <i class="fa fa-bars pull-left fa-2x b-clr"></i>
                     </span>
                 </div>
-                <div class="col-md-1 col-sm-1">
-                    <span><i class="fa fa-reply" id="backIcon"></i></span>
+                <div class="col-md-4 col-sm-12">
+                   <span id="headMenuFont">
+                       <marquee direction="left" onmouseover=this.stop() onmouseout=this.start() width=80% scrollamount="4"><i class="fa fa-home"></i>&nbsp;欢 迎 来 到 物 管 理 平 台 ！</marquee>
+                   </span>
                 </div>
-                <div class="col-md-4 col-sm-12"></div>
-                <!--<div class="col-md-5 col-sm-12" >
-                    <i class="pull-right"> 欢迎来到物管理平台 &nbsp;&nbsp;</i>
-                </div>-->
-                <div class="col-md-6 col-sm-12">
-                    <span class="upSideMenu"><i class="fa fa-user"></i>当前用户：<span>Tenant Admin</span></span>
-                    <span class="upSideMenu"><i class="fa fa-users"></i>用户等级：<span>TENANT_ADMIN</span></span>
+                <div class="col-md-7 col-sm-12">
+                    <span class="upSideMenu" id="firstSpan"><i class="fa fa-user"></i>当前用户：<span ng-cloak>{{currentUser}}</span></span>
+                    <span class="upSideMenu"><i class="fa fa-users"></i>用户等级：<span ng-cloak>{{currentUserLevel}}</span></span>
+                    <span class="upSideMenu" id="backIcon"><i class="fa fa-reply"></i>返回上一级</span>
                     <span class="upSideMenu" id="quit" ng-click="logout()"><i class="fa fa-sign-out"></i>退出登录</span>
                 </div>
-               <!-- <div class="col-md-1 col-sm-12">
-                    <input type="button" class="btn btn-danger" value="退出登录" id="quit" ng-click="logout()"/>
-                    &lt;!&ndash;<a href="/"><input type="button" class="btn btn-danger" value="退出登录" id="quit" ng-click="logout()"/></a>&ndash;&gt;
-                </div>-->
             </div>
-            <!--<div class="row">
-                <div class="col-md-12">
-
-                </div>
-            </div>-->
         </div>
 
      </section>

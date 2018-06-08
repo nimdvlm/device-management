@@ -28,14 +28,29 @@ HEAD MENU STYLES
     font-size: 16px;
     margin-left: 25px;
 }
-#quit{
+#firstSpan{
+    margin-left: 70px;
+}
+#quit,#backIcon{
     cursor: pointer;
 }
-#backIcon{
-    cursor: pointer;
-    color: #ffffff;
-    margin-left: 20px;
+#headMenuFont{
+    /*color: #cacaca;*/
+    font-family: 'Adobe 黑体 Std R';
+    font-size: 26px;
+    font-weight: bold;
+    margin-left: 50px;
 }
+/*#wrap{
+    overflow: hidden;
+    white-space: nowrap;
+}
+#wrap div {
+    display: inline-block;
+    !*float: left;*!
+
+}*/
+
 
 
 

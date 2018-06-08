@@ -89,7 +89,7 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
             $(this).css("color","#ffffff");
         });
 
-        //顶侧栏用户信息显示
+        /*HEAD MENU用户信息显示*/
         var hrefUpMenu = window.location.search;//取?后的参数
         var attrUpMenu = hrefUpMenu.substring(hrefUpMenu.indexOf("?")+1);
         var attrsUpMenu = attrUpMenu.split("&");
@@ -98,19 +98,37 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
         $.ajax({
             url:"/api/account/user?userId="+userId,
             type:"GET",
-            dataType:"text",
+            dataType:"json",
             contentType: "application/json; charset=utf-8",
             async:false,
             success:function (msg) {
                 console.log(msg);
-                var msgJson = JSON.parse(msg);
-                console.log(msgJson);
+                $scope.currentUser = msg.name;
+                $scope.currentUserLevel = msg.authority;
             },
             error:function (err) {
                 console.log(err);
             }
         });
 
+        /*跑马灯效果*/
+   /* (function () {
+        var wrap = document.getElementById('wrap'),
+            first = document.getElementById('first');
+        var timer = window.setInterval(move, 50);
+        wrap.onmouseover = function () {
+            window.clearInterval(timer);
+        };
+        wrap.onmouseout = function () {
+            timer = window.setInterval(move, 50);
+        };
+        function move() {
+            wrap.scrollLeft++;
+            if (wrap.scrollLeft >= first.scrollWidth) {
+                wrap.scrollLeft = 0;
+            }
+        }
+    })();*/
 
 
 
