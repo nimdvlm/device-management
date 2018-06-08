@@ -32,9 +32,9 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
 
     };
 
-    //获取所有客户
+    //获取所有客户组
     var customerObj = $resource("/api/account/customers?limit=10&page=0");
-    $scope.customersInfo = customerObj.query();//所有客户信息
+    $scope.customersInfo = customerObj.query();//所有客户组信息
     console.log($scope.customersInfo);
 
     /*鼠标移入动画效果*/
@@ -49,7 +49,7 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
         });
     };
 
-    //选中客户信息展示
+    //选中客户组信息展示
     $scope.showCustomer = function (data) {
         $scope.customersInfo.forEach(function (items) {
             if(data != items) items.style = {}
@@ -77,21 +77,21 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
 
 
 
-    //删除客户
+    //删除客户组
     $scope.deleteCustomer = function () {
         // console.log($scope.customerInfo);
         var deleteObj = $resource("/api/account/customer?customerId=:customerId");
         deleteObj.delete({customerId:$scope.customerInfo.id},{},function (resp) {
-            toastr.success("删除客户成功！");
+            toastr.success("删除客户组成功！");
             setTimeout(function () {
                 window.location.reload();
             },1000);
         },function (err) {
-            toastr.error("删除客户失败！");
+            toastr.error("删除客户组失败！");
         });
     };
 
-    //新增客户
+    //新增客户组
     $("#addCustomer").click(function () {
         $("#customerName").removeClass("input-err");
     });
@@ -111,13 +111,13 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
                 type:"POST",
                 contentType: "application/json; charset=utf-8",//post请求必须
                 success:function (resp) {
-                    toastr.success("创建客户成功！");
+                    toastr.success("创建客户组成功！");
                     setTimeout(function () {
                         window.location.reload();
                     },1000);
                 },
                 error:function (err) {
-                    toastr.error("创建客户失败！");
+                    toastr.error("创建客户组失败！");
                 }
             });
 
@@ -140,7 +140,7 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
         console.log($scope.customerInfo.phone);
     };
 
-    //修改用户
+    //修改客户组信息
     $scope.refreshCustomer = function () {
 
         var phone = $("#refreshCustomerPhone").val();
@@ -155,13 +155,13 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
             type:"PUT",
             contentType: "application/json; charset=utf-8",//post请求必须
             success:function (resp) {
-                toastr.success("修改客户信息成功！");
+                toastr.success("修改客户组信息成功！");
                 setTimeout(function () {
                     window.location.reload();
                 },1000);
             },
             error:function () {
-                toastr.error("修改客户信息失败！");
+                toastr.error("修改客户组信息失败！");
             }
         });
     }

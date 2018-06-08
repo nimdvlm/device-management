@@ -23,14 +23,18 @@
 /* =============================================================
 HEAD MENU STYLES
 ============================================================ */
-#quit{
 
-   float: right;
+.upSideMenu{
+    font-size: 16px;
+    margin-left: 25px;
 }
-
+#quit{
+    cursor: pointer;
+}
 #backIcon{
     cursor: pointer;
     color: #ffffff;
+    margin-left: 20px;
 }
 
 
