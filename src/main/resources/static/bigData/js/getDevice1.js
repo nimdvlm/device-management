@@ -35,8 +35,9 @@ function getdata() {
             var meso = eval("("+mes+")");
             //window.alert(meso.datagroup[0].deviceId);
             //window.alert(meso.datagroup.length);
-            for(var i=1; i<meso.length; i++){
-                if(i==7){
+            for(var i=0; i<meso.length; i++){
+
+                if(i==1||i==8){
                     continue;
                 }
                 var div = document.createElement("div");

@@ -8,10 +8,6 @@
     <meta name="robots" content="" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/style.css" media="all" />
-    <link rel="stylesheet" href="css/jquery.dataTables.min.css" />
-    <script src="js/jquery-3.3.1.js"></script>
-    <script src="js/jquery.dataTables.min.js"></script>
-    <script src="js/getUrlParam.js"></script>
 
 </head>
 <body>
@@ -32,7 +28,7 @@
         </div>
     </section>
 </div>
-<nav style="position: absolute">
+<nav>
     <ul>
         <li><a href="device1.html"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
         <li class="section"><a href="start.html"><span class="icon">&#128200;</span>设备统计</a></li>
@@ -40,54 +36,37 @@
         <li><a href="hisdata.html"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
     </ul>
 </nav>
+<div style="width: 50%;height: 5000px;margin-top:20px;float: left" id="main1"></div>
+<div style="width: 30%;height: 5000px;margin-top:38px;margin-left:30px;float: left" id="main2"></div>
+<!--<div>
+<input type="button" value="click" id="test"/>
+</div>
+<script type="text/javascript">
+    $('test').onclick(
+        function () {
+            $('main').css("background","#208ed3");
+        }
+    )
+</script>-->
 
-<section class="alert">
-    <!--<form method="link" action="statisticsdata.jsp">-->
-    <a id="transportId" href="#"><button class="green">点此查看统计数据</button></a>
-    <!--</form>-->
-</section>
+<!--<script type="text/javascript">
 
-<section class="content">
-    <section class="widget">
+    var copydiv = document.getElementById("divcard");
+    for(var i=0;i<14;i++){
+        var clonediv = copydiv.cloneNode(true);
+        clonediv.setAttribute("id","divcard-"+i);
+        var clonename = clonediv.getElementsByTagName("p");
+        clonename[0].innerText="设备 No-"+(i+2);
+        copydiv.parentNode.appendChild(clonediv);
 
-        <p id="showDevice" style="font-size: 14px;"></p>
-        <table id="table_id_example" class="display">
-            <thead>
-            <tr>
-                <th>时间</th>
-                <th>属性键</th>
-                <th>属性值</th>
-            </tr>
-            </thead>
-            <tbody id="tBody">
-            <tr>
-                <td style="text-align: center">2018-06-10 7:02:58</td>
-                <td style="text-align: center">temperature</td>
-                <td style="text-align: center">22.8</td>
-            </tr>
-            <tr>
-                <td style="text-align: center">2018-06-10 7:02:58</td>
-                <td style="text-align: center">humidity</td>
-                <td style="text-align: center">76</td>
-            </tr>
-            <tr>
-                <td style="text-align: center">2018-06-10 7:02:58</td>
-                <td style="text-align: center">status</td>
-                <td style="text-align: center">false</td>
-            </tr>
-            </tbody>
-        </table>
-
-    </section>
-
-</section>
+    }
+</script>-->
 <script src="js/jquery-3.3.1.js"></script>
 <script src="js/common.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
 <script src="js/getUrlParam.js"></script>
-<script src="js/webSocket.js"></script>
 <script src="js/starttoend.js"></script>
 <script src="js/echarts.min.js"></script>
+<script src="js/getDevice1up.js"></script>
 
 </body>
 </html>

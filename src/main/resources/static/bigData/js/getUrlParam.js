@@ -90,7 +90,7 @@ themeCount=localStorage.getItem("themeCount");
 if(themeCount==null){
     //var ran = Math.random();
     //if(ran<=0.75){
-        themeCount=1;
+        themeCount=0;
     //}else{
     //    themeCount=0;
     //}

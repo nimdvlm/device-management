@@ -44,8 +44,8 @@ body {
 	height: 100%;
 	font-family: arial;
 	font-size: 12px;
-	background: #f7f7f7;
-	background-image: url("../images/bgpicture.png");
+	background: #3c3e40;/**#f7f7f7，3c3e40**/
+	/**background-image: url("../images/bgpicture.png");**/
 	overflow-x: hidden;
 	color: #3B3E40;
 }
@@ -399,7 +399,7 @@ section.widget {
 /**  MENU  **/
 
 nav {
-	height: 3000px;
+	height: 10000px;
 	min-height: 100%;
 	width: 210px;
 	background: #3B3E40;
