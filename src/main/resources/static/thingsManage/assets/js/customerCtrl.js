@@ -70,13 +70,15 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
 
     };
     //分页
-    $(".addActive").click(function () {
-        $(this).addClass("active");
-        $(this).siblings().removeClass("active");
-        currentPage = Number($(this).text());
-        console.log(currentPage);
-    });
 
+    Page({
+        num:10,					//页码数
+        startnum:6,				//指定页码
+        elem:$('#customerPage'),		//指定的元素
+        callback:function(n){	//回调函数
+            console.log(n);//当前页号
+        }
+    });
 
 
     //删除客户组
