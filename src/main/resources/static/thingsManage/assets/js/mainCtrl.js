@@ -43,16 +43,14 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
         });
 }]);
 
-mainApp.controller("mainCtrl",["$scope","$location",function ($scope,$location) {
+mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope,$location,$resource) {
     /*路由跳转*/
     $scope.$location = $location;
 
+
+
     /*退出登录*/
     $scope.logout = function () {
-       /* var logoutObj = $resource("/api/user/logout");
-        $scope.logoutInfo = logoutObj.get({},function (resp) {
-            alert(resp);
-        });*/
         $.ajax({
             url:"/api/user/logout",
             contentType: "application/json; charset=utf-8",
@@ -71,22 +69,67 @@ mainApp.controller("mainCtrl",["$scope","$location",function ($scope,$location) 
         console.log(attr);
         var attrs = attr.split("&");
         window.location.href = "/home?"+attrs[0]+"&"+attrs[1]+"&"+attrs[2];
+
     });
 
 
 
-
     /*突出显示效果*/
-    $(document).ready(function(){
+
         $(".homeIconBackground,.side-menu-icon").mouseover(function(){
             $(this).siblings().stop().fadeTo(300, 0.3);//动画速度用数字表示时不需加引号
         });
         $(".homeIconBackground,.side-menu-icon").mouseout(function () {
             $(this).siblings().stop().fadeTo(300, 1);
         });
+        $("#quit,#backIcon").mouseover(function () {
+            $(this).css("color","#c0c0c0");
+        });
+        $("#quit,#backIcon").mouseout(function () {
+            $(this).css("color","#ffffff");
+        });
 
+        /*HEAD MENU用户信息显示*/
+        var hrefUpMenu = window.location.search;//取?后的参数
+        var attrUpMenu = hrefUpMenu.substring(hrefUpMenu.indexOf("?")+1);
+        var attrsUpMenu = attrUpMenu.split("&");
+        console.log(attrsUpMenu[2]);
+        var userId = attrsUpMenu[2]; //用于记录当前用户id
+        $.ajax({
+            url:"/api/account/user?userId="+userId,
+            type:"GET",
+            dataType:"json",
+            contentType: "application/json; charset=utf-8",
+            async:false,
+            success:function (msg) {
+                console.log(msg);
+                $scope.currentUser = msg.name;
+                $scope.currentUserLevel = msg.authority;
+            },
+            error:function (err) {
+                console.log(err);
+            }
+        });
 
-    });
+        /*跑马灯效果*/
+   /* (function () {
+        var wrap = document.getElementById('wrap'),
+            first = document.getElementById('first');
+        var timer = window.setInterval(move, 50);
+        wrap.onmouseover = function () {
+            window.clearInterval(timer);
+        };
+        wrap.onmouseout = function () {
+            timer = window.setInterval(move, 50);
+        };
+        function move() {
+            wrap.scrollLeft++;
+            if (wrap.scrollLeft >= first.scrollWidth) {
+                wrap.scrollLeft = 0;
+            }
+        }
+    })();*/
+
 
 
 }]);
