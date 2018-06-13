@@ -43,9 +43,9 @@ function getdata() {
 
                 if(Math.floor((i+1)/2)%2==1){
                     if(i%2==1){
-                        div.setAttribute("style","background:#c8856b;width: 220px;height:200px;float: left;margin:20px 20px 20px 20px");//background-image:url('images/bgimage1.png')
+                        div.setAttribute("style","background:#c8856b;width: 30.55%;height:200px;float: left;margin:20px 2.77% 20px 2.77%");//background-image:url('images/bgimage1.png')
                     }else {
-                        div.setAttribute("style","background:#c8856b;width: 260px;height:200px;float: left;margin:20px 20px 20px 20px");//background-image:url('images/bgimage1.png')
+                        div.setAttribute("style","background:#c8856b;width: 36.11%;height:200px;float: left;margin:20px 2.77% 20px 2.77%");//background-image:url('images/bgimage1.png')
                     }
                     var deviceName = meso[i].name;
                     a.setAttribute("href","statisticsdata.html?deviceId="+meso[i].id+"&deviceNum=No-"+(i+1));
@@ -141,9 +141,9 @@ function getdata() {
                     myChart.setOption(option);
                 }else {
                     if(i%2==1){
-                        div.setAttribute("style","background:#fffae3;width: 220px;height:200px;float: left;margin:20px 20px 20px 180px");//background-image:url('images/bgimage1.png')
+                        div.setAttribute("style","background:#fffae3;width: 30.55%;height:200px;float: left;margin:20px 2.77% 20px 25%");//background-image:url('images/bgimage1.png')
                     }else{
-                        div.setAttribute("style","background:#fffae3;width: 420px;height:200px;float: left;margin:20px 20px 20px 20px");//background-image:url('images/bgimage1.png')
+                        div.setAttribute("style","background:#fffae3;width: 58.33%;height:200px;float: left;margin:20px 2.77% 20px 2.77%");//background-image:url('images/bgimage1.png')
                     }
                     var deviceName = meso[i].name;
                     a.setAttribute("href","statisticsdata.html?deviceId="+meso[i].id+"&deviceNum=No-"+(i+1));
@@ -241,7 +241,7 @@ function getdata() {
 
             }
             var div1 = document.createElement("div");
-            div1.setAttribute("style","width:400px;height:400px");
+            div1.setAttribute("style","width:92.59%;height:400px");
             document.getElementById('main2').appendChild(div1);
             var myChart1 = echarts.init(div1);
             option = {
@@ -320,7 +320,7 @@ function getdata() {
             myChart1.setOption(option);
 
             var div2 = document.createElement("div");
-            div2.setAttribute("style","width:400px;height:400px;margin-top:40px");
+            div2.setAttribute("style","width:92.59%;height:400px;margin-top:40px");
             document.getElementById('main2').appendChild(div2);
             var myChart2 = echarts.init(div2);
             option = {
@@ -399,7 +399,7 @@ function getdata() {
             myChart2.setOption(option);
 
             var div3 = document.createElement("div");
-            div3.setAttribute("style","width:400px;height:400px;margin-top:40px");
+            div3.setAttribute("style","width:92.59%;height:400px;margin-top:40px");
             document.getElementById('main2').appendChild(div3);
             var myChart3 = echarts.init(div3);
             option = {
