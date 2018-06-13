@@ -504,6 +504,7 @@ function showData() {
                 myChart.setOption(option);
             }
         }
+        document.getElementById("YWaitDialog").setAttribute("style","display:none;");
     }else{
         window.alert("输入有误");
     }

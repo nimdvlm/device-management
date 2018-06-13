@@ -431,4 +431,5 @@ function getData() {
             }*/
         }
     }
+    document.getElementById("YWaitDialog").setAttribute("style","display:none;");
 }
