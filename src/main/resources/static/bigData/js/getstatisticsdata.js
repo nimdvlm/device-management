@@ -1,3 +1,4 @@
+document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
 function timestampToTime(timestamp) {
     var date = new Date(timestamp);
     Y = date.getFullYear() + '-';

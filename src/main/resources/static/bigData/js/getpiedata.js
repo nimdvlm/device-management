@@ -1,4 +1,4 @@
-// 基于准备好的dom，初始化echarts实例
+document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
 var myChart = echarts.init(document.getElementById('main'));
 
 option = {
