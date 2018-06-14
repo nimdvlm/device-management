@@ -30,7 +30,7 @@ public class ShadowController extends DefaultThingsboardAwaredController {
     
     @RequestMapping(value = "/{deviceId}",method = RequestMethod.GET)
     public String getDeviceShadow(@PathVariable("deviceId") String deviceId){
-        String url = "http://"+getDeviceAccessServer()+"/api/v1/device/"+deviceId;
+        String url = "http://"+getDeviceAccessServer()+"/api/v1/deviceaccess/device/"+deviceId;
         try{
         String res = HttpUtil.sendGetToThingsboard(url,new HashMap<>(),request.getSession());
         JsonObject body = new JsonParser().parse(res).getAsJsonObject();
@@ -39,7 +39,7 @@ public class ShadowController extends DefaultThingsboardAwaredController {
         JsonElement modelName = body.get("model");
         if(manufacturerName==null||deviceTypeName==null||modelName==null) return null;
 
-        String url1 = "http://"+getServiceManagementServer()+"api/v1/ability/"+manufacturerName.getAsString()
+        String url1 = "http://"+getServiceManagementServer()+"api/v1/servicemanagement/ability/"+manufacturerName.getAsString()
                 +"/"+deviceTypeName.getAsString()+"/"+modelName.getAsString();
         String serviceDes = HttpUtil.sendGetToThingsboard(url1,new HashMap<>(),(request.getSession()));
 
@@ -116,7 +116,7 @@ public class ShadowController extends DefaultThingsboardAwaredController {
 //        body.add("requestBody",paramsAndServiceName);
 //        JsonObject res = new JsonObject();
         try{
-            url = "http://"+getDeviceAccessServer()+"/api/v1/rpc/"+deviceId+"/"+requester.getAndIncrement();
+            url = "http://"+getDeviceAccessServer()+"/api/v1/deviceaccess/rpc/"+deviceId+"/"+requester.getAndIncrement();
             String s = HttpUtil.sendPostToThingsboard(url,null,paramsAndServiceName,request.getSession());
 //            res.addProperty("responce_code",0);
 //            res.addProperty("responce_msg",s);

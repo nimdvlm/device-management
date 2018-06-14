@@ -19,9 +19,13 @@
     </header>
     <section class="user">
 
+        <div style="width: 100px;height: 43px;float: left;margin-top: 23px;margin-left: 10px">
+            <input style="width: 90px;height: 35px" type="button" value="导航栏" id="test1"/>
+        </div>
         <div class="buttons">
             <button class="ico-font">&#9206;</button>
             <input type="button" value="更多皮肤" id="test"/>
+            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 90px" value="返回上一级"/></a>
             <input type="button" class="button blue" value="退出" onclick="quitThings()" />
             <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
             <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
@@ -30,10 +34,10 @@
 </div>
 <nav>
     <ul>
-        <li><a href="device1.html"><span class="icon">&#128202;</span> 统计数据</a></li>
-        <li><a href="device2.html"><span class="icon">&#128200;</span> 实时数据</a></li>
-        <li><a href="model.html"><span class="icon">&#128201;</span> 模型仓库</a></li>
-        <li class="section"><a href="hisdata.html"><span class="icon">&#128711;</span> 海量分析</a></li>
+        <li><a href="device1.html"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
+        <li><a href="start.html"><span class="icon">&#128200;</span>设备统计</a></li>
+        <li><a href="model.html"><span class="icon">&#128201;</span>模型仓库</a></li>
+        <li class="section"><a href="hisdata.html"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
     </ul>
 </nav>
 
@@ -41,7 +45,7 @@
     <button class="green" onclick="getData()">点此获取数据</button>
 </section>
 
-<section class="content">
+<section class="content" id="navid">
     <section class="widget">
         <div id="main" style="width: 100%;height:600px;margin-top: 50px"></div>
         <div id="main1" style="width: 100%;height:600px;margin-top: 50px"></div>
@@ -50,12 +54,168 @@
     </section>
 </section>
 
+<div class="waiting" id="YWaitDialog">
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <h1 style="color: #F88863">loading</h1>
+</div>
+
 <<script src="js/jquery-3.3.1.js"></script>
 <script src="js/common.js"></script>
 <script src="js/getUrlParam.js"></script>
 <script src="js/starttoend.js"></script>
-<script src="js/echarts.common.min.js"></script>
+<script src="js/echarts.min.js"></script>
 <script src="js/getpiedata.js"></script>
+<script type="text/javascript">
+    var navCount;
+    navCount = localStorage.getItem("navCount");
+    if(navCount==null){
+        navCount=0;
+        localStorage.setItem("navCount",navCount);
+    }
+    if(navCount%2==1){
+        $("#test1").val("显示导航栏");
+        $("nav").html(null);
+        $("nav").css("width","0");
+        $("#navid").css("margin-left","8.5%");
+    }else {
+        $("#test1").val("隐藏导航栏");
+    }
+    $("#test1").click(
+        function () {
+            navCount=localStorage.getItem("navCount");
+            if(navCount%2==0){
+                $("nav").html(null);
+                $("nav").css("width","0");
+                $("#navid").css("margin-left","8.5%");
+                $("#test1")[0].value="显示导航栏";
+            }else {
+                $("nav").html("<ul>\n" +
+                    "        <li><a href=\"device1.html\"><span class=\"icon\">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>\n" +
+                    "        <li><a href=\"start.html\"><span class=\"icon\">&#128200;</span>设备统计</a></li>\n" +
+                    "        <li><a href=\"model.html\"><span class=\"icon\">&#128201;</span>模型仓库</a></li>\n" +
+                    "        <li class=\"section\"><a href=\"hisdata.html\"><span class=\"icon\">&#128196;</span>海量分析</a></li><!--128711-->\n" +
+                    "    </ul>");
+                $("nav").css("width","14.58%");
+                showTheme();
+                $("#navid").css("margin-left","0%");
+                $("#test1").val("隐藏导航栏");
+            }
+            navCount++;
+            localStorage.setItem("navCount",navCount);
+        }
+    );
 
+</script>
 </body>
 </html>

@@ -24,7 +24,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     private String getRules()
     {
-        String requestAddr = "/api/rule/rules";
+        String requestAddr = "/api/v1/smartruler/rules";
 
         StringBuffer param = new StringBuffer();
         param.append("limit").append("=").append("30");
@@ -50,7 +50,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     private String getARules(@PathVariable("ruleId") String ruleId)
     {
-        String requestAddr = "/api/rule/rule/"+ruleId;
+        String requestAddr = "/api/v1/smartruler/rule/"+ruleId;
 
         String responseContent = null;
         try{
@@ -70,7 +70,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     private String getRulesByTenantId()
     {
-        String requestAddr = "/api/rule/ruleByTenant/"+getTenantId();
+        String requestAddr = "/api/v1/smartruler/ruleByTenant/"+getTenantId();
 
         StringBuffer param = new StringBuffer();
         param.append("limit").append("=").append("30");
@@ -195,7 +195,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     public String active(@PathVariable("ruleId") String ruleId)
     {
-        String requestAddr = "/api/rule/"+ruleId+"/activate";
+        String requestAddr = "/api/v1/smartruler/"+ruleId+"/activate";
         JsonObject requestbody=new JsonObject();
 
         String responseContent = null;
@@ -215,7 +215,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     public String suspend(@PathVariable("ruleId") String ruleId)
     {
-        String requestAddr = "/api/rule/"+ruleId+"/suspend";
+        String requestAddr = "/api/v1/smartruler/"+ruleId+"/suspend";
         JsonObject requestbody=new JsonObject();
 
         String responseContent = null;
@@ -235,7 +235,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     public String deleteRules(@PathVariable("ruleId") String ruleId)
     {
-        String requestAddr = "/api/rule/remove/"+ruleId;
+        String requestAddr = "/api/v1/smartruler/remove/"+ruleId;
 
         String responseContent = null;
         try{
@@ -252,7 +252,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     public String createRule(@RequestBody String ruleInfo)
     {
-        String requestAddr = "/api/rule/add";
+        String requestAddr = "/api/v1/smartruler/add";
 
         JsonObject ruleInfoJson = (JsonObject)new JsonParser().parse(ruleInfo);
 

@@ -110,7 +110,7 @@ public class NavigationController {
     public String realtimeDevice() {return "static/bigData/device2";}
 
     @RequestMapping("/realtimeData")
-    public String realtimeData() {return "static/bigData/dydata";}
+    public String realtimeData() {return "static/bigData/dydatatrue";}
 
     @RequestMapping("/historicalData")
     public String historicalData() {return "static/bigData/hisdata";}

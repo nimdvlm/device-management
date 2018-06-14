@@ -38,22 +38,25 @@ function getdata() {
             for(var i=0; i<8; i++){
 
                 var div = document.createElement("div");
+                var a = document.createElement("a");
+                a.setAttribute("href","#");
                 div.setAttribute("class","card");
                 div.setAttribute("id","divcard");
                 div.setAttribute("data-toggle","modal");
                 div.setAttribute("data-target","#myModal");
                 div.setAttribute("onclick","modalinput(this)");
                 if(themeCount%2==1){
-                    div.setAttribute("style","background-image:url(images/ting4.png);margin-top: 20px;margin-left: 20px");
+                    div.setAttribute("style","display:none;background-image:url(images/ting4.png);margin-top: 20px;margin-left: 20px");
                 }else{
-                    div.setAttribute("style","background-image:url(images/timg3.png);margin-top: 20px;margin-left: 20px");
+                    div.setAttribute("style","display:none;background-image:url(images/timg3.png);margin-top: 20px;margin-left: 20px");
                 }
+                $(div).fadeIn(500+i*300);
+                $(div).fadeOut(500+i*300);
+                $(div).fadeIn(500+i*300);
                 /*var a = document.createElement("a");
                 a.setAttribute("href","statisticsdata.html?deviceId="+meso[i].id+"&deviceNum=No-"+(i+1));*/
-                var div1 = document.createElement("div");
-                div1.setAttribute("class","header");
                 var p = document.createElement("p");
-                p.setAttribute("style","font-size: 20px;margin-top: 55px;word-break:normal;");
+                p.setAttribute("style","font-size: 20px;margin-top: 65px;color:#ffffff");
                 p.innerHTML = "Model-"+(i+1);
                 //p.innerHTML = "设备 No-"+(i+1);
                 /*var p0 = document.createElement("p");
@@ -76,7 +79,7 @@ function getdata() {
                 var p5 = document.createElement("p");
                 p5.setAttribute("style","color:white");
                 p5.innerHTML = "设备位置："+ meso[i].location;*/
-                div1.appendChild(p);
+                div.appendChild(p);
                 //div1.appendChild(p0);
                 //div2.appendChild(p1);
                 //div2.appendChild(p2);
@@ -85,17 +88,20 @@ function getdata() {
                 //div2.appendChild(p5);
                 //a.appendChild(div1);
                 //a.appendChild(div2);
-                div.appendChild(div1);
-                document.getElementById("main1").appendChild(div);
+                a.appendChild(div);
+                document.getElementById("main1").appendChild(a);
             }
             for(var j=0;j<3;j++){
                 var divadd = document.createElement("div");
                 divadd.setAttribute("class","card");
                 if(themeCount%2==1){
-                    divadd.setAttribute("style","background-image:url(images/ting4.png);margin-top: 20px;margin-left: 20px");
+                    divadd.setAttribute("style","display:none;background-image:url(images/ting4.png);margin-top: 20px;margin-left: 20px");
                 }else{
-                    divadd.setAttribute("style","background-image:url(images/timg3.png);margin-top: 20px;margin-left: 20px");
+                    divadd.setAttribute("style","display:none;background-image:url(images/timg3.png);margin-top: 20px;margin-left: 20px");
                 }
+                $(divadd).fadeIn(3000-500*j);
+                $(divadd).fadeOut(2000+800*j);
+                $(divadd).fadeIn(1500+500*j);
                 var p1 = document.createElement("p");
                 p1.setAttribute("style","color:white;font-size:20px;margin-top:25px");
                 p1.innerHTML = "Model-1";
@@ -118,6 +124,12 @@ function getdata() {
     //}
 //}
 getdata();
+
+$('.card').hover(function () {
+    $('.card:hover').css("opacity","0.5");
+},function () {
+    $('.card').css("opacity","1");
+});
 
 var modalName;
 function modalinput(obj) {

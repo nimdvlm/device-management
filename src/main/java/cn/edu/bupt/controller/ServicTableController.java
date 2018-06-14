@@ -21,7 +21,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
 
     @RequestMapping(value = "/abilityGroup",method = RequestMethod.POST)
     public String saveGroup(@RequestBody String json) {
-        String url = "http://"+getServiceManagementServer()+"/api/v1/abilityGroup";
+        String url = "http://"+getServiceManagementServer()+"/api/v1/servicemanagement/abilityGroup";
         try{
             String responce = HttpUtil.sendPostToThingsboard(url,null,new JsonParser().parse(json).getAsJsonObject(),request.getSession());
             return retSuccess(responce);
@@ -32,7 +32,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
 
     @RequestMapping(value = "/abilityGroup",method = RequestMethod.GET)
     public String getGroup() {
-        String url = "http://"+getServiceManagementServer()+"/api/v1/abilityGroup";
+        String url = "http://"+getServiceManagementServer()+"/api/v1/servicemanagement/abilityGroup";
         try{
             String responce = HttpUtil.sendGetToThingsboard(url,null,request.getSession());
             return retSuccess(responce);
@@ -44,7 +44,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
 
     @RequestMapping(value="/abilityGroup", method = RequestMethod.DELETE)
     public String deleteGroup(@RequestParam int  modelId) {
-        String url = "http://"+getServiceManagementServer()+"/api/v1/abilityGroup?modelId="+modelId;
+        String url = "http://"+getServiceManagementServer()+"/api/v1/servicemanagement/abilityGroup?modelId="+modelId;
         try{
             String responce = HttpUtil.sendDeletToThingsboard(url,request.getSession());
             return retSuccess(responce);
@@ -55,7 +55,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
 
     @RequestMapping(value = "/ability", method = RequestMethod.POST)
     public String saveServiceToGroup(@RequestBody String json) {
-        String url = "http://"+getServiceManagementServer()+"/api/v1/ability";
+        String url = "http://"+getServiceManagementServer()+"/api/v1/servicemanagement/ability";
         try{
             JsonObject asJsonObject = (JsonObject)new JsonParser().parse(json);
             String responce = HttpUtil.sendPostToThingsboard(url,null, asJsonObject, request.getSession());
@@ -71,7 +71,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
         // manufacture
         // deviceType
         // df
-        String url = "http://"+getServiceManagementServer()+"/api/v1/ability/"+abilityId;
+        String url = "http://"+getServiceManagementServer()+"/api/v1/servicemanagement/ability/"+abilityId;
         try{
            // JsonObject asJsonObject = (JsonObject)new JsonParser().parse(json);
             String responce = HttpUtil.sendDeletToThingsboard(url, request.getSession());
@@ -94,7 +94,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
 
     @RequestMapping(value = "/ability/{modelId}", method = RequestMethod.GET)
     public String serviceTableList(@PathVariable String modelId) {
-        String requestAddr = String.format("/api/v1/ability/%s", modelId) ;
+        String requestAddr = String.format("/api/v1/servicemanagement/ability/%s", modelId) ;
         String url = "http://"+getServiceManagementServer() + requestAddr;
         try{
             String response = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
@@ -107,7 +107,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
     @RequestMapping(value = "/ability/{manufacturerName}/{deviceTypeName}/{modelName:.+}", method = RequestMethod.GET)
     public String serviceTableList(@PathVariable String manufacturerName,@PathVariable String deviceTypeName,
                                    @PathVariable String modelName ) {
-        String requestAddr = String.format("/api/v1/ability/%s/%s/%s", manufacturerName,deviceTypeName,modelName) ;
+        String requestAddr = String.format("/api/v1/servicemanagement/ability/%s/%s/%s", manufacturerName,deviceTypeName,modelName) ;
         String url = "http://"+getServiceManagementServer() + requestAddr;
         try{
             String response = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
@@ -120,7 +120,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
     @ApiOperation(value = "获取所有厂商信息", notes = "获取所有厂商信息")
     @RequestMapping(value = "/abilityGroup/manufacturers", method = RequestMethod.GET)
     public String serviceManufacture(@RequestParam(required = false) String keyword){
-        String url = "http://" + getServiceManagementServer() + "/api/v1/abilityGroup/manufacturers";
+        String url = "http://" + getServiceManagementServer() + "/api/v1/servicemanagement/abilityGroup/manufacturers";
         if(keyword!=null) url += "?keyword="+keyword;
         try{
             String s = HttpUtil.sendGetToThingsboard(url, null, request.getSession());
@@ -134,7 +134,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
     @ApiImplicitParam(name = "manufacture", value = "厂商", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/abilityGroup/deviceTypes", method = RequestMethod.GET)
     public String serviceDeviceType(@RequestParam String manufacturerId,@RequestParam(required = false) String keyword){
-        String requestAddr = String.format("/api/v1/abilityGroup/deviceTypes?manufacturerId=%s", manufacturerId) ;
+        String requestAddr = String.format("/api/v1/servicemanagement/abilityGroup/deviceTypes?manufacturerId=%s", manufacturerId) ;
         String url = "http://" + getServiceManagementServer() + requestAddr;
         if(keyword!=null){
             url +="&keyword="+keyword;
@@ -152,7 +152,7 @@ public class ServicTableController extends DefaultThingsboardAwaredController {
             @ApiImplicitParam(name = "deviceType", value = "设备类型", required = true, dataType = "String",paramType = "path")})
     @RequestMapping(value = "/abilityGroup/models", method = RequestMethod.GET)
     public String serviceModel(@RequestParam String manufacturerId,@RequestParam String deviceTypeId,@RequestParam(required = false)  String keyword){
-        String requestAddr = String.format("/api/v1/abilityGroup/models?manufacturerId=%s&deviceTypeId=%s", manufacturerId, deviceTypeId) ;
+        String requestAddr = String.format("/api/v1/servicemanagement/abilityGroup/models?manufacturerId=%s&deviceTypeId=%s", manufacturerId, deviceTypeId) ;
         String url = "http://"+getServiceManagementServer()+ requestAddr;
         if(keyword!=null){
             url +="&keyword="+keyword;
