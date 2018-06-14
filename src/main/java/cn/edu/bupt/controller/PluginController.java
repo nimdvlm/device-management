@@ -17,7 +17,7 @@ public class PluginController extends DefaultThingsboardAwaredController{
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @RequestMapping(value = "/allPlugins",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getAllPlugins(){
-        String requestAddr = "/api/plugin/all";
+        String requestAddr = "/api/v1/smartruler/plugin/all";
 
         String responseContent = null;
         try{
@@ -34,7 +34,7 @@ public class PluginController extends DefaultThingsboardAwaredController{
 
     @RequestMapping(value = "/state/{url}/{port}",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getStates(@PathVariable("url") String url,@PathVariable("port") String port){
-        String requestAddr = "/api/plugin/state/";
+        String requestAddr = "/api/v1/smartruler/plugin/state/";
 
         String responseContent = null;
         try{
@@ -54,7 +54,7 @@ public class PluginController extends DefaultThingsboardAwaredController{
     /**
     @RequestMapping(value = "/savePlugin",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public String savePlugin(@RequestBody String json){
-        String requestAddr = "/api/plugin";
+        String requestAddr = "/api/v1/smartruler/plugin";
         String responseContent = null;
         try{
             responseContent = HttpUtil.sendPostToThingsboard("http://" + getServer() + requestAddr,
@@ -69,7 +69,7 @@ public class PluginController extends DefaultThingsboardAwaredController{
 
     @RequestMapping(value = "/deletePlugin/{pluginId}",method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     public String deletePlugin(@PathVariable String pluginId){
-        String requestAddr = "/api/plugin/"+pluginId;
+        String requestAddr = "/api/v1/smartruler/plugin/"+pluginId;
         String responseContent = null;
         try{
             responseContent = HttpUtil.sendDeletToThingsboard("http://" + getServer() + requestAddr,
@@ -83,7 +83,7 @@ public class PluginController extends DefaultThingsboardAwaredController{
 
     @RequestMapping(value = "/suspend/{url}/{port}",method = RequestMethod.POST)
     public String suspend(@PathVariable("url") String url, @PathVariable("port") String port){
-        String requestAddr = "/api/plugin/suspend/";
+        String requestAddr = "/api/v1/smartruler/plugin/suspend/";
 
         String responseContent = null;
         try{
@@ -99,7 +99,7 @@ public class PluginController extends DefaultThingsboardAwaredController{
 
     @RequestMapping(value = "/activate/{url}/{port}",method = RequestMethod.POST)
     public String activate(@PathVariable("url") String url, @PathVariable("port") String port){
-        String requestAddr = "/api/plugin/active/";
+        String requestAddr = "/api/v1/smartruler/plugin/active/";
 
         String responseContent = null;
         try{
