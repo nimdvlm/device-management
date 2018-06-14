@@ -1,3 +1,4 @@
+$("#main").fadeIn(2000);
 var myChart = echarts.init(document.getElementById('main'));
 
 var dataMap = {};
@@ -386,3 +387,4 @@ option = {
     ]
 };
 myChart.setOption(option);
+

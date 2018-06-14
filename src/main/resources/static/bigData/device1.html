@@ -40,7 +40,7 @@
         <li><a href="hisdata.html"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
     </ul>
 </nav>
-<div style="width: 80%;height: 80%;float: left;margin-left: 2.77%;margin-top: 1.39%;" id="main"></div>
+<div style="width: 80%;height: 80%;float: left;margin-left: 2.77%;margin-top: 1.39%;display: none" id="main"></div>
 <!--<div>
 <input type="button" value="click" id="test"/>
 </div>
@@ -79,7 +79,7 @@
     }
     if(navCount%2==1){
         $("#test1").val("显示导航栏");
-        $("nav").html(null);
+        $("nav").css("display","none");
         $("nav").css("width","0");
         $("#main").css("margin-left","10.5%");
     }else {
@@ -89,27 +89,19 @@
         function () {
             navCount=localStorage.getItem("navCount");
             if(navCount%2==0){
-                $("nav").html(null);
-                $("nav").css("width","0");
-                $("#main").css("margin-left","10.5%");
+                $("nav").css("display","none");
                 $("#test1")[0].value="显示导航栏";
+                $("#main").css("margin-left","10.5%");
             }else {
-                $("nav").html("<ul>\n" +
-                    "        <li class=\"section\"><a href=\"device1.html\"><span class=\"icon\">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>\n" +
-                    "        <li><a href=\"start.html\"><span class=\"icon\">&#128200;</span>设备统计</a></li>\n" +
-                    "        <li><a href=\"model.html\"><span class=\"icon\">&#128201;</span>模型仓库</a></li>\n" +
-                    "        <li><a href=\"hisdata.html\"><span class=\"icon\">&#128196;</span>海量分析</a></li><!--128711-->\n" +
-                    "    </ul>");
-                $("nav").css("width","14.58%");
+                $("nav").css("display","block");
                 showTheme();
-                $("#main").css("margin-left","2.77%");
                 $("#test1").val("隐藏导航栏");
+                $("#main").css("margin-left","2.77%");
             }
             navCount++;
             localStorage.setItem("navCount",navCount);
         }
     );
-
 </script>
 </body>
 </html>

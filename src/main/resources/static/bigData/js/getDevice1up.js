@@ -38,6 +38,8 @@ function getdata() {
             for(var i=0; i<meso.length; i++){
 
                 var a = document.createElement("a");
+                a.setAttribute("style","display:none");
+                $(a).fadeIn((i%6)*((i%6))*500/2+2000);
                 var div = document.createElement("div");
                 div.setAttribute("id","mains"+i);
 
@@ -111,7 +113,7 @@ function getdata() {
                         },
                         series : [
                             {
-                                name:'生活费',
+                                name:meso[i].deviceType,
                                 type:'bar',
                                 stack: '总量',
                                 label: {
@@ -139,6 +141,7 @@ function getdata() {
                         ]
                     };
                     myChart.setOption(option);
+
                 }else {
                     if(i%2==1){
                         div.setAttribute("style","background:#fffae3;width: 30.55%;height:200px;float: left;margin:20px 2.77% 20px 25%");//background-image:url('images/bgimage1.png')
@@ -209,7 +212,7 @@ function getdata() {
                         },
                         series : [
                             {
-                                name:'生活费',
+                                name:meso[i].deviceType,
                                 type:'bar',
                                 stack: '总量',
                                 label: {
@@ -237,11 +240,13 @@ function getdata() {
                         ]
                     };
                     myChart.setOption(option);
+
                 }
 
             }
             var div1 = document.createElement("div");
-            div1.setAttribute("style","width:92.59%;height:400px");
+            div1.setAttribute("style","display:none;width:92.59%;height:400px");
+            $(div1).fadeIn(5000);
             document.getElementById('main2').appendChild(div1);
             var myChart1 = echarts.init(div1);
             option = {
@@ -320,7 +325,8 @@ function getdata() {
             myChart1.setOption(option);
 
             var div2 = document.createElement("div");
-            div2.setAttribute("style","width:92.59%;height:400px;margin-top:40px");
+            div2.setAttribute("style","display:none;width:92.59%;height:400px;margin-top:40px");
+            $(div2).fadeIn(7000);
             document.getElementById('main2').appendChild(div2);
             var myChart2 = echarts.init(div2);
             option = {
@@ -399,7 +405,8 @@ function getdata() {
             myChart2.setOption(option);
 
             var div3 = document.createElement("div");
-            div3.setAttribute("style","width:92.59%;height:400px;margin-top:40px");
+            div3.setAttribute("style","display:none;width:92.59%;height:400px;margin-top:40px");
+            $(div3).fadeIn(9000);
             document.getElementById('main2').appendChild(div3);
             var myChart3 = echarts.init(div3);
             option = {
@@ -481,3 +488,5 @@ function getdata() {
     }
 }
 getdata();
+
+//mychart.on('mouseover/mouseout/mousemove',function(params){window.alert(params.name/value/type)});

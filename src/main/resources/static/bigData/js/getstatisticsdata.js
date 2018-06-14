@@ -1,4 +1,5 @@
 document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
+$("#main").fadeIn(3000);
 function timestampToTime(timestamp) {
     var date = new Date(timestamp);
     Y = date.getFullYear() + '-';
@@ -345,6 +346,8 @@ function showData() {
 
             if (myXmlHttpRequest.readyState == 4) {
                 var myChart = echarts.init(document.getElementById('main'));
+                $("#main").css("display","none");
+                $("#main").fadeIn(3000);
                 var xAxisData = [];
                 var data1 = [];
                 var data2 = [];

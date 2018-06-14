@@ -1,3 +1,4 @@
+$("#table_id_example").fadeIn(3000);
 function timestampToTime(timestamp) {
     var date = new Date(timestamp);
     Y = date.getFullYear() + '-';
