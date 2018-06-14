@@ -38,6 +38,14 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
             templateUrl:"tenant.html",
             controller:"mainCtrl"
         })
+        .when("/customerUser",{
+            templateUrl:"customerUser.html",
+            controller:"customerCtrl"
+        })
+        .when("/customer",{
+            templateUrl:"customer.html",
+            controller:"customerUserCtrl"
+        })
         .otherwise({
             redirectTo:"/homePage"
         });
@@ -46,8 +54,13 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
 mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope,$location,$resource) {
     /*路由跳转*/
     $scope.$location = $location;
+    console.log($.cookie());
 
-
+    /*侧边栏选中效果*/
+    var href  = window.location.hash;
+    var hrefClass = href.substring(2,href.length);
+    $("#"+hrefClass).css("background","#4f6f93");
+    $("#"+hrefClass).siblings().css("background","");
 
     /*退出登录*/
     $scope.logout = function () {
@@ -63,23 +76,22 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
     };
 
     $("#backIcon").click(function () {
-        var href = window.location.search;//取?后的参数
-        console.log(href);
-        var attr = href.substring(href.indexOf("?")+1);
-        console.log(attr);
-        var attrs = attr.split("&");
-        window.location.href = "/home?"+attrs[0]+"&"+attrs[1]+"&"+attrs[2];
+        window.location.href = "/home";
 
     });
+
+
 
 
 
     /*突出显示效果*/
 
         $(".homeIconBackground,.side-menu-icon").mouseover(function(){
+
             $(this).siblings().stop().fadeTo(300, 0.3);//动画速度用数字表示时不需加引号
         });
         $(".homeIconBackground,.side-menu-icon").mouseout(function () {
+
             $(this).siblings().stop().fadeTo(300, 1);
         });
         $("#quit,#backIcon").mouseover(function () {
@@ -90,11 +102,7 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
         });
 
         /*HEAD MENU用户信息显示*/
-        var hrefUpMenu = window.location.search;//取?后的参数
-        var attrUpMenu = hrefUpMenu.substring(hrefUpMenu.indexOf("?")+1);
-        var attrsUpMenu = attrUpMenu.split("&");
-        console.log(attrsUpMenu[2]);
-        var userId = attrsUpMenu[2]; //用于记录当前用户id
+        var userId = $.cookie("userId");
         $.ajax({
             url:"/api/account/user?userId="+userId,
             type:"GET",
@@ -111,24 +119,6 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
             }
         });
 
-        /*跑马灯效果*/
-   /* (function () {
-        var wrap = document.getElementById('wrap'),
-            first = document.getElementById('first');
-        var timer = window.setInterval(move, 50);
-        wrap.onmouseover = function () {
-            window.clearInterval(timer);
-        };
-        wrap.onmouseout = function () {
-            timer = window.setInterval(move, 50);
-        };
-        function move() {
-            wrap.scrollLeft++;
-            if (wrap.scrollLeft >= first.scrollWidth) {
-                wrap.scrollLeft = 0;
-            }
-        }
-    })();*/
 
 
 

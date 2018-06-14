@@ -135,7 +135,7 @@
                             <td class="attName">父类设备:</td>
                             <td>
                                 <select class="inputInfo" id="parentId">
-                                    <option></option>
+                                    <option value=""></option>
                                     <option ng-repeat="data in deviceListAll" class="{{data.id}}">{{data.name}}</option>
                                 </select>
                             </td>
@@ -144,7 +144,7 @@
                             <td class="attName">厂商:</td>
                             <td>
                                 <select class="inputInfo" id="manufacture" ng-change="getCreateManufacture()" ng-model="myManufacturer">
-
+                                    <option value=""></option>
                                     <option ng-repeat="data in manufacturerInfo" class="{{data.manufacturerId}}">{{data.manufacturerName}}</option>
                                 </select>
                             </td>
@@ -153,7 +153,7 @@
                             <td class="attName">设备类型:</td>
                             <td>
                                 <select class="inputInfo" id="deviceType" ng-change="getCreateDeviceType()" ng-model="myDeviceType">
-
+                                    <option value=""></option>
                                     <option ng-repeat="data in deviceTypeInfo" class="{{data.deviceTypeId}}">{{data.deviceTypeName}}</option>
                                 </select>
                             </td>
@@ -162,7 +162,7 @@
                             <td class="attName">型号：</td>
                             <td>
                                 <select class="inputInfo" id="model" ng-change="getCreateDeviceModel()" ng-model="myDeviceModel">
-
+                                    <option value=""></option>
                                     <option ng-repeat="data in deviceModelInfo" class="{{data.modelId}}">{{data.modelName}}</option>
                                 </select>
                             </td>

@@ -26,8 +26,10 @@
     <!--pager-->
     <link href="static/thingsManage/assets/css/pager.css" rel="stylesheet" type="text/css">
 
-    <script type="text/javascript" src="static/thingsManage/assets/js/jquery-1.11.1.js"></script>
+
     <!-- MAIN ANGULAR SCRIPT -->
+    <script type="text/javascript" src="static/thingsManage/assets/js/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="static/thingsManage/assets/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="static/thingsManage/assets/js/angular.js"></script>
     <script type="text/javascript" src="static/thingsManage/assets/js/angular-route.js"></script>
     <script type="text/javascript" src="static/thingsManage/assets/js/angular-resource.js"></script>
@@ -61,6 +63,9 @@
     <!--Customer-->
     <script type="text/javascript" src="static/thingsManage/assets/js/customerCtrl.js"></script>
     <script type="text/javascript" src="static/thingsManage/assets/js/pager.js"></script>
+
+    <!--CustomerUser-->
+    <script type="text/javascript" src="static/thingsManage/assets/js/customerUserCtrl.js"></script>
 </head>
 <body ng-controller="mainCtrl">
 
@@ -81,7 +86,7 @@
 
             <div class="col-md-7 col-sm-12">
                 <span class="upSideMenu" id="firstSpan"><i class="fa fa-user"></i>当前用户：<span ng-cloak>{{currentUser}}</span></span>
-                <span class="upSideMenu"><i class="fa fa-users"></i>用户等级：<span ng-cloak>{{currentUserLevel}}</span></span>
+                <span class="upSideMenu"><i class="fa fa-line-chart"></i>用户等级：<span ng-cloak>{{currentUserLevel}}</span></span>
                 <span class="upSideMenu" id="backIcon"><i class="fa fa-reply"></i>返回上一级</span>
                 <span class="upSideMenu" id="quit" ng-click="logout()"><i class="fa fa-sign-out"></i>退出登录</span>
             </div>
@@ -95,54 +100,54 @@
         <li style="border-bottom:0px;">
             <a href="#" title="close"> <i class="fa fa-close fa-2x menu-close-icon b-clr"></i></a>
         </li>
-        <li class="side-menu-icon">
+        <li class="side-menu-icon" id="homePage">
             <a href ="" title="首页" ng-click="$location.path('homePage')">
                 <i class="fa fa-home fontStyle"></i>
                 <span class="textStyle">首页</span>
             </a>
 
         </li>
-        <li class="side-menu-icon">
+        <li class="side-menu-icon" id="deviceList">
             <a href="" title="设备列表" ng-click="$location.path('deviceList')">
                 <i class="fa fa-file-text-o fontStyle"></i>
                 <span class="textStyle">设备列表</span>
             </a>
         </li>
-        <li class="side-menu-icon">
+        <li class="side-menu-icon" id="deviceGroup">
             <a href="" title="设备组" ng-click="$location.path('deviceGroup')">
                 <i class="fa fa-cubes fontStyle"></i>
                 <span class="textStyle">设备组</span>
             </a>
         </li>
-        <li class="side-menu-icon">
+        <li class="side-menu-icon" id="service">
             <a href="" title="服务管理" ng-click="$location.path('service')">
                 <i class="fa fa-cog fontStyle"></i>
                 <span class="textStyle">服务管理</span>
             </a>
         </li>
-        <li class="side-menu-icon">
+        <li class="side-menu-icon" id="plugins">
             <a href="" title="插件管理" ng-click="$location.path('plugins')">
                 <i class="fa fa-plug fontStyle "></i>
                 <span class="textStyle">插件管理</span>
             </a>
         </li>
-        <li class="side-menu-icon">
+        <li class="side-menu-icon" id="rules">
             <a href="" title="规则管理" ng-click="$location.path('rules')">
                 <i class="fa fa-link fontStyle "></i>
                 <span class="textStyle">规则管理</span>
             </a>
         </li>
 
-        <li class="side-menu-icon">
-            <a href="" title="客户" ng-click="$location.path('customer')">
-                <i class="fa fa-user fontStyle "></i>
-                <span class="textStyle">客户</span>
+        <li class="side-menu-icon" id="customer">
+            <a href="" title="客户组" ng-click="$location.path('customer')">
+                <i class="fa fa-users fontStyle "></i>
+                <span class="textStyle">客户组</span>
             </a>
         </li>
 
-        <li class="side-menu-icon">
+        <li class="side-menu-icon" id="evaluate">
             <a href="" title="用户手册" ng-click="$location.path('evaluate')">
-                <i class="fa fa-line-chart fontStyle "></i>
+                <i class="fa fa-newspaper-o fontStyle "></i>
                 <span class="textStyle">用户手册</span>
             </a>
         </li>
@@ -160,8 +165,6 @@
 <!-- CONTENT-WRAPPER SECTION END-->
 
 <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
-<!-- CORE JQUERY  -->
-<script type="text/javascript" src="static/thingsManage/assets/js/jquery-1.11.1.js"></script>
 <!-- BOOTSTRAP SCRIPTS  -->
 <script type="text/javascript" src="static/thingsManage/assets/js/bootstrap.js"></script>
 <!-- CUSTOM SCRIPTS  -->

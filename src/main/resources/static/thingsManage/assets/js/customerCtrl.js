@@ -1,41 +1,33 @@
-mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resource) {
-    var href = window.location.search;//取?后的参数
-    var attr = href.substring(href.indexOf("?")+1);
-    var attrs = attr.split("&");
-    console.log(attrs);
-    var userLevel = attrs[0];
-    var tenantId = attrs[1];
-    var userId = attrs[2];
-  
-    //getUserById
-    /*var userObj = $resource("/api/account/user?userId=:userId");
-    var userInfo = userObj.get({userId:userId});
-    console.log(userInfo);*/
-    /*$.ajax({
-        url:"/api/account/user?userId="+userId,
-        dataType:"json",
-        type:"GET",
-        async:false,
-        contentType: "application/json; charset=utf-8",
-        success:function (msg) {
-            console.log(msg);
-            customId = msg.customer_id;
+mainApp.controller("customerCtrl",["$scope","$resource","$location",function ($scope,$resource,$location) {
+    $scope.$location = $location;
+
+    var currentPage=1;//用于记录当前页号
+    var customersLimit = 9;//用于记录当前展示客户个数
+
+
+    $scope.customerLimit = function () {
+        if($("#customerNum").val() === ""){
+            setTimeout(function () {
+                customersLimit = 9;
+                var customerCurrentObj = $resource("/api/account/customers?limit=:customersLimit&page=:page");
+                $scope.customersInfo = customerCurrentObj.query({customersLimit:customersLimit,page:(currentPage-1)});//所有客户组信息
+                console.log($scope.customersInfo);
+            },1000);
+
+        }else{
+            setTimeout(function () {
+                customersLimit = $("#customerNum").val();
+                console.log(customersLimit);
+                var customerCurrentObj = $resource("/api/account/customers?limit=:customersLimit&page=:page");
+                $scope.customersInfo = customerCurrentObj.query({customersLimit:customersLimit,page:(currentPage-1)});//所有客户组信息
+                console.log($scope.customersInfo);
+            },1000);
         }
-    });*/
-    var currentPage;//用于记录当前页号
-    
-
-
-    $scope.limit = function () {
-        setTimeout(function () {
-            console.log($("#customerNum").val());
-        },1000);
-
     };
 
     //获取所有客户组
-    var customerObj = $resource("/api/account/customers?limit=10&page=0");
-    $scope.customersInfo = customerObj.query();//所有客户组信息
+    var customerObj = $resource("/api/account/customers?limit=9&page=:page");
+    $scope.customersInfo = customerObj.query({page:(currentPage-1)});//所有客户组信息
     console.log($scope.customersInfo);
 
     /*鼠标移入动画效果*/
@@ -52,6 +44,9 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
 
     //选中客户组信息展示
     $scope.showCustomer = function (data) {
+        var offset = $('#customerChart').offset().top-190;
+        console.log(offset);
+        $('html, body').animate({scrollTop:offset}, 1000);
         $scope.customersInfo.forEach(function (items) {
             if(data != items) items.style = {}
         });
@@ -67,18 +62,23 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
         $scope.address = data.address;
         $scope.email = data.email;
         $scope.phone = data.phone;
-
+        // document.cookie="customerId="+$scope.customerId;
+        $.cookie("customerId",$scope.customerId);
     };
     //分页
-
     Page({
-        num:10,					//页码数
-        startnum:6,				//指定页码
+        num:20,					//页码数
+        startnum:1,				//指定页码
         elem:$('#customerPage'),		//指定的元素
         callback:function(n){	//回调函数
             console.log(n);//当前页号
+            currentPage = Number(n);
+            var customerObj = $resource("/api/account/customers?limit=:customersLimit&page=:page");
+            $scope.customersInfo = customerObj.query({customersLimit:customersLimit,page:(currentPage-1)});//所有客户组信息
+            console.log($scope.customersInfo);
         }
     });
+
 
 
     //删除客户组
@@ -98,9 +98,13 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
     //新增客户组
     $("#addCustomer").click(function () {
         $("#customerName").removeClass("input-err");
+        $("#createCustomer input").each(function () {
+            $(this).val("");
+        });
+
     });
     $scope.createCustomer = function () {
-
+        $("#modalConfirmCreateCustomer").attr("data-dismiss","modal");
         if($("#customerName").val()){
             var title = $("#customerName").val();
             var phone = $("#customerPhone").val();
@@ -133,7 +137,7 @@ mainApp.controller("customerCtrl",["$scope","$resource",function ($scope,$resour
                 $(this).removeClass('input-err');
             });
         }
-    }
+    };
 
     //显示现有信息
     $scope.setCustomerInfo = function () {

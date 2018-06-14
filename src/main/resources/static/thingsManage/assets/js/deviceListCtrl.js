@@ -418,9 +418,15 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     // var createDeviceObj =  $resource("/api/device/create");
     $("#addDevice").click(function () {
         $("#name").removeClass("input-err");
+        $("#createDevice input").each(function () {
+            $(this).val("");
+        });
+        $("#createDevice select").each(function () {
+            $(this).prop("selectedIndex",0).attr("selected",true);
+        });
     });
     $scope.createDevice = function(){
-
+        $("#modalConfirm").attr("data-dismiss","modal");
         if($("#name").val()){
             $scope.name = $("#name").val();
             $scope.parent = $("#parentId option:selected").attr("class");
@@ -462,7 +468,11 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                    if(msgJson.id == ""){
                        toastr.warning("不允许创建同名设备！");
                    }else{
-                       window.location.reload();
+                       toastr.success("创建设备成功！");
+                       setTimeout(function () {
+                           window.location.reload();
+                       },1000);
+
                    }
 
                 },

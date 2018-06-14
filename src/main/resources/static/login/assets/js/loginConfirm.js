@@ -1,6 +1,6 @@
-var userLevel;
-var tenant;
-var userId;
+// var userLevel;
+// var tenant;
+// var userId;
 $(document).ready(function () {
 
     /*
@@ -25,10 +25,14 @@ $(document).ready(function () {
                     console.log(password);*/
                     console.log(msg);
                     var msgJson = JSON.parse(msg);
-                    userLevel = msgJson.authority;
+                    $.cookie("userLevel",msgJson.authority);
+                    $.cookie("tenantId",msgJson.tenant_id);
+                    $.cookie("userId",msgJson.user_id);
+                   /* userLevel = msgJson.authority;
                     tenant = msgJson.tenant_id;
                     userId = msgJson.user_id;
-                   window.location.href = "/home?"+userLevel+"&"+tenant+"&"+userId;
+                   window.location.href = "/home?"+userLevel+"&"+tenant+"&"+userId;*/
+                    window.location.href = "/home";
                 },
                 error:function () {
                     toastr.error("用户名或密码错误！");

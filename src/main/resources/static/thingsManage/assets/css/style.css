@@ -61,9 +61,9 @@ HEAD MENU STYLES
 #side-menu {
     height: 100%;
     position: fixed;
-      left: -250px;
+    left: 0px;
+    top: 0px;
     background-color: #305680;
-    /*#3AB056*/
     color: #fff;
     z-index: 999;
     overflow: auto;
@@ -77,7 +77,7 @@ HEAD MENU STYLES
     }
 
         #side-menu ul li {
-            border-bottom: 1px dashed #cccccc;
+            border-bottom: 1px solid #2a4c70;
             padding: 21px 25px;
             text-align: left;
         }
@@ -87,7 +87,7 @@ HEAD MENU STYLES
             }
 
             #side-menu ul li a, #side-menu ul li a:hover {
-                color: #fff;
+                color: #cad4df;
                 text-decoration: none;
                 font-size: 16px;
             }
@@ -175,20 +175,18 @@ ul,li{
 /* =============================================================
 DEVICELIST STYLES
 ============================================================ */
-#deviceListIcon,#customerIcon{
+#deviceListIcon,#customerIcon,#customerUserIcon{
     width: 48%;
     float: left;
     padding-left: 10px;
 }
 
-#deviceListChart,#customerChart{
+#deviceListChart,#customerChart,#customerUserChart{
     width: 40%;
     float: right;
-    /*position: fixed;*/
-    /*right: 30px;*/
-    /*margin-top: 20px;*/
     border: 1px solid #c0c0c0;
     border-radius: 10px;
+    margin-right: 20px;
 
 }
 

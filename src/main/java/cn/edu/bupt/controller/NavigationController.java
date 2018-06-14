@@ -97,6 +97,9 @@ public class NavigationController {
         return "static/thingsManage/tenant";
     }
 
+    @RequestMapping("/customerUser")
+    public String customerUserCtrl() {return "static/thingsManage/customerUser";}
+
     @RequestMapping("/statisticsDevice")
     public String statisticsDevice() { return  "static/bigData/device1"; }
 
