@@ -20,7 +20,7 @@ public class EventController extends DefaultThingsboardAwaredController {
                              @RequestParam long endTime,
                              @RequestParam(required = false) boolean ascOrder) {
 
-        String requestAddr = "/api/v1/event/"  + getTenantId() +
+        String requestAddr = "/api/v1/deviceaccess/event/"  + getTenantId() +
                 "/" + deviceId + "?limit=" + limit + "&startTime=" + startTime
                 + "&endTime=" + endTime;
         if(ascOrder == true){

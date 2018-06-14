@@ -40,7 +40,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String createDevice(@RequestBody String deviceInfo) {
-        String requestAddr = "/api/v1/device" ;
+        String requestAddr = "/api/v1/deviceaccess/device" ;
 
         /**
          * 这里的deviceInfo为json
@@ -76,7 +76,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @RequestMapping(value = "/delete/{deviceId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String delete(@PathVariable(DEVICE_ID) String strDeviceId) {
-        String requestAddr ="http://"+ getDeviceAccessServer() +String.format("/api/v1/device/%s", strDeviceId);
+        String requestAddr ="http://"+ getDeviceAccessServer() +String.format("/api/v1/deviceaccess/device/%s", strDeviceId);
         try{
             String responseContent = HttpUtil.sendDeletToThingsboard(requestAddr,request.getSession());
             return retSuccess(responseContent) ;
@@ -96,7 +96,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
         JsonObject deviceInfoJson = (JsonObject)new JsonParser().parse(json);
         deviceInfoJson.addProperty("tenantId", getTenantId());
-        String requestAddr = "/api/v1/device" ;
+        String requestAddr = "/api/v1/deviceaccess/device" ;
         String responseContent = null ;
         try{
             responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
@@ -116,7 +116,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @ResponseBody
     public String finddeviceName(@PathVariable(DEVICE_ID) String strDeviceId) {
 
-        String requestAddr ="http://"+ getDeviceAccessServer() +String.format("/api/v1/device/%s", strDeviceId);
+        String requestAddr ="http://"+ getDeviceAccessServer() +String.format("/api/v1/deviceaccess/device/%s", strDeviceId);
         try{
             String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
                     null,
@@ -139,7 +139,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
                              @RequestParam(required = false) String idOffset,
                              @RequestParam(required = false) String textOffset) {
 
-        String requestAddr = "/api/v1/tenant/devices/"  + getTenantId() +"?limit=" + limit;
+        String requestAddr = "/api/v1/deviceaccess/tenant/devices/"  + getTenantId() +"?limit=" + limit;
         if(textSearch != null){
             requestAddr = requestAddr + "&textSearch=" + textSearch;
         }
@@ -179,7 +179,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
                                    @RequestParam(required = false) String idOffset,
                                    @RequestParam(required = false) String textOffset) {
 
-        String requestAddr = "http://" + getDeviceAccessServer() + "/api/v1/parentdevices/"+parentDeviceId + "?limit=" + limit;
+        String requestAddr = "http://" + getDeviceAccessServer() + "/api/v1/deviceaccess/parentdevices/"+parentDeviceId + "?limit=" + limit;
         if(textSearch != null){
             requestAddr = requestAddr + "&textSearch=" + textSearch;
         }
@@ -204,7 +204,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @RequestMapping(value = "/token/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getDeviceToken(@PathVariable String deviceId) {
-        String requestAddr = "/api/v1/credentialbyid/" + deviceId ;
+        String requestAddr = "/api/v1/deviceaccess/credentialbyid/" + deviceId ;
         String responseContent = null ;
         try{
             responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,

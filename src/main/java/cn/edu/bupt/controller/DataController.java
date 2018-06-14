@@ -18,7 +18,7 @@ public class DataController extends DefaultThingsboardAwaredController{
     //后台无此方法，应该是从卡夫卡拿实时数据
     @RequestMapping(value="/getKeyData/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getKeyData(@PathVariable("deviceId") String deviceId) {
-        String requestKeyAddr = "/api/v1/data/alllatestdata/" + deviceId ;
+        String requestKeyAddr = "/api/v1/deviceaccess/data/alllatestdata/" + deviceId ;
 
         String responseKeyContent = null;
         try {
@@ -39,7 +39,7 @@ public class DataController extends DefaultThingsboardAwaredController{
         responseKeyContent=responseKeyContent.replaceAll("[\\[\\]]","");
         responseKeyContent=responseKeyContent.replaceAll("\"","");*/
 
-        String requestHistoricalDataAddr = "/api/v1/data/alllatestdata/"+ deviceId;
+        String requestHistoricalDataAddr = "/api/v1/deviceaccess/data/alllatestdata/"+ deviceId;
 
 
         String responseHistoricalDataContent = null ;
@@ -68,7 +68,7 @@ public class DataController extends DefaultThingsboardAwaredController{
         responseKeyContent=responseKeyContent.replaceAll("[\\[\\]]","");
         responseKeyContent=responseKeyContent.replaceAll("\"","");*/
 
-        String requestHistoricalDataAddr = "/api/v1/data/alldata/"+ deviceId
+        String requestHistoricalDataAddr = "/api/v1/deviceaccess/data/alldata/"+ deviceId
                 + "?key=" + key
                 + "&startTs="+ startTs
                 + "&endTs="+ endTs
@@ -91,7 +91,7 @@ public class DataController extends DefaultThingsboardAwaredController{
     //获取所有遥测数据的key
     @RequestMapping(value="/allKeys/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getAllKeys(@PathVariable("deviceId") String deviceId) {
-        String requestKeyAddr = "/api/v1/data/allKeys/" + deviceId ;
+        String requestKeyAddr = "/api/v1/deviceaccess/data/allKeys/" + deviceId ;
 
         String responseContent = null;
         try {
@@ -109,7 +109,7 @@ public class DataController extends DefaultThingsboardAwaredController{
     //获取所有属性
     @RequestMapping(value="/getKeyAttribute/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getKeyAttributes(@PathVariable("deviceId") String deviceId) {
-        String requestKeyAddr = "/api/v1/allattributes/" + deviceId ;
+        String requestKeyAddr = "/api/v1/deviceaccess/allattributes/" + deviceId ;
 
         String responseKeyAttributeContent = null;
         try {
@@ -133,7 +133,7 @@ public class DataController extends DefaultThingsboardAwaredController{
         responseKeyAttributeContent=responseKeyAttributeContent.replaceAll("[\\[\\]]","");
         responseKeyAttributeContent=responseKeyAttributeContent.replaceAll("\"","");*/
 
-        String requestHistoricalDataAddr = "/api/v1/attributes/"+ deviceId
+        String requestHistoricalDataAddr = "/api/v1/deviceaccess/attributes/"+ deviceId
                 + "/" +key;
 
         String responseAttributeDataContent = null ;

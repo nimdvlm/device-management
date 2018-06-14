@@ -39,7 +39,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
 
         JsonObject groupInfoJson = (JsonObject)new JsonParser().parse(deviceGroupInfo);
         groupInfoJson.addProperty("tenantId", getTenantId());
-        String requestAddr = "/api/v1/group" ;
+        String requestAddr = "/api/v1/deviceaccess/group" ;
 
         String responseContent = null ;
         try {
@@ -59,7 +59,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @RequestMapping(value = "/delete/{groupId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String delete(@PathVariable String groupId) {
-        String requestAddr = String.format("/api/v1/group/%s", groupId);
+        String requestAddr = String.format("/api/v1/deviceaccess/group/%s", groupId);
 
         String responseContent = null ;
         try {
@@ -84,7 +84,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
                                   @RequestParam(required = false) String textOffset) {
 
 
-        String requestAddr = "/api/v1/groups/tenant/" + getTenantId() +"?limit=" + limit;
+        String requestAddr = "/api/v1/deviceaccess/groups/tenant/" + getTenantId() +"?limit=" + limit;
         if(textSearch != null){
             requestAddr = requestAddr + "&textSearch=" + textSearch;
         }
@@ -122,7 +122,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
                                       @RequestParam(required = false) String idOffset,
                                       @RequestParam(required = false) String textOffset) throws Exception {
 
-        String requestAddr = String.format("/api/v1/group/devices/%s", gId);
+        String requestAddr = String.format("/api/v1/deviceaccess/group/devices/%s", gId);
         requestAddr = requestAddr  + "?limit=" + limit;
         if(textSearch != null){
             requestAddr = requestAddr + "&textSearch=" + textSearch;
@@ -151,7 +151,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @RequestMapping(value = "/assign/{deviceId}/{groupId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String assignDeviceToGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {
-        String requestAddr = String.format("/api/v1/assign/group/%s/%s", gId, dId);
+        String requestAddr = String.format("/api/v1/deviceaccess/assign/group/%s/%s", gId, dId);
 
         String responseContent = null ;
         try {
@@ -172,7 +172,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
     @RequestMapping(value = "/unassign/{deviceId}/{groupId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String unAssignDeviceFromGroup(@PathVariable("deviceId") String dId,@PathVariable("groupId") String gId) throws Exception {
-        String requestAddr = String.format("/api/v1/unassign/group/%s/%s", gId,dId);
+        String requestAddr = String.format("/api/v1/deviceaccess/unassign/group/%s/%s", gId,dId);
 
         String responseContent = null ;
         try {
