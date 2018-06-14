@@ -1,19 +1,212 @@
-<div class="row pad-botm">
-    <div class="col-md-12">
-        <h4 class="header-line">客户</h4>
+<div class="content-wrapper" ng-controller="customerCtrl">
+    <div class="container">
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-md-2">
+                <h2>客户组</h2>
+            </div>
+            <div class="col-md-1" style="margin-top: 23px;">
+                <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#createCustomer" id="addCustomer">+ 创建客户组
+                </button>
+            </div>
+        </div>
 
-    </div>
 
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="alert alert-success">
-            This is blank page for your customization. So use this page and start your project now.
-            <br/>
-            Happy downloading
-            <br/>
-            Keep Looking <a target="_blank" href="http://#/">binarytheme.com</a> for cool stuff.
+        <div class="row" style="margin-left: 20px;">
+                每页显示&nbsp<input type="text" id="customerNum" style="width: 50px;border-radius: 5px;" ng-change="limit()" ng-model="myLimit">&nbsp个客户组
+        </div>
+
+        <div id="customerIcon">
+            <div class="chooseBtn" ng-repeat="data in customersInfo" ng-click="showCustomer(data)" ng-style="data.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                <div title="{{data.title}}">
+                    <i class="fa fa-user fa-2x"></i>
+                    <p>{{data.title}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="customerChart">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th colspan="2">{{title}}
+
+                        <i class="fa fa-trash-o highlight" data-toggle="modal"
+                           data-target="#deleteCustomer" title="删除" style="float: right;font-size: 17px;cursor: pointer;color: #305680;"></i>
+                    </th>
+                </tr>
+
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="attName">客户组ID:</td>
+                    <td>{{customerId}}</td>
+                </tr>
+                <tr>
+                    <td class="attName">所属租户ID:</td>
+                    <td>{{tenantId}}</td>
+                </tr>
+                <tr>
+                    <td class="attName">电话：</td>
+                    <td>{{phone}}</td>
+                </tr>
+                <tr>
+                    <td class="attName">地址:</td>
+                    <td>{{address}}</td>
+                </tr>
+                <tr>
+                    <td class="attName">email：</td>
+                    <td>{{email}}</td>
+                </tr>
+                <tr>
+                    <td class="attName">备注信息：</td>
+                    <td>{{additionalInfo}}</td>
+                </tr>
+
+               <tr>
+                    <td class="attName">操作：</td>
+                    <td>
+                        <button class="btn btn-primary" data-toggle="modal"
+                                data-target="#refreshCustomer" ng-click="setCustomerInfo()">修改客户组信息</button>
+
+                        <button class="btn btn-primary">查看客户组用户信息</button>
+                        <!--ng-click="seeUser()"-->
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="row" style="margin-left: 20px;">
+                <ul class="pagination" id="customerPage">
+                </ul>
+                <div class="pageJump">
+                    <span>跳转到</span>
+                    <input type="text"/>
+                    <span>页</span>
+                    <button type="button" class="button">确定</button>
+                </div>
+            <!--</div>-->
         </div>
     </div>
+    <!--新增客户组-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="createCustomer">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                <h4 class="modal-title" style="font-weight: bold;">新增客户</h4>
+            </div>
+            <div class="modal-body" id="customerInfoTable">
+                <table class="table table-striped table-hover">
+                    <tbody>
+                    <tr>
+                        <td class="attName"><span style="color: red;font-size: 10px;margin-right: 5px;">*</span>客户名称:</td>
+                        <td><input type="text" class="inputInfo" id="customerName" placeholder="必填"></td>
+                    </tr>
+                    <tr>
+                        <td class="attName">电话:</td>
+                        <td>
+                            <input type="text" class="inputInfo" id="customerPhone">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="attName">地址:</td>
+                        <td>
+                            <input type="text" class="inputInfo" id="customerAddress">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="attName">email:</td>
+                        <td>
+                            <input type="text" class="inputInfo" id="customerEmail">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="attName">备注信息：</td>
+                        <td>
+                            <input type="text" class="inputInfo" id="customerAddInfo">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseCreateCustomer">关闭</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalConfirmCreateCustomer" ng-click="createCustomer()">确定</button>
+            </div>
 
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+    <!-- 删除客户组 -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="deleteCustomer">
+        <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" style="font-weight: bold;">删除客户</h4>
+                </div>
+                <div class="modal-body" id="deleteCustomerTable">
+                    <p style="text-align: center;font-size: 17px;">您真的要删除该客户吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseDeleteCustomer">取消</button>
+                    <button type="button" class="btn btn-primary" id="modalConfirmDeleteCustomer" data-dismiss="modal" ng-click="deleteCustomer()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--修改客户组信息-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="refreshCustomer">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" style="font-weight: bold;">新增客户组</h4>
+                </div>
+                <div class="modal-body" id="refreshCustomerInfoTable">
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                        <tr>
+                            <td class="attName"><span style="color: red;font-size: 10px;margin-right: 5px;">*</span>客户组名称:</td>
+                            <td><input type="text" class="inputInfo" disabled="disabled" ng-value="title" id="reCustomerName"></td>
+                        </tr>
+                        <tr>
+                            <td class="attName">电话:</td>
+                            <td>
+                                <input type="text" class="inputInfo" id="refreshCustomerPhone">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="attName">地址:</td>
+                            <td>
+                                <input type="text" class="inputInfo" id="refreshCustomerAddress">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="attName">email:</td>
+                            <td>
+                                <input type="text" class="inputInfo" id="refreshCustomerEmail">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="attName">备注信息：</td>
+                            <td>
+                                <input type="text" class="inputInfo" id="refreshCustomerAddInfo">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseRefresheCustomer">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalConfirmRefresheCustomer" ng-click="refreshCustomer()">确定</button>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>

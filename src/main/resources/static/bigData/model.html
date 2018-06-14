@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>数据分析平台</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="robots" content="" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.css" media="all" />
+    <link rel="stylesheet" href="css/style.css" media="all" />
+
+</head>
+<body>
+
+<div class="testing">
+    <header class="main">
+        <h1><strong>大数据平台</strong> </h1>
+        <input type="text" value="search" />
+    </header>
+    <section class="user">
+
+        <div style="width: 100px;height: 43px;float: left;margin-top: 22px;margin-left: 10px">
+            <input style="width: 90px;height: 35px" type="button" value="导航栏" id="test1"/>
+        </div>
+        <div class="buttons">
+            <button class="ico-font">&#9206;</button>
+            <input type="button" value="更多皮肤" id="test"/>
+            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 90px" value="返回上一级"/></a>
+            <input type="button" class="button blue" value="退出" onclick="quitThings()" />
+            <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
+            <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
+        </div>
+    </section>
+</div>
+<nav>
+    <ul>
+        <li><a href="device1.html"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
+        <li><a href="start.html"><span class="icon">&#128200;</span>设备统计</a></li>
+        <li class="section"><a href="model.html"><span class="icon">&#128201;</span>模型仓库</a></li>
+        <li><a href="hisdata.html"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
+    </ul>
+</nav>
+
+<div id="main1" style="width: 100%;margin-left: 20px">
+    <h1 style="color: white;font-size: 16px;margin-top:20px;margin-left:230px;">模型</h1>
+</div>
+<div id="main2" style="width: 100%;margin-top:370px;margin-left:20px;font-size:16px">
+    <h1 style="color: white;font-size: 16px;margin-left:230px;">模型实例</h1>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">模型定制</h4>
+            </div>
+            <div class="modal-body">
+                <select>
+                    <option>设备ID</option>
+                    <option>10001</option>
+                    <option>10002</option>
+                    <option>10003</option>
+                    <option>10004</option>
+                </select>
+                <select>
+                    <option>Key1</option>
+                    <option>temperature</option>
+                    <option>humidity</option>
+                    <option>pressure</option>
+                    <option>speed</option>
+                </select>
+                <select>
+                    <option>Key2</option>
+                    <option>temperature</option>
+                    <option>humidity</option>
+                    <option>pressure</option>
+                    <option>speed</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="modelchange" type="button" class="btn btn-primary">提交更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!--<div>
+<input type="button" value="click" id="test"/>
+</div>
+<script type="text/javascript">
+    $('test').onclick(
+        function () {
+            $('main').css("background","#208ed3");
+        }
+    )
+</script>-->
+
+<!--<script type="text/javascript">
+
+    var copydiv = document.getElementById("divcard");
+    for(var i=0;i<14;i++){
+        var clonediv = copydiv.cloneNode(true);
+        clonediv.setAttribute("id","divcard-"+i);
+        var clonename = clonediv.getElementsByTagName("p");
+        clonename[0].innerText="设备 No-"+(i+2);
+        copydiv.parentNode.appendChild(clonediv);
+
+    }
+</script>-->
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/common.js"></script>
+<script src="js/getUrlParam.js"></script>
+<script src="js/starttoend.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/getModel.js"></script>
+<script type="text/javascript">
+    var navCount;
+    navCount = localStorage.getItem("navCount");
+    if(navCount==null){
+        navCount=0;
+        localStorage.setItem("navCount",navCount);
+    }
+    if(navCount%2==1){
+        $("#test1").val("显示导航栏");
+        $("nav").html(null);
+        $("nav").css("width","0");
+        $("#navid").css("margin-left","8.5%");
+    }else {
+        $("#test1").val("隐藏导航栏");
+    }
+    $("#test1").click(
+        function () {
+            navCount=localStorage.getItem("navCount");
+            if(navCount%2==0){
+                $("nav").html(null);
+                $("nav").css("width","0");
+                $("#navid").css("margin-left","8.5%");
+                $("#test1")[0].value="显示导航栏";
+            }else {
+                $("nav").html("<ul>\n" +
+                    "        <li><a href=\"device1.html\"><span class=\"icon\">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>\n" +
+                    "        <li><a href=\"start.html\"><span class=\"icon\">&#128200;</span>设备统计</a></li>\n" +
+                    "        <li class=\"section\"><a href=\"model.html\"><span class=\"icon\">&#128201;</span>模型仓库</a></li>\n" +
+                    "        <li><a href=\"hisdata.html\"><span class=\"icon\">&#128196;</span>海量分析</a></li><!--128711-->\n" +
+                    "    </ul>");
+                $("nav").css("width","14.58%");
+                showTheme();
+                $("#navid").css("margin-left","0%");
+                $("#test1").val("隐藏导航栏");
+            }
+            navCount++;
+            localStorage.setItem("navCount",navCount);
+        }
+    );
+
+</script>
+</body>
+</html>

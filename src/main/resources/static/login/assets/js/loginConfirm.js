@@ -1,5 +1,6 @@
 var userLevel;
 var tenant;
+var userId;
 $(document).ready(function () {
 
     /*
@@ -26,7 +27,8 @@ $(document).ready(function () {
                     var msgJson = JSON.parse(msg);
                     userLevel = msgJson.authority;
                     tenant = msgJson.tenant_id;
-                   window.location.href = "/home?"+userLevel+"&"+tenant;
+                    userId = msgJson.user_id;
+                   window.location.href = "/home?"+userLevel+"&"+tenant+"&"+userId;
                 },
                 error:function () {
                     toastr.error("用户名或密码错误！");

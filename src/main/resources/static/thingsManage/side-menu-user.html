@@ -19,8 +19,14 @@
     <!--ui-grid file-->
     <!--TOASTR STYLE CSS-->
     <link href="static/thingsManage/assets/css/toastr.css" rel="stylesheet" type="text/css"/>
-    <link href="static/thingsManage/assets/css/bootstrap-switch.css" rel="stylesheet" type="text/css">
+
+
+    <!--pagination-->
     <link href="static/thingsManage/assets/css/pagination.css" rel="stylesheet" type="text/css">
+
+    <!--pager-->
+    <link href="static/thingsManage/assets/css/pager.css" rel="stylesheet" type="text/css">
+
     <script type="text/javascript" src="static/thingsManage/assets/js/jquery-1.11.1.js"></script>
     <!-- MAIN ANGULAR SCRIPT -->
     <script type="text/javascript" src="static/thingsManage/assets/js/angular.js"></script>
@@ -53,6 +59,9 @@
     <script type="text/javascript" src="static/thingsManage/assets/js/serviceCtrl.js"></script>
     <script type="text/javascript" src="static/thingsManage/assets/js/pluginCtrl.js"></script>
 
+    <!--Customer-->
+    <script type="text/javascript" src="static/thingsManage/assets/js/customerCtrl.js"></script>
+    <script type="text/javascript" src="static/thingsManage/assets/js/pager.js"></script>
 
 </head>
 <body ng-controller="mainCtrl">
@@ -65,23 +74,18 @@
                         <i class="fa fa-bars pull-left fa-2x b-clr"></i>
                     </span>
                 </div>
-                <div class="col-md-1 col-sm-1">
-                    <span><i class="fa fa-reply" id="backIcon"></i></span>
+                <div class="col-md-4 col-sm-12">
+                   <span id="headMenuFont">
+                       <marquee direction="left" onmouseover=this.stop() onmouseout=this.start() width=87% scrollamount="4"><i class="fa fa-home"></i>&nbsp;欢 迎 来 到 物 管 理 平 台 ！</marquee>
+                   </span>
                 </div>
-                <div class="col-md-4 col-sm-12"></div>
-                <div class="col-md-5 col-sm-12" >
-                    <i class="pull-right"> 欢迎来到物管理平台 &nbsp;&nbsp;</i>
-                </div>
-                <div class="col-md-1 col-sm-12">
-                    <input type="button" class="btn btn-danger" value="退出登录" id="quit" ng-click="logout()"/>
-                    <!--<a href="/"><input type="button" class="btn btn-danger" value="退出登录" id="quit" ng-click="logout()"/></a>-->
+                <div class="col-md-7 col-sm-12">
+                    <span class="upSideMenu" id="firstSpan"><i class="fa fa-user"></i>当前用户：<span ng-cloak>{{currentUser}}</span></span>
+                    <span class="upSideMenu"><i class="fa fa-users"></i>用户等级：<span ng-cloak>{{currentUserLevel}}</span></span>
+                    <span class="upSideMenu" id="backIcon"><i class="fa fa-reply"></i>返回上一级</span>
+                    <span class="upSideMenu" id="quit" ng-click="logout()"><i class="fa fa-sign-out"></i>退出登录</span>
                 </div>
             </div>
-            <!--<div class="row">
-                <div class="col-md-12">
-
-                </div>
-            </div>-->
         </div>
 
      </section>
@@ -154,7 +158,7 @@
     <script type="text/javascript" src="static/thingsManage/assets/js/bootstrap.js"></script>
      <!-- CUSTOM SCRIPTS  -->
     <script type="text/javascript" src="static/thingsManage/assets/js/custom.js" ></script>
-    <script type="text/javascript" src="static/thingsManage/assets/js/bootstrap-switch.js"></script>
+
     <!-- pagination -->
     <script type="text/javascript" src="static/thingsManage/assets/js/pagination.js"></script>
      <!-- echarts -->

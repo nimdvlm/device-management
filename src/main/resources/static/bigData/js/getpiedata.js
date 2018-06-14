@@ -1,4 +1,12 @@
-// 基于准备好的dom，初始化echarts实例
+document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
+$("#main").css("display","none");
+$("#main1").css("display","none");
+$("#main2").css("display","none");
+$("#main3").css("display","none");
+$("#main").fadeIn(3000);
+$("#main1").fadeIn(5000);
+$("#main2").fadeIn(7000);
+$("#main3").fadeIn(9000);
 var myChart = echarts.init(document.getElementById('main'));
 
 option = {
@@ -218,6 +226,15 @@ function getData() {
 
             var mes = myXmlHttpRequest.responseText;
             window.alert(mes);
+            $("#main").css("display","none");
+            $("#main1").css("display","none");
+            $("#main2").css("display","none");
+            $("#main3").css("display","none");
+            $("#main").fadeIn(3000);
+            $("#main1").fadeIn(5000);
+            $("#main2").fadeIn(7000);
+            $("#main3").fadeIn(9000);
+            document.getElementById("YWaitDialog").setAttribute("style","display:none;");
             var mes1 = JSON.parse(mes);
             meso = eval("(" + mes1 + ")");
             // 基于准备好的dom，初始化echarts实例
@@ -431,4 +448,5 @@ function getData() {
             }*/
         }
     }
+    document.getElementById("YWaitDialog").setAttribute("style","display:none;");
 }

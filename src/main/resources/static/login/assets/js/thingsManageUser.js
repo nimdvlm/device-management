@@ -8,22 +8,23 @@ $(document).ready(function () {
     var attrs = attr.split("&");
     var level = attrs[0];
     var tenant = attrs[1];
+    var userId = attrs[2];
     $("#thingsManage").click(function () {
         if(level == "CUSTOMER_USER"){
-                window.location.href = "/thingsUserManager?"+level+"&"+tenant;
+                window.location.href = "/thingsUserManager?"+level+"&"+tenant+"&"+userId;
         }
         else if(level == "TENANT_ADMIN"){
-                window.location.href = "/thingsTenantManager?"+level+"&"+tenant;
+                window.location.href = "/thingsTenantManager?"+level+"&"+tenant+"&"+userId;
         }
         else if(level == "SYS_ADMIN"){
-                window.location.href = "/thingsSystemManager?"+level+"&"+tenant;
+                window.location.href = "/thingsSystemManager?"+level+"&"+tenant+"&"+userId;
         }
     });
     $("#3dPages").click(function () {
         window.open("http://39.104.189.84:8800?id="+tenant);
     });
     $("#bigData").click(function () {
-       window.open("../bigData/device1.html");
+       window.location.href = "../bigData/device1.html?"+level+"&"+tenant+"&"+userId;
     });
 
 

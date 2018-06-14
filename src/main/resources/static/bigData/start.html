@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/style.css" media="all" />
 
 </head>
-<body style="background:#ffffff">
+<body>
 
 <div class="testing">
     <header class="main">
@@ -34,13 +34,14 @@
 </div>
 <nav>
     <ul>
-        <li class="section"><a href="device1.html"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
-        <li><a href="start.html"><span class="icon">&#128200;</span>设备统计</a></li>
+        <li><a href="device1.html"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
+        <li class="section"><a href="start.html"><span class="icon">&#128200;</span>设备统计</a></li>
         <li><a href="model.html"><span class="icon">&#128201;</span>模型仓库</a></li>
         <li><a href="hisdata.html"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
     </ul>
 </nav>
-<div style="width: 80%;height: 80%;float: left;margin-left: 2.77%;margin-top: 1.39%;display: none" id="main"></div>
+<div style="width: 50%;height: 5000px;margin-top:20px;float: left" id="main1"></div>
+<div style="width: 30%;height: 5000px;margin-top:38px;margin-left:2.08%;float: left" id="main2"></div>
 <!--<div>
 <input type="button" value="click" id="test"/>
 </div>
@@ -69,7 +70,7 @@
 <script src="js/getUrlParam.js"></script>
 <script src="js/starttoend.js"></script>
 <script src="js/echarts.min.js"></script>
-<script src="js/start.js"></script>
+<script src="js/getDevice1up.js"></script>
 <script type="text/javascript">
     var navCount;
     navCount = localStorage.getItem("navCount");
@@ -79,9 +80,9 @@
     }
     if(navCount%2==1){
         $("#test1").val("显示导航栏");
-        $("nav").css("display","none");
+        $("nav").html(null);
         $("nav").css("width","0");
-        $("#main").css("margin-left","10.5%");
+        $("#main1").css("margin-left","10%");
     }else {
         $("#test1").val("隐藏导航栏");
     }
@@ -89,19 +90,27 @@
         function () {
             navCount=localStorage.getItem("navCount");
             if(navCount%2==0){
-                $("nav").css("display","none");
+                $("nav").html(null);
+                $("nav").css("width","0");
+                $("#main1").css("margin-left","10%");
                 $("#test1")[0].value="显示导航栏";
-                $("#main").css("margin-left","10.5%");
             }else {
-                $("nav").css("display","block");
+                $("nav").html("<ul>\n" +
+                    "        <li><a href=\"device1.html\"><span class=\"icon\">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>\n" +
+                    "        <li class=\"section\"><a href=\"start.html\"><span class=\"icon\">&#128200;</span>设备统计</a></li>\n" +
+                    "        <li><a href=\"model.html\"><span class=\"icon\">&#128201;</span>模型仓库</a></li>\n" +
+                    "        <li><a href=\"hisdata.html\"><span class=\"icon\">&#128196;</span>海量分析</a></li><!--128711-->\n" +
+                    "    </ul>");
+                $("nav").css("width","14.58%");
                 showTheme();
+                $("#main1").css("margin-left","0");
                 $("#test1").val("隐藏导航栏");
-                $("#main").css("margin-left","2.77%");
             }
             navCount++;
             localStorage.setItem("navCount",navCount);
         }
     );
+
 </script>
 </body>
 </html>

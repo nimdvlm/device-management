@@ -23,15 +23,34 @@
 /* =============================================================
 HEAD MENU STYLES
 ============================================================ */
-#quit{
 
-   float: right;
+.upSideMenu{
+    font-size: 16px;
+    margin-left: 25px;
 }
-
-#backIcon{
+#firstSpan{
+    margin-left: 70px;
+}
+#quit,#backIcon{
     cursor: pointer;
-    color: #ffffff;
 }
+#headMenuFont{
+    /*color: #cacaca;*/
+    font-family: 'Adobe 黑体 Std R';
+    font-size: 26px;
+    font-weight: bold;
+    margin-left: 50px;
+}
+/*#wrap{
+    overflow: hidden;
+    white-space: nowrap;
+}
+#wrap div {
+    display: inline-block;
+    !*float: left;*!
+
+}*/
+
 
 
 
@@ -156,13 +175,13 @@ ul,li{
 /* =============================================================
 DEVICELIST STYLES
 ============================================================ */
-#deviceListIcon{
+#deviceListIcon,#customerIcon{
     width: 48%;
     float: left;
     padding-left: 10px;
 }
 
-#deviceListChart{
+#deviceListChart,#customerChart{
     width: 40%;
     float: right;
     /*position: fixed;*/

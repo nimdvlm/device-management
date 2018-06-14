@@ -88,7 +88,13 @@ function showTheme() {
 var themeCount;
 themeCount=localStorage.getItem("themeCount");
 if(themeCount==null){
-    themeCount=0;
+    //var ran = Math.random();
+    //if(ran<=0.75){
+        themeCount=0;
+    //}else{
+    //    themeCount=0;
+    //}
+    localStorage.setItem("themeCount",themeCount);
 }
 showTheme();
 $('#test').click(
