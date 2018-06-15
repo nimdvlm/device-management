@@ -388,3 +388,71 @@ option = {
 };
 myChart.setOption(option);
 
+var navCount;
+navCount = localStorage.getItem("navCount");
+if(navCount==null){
+    navCount=0;
+    localStorage.setItem("navCount",navCount);
+}
+if(navCount%2==1){
+    $("#test1").val("显示导航栏");
+    $("nav").css("display","none");
+    $("nav").css("width","0");
+    $("#main").css("margin-left","10.5%");
+}else {
+    $("#test1").val("隐藏导航栏");
+}
+$("#test1").click(
+    function () {
+        navCount=localStorage.getItem("navCount");
+        if(navCount%2==0){
+            $("nav").css("display","none");
+            $("#test1")[0].value="显示导航栏";
+            $("#main").css("margin-left","10.5%");
+        }else {
+            $("nav").css("display","block");
+            showTheme();
+            $("#test1").val("隐藏导航栏");
+            $("#main").css("margin-left","2.77%");
+        }
+        navCount++;
+        localStorage.setItem("navCount",navCount);
+    }
+);
+
+$('#test4').hover(
+    function () {
+        $('#test2').fadeIn(1000);
+        $('#test3').fadeIn(1000);
+    },function () {
+        $('#test2').fadeOut(500);
+        $('#test3').fadeOut(500);
+    }
+);
+
+$('#test2').click(
+    function () {
+        themeCount=0;
+        localStorage.setItem("themeCount",themeCount);
+        showTheme();
+    }
+);
+
+$('#test3').click(
+    function () {
+        themeCount=1;
+        localStorage.setItem("themeCount",themeCount);
+        showTheme();
+    }
+);
+
+$('#test5').hover(
+    function () {
+        $('#test6').fadeIn(1000);
+        $('#test7').fadeIn(1000);
+    },function () {
+        $('#test6').fadeOut(1000);
+        $('#test7').fadeOut(1000);
+    }
+);
+

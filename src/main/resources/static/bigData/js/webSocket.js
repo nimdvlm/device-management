@@ -101,3 +101,78 @@ $('#table_id_example').DataTable();
     var message = document.getElementById('text').value;
     websocket.send(message);//{"deviceId":"a23fa690-5e5d-11e8-b16e-59c2cc02320f"}
 }*/
+
+var navCount;
+navCount = localStorage.getItem("navCount");
+if(navCount==null){
+    navCount=0;
+    localStorage.setItem("navCount",navCount);
+}
+if(navCount%2==1){
+    $("#test1").val("显示导航栏");
+    $("nav").html(null);
+    $("nav").css("width","0");
+    $("#navid").css("margin-left","8.5%");
+}else {
+    $("#test1").val("隐藏导航栏");
+}
+$("#test1").click(
+    function () {
+        navCount=localStorage.getItem("navCount");
+        if(navCount%2==0){
+            $("nav").html(null);
+            $("nav").css("width","0");
+            $("#navid").css("margin-left","8.5%");
+            $("#test1")[0].value="显示导航栏";
+        }else {
+            $("nav").html("<ul>\n" +
+                "        <li><a href=\"device1.html\"><span class=\"icon\">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>\n" +
+                "        <li class=\"section\"><a href=\"start.html\"><span class=\"icon\">&#128200;</span>设备统计</a></li>\n" +
+                "        <li><a href=\"model.html\"><span class=\"icon\">&#128201;</span>模型仓库</a></li>\n" +
+                "        <li><a href=\"hisdata.html\"><span class=\"icon\">&#128196;</span>海量分析</a></li><!--128711-->\n" +
+                "    </ul>");
+            $("nav").css("width","14.58%");
+            showTheme();
+            $("#navid").css("margin-left","0");
+            $("#test1").val("隐藏导航栏");
+        }
+        navCount++;
+        localStorage.setItem("navCount",navCount);
+    }
+);
+
+$('#test4').hover(
+    function () {
+        $('#test2').fadeIn(1000);
+        $('#test3').fadeIn(1000);
+    },function () {
+        $('#test2').fadeOut(1000);
+        $('#test3').fadeOut(1000);
+    }
+);
+
+$('#test2').click(
+    function () {
+        themeCount=0;
+        localStorage.setItem("themeCount",themeCount);
+        showTheme();
+    }
+);
+
+$('#test3').click(
+    function () {
+        themeCount=1;
+        localStorage.setItem("themeCount",themeCount);
+        showTheme();
+    }
+);
+
+$('#test5').hover(
+    function () {
+        $('#test6').fadeIn(1000);
+        $('#test7').fadeIn(1000);
+    },function () {
+        $('#test6').fadeOut(1000);
+        $('#test7').fadeOut(1000);
+    }
+);

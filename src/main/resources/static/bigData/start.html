@@ -41,14 +41,14 @@
         <li class="section"><a href="start.html"><span class="icon">&#128200;</span>设备统计</a></li>
         <ul id="test5">
             <li><a href="#"><span class="icon">&#128201;</span>模型仓库</a></li>
-            <li id="test6" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="model.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>模型定制</a></li>
-            <li id="test7" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="modelentity.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>实例详情</a></li>
+            <li id="test6" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="model.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>模型定制</a></li>
+            <li id="test7" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="modelentity.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>实例详情</a></li>
         </ul>
         <li><a href="hisdata.html"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
     </ul>
 </nav>
 <div style="width: 50%;height: 5000px;margin-top:20px;float: left" id="main1"></div>
-<div style="width: 30%;height: 5000px;margin-top:38px;margin-left:2.08%;float: left" id="main2"></div>
+<div style="width: 30%;height: 5000px;margin-top:20px;margin-left:2.08%;float: left" id="main2"></div>
 <!--<div>
 <input type="button" value="click" id="test"/>
 </div>
@@ -78,82 +78,5 @@
 <script src="js/starttoend.js"></script>
 <script src="js/echarts.min.js"></script>
 <script src="js/getDevice1up.js"></script>
-<script type="text/javascript">
-    var navCount;
-    navCount = localStorage.getItem("navCount");
-    if(navCount==null){
-        navCount=0;
-        localStorage.setItem("navCount",navCount);
-    }
-    if(navCount%2==1){
-        $("#test1").val("显示导航栏");
-        $("nav").html(null);
-        $("nav").css("width","0");
-        $("#main1").css("margin-left","10%");
-    }else {
-        $("#test1").val("隐藏导航栏");
-    }
-    $("#test1").click(
-        function () {
-            navCount=localStorage.getItem("navCount");
-            if(navCount%2==0){
-                $("nav").html(null);
-                $("nav").css("width","0");
-                $("#main1").css("margin-left","10%");
-                $("#test1")[0].value="显示导航栏";
-            }else {
-                $("nav").html("<ul>\n" +
-                    "        <li><a href=\"device1.html\"><span class=\"icon\">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>\n" +
-                    "        <li class=\"section\"><a href=\"start.html\"><span class=\"icon\">&#128200;</span>设备统计</a></li>\n" +
-                    "        <li><a href=\"model.html\"><span class=\"icon\">&#128201;</span>模型仓库</a></li>\n" +
-                    "        <li><a href=\"hisdata.html\"><span class=\"icon\">&#128196;</span>海量分析</a></li><!--128711-->\n" +
-                    "    </ul>");
-                $("nav").css("width","14.58%");
-                showTheme();
-                $("#main1").css("margin-left","0");
-                $("#test1").val("隐藏导航栏");
-            }
-            navCount++;
-            localStorage.setItem("navCount",navCount);
-        }
-    );
-
-    $('#test4').hover(
-        function () {
-            $('#test2').fadeIn(1000);
-            $('#test3').fadeIn(1000);
-        },function () {
-            $('#test2').fadeOut(1000);
-            $('#test3').fadeOut(1000);
-        }
-    );
-
-    $('#test2').click(
-        function () {
-            themeCount=0;
-            localStorage.setItem("themeCount",themeCount);
-            showTheme();
-        }
-    );
-
-    $('#test3').click(
-        function () {
-            themeCount=1;
-            localStorage.setItem("themeCount",themeCount);
-            showTheme();
-        }
-    );
-
-    $('#test5').hover(
-        function () {
-            $('#test6').fadeIn(1000);
-            $('#test7').fadeIn(1000);
-        },function () {
-            $('#test6').fadeOut(1000);
-            $('#test7').fadeOut(1000);
-        }
-    );
-
-</script>
 </body>
 </html>

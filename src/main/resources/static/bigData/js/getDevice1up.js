@@ -42,6 +42,7 @@ function getdata() {
                 $(a).fadeIn((i%6)*((i%6))*500/2+2000);
                 var div = document.createElement("div");
                 div.setAttribute("id","mains"+i);
+                div.setAttribute("class","abc");
 
                 if(Math.floor((i+1)/2)%2==1){
                     if(i%2==1){
@@ -406,7 +407,7 @@ function getdata() {
 
             var div3 = document.createElement("div");
             div3.setAttribute("style","display:none;width:92.59%;height:400px;margin-top:40px");
-            $(div3).fadeIn(7000);
+            $(div3).fadeIn(5000);
             document.getElementById('main2').appendChild(div3);
             var myChart3 = echarts.init(div3);
             option = {
@@ -484,10 +485,95 @@ function getdata() {
             };
             myChart3.setOption(option);
 
+            $('.abc').hover(
+                function () {
+                    $('.abc:not(:hover)').css("opacity","0.1");
+                    $('#main2').css("opacity","0.1");
+                },function () {
+                    $('.abc').css("opacity","1");
+                    $('#main2').css("opacity","1");
+                }
+            );
+
         }
     }
 }
 getdata();
+
+var navCount;
+navCount = localStorage.getItem("navCount");
+if(navCount==null){
+    navCount=0;
+    localStorage.setItem("navCount",navCount);
+}
+if(navCount%2==1){
+    $("#test1").val("显示导航栏");
+    $("nav").html(null);
+    $("nav").css("width","0");
+    $("#main1").css("margin-left","10%");
+}else {
+    $("#test1").val("隐藏导航栏");
+}
+$("#test1").click(
+    function () {
+        navCount=localStorage.getItem("navCount");
+        if(navCount%2==0){
+            $("nav").html(null);
+            $("nav").css("width","0");
+            $("#main1").css("margin-left","10%");
+            $("#test1")[0].value="显示导航栏";
+        }else {
+            $("nav").html("<ul>\n" +
+                "        <li><a href=\"device1.html\"><span class=\"icon\">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>\n" +
+                "        <li class=\"section\"><a href=\"start.html\"><span class=\"icon\">&#128200;</span>设备统计</a></li>\n" +
+                "        <li><a href=\"model.html\"><span class=\"icon\">&#128201;</span>模型仓库</a></li>\n" +
+                "        <li><a href=\"hisdata.html\"><span class=\"icon\">&#128196;</span>海量分析</a></li><!--128711-->\n" +
+                "    </ul>");
+            $("nav").css("width","14.58%");
+            showTheme();
+            $("#main1").css("margin-left","0");
+            $("#test1").val("隐藏导航栏");
+        }
+        navCount++;
+        localStorage.setItem("navCount",navCount);
+    }
+);
+
+$('#test4').hover(
+    function () {
+        $('#test2').fadeIn(1000);
+        $('#test3').fadeIn(1000);
+    },function () {
+        $('#test2').fadeOut(1000);
+        $('#test3').fadeOut(1000);
+    }
+);
+
+$('#test2').click(
+    function () {
+        themeCount=0;
+        localStorage.setItem("themeCount",themeCount);
+        showTheme();
+    }
+);
+
+$('#test3').click(
+    function () {
+        themeCount=1;
+        localStorage.setItem("themeCount",themeCount);
+        showTheme();
+    }
+);
+
+$('#test5').hover(
+    function () {
+        $('#test6').fadeIn(1000);
+        $('#test7').fadeIn(1000);
+    },function () {
+        $('#test6').fadeOut(1000);
+        $('#test7').fadeOut(1000);
+    }
+);
 
 //mychart.on('mouseover/mouseout/mousemove',function(params){window.alert(params.name/value/type)});
 /*$('li').hover(
