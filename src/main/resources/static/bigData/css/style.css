@@ -257,10 +257,10 @@ section.user img {
 }
 
 section.user .buttons {
-	position: absolute;
-	right: 25px;
-	top: 15px;
-	text-align: right;
+	float: right;
+	width: 300px;
+	height: 66px;
+	padding-top: 20px;
 }
 
 section.user .buttons button {

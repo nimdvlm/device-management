@@ -24,8 +24,11 @@
             <input style="width: 90px;height: 35px" type="button" value="导航栏" id="test1"/>
         </div>
         <div class="buttons">
-            <button class="ico-font">&#9206;</button>
-            <input type="button" value="更多皮肤" id="test"/>
+            <ul id="test4" style="width:80px;margin-right: 8px;float: left ">
+                <li><input type="button" value="更多皮肤" id="test"/></li>
+                <li id="test2" style="display: none"><input type="button" value="天之蓝"/></li>
+                <li id="test3" style="display: none"><input type="button" value="红宝石"/></li>
+            </ul>
             <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 90px" value="返回上一级"/></a>
             <input type="button" class="button blue" value="退出" onclick="quitThings()" />
             <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
@@ -37,7 +40,11 @@
     <ul>
         <li><a href="device1.html"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
         <li><a href="start.html"><span class="icon">&#128200;</span>设备统计</a></li>
-        <li class="section"><a href="model.html"><span class="icon">&#128201;</span>模型仓库</a></li>
+        <ul id="test5">
+            <li class="section"><a href="#"><span class="icon">&#128201;</span>模型仓库</a></li>
+            <li id="test6" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="model.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>模型定制</a></li>
+            <li id="test7" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="modelentity.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>实例详情</a></li>
+        </ul>
         <li><a href="hisdata.html"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
     </ul>
 </nav>
@@ -155,6 +162,42 @@
             }
             navCount++;
             localStorage.setItem("navCount",navCount);
+        }
+    );
+
+    $('#test4').hover(
+        function () {
+            $('#test2').fadeIn(1000);
+            $('#test3').fadeIn(1000);
+        },function () {
+            $('#test2').fadeOut(1000);
+            $('#test3').fadeOut(1000);
+        }
+    );
+
+    $('#test2').click(
+        function () {
+            themeCount=0;
+            localStorage.setItem("themeCount",themeCount);
+            showTheme();
+        }
+    );
+
+    $('#test3').click(
+        function () {
+            themeCount=1;
+            localStorage.setItem("themeCount",themeCount);
+            showTheme();
+        }
+    );
+
+    $('#test5').hover(
+        function () {
+            $('#test6').fadeIn(1000);
+            $('#test7').fadeIn(1000);
+        },function () {
+            $('#test6').fadeOut(1000);
+            $('#test7').fadeOut(1000);
         }
     );
 

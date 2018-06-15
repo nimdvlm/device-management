@@ -7,6 +7,7 @@
     <meta name="keywords" content="" />
     <meta name="robots" content="" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.css" media="all" />
     <link rel="stylesheet" href="css/style.css" media="all" />
 
 </head>
@@ -19,7 +20,7 @@
     </header>
     <section class="user">
 
-        <div style="width: 100px;height: 43px;float: left;margin-top: 23px;margin-left: 10px">
+        <div style="width: 100px;height: 43px;float: left;margin-top: 22px;margin-left: 10px">
             <input style="width: 90px;height: 35px" type="button" value="导航栏" id="test1"/>
         </div>
         <div class="buttons">
@@ -38,17 +39,20 @@
 <nav>
     <ul>
         <li><a href="device1.html"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
-        <li class="section"><a href="start.html"><span class="icon">&#128200;</span>设备统计</a></li>
+        <li><a href="start.html"><span class="icon">&#128200;</span>设备统计</a></li>
         <ul id="test5">
-            <li><a href="#"><span class="icon">&#128201;</span>模型仓库</a></li>
+            <li class="section"><a href="#"><span class="icon">&#128201;</span>模型仓库</a></li>
             <li id="test6" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="model.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>模型定制</a></li>
             <li id="test7" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="modelentity.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>实例详情</a></li>
         </ul>
         <li><a href="hisdata.html"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
     </ul>
 </nav>
-<div style="width: 50%;height: 5000px;margin-top:20px;float: left" id="main1"></div>
-<div style="width: 30%;height: 5000px;margin-top:38px;margin-left:2.08%;float: left" id="main2"></div>
+
+<div id="main2" style="width: 100%;margin-top:30px;margin-left:20px;font-size:16px">
+    <h1 style="color: white;font-size: 16px;margin-left:230px;">模型实例</h1>
+</div>
+
 <!--<div>
 <input type="button" value="click" id="test"/>
 </div>
@@ -73,11 +77,12 @@
     }
 </script>-->
 <script src="js/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="js/common.js"></script>
 <script src="js/getUrlParam.js"></script>
 <script src="js/starttoend.js"></script>
 <script src="js/echarts.min.js"></script>
-<script src="js/getDevice1up.js"></script>
+<script src="js/getModelentity.js"></script>
 <script type="text/javascript">
     var navCount;
     navCount = localStorage.getItem("navCount");
@@ -89,7 +94,7 @@
         $("#test1").val("显示导航栏");
         $("nav").html(null);
         $("nav").css("width","0");
-        $("#main1").css("margin-left","10%");
+        $("#navid").css("margin-left","8.5%");
     }else {
         $("#test1").val("隐藏导航栏");
     }
@@ -99,18 +104,18 @@
             if(navCount%2==0){
                 $("nav").html(null);
                 $("nav").css("width","0");
-                $("#main1").css("margin-left","10%");
+                $("#navid").css("margin-left","8.5%");
                 $("#test1")[0].value="显示导航栏";
             }else {
                 $("nav").html("<ul>\n" +
                     "        <li><a href=\"device1.html\"><span class=\"icon\">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>\n" +
-                    "        <li class=\"section\"><a href=\"start.html\"><span class=\"icon\">&#128200;</span>设备统计</a></li>\n" +
-                    "        <li><a href=\"model.html\"><span class=\"icon\">&#128201;</span>模型仓库</a></li>\n" +
+                    "        <li><a href=\"start.html\"><span class=\"icon\">&#128200;</span>设备统计</a></li>\n" +
+                    "        <li class=\"section\"><a href=\"model.html\"><span class=\"icon\">&#128201;</span>模型仓库</a></li>\n" +
                     "        <li><a href=\"hisdata.html\"><span class=\"icon\">&#128196;</span>海量分析</a></li><!--128711-->\n" +
                     "    </ul>");
                 $("nav").css("width","14.58%");
                 showTheme();
-                $("#main1").css("margin-left","0");
+                $("#navid").css("margin-left","0%");
                 $("#test1").val("隐藏导航栏");
             }
             navCount++;

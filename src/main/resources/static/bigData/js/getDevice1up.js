@@ -246,7 +246,7 @@ function getdata() {
             }
             var div1 = document.createElement("div");
             div1.setAttribute("style","display:none;width:92.59%;height:400px");
-            $(div1).fadeIn(5000);
+            $(div1).fadeIn(3000);
             document.getElementById('main2').appendChild(div1);
             var myChart1 = echarts.init(div1);
             option = {
@@ -326,7 +326,7 @@ function getdata() {
 
             var div2 = document.createElement("div");
             div2.setAttribute("style","display:none;width:92.59%;height:400px;margin-top:40px");
-            $(div2).fadeIn(7000);
+            $(div2).fadeIn(5000);
             document.getElementById('main2').appendChild(div2);
             var myChart2 = echarts.init(div2);
             option = {
@@ -406,7 +406,7 @@ function getdata() {
 
             var div3 = document.createElement("div");
             div3.setAttribute("style","display:none;width:92.59%;height:400px;margin-top:40px");
-            $(div3).fadeIn(9000);
+            $(div3).fadeIn(7000);
             document.getElementById('main2').appendChild(div3);
             var myChart3 = echarts.init(div3);
             option = {
@@ -490,3 +490,12 @@ function getdata() {
 getdata();
 
 //mychart.on('mouseover/mouseout/mousemove',function(params){window.alert(params.name/value/type)});
+/*$('li').hover(
+        function () {
+            //$('li:hover a').css("display","block");
+            $('li:hover a').fadeIn(2000);
+        },function () {
+            //$('li:hover a').css("display","none");
+            $('.dropdown').fadeOut(2000);
+        }
+    )*/
