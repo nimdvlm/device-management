@@ -18,20 +18,20 @@ bupt.thingsboard:
 
 
 device-access:
- host: 39.104.84.131
- port: 8100
+ host: 39.104.189.84
+ port: 30080
 
 smart_ruler:
-  host: 39.104.186.210
-  port: 8200
+ host: 39.104.189.84
+ port: 30080
 
 service-management:
-  host: 39.104.84.131
-  port: 8000
+ host: 39.104.189.84
+ port: 30080
 
 account:
-  host: 39.104.165.155
-  port: 8081
+  host: 39.104.189.84
+  port: 30080
   login_url: http://${account.host}:${account.port}/api/v1/auth/login
   logout_url: http://${account.host}:${account.port}/api/v1/auth/logout
   client_id: client_2
