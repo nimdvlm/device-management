@@ -68,7 +68,7 @@ HEAD MENU STYLES
     z-index: 999;
     overflow: auto;
     max-width: 500px;
-    overflow:auto;
+
 }
 
     #side-menu ul {
@@ -492,7 +492,7 @@ pluginsGroup
     margin:20px 0px 0 670px;
     padding-top: 5px;
     width:450px;
-    height:250px;
+    height:260px;
     float: right;
     margin-left: 790px;
     position: fixed;
@@ -520,9 +520,19 @@ pluginsGroup
     padding-bottom: 20px;
 }
 .displayPosition{
-    margin-top: 40px;
+    margin-top: 20px;
     margin-left: 20px;
     font-size: 15px;
     color: #0f0f0f;
     font-weight: 400;
+}
+.displayInterface{
+    background: #feffff;
+    margin:285px 0px 0 670px;
+    padding-top: 5px;
+    width:450px;
+    height:250px;
+    float: right;
+    margin-left: 790px;
+    position: fixed;
 }
