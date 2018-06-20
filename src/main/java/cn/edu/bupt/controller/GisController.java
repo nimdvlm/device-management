@@ -57,13 +57,13 @@ public class GisController {
 //        System.out.println("control :"+uid);
 //        ThingsBoardApi api =  ThingsBoardApi.getInstance("10.108.217.227",8080);
 //        String token = api.api_token("tenant@thingsboard.org","tenant");
-//        String responce =  null;
+//        String response =  null;
 //        if("uid1".equals(uid)){
-//            responce = api.api_RPC(map.get(uid),token,"setValue_1138530",true);
+//            response = api.api_RPC(map.get(uid),token,"setValue_1138530",true);
 //        }else{
-//            responce = api.api_RPC(map.get(uid),token,"setValue_1138530",false);
+//            response = api.api_RPC(map.get(uid),token,"setValue_1138530",false);
 //        }
-//        System.out.println(responce);
+//        System.out.println(response);
            return "rpc cpmmd send ok";
     }
 }

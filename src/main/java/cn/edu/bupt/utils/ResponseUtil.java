@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
  * Created by Administrator on 2018/1/10.
  *
  */
-public interface ResponceUtil {
+public interface ResponseUtil {
     public String onSuccess(String msg);
     public String onSuccess(JsonObject jsonObject) ;
     public String onFail(String msg);
