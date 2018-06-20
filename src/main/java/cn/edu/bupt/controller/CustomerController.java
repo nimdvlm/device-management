@@ -117,8 +117,7 @@ public class CustomerController extends DefaultThingsboardAwaredController{
 
     @RequestMapping(value = "/customersPage", params = { "limit"}, method = RequestMethod.GET)
     @ResponseBody
-    public String getCustomersPage(@RequestParam int limit,
-                               @RequestParam int page) {
+    public String getCustomersPage(@RequestParam int limit) {
         String requestAddr = API_PREFIX + "customersPages";
         StringBuffer param = new StringBuffer();
         param.append("limit").append("=").append(limit);
