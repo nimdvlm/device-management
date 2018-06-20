@@ -200,7 +200,7 @@ option = {
     },
     legend: {
         data: ['最大值', '均值','最小值','标准差','数据条数','正常数据条数','正常数据比例'],
-        align: 'left'
+        align: 'left',
     },
     toolbox: {
         // y: 'bottom',
