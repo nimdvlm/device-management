@@ -121,7 +121,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     public String getPlugins()
     {
-        String requestAddr = "/api/plugin/all";
+        String requestAddr = "/api/v1/smartruler/plugin/all";
 
         String responseContent = null;
         try{
