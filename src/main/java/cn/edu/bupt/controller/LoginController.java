@@ -90,7 +90,7 @@ public class LoginController extends DefaultThingsboardAwaredController {
     @RequestMapping(value = "/changePassword", method = RequestMethod.PUT)
     public String changePassword (
             @RequestBody String changePasswordRequest) {
-        String requestAddr = "/api/v1/auth/changePassword";
+        String requestAddr = "/api/v1/account/changePassword";
         JsonObject PasswordInfoJson = (JsonObject) new JsonParser().parse(changePasswordRequest);
         String responseContent = null;
         try {
