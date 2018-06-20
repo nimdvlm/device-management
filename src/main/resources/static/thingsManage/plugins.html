@@ -40,6 +40,8 @@
                     data-target="#refreshDevice"  ng-click="activePlugin()">激活插件</button>
             <button class="btn btn-danger" data-toggle="modal"
                     data-target="#refreshDevice"  ng-click="stopPlugin()">暂停插件</button>
+            <button class="btn btn-primary" data-toggle="modal"
+                    data-target="#operatingStatus"  ng-click="operatingStatus()">运行状态</button>
         </div>
     </div>
     <div class="displayInterface">
@@ -52,31 +54,55 @@
             <p>接口功能：</p>
             <p>数据格式：</p>
         </div>
-        <div class="btnPosition">
-            <button class="btn btn-success" data-toggle="modal"
-                    data-target="#refreshDevice"  ng-click="activePlugin()">运行状态</button>
-            <button class="btn btn-danger" data-toggle="modal"
-                    data-target="#refreshDevice"  ng-click="stopPlugin()">连接状态</button>
+
+    </div>
+    <!--插件运行状态显示模态框-->
+    <div class="modal fade" id="operatingStatus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    插件运行信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <p>运行状态：</p>
+                <p>故障情况：</p>
+                <p>使用频率：</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                </button>
+                <button type="button" class="btn btn-primary"  ng-click="activePlugin()">
+                    确定
+                </button>
+            </div>
         </div>
     </div>
-<!--创建插
+</div>
 
- <span style="margin-left: 160px" ng-init="firstState='SUSPEND'">
-                <i class="glyphicon glyphicon-ok" ng-bind="firstState">{{state}}</i>
+    <!--创建插
+
+     <span style="margin-left: 160px" ng-init="firstState='SUSPEND'">
+                    <i class="glyphicon glyphicon-ok" ng-bind="firstState">{{state}}</i>
+                    </span>
+
+    <p class="stylePulgin">插件url：{{itemp.url}}</p>
+                        <p class="stylePulgin"> 描述：{{itemp.describe}}</p>
+
+    <span class="pluginActiveposition" data-toggle="modal" data-target="#activePG">
+                    <i class="glyphicon glyphicon-play" title="激活" ng-click="activePG()"></i>
+                    </span>
+                    <span class="pluginStopposition" data-toggle="modal" data-target="#stopPG">
+                    <i class="glyphicon glyphicon-pause" title="暂停"></i>
                 </span>
 
-<p class="stylePulgin">插件url：{{itemp.url}}</p>
-                    <p class="stylePulgin"> 描述：{{itemp.describe}}</p>
 
-<span class="pluginActiveposition" data-toggle="modal" data-target="#activePG">
-                <i class="glyphicon glyphicon-play" title="激活" ng-click="activePG()"></i>
-                </span>
-                <span class="pluginStopposition" data-toggle="modal" data-target="#stopPG">
-                <i class="glyphicon glyphicon-pause" title="暂停"></i>
-            </span>
-
-
-件界面-->
+    件界面-->
 <!--div class="modal fade" id="addPluginGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">

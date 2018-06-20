@@ -8,9 +8,18 @@
     <meta name="robots" content="" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/style.css" media="all" />
+    <link rel="stylesheet" href="css/leaflet.css">
+    <style>
+        html, body, #map {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        #forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#c11;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:fixed;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}}</style>
 
 </head>
-<body style="background:#ffffff">
+
+<body>
 
 <div class="testing">
     <header class="main">
@@ -36,7 +45,7 @@
         </div>
     </section>
 </div>
-<nav>
+<nav style="height:150%">
     <ul>
         <li class="section"><a href="device1.html"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
         <li>
@@ -50,7 +59,124 @@
         <li><a href="hisdata.html"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
     </ul>
 </nav>
-<div style="width: 80%;height: 80%;float: left;margin-left: 2.77%;margin-top: 1.39%;display: none" id="main"></div>
+<div id="map" style="width: 83%;height: 80%;float: left;margin-left: 1%;display: none"></div>
+<div id="main1" style="width: 40%;height: 40%;float: left;margin-left: 1.5%;margin-top: 2%;display: none"></div>
+<div id="main2" style="width: 40%;height: 40%;float: left;margin-left: 2%;margin-top: 2%;display: none"></div>
+<div class="waiting" id="YWaitDialog">
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <h1 style="color: #F88863">loading</h1>
+</div>
 <!--<div>
 <input type="button" value="click" id="test"/>
 </div>
@@ -74,11 +200,19 @@
 
     }
 </script>-->
+<script type="text/javascript">
+    document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
+</script>
 <script src="js/jquery-3.3.1.js"></script>
 <script src="js/common.js"></script>
 <script src="js/getUrlParam.js"></script>
 <script src="js/starttoend.js"></script>
+<script src="js/main.min.js"></script>
+<script src="js/map.js"></script>
 <script src="js/echarts.min.js"></script>
 <script src="js/start.js"></script>
+<script type="text/javascript">
+    document.getElementById("YWaitDialog").setAttribute("style","display:none;");
+</script>
 </body>
 </html>
