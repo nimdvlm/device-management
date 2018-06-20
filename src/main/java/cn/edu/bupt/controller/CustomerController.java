@@ -115,6 +115,25 @@ public class CustomerController extends DefaultThingsboardAwaredController{
         }
     }
 
+    @RequestMapping(value = "/customersPage", params = { "limit"}, method = RequestMethod.GET)
+    @ResponseBody
+    public String getCustomersPage(@RequestParam int limit,
+                               @RequestParam int page) {
+        String requestAddr = API_PREFIX + "customersPages";
+        StringBuffer param = new StringBuffer();
+        param.append("limit").append("=").append(limit);
+        requestAddr = requestAddr + "?" + param ;
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getAccountServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+            return responseContent;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+    }
+
     private void ResStatus(String responseContent){
         JsonObject responseJson = (JsonObject) new JsonParser().parse(responseContent);
         if(responseJson.has("status")){
