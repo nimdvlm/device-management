@@ -536,3 +536,18 @@ pluginsGroup
     margin-left: 790px;
     position: fixed;
 }
+#box{
+    width:400px;
+    height:40px;
+    border:1px solid #ddd;
+    padding:10px;
+    overflow:hidden;
+    font-size:12px;
+    margin-left: 120px;
+    margin-top: -35px;
+}
+#box ul li{
+    line-height:25px;
+    text-align:center;
+    list-style:none;
+}
