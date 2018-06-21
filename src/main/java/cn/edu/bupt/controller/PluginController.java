@@ -112,4 +112,22 @@ public class PluginController extends DefaultThingsboardAwaredController{
         }
         return retSuccess("");
     }
+
+    @RequestMapping(value = "/allUrls/{host}/{port}", method = RequestMethod.GET)
+    public String allUrls(@PathVariable("host") String host, @PathVariable("port") String port){
+        String requestAddr = "/api/v1/smartruler/plugin/allUrls/";
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendGetToThingsboard("http://" +  getSmartRulerServer() + requestAddr+host+"/"+port,
+                    null,
+                    request.getSession());
+
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        String responseBody="{\"api\":"+responseContent+"}" ;
+        return responseBody;
+    }
 }
