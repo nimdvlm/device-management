@@ -1,6 +1,6 @@
 package cn.edu.bupt.UtilComponents;
 
-import cn.edu.bupt.utils.ResponceUtil;
+import cn.edu.bupt.utils.ResponseUtil;
 import com.google.gson.JsonObject;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class ResponceUtilImpl implements ResponceUtil{
+public class ResponseUtilImpl implements ResponseUtil {
     @Override
     public String onSuccess(String msg) {
         return msg ;
@@ -24,8 +24,8 @@ public class ResponceUtilImpl implements ResponceUtil{
     @Override
     public String onFail(String msg) {
         JsonObject InfoJson = new JsonObject() ;
-        InfoJson.addProperty("responce_code", 1);
-        InfoJson.addProperty("responce_msg", msg);
+        InfoJson.addProperty("response_code", 1);
+        InfoJson.addProperty("response_msg", msg);
         return InfoJson.toString() ;
     }
 

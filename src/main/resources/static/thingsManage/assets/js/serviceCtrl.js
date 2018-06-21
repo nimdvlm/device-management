@@ -85,11 +85,11 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
         $scope.serviceType = $("#serviceType").val();
         $scope.protocol = $("#protocol").val();
         $scope.url = $("#url").val();
-        $scope.requireResponce = $("#requireResponce").val();
-        if($scope.requireResponce=="true"){
-            $scope.requireResponce = true;
+        $scope.requireResponse = $("#requireResponse").val();
+        if($scope.requireResponse=="true"){
+            $scope.requireResponse = true;
         }else{
-            $scope.requireResponce = false;
+            $scope.requireResponse = false;
         }
         $scope.methodName = $("#methodName").val();
 
@@ -118,7 +118,7 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
                     serviceType: $scope.serviceType,
                     protocol: $scope.protocol,
                     url: $scope.url,
-                    requireResponce: $scope.requireResponce,
+                    requireResponse: $scope.requireResponse,
                     serviceBody: {
                         methodName: $scope.methodName,
                         params: params
@@ -135,7 +135,7 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
                         serviceType: $scope.serviceType,
                         protocol: $scope.protocol,
                         url: $scope.url,
-                        requireResponce: $scope.requireResponce,
+                        requireResponse: $scope.requireResponse,
                         serviceBody: {
                             methodName: $scope.methodName,
                             params: params
