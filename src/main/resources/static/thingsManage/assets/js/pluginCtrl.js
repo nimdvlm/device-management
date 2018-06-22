@@ -54,13 +54,11 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
             for(var i=0;i<arrs.length;i++){
                 if(arrs[i].indexOf("/api/v1")== -1){
                     $scope.interface = "内部";
-                    console.log("内部");
                     var fileData = {"name":$scope.interfaceInfomations.api[i],"value":$scope.interface};
                     arry.push(fileData);//重新构建数组对象
 
                 }else{
                     $scope.interface = "外部";
-                    console.log("外部");
                     var fileData = {"name":$scope.interfaceInfomations.api[i],"value":$scope.interface};
                     arry.push(fileData);
                 }
