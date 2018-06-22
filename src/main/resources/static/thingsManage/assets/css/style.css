@@ -489,12 +489,12 @@ pluginsGroup
 }
 .pluginChart{
     background: #feffff;
-    margin:20px 0px 0 670px;
+    margin:0px 0px 0 790px;
+    width:480px;
+    height:240px;
     padding-top: 5px;
-    width:450px;
-    height:260px;
     float: right;
-    margin-left: 790px;
+    font-family: inherit;
     position: fixed;
 }
 .pluginIcon{
@@ -514,13 +514,13 @@ pluginsGroup
     margin-left: 20px;
 }
 .PluginInfo{
-    font-size: 28px;
+    font-size: 23px;
     color: #305680;
     font-weight: 600;
-    padding-bottom: 20px;
+    padding: 5px;
+    margin-left: 20px;
 }
 .displayPosition{
-    margin-top: 20px;
     margin-left: 20px;
     font-size: 15px;
     color: #0f0f0f;
@@ -528,18 +528,34 @@ pluginsGroup
 }
 .displayInterface{
     background: #feffff;
-    margin:285px 0px 0 670px;
+    margin:245px 0px 0 790px;
     padding-top: 5px;
-    width:450px;
-    height:210px;
+    width:480px;
+    height:290px;
     float: right;
-    margin-left: 790px;
     position: fixed;
+    overflow: auto;
+
+}
+.PluginInterfaceInfo{
+    font-size: 23px;
+    color: #305680;
+    font-weight: 600;
+    padding: 5px;
+    margin-left: 20px;
+
+}
+.interfaceInfo {
+    margin-left: 20px;
+    font-size: 13px;
+    color: #0f0f0f;
+    font-weight: 400;
+
 }
 #box{
     width:400px;
     height:40px;
-    border:1px solid #ddd;
+    border:1px solid #fdfdfd;
     padding:10px;
     overflow:hidden;
     font-size:12px;
@@ -551,6 +567,7 @@ pluginsGroup
     text-align:center;
     list-style:none;
 }
+<<<<<<< Updated upstream
 /* =============================================================
    Dashboard
  ============================================================ */
@@ -577,3 +594,5 @@ pluginsGroup
     line-height: 300px;
     color: rgba(43, 76, 227, 0.4);
 }
+=======
+>>>>>>> Stashed changes

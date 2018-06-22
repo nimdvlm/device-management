@@ -32,10 +32,10 @@
             </div>
         </div>
     </div>
-       <!--右侧表格显示-->
+       <!--右侧表格显示（上部）-->
     <div class="pluginChart">
-        <div class="DGTitle DGminTitle">
-            <span class="PluginInfo">插件基本信息</span>
+        <div class="PluginInfo">
+            <p>插件基本信息</p>
         </div>
         <div class="displayPosition">
             <p>插件名称：{{name}}</p>
@@ -56,17 +56,14 @@
                     data-target="#operatingStatus"  ng-click="operatingStatus()">运行状态</button>
         </div>
     </div>
+    <!--右侧表格显示（下部）-->
     <div class="displayInterface">
-        <div class="DGTitle DGminTitle">
-            <span class="PluginInfo">插件接口信息</span>
+        <div class="PluginInterfaceInfo">
+            <p>插件接口信息</p>
         </div>
-        <div class="displayPosition">
-            <p>接口名称：</p>
-            <p>接口地址：</p>
-            <p>接口功能：</p>
-            <p>数据格式：</p>
+        <div class="interfaceInfo" ng-repeat="inter in interfaceArray">
+            <p>{{inter.value}}接口：{{inter.name}}</p>
         </div>
-
     </div>
     <!--插件运行状态显示模态框-->
     <div class="modal fade" id="operatingStatus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
