@@ -56,6 +56,14 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
     $scope.$location = $location;
     console.log($.cookie());
 
+    /*权限管理*/
+    if($.cookie("userLevel") === "CUSTOMER_USER"){
+        $(".user").attr("disabled","disabled");
+        $(".userDelete").removeAttr("data-target");
+        $(".userDelete").css({cursor:"text",color:"#333"});
+        $(".userDelete").removeClass("highlight");
+    }
+
     /*侧边栏选中效果*/
     var href  = window.location.hash;
     var hrefClass = href.substring(2,href.length);
