@@ -1,7 +1,7 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
-import cn.edu.bupt.utils.ResponceUtil;
+import cn.edu.bupt.utils.ResponseUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class DefaultThingsboardAwaredController {
     HttpServletRequest request;
 
     @Autowired
-    ResponceUtil responceUtil ;
+    ResponseUtil responseUtil ;
 
     //为了不报错，暂时不要删除这个方法
     protected String getServer(){
@@ -77,11 +77,11 @@ public class DefaultThingsboardAwaredController {
     }
 
     protected String retSuccess(String msg) {
-        return responceUtil.onSuccess(msg) ;
+        return responseUtil.onSuccess(msg) ;
     }
 
     protected String retFail(String msg) {
-        return responceUtil.onFail(msg) ;
+        return responseUtil.onFail(msg) ;
     }
 
     public Integer getTenantId(){

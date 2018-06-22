@@ -121,7 +121,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
     @ResponseBody
     public String getPlugins()
     {
-        String requestAddr = "/api/plugin/all";
+        String requestAddr = "/api/v1/smartruler/plugin/all";
 
         String responseContent = null;
         try{
@@ -271,8 +271,8 @@ public class RuleController extends DefaultThingsboardAwaredController{
 
     private String getErrorMsg(Exception e) {
         JsonObject errorInfoJson = new JsonObject();
-        errorInfoJson.addProperty("responce_code", 1);
-        errorInfoJson.addProperty("responce_msg", e.toString());
+        errorInfoJson.addProperty("response_code", 1);
+        errorInfoJson.addProperty("response_msg", e.toString());
         return errorInfoJson.toString();
     }
 

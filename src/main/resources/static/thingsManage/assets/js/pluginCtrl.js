@@ -28,13 +28,12 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
         });
         /*给点击元素加上特定样式*/
         item.style = {"border": "2px solid #305680"};
-
         $scope.name = item.name;
         $scope.url = item.url;
         $scope.describe = item.describe;
         console.log($scope.url);
         str = item.url.split(":");
-        console.log(str);//正常显示str数组
+        //console.log(str);//正常显示str数组
         var pluginState = $resource('/api/plugin/state/:urlId/:portId',{urlId: '@id', portId: '@id'});
         pluginState.get({urlId:str[0],portId:str[1]}).$promise.then(function (resp) {
         $scope.pluginStateDisplay=resp;
@@ -44,6 +43,28 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
             } else {
                 $scope.isActive = false;
             }
+        })
+        //获取插件所有接口
+        var interfaceInfo = $resource('/api/plugin/allUrls/:hostID/:portID',{hostID:"@id",portID:"@id"});
+        interfaceInfo.get({hostID:str[0],portID:str[1]}).$promise.then(function(res){
+            $scope.interfaceInfomations = res;
+            var arrs = [];
+            var arry = [];
+            arrs = $scope.interfaceInfomations.api;
+            for(var i=0;i<arrs.length;i++){
+                if(arrs[i].indexOf("/api/v1")== -1){
+                    $scope.interface = "内部";
+                    var fileData = {"name":$scope.interfaceInfomations.api[i],"value":$scope.interface};
+                    arry.push(fileData);//重新构建数组对象
+
+                }else{
+                    $scope.interface = "外部";
+                    var fileData = {"name":$scope.interfaceInfomations.api[i],"value":$scope.interface};
+                    arry.push(fileData);
+                }
+
+            }
+            $scope.interfaceArray = arry;
         })
 
     }
@@ -79,5 +100,40 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
     }
 
 
+    /*实现向上滚动显示数据
+    * scrollTop 0.1
+    * Dependence jquery-1.7.1.js
+    */
+    ;(function($){
+        $.fn.scrollTop = function(options){
+            var defaults = {
+                speed:30
+            }
+            var opts = $.extend(defaults,options);
+            this.each(function(){
+                var $timer;
+                var scroll_top=0;
+                var obj = $(this);
+                var $height = obj.find("ul").height();
+                obj.find("ul").clone().appendTo(obj);
+                obj.hover(function(){
+                    clearInterval($timer);
+                },function(){
+                    $timer = setInterval(function(){
+                        scroll_top++;
+                        if(scroll_top > $height){
+                            scroll_top = 0;
+                        }
+                        obj.find("ul").first().css("margin-top",-scroll_top);
+                    },opts.speed);
+                }).trigger("mouseleave");
+            })
+        }
+    })(jQuery)
+    $(function(){
+        $("#box").scrollTop({
+            speed:70 //数值越大 速度越慢
+        });
+    })
 
 });

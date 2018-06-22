@@ -7,9 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.Unsafe;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -48,11 +46,11 @@ public class ShadowController extends DefaultThingsboardAwaredController {
 ////        JsonObject res = new JsonObject();
 //        try{
 //            String s = HttpUtil.sendPostToThingsboard(url,null,body,request.getSession());
-////            res.addProperty("responce_code",0);
+////            res.addProperty("response_code",0);
 //            JsonObject obj = new JsonParser().parse(s).getAsJsonObject();
-//            CachForDeviceService.put(deviceId,obj);
-////            res.add("responce_msg",obj);
-            return responceUtil.onSuccess(serviceDes) ;
+//            CatchForDeviceService.put(deviceId,obj);
+////            res.add("response_msg",obj);
+            return responseUtil.onSuccess(serviceDes) ;
         }catch(Exception e){
             return retFail(e.toString());
         }
@@ -76,7 +74,7 @@ public class ShadowController extends DefaultThingsboardAwaredController {
         try{
             String s = HttpUtil.sendGetToThingsboard(url,null,request.getSession());
            // JsonObject obj = new JsonParser().parse(s).getAsJsonObject();
-         // return responceUtil.onSuccess(obj) ;
+         // return responseUtil.onSuccess(obj) ;
            return  retSuccess(s);
         }catch(Exception e){
             return retFail(e.toString());
@@ -109,7 +107,7 @@ public class ShadowController extends DefaultThingsboardAwaredController {
 //        }
 //
 ////        String serviceNmae = paramsAndServiceName.get("serviceName").getAsString();
-////        JsonObject service = CachForDeviceService.get(deviceId,serviceNmae);
+////        JsonObject service = CachForDeviceService.get(deviceId,serviceName);
 ////        paramsAndServiceName.remove("serviceName");
 ////        service.get("serviceBody").getAsJsonObject().add("params",paramsAndServiceName);
 ////        body.add("requestBody",service);
@@ -118,8 +116,8 @@ public class ShadowController extends DefaultThingsboardAwaredController {
         try{
             url = "http://"+getDeviceAccessServer()+"/api/v1/deviceaccess/rpc/"+deviceId+"/"+requester.getAndIncrement();
             String s = HttpUtil.sendPostToThingsboard(url,null,paramsAndServiceName,request.getSession());
-//            res.addProperty("responce_code",0);
-//            res.addProperty("responce_msg",s);
+//            res.addProperty("response_code",0);
+//            res.addProperty("response_msg",s);
             return retSuccess(s);
         }catch(Exception e){
             return retFail(e.toString());

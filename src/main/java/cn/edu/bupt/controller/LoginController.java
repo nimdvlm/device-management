@@ -58,12 +58,12 @@ public class LoginController extends DefaultThingsboardAwaredController {
 //            Subject subject = SecurityUtils.getSubject();
 //            subject.login(usernamePasswordToken);   //完成登录
 //
-//            json.addProperty("responce_code",0);
-//            json.addProperty("responce_msg","login ok");
+//            json.addProperty("response_code",0);
+//            json.addProperty("response_msg","login ok");
 //            response.setStatus(200);
 //        }else{
-//            json.addProperty("responce_code",1);
-//            json.addProperty("responce_msg","wrong username or password");
+//            json.addProperty("response_code",1);
+//            json.addProperty("response_msg","wrong username or password");
 //            session.removeAttribute("username");
 //            session.removeAttribute("password");
 //            response.setStatus(401);
