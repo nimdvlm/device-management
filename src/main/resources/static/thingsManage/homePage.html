@@ -1,61 +1,23 @@
 ﻿<div ng-controller="homePageCtrl">
-                <div class="homeIconBackground">
-                    <a href="" title="设备列表" ng-click="$location.path('/deviceList')">
-                        <div>
-                            <i class="fa fa-file-text-o homeIcon"></i>
-                            <p class="homeIconName">设备列表</p>
-                        </div>
-                    </a>
-                </div>
-
-
-                <div class="homeIconBackground" ng-click="$location.path('/deviceGroup')">
-                    <a href="" title="设备组" >
-                        <div>
-                            <i class="fa fa-cubes homeIcon"></i>
-                            <p class="homeIconName">设备组</p>
-                        </div>
-                    </a>
-                </div>
-
-
-                <div class="homeIconBackground">
-                    <a href="" title="服务管理" ng-click="$location.path('/service')">
-                        <div>
-                            <i class="fa fa-cog homeIcon"></i>
-                            <p class="homeIconName">服务管理</p>
-                        </div>
-                    </a>
-                </div>
-
-
-                <div class="homeIconBackground">
-                    <a href="" title="插件管理" ng-click="$location.path('/plugins')">
-                        <div>
-                            <i class="fa fa-plug homeIcon"></i>
-                            <p class="homeIconName">插件管理</p>
-                        </div>
-                    </a>
-                </div>
-
-
-                <div class="homeIconBackground">
-                    <a href="" title="规则管理" ng-click="$location.path('/rules')">
-                        <div>
-                            <i class="fa fa-link homeIcon"></i>
-                            <p class="homeIconName">规则管理</p>
-                        </div>
-                    </a>
-                </div>
-
-
-                <div class="homeIconBackground">
-                    <a href="" title="用户手册" ng-click="$location.path('/evaluate')">
-                        <div>
-                            <i class="fa fa-newspaper-o homeIcon"></i>
-                            <p class="homeIconName">用户手册</p>
-                        </div>
-                    </a>
-                </div>
-
+    <div class="content">
+        <div class="firstLine">
+            <div class="dashboard">
+                <canvas id="myChart3" width="300" height="300"></canvas>
+            </div>
+            <div class="dashboard">
+                <canvas id="myChart4" width="300" height="300"></canvas>
+            </div>
+            <div id="boradcast">
+                暂无广播事件
+            </div>
+        </div>
+        <div class="secondLine">
+            <div class="dashboard" style="width: 48%;height: 30%">
+                <canvas id="myChart2"></canvas>
+            </div>
+            <div class="dashboard" style="width: 48%;height: 30%;">
+                <canvas id="myChart1"></canvas>
+            </div>
+        </div>
+    </div>
 </div>

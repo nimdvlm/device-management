@@ -551,3 +551,29 @@ pluginsGroup
     text-align:center;
     list-style:none;
 }
+/* =============================================================
+   Dashboard
+ ============================================================ */
+.content{
+    margin:30px 50px 0 70px;
+    height:100%;
+    overflow:hidden;
+}
+.dashboard{
+    float: left;
+    border: 1px solid rgba(43, 76, 227, 0.2);
+    margin:10px 10px;
+}
+.firstLine,.secondLine{
+    height:100%;
+    overflow:hidden;
+}
+#boradcast{
+    margin: 10px 10px 0 650px;
+    border: 1px solid rgba(43, 76, 227, 0.2);
+    height: 300px;
+    text-align: center;
+    font-size: 30px;
+    line-height: 300px;
+    color: rgba(43, 76, 227, 0.4);
+}
