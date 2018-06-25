@@ -30,8 +30,10 @@ service-management:
  port: 30080
 
 account:
-  host: 39.104.165.155
-  port: 8400
+#  host: 39.104.165.155
+#  port: 8400
+  host: 39.104.189.84
+  port: 30080
   login_url: http://${account.host}:${account.port}/api/v1/account/login
   logout_url: http://${account.host}:${account.port}/api/v1/account/logout
   client_id: client_2
