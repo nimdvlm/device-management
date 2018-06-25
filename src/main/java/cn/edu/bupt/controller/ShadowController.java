@@ -48,7 +48,7 @@ public class ShadowController extends DefaultThingsboardAwaredController {
 //            String s = HttpUtil.sendPostToThingsboard(url,null,body,request.getSession());
 ////            res.addProperty("response_code",0);
 //            JsonObject obj = new JsonParser().parse(s).getAsJsonObject();
-//            CatchForDeviceService.put(deviceId,obj);
+//            CachForDeviceService.put(deviceId,obj);
 ////            res.add("response_msg",obj);
             return responseUtil.onSuccess(serviceDes) ;
         }catch(Exception e){
