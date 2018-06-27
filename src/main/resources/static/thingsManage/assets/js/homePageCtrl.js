@@ -1,5 +1,175 @@
+mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resource) {
+    var Device = $resource("/api/device/alldevices?limit=1000");
+    $scope.Devices = Device.query(function () {
+        $scope.Devices_Number=$scope.Devices.length;
+        console.log("设备个数："+$scope.Devices_Number);
+        var DeviceName=getDevicesName()
 
-mainApp.controller("homePageCtrl",["$scope","$location",function ($scope,$location) {
+        var DeviceState=$resource("/api/device/status");
+        var DeviceStates=DeviceState.save({deviceId:DeviceName})
+            .$promise.then(function (resp) {
+                console.log(resp);
+                var data=resp;
+                var key='6d090f10-6e1c-11e8-8dc5-59c2cc02320f'
+                console.log(data[key])
+               showDeviceState(resp,DeviceName);
+            })
+
+    });
+
+    var pluginGroup = $resource('/api/rule/allPlugins');
+    $scope.pluginGroups = pluginGroup.query(function () {
+        $scope.Plugin_Number=$scope.pluginGroups.length;
+        console.log("插件个数："+$scope.Plugin_Number);
+    });
+
+    var RULE = $resource('/api/rule/ruleByTenant');
+    $scope.Rules=RULE.query(function () {
+        $scope.Rule_Number=$scope.Rules.length;
+        console.log("规则个数："+$scope.Rule_Number);
+        showRuleDounut();
+    })
+
+    function showRuleDounut() {
+        var  _active =0
+        var  _suspend =0
+        var  _error = 0
+
+        $scope.Rules.forEach(function (item) {
+            if (item.rule.state == "ACTIVE") {
+                _active++;
+            }
+            else if (item.rule.state == "SUSPEND") {
+                _suspend++;
+            } else {
+                _error++;
+            }
+        });
+        console.log(_active, _suspend, _error);
+
+        //charts.js-甜甜圈
+        ctx = document.getElementById("myChart1").getContext("2d");
+        var myDoughnutChart1 = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [_active, _error, _suspend],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+
+                }],
+                labels: [
+                    '运行中',
+                    '故障',
+                    '已停止'
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: '规则运行情况',
+                    fontSize: 25,
+                    fontFamily: "Microsoft YaHei",
+                    fontStyle: 'normal',
+                    fontColor: '#1964ad'
+                },
+                legend: {
+                    position: 'bottom',
+                    labels:{
+                        boxWidth:20
+                    }
+                }
+            }
+        });
+    }
+    function getDevicesName() {
+        var _DeviceName=[];
+        $scope.Devices.forEach(function (item) {
+            _DeviceName.push(item.id);
+        })
+        return _DeviceName
+
+    }
+    function showDeviceState(data,DeviceName) {
+        var _online=0
+        var _offline=0
+        var _error=0
+        var devicekey
+
+        for(var i=0;i<$scope.Devices_Number;i++){
+            devicekey=DeviceName[i]
+            console.log(data[devicekey])
+            if (data[devicekey] === "offline") {
+                _offline++;
+            }else if(data[devicekey] === "online"){
+                _online++;
+            }else{
+                _error++;
+            }
+        }
+        console.log(_offline,_online,_error);
+
+        //饼状图
+        //charts.js-甜甜圈
+        ctx = document.getElementById("myChart2").getContext("2d");
+        var myDoughnutChart1 = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [_online, _error, _offline],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+
+                }],
+                labels: [
+                    '上线',
+                    '故障',
+                    '下线'
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: '设备上下线情况',
+                    fontSize: 25,
+                    fontFamily: "Microsoft YaHei",
+                    fontStyle: 'normal',
+                    fontColor: '#1964ad'
+                },
+                legend: {
+                    position: 'bottom',
+                    labels:{
+                        boxWidth:20
+                    }
+                }
+            }
+        });
+
+    }
+
+
+
+    /*************************
+     * 样例部分
+     *
     //直方图
     var ctx = document.getElementById("myChart1").getContext("2d");
     var myChart1 = new Chart(ctx, {
@@ -172,4 +342,6 @@ mainApp.controller("homePageCtrl",["$scope","$location",function ($scope,$locati
             }
         }
     });
+     *******/
+    /******样例END*******/
 }]);
