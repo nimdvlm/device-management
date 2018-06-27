@@ -119,7 +119,6 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
         console.log(_offline,_online,_error);
 
         //饼状图
-        //charts.js-甜甜圈
         ctx = document.getElementById("myChart2").getContext("2d");
         var myDoughnutChart1 = new Chart(ctx, {
             type: 'pie',
