@@ -30,6 +30,14 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
             templateUrl:"evaluate.html",
             controller:"mainCtrl"
         })
+        .when("/widgetsLibrary",{
+            templateUrl:"widgetsLibrary.html",
+            controller:"widgetsLibraryCtrl"
+        })
+        .when("/dashboard",{
+            templateUrl:"dashboard.html",
+            controller:"dashboardCtrl"
+        })
         .when("/customer",{
             templateUrl:"customer.html",
             controller:"mainCtrl"
