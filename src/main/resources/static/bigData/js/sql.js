@@ -28,7 +28,7 @@ var myXmlHttpRequest="";
 var deviceId = UrlParm.parm("deviceId");
 var deviceNum = UrlParm.parm("deviceNum");
 var sectionA = document.getElementById("transportId");
-sectionA.setAttribute("href","dydatatrue.html?deviceId="+deviceId+"&deviceNum="+deviceNum);
+sectionA.setAttribute("href","statisticsdata.html?deviceId="+deviceId+"&deviceNum="+deviceNum);
 
 /*function getdata() {
 
@@ -514,7 +514,7 @@ function showData() {
 
 }
 
-/*var navCount;
+var navCount;
 navCount = localStorage.getItem("navCount");
 if(navCount==null){
     navCount=0;
@@ -550,22 +550,6 @@ $("#test1").click(
         }
         navCount++;
         localStorage.setItem("navCount",navCount);
-    }
-);*/
-
-$('#test12').hover(
-    function () {
-        $('#test121').fadeIn(1000);
-        $('#test122').fadeIn(1000);
-    },function () {
-        $('#test121').fadeOut(1000);
-        $('#test122').fadeOut(1000);
-    }
-);
-
-$('#modelchange').click(
-    function () {
-        window.alert($("#sqlText").val()+"已提交");
     }
 );
 
