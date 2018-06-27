@@ -83,9 +83,13 @@ public class NavigationController {
     public String  plugins() { return "static/thingsManage/plugins"; }
 
     @RequestMapping("/evaluate")
-    public String  assess() {
-        return "static/thingsManage/evaluate";
-    }
+    public String  assess() { return "static/thingsManage/evaluate"; }
+
+    @RequestMapping("/widgetsLibrary")
+    public String  widgetsLibrary() { return "static/thingsManage/widgetsLibrary"; }
+
+    @RequestMapping("/dashboard")
+    public String  dashboard() { return "static/thingsManage/dashboard"; }
 
     @RequestMapping("/customer")
     public String  customer() {
