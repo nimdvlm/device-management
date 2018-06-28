@@ -1,5 +1,4 @@
-﻿
-/*======================================
+﻿/*======================================
     GENERAL STYLES
 ======================================= */
 
@@ -48,7 +47,6 @@ HEAD MENU STYLES
 #wrap div {
     display: inline-block;
     !*float: left;*!
-
 }*/
 
 
@@ -71,26 +69,26 @@ HEAD MENU STYLES
 
 }
 
-    #side-menu ul {
-        list-style: none;
-        padding: 0px;
-    }
+#side-menu ul {
+    list-style: none;
+    padding: 0px;
+}
 
-        #side-menu ul li {
-            border-bottom: 1px solid #2a4c70;
-            padding: 21px 25px;
-            text-align: left;
-        }
+#side-menu ul li {
+    border-bottom: 1px solid #2a4c70;
+    padding: 21px 25px;
+    text-align: left;
+}
 
-            #side-menu ul li a i {
-                padding-right: 10px;
-            }
+#side-menu ul li a i {
+    padding-right: 10px;
+}
 
-            #side-menu ul li a, #side-menu ul li a:hover {
-                color: #cad4df;
-                text-decoration: none;
-                font-size: 16px;
-            }
+#side-menu ul li a, #side-menu ul li a:hover {
+    color: #cad4df;
+    text-decoration: none;
+    font-size: 16px;
+}
 
 .menu-close-icon, .menu-open-icon {
     cursor: pointer;
@@ -191,9 +189,9 @@ DEVICELIST STYLES
 }
 
 .attName{
-  font-weight: bold;
-  width: 150px;
-  text-align: center;
+    font-weight: bold;
+    width: 150px;
+    text-align: center;
 }
 
 .inputInfo{
@@ -205,8 +203,8 @@ DEVICELIST STYLES
     border: 2px solid #ff3c3c;
 }
 .showForm table tbody tr td{
-   width: 30%;
-   text-align: center;
+    width: 30%;
+    text-align: center;
 }
 .boldForm{
     font-weight: bold;
@@ -602,20 +600,80 @@ pluginsGroup
     text-align:center;
     list-style:none;
 }
-<<<<<<< Updated upstream
+
 /* =============================================================
-   Dashboard
+pluginsGroup
+============================================================ */
+.parent{
+    text-align: center;
+}
+.tenantLoyout{
+    position: absolute;
+    left: 184px;
+    top:88px;
+    background: #c0c0c036;
+    height: 100px;
+    width: 785px;
+}
+.tenantRow{
+    position: absolute;
+    left: 184px;
+    top: 195px;
+    background: #c0c0c036;
+    width: 785px;
+    height: 600px;
+}
+.tenantRight{
+    position: absolute;
+    margin-left: 765px;
+    top:88px;
+    height: 650px;
+    width: 535px;
+    background: #c0c0c036;
+}
+.tenantHeader{
+    float: left;
+    font-size: 30px;
+    font-weight: 600;
+    margin-left: 30px;
+    margin-top: 30px;
+    font-family: Microsoft YaHei;
+ }
+
+
+/* =============================================================
+    HomePage
  ============================================================ */
 .content{
-    margin:30px 50px 0 70px;
+    margin:30px 0 0 70px;
     height:100%;
     overflow:hidden;
 }
-.dashboard{
+.block{
+    height: 200px;
+    width: 30%;
     float: left;
     border: 1px solid rgba(43, 76, 227, 0.2);
-    margin:10px 10px;
+    margin:10px 15px;
+    text-align: center;
 }
+.block_number{
+    font-size: 80px;
+    font-weight: bold;
+    color: #3a87ad;
+}
+.block_title{
+    font-size: 25px;
+    color: #1964ad;
+    padding-top: 15px;
+}
+#no_broadcast{
+    text-align: center;
+    font-size: 25px;
+    line-height: 200px;
+    color: rgba(43, 76, 227, 0.4);
+}
+/***示例
 .firstLine,.secondLine{
     height:100%;
     overflow:hidden;
@@ -629,5 +687,4 @@ pluginsGroup
     line-height: 300px;
     color: rgba(43, 76, 227, 0.4);
 }
-=======
->>>>>>> Stashed changes
+***/
