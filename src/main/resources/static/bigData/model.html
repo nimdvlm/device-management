@@ -30,7 +30,7 @@
                 <li id="test3" style="display: none"><input type="button" value="红宝石"/></li>
             </ul>
             <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 90px" value="返回上一级"/></a>
-            <input type="button" class="button blue" value="退出" onclick="quitThings()" />
+            <input type="button" class="button blue" value="退&nbsp;&nbsp;&nbsp;出" onclick="quitThings()" />
             <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
             <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
         </div>
@@ -38,21 +38,21 @@
 </div>
 <nav>
     <ul>
-        <li><a href="device1.html"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
-        <li><a href="start.html"><span class="icon">&#128200;</span>设备统计</a></li>
+        <li><a href="device1.html" style="font-size: 14px"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
+        <li><a href="start.html" style="font-size: 14px"><span class="icon">&#128200;</span>设备统计</a></li>
         <ul id="test5">
-            <li class="section"><a href="#"><span class="icon">&#128201;</span>模型仓库</a></li>
+            <li class="section"><a href="#" style="font-size: 14px"><span class="icon">&#128201;</span>模型仓库</a></li>
             <li id="test6" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="model.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>模型定制</a></li>
             <li id="test7" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="modelentity.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>实例详情</a></li>
         </ul>
-        <li><a href="hisdata.html"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
+        <li><a href="hisdata.html" style="font-size: 14px"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
     </ul>
 </nav>
 
 <div id="main1" style="width: 100%;margin-left: 20px">
     <h1 style="color: white;font-size: 16px;margin-top:20px;margin-left:230px;">模型</h1>
 </div>
-<div id="main2" style="width: 100%;margin-top:370px;margin-left:20px;font-size:16px">
+<div id="main2" style="width: 100%;margin-top:250px;margin-left:20px;font-size:16px">
     <h1 style="color: white;font-size: 16px;margin-left:230px;">模型实例</h1>
 </div>
 
@@ -64,29 +64,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">模型定制</h4>
             </div>
-            <div class="modal-body">
-                <select>
-                    <option>设备ID</option>
-                    <option>10001</option>
-                    <option>10002</option>
-                    <option>10003</option>
-                    <option>10004</option>
-                </select>
-                <select>
-                    <option>Key1</option>
-                    <option>temperature</option>
-                    <option>humidity</option>
-                    <option>pressure</option>
-                    <option>speed</option>
-                </select>
-                <select>
-                    <option>Key2</option>
-                    <option>temperature</option>
-                    <option>humidity</option>
-                    <option>pressure</option>
-                    <option>speed</option>
-                </select>
-            </div>
+            <div class="modal-body" id="modelSelect"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button id="modelchange" type="button" class="btn btn-primary">提交更改</button>

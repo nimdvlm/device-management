@@ -1070,7 +1070,7 @@ th {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
-*:before,
+/*   *:before,   */
 *:after {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -6462,7 +6462,6 @@ button.close {
 .clearfix:after,
 .dl-horizontal dd:before,
 .dl-horizontal dd:after,
-.container:before,
 .container:after,
 .container-fluid:before,
 .container-fluid:after,
