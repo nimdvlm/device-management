@@ -214,7 +214,7 @@ function startEntity(obj) {
     myXmlHttpRequest = getXmlHttpObject();
     if (myXmlHttpRequest) {
         //var url = "toajax?username=" + document.getElementById("username").value;
-        document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
+        document.getElementById("YWaitDialog1").setAttribute("style","display:block;");
         var appIdString = $(obj).parent().parent().children().find("p").eq(1).html();
         var appId = appIdString.split(":")[1];
         var url = "http://39.104.186.210:8090/api/app/start-app?appId="+appId;// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
@@ -231,7 +231,7 @@ function startEntity(obj) {
 
         if (myXmlHttpRequest.readyState == 4) {
 
-            document.getElementById("YWaitDialog").setAttribute("style","display:none;");
+            document.getElementById("YWaitDialog1").setAttribute("style","display:none;");
             var mes = myXmlHttpRequest.responseText;
             window.alert(mes);
 
@@ -243,7 +243,7 @@ function getResult(obj) {
     myXmlHttpRequest2 = getXmlHttpObject();
     if (myXmlHttpRequest2) {
         //var url = "toajax?username=" + document.getElementById("username").value;
-        document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
+        document.getElementById("YWaitDialog1").setAttribute("style","display:block;");
         var appIdString = $(obj).parent().parent().children().find("p").eq(1).html();
         var appId = appIdString.split(":")[1];
         var url2 = "http://39.104.186.210:8090/api/app/real-predict?appId="+appId;// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
@@ -260,7 +260,7 @@ function getResult(obj) {
 
         if (myXmlHttpRequest2.readyState == 4) {
 
-            document.getElementById("YWaitDialog").setAttribute("style","display:none;");
+            document.getElementById("YWaitDialog1").setAttribute("style","display:none;");
             var mes = myXmlHttpRequest.responseText;
             window.alert(mes);
 
