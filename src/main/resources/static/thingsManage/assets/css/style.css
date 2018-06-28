@@ -629,24 +629,51 @@ pluginsGroup
     color: #1964ad;
     padding-top: 15px;
 }
-#no_broadcast{
+.no_broadcast{
     text-align: center;
     font-size: 25px;
     line-height: 200px;
     color: rgba(43, 76, 227, 0.4);
 }
-/***示例
-.firstLine,.secondLine{
-    height:100%;
-    overflow:hidden;
+/* =============================================================
+        Dashboard
+============================================================ */
+.left_Dashboard{
+    float:left;
+    width: 200px;
+    border-right: 1px solid #ffffff;
+    height: 500px;
+    overflow-y: scroll;
 }
-#boradcast{
-    margin: 10px 10px 0 650px;
+.left_Dashboard::-webkit-scrollbar {display:none;}
+.right_Dashboard{
+    margin-left:220px ;
+}
+.dashboard{
+    position:relative;
+    height: 120px;
     border: 1px solid rgba(43, 76, 227, 0.2);
-    height: 300px;
+    margin:15px 10px 0 0;
+    cursor:pointer;
+}
+#dashboard_add{
+    border-style: dashed;
+}
+.no_dashboard{
     text-align: center;
-    font-size: 30px;
-    line-height: 300px;
+    font-size: 20px;
+    line-height: 120px;
     color: rgba(43, 76, 227, 0.4);
 }
-***/
+.dashboardicon{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+.dashboard_item{
+    float: left;
+    width: 47%;
+    margin: 15px 5px;
+    border: 1px solid rgba(25, 100, 173, 0.5);
+    height: 250px;
+}
