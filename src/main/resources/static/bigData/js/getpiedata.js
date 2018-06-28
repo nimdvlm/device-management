@@ -191,7 +191,6 @@ myChart3.setOption(option3);
 
 function getData() {
 
-    window.alert("数据分析中···，请耐心等待");
     document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
     function getXmlHttpObject() {
 
@@ -448,7 +447,6 @@ function getData() {
             }*/
         }
     }
-    document.getElementById("YWaitDialog").setAttribute("style","display:none;");
 }
 
 var navCount;
