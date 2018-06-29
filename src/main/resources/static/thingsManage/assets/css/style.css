@@ -677,3 +677,39 @@ pluginsGroup
     border: 1px solid rgba(25, 100, 173, 0.5);
     height: 250px;
 }
+/*tenantGroup*/
+.parent{
+    text-align: center;
+}
+.tenantLoyout{
+    position: absolute;
+    left: 184px;
+    top:88px;
+    background: #c0c0c036;
+    height: 100px;
+    width: 785px;
+}
+.tenantRow{
+    position: absolute;
+    left: 184px;
+    top: 195px;
+    background: #c0c0c036;
+    width: 785px;
+    height: 600px;
+}
+.tenantRight{
+    position: absolute;
+    margin-left: 765px;
+    top:88px;
+    height: 650px;
+    width: 535px;
+    background: #c0c0c036;
+}
+.tenantHeader{
+    float: left;
+    font-size: 30px;
+    font-weight: 600;
+    margin-left: 30px;
+    margin-top: 30px;
+    font-family: Microsoft YaHei;
+}
