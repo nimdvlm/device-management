@@ -8,29 +8,18 @@
     <meta name="robots" content="" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/style.css" media="all" />
-    <link rel="stylesheet" href="css/leaflet.css">
-    <style>
-        html, body, #map {
-            height: 100%;
-            padding: 0;
-            margin: 0;
-        }
-        #forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#c11;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:fixed;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}}</style>
 
 </head>
-
 <body>
 
 <div class="testing">
     <header class="main">
         <h1><strong>大数据平台</strong> </h1>
-        <input type="text" value="search" />
     </header>
     <section class="user">
 
         <div style="width: 100px;height: 43px;float: left;margin-top: 23px;margin-left: 10px">
             <input style="width: 90px;height: 35px" type="button" value="导航栏" id="test1"/>
-
         </div>
         <div class="buttons">
             <ul id="test4" style="width:80px;margin-right: 8px;float: left ">
@@ -45,12 +34,11 @@
         </div>
     </section>
 </div>
-<nav style="height:150%">
+
+<nav>
     <ul>
-        <li class="section"><a href="device1.html" style="font-size: 14px"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
-        <li>
-            <a href="start.html" style="font-size: 14px"><span class="icon">&#128200;</span>设备统计</a>
-        </li>
+        <li><a href="device1.html" style="font-size: 14px"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
+        <li class="section"><a href="start.html" style="font-size: 14px"><span class="icon">&#128200;</span>设备统计</a></li>
         <ul id="test5">
             <li><a href="#" style="font-size: 14px"><span class="icon">&#128201;</span>模型仓库</a></li>
             <li id="test6" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="model.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>模型定制</a></li>
@@ -59,9 +47,36 @@
         <li><a href="hisdata.html" style="font-size: 14px"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
     </ul>
 </nav>
-<div id="map" style="width: 83%;height: 80%;float: left;margin-left: 1%;display: none"></div>
-<div id="main1" style="width: 40%;height: 40%;float: left;margin-left: 1.5%;margin-top: 2%;display: none"></div>
-<div id="main2" style="width: 40%;height: 40%;float: left;margin-left: 2%;margin-top: 2%;display: none"></div>
+
+<section class="alert">
+    <!--<form method="link" action="dydata.jsp">-->
+    <a id="transportId" href="#"><button class="green">点此查看实时数据</button></a>
+    <!--</form>-->
+</section>
+
+<section class="content" id="navid">
+    <section class="widget">
+        <div id="main" style="width: 100%;height: 600px;display: none"></div>
+        <div align="middle">
+            <textarea rows="3" cols="100">
+                提交sql语句
+            </textarea>
+            <input style="width: 5%;margin-bottom:10px;margin-left: 5% " type="button" value="确认" id="fname3" onclick="showData()">
+        </div>
+
+        <!--<form action="" method="post">
+            用户名字：<input type="text" onkeyup="checkname();" name="username1" id="username">
+            <input type="button" onclick="checkname();" value="验证用户名">
+            <input style="border-width:0;color: red " type="text" id="myres">
+            <br/>
+            用户密码：<input type="password" name="password"><br/>
+            电子邮件：<input type="text" name="email"><br/>
+            <input type="submit" value="用户注册">
+        </form>-->
+
+    </section>
+</section>
+
 <div class="waiting" id="YWaitDialog">
     <div class="spinner">
         <div class="spin">
@@ -177,42 +192,13 @@
     </div>
     <h1 style="color: #F88863">loading</h1>
 </div>
-<!--<div>
-<input type="button" value="click" id="test"/>
-</div>
-<script type="text/javascript">
-    $('test').onclick(
-        function () {
-            $('main').css("background","#208ed3");
-        }
-    )
-</script>-->
 
-<!--<script type="text/javascript">
-
-    var copydiv = document.getElementById("divcard");
-    for(var i=0;i<14;i++){
-        var clonediv = copydiv.cloneNode(true);
-        clonediv.setAttribute("id","divcard-"+i);
-        var clonename = clonediv.getElementsByTagName("p");
-        clonename[0].innerText="设备 No-"+(i+2);
-        copydiv.parentNode.appendChild(clonediv);
-
-    }
-</script>-->
-<script type="text/javascript">
-    document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
-</script>
 <script src="js/jquery-3.3.1.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
 <script src="js/common.js"></script>
 <script src="js/getUrlParam.js"></script>
 <script src="js/starttoend.js"></script>
-<script src="js/main.min.js"></script>
-<script src="js/map.js"></script>
 <script src="js/echarts.min.js"></script>
-<script src="js/start.js"></script>
-<script type="text/javascript">
-    document.getElementById("YWaitDialog").setAttribute("style","display:none;");
-</script>
+<script src="js/sql.js"></script>
 </body>
 </html>

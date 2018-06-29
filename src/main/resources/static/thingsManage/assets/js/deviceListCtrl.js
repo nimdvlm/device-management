@@ -9,9 +9,6 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     var nextDeviceId;//用于设备列表展示时向后翻页
     var nextDeviceName;//用于设备列表展示时向后翻页
     var pageNum = 1;//用于记录当前页号
-
-
-
     /*设备列表信息获取与展示*/
 
     /*返回值为所有设备信息*/

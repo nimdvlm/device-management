@@ -1,22 +1,32 @@
 ﻿<div ng-controller="homePageCtrl">
     <div class="content">
-        <div class="firstLine">
-            <div class="dashboard">
-                <canvas id="myChart3" width="300" height="300"></canvas>
-            </div>
-            <div class="dashboard">
-                <canvas id="myChart4" width="300" height="300"></canvas>
-            </div>
-            <div id="boradcast">
-                暂无广播事件
+        <div class="block">
+            <div class="block_title">设备数量</div>
+            <div class="block_number">
+                {{Devices_Number}}
             </div>
         </div>
-        <div class="secondLine">
-            <div class="dashboard" style="width: 48%;height: 30%">
-                <canvas id="myChart2"></canvas>
+        <div class="block">
+            <div class="block_title">插件数量</div>
+            <div class="block_number">
+                {{Plugin_Number}}
             </div>
-            <div class="dashboard" style="width: 48%;height: 30%;">
-                <canvas id="myChart1"></canvas>
+        </div>
+        <div class="block">
+            <div class="block_title">规则数量</div>
+            <div class="block_number">
+                {{Rule_Number}}
+            </div>
+        </div>
+        <div class="block">
+            <canvas id="myChart2" height="180"></canvas>
+        </div>
+        <div class="block">
+            <canvas id="myChart1" height="180"></canvas>
+        </div>
+        <div class="block">
+            <div class="no_broadcast">
+                暂无广播事件
             </div>
         </div>
     </div>
