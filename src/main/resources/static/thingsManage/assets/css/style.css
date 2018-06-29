@@ -797,10 +797,10 @@ pluginsGroup
     border: 1px solid #337ab7;
 
 }
-th{
+#tenantAdministrator th{
     height: 50px;
     text-align: center;
 }
-td{
+#tenantAdministrator td{
     height: 40px;
 }
