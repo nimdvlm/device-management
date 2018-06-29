@@ -677,7 +677,7 @@ pluginsGroup
     border: 1px solid rgba(25, 100, 173, 0.5);
     height: 250px;
 }
-/*tenantGroup*/
+/*=======================================tenantGroup===========================================*/
 .parent{
     text-align: center;
 }
@@ -701,7 +701,7 @@ pluginsGroup
     position: absolute;
     margin-left: 765px;
     top:88px;
-    height: 650px;
+    height: 640px;
     width: 535px;
     background: #c0c0c036;
 }
@@ -712,4 +712,95 @@ pluginsGroup
     margin-left: 30px;
     margin-top: 30px;
     font-family: Microsoft YaHei;
+}
+#tenantDetail ul {
+    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+    background-color: #afd9ee;
+    position: fixed;
+    top: 94px;
+    width: 520px;
+    margin-left: 7px;
+}
+#tenantDetail li {
+    float: left;
+}
+#tenantDetail li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+#tenantDetail li a:hover:not(.active) {
+    background-color: #337ab7;
+}
+#tenantDetail .active {
+    background-color: #337ab7;
+}
+#tenantDetail .right{
+    float:right;
+}
+#detailShow{
+    padding:15px;
+    margin-top:30px;
+    margin-left: 7px;
+    background-color: #ffffff;
+    height:615px;
+    width: 520px;
+    top: 110px;
+    border-bottom: 2px solid #c0c0c0;
+    border-left: 2px solid #c0c0c0;
+    border-right: 2px solid #c0c0c0;
+    position: fixed;
+
+}
+#detailShow h2{
+    color: #337ab7;
+    font-family: "Anonymous Pro", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
+    padding-bottom: 20px;
+}
+.lineSpacing{
+    padding-top: 10px;
+    text-align: left;
+    font-family: 微软雅黑;
+}
+.underLine{
+    border-bottom:1px solid #000000;
+}
+#tenantAdministrator{
+    padding:15px;
+    margin-top:30px;
+    margin-left: 7px;
+    background-color: #ffffff;
+    height:615px;
+    width: 520px;
+    top: 110px;
+    border-bottom: 2px solid #c0c0c0;
+    border-left: 2px solid #c0c0c0;
+    border-right: 2px solid #c0c0c0;
+    position: fixed;
+    overflow-y: auto;
+
+}
+#tenantAue #tenantTow #tenantThere #createManager{
+    cursor:hand;
+}
+#tenantAdministrator h2{
+    color: #337ab7;
+    font-family: "Anonymous Pro", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
+    padding-bottom: 20px;
+    text-align: left;
+}
+#tenantAdministrator table{
+    border: 1px solid #337ab7;
+
+}
+#tenantAdministrator th{
+    height: 50px;
+    text-align: center;
+}
+#tenantAdministrator td{
+    height: 40px;
 }
