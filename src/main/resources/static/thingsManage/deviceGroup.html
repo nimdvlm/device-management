@@ -5,7 +5,7 @@
             <div class="DGAssignContainer">
                 <div class="DGTitle DGminTitle">
                     <span class="RightviewTitle">设备组信息</span>
-                    <div class="ruleiconcontainer" data-toggle="modal" data-target="#delDG">
+                    <div class="ruleiconcontainer userDelete" data-toggle="modal" data-target="#delDG">
                         <i class="fa fa-trash-o fa-lg ruleicon shand" title="删除"></i>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                             </td>
                             <td>{{data.name}}</td>
                             <td>{{data.id}}</td>
-                            <td style="text-align: center"><i class="fa fa-minus shand" data-toggle="modal" data-target="#warnDelAssign"
+                            <td style="text-align: center"><i class="fa fa-minus shand userDelete" data-toggle="modal" data-target="#warnDelAssign"
                                                               ng-click="giveData(data)"></i></td>
                         </tr>
                         <tr ng-if="data.expanded" ng-repeat-end="">
@@ -63,7 +63,7 @@
                                 <p>状态：{{data.status}}</p>
                                 <p>位置：{{data.location}}</p>
                                 <p>
-                                    <button class="btn btn-primary" data-toggle="modal"
+                                    <button class="btn btn-primary user" data-toggle="modal"
                                             data-target="#refreshDevice" ng-click="setValue(data)">更新设备
                                     </button>
                                     <button class="btn btn-primary" data-toggle="modal"
@@ -360,7 +360,7 @@
     <div class="LeftView">
         <div class="DGTitle">
             <span style="font-size:30px">设备组</span>
-            <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
+            <button style="margin-left:5px" class="btn btn-primary btn-sm user" data-toggle="modal"
                     data-target="#addDeviceGroup">+ 创建设备组
             </button>
             <div class="SearchDG">

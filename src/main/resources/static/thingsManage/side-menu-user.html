@@ -79,12 +79,12 @@
                         <i class="fa fa-bars pull-left fa-2x b-clr"></i>
                     </span>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-3 col-sm-12">
                    <span id="headMenuFont">
                        <marquee direction="left" onmouseover=this.stop() onmouseout=this.start() width=87% scrollamount="4"><i class="fa fa-home"></i>&nbsp;欢 迎 来 到 物 管 理 平 台 ！</marquee>
                    </span>
                 </div>
-                <div class="col-md-7 col-sm-12">
+                <div class="col-md-8 col-sm-12">
                     <span class="upSideMenu" id="firstSpan"><i class="fa fa-user"></i>当前用户：<span ng-cloak>{{currentUser}}</span></span>
                     <span class="upSideMenu"><i class="fa fa-line-chart"></i>用户等级：<span ng-cloak>{{currentUserLevel}}</span></span>
                     <span class="upSideMenu" id="backIcon"><i class="fa fa-reply"></i>返回上一级</span>
@@ -137,6 +137,21 @@
                     <span class="textStyle">规则管理</span>
                 </a>
             </li>
+
+            <li class="side-menu-icon" id="widgets">
+                <a href="" title="组件库" ng-click="$location.path('widgetsLibrary')">
+                    <i class="fa fa-cube fontStyle "></i>
+                    <span class="textStyle">组件库</span>
+                </a>
+            </li>
+
+            <li class="side-menu-icon" id="dashboard">
+                <a href="" title="仪表盘" ng-click="$location.path('dashboard')">
+                    <i class="fa fa-clock-o fontStyle "></i>
+                    <span class="textStyle">仪表盘</span>
+                </a>
+            </li>
+
             <li class="side-menu-icon" id="evaluate">
                 <a href="" title="用户手册" ng-click="$location.path('evaluate')">
                     <i class="fa fa-newspaper-o fontStyle "></i>

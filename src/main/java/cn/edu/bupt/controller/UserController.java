@@ -141,4 +141,23 @@ public class UserController extends DefaultThingsboardAwaredController{
         }
     }
 
+    @RequestMapping(value = "/customer/usersPage", params = {  "customerId","limit"}, method = RequestMethod.GET)
+    @ResponseBody
+    public String getCustomerUsers(@RequestParam Integer customerId,
+                                   @RequestParam int limit) {
+        String requestAddr = API_PREFIX + "customer/usersPages";
+        StringBuffer param = new StringBuffer();
+        param.append("customerId").append("=").append(customerId).append("&").append("limit").append("=").append(limit);
+        requestAddr = requestAddr + "?" + param ;
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getAccountServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+            return responseContent;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+    }
+
 }

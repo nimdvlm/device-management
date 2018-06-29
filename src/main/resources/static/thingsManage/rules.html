@@ -6,9 +6,9 @@
                 <div class="DGTitle DGminTitle">
                     <span class="RightviewTitle">规则信息</span>
                     <div class="ruleiconcontainer">
-                        <i class="fa fa-power-off fa-lg ruleicon shand" ng-show="Rulestart" title="激活规则"
+                        <i class="fa fa-power-off fa-lg ruleicon shand userDelete" ng-show="Rulestart" title="激活规则"
                            data-toggle="modal" data-target="#startRule"></i>
-                        <i class="fa fa-ban fa-lg ruleicon shand" ng-show="Rulestop" title="暂停规则"
+                        <i class="fa fa-ban fa-lg ruleicon shand userDelete" ng-show="Rulestop" title="暂停规则"
                            data-toggle="modal" data-target="#stopRule"></i>
                         <i class="fa fa-trash-o fa-lg ruleicon shand" title="删除此规则"
                            data-toggle="modal" data-target="#delRule"></i>
@@ -216,7 +216,7 @@
         <div class="LeftView">
             <div class="DGTitle">
                 <span style="font-size:30px">规则管理</span>
-                <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
+                <button style="margin-left:5px" class="btn btn-primary btn-sm user" data-toggle="modal"
                         data-target="#addRule">+ 创建规则
                 </button>
                 <div class="SearchDG">

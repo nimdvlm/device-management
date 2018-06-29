@@ -457,6 +457,14 @@ serviceGroup
 /* =============================================================
 pluginsGroup
 ============================================================ */
+.upperLayout{
+    height: 110px;
+    width: 73%;
+    float: left;
+    background: #c0c0c036;
+    margin: 6px 10px 5px -45px;
+}
+
 .pluginActiveposition{
     margin-left: 250px;
     color: #305680;
@@ -468,11 +476,18 @@ pluginsGroup
     color: #305680;
     font-size: large;
 }
+.header-line{
+    font-size: 30px;
+    font-weight: 600;
+    margin-left: 30px;
+    font-family: Microsoft YaHei;
+
+}
 .stylePulgin{
     color:  #305680;
     font-size: 15px;
     font-weight: bold;
-    margin-left: 15px;
+    text-align: center;
     margin-top: 5px;
 }
 .homeBackgroundstyle{
@@ -488,19 +503,26 @@ pluginsGroup
 
 }
 .pluginChart{
-    background: #feffff;
-    margin:0px 0px 0 790px;
-    width:480px;
+    background: #c0c0c036;
+    width:505px;
     height:240px;
+    margin:6px 10px 0 795px;
     padding-top: 5px;
     float: right;
     font-family: inherit;
     position: fixed;
 }
-.pluginIcon{
-    width: 70%;
+.lowerLayout{
+    width: 73%;
+    height: 1000px;
     float: left;
     padding-top:10px;
+    background: #c0c0c036;
+    margin: 1px 10px 5px -45px;
+}
+.pluginIcon{
+    float: left;
+    margin-left: 10px;
 }
 .positionTwo{
     margin-left: 25px;
@@ -516,7 +538,7 @@ pluginsGroup
 .PluginInfo{
     font-size: 23px;
     color: #305680;
-    font-weight: 600;
+    font-weight: 500;
     padding: 5px;
     margin-left: 20px;
 }
@@ -527,11 +549,11 @@ pluginsGroup
     font-weight: 400;
 }
 .displayInterface{
-    background: #feffff;
-    margin:245px 0px 0 790px;
+    background: #c0c0c036;
+    margin:252px 10px 0 795px;
     padding-top: 5px;
-    width:480px;
-    height:290px;
+    width:505px;
+    height:415px;
     float: right;
     position: fixed;
     overflow: auto;
@@ -540,26 +562,39 @@ pluginsGroup
 .PluginInterfaceInfo{
     font-size: 23px;
     color: #305680;
-    font-weight: 600;
+    font-weight: 500;
     padding: 5px;
     margin-left: 20px;
-
 }
 .interfaceInfo {
     margin-left: 20px;
-    font-size: 13px;
+    font-size: 14px;
     color: #0f0f0f;
     font-weight: 400;
+}
+.interfaceInfo ul li{
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+    padding: 6px;
 
+}
+.interName{
+    margin-left: 90px;
+}
+.inlinInter{
+    color: #305680;
+    border: 1px solid #CCC;
+    border-radius:5px;
+    font-weight: 500;
 }
 #box{
     width:400px;
     height:40px;
-    border:1px solid #fdfdfd;
+    border:1px solid #ccc;
     padding:10px;
     overflow:hidden;
     font-size:12px;
-    margin-left: 120px;
+    margin-left: 190px;
     margin-top: -35px;
 }
 #box ul li{
@@ -567,32 +602,114 @@ pluginsGroup
     text-align:center;
     list-style:none;
 }
-<<<<<<< Updated upstream
+
 /* =============================================================
-   Dashboard
+    HomePage
  ============================================================ */
 .content{
-    margin:30px 50px 0 70px;
+    margin:30px 0 0 70px;
     height:100%;
     overflow:hidden;
 }
-.dashboard{
+.block{
+    height: 200px;
+    width: 30%;
     float: left;
     border: 1px solid rgba(43, 76, 227, 0.2);
-    margin:10px 10px;
-}
-.firstLine,.secondLine{
-    height:100%;
-    overflow:hidden;
-}
-#boradcast{
-    margin: 10px 10px 0 650px;
-    border: 1px solid rgba(43, 76, 227, 0.2);
-    height: 300px;
+    margin:10px 15px;
     text-align: center;
-    font-size: 30px;
-    line-height: 300px;
+}
+.block_number{
+    font-size: 80px;
+    font-weight: bold;
+    color: #3a87ad;
+}
+.block_title{
+    font-size: 25px;
+    color: #1964ad;
+    padding-top: 15px;
+}
+.no_broadcast{
+    text-align: center;
+    font-size: 25px;
+    line-height: 200px;
     color: rgba(43, 76, 227, 0.4);
 }
-=======
->>>>>>> Stashed changes
+/* =============================================================
+        Dashboard
+============================================================ */
+.left_Dashboard{
+    float:left;
+    width: 200px;
+    border-right: 1px solid #ffffff;
+    height: 500px;
+    overflow-y: scroll;
+}
+.left_Dashboard::-webkit-scrollbar {display:none;}
+.right_Dashboard{
+    margin-left:220px ;
+}
+.dashboard{
+    position:relative;
+    height: 120px;
+    border: 1px solid rgba(43, 76, 227, 0.2);
+    margin:15px 10px 0 0;
+    cursor:pointer;
+}
+#dashboard_add{
+    border-style: dashed;
+}
+.no_dashboard{
+    text-align: center;
+    font-size: 20px;
+    line-height: 120px;
+    color: rgba(43, 76, 227, 0.4);
+}
+.dashboardicon{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+.dashboard_item{
+    float: left;
+    width: 47%;
+    margin: 15px 5px;
+    border: 1px solid rgba(25, 100, 173, 0.5);
+    height: 250px;
+}
+/*tenantGroup*/
+.parent{
+    text-align: center;
+}
+.tenantLoyout{
+    position: absolute;
+    left: 184px;
+    top:88px;
+    background: #c0c0c036;
+    height: 100px;
+    width: 785px;
+}
+.tenantRow{
+    position: absolute;
+    left: 184px;
+    top: 195px;
+    background: #c0c0c036;
+    width: 785px;
+    height: 600px;
+}
+.tenantRight{
+    position: absolute;
+    margin-left: 765px;
+    top:88px;
+    height: 650px;
+    width: 535px;
+    background: #c0c0c036;
+}
+.tenantHeader{
+    float: left;
+    font-size: 30px;
+    font-weight: 600;
+    margin-left: 30px;
+    margin-top: 30px;
+    font-family: Microsoft YaHei;
+}

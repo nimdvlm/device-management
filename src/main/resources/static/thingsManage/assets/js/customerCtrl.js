@@ -3,7 +3,7 @@ mainApp.controller("customerCtrl",["$scope","$resource","$location",function ($s
 
     var currentPage=1;//用于记录当前页号
     var customersLimit = 9;//用于记录当前展示客户个数
-
+    var totalPages;
 
     $scope.customerLimit = function () {
         if($("#customerNum").val() === ""){
@@ -65,9 +65,24 @@ mainApp.controller("customerCtrl",["$scope","$resource","$location",function ($s
         // document.cookie="customerId="+$scope.customerId;
         $.cookie("customerId",$scope.customerId);
     };
+
+    //获取分页总数
+    $.ajax({
+        url:"api/account/customersPage?limit="+customersLimit,
+        type:"GET",
+        dataType:"text",
+        async:false,
+        success:function (msg) {
+            totalPages = Number(msg);
+            console.log(totalPages);
+        }
+    });
+
+
+
     //分页
     Page({
-        num:20,					//页码数
+        num:totalPages,					//页码数
         startnum:1,				//指定页码
         elem:$('#customerPage'),		//指定的元素
         callback:function(n){	//回调函数

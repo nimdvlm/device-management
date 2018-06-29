@@ -1,4 +1,3 @@
-document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
 $("#main").fadeIn(3000);
 function timestampToTime(timestamp) {
     var date = new Date(timestamp);
@@ -325,7 +324,7 @@ function  proce() {
 function showData() {
 
     if((inputStartDate != "") && (inputEndDate != "")){
-        window.alert("数据分析中···，请耐心等待");
+        document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
         if(myXmlHttpRequest){
             //var url = "toajax?username=" + document.getElementById("username").value;
             var url = "http://39.104.186.210:8090/api/analysis/data";//url="http://39.104.186.210:8090/api/analysis/data";getselectdata
@@ -345,6 +344,7 @@ function showData() {
         function proce() {
 
             if (myXmlHttpRequest.readyState == 4) {
+                document.getElementById("YWaitDialog").setAttribute("style","display:none;");
                 var myChart = echarts.init(document.getElementById('main'));
                 $("#main").css("display","none");
                 $("#main").fadeIn(3000);
@@ -507,14 +507,13 @@ function showData() {
                 myChart.setOption(option);
             }
         }
-        document.getElementById("YWaitDialog").setAttribute("style","display:none;");
     }else{
         window.alert("输入有误");
     }
 
 }
 
-var navCount;
+/*var navCount;
 navCount = localStorage.getItem("navCount");
 if(navCount==null){
     navCount=0;
@@ -550,6 +549,22 @@ $("#test1").click(
         }
         navCount++;
         localStorage.setItem("navCount",navCount);
+    }
+);*/
+
+$('#test12').hover(
+    function () {
+        $('#test121').fadeIn(1000);
+        $('#test122').fadeIn(1000);
+    },function () {
+        $('#test121').fadeOut(1000);
+        $('#test122').fadeOut(1000);
+    }
+);
+
+$('#modelchange').click(
+    function () {
+        window.alert($("#sqlText").val()+"已提交");
     }
 );
 

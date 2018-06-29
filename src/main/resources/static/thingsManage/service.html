@@ -4,7 +4,7 @@
     <div clas="SMTitle">
         <div style="margin-top: 32px">
             <span class="header-line" style="font-size: 27px;font-weight: 600">服务组
-            <button style="margin-left:10px" class="btn btn-primary btn-sm" data-toggle="modal"
+            <button style="margin-left:10px" class="btn btn-primary btn-sm user" data-toggle="modal"
                     data-target="#addServiceGroup">+ 创建服务组
             </button>
             </span>
@@ -21,7 +21,7 @@
         <div ng-repeat="items in abilityGroups" class="abilityBackgroundstyle" ng-click="show(items)" ng-style="items.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                 <span title="服务组"><i class="fa fa-cog homeIconstyle"></i></span>
                 <span class="abilityPlus" data-toggle="modal" data-target="#createSM">
-                <i class="glyphicon glyphicon-plus" title="创建服务"></i>
+                <i class="glyphicon glyphicon-plus userDelete" title="创建服务"></i>
                 </span>
                 <span data-toggle="modal" class="abilityDelete" data-target="#deleteSM">
                 <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
@@ -50,7 +50,7 @@
                     <td>{{arr.serviceName}}</td>
                     <td>{{arr.serviceDescription}}</td>
                     <td>{{arr.serviceType}}</td>
-                    <td><button class="btn btn-sm btn-danger" ng-click="deleteAA(arr)">删除</button></td>
+                    <td><button class="btn btn-sm btn-danger user" ng-click="deleteAA(arr)">删除</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -66,7 +66,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h3 class="modal-title" style="color: #305680;font-weight: 600">
+                    <h3 class="modal-title user" style="color: #305680;font-weight: 600">
                         创建服务组
                     </h3>
                 </div>

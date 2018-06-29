@@ -68,6 +68,11 @@
 
     <!--CustomerUser-->
     <script type="text/javascript" src="static/thingsManage/assets/js/customerUserCtrl.js"></script>
+
+    <!--Dashboard-->
+    <script type="text/javascript" src="static/thingsManage/assets/js/widgetsLibraryCtrl.js"></script>
+    <script type="text/javascript" src="static/thingsManage/assets/js/dashboardCtrl.js"></script>
+
 </head>
 <body ng-controller="mainCtrl">
 
@@ -144,6 +149,20 @@
             <a href="" title="客户组" ng-click="$location.path('customer')">
                 <i class="fa fa-users fontStyle "></i>
                 <span class="textStyle">客户组</span>
+            </a>
+        </li>
+
+        <li class="side-menu-icon" id="widgets">
+            <a href="" title="组件库" ng-click="$location.path('widgetsLibrary')">
+                <i class="fa fa-cube fontStyle "></i>
+                <span class="textStyle">组件库</span>
+            </a>
+        </li>
+
+        <li class="side-menu-icon" id="dashboard">
+            <a href="" title="仪表盘" ng-click="$location.path('dashboard')">
+                <i class="fa fa-clock-o fontStyle "></i>
+                <span class="textStyle">仪表盘</span>
             </a>
         </li>
 

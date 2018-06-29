@@ -217,6 +217,24 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         return retSuccess(responseContent);
     }
 
+    //获取设备状态信息
+    @RequestMapping(value = "/status", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getDevicesStatus(@RequestBody String Dids) {
+        String requestAddr = "/api/v1/deviceaccess/device/status/" + getTenantId() ;
+        JsonObject deviceid = (JsonObject)new JsonParser().parse(Dids);
+        String responseContent = null ;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    null,
+                    deviceid,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+        return retSuccess(responseContent);
+    }
+
 
 
 

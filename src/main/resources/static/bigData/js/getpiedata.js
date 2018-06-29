@@ -1,4 +1,3 @@
-document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
 $("#main").css("display","none");
 $("#main1").css("display","none");
 $("#main2").css("display","none");
@@ -192,7 +191,7 @@ myChart3.setOption(option3);
 
 function getData() {
 
-    window.alert("数据分析中···，请耐心等待");
+    document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
     function getXmlHttpObject() {
 
         var xmlHttpRequest;
@@ -448,7 +447,6 @@ function getData() {
             }*/
         }
     }
-    document.getElementById("YWaitDialog").setAttribute("style","display:none;");
 }
 
 var navCount;

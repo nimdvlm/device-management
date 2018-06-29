@@ -1,19 +1,80 @@
-<div class="row pad-botm">
-    <div class="col-md-12">
-        <h4 class="header-line">租户</h4>
+<div ng-controller="tenantCtrl">
+    <div class="parent">
+        <!--租户头部模型-->
+        <div class="tenantLoyout">
+            <h4 class="tenantHeader">租户
+                <button style="margin-left:10px" class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#addServiceGroup">+ 创建租户
+                </button>
+            </h4>
+        </div>
 
-    </div>
+        <!--下侧控件模块-->
+        <div class="tenantRow">
+            <div class="pluginIcon">
+                <div ng-click="" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                    <div>
+                        <span title="租户"><i class="fa fa-user fa-2x"></i></span>
+                        <p class="stylePulgin">租户A</p>
+                    </div>
+                </div>
+            </div>
 
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="alert alert-success">
-            This is blank page for your customization. So use this page and start your project now.
-            <br/>
-            Happy downloading
-            <br/>
-            Keep Looking <a target="_blank" href="http://#/">binarytheme.com</a> for cool stuff.
+            <div class="pluginIcon">
+                <div ng-click="" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                    <div>
+                        <span title="租户"><i class="fa fa-user fa-2x"></i></span>
+                        <p class="stylePulgin">租户B</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pluginIcon">
+                <div ng-click="" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                    <div>
+                        <span title="租户"><i class="fa fa-user fa-2x"></i></span>
+                        <p class="stylePulgin">租户C</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pluginIcon">
+                <div ng-click="" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                    <div>
+                        <span title="租户"><i class="fa fa-user fa-2x"></i></span>
+                        <p class="stylePulgin">租户D</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pluginIcon">
+                <div ng-click="" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                    <div>
+                        <span title="租户"><i class="fa fa-user fa-2x"></i></span>
+                        <p class="stylePulgin">租户E</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pluginIcon">
+                <div ng-click="" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                    <div>
+                        <span title="租户"><i class="fa fa-user fa-2x"></i></span>
+                        <p class="stylePulgin">租户F</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--右侧栏详情-->
+        <div class="tenantRight">
+            右侧栏部分
         </div>
     </div>
+
+
+
+
 
 </div>

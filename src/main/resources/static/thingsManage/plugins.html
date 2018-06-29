@@ -1,68 +1,73 @@
 ﻿<div ng-controller="pluginCtrl">
-    <div clas="PMTitle">
-        <div style="margin-top: 32px">
-            <span class="header-line" style="font-size: 27px;font-weight: 600">插件管理</span>
-            <!--span class="PMsearch">
-                <input class="span2" type="text" placeholder="输入插件名称">
-                <button><span ng-click="searchDG()" title="搜索"><i class="glyphicon glyphicon-search"></i> </span></button>
-            </span-->
-            <div id="box">
-                <ul>
-                    <li>这是1个无缝向上滚动的特效，实现向上滚动显示的插件</li>
-                    <li>这是2个无缝向上滚动的特效，实现向上滚动显示的插件</li>
-                    <li>这是3个无缝向上滚动的特效，实现向上滚动显示的插件</li>
-                    <li>这是4个无缝向上滚动的特效，实现向上滚动显示的插件</li>
-                    <li>这是5个无缝向上滚动的特效，实现向上滚动显示的插件</li>
-                    <li>这是6个无缝向上滚动的特效，实现向上滚动显示的插件</li>
-                    <li>这是7个无缝向上滚动的特效，实现向上滚动显示的插件</li>
-                    <li>这是8个无缝向上滚动的特效，实现向上滚动显示的插件</li>
-                    <li>这是9个无缝向上滚动的特效，实现向上滚动显示的插件</li>
-                </ul>
+        <div class="upperLayout">
+            <div style="margin-top: 32px">
+                <span class="header-line">插件管理</span>
+                <!--span class="PMsearch">
+                    <input class="span2" type="text" placeholder="输入插件名称">
+                    <button><span ng-click="searchPG()" title="搜索"><i class="glyphicon glyphicon-search"></i> </span></button>
+                </span-->
+                <div id="box">
+                    <ul>
+                        <li>这是1个无缝向上滚动的特效，实现向上滚动显示的插件</li>
+                        <li>这是2个无缝向上滚动的特效，实现向上滚动显示的插件</li>
+                        <li>这是3个无缝向上滚动的特效，实现向上滚动显示的插件</li>
+                        <li>这是4个无缝向上滚动的特效，实现向上滚动显示的插件</li>
+                        <li>这是5个无缝向上滚动的特效，实现向上滚动显示的插件</li>
+                        <li>这是6个无缝向上滚动的特效，实现向上滚动显示的插件</li>
+                        <li>这是7个无缝向上滚动的特效，实现向上滚动显示的插件</li>
+                        <li>这是8个无缝向上滚动的特效，实现向上滚动显示的插件</li>
+                        <li>这是9个无缝向上滚动的特效，实现向上滚动显示的插件</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
 
         <!--模块控件-->
-    <div class="pluginIcon">
-        <div ng-repeat="item in pluginGroups" ng-click="showAll(item)" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
-            <div>
-                <span data-toggle="modal" data-target="#SMDetail" class="itemp"></span>
-                <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
-                <p class="stylePulgin">{{item.name}}</p>
+        <div class="lowerLayout">
+            <div class="pluginIcon">
+                <div ng-repeat="item in pluginGroups" ng-click="showAll(item)" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                    <div>
+                        <span data-toggle="modal" data-target="#SMDetail" class="itemp"></span>
+                        <span title="插件管理"><i class="fa fa-plug fa-2x"></i></span>
+                        <p class="stylePulgin">{{item.name}}</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
        <!--右侧表格显示（上部）-->
-    <div class="pluginChart">
-        <div class="PluginInfo">
-            <p>插件基本信息</p>
-        </div>
-        <div class="displayPosition">
-            <p>插件名称：{{name}}</p>
-            <p>插件url：{{url}}</p>
-            <p>插件描述：{{describe}}</p>
-            <p id="changeState">插件状态：<span ng-class="{true:'stateActive',false:'stateNActive'}[isActive]">
+        <div class="pluginChart">
+            <div class="PluginInfo">
+                <p>插件基本信息</p>
+            </div>
+            <div class="displayPosition">
+                <p>插件名称：{{name}}</p>
+                <p>插件url：{{url}}</p>
+                <p>插件描述：{{describe}}</p>
+                <p id="changeState">插件状态：<span ng-class="{true:'stateActive',false:'stateNActive'}[isActive]">
                 <i ng-class="{true:'fa fa-refresh fa-spin',false:'fa fa-refresh'}[isActive]"></i>
                 {{pluginStateDisplay.state}}
             </span>
             </p>
         </div>
         <div class="btnPosition">
-            <button class="btn btn-success" data-toggle="modal"
+            <button class="btn btn-success user" data-toggle="modal"
                     data-target="#refreshDevice"  ng-click="activePlugin()">激活插件</button>
-            <button class="btn btn-danger" data-toggle="modal"
+            <button class="btn btn-danger user" data-toggle="modal"
                     data-target="#refreshDevice"  ng-click="stopPlugin()">暂停插件</button>
-            <button class="btn btn-primary" data-toggle="modal"
+            <button class="btn btn-primary user" data-toggle="modal"
                     data-target="#operatingStatus"  ng-click="operatingStatus()">运行状态</button>
         </div>
     </div>
-    <!--右侧表格显示（下部）-->
     <div class="displayInterface">
         <div class="PluginInterfaceInfo">
             <p>插件接口信息</p>
         </div>
-        <div class="interfaceInfo" ng-repeat="inter in interfaceArray">
-            <p>{{inter.value}}接口：{{inter.name}}</p>
+        <div class="interfaceInfo">
+            <ul>
+                <li class="inlinInter">内外接口<span class="interName">接口名称</span></li>
+                <li ng-repeat="inter in interfaceArray">{{inter.value}}接口:&nbsp{{inter.name}}</li>
+            </ul>
+
         </div>
     </div>
     <!--插件运行状态显示模态框-->

@@ -8,7 +8,7 @@
             </div>
 
             <div class="col-md-1">
-                <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
+                <button style="margin-left:5px" class="btn btn-primary btn-sm user" data-toggle="modal"
                         data-target="#createDevice" id="addDevice">+ 创建设备
                 </button>
             </div>
@@ -49,7 +49,7 @@
                 <tr>
                     <th colspan="2">{{deviceName}}
 
-                       <i class="fa fa-trash-o highlight" data-toggle="modal"
+                       <i class="fa fa-trash-o highlight userDelete" data-toggle="modal"
                         data-target="#deleteDevice" title="删除" style="float: right;font-size: 17px;cursor: pointer;color: #305680;"></i>
 
                     </th>
@@ -88,11 +88,9 @@
                 <tr>
                     <td class="attName">操作：</td>
                     <td>
-                        <button class="btn btn-primary" data-toggle="modal"
+                        <button class="btn btn-primary user" data-toggle="modal"
                                 data-target="#refreshDevice"  ng-click="setValue()">更新设备</button>
-                        <button class="btn btn-primary" data-toggle="modal"
-                                data-target="#token" ng-click="showToken()">查看令牌</button>
-                        <button class="btn btn-primary" data-toggle="modal"
+                        <button class="btn btn-primary user" data-toggle="modal"
                                 data-target="#assign">分配设备</button>
 
                     </td>
@@ -100,6 +98,8 @@
                 <tr>
                     <td class="attName">查看：</td>
                     <td>
+                        <button class="highlight btn btn-default" data-toggle="modal"
+                                data-target="#token" ng-click="showToken()">查看令牌</button>
                         <button data-toggle="modal"
                                 data-target="#deviceEvent" class="highlight btn btn-default" ng-click="showEvent()">
                             查看事件
