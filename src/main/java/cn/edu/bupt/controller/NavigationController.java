@@ -34,6 +34,19 @@ public class NavigationController {
         return "static/login/modifyPassword";
     }
 
+    @RequestMapping("/allocationCenterIndex")
+    public String  allocationCenter() {
+        return "static/allocationCenter/allocationCenterIndex";
+    }
+
+    @RequestMapping("/KUBERNETESIndex")
+    public String  KUBERNETES() { return "static/KUBERNETES/KUBERNETESIndex"; }
+
+    @RequestMapping("/logCenterIndex")
+    public String  logCenterIndex() {
+        return "static/logCenter/logCenterIndex";
+    }
+
     @RequestMapping("/home")
     public String  getHomepage() {
         return "static/login/chooseIndex";

@@ -12,7 +12,7 @@
         </div>
 
         <div class="row" style="margin-left: 20px;">
-            每页显示&nbsp<input type="text" id="customerUserNum" style="width: 50px;border-radius: 5px;" ng-change="customerUserLimit()" ng-model="myLimit">&nbsp个客户组
+            每页显示&nbsp<input type="text" id="customerUserNum" style="width: 50px;border-radius: 5px;" ng-change="customerUserLimit()" ng-model="myLimit" placeholder="9">&nbsp个客户组
         </div>
         <div class="row">
             <div id="customerUserIcon">
@@ -25,10 +25,10 @@
             </div>
 
             <div id="customerUserChart">
-                <!--  <table class="table table-striped table-hover">
-                      <!-- <thead>
+               <table class="table table-striped table-hover">
+                     <thead>
                       <tr>
-                          <th colspan="2">{{title}}
+                          <th colspan="2">{{name}}
 
                               <i class="fa fa-trash-o highlight" data-toggle="modal"
                                  data-target="#deleteCustomerUser" title="删除" style="float: right;font-size: 17px;cursor: pointer;color: #305680;"></i>
@@ -38,6 +38,10 @@
                       </thead>
                       <tbody>
                       <tr>
+                          <td class="attName">用户ID:</td>
+                          <td>{{userId}}</td>
+                      </tr>
+                      <tr>
                           <td class="attName">客户组ID:</td>
                           <td>{{customerId}}</td>
                       </tr>
@@ -46,20 +50,16 @@
                           <td>{{tenantId}}</td>
                       </tr>
                       <tr>
-                          <td class="attName">电话：</td>
-                          <td>{{phone}}</td>
-                      </tr>
-                      <tr>
-                          <td class="attName">地址:</td>
-                          <td>{{address}}</td>
-                      </tr>
-                      <tr>
                           <td class="attName">email：</td>
                           <td>{{email}}</td>
                       </tr>
                       <tr>
+                          <td class="attName">权限等级：</td>
+                          <td>{{authority}}</td>
+                      </tr>
+                      <tr>
                           <td class="attName">备注信息：</td>
-                          <td>{{additionalInfo}}</td>
+                          <td>{{additional_info}}</td>
                       </tr>
 
                       <tr>
@@ -72,7 +72,7 @@
                       </tr>
 
                       </tbody>
-                </table>-->
+                </table>
             </div>
         </div>
         <div class="row" style="margin-left: 20px;">
@@ -88,7 +88,7 @@
         </div>
 
     </div>
-    <!--新增用户组-->
+    <!--新增用户-->
     <div class="modal fade" tabindex="-1" role="dialog" id="createCustomerUser">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -118,7 +118,7 @@
                         <tr>
                             <td class="attName"><span style="color: red;font-size: 10px;margin-right: 5px;">*</span>email:</td>
                             <td>
-                                <input type="text" class="inputInfo necInfo" id="customerUserEmail">
+                                <input type="text" class="inputInfo necInfo" id="customerUserEmail" placeholder="必填">
                             </td>
                         </tr>
                         <tr>
@@ -133,6 +133,69 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseCreateCustomerUser">关闭</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalConfirmCreateCustomerUser" ng-click="createCustomerUser()">确定</button>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- 删除用户 -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="deleteCustomerUser">
+        <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" style="font-weight: bold;">删除用户</h4>
+                </div>
+                <div class="modal-body" id="deleteCustomerTable">
+                    <p style="text-align: center;font-size: 17px;">您真的要删除该用户吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseDeleteCustomerUser">取消</button>
+                    <button type="button" class="btn btn-primary" id="modalConfirmDeleteCustomerUser" data-dismiss="modal" ng-click="deleteCustomerUser()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--修改用户-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="refreshCustomerUser">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" style="font-weight: bold;">修改用户</h4>
+                </div>
+                <div class="modal-body" id="refreshCustomerUserInfoTable">
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                        <tr>
+                            <td class="attName">用户名:</td>
+                            <td><input type="text" class="inputInfo necInfo" id="refreshCustomerUserName"></td>
+                        </tr>
+                        <tr>
+                            <td class="attName">客户组ID:</td>
+                            <td><input type="text" class="inputInfo necInfo" id="refreshCustomerId"></td>
+                        </tr>
+                        <tr>
+                            <td class="attName">email:</td>
+                            <td>
+                                <input type="text" class="inputInfo necInfo" id="refreshCustomerUserEmail">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="attName">备注信息：</td>
+                            <td>
+                                <input type="text" class="inputInfo" id="refreshCustomerUserAddInfo">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseRefreshCustomerUser">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalConfirmRefreshCustomerUser" ng-click="refreshCustomerUser()">确定</button>
                 </div>
 
             </div><!-- /.modal-content -->
