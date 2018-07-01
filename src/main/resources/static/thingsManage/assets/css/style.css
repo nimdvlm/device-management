@@ -639,13 +639,17 @@ pluginsGroup
         Dashboard
 ============================================================ */
 .left_Dashboard{
-    float:left;
+    position: fixed;
+    bottom:0px;
     width: 200px;
     border-right: 1px solid #ffffff;
-    height: 500px;
+    height: 83%;
     overflow-y: scroll;
 }
 .left_Dashboard::-webkit-scrollbar {display:none;}
+#dblist_title{
+    font-size: 20px;
+}
 .right_Dashboard{
     margin-left:220px ;
 }
@@ -656,13 +660,13 @@ pluginsGroup
     margin:15px 10px 0 0;
     cursor:pointer;
 }
-#dashboard_add{
+.dashboard_add{
     border-style: dashed;
+    cursor: pointer;
 }
-.no_dashboard{
+.add_item{
     text-align: center;
     font-size: 20px;
-    line-height: 120px;
     color: rgba(43, 76, 227, 0.4);
 }
 .dashboardicon{
@@ -676,6 +680,9 @@ pluginsGroup
     margin: 15px 5px;
     border: 1px solid rgba(25, 100, 173, 0.5);
     height: 250px;
+}
+#addDBwidget_table tr{
+    height: 40px;
 }
 /*=======================================tenantGroup===========================================*/
 .parent{

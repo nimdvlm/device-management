@@ -11,78 +11,78 @@ mainApp.controller("widgetsLibraryCtrl", function ($scope, $resource) {
         var random_6=Math.ceil(Math.random()*20);
         var random_7=Math.ceil(Math.random()*20);
 
-        //甜甜圈
-        var ctx=document.getElementById("Doughnut").getContext("2d");
-        var myDoughnutChart2 = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                datasets: [{
-                    data: [random_1, random_2, random_3],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: '环形图',
-                    fontSize: 20,
-                    fontFamily: "Microsoft YaHei",
-                    fontStyle: 'normal',
-                    fontColor: '#1964ad'
-                },
-                legend: {
-                    position:'top'
-                }
-            }
-        });
-
-        //饼状图
-        ctx=document.getElementById("PieChart").getContext("2d");
-        var myDoughnutChart2 = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                datasets: [{
-                    data: [random_4, random_5, random_6],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: '扇形图',
-                    fontSize: 20,
-                    fontFamily: "Microsoft YaHei",
-                    fontStyle: 'normal',
-                    fontColor: '#1964ad'
-                },
-                legend: {
-                    position:'top'
-                }
-            }
-        });
+        // //甜甜圈
+        // var ctx=document.getElementById("Doughnut").getContext("2d");
+        // var myDoughnutChart2 = new Chart(ctx, {
+        //     type: 'doughnut',
+        //     data: {
+        //         datasets: [{
+        //             data: [random_1, random_2, random_3],
+        //             backgroundColor: [
+        //                 'rgba(75, 192, 192, 0.2)',
+        //                 'rgba(153, 102, 255, 0.2)',
+        //                 'rgba(255, 159, 64, 0.2)'
+        //             ],
+        //             borderColor: [
+        //                 'rgba(75, 192, 192, 1)',
+        //                 'rgba(153, 102, 255, 1)',
+        //                 'rgba(255, 159, 64, 1)'
+        //             ],
+        //             borderWidth: 1
+        //         }]
+        //     },
+        //     options: {
+        //         title: {
+        //             display: true,
+        //             text: '环形图',
+        //             fontSize: 20,
+        //             fontFamily: "Microsoft YaHei",
+        //             fontStyle: 'normal',
+        //             fontColor: '#1964ad'
+        //         },
+        //         legend: {
+        //             position:'top'
+        //         }
+        //     }
+        // });
+        //
+        // //饼状图
+        // ctx=document.getElementById("PieChart").getContext("2d");
+        // var myDoughnutChart2 = new Chart(ctx, {
+        //     type: 'pie',
+        //     data: {
+        //         datasets: [{
+        //             data: [random_4, random_5, random_6],
+        //             backgroundColor: [
+        //                 'rgba(75, 192, 192, 0.2)',
+        //                 'rgba(153, 102, 255, 0.2)',
+        //                 'rgba(255, 159, 64, 0.2)'
+        //             ],
+        //             borderColor: [
+        //                 'rgba(75, 192, 192, 1)',
+        //                 'rgba(153, 102, 255, 1)',
+        //                 'rgba(255, 159, 64, 1)'
+        //             ],
+        //             borderWidth: 1
+        //         }]
+        //     },
+        //     options: {
+        //         title: {
+        //             display: true,
+        //             text: '扇形图',
+        //             fontSize: 20,
+        //             fontFamily: "Microsoft YaHei",
+        //             fontStyle: 'normal',
+        //             fontColor: '#1964ad'
+        //         },
+        //         legend: {
+        //             position:'top'
+        //         }
+        //     }
+        // });
 
         //直方图
-        ctx = document.getElementById("Histogram").getContext("2d");
+        var ctx = document.getElementById("Histogram").getContext("2d");
         var myChart1 = new Chart(ctx, {
             type: 'bar',
             data: {
