@@ -1,6 +1,8 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.swagger.annotations.ApiImplicitParam;
@@ -320,11 +322,27 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
 
 
-    //获取设备列表中的array
+    //增加显示警报的方法
     public String decodeArray(String res){
         JsonObject jsonObject = (JsonObject)new JsonParser().parse(res);
-        String array=jsonObject.getAsJsonArray("data").toString();
-        return array;
+        JsonArray array = jsonObject.getAsJsonArray("data");
+        for(JsonElement je : array){
+            JsonObject jo = je.getAsJsonObject();
+            if(jo.get("lifeTime").getAsLong() == 0){
+                continue;
+            }
+            //判断时间间隔是否小于6个月大于1个月
+            if(((jo.get("lifeTime").getAsLong() - System.currentTimeMillis())/1000 < 15552000) &&
+                    ((jo.get("lifeTime").getAsLong() - System.currentTimeMillis())/1000 > 2678400)){
+                jo.addProperty("alarm", "orange");
+
+            }
+            //小于一个月
+            if((jo.get("lifeTime").getAsLong() - System.currentTimeMillis())/1000 < 2678400){
+                jo.addProperty("alarm", "red");
+            }
+        }
+        return array.toString();
     }
 
 
