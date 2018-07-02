@@ -4,7 +4,7 @@
         <div class="tenantLoyout">
             <h4 class="tenantHeader">租户
                 <button style="margin-left:10px" class="btn btn-primary btn-sm" data-toggle="modal"
-                        data-target="#addTenantGroup">+ 创建租户
+                        data-target="#addTenantGroup" id="addTenant">+ 创建租户
                 </button>
             </h4>
         </div>
@@ -12,55 +12,10 @@
         <!--下侧控件模块-->
         <div class="tenantRow">
             <div class="pluginIcon">
-                <div ng-click="" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                <div ng-repeat="item in tenantGroups" ng-click="showTenantDetail(item)" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                     <div>
                         <span title="租户"><i class="fa fa-user fa-2x"></i></span>
-                        <p class="stylePulgin">租户A</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pluginIcon">
-                <div ng-click="" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
-                    <div>
-                        <span title="租户"><i class="fa fa-user fa-2x"></i></span>
-                        <p class="stylePulgin">租户B</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pluginIcon">
-                <div ng-click="" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
-                    <div>
-                        <span title="租户"><i class="fa fa-user fa-2x"></i></span>
-                        <p class="stylePulgin">租户C</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pluginIcon">
-                <div ng-click="" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
-                    <div>
-                        <span title="租户"><i class="fa fa-user fa-2x"></i></span>
-                        <p class="stylePulgin">租户D</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pluginIcon">
-                <div ng-click="" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
-                    <div>
-                        <span title="租户"><i class="fa fa-user fa-2x"></i></span>
-                        <p class="stylePulgin">租户E</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pluginIcon">
-                <div ng-click="" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
-                    <div>
-                        <span title="租户"><i class="fa fa-user fa-2x"></i></span>
-                        <p class="stylePulgin">租户F</p>
+                        <p class="stylePulgin">{{item.title}}</p>
                     </div>
                 </div>
             </div>
@@ -78,43 +33,32 @@
                 </ul>
             </div>
             <div id="detailShow">
-                <h2 class="lineSpacing">{{tenant}}信息详情</h2>
-                <h4 class="lineSpacing">姓名：miaomiao.liu</h4><hr>
-                <h4 class="lineSpacing">邮箱：1024332886@qq.com</h4><hr>
-                <h4 class="lineSpacing">电话：15210771360</h4><hr>
-                <h4 class="lineSpacing">地址：北京邮电大学</h4><hr>
-                <h4 class="lineSpacing">备注：无</h4><hr>
+                <h2 class="lineSpacing">租户信息详情<i class="glyphicon glyphicon-trash" title="删除租户" data-toggle="modal"
+                                                      data-target="#deleteTenantModal" style="left: 250px;font-size: 24px"></i></h2>
+                <h4 class="lineSpacing">姓名：{{tenantDetailShow.title}}</h4><hr>
+                <h4 class="lineSpacing">邮箱：{{tenantDetailShow.email}}</h4><hr>
+                <h4 class="lineSpacing">电话：{{tenantDetailShow.phone}}</h4><hr>
+                <h4 class="lineSpacing">地址：{{tenantDetailShow.address}}</h4><hr>
+                <h4 class="lineSpacing">附加消息：{{tenantDetailShow.additional_info}}</h4><hr>
+                <h4 class="lineSpacing">操作：<button class="btn btn-sm btn-info" ng-click="dd()">查看租户下租户管理员</button></h4><hr>
             </div>
             <div id="tenantAdministrator">
                  <table border="1" width="100%">
                      <h2>租户管理员详情</h2>
                      <thead>
                      <tr>
-                         <th width="80%">租户管理员名称</th>
+                         <th width="60%">租户管理员名称</th>
                          <th>操作</th>
                      </tr>
                      </thead>
                      <tbody>
                      <tr>
                          <td>TenantAdmin@bupt.edu.cn</td>
-                         <td><button class="btn btn-sm btn-danger" ng-click="dd()">删除</button></td>
+                         <td><button class="btn btn-sm btn-info" ng-click="dd()">查看详情</button>
+                             <button class="btn btn-sm btn-success" ng-click="dd()">编辑</button>
+                             <button class="btn btn-sm btn-danger" ng-click="dd()">删除</button></td>
                      </tr>
-                     <tr>
-                         <td>TenantAdmin@bupt.edu.cn</td>
-                         <td><button class="btn btn-sm btn-danger" ng-click="dd()">删除</button></td>
-                     </tr>
-                     <tr>
-                         <td>TenantAdmin@bupt.edu.cn</td>
-                         <td><button class="btn btn-sm btn-danger" ng-click="dd()">删除</button></td>
-                     </tr>
-                     <tr>
-                         <td>TenantAdmin@bupt.edu.cn</td>
-                         <td><button class="btn btn-sm btn-danger" ng-click="dd()">删除</button></td>
-                     </tr>
-                     <tr>
-                         <td>TenantAdmin@bupt.edu.cn</td>
-                         <td><button class="btn btn-sm btn-danger" ng-click="dd()">删除</button></td>
-                     </tr>
+
                      </tbody>
                  </table>
             </div>
@@ -141,34 +85,34 @@
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>姓名
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" required/>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="tenantName" required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>邮箱
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填"  required/>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="tenantEmail"  required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>电话
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" required/>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="tenantPhone" required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>地址
                     </label>
-                    <textarea type="text" style="pixels: 300px" placeholder="必填" required/>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="tenantAddress" required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>备注
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" required/>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="tenantInfo" required/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="add()">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalConfirmCreateTenant" ng-click="createTenant()">
                         创建
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -213,8 +157,8 @@
                         取消
                     </button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
+            </div>
+        </div>
     </div>
 
     <!--编辑模态框-->
@@ -235,35 +179,35 @@
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>姓名
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" required/>
+                    <input type="text" style="pixels: 300px" placeholder="必填" value="{{tenantDetailShow.title}}" id="reTenantName" required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>邮箱
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填"  required/>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="reTenantEmail"  required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>电话
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" required/>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="reTenantPhone" required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>地址
                     </label>
-                    <textarea type="text" style="pixels: 300px" placeholder="必填" required/>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="reTenantAddress" required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
-                        <span style="color: red;">*</span>备注
+                        <span style="color: red;">*</span>附加消息
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" required/>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="reTenantInfo" required/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="add()">
-                        创建
+                    <button type="button" class="btn btn-primary" ng-click="editTenant()">
+                        确定
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         取消
@@ -272,5 +216,24 @@
             </div>
         </div>
     </div>
+<!--删除模态框-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="deleteTenantModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" style="font-weight: bold;">删除租户</h4>
+                </div>
+                <div class="modal-body" id="deleteCustomerTable">
+                    <p style="text-align: center;font-size: 17px;">确定删除该租户？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
+                    <button type="button" class="btn btn-primary"  data-dismiss="modal" ng-click="deleteTenant()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
