@@ -13,6 +13,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.showrestfulPOST = false;
     $scope.RESTMethod = ["POST", "DELETE", "GET"];
     $scope.RestfulBody = {};
+    $scope.RuleaddPluginUrl="";//用于解决url重复赋值bug
 
     InitformData();
 
@@ -235,19 +236,21 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //点击添加规则-根据插件名判断插件类型
     $scope.change = function (data) {
+        $scope.RuleaddPluginUrl=data.url;
+        console.log("url:"+data.url)
         if (data.name == "MailPlugin") {
             console.log("判断添加插件类型为MailPlugin");
             $scope.showsendmail = true;
             $scope.showrestful = false;
             data.method = "POST";
-            data.url = "http://" + data.url + "/api/plugin/sendMail";
+            $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/mailplugin/sendMail";
             console.log("MailUrl：" + data.url);
         } else if (data.name == "RestfulPlugin") {
             console.log("判断添加插件类型为RestfulPlugin");
             $scope.showrestful = true;
             $scope.showsendmail = false;
             tempurl = data.url;
-            data.url = "http://" + data.url + "/api/restful/sendRequest";
+            $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/restfulplugin/sendRequest";
         } else {
             console.log("判断添加插件类型为其他")
             $scope.showsendmail = false;
@@ -285,13 +288,13 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
             $scope.showaddTransform = true;
             $scope.formData.transform.name = $scope.RuleaddPlugin.name;
-            $scope.formData.transform.url = $scope.RuleaddPlugin.url;
+            $scope.formData.transform.url = $scope.RuleaddPluginUrl;
             $scope.formData.transform.method = "POST";
             $scope.formData.transform.requestBody = $scope.MailrequestBody;
         } else if ($scope.RuleaddPlugin.name == "RestfulPlugin") {
             $scope.showaddTransform = true;
             $scope.formData.transform.name = $scope.RuleaddPlugin.name;
-            $scope.formData.transform.url = $scope.RuleaddPlugin.url;
+            $scope.formData.transform.url = $scope.RuleaddPluginUrl;
             $scope.formData.transform.method = "POST";
             $scope.formData.transform.requestBody = $scope.RestfulBody;
         }
