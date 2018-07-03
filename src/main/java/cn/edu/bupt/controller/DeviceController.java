@@ -1,6 +1,8 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.swagger.annotations.ApiImplicitParam;
@@ -153,9 +155,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         }
 
         try {
-            JsonObject jsonObject = (JsonObject)new JsonParser().parse(responseContent);
-            String array=jsonObject.getAsJsonArray("data").toString();
-            return retSuccess(array) ;
+            return retSuccess(decodeArray(responseContent)) ;
         } catch (Exception e) {
             return retFail(e.toString()) ;
         }
@@ -182,12 +182,19 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         if(textOffset != null){
             requestAddr = requestAddr + "&textOffset=" + textOffset;
         }
+
+        String responseContent = null ;
         try{
-            String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
+            responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
                     null,
                     request.getSession());
-            return retSuccess(responseContent) ;
-        }catch(Exception e){
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+        try {
+            return retSuccess(decodeArray(responseContent)) ;
+        } catch (Exception e) {
             return retFail(e.toString()) ;
         }
     }
@@ -229,40 +236,114 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     }
 
 
-
-
-   /*
-    @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken")
-    @ApiImplicitParam(name = "strDeviceId", value = "设备ID", required = true, dataType = "String", paramType = "path")
-    @RequestMapping(value = "/accesstoken/{deviceId}", method = RequestMethod.GET)
+    //以下是客户层面的设备操作
+    //分配设备给客户
+    @RequestMapping(value = "/assign/customer/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getDeviceAccessToken(@PathVariable(DEVICE_ID) String strDeviceId) {
-        String requestAddr = "http://" + getDeviceAccessServer() + "/api/v1/credentialbyid/"+strDeviceId ;
+    public String assignDeviceToCustomer(@PathVariable("deviceId") String dId){
+        String requestAddr = String.format("/api/v1/deviceaccess/assign/group/%s/%s", dId, getCustomerId());
+        String responseContent = "";
 
         try {
-            String responseContent = HttpUtil.sendGetToThingsboard(requestAddr,
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
                     null,
                     request.getSession()) ;
-            try {
-                JsonObject jsonR = (JsonObject)new JsonParser().parse(responseContent);
-                String credentialsId = jsonR.get("credentialsId").getAsString() ;
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("credentialsId", credentialsId);
-                return retSuccess(jsonObject.toString()) ;
-            } catch (Exception e) {
-                return retFail(e.toString()) ;
-            }
         } catch (Exception e) {
             return retFail(e.toString()) ;
         }
-    }*/
+        return retSuccess(responseContent) ;
+    }
 
-   /*public Integer getTenantId(){
-       HttpSession sess = request.getSession();
-       String res = HttpUtil.getAccessToken(sess);
-       JsonObject jo = (JsonObject)new JsonParser().parse(res);
-       Integer tenantId = jo.get("tenant_id").getAsInt();
-       return tenantId;
-   }*/
+    //取消分配给客户的某个设备
+    @RequestMapping(value = "/unassign/customer/{deviceId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String unAssignDeviceFromCustomer(@PathVariable("deviceId") String dId) {
+        String requestAddr = String.format("/api/v1/deviceaccess/unassign/customer/%s", dId);
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    request.getSession()) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+        return retSuccess(responseContent) ;
+    }
+
+    //取消分配客户下的所有设备
+    @RequestMapping(value = "/unassign/customer", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String unAssignCustomerDevices(){
+        String requestAddr = "/api/v1/deviceaccess/unassign/" + getTenantId() + "/" + getCustomerId();
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    request.getSession()) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+        return retSuccess(responseContent) ;
+    }
+
+    //获取客户的所有设备
+    @RequestMapping(value = "/customerDevices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getCustomerDevices(@RequestParam int limit,
+                                     @RequestParam(required = false) String textSearch,
+                                     @RequestParam(required = false) String idOffset,
+                                     @RequestParam(required = false) String textOffset) {
+
+        String requestAddr = "/api/v1/deviceaccess/customerdevices/" + getTenantId() + "/" + getCustomerId()
+                + "?limit=" + limit;
+        if (textSearch != null) {
+            requestAddr = requestAddr + "&textSearch=" + textSearch;
+        }
+        if (idOffset != null) {
+            requestAddr = requestAddr + "&idOffset=" + idOffset;
+        }
+        if (textOffset != null) {
+            requestAddr = requestAddr + "&textOffset=" + textOffset;
+        }
+
+        String responseContent = null;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    null,
+                    request.getSession());
+        } catch (Exception e) {
+            return retFail(e.toString());
+        }
+        try {
+            return retSuccess(decodeArray(responseContent));
+        } catch (Exception e) {
+            return retFail(e.toString());
+        }
+    }
+
+
+
+    //增加显示警报的方法
+    public String decodeArray(String res){
+        JsonObject jsonObject = (JsonObject)new JsonParser().parse(res);
+        JsonArray array = jsonObject.getAsJsonArray("data");
+        for(JsonElement je : array){
+            JsonObject jo = je.getAsJsonObject();
+            if(jo.get("lifeTime").getAsLong() == 0){
+                continue;
+            }
+            //判断时间间隔是否小于6个月大于1个月
+            if(((jo.get("lifeTime").getAsLong() - System.currentTimeMillis())/1000 < 15552000) &&
+                    ((jo.get("lifeTime").getAsLong() - System.currentTimeMillis())/1000 > 2678400)){
+                jo.addProperty("alarm", "orange");
+
+            }
+            //小于一个月
+            if((jo.get("lifeTime").getAsLong() - System.currentTimeMillis())/1000 < 2678400){
+                jo.addProperty("alarm", "red");
+            }
+        }
+        return array.toString();
+    }
+
 
 }

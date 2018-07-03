@@ -185,6 +185,41 @@ public class GroupController extends DefaultThingsboardAwaredController{
     }
 
 
+    //以下是客户层面的设备组操作
+
+    //获取客户管理的设备组
+    @RequestMapping(value = "/customerGroups", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getCustomerGroups(@RequestParam int limit, @RequestParam(required = false) String textSearch,
+                                  @RequestParam(required = false) String idOffset,
+                                  @RequestParam(required = false) String textOffset) {
+
+
+        String requestAddr = "/api/v1/deviceaccess/groups/customer/" + getCustomerId() +"?limit=" + limit;
+        if(textSearch != null){
+            requestAddr = requestAddr + "&textSearch=" + textSearch;
+        }
+        if(idOffset != null){
+            requestAddr = requestAddr + "&idOffset=" + idOffset;
+        }
+        if(textOffset != null){
+            requestAddr = requestAddr + "&textOffset=" + textOffset;
+        }
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr ,
+                    null,
+                    request.getSession());
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+        return retSuccess(decode(responseContent)) ;
+    }
+
+
+
+
 
     public String decode(String str){
         JsonObject jsonObject = (JsonObject)new JsonParser().parse(str);

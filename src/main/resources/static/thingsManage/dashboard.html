@@ -1,32 +1,29 @@
 <div ng-controller="dashboardCtrl">
-    <div class="content" style="height: 500px">
+    <div class="content">
         <div class="left_Dashboard">
-            <div class="dashboard" id="dashboard_add" data-toggle="modal" data-target="#addDashboard">
-                <div class="no_dashboard">
+            <div id="dblist_title">仪表板列表</div>
+            <div class="dashboard dashboard_add" data-toggle="modal" data-target="#addDashboard">
+                <div class="add_item" style="line-height: 120px">
                     +添加仪表板
                 </div>
             </div>
 
-            <div class="dashboard" ng-click="change(1)">
-                Test1 Dashboard
-                <i class="fa fa-trash-o fa-lg dashboardicon shand" title="删除"></i>
+            <div ng-repeat="dashboard in Dashboards" class="dashboard" ng-click="showDBDetail(dashboard)"
+                 ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                    {{dashboard.name}}
+                    <i class="fa fa-trash-o fa-lg dashboardicon shand" title="删除"></i>
             </div>
-            <div class="dashboard" ng-click="change(2)">
-                Test2 Dashboard
-                <i class="fa fa-trash-o fa-lg dashboardicon shand" title="删除"></i>
-            </div>
-            <div class="dashboard" ng-click="change(3)">
-                Test3 Dashboard
-                <i class="fa fa-trash-o fa-lg dashboardicon shand" title="删除"></i>
-            </div>
+            <br/>
         </div>
-        <div class="right_Dashboard">
-            <h3>{{dashboardName}}</h3>
+        <div class="right_Dashboard" ng-show="isChoose">
+            <h3>仪表板&nbsp;&nbsp;>&nbsp;&nbsp;{{dbItem.name}}</h3>
             <div class="dashboard_item">
                 <canvas id="myChart1" height="180"></canvas>
             </div>
-            <div class="dashboard_item">
-                <canvas id="myChart2" height="180"></canvas>
+            <div class="dashboard_add dashboard_item" style="border-style: dashed;" data-toggle="modal" data-target="#addDBWidget">
+                <div class="add_item" style="line-height: 250px">
+                +添加展示组件
+                </div>
             </div>
         </div>
     </div>
@@ -40,24 +37,59 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">
+                    <h4 class="modal-title">
                         添加仪表板
                     </h4>
                 </div>
                 <div class="modal-body">
-                    <table>
-                        <tr style="line-height:20px"><td>名称：</td>
-                            <td><input id="db_name" name="db_name" type="text"/></td></tr>
-                        <tr style="line-height:20px"><td>关联设备：</td>
-                        <td><select id="db_device" ng-model="db_device" ng-options="x.name for x in DeviceName">
+
+                    <label>仪表板名称：</label>
+                            <td><input id="db_name" name="db_name" type="text" ng-model="db_name"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="addDashboard()">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+
+    <!--modal添加Widget-->
+    <div class="modal fade" id="addDBWidget" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        添加组件
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <table id="addDBwidget_table">
+                        <tr><td>组件名称：</td>
+                            <td><input id="db_widget_name" name="db_name" type="text"/></td></tr>
+                        <tr><td>关联设备：</td>
+                        <td><select id="db_device" ng-model="db_widget_device" ng-options="x.name for x in DeviceName">
                             <option value="" disabled>--请选择设备--</option>
                             </select></td></tr>
+                        <tr><td>组件类型：</td>
+                        <td><select id="db_widget" ng-model="db_widget_device" ng-options="x.name for x in Widgets">
+                            <option value="" disabled>--请选择组件--</option>
+                        </select></td></tr>
+                        <tr><td>展示数据：</td></tr>
                     </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-primary" ng-click="stopRule()">
+                    <button type="button" class="btn btn-primary" ng-click="addDBWidget()">
                         确定
                     </button>
                 </div>
