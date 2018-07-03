@@ -12,17 +12,23 @@
     padding-bottom:15px;
     color:#fff;
     font-size:22px;
-
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
 }
 .content-wrapper {
     min-height:1000px;
     background: rgb(238,238,238);
-    padding-left: 45px;
+    padding-left: 6%;
+    margin-top: 4%;
 }
-
-/* =============================================================
-HEAD MENU STYLES
-============================================================ */
+.content-wrapper .container{
+    width: 100%;
+}
+    /* =============================================================
+    HEAD MENU STYLES
+    ============================================================ */
 
 .upSideMenu{
     font-size: 16px;
@@ -41,15 +47,7 @@ HEAD MENU STYLES
     font-weight: bold;
     margin-left: 50px;
 }
-/*#wrap{
-    overflow: hidden;
-    white-space: nowrap;
-}
-#wrap div {
-    display: inline-block;
-    !*float: left;*!
 
-}*/
 
 
 
@@ -78,13 +76,21 @@ HEAD MENU STYLES
 
         #side-menu ul li {
             border-bottom: 1px solid #2a4c70;
-            padding: 21px 25px;
             text-align: left;
         }
+        #side-menu ul .userMenu{
+            padding: 17px 25px;
+        }
+        #side-menu ul .systemMenu{
+            padding: 17px 25px;
+        }
+        #side-menu ul .tenantMenu{
+            padding: 15px 25px;
+        }
 
-            #side-menu ul li a i {
-                padding-right: 10px;
-            }
+        #side-menu ul li a i {
+                        padding-right: 10px;
+                    }
 
             #side-menu ul li a, #side-menu ul li a:hover {
                 color: #cad4df;
@@ -182,12 +188,14 @@ DEVICELIST STYLES
 }
 
 #deviceListChart,#customerChart,#customerUserChart{
-    width: 40%;
+    width: 35%;
     float: right;
     border: 1px solid #c0c0c0;
     border-radius: 10px;
     margin-right: 20px;
-
+    margin-top: 10px;
+    position: fixed;
+    right: 10px;
 }
 
 .attName{

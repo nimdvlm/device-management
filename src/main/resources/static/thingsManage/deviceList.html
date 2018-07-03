@@ -2,37 +2,40 @@
     <div class="container">
 
 
-        <div class="row" style="margin-top: 20px">
-            <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-7">
                     <span style="font-size: 30px;">设备列表</span>
-            </div>
-
-            <div class="col-md-1">
                 <button style="margin-left:5px" class="btn btn-primary btn-sm user" data-toggle="modal"
                         data-target="#createDevice" id="addDevice">+ 创建设备
                 </button>
             </div>
-            <div class="col-md-5">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="请输入设备名称..." id="searchDeviceText">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" type="button" ng-click="searchDevice()"><i class="fa fa-search"></i></button>
-                    </span>
-                </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
+
 
         </div><!-- /.row -->
-        <div class="row" style="margin-top: 15px;margin-left: 35px;">
+          <div class="row" style="margin-top: 15px;margin-left: 35px;">
             <div class="col-md-3">
-                <div class="input-group">
+              <div class="input-group">
                     <input type="text" class="form-control" placeholder="每页显示设备数量" id="deviceListNum">
                     <span class="input-group-btn">
                         <button class="btn btn-primary" type="button" ng-click="deviceListNumChoose()">确定</button>
                     </span>
                 </div>
             </div>
+              <div class="col-md-3"></div>
+              <div class="col-md-4" style="margin-left: 52px;">
+                  <div class="input-group">
+                      <input type="text" class="form-control" placeholder="请输入设备名称..." id="searchDeviceText">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-click="searchDevice()"><i class="fa fa-search"></i></button>
+                    </span>
+                  </div><!-- /input-group -->
+              </div><!-- /.col-lg-4 -->
+              <!--<div class="col-md-1">-->
+                  <!--<i class="fa fa-angle-double-up"></i>-->
+              <!--</div>-->
         </div>
 
+        <div class="row">
         <div id="preDevice" ng-click="preDeviceInfo()"><i class="fa fa-chevron-left"></i></div>
         <div id="deviceListIcon">
           <div class="chooseBtn" ng-repeat="data in deviceList" ng-click="show(data)" ng-style="data.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
@@ -114,7 +117,7 @@
             </table>
         </div>
     </div>
-
+    </div>
     <!--  CREATE MODEL  -->
     <div class="modal fade" tabindex="-1" role="dialog" id="createDevice">
         <!--.modal:指定为模态框      fade:淡入淡出效果     tabindex="-1":不受tab键控制    role="dialog":指定模态框为对话框-->
