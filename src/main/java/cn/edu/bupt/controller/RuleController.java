@@ -92,6 +92,32 @@ public class RuleController extends DefaultThingsboardAwaredController{
         return retSuccess(array.toString());
     }
 
+    @RequestMapping(value = "/ruleByTenant/{textSearch}",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    private String getRulesByTenantIdAndText(@PathVariable("textSearch") String textSearch)
+    {
+        String requestAddr = "/api/v1/smartruler/ruleByTenant/"+getTenantId()+"/"+textSearch;
+
+        StringBuffer param = new StringBuffer();
+        param.append("limit").append("=").append("30");
+
+        requestAddr = requestAddr + "?" + param ;
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getSmartRulerServer() + requestAddr,
+                    null,
+                    request.getSession());
+
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        responseContent = encodeJson(responseContent);
+        JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
+        return retSuccess(array.toString());
+    }
+
     @RequestMapping(value = "/tenant",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getTenant()
