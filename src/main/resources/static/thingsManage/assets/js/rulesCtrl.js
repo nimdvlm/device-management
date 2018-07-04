@@ -1,7 +1,5 @@
 mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //各种ng-show初始化
-    $scope.showAllRule = true;
-    $scope.showInfoRule = false;
     $scope.Rulestart = false;
     $scope.Rulestop = false;
     $scope.showaddFilter = false;
@@ -115,27 +113,31 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         $scope.$broadcast('senddata', $scope.Ruleitem);
     };
 
-    //根据id查找规则
+    //模糊搜索规则
     $scope.searchRule = function () {
-        if ($scope.ruleid != "" && $scope.ruleid != null) {
-            var searchRULE = $resource('/api/rule/:id', {id: '@id'});
-            searchRULE.get({id: $scope.ruleid})
-                .$promise.then(function (person) {
-                console.log("文本框输入内容：" + $scope.ruleid);
-                console.log("返回的数据：");
-                console.log(person);
-                if (person.rule.ruleId != undefined) {
-                    $scope.showInfoRule = true;
-                    $scope.showAllRule = false;
-                    $scope.searchresult = person;
-                    //console.log("接口返回对象：" + person.rule.name + person.rule.ruleId);
-                } else {
-                    $scope.showInfoRule = false;
-                    alert("无规则组[id=" + $scope.ruleid + "]信息，请输入正确设备组名!");
+        var textSearch = $("#searchRuleText").val();
+        console.log(textSearch)
+        if (textSearch!= "" && textSearch!= null) {
+            var searchRuleObj = $resource("/api/rule/ruleByTenant/"+textSearch);
+            $scope.searchRuleInfo = searchRuleObj.query();
+            console.log($scope.searchRuleInfo);
+            console.log($scope.searchRuleInfo.length);
+            $scope.searchRuleInfo.$promise.then(function (value) {
+                if(value == false){
+                    toastr.warning("规则名称输入有误，无此设备！");
+                    setTimeout(function () {
+                        window.location.reload();
+                    },1000);
                 }
-
+                else{
+                    $scope.searchresult =value ;
+                    $scope.Rules = $scope.searchRuleInfo;
+                    $("#searchDeviceText").on("focus",function () {
+                        $(this).val("");
+                    })
+                }
             });
-        }
+            }
         else {
             alert("输入不能为空!");
         }

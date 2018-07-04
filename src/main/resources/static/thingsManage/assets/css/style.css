@@ -283,9 +283,6 @@ DEVICELIST STYLES
 .DGminTitle{
     overflow: hidden;
 }
-.DGContainer{
-    overflow: hidden;
-}
 .SearchDG{
     float: right;
     height: 20px;
