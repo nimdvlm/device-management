@@ -14,6 +14,7 @@ function getXmlHttpObject() {
 var myXmlHttpRequest="";
 var myXmlHttpRequest1="";
 var deviceGroup = [];
+var modelDetail = [];
 
 function getdata(){
 
@@ -38,6 +39,7 @@ function getdata(){
             //window.alert(meso.datagroup[0].deviceId);
             //window.alert(meso.datagroup.length);
             for (var i = 0; i < meso.length; i++) {
+                deviceGroup.push(meso[i].name);
                 deviceGroup.push(meso[i].id);
             }
         }
@@ -69,73 +71,92 @@ function getdata(){
                 var model_name = meso.data[i].model_name;
                 var model_id = meso.data[i].model_id;
                 var model_input = meso.data[i].model_input;
-                var div = document.createElement("div");
-                var a = document.createElement("a");
-                a.setAttribute("href", "#");
-                div.setAttribute("class", "card");
-                div.setAttribute("id", "divcard");
-                div.setAttribute("data-toggle", "modal");
-                div.setAttribute("data-target", "#myModal");
-                div.setAttribute("onclick", "modalinput(this)");
-                if (themeCount % 2 == 1) {
-                    div.setAttribute("style", "display:none;background-image:url(images/ting4.png);margin-top: 20px;margin-left: 20px");
-                } else {
-                    div.setAttribute("style", "display:none;background-image:url(images/timg3.png);margin-top: 20px;margin-left: 20px");
+                modelDetail.push(model_name);
+                modelDetail.push(model_id);
+                modelDetail.push(model_input);
+                var divadd = document.createElement("div");
+                var divadd1 = document.createElement("div");
+                var divaddall = document.createElement("div");
+                var button1 = document.createElement("button");
+                button1.setAttribute("style","width:50%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                button1.setAttribute("data-toggle","modal");
+                button1.setAttribute("data-target","#myModal");
+                button1.setAttribute("onclick","addModel(this)");
+                button1.innerHTML = '添加实例';
+                var button2 = document.createElement("button");
+                button2.setAttribute("style","width:50%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                button2.setAttribute("data-toggle","modal");
+                button2.setAttribute("data-target","#myModal1");
+                button2.setAttribute("onclick","viewModel(this)");
+                button2.innerHTML = '查看详情';
+                divadd1.setAttribute("style","width: 100%;height:10%;display:block");
+                if(i%4 == 0){
+                    divaddall.setAttribute("style","width: 15%;height: 18%;margin-top: 3%;margin-left: 14%;float:left");
+                }else {
+                    divaddall.setAttribute("style","width: 15%;height: 18%;margin-top: 3%;margin-left: 4%;float:left");
                 }
-                $(div).fadeIn(500 + i * 300);
-                /*var a = document.createElement("a");
-                a.setAttribute("href","statisticsdata.html?deviceId="+meso[i].id+"&deviceNum=No-"+(i+1));*/
-                var p = document.createElement("p");
-                p.setAttribute("style", "font-size: 20px;margin-top: 65px;color:#ffffff");
-                p.innerHTML = model_name;
+                divadd.setAttribute("class", "card");
+                divadd.setAttribute("style", "display:none;background: #fffae3;margin-right: 0px; width:100%; height:90%");
+                $(divadd).fadeIn(500 + 300 * i);
                 var p1 = document.createElement("p");
-                p1.setAttribute("style", "font-size: 20px;margin-top: 65px;color:#ffffff;display:none");
-                p1.innerHTML = model_id;
-                //p.innerHTML = "设备 No-"+(i+1);
-                /*var p0 = document.createElement("p");
-                p0.setAttribute("style","font-size: 9px");
-                p0.innerHTML = "统计数据";
-                var div2 = document.createElement("div");
-                div2.setAttribute("class","body");
-                var p1 = document.createElement("p");
-                p1.setAttribute("style","color:white;margin-top: 5px");
-                p1.innerHTML = "设备ID："+ meso[i].id;
+                p1.setAttribute("style", "color:#000000;font-size:20px;margin-top:30%");
+                p1.innerHTML = model_name;
                 var p2 = document.createElement("p");
-                p2.setAttribute("style","color:white");
-                p2.innerHTML = "设备类型："+ meso[i].deviceType;
-                var p3 = document.createElement("p");
-                p3.setAttribute("style","color:white;font-size: 19px;");
-                p3.innerHTML = meso[i].name;
-                var p4 = document.createElement("p");
-                p4.setAttribute("style","color:white");
-                p4.innerHTML = "设备状态："+ meso[i].status;
-                var p5 = document.createElement("p");
-                p5.setAttribute("style","color:white");
-                p5.innerHTML = "设备位置："+ meso[i].location;*/
-                div.appendChild(p);
-                div.appendChild(p1);
-                //div1.appendChild(p0);
-                //div2.appendChild(p1);
-                //div2.appendChild(p2);
-                //div2.appendChild(p3);
-                //div2.appendChild(p4);
-                //div2.appendChild(p5);
-                //a.appendChild(div1);
-                //a.appendChild(div2);
-                a.appendChild(div);
-                document.getElementById("main1").appendChild(a);
-                for (var k = 0; k < model_input.length; k++) {
-                    $select = $('<select></select>');
-                    $option = $('<option></option>');
-                    $option.html(model_input[k]);
-                    $select.append($option);
-                    for (var b=0; b<deviceGroup.length; b++){
-                        $option1 = $('<option></option>');
-                        $option1.html(deviceGroup[b]);
-                        $select.append($option1);
+                p2.setAttribute("style", "display: none");
+                p2.innerHTML = model_id;
+                divadd.appendChild(p1);
+                divadd.appendChild(p2);
+                divadd1.appendChild(button1);
+                divadd1.appendChild(button2);
+                divaddall.appendChild(divadd);
+                divaddall.appendChild(divadd1);
+                document.body.appendChild(divaddall);
+                $('body').append($('<div id="main2" style="width: 100%;margin-left:20px; margin-top:250px; font-size:16px">\n' +
+                    '    <h1 style="color: white;font-size: 16px; margin-left: 1%">自定义模型</h1>\n' +
+                    '</div>'));
+                for (var e=0; e<10; e++){
+                    var divadd2 = document.createElement("div");
+                    var divadd3 = document.createElement("div");
+                    var divaddall1 = document.createElement("div");
+                    var button11 = document.createElement("button");
+                    button11.setAttribute("style","width:33.3%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                    button11.setAttribute("data-toggle","modal");
+                    button11.setAttribute("data-target","#myModal");
+                    button11.setAttribute("onclick","addModel1(this)");
+                    button11.innerHTML = '添加';
+                    var button21 = document.createElement("button");
+                    button21.setAttribute("style","width:33.3%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                    button21.setAttribute("data-toggle","modal");
+                    button21.setAttribute("data-target","#myModal1");
+                    button21.setAttribute("onclick","viewModel1(this)");
+                    button21.innerHTML = '详情';
+                    var button13 = document.createElement("button");
+                    button13.setAttribute("style","width:33.3%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                    button13.setAttribute("data-toggle","modal");
+                    button13.setAttribute("data-target","#myModal1");
+                    button13.setAttribute("onclick","deleteModel1(this)");
+                    button13.innerHTML = '删除';
+                    divadd3.setAttribute("style","width: 100%;height:10%;display:block");
+                    if(i%4 == 0){
+                        divaddall1.setAttribute("style","width: 15%;height: 18%;margin-top: 3%;margin-left: 14%;float:left");
+                    }else {
+                        divaddall1.setAttribute("style","width: 15%;height: 18%;margin-top: 3%;margin-left: 4%;float:left");
                     }
-                    $('#modelSelect').append($select);
+                    divadd2.setAttribute("class", "card");
+                    divadd2.setAttribute("style", "display:none;background: #fffae3;margin-right: 0px; width:100%; height:90%");
+                    $(divadd2).fadeIn(500 + 300 * i);
+                    var p3 = document.createElement("p");
+                    p3.setAttribute("style", "color:#000000;font-size:20px;margin-top:30%");
+                    p3.innerHTML = 'Customize-'+e;
+                    divadd2.appendChild(p3);
+                    divadd3.appendChild(button11);
+                    divadd3.appendChild(button21);
+                    divadd3.appendChild(button13);
+                    divaddall1.appendChild(divadd2);
+                    divaddall1.appendChild(divadd3);
+                    document.body.appendChild(divaddall1);
                 }
+
             }
         }
     }
@@ -198,97 +219,7 @@ function getdata1() {
 }
 
 getdata();
-getdata1();
-
-$('.card').hover(function () {
-    $('.card:hover').css("opacity","0.5");
-},function () {
-    $('.card').css("opacity","1");
-});
-
-function modalinput(obj) {
-    var modalName = $(obj).find("p").eq(0).html();
-    var modalId = $(obj).find("p").eq(1).html();
-    document.getElementById("myModalLabel").innerHTML = "模型定制："+modalName;
-
-    $("#modelchange").click(
-        function () {
-
-            myXmlHttpRequest2 = getXmlHttpObject();
-            if (myXmlHttpRequest2) {
-                //var url = "toajax?username=" + document.getElementById("username").value;
-                var dataSourceSelect = '[';
-                for (var c=0; c<$('#modelSelect').find('select').length; c++){
-                    if(c == $('#modelSelect').find('select').length-1){
-                        dataSourceSelect = dataSourceSelect + '"'+ $('#modelSelect').find('select').eq(c).val()+ '"]';
-                    }else {
-                        dataSourceSelect = dataSourceSelect + '"'+ $('#modelSelect').find('select').eq(c).val()+ '",';
-                    }
-                }
-                var url1 = "http://39.104.186.210:8090/api/app/create-app?tenantId=1&modelId="+modalId+"&dataSource="+dataSourceSelect;// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
-                //myXmlHttpRequest.open("get",url,true);
-                myXmlHttpRequest2.open("get", url1, true);//url="http://10.108.218.64:8090/api/analysis/device"
-                myXmlHttpRequest2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                myXmlHttpRequest2.onreadystatechange = proce2;
-                //myXmlHttpRequest.send(null);
-                myXmlHttpRequest2.send(null);
-            }
-
-            function proce2() {
-
-                if (myXmlHttpRequest2.readyState == 4) {
-
-                    var mes = myXmlHttpRequest2.responseText;
-                    var mes1 = JSON.parse(mes);
-                    var meso = eval("(" + mes1 + ")");
-                    window.alert(meso.status);
-                    $('#main2').empty();
-                    getdata1();
-
-                    //window.alert(meso.datagroup[0].deviceId);
-                    //window.alert(meso.datagroup.length);
-
-                    /*var value=[];
-                    $("select option:checked").each(function (i,n) {
-                        value.push(n.value);
-                    });
-                    var div = document.createElement("div");
-                    div.setAttribute("class","card");
-                    if(themeCount%2==1){
-                        div.setAttribute("style","background-image:url(images/ting4.png);margin-top: 20px;margin-left: 20px");
-                    }else{
-                        div.setAttribute("style","background-image:url(images/timg3.png);margin-top: 20px;margin-left: 20px");
-                    }
-                    var p1 = document.createElement("p");
-                    p1.setAttribute("style","color:white;font-size:20px;margin-top:25px");
-                    p1.innerHTML = modalName;
-                    div.appendChild(p1);
-                    var p2 = document.createElement("p");
-                    p2.setAttribute("style","color:white;font-size:12px;margin-top:25px");
-                    p2.innerHTML = "设备ID:"+value[0];
-                    div.appendChild(p2);
-                    var p3 = document.createElement("p");
-                    p3.setAttribute("style","color:white;font-size:12px;margin-top:10px");
-                    p3.innerHTML = "Key1:"+value[1];
-                    div.appendChild(p3);
-                    var p4 = document.createElement("p");
-                    p4.setAttribute("style","color:white;font-size:12px;margin-top:10px");
-                    p4.innerHTML = "Key2:"+value[2];
-                    div.appendChild(p4);
-                    document.getElementById("main2").appendChild(div);*/
-                    }
-                }
-
-
-        }
-    );
-    /*$(obj).find("p").each(
-        function (i,n) {
-            window.alert(i);
-            window.alert(n.innerHTML);
-        }
-    );*/
-}
+//getdata1();
 
 var navCount;
 navCount = localStorage.getItem("navCount");
@@ -364,3 +295,130 @@ $('#test5').hover(
         $('#test7').fadeOut(1000);
     }
 );
+
+$('#dropzone').hover(
+    function () {
+        $('#dropli').fadeIn(500);
+    },function () {
+        $('#dropli').fadeOut(500);
+    }
+);
+
+function addModel1() {
+    window.alert("暂无自定义模型接口");
+}
+function viewModel1() {
+    window.alert("暂无自定义模型接口");
+}
+function deleteModel1() {
+    window.alert("暂无自定义模型接口");
+}
+
+function addModel(obj) {
+
+    $('#modelSelect').empty();
+    var modalName = $(obj).parent().parent().find("p").eq(0).html();
+    var modalId = $(obj).parent().parent().find("p").eq(1).html();
+    var modalInput = modelDetail[modelDetail.indexOf(parseInt(modalId))+1];
+    for (var k = 0; k < modalInput.length; k++) {
+        $select = $('<select></select>');
+        $option = $('<option></option>');
+        $option.html("选择需要绑定参数"+modalInput[k]+"的设备");
+        $select.append($option);
+        for (var b=0; b<deviceGroup.length; b=b+2){
+            $option1 = $('<option></option>');
+            $option1.html(deviceGroup[b]);
+            $select.append($option1);
+        }
+        $('#modelSelect').append($select);
+    }
+    document.getElementById("myModalLabel").innerHTML = "添加模型"+modalName+"的实例";
+
+    $("#modelchange").click(
+        function () {
+
+            myXmlHttpRequest2 = getXmlHttpObject();
+            if (myXmlHttpRequest2) {
+                //var url = "toajax?username=" + document.getElementById("username").value;
+                var dataSourceSelect = '[';
+                for (var c=0; c<$('#modelSelect').find('select').length; c++){
+                    if(c == $('#modelSelect').find('select').length-1){
+                        dataSourceSelect = dataSourceSelect + '"'+ $('#modelSelect').find('select').eq(c).val()+ '"]';
+                    }else {
+                        dataSourceSelect = dataSourceSelect + '"'+ $('#modelSelect').find('select').eq(c).val()+ '",';
+                    }
+                }
+                var url1 = "http://39.104.186.210:8090/api/app/create-app?tenantId=1&modelId="+modalId+"&dataSource="+dataSourceSelect;// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
+                //myXmlHttpRequest.open("get",url,true);
+                window.alert(url1);
+                myXmlHttpRequest2.open("get", url1, true);//url="http://10.108.218.64:8090/api/analysis/device"
+                myXmlHttpRequest2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                myXmlHttpRequest2.onreadystatechange = proce2;
+                //myXmlHttpRequest.send(null);
+                myXmlHttpRequest2.send(null);
+            }
+
+            function proce2() {
+
+                if (myXmlHttpRequest2.readyState == 4) {
+
+                    var mes = myXmlHttpRequest2.responseText;
+                    var mes1 = JSON.parse(mes);
+                    var meso = eval("(" + mes1 + ")");
+                    window.alert(meso.status);
+                    window.location.href = "modelentity.html";
+
+                    //window.alert(meso.datagroup[0].deviceId);
+                    //window.alert(meso.datagroup.length);
+
+                    /*var value=[];
+                    $("select option:checked").each(function (i,n) {
+                        value.push(n.value);
+                    });
+                    var div = document.createElement("div");
+                    div.setAttribute("class","card");
+                    if(themeCount%2==1){
+                        div.setAttribute("style","background-image:url(images/ting4.png);margin-top: 20px;margin-left: 20px");
+                    }else{
+                        div.setAttribute("style","background-image:url(images/timg3.png);margin-top: 20px;margin-left: 20px");
+                    }
+                    var p1 = document.createElement("p");
+                    p1.setAttribute("style","color:white;font-size:20px;margin-top:25px");
+                    p1.innerHTML = modalName;
+                    div.appendChild(p1);
+                    var p2 = document.createElement("p");
+                    p2.setAttribute("style","color:white;font-size:12px;margin-top:25px");
+                    p2.innerHTML = "设备ID:"+value[0];
+                    div.appendChild(p2);
+                    var p3 = document.createElement("p");
+                    p3.setAttribute("style","color:white;font-size:12px;margin-top:10px");
+                    p3.innerHTML = "Key1:"+value[1];
+                    div.appendChild(p3);
+                    var p4 = document.createElement("p");
+                    p4.setAttribute("style","color:white;font-size:12px;margin-top:10px");
+                    p4.innerHTML = "Key2:"+value[2];
+                    div.appendChild(p4);
+                    document.getElementById("main2").appendChild(div);*/
+                }
+            }
+
+
+        }
+    );
+    /*$(obj).find("p").each(
+        function (i,n) {
+            window.alert(i);
+            window.alert(n.innerHTML);
+        }
+    );*/
+
+}
+
+function viewModel(obj) {
+
+    var index = modelDetail.indexOf(parseInt($(obj).parent().parent().find('p').eq(1).html()));
+    $('#view1').html("模型名称:"+modelDetail[index-1]);
+    $('#view2').html("模型ID:&nbsp;&nbsp;&nbsp;"+modelDetail[index]);
+    $('#view3').html("模型参数:"+modelDetail[index+1]);
+
+}

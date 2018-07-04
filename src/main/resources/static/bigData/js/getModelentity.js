@@ -12,7 +12,7 @@ function getXmlHttpObject() {
 }
 
 var myXmlHttpRequest="";
-
+var entityDetail = [];
 function getdata1() {
 
     myXmlHttpRequest1 = getXmlHttpObject();
@@ -39,138 +39,90 @@ function getdata1() {
             //window.alert(meso.datagroup.length);
 
             for (var j = 0; j < meso.data.length; j++) {
+                entityDetail.push(meso.data[j].app_id);
+                entityDetail.push(meso.data[j].app_name);
+                entityDetail.push(meso.data[j].model_id);
+                entityDetail.push(meso.data[j].tenant_id);
+                entityDetail.push(meso.data[j].app_input);
+                entityDetail.push(meso.data[j].app_output);
                 var divadd = document.createElement("div");
                 var divadd1 = document.createElement("div");
                 var divaddall = document.createElement("div");
                 var button1 = document.createElement("button");
-                button1.setAttribute("class","green");
-                button1.setAttribute("style","width:56px;font-size:12px");
-                button1.setAttribute("onclick","startEntity(this)");
-                button1.innerHTML = '启动';
+                button1.setAttribute("style","width:20%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                button1.setAttribute("data-toggle","modal");
+                button1.setAttribute("data-target","#myModal");
+                button1.setAttribute("onclick","viewEntity(this)");
+                button1.innerHTML = '查';
                 var button2 = document.createElement("button");
-                button2.setAttribute("class","green");
-                button2.setAttribute("style","width:88px;font-size:12px");
-                button2.setAttribute("onclick","getResult(this)");
-                button2.innerHTML = '预测结果';
+                button2.setAttribute("style","width:30%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                button2.setAttribute("onclick","startEntity(this)");
+                button2.innerHTML = '启动';
+                var button4 = document.createElement("button");
+                button4.setAttribute("style","width:30%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                button4.setAttribute("onclick","getResult(this)");
+                button4.innerHTML = '预测';
                 var button3 = document.createElement("button");
-                button3.setAttribute("class","green");
-                button3.setAttribute("style","width:56px;font-size:12px");
-                button3.innerHTML = '删除';
-                divadd1.setAttribute("style","width:200px,height:30px;display:block");
-                divaddall.setAttribute("style","width:200px,height:190px;margin-top: 20px;margin-left: 20px;margin-right: 10px;float:left");
-                divadd.setAttribute("class", "card");
-                if (themeCount % 2 == 1) {
-                    divadd.setAttribute("style", "display:none;background-image:url(images/ting4.png);margin-right: 0px");
-                } else {
-                    divadd.setAttribute("style", "display:none;background-image:url(images/timg3.png);margin-right: 0px");
+                button3.setAttribute("style","width:20%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                button3.setAttribute("onclick","deleteEntity(this)");
+                button3.innerHTML = '删';
+                divadd1.setAttribute("style","width: 100%;height:10%;display:block");
+                if(j%4 == 0){
+                    divaddall.setAttribute("style","width: 15%;height: 18%;margin-top: 3%;margin-left: 14%;float:left");
+                }else {
+                    divaddall.setAttribute("style","width: 15%;height: 18%;margin-top: 3%;margin-left: 4%;float:left");
                 }
+                divadd.setAttribute("class", "card");
+                divadd.setAttribute("style", "display:none;background: #fffae3;margin-right: 0px; width:100%; height:90%");
                 $(divadd).fadeIn(500 + 300 * j);
                 var p1 = document.createElement("p");
-                p1.setAttribute("style", "color:white;font-size:20px;margin-top:25px");
-                p1.innerHTML = "Model-"+ meso.data[j].model_id ;
-                divadd.appendChild(p1);
+                p1.setAttribute("style", "color:#000000;font-size:20px;margin-top:30%");
+                if(meso.data[j].app_name == 'lw_app'){
+                    p1.innerHTML = meso.data[j].app_name;
+                }else {
+                    p1.innerHTML = 'null';
+                }
                 var p2 = document.createElement("p");
-                p2.setAttribute("style", "color:white;font-size:12px;margin-top:25px");
+                p2.setAttribute("style", "display: none");
+                p2.innerHTML = meso.data[j].app_id;
+                //p1.innerHTML = "Model-"+ meso.data[j].app_id ;
+                divadd.appendChild(p1);
+                divadd.appendChild(p2);
+                /*var p2 = document.createElement("p");
+                p2.setAttribute("style", "color:#000000;font-size:12px;margin-top:25px");
                 p2.innerHTML = "实例ID:"+ meso.data[j].app_id;
                 divadd.appendChild(p2);
                 var p3 = document.createElement("p");
-                p3.setAttribute("style", "color:white;font-size:12px;margin-top:10px");
+                p3.setAttribute("style", "color:#000000;font-size:12px;margin-top:10px");
                 p3.innerHTML = "Key1:"+meso.data[j].app_input[0].type + ",deviceId:" + meso.data[j].app_input[0].device_id;
                 divadd.appendChild(p3);
                 var p4 = document.createElement("p");
-                p4.setAttribute("style", "color:white;font-size:12px;margin-top:10px");
+                p4.setAttribute("style", "color:#000000;font-size:12px;margin-top:10px");
                 p4.innerHTML = "Key2:"+meso.data[j].app_input[1].type + ",deviceId:" + meso.data[j].app_input[1].device_id;
-                divadd.appendChild(p4);
+                divadd.appendChild(p4);*/
                 divadd1.appendChild(button1);
                 divadd1.appendChild(button2);
+                divadd1.appendChild(button4);
                 divadd1.appendChild(button3);
                 divaddall.appendChild(divadd);
                 divaddall.appendChild(divadd1);
-                document.getElementById("main2").appendChild(divaddall);
+                document.body.appendChild(divaddall);
+                $('.card').hover(function () {
+                    $('.card:hover').css("opacity","0.5");
+                },function () {
+                    $('.card').css("opacity","1");
+                });
             }
         }
     }
 }
-
 getdata1();
 
-$('.card').hover(function () {
-    $('.card:hover').css("opacity","0.5");
-},function () {
-    $('.card').css("opacity","1");
-});
-
-$("#modelchange").click(
+$('#dropzone').hover(
     function () {
-
-        var value=[];
-        $("select option:checked").each(function (i,n) {
-            value.push(n.value);
-        });
-        var div = document.createElement("div");
-        div.setAttribute("class","card");
-        if(themeCount%2==1){
-            div.setAttribute("style","background-image:url(images/ting4.png);margin-top: 20px;margin-left: 20px");
-        }else{
-            div.setAttribute("style","background-image:url(images/timg3.png);margin-top: 20px;margin-left: 20px");
-        }
-        var p1 = document.createElement("p");
-        p1.setAttribute("style","color:white;font-size:20px;margin-top:25px");
-        p1.innerHTML = modalName;
-        div.appendChild(p1);
-        var p2 = document.createElement("p");
-        p2.setAttribute("style","color:white;font-size:12px;margin-top:25px");
-        p2.innerHTML = "设备ID:"+value[0];
-        div.appendChild(p2);
-        var p3 = document.createElement("p");
-        p3.setAttribute("style","color:white;font-size:12px;margin-top:10px");
-        p3.innerHTML = "Key1:"+value[1];
-        div.appendChild(p3);
-        var p4 = document.createElement("p");
-        p4.setAttribute("style","color:white;font-size:12px;margin-top:10px");
-        p4.innerHTML = "Key2:"+value[2];
-        div.appendChild(p4);
-        document.getElementById("main2").appendChild(div);
-
-    }
-);
-
-var navCount;
-navCount = localStorage.getItem("navCount");
-if(navCount==null){
-    navCount=0;
-    localStorage.setItem("navCount",navCount);
-}
-if(navCount%2==1){
-    $("#test1").val("显示导航栏");
-    $("nav").html(null);
-    $("nav").css("width","0");
-    $("#navid").css("margin-left","8.5%");
-}else {
-    $("#test1").val("隐藏导航栏");
-}
-$("#test1").click(
-    function () {
-        navCount=localStorage.getItem("navCount");
-        if(navCount%2==0){
-            $("nav").html(null);
-            $("nav").css("width","0");
-            $("#navid").css("margin-left","8.5%");
-            $("#test1")[0].value="显示导航栏";
-        }else {
-            $("nav").html("<ul>\n" +
-                "        <li><a href=\"device1.html\"><span class=\"icon\">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>\n" +
-                "        <li><a href=\"start.html\"><span class=\"icon\">&#128200;</span>设备统计</a></li>\n" +
-                "        <li class=\"section\"><a href=\"model.html\"><span class=\"icon\">&#128201;</span>模型仓库</a></li>\n" +
-                "        <li><a href=\"hisdata.html\"><span class=\"icon\">&#128196;</span>海量分析</a></li><!--128711-->\n" +
-                "    </ul>");
-            $("nav").css("width","14.58%");
-            showTheme();
-            $("#navid").css("margin-left","0%");
-            $("#test1").val("隐藏导航栏");
-        }
-        navCount++;
-        localStorage.setItem("navCount",navCount);
+        $('#dropli').fadeIn(500);
+    },function () {
+        $('#dropli').fadeOut(500);
     }
 );
 
@@ -210,16 +162,29 @@ $('#test5').hover(
     }
 );
 
+function viewEntity(obj) {
+    var viewEntityID = $(obj).parent().parent().find('p').eq(1).html();
+    var viewIndex = entityDetail.indexOf(parseInt(viewEntityID));
+    var viewInputString = "";
+    $('#view1').html("实例ID：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + viewEntityID);
+    $('#view2').html("实例名称：&nbsp;&nbsp;&nbsp;"+entityDetail[viewIndex+1]);
+    $('#view3').html("所属模型ID："+entityDetail[viewIndex+2]);
+    $('#view4').html("所属租户ID："+entityDetail[viewIndex+3]);
+    for (var i=0; i<entityDetail[viewIndex+4].length; i++){
+        viewInputString = viewInputString+"&nbsp;&nbsp;&nbsp;输入参数-"+entityDetail[viewIndex+4][i].type+","+"绑定设备ID-"+entityDetail[viewIndex+4][i].device_id+"<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    }
+    $('#view5').html("实例输入："+viewInputString);
+    $('#view6').html("实例输出："+entityDetail[viewIndex+5]);
+}
+
 function startEntity(obj) {
     myXmlHttpRequest = getXmlHttpObject();
     if (myXmlHttpRequest) {
         //var url = "toajax?username=" + document.getElementById("username").value;
         document.getElementById("YWaitDialog1").setAttribute("style","display:block;");
         var appIdString = $(obj).parent().parent().children().find("p").eq(1).html();
-        var appId = appIdString.split(":")[1];
-        var url = "http://39.104.186.210:8090/api/app/start-app?appId="+appId;// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
+        var url = "http://39.104.186.210:8090/api/app/start-app?appId="+appIdString;// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
         //myXmlHttpRequest.open("get",url,true);
-        window.alert(url);
         myXmlHttpRequest.open("get", url, true);//url="http://10.108.218.64:8090/api/analysis/device"
         myXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         myXmlHttpRequest.onreadystatechange = proce;
@@ -245,8 +210,7 @@ function getResult(obj) {
         //var url = "toajax?username=" + document.getElementById("username").value;
         document.getElementById("YWaitDialog1").setAttribute("style","display:block;");
         var appIdString = $(obj).parent().parent().children().find("p").eq(1).html();
-        var appId = appIdString.split(":")[1];
-        var url2 = "http://39.104.186.210:8090/api/app/real-predict?appId="+appId;// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
+        var url2 = "http://39.104.186.210:8090/api/app/real-predict?appId="+appIdString;// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
         //myXmlHttpRequest.open("get",url,true);
         window.alert(url2);
         myXmlHttpRequest2.open("get", url2, true);//url="http://10.108.218.64:8090/api/analysis/device"
@@ -261,9 +225,13 @@ function getResult(obj) {
         if (myXmlHttpRequest2.readyState == 4) {
 
             document.getElementById("YWaitDialog1").setAttribute("style","display:none;");
-            var mes = myXmlHttpRequest.responseText;
+            var mes = myXmlHttpRequest2.responseText;
             window.alert(mes);
 
         }
     }
+}
+
+function deleteEntity(obj) {
+    window.alert("暂无删除实例接口");
 }

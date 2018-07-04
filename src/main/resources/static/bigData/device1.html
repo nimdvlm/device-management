@@ -22,46 +22,44 @@
 <body>
 
 <div class="testing">
-    <header class="main">
-        <h1><strong>大数据平台</strong> </h1>
-        <input type="text" value="search" />
-    </header>
-    <section class="user">
 
-        <div style="width: 100px;height: 43px;float: left;margin-top: 23px;margin-left: 10px">
-            <input style="width: 90px;height: 35px" type="button" value="导航栏" id="test1"/>
-
+    <section class="user" style="border-bottom:1px solid white;margin-bottom: 10px">
+        <div style="float: left;width: 50%;height: 26px;padding: 25px 0 0 25px">
+            <p style="font-size: 24px;color: white;margin: 0">大数据平台</p>
         </div>
-        <div class="buttons">
-            <ul id="test4" style="width:80px;margin-right: 8px;float: left ">
-                <li><input type="button" value="更多皮肤" id="test"/></li>
-                <li id="test2" style="display: none"><input type="button" value="天之蓝"/></li>
-                <li id="test3" style="display: none"><input type="button" value="红宝石"/></li>
+        <div class="buttons" style="width: 45%;padding-top: 15px">
+            <a href="device1.html"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px; margin-left: 11%" value="首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页"/></a>
+            <a href="hisdata.html"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px" value="海量分析"/></a>
+            <a href="statisticsdata.html"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px" value="数据分析"/></a>
+            <ul id="dropzone" style="float: left; width: 14%;margin-left: 5px">
+                <li style="width: 100%"><a href="model.html"><input type="button" style="width: 100%; height:38px;font-size: 12px;margin: 0" value="数据模型"/></a></li>
+                <li style="width: 100%; display:none;" id="dropli"><a href="modelentity.html"><input type="button" style="width: 100%; height:38px;font-size: 12px;margin: 0" value="模型实例"/></a></li>
             </ul>
-            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 90px" value="返回上一级"/></a>
-            <input type="button" class="button blue" value="退&nbsp;&nbsp;&nbsp;出" onclick="quitThings()" />
+            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px" value="返回上一级"/></a>
+            <input type="button" value="退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出" style="width: 14%; float: left; height:38px;font-size: 12px" onclick="quitThings()" />
             <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
             <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
         </div>
     </section>
 </div>
-<nav style="height:150%">
-    <ul>
-        <li class="section"><a href="device1.html" style="font-size: 14px"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
-        <li>
-            <a href="start.html" style="font-size: 14px"><span class="icon">&#128200;</span>设备统计</a>
-        </li>
-        <ul id="test5">
-            <li><a href="#" style="font-size: 14px"><span class="icon">&#128201;</span>模型仓库</a></li>
-            <li id="test6" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="model.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>模型定制</a></li>
-            <li id="test7" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="modelentity.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>实例详情</a></li>
-        </ul>
-        <li><a href="hisdata.html" style="font-size: 14px"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
-    </ul>
-</nav>
-<div id="map" style="width: 83%;height: 80%;float: left;margin-left: 1%;display: none"></div>
-<div id="main1" style="width: 40%;height: 40%;float: left;margin-left: 1.5%;margin-top: 2%;display: none"></div>
-<div id="main2" style="width: 40%;height: 40%;float: left;margin-left: 2%;margin-top: 2%;display: none"></div>
+
+<div style="width: 25%;height: 62%;float: left; margin-left: 1%">
+    <div id="main1" style="width: 100%;height: 50%;float: left;background: transparent;border:1px dotted grey;"></div>
+    <div id="main2" style="width: 100%;height: 50%;float: left;background: transparent;border:1px dotted grey;"></div>
+</div>
+<div id="map" style="width: 48%;height: 62%;float: left;margin-left: 2px; background: transparent"></div>
+<div style="width: 25%;height: 62%;float: left;margin-left: 2px">
+    <div id="main3" style="width: 100%;height: 50%;float: left;background: transparent;border:1px dotted grey;"></div>
+    <div id="main4" style="width: 100%;height: 50%;float: left;background: transparent;border:1px dotted grey;"></div>
+</div>
+<div id="main5" style="width: 25%;height: 30%;float: left;background: transparent;border:1px dotted grey;margin-top: 3px;margin-left: 1%"></div>
+<div style="width: 48%;height: 30%;float: left;background: transparent;border:1px dotted grey;;margin-top: 3px">
+    <div id="main6" style="width: 33.3%;height: 90%;float: left;margin-top:4%; background: transparent"></div>
+    <div id="main7" style="width: 33.3%;height: 90%;float: left;margin-top:4%; background: transparent"></div>
+    <div id="main8" style="width: 33.3%;height: 90%;float: left;margin-top:4%; background: transparent"></div>
+</div>
+<div id="main9" style="width: 25%;height: 30%;float: left;background: transparent;border:1px dotted grey;;margin-top: 3px"></div>
+
 <div class="waiting" id="YWaitDialog">
     <div class="spinner">
         <div class="spin">
@@ -207,9 +205,14 @@
 <script src="js/common.js"></script>
 <script src="js/getUrlParam.js"></script>
 <script src="js/starttoend.js"></script>
-<script src="js/main.min.js"></script>
-<script src="js/map.js"></script>
+<!--<script src="js/main.min.js"></script>
+<script src="js/map.js"></script>-->
+<script src="http://api.map.baidu.com/api?v=2.0&ak=53oVIOgmSIejwV7EfphPgTynOZbIiVYu"></script>
 <script src="js/echarts.min.js"></script>
+<script src="js/bmap.js"></script>
+<script src="js/mapjson.js"></script>
+<script src="js/map1.js"></script>
+<script src="theme/dark.js"></script>
 <script src="js/start.js"></script>
 <script type="text/javascript">
     document.getElementById("YWaitDialog").setAttribute("style","display:none;");
