@@ -39,6 +39,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
 
         JsonObject groupInfoJson = (JsonObject)new JsonParser().parse(deviceGroupInfo);
         groupInfoJson.addProperty("tenantId", getTenantId());
+        groupInfoJson.addProperty("customerId", getCustomerId());
         String requestAddr = "/api/v1/deviceaccess/group" ;
 
         String responseContent = null ;
