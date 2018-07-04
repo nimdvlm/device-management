@@ -32,11 +32,11 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
         })
         .when("/widgetsLibrary",{
             templateUrl:"widgetsLibrary.html",
-            controller:"widgetsLibraryCtrl"
+            controller:"mainCtrl"
         })
         .when("/dashboard",{
             templateUrl:"dashboard.html",
-            controller:"dashboardCtrl"
+            controller:"mainCtrl"
         })
         .when("/customer",{
             templateUrl:"customer.html",
@@ -48,11 +48,11 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
         })
         .when("/customerUser",{
             templateUrl:"customerUser.html",
-            controller:"customerCtrl"
+            controller:"mainCtrl"
         })
         .when("/customer",{
             templateUrl:"customer.html",
-            controller:"customerUserCtrl"
+            controller:"mainCtrl"
         })
         .otherwise({
             redirectTo:"/homePage"
@@ -75,6 +75,7 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
     /*侧边栏选中效果*/
     var href  = window.location.hash;
     var hrefClass = href.substring(2,href.length);
+    console.log(hrefClass);
     $("#"+hrefClass).css("background","#4f6f93");
     $("#"+hrefClass).siblings().css("background","");
 

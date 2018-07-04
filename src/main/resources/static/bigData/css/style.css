@@ -44,8 +44,8 @@ body {
 	height: 100%;
 	font-family: arial;
 	font-size: 12px;
-	background: #3c3e40;/**#f7f7f7，3c3e40**/
-	/**background-image: url("../images/bgpicture.png");**/
+	background: #000000;/**#f7f7f7，3c3e40**/
+	background-image: url("../images/test1.jpg");
 	overflow-x: hidden;
 	/**color: #3B3E40;**/
 }
@@ -220,11 +220,10 @@ section.alert .red, div.red, button.red {
 }*/
 
 section.user {
-	border-bottom: 1px solid #2a2a2a;
-	background:  #3B3E40;
-	height: 66px;
+	/*border-bottom: 1px solid #2a2a2a;*/
+	background: transparent;
 	position: relative;
-	height: 65px;
+	height: 55px;
 	width: 100%;
 	z-index: 1000;
 }
@@ -259,8 +258,7 @@ section.user img {
 section.user .buttons {
 	float: right;
 	width: 300px;
-	height: 66px;
-	padding-top: 20px;
+	height: 40px;
 }
 
 section.user .buttons button {
@@ -318,12 +316,13 @@ button.ico-font {
 	z-index: 500;
 	
 	background: #4b4f51; /* Old browsers */
-	 background: -moz-linear-gradient(top, #4b4f51 0%, #414547 100%); /* FF3.6+ */ 
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4b4f51), color-stop(100%,#414547)); /* Chrome,Safari4+ */ 
+	 background: -moz-linear-gradient(top, #4b4f51 0%, #414547 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4b4f51), color-stop(100%,#414547)); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top, #4b4f51 0%,#414547 100%); /* Chrome10+,Safari5.1+ */
 	 background: -o-linear-gradient(top, #4b4f51 0%,#414547 100%); /* Opera 11.10+ */
-	 background: -ms-linear-gradient(top, #4b4f51 0%,#414547 100%); /* IE10+ */ 
-	background: linear-gradient(to bottom, #4b4f51 0%,#414547 100%); /* W3C */ 
+	 background: -ms-linear-gradient(top, #4b4f51 0%,#414547 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #4b4f51 0%,#414547 100%); /* W3C */
+	background: transparent;
 	cursor: pointer;
 }
 
@@ -339,6 +338,7 @@ button.ico-font {
 	background: -o-linear-gradient(top, #4b4f51 0%,#414547 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top, #4b4f51 0%,#414547 100%); /* IE10+ */
 	background: linear-gradient(to bottom, #4b4f51 0%,#414547 100%); /* W3C */
+	background: transparent;
 	color: #ffffff;
 	border: 1px solid #323537;
 	padding: 10px 15px;
@@ -361,10 +361,11 @@ button.ico-font {
 	background: -o-linear-gradient(top, #208ed3 0%,#0272bd 100%); /* Opera 11.10+ */ 
 	background: -ms-linear-gradient(top, #208ed3 0%,#0272bd 100%); /* IE10+ */ 
 	background: linear-gradient(to bottom, #208ed3 0%,#0272bd 100%); /* W3C */
+	background: transparent;
 }
 
 button.green {
-	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+	text-shadow: none;
 	border: 1px solid #719e37;
 	margin: 0;
 	background: #9bc747; /* Old browsers */ 
@@ -498,11 +499,12 @@ span.icon {
 
 button:hover, .button:hover, .user input:hover {
 	border: 1px solid rgba(0, 0, 0, .3);
-	background: #313131;
+	background: #ffffff;
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 	cursor: pointer;
+	color: #000000;
 }
 
 /** LOGIN  **/
@@ -690,7 +692,7 @@ body.login {
 	left: 50%;
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
-	background-color: #F88863;
+	background-color: #F88863;/*F88863*/
 	width: 5px;
 	height: 5px;
 	border-radius: 100%;
@@ -927,6 +929,14 @@ body.login {
 	70% {
 		height: 20px;
 	}
+}
+
+/** remove baidu logo **/
+.BMap_cpyCtrl {
+	display:none;
+}
+.anchorBL{
+	display:none;
 }
 
 /** Mobile **/

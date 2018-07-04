@@ -1,22 +1,20 @@
 <div class="content-wrapper" ng-controller="customerCtrl">
     <div class="container">
-        <div class="row" style="margin-bottom: 10px;">
-            <div class="col-md-2">
-                <h2>客户组</h2>
-            </div>
-            <div class="col-md-1" style="margin-top: 23px;">
-                <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
+        <div class="row">
+            <div class="col-md-7">
+                <span style="font-size: 30px;">客户组</span>
+                <button class="btn btn-primary btn-sm" data-toggle="modal"
                         data-target="#createCustomer" id="addCustomer">+ 创建客户组
                 </button>
             </div>
         </div>
 
 
-        <div class="row" style="margin-left: 20px;">
+        <div class="row" style="margin-left: 20px;margin-top: 10px;">
                 每页显示&nbsp<input type="text" id="customerNum" style="width: 50px;border-radius: 5px;" ng-change="customerLimit()" ng-model="myLimit" placeholder="9">&nbsp个客户组
         </div>
         <div class="row">
-            <div id="customerIcon" style=" padding-left: 50px;">
+            <div id="customerIcon">
                 <div class="chooseBtn" ng-repeat="data in customersInfo" ng-click="showCustomer(data)" ng-style="data.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                     <div title="{{data.title}}">
                         <i class="fa fa-users fa-2x"></i>

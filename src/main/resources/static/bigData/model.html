@@ -14,60 +14,63 @@
 <body>
 
 <div class="testing">
-    <header class="main">
-        <h1><strong>大数据平台</strong> </h1>
-        <input type="text" value="search" />
-    </header>
-    <section class="user">
-
-        <div style="width: 100px;height: 43px;float: left;margin-top: 22px;margin-left: 10px">
-            <input style="width: 90px;height: 35px" type="button" value="导航栏" id="test1"/>
+    <section class="user" style="border-bottom:1px solid white;margin-bottom: 10px">
+        <div style="float: left;width: 50%;height: 26px;padding: 25px 0 0 25px">
+            <p style="font-size: 24px;color: white;margin: 0">大数据平台</p>
         </div>
-        <div class="buttons">
-            <ul id="test4" style="width:80px;margin-right: 8px;float: left ">
-                <li><input type="button" value="更多皮肤" id="test"/></li>
-                <li id="test2" style="display: none"><input type="button" value="天之蓝"/></li>
-                <li id="test3" style="display: none"><input type="button" value="红宝石"/></li>
+        <div class="buttons" style="width: 45%;padding-top: 15px">
+            <a href="device1.html"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px; margin-left: 11%" value="首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页"/></a>
+            <a href="hisdata.html"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px" value="海量分析"/></a>
+            <a href="statisticsdata.html"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px" value="数据分析"/></a>
+            <ul id="dropzone" style="float: left; width: 14%;margin-left: 5px">
+                <li style="width: 100%"><a href="model.html"><input type="button" style="width: 100%; height:38px;font-size: 12px;margin: 0" value="数据模型"/></a></li>
+                <li style="width: 100%; display:none;" id="dropli"><a href="modelentity.html"><input type="button" style="width: 100%; height:38px;font-size: 12px;margin: 0" value="模型实例"/></a></li>
             </ul>
-            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 90px" value="返回上一级"/></a>
-            <input type="button" class="button blue" value="退&nbsp;&nbsp;&nbsp;出" onclick="quitThings()" />
+            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px" value="返回上一级"/></a>
+            <input type="button" value="退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出" style="width: 14%; float: left; height:38px;font-size: 12px" onclick="quitThings()" />
             <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
             <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
         </div>
     </section>
 </div>
-<nav>
-    <ul>
-        <li><a href="device1.html" style="font-size: 14px"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
-        <li><a href="start.html" style="font-size: 14px"><span class="icon">&#128200;</span>设备统计</a></li>
-        <ul id="test5">
-            <li class="section"><a href="#" style="font-size: 14px"><span class="icon">&#128201;</span>模型仓库</a></li>
-            <li id="test6" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="model.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>模型定制</a></li>
-            <li id="test7" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="modelentity.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>实例详情</a></li>
-        </ul>
-        <li><a href="hisdata.html" style="font-size: 14px"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
-    </ul>
-</nav>
 
 <div id="main1" style="width: 100%;margin-left: 20px">
-    <h1 style="color: white;font-size: 16px;margin-top:20px;margin-left:230px;">模型</h1>
+    <h1 style="color: white;font-size: 16px;margin-top:30px; margin-left: 1%">通用模型</h1>
 </div>
-<div id="main2" style="width: 100%;margin-top:250px;margin-left:20px;font-size:16px">
-    <h1 style="color: white;font-size: 16px;margin-left:230px;">模型实例</h1>
-</div>
+<!--<div id="main2" style="width: 100%;margin-top:250px;margin-left:20px;font-size:16px">
+    <h1 style="color: white;font-size: 16px; margin-left: 1%">自定义模型</h1>
+</div>-->
 
-<!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">模型定制</h4>
+                <h4 class="modal-title" id="myModalLabel"></h4>
             </div>
             <div class="modal-body" id="modelSelect"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button id="modelchange" type="button" class="btn btn-primary">提交更改</button>
+                <button id="modelchange" type="button" class="btn btn-primary">添加实例</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel1">模型详情</h4>
+            </div>
+            <div class="modal-body" id="modelSelect1">
+                <p id="view1"></p>
+                <p id="view2"></p>
+                <p id="view3"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

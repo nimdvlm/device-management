@@ -14,34 +14,35 @@
 <body>
 
 <div class="testing">
-    <header class="main">
-        <h1><strong>大数据平台</strong> </h1>
-    </header>
-    <section class="user">
-
-        <div style="width: 500px;height: 43px;float: left;margin-top: 23px;margin-left: 10px">
-            <a href="device1.html"><input style="width: 90px;height: 35px;float: left" type="button" value="首页" id="test1"/></a>
-            <a href="start.html"><input class="button blue" style="width: 90px;height: 35px;float: left" type="button" value="设备统计" id="test11"/></a>
-            <ul id="test12" style="width: 90px;float: left;margin-right: 5px">
-                <li><a href="#"><input style="width: 90px;height: 35px;float: left" type="button" value="模型仓库" id="test120"/></a></li>
-                <li><a href="model.html"><input style="width: 90px;height: 35px;float: left;display: none" type="button" value="模型定制" id="test121"/></a></li>
-                <li><a href="modelentity.html"><input style="width: 90px;height: 35px;float: left;display: none" type="button" value="实例详情" id="test122"/></a></li>
-            </ul>
-            <a href="modelentity.html"><input style="width: 90px;height: 35px;float: left" type="button" value="海量分析" id="test13"/></a>
+    <section class="user" style="border-bottom:1px solid white;margin-bottom: 10px">
+        <div style="float: left;width: 50%;height: 26px;padding: 25px 0 0 25px">
+            <p style="font-size: 24px;color: white;margin: 0">大数据平台</p>
         </div>
-        <div class="buttons">
-            <ul id="test4" style="width:80px;margin-right: 8px;float: left ">
-                <li><input type="button" value="更多皮肤" id="test"/></li>
-                <li id="test2" style="display: none"><input type="button" value="天之蓝"/></li>
-                <li id="test3" style="display: none"><input type="button" value="红宝石"/></li>
+        <div class="buttons" style="width: 45%;padding-top: 15px">
+            <a href="device1.html"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px; margin-left: 11%" value="首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页"/></a>
+            <a href="hisdata.html"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px" value="海量分析"/></a>
+            <a href="statisticsdata.html"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px" value="数据分析"/></a>
+            <ul id="dropzone" style="float: left; width: 14%;margin-left: 5px">
+                <li style="width: 100%"><a href="model.html"><input type="button" style="width: 100%; height:38px;font-size: 12px;margin: 0" value="数据模型"/></a></li>
+                <li style="width: 100%; display:none;" id="dropli"><a href="modelentity.html"><input type="button" style="width: 100%; height:38px;font-size: 12px;margin: 0" value="模型实例"/></a></li>
             </ul>
-            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 90px" value="返回上一级"/></a>
-            <input type="button" class="button blue" value="退&nbsp;&nbsp;&nbsp;出" onclick="quitThings()" />
+            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px" value="返回上一级"/></a>
+            <input type="button" value="退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出" style="width: 14%; float: left; height:38px;font-size: 12px" onclick="quitThings()" />
             <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
             <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
         </div>
     </section>
 </div>
+
+<div style="width: 100%;height: 40px;background: transparent;color: white"><p style="width: 60px; display: inline; margin-left: 30px">模糊查询</p>
+    <select id="mohuquery" style="margin-top: 15px;margin-left: 5px">
+        <option>近三天</option>
+        <option selected="selected">近一周</option>
+        <option>近一月</option>
+    </select>
+    <a id="query1" href="#"><button data-toggle="modal" data-target="#myModal" style="float: right;margin-right: 20px;margin-top: 5px">精确查询</button></a>
+</div>
+<!-- use style transparent，and hover doesn't work -->
 
 <!--<nav>
     <ul>
@@ -56,22 +57,18 @@
     </ul>
 </nav>-->
 
-<section class="alert">
-    <!--<form method="link" action="dydata.jsp">-->
+<!--<section class="alert">
     <a id="transportId" href="#"><button class="green">点此查看实时数据</button></a>
     <a id="transportId1" href="#"><button class="green" data-toggle="modal" data-target="#myModal" >使用sql查询</button></a>
-    <!--</form>-->
-</section>
+</section>-->
 
-<section class="content" id="navid" style="margin-left: 8%">
-    <section class="widget">
-        <div id="main" style="width: 100%;height: 600px;display: none"></div>
-        <div align="middle">
-            <span style="width: 10%;font-size: 15px;color: gray"><strong>开始时间</strong></span><input style="width: 10%;margin-left: 1%" type="date" id="fname" onchange="starttoend(this.id)">
-            <span style="width: 10%;font-size: 15px;color: gray;margin-left: 5%"><strong>结束时间</strong> </span><input style="width: 10%;margin-left: 1%" type="date" id="fname1" onchange="starttoend(this.id)">
-            <span style="width: 10%;font-size: 15px;color: gray;margin-left: 5%"><strong>分段数</strong> </span><input style="width: 10%;margin-left: 1%" type="text" id="fname2" onchange="starttoend(this.id)">
-            <span style="width: 10%;font-size: 15px;color: gray;margin-left: 5%"></span><input style="width: 10%;margin-left: 2%" type="button" value="确认" id="fname3" onclick="showData()">
-        </div>
+<div id="main" style="width: 80%;height: 70%;background: white;margin-left: 10%;margin-top: 80px;float: left"></div>
+<!--<div align="middle">
+    <span style="width: 10%;font-size: 15px;color: gray"><strong>开始时间</strong></span><input style="width: 10%;margin-left: 1%" type="date" id="fname" onchange="starttoend(this.id)">
+    <span style="width: 10%;font-size: 15px;color: gray;margin-left: 5%"><strong>结束时间</strong> </span><input style="width: 10%;margin-left: 1%" type="date" id="fname1" onchange="starttoend(this.id)">
+    <span style="width: 10%;font-size: 15px;color: gray;margin-left: 5%"><strong>分段数</strong> </span><input style="width: 10%;margin-left: 1%" type="text" id="fname2" onchange="starttoend(this.id)">
+    <span style="width: 10%;font-size: 15px;color: gray;margin-left: 5%"></span><input style="width: 10%;margin-left: 2%" type="button" value="确认" id="fname3" onclick="showData()">
+</div>-->
 
         <!--<form action="" method="post">
             用户名字：<input type="text" onkeyup="checkname();" name="username1" id="username">
@@ -83,23 +80,37 @@
             <input type="submit" value="用户注册">
         </form>-->
 
-    </section>
-</section>
-
-<!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">提交sql语句</h4>
+                <h4 class="modal-title" id="myModalLabel">精确查询(4月-5月)</h4>
             </div>
             <div class="modal-body">
-                <textarea id="sqlText" rows="20" cols="108"></textarea>
+                <input name="Fruit" type="radio" value="type" style="width: 20px" checked="checked" />按设备类型查询
+                <input name="Fruit" type="radio" value="device" style="width: 20px;margin-left: 30px"/>按设备名称查询
+                <div id="modaldiv" style="margin-top: 30px;width: 100%">
+                    <span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>设备类型</strong> </span>
+                    <select id="fname3" onchange="starttoend(this.id)">
+                        <option></option>
+                        <option>temperature</option>
+                        <option>humidity</option>
+                        <option>pressure</option>
+                        <option>deformation</option>
+                        <option>velocity</option>
+                        <option>light</option>
+                    </select>
+                </div>
+                <div style="margin-top: 30px;width: 100%">
+                    <span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>开始时间</strong></span><input style="width: 20%;margin-left: 1%" type="date" id="fname" onchange="starttoend(this.id)">
+                    <span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>结束时间</strong> </span><input style="width: 20%;margin-left: 1%" type="date" id="fname1" onchange="starttoend(this.id)">
+                    <span style="width: 10%;font-size: 15px;color: gray;margin-left: 10px"><strong>分段数</strong> </span><input style="width: 10%;margin-left: 1%" type="text" id="fname2" onchange="starttoend(this.id)"><br/>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button id="modelchange" type="button" class="btn btn-primary">提交</button>
+                <button id="modelchange" type="button" class="btn btn-primary" data-dismiss="modal" onclick="showData()">提交</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

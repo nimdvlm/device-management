@@ -1,7 +1,9 @@
 
 mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$resource) {
     $scope.deviceInfo;//用于记录当前选中的设备
+
     var parentName;//用于记录父设备名称
+
     var preDeviceIdArr = [];//用于记录设备列表展示时向前翻页
     var preDeviceNameArr = [];//用于设备列表展示时向前翻页
     var preDeviceId;//用于设备列表展示时向前翻页
@@ -9,6 +11,10 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     var nextDeviceId;//用于设备列表展示时向后翻页
     var nextDeviceName;//用于设备列表展示时向后翻页
     var pageNum = 1;//用于记录当前页号
+
+    var allDeviceId = [];//用于获取当前页面的设备的状态信息
+    var statusSend;//用于请求获取设备状态时发送的数据
+
     /*设备列表信息获取与展示*/
 
     /*返回值为所有设备信息*/
@@ -22,17 +28,38 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         async: false,
         type:"GET",
         success:function(msg) {
+            console.log(msg);
            if(msg.length != 0){
                $scope.deviceList = msg;
                var last = $scope.deviceList.length - 1;
                console.log($scope.deviceList);
                console.log($scope.deviceList.length);
+               for(var i=0;i<$scope.deviceList.length;i++){
+                   allDeviceId.push($scope.deviceList[i].id);
+               }
+               statusSend = {"deviceId":allDeviceId};
+               /*用于翻页*/
                nextDeviceId = $scope.deviceList[last].id;
                nextDeviceName = $scope.deviceList[last].name;
                preDeviceIdArr.push($scope.deviceList[last].id);
                preDeviceNameArr.push($scope.deviceList[last].name);
            }
 
+        }
+    });
+
+
+    /*获取设备状态*/
+    $.ajax({
+        url:"/api/device/status",
+        type:"POST",
+        data:statusSend,
+        contentType:"application/json; charset=utf-8",
+        success:function (msg) {
+            console.log(msg);
+        },
+        error:function (err) {
+            console.log(statusSend);
         }
     });
 
@@ -50,10 +77,12 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     };
     /*在右侧表格中显示各个设备的信息*/
     $scope.show = function (data) {
-        /*除点击元素外其他元素均无特殊样式*/
-        var offset = $('#deviceListChart').offset().top-190;
+        /*回到顶部*/
+        /*var offset = $('#deviceListChart').offset().top-190;
         console.log(offset);
-        $('html, body').animate({scrollTop:offset}, 1000);
+        $('html, body').animate({scrollTop:offset}, 1000);*/
+
+        /*除点击元素外其他元素均无特殊样式*/
         $scope.deviceList.forEach(function (items) {
             if(data != items) items.style = {}
         });

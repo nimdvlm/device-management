@@ -7,6 +7,7 @@
     <meta name="keywords" content="" />
     <meta name="robots" content="" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.css" media="all" />
     <link rel="stylesheet" href="css/style.css" media="all" />
 
 </head>
@@ -14,52 +15,72 @@
 <body>
 
 <div class="testing">
-    <header class="main">
-        <h1><strong>大数据平台</strong> </h1>
-    </header>
-    <section class="user">
-
-        <div style="width: 100px;height: 43px;float: left;margin-top: 23px;margin-left: 10px">
-            <input style="width: 90px;height: 35px" type="button" value="导航栏" id="test1"/>
+    <section class="user" style="border-bottom:1px solid white;margin-bottom: 10px">
+        <div style="float: left;width: 50%;height: 26px;padding: 25px 0 0 25px">
+            <p style="font-size: 24px;color: white;margin: 0">大数据平台</p>
         </div>
-        <div class="buttons">
-            <ul id="test4" style="width:80px;margin-right: 8px;float: left ">
-                <li><input type="button" value="更多皮肤" id="test"/></li>
-                <li id="test2" style="display: none"><input type="button" value="天之蓝"/></li>
-                <li id="test3" style="display: none"><input type="button" value="红宝石"/></li>
+        <div class="buttons" style="width: 45%;padding-top: 15px">
+            <a href="device1.html"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px; margin-left: 11%" value="首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页"/></a>
+            <a href="hisdata.html"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px" value="海量分析"/></a>
+            <a href="statisticsdata.html"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px" value="数据分析"/></a>
+            <ul id="dropzone" style="float: left; width: 14%;margin-left: 5px">
+                <li style="width: 100%"><a href="model.html"><input type="button" style="width: 100%; height:38px;font-size: 12px;margin: 0" value="数据模型"/></a></li>
+                <li style="width: 100%; display:none;" id="dropli"><a href="modelentity.html"><input type="button" style="width: 100%; height:38px;font-size: 12px;margin: 0" value="模型实例"/></a></li>
             </ul>
-            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 90px" value="返回上一级"/></a>
-            <input type="button" class="button blue" value="退&nbsp;&nbsp;&nbsp;出" onclick="quitThings()" />
+            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 14%; float: left; height:38px;font-size: 12px" value="返回上一级"/></a>
+            <input type="button" value="退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出" style="width: 14%; float: left; height:38px;font-size: 12px" onclick="quitThings()" />
             <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
             <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
         </div>
     </section>
 </div>
-<nav>
+<!--<nav>
     <ul>
         <li><a href="device1.html" style="font-size: 14px"><span class="icon">&#128202;</span>首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
-        <li><a href="start.html" style="font-size: 14px"><span class="icon">&#128200;</span>设备统计</a></li>
+        <li><a href="start.html" style="font-size: 14px"><span class="icon">&#128200;</span>数据统计</a></li>
         <ul id="test5">
             <li><a href="#" style="font-size: 14px"><span class="icon">&#128201;</span>模型仓库</a></li>
             <li id="test6" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="model.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>模型定制</a></li>
             <li id="test7" style="display: none;height: 45px"><a style="padding: 5px 7.14% 0 2.38%;font-size: 12px" href="modelentity.html"><span class="icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>实例详情</a></li>
         </ul>
-        <li class="section"><a href="hisdata.html" style="font-size: 14px"><span class="icon">&#128196;</span>海量分析</a></li><!--128711-->
+        <li class="section"><a href="hisdata.html" style="font-size: 14px"><span class="icon">&#128196;</span>海量分析</a></li>
     </ul>
-</nav>
+</nav>-->
 
-<section class="alert">
+<!--<section class="alert">
     <button class="green" onclick="getData()">点此获取数据</button>
-</section>
+</section>-->
+<div style="width: 100%;height: 40px;background: transparent;color: white"><p style="width: 60px; display: inline; margin-left: 30px">模糊查询</p>
+    <select id="mohuquery" style="margin-top: 15px;margin-left: 5px">
+        <option>近三天</option>
+        <option selected="selected">近一周</option>
+        <option>近一月</option>
+    </select>
+    <a id="query1" href="#"><button data-toggle="modal" data-target="#myModal" style="float: right;margin-right: 20px;margin-top: 5px">精确查询</button></a>
+</div>
+<div id="main" style="width: 39%; height:39%;margin-top: 1%;margin-left: 9%; background: #ffffff;float: left"></div>
+<div id="main1" style="width: 39%; height:39%;margin-top: 1%;right:9%; background: #ffffff;float: right"></div>
+<div id="main2" style="width: 39%; height:39%;margin-top: 3%;margin-left:9%; background: #ffffff;float: left"></div>
+<div id="main3" style="width: 39%; height:39%;margin-top: 3%;margin-right:9%; background: #ffffff;float: right"></div>
 
-<section class="content" id="navid">
-    <section class="widget">
-        <div id="main" style="width: 100%;height:600px;margin-top: 50px"></div>
-        <div id="main1" style="width: 100%;height:600px;margin-top: 50px"></div>
-        <div id="main2" style="width: 100%;height:600px;margin-top: 50px"></div>
-        <div id="main3" style="width: 100%;height:600px;margin-top: 50px"></div>
-    </section>
-</section>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">精确查询(4月-5月)</h4>
+            </div>
+            <div class="modal-body">
+                    <span style="width: 10%;font-size: 15px;color: gray"><strong>开始时间</strong></span><input style="width: 30%;margin-left: 1%" type="date" id="fname" onchange="starttoend(this.id)">
+                    <span style="width: 10%;font-size: 15px;color: gray;margin-left: 5%"><strong>结束时间</strong> </span><input style="width: 30%;margin-left: 1%" type="date" id="fname1" onchange="starttoend(this.id)">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="modelchange" type="button" class="btn btn-primary" data-dismiss="modal" onclick="showData()">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 <div class="waiting" id="YWaitDialog">
     <div class="spinner">
@@ -178,6 +199,7 @@
 </div>
 
 <<script src="js/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="js/common.js"></script>
 <script src="js/getUrlParam.js"></script>
 <script src="js/starttoend.js"></script>
