@@ -1,23 +1,39 @@
 mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
-    //获取设备组
-    $scope.showAll = true;
-    $scope.showEmpty = false;
+    $scope.isShowAll= true;
+    $scope.isShowEmpty = false;
 
-    var Devicegroup = $resource('/api/group/allgroups?limit=20');
+    //获取设备组
+    /*权限管理*/
+    console.log($.cookie());
+    if($.cookie("userLevel") === "CUSTOMER_USER"){
+        console.log("客户权限")
+        var Devicegroup = $resource('/api/group/customerGroups?limit=20');
+    }else {
+        console.log("租户权限")
+        var Devicegroup = $resource('/api/group/tenantGroups?limit=20');
+    }
+    /*获取设备组接口*/
     $scope.DeviceGroups = Devicegroup.query(function () {
         //初始化右侧视图
-        $scope.item = $scope.DeviceGroups[0];
-        console.log($scope.item);
-        //初始化设备组的设备视图
-        var DGDEVICES = $resource('/api/group/:id/devices?limit=20', {id: '@id'});
-        DGDEVICES.query({id: $scope.item.id})
-            .$promise.then(function (person) {
-            $scope.myData = person;
-            console.log("$scope.myData");
-            console.log($scope.myData);
-        });
-    });
+        if($scope.DeviceGroups[0]!=null&&$scope.DeviceGroups[0]!=""){
+            $scope.item = $scope.DeviceGroups[0];
 
+            $scope.isShowEmpty=false;
+            $scope.isShowAll=true;
+            console.log($scope.item);
+            //初始化设备组的设备视图
+            var DGDEVICES = $resource('/api/group/:id/devices?limit=20', {id: '@id'});
+            DGDEVICES.query({id: $scope.item.id})
+                .$promise.then(function (person) {
+                $scope.myData = person;
+                console.log("$scope.myData");
+                console.log($scope.myData);
+            });
+        }else {
+            $scope.isShowEmpty=true;
+            $scope.isShowAll=false;
+        }
+    });
 
     //添加设备组
     $scope.addDG = function () {
@@ -42,19 +58,24 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     //按照关键词查找设备组，返回一个数组
     $scope.searchDG = function () {
         if ($scope.dgname != "" && $scope.dgname != null) {
-            var searchDG = $resource('/api/group/allgroups?limit=20&textSearch=:name', {name: '@name'});
+            //权限管理
+            console.log($.cookie());
+            if($.cookie("userLevel") === "CUSTOMER_USER"){
+                console.log("客户权限")
+                var searchDG = $resource('/api/group/customerGroups?limit=20&textSearch=:name', {name: '@name'});
+            }else {
+                console.log("租户权限")
+                var searchDG = $resource('/api/group/tenantGroups?limit=20&textSearch=:name', {name: '@name'});
+            }
+
             searchDG.query({name: $scope.dgname})
                 .$promise.then(function (person) {
-                console.log($scope.dgname);
                 if (person == false) {
                     //如无此结果返回[]
-                    $scope.showInfo = false;
                     alert("无设备组[" + $scope.dgname + "]信息，请输入正确设备组名!");
                     location.reload();
                 } else {
-                    $scope.showInfo = true;
-                    $scope.showAll = false;
-                    $scope.Searchresults = person;
+                    $scope.DeviceGroups = person;
                 }
             });
         }

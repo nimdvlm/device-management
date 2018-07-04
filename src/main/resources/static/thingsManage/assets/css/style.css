@@ -294,6 +294,12 @@ DEVICELIST STYLES
     margin-left: -25px;
     color:#adadad;
 }
+.showEmpty{
+    text-align: center;
+    padding-top: 150px;
+    font-size: 30px;
+    color: #adadad ;
+}
 
 /* =============================================================
    DeviceGroupAssign
