@@ -13,7 +13,7 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     var pageNum = 1;//用于记录当前页号
 
     var allDeviceId = [];//用于获取当前页面的设备的状态信息
-    var statusSend;//用于请求获取设备状态时发送的数据
+
 
     /*设备列表信息获取与展示*/
 
@@ -37,7 +37,20 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                for(var i=0;i<$scope.deviceList.length;i++){
                    allDeviceId.push($scope.deviceList[i].id);
                }
-               statusSend = {"deviceId":allDeviceId};
+
+               /*获取设备状态*/
+               var statusObj = $resource("/api/device/status");
+               var statusInfo = statusObj.save({deviceId:allDeviceId}).$promise.then(function (resp) {
+                   console.log(resp);
+                   var temp;
+                   for(var i=0;i<allDeviceId.length;i++){
+                       temp = allDeviceId[i];
+                       console.log(resp[temp]);
+                       if(resp[temp] === "offline"){
+                           $("#"+temp).css({color:"rgb(220, 220, 220)"});
+                       }
+                   }
+               });
                /*用于翻页*/
                nextDeviceId = $scope.deviceList[last].id;
                nextDeviceName = $scope.deviceList[last].name;
@@ -49,19 +62,9 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     });
 
 
-    /*获取设备状态*/
-    $.ajax({
-        url:"/api/device/status",
-        type:"POST",
-        data:statusSend,
-        contentType:"application/json; charset=utf-8",
-        success:function (msg) {
-            console.log(msg);
-        },
-        error:function (err) {
-            console.log(statusSend);
-        }
-    });
+
+
+
 
     /*鼠标移入动画效果*/
     $scope.fadeSiblings = function () {
@@ -78,9 +81,9 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     /*在右侧表格中显示各个设备的信息*/
     $scope.show = function (data) {
         /*回到顶部*/
-        /*var offset = $('#deviceListChart').offset().top-190;
+        var offset = $('#deviceListChart').offset().top-190;
         console.log(offset);
-        $('html, body').animate({scrollTop:offset}, 1000);*/
+        $('html, body').animate({scrollTop:offset}, 1000);
 
         /*除点击元素外其他元素均无特殊样式*/
         $scope.deviceList.forEach(function (items) {
@@ -140,14 +143,37 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
             async: false,
             type:"GET",
             success:function(msg) {
+
                 $scope.deviceList = msg;
                 var last = $scope.deviceList.length - 1;
                 console.log($scope.deviceList);
                 console.log($scope.deviceList.length);
+
+                allDeviceId = [];
+                for(var i=0;i<$scope.deviceList.length;i++){
+                    allDeviceId.push($scope.deviceList[i].id);
+                }
+
+                /*获取设备状态*/
+                var statusObj = $resource("/api/device/status");
+                var statusInfo = statusObj.save({deviceId:allDeviceId}).$promise.then(function (resp) {
+                    console.log(resp);
+                    var temp;
+                    for(var i=0;i<allDeviceId.length;i++){
+                        temp = allDeviceId[i];
+                        console.log(resp[temp]);
+                        if(resp[temp] === "offline"){
+                            $("#"+temp).css({color:"rgb(220, 220, 220)"});
+                        }
+                    }
+                });
+
                 nextDeviceId = $scope.deviceList[last].id;
                 nextDeviceName = $scope.deviceList[last].name;
                 preDeviceIdArr.push($scope.deviceList[last].id);
                 preDeviceNameArr.push($scope.deviceList[last].name);
+
+
             }
         });
     };
@@ -173,6 +199,26 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                         $scope.deviceList = msg;
                         var last = $scope.deviceList.length - 1;
                         console.log($scope.deviceList);
+
+                        allDeviceId = [];
+                        for(var i=0;i<$scope.deviceList.length;i++){
+                            allDeviceId.push($scope.deviceList[i].id);
+                        }
+
+                        /*获取设备状态*/
+                        var statusObj = $resource("/api/device/status");
+                        var statusInfo = statusObj.save({deviceId:allDeviceId}).$promise.then(function (resp) {
+                            console.log(resp);
+                            var temp;
+                            for(var i=0;i<allDeviceId.length;i++){
+                                temp = allDeviceId[i];
+                                console.log(resp[temp]);
+                                if(resp[temp] === "offline"){
+                                    $("#"+temp).css({color:"rgb(220, 220, 220)"});
+                                }
+                            }
+                        });
+
                         nextDeviceId = $scope.deviceList[last].id;
                         nextDeviceName = $scope.deviceList[last].name;
                         preDeviceIdArr.push($scope.deviceList[last].id);
@@ -215,6 +261,26 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                     $scope.deviceList = msg;
                     var last = $scope.deviceList.length - 1;
                     console.log($scope.deviceList);
+
+                    allDeviceId = [];
+                    for(var i=0;i<$scope.deviceList.length;i++){
+                        allDeviceId.push($scope.deviceList[i].id);
+                    }
+
+                    /*获取设备状态*/
+                    var statusObj = $resource("/api/device/status");
+                    var statusInfo = statusObj.save({deviceId:allDeviceId}).$promise.then(function (resp) {
+                        console.log(resp);
+                        var temp;
+                        for(var i=0;i<allDeviceId.length;i++){
+                            temp = allDeviceId[i];
+                            console.log(resp[temp]);
+                            if(resp[temp] === "offline"){
+                                $("#"+temp).css({color:"rgb(220, 220, 220)"});
+                            }
+                        }
+                    });
+
                     nextDeviceId = $scope.deviceList[last].id;
                     nextDeviceName = $scope.deviceList[last].name;
                 }
@@ -476,14 +542,11 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
             }
             $scope.location = $("#location").val();
             $scope.status = $("#status").val();
-            $scope.createDeviceInfo = '{"name":'+'"'+$scope.name+'"'+',"parentDeviceId":'+'"'+$scope.parent+'"'+',"deviceType":'+'"'+$scope.deviceType+'"'+',"manufacture":'+'"'+$scope.manufacture+'"'+',"model":'+'"'+$scope.model+'"'+',"location":'+'"'+$scope.location+'"'+',"status":'+'"'+$scope.status+'"'+'}';
+            var fixTime = $("#fixTime").val();
+            var fixTimeStamp = new Date(fixTime).getTime();
+            $scope.createDeviceInfo = '{"name":'+'"'+$scope.name+'"'+',"parentDeviceId":'+'"'+$scope.parent+'"'+',"lifeTime":'+'"'+fixTimeStamp+'"'+',"deviceType":'+'"'+$scope.deviceType+'"'+',"manufacture":'+'"'+$scope.manufacture+'"'+',"model":'+'"'+$scope.model+'"'+',"location":'+'"'+$scope.location+'"'+',"status":'+'"'+$scope.status+'"'+'}';
             //字符串类型的数据发送给后台是会自动加上引号
             console.log($scope.createDeviceInfo);
-            /*$scope.deviceInformation = createDeviceObj.save({},$scope.createDeviceInfo,function (resp) {
-                window.location.reload();
-            },function (error) {
-                toastr.error("新增设备失败！");
-            });*/
             $.ajax({
                 url:"/api/device/create",
                 data:$scope.createDeviceInfo,
