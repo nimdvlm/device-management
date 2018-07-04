@@ -262,10 +262,10 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
     //以下是客户层面的设备操作
     //分配设备给客户
-    @RequestMapping(value = "/assign/customer/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/assign/customer/{deviceId}/{customerId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String assignDeviceToCustomer(@PathVariable("deviceId") String dId){
-        String requestAddr = String.format("/api/v1/deviceaccess/assign/group/%s/%s", dId, getCustomerId());
+    public String assignDeviceToCustomer(@PathVariable("deviceId") String dId, @PathVariable("cutomerId") Integer cId){
+        String requestAddr = String.format("/api/v1/deviceaccess/assign/group/%s/%s", dId, cId);
         String responseContent = "";
 
         try {
