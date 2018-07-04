@@ -264,7 +264,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     //分配设备给客户
     @RequestMapping(value = "/assign/customer/{deviceId}/{customerId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String assignDeviceToCustomer(@PathVariable("deviceId") String dId, @PathVariable("cutomerId") Integer cId){
+    public String assignDeviceToCustomer(@PathVariable("deviceId") String dId, @PathVariable("customerId") Integer cId){
         String requestAddr = String.format("/api/v1/deviceaccess/assign/group/%s/%s", dId, cId);
         String responseContent = "";
 
