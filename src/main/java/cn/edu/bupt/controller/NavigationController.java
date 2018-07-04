@@ -131,4 +131,6 @@ public class NavigationController {
 
     @RequestMapping("/historicalData")
     public String historicalData() {return "static/bigData/hisdata";}
+    @RequestMapping("/homeTenant")
+    public String homeTenant() {return "static/thingsManage/homeTenant";}
 }
