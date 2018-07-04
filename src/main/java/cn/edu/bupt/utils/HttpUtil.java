@@ -174,6 +174,7 @@ public class HttpUtil {
                 if(!obj.has("error")) {
                     session.setAttribute("token", obj.get("access_token").getAsString());
                     session.setAttribute("refreshToken", obj.get("refresh_token").getAsString());
+                    session.setAttribute("tenant_id", obj.get("tenant_id").getAsInt());
                 }
                 return res;
             } else{
@@ -188,6 +189,7 @@ public class HttpUtil {
                 if(!obj.has("error")) {
                     session.setAttribute("token", obj.get("access_token").getAsString());
                     session.setAttribute("refreshToken", obj.get("refresh_token").getAsString());
+                    session.setAttribute("tenant_id", obj.get("tenant_id").getAsInt());
                 }
                 return res ;
             } catch (Exception e1) {

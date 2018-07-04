@@ -24,6 +24,30 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
     public static final String DEVICE_ID = "deviceId";
 
+    @ApiOperation(value="获取租户所有设备的数量", notes="获取租户所有设备的数量")
+    @RequestMapping(value = "/tenant/devicesCount", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getDevicesCount(){
+
+        String requestAddr = "/api/v1/deviceaccess/tenant/deviceCount/"  + getTenantId();
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+        try {
+            return retSuccess(responseContent) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+    }
+
 
     /**
      * 获取租户所有设备的信息
