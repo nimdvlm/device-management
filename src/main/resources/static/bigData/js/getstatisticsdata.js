@@ -1,4 +1,3 @@
-$("#main").fadeIn(3000);
 function timestampToTime(timestamp) {
     var date = new Date(timestamp);
     Y = date.getFullYear() + '-';
@@ -23,13 +22,11 @@ function getXmlHttpObject() {
 
 }
 
-var myXmlHttpRequest="";
+/*var myXmlHttpRequest="";
 var deviceId = UrlParm.parm("deviceId");
 var deviceNum = UrlParm.parm("deviceNum");
-var sectionA = document.getElementById("transportId");
-sectionA.setAttribute("href","dydatatrue.html?deviceId="+deviceId+"&deviceNum="+deviceNum);
 
-/*function getdata() {
+function getdata() {
 
     myXmlHttpRequest = getXmlHttpObject();
     if(myXmlHttpRequest){
@@ -195,11 +192,13 @@ var data7 = [];
 
 option = {
     title: {
-        text: '统计数据 '+"  设备"+deviceNum
+        text: '数据分析',
+        subtext: '近一周',
+        subtextStyle:{}
     },
     legend: {
         data: ['最大值', '均值','最小值','标准差','数据条数','正常数据条数','正常数据比例'],
-        align: 'left',
+        align: 'left'
     },
     toolbox: {
         // y: 'bottom',
@@ -215,26 +214,26 @@ option = {
     },
     tooltip: {},
     xAxis: {
-        data: xAxisData,
+        data: ['周一','周二','周三','周四','周五','周六','周日'],
         silent: false,
         splitLine: {
             show: false
         }
     },
     yAxis: {
-        name:'温度'
+        //name:'温度'
     },
     series: [{
         name: '最大值',
         type: 'bar',
-        data: data1,
+        data: [12,55,33,62,95,43,66],
         animationDelay: function (idx) {
             return idx * 10;
         }
     }, {
         name: '均值',
         type: 'bar',
-        data: data2,
+        data: [43,22,78,46,64,89,60],
         animationDelay: function (idx) {
             return idx * 10 + 50;
         }
@@ -242,35 +241,35 @@ option = {
         {
             name: '最小值',
             type: 'bar',
-            data: data3,
+            data: [84,53,36,65,43,99,25],
             animationDelay: function (idx) {
                 return idx * 100;
             }
         },{
             name: '标准差',
             type: 'bar',
-            data: data4,
+            data: [63,32,77,40,95,27,13],
             animationDelay: function (idx) {
                 return idx * 10 + 150;
             }
         },{
             name: '数据条数',
             type: 'bar',
-            data: data5,
+            data: [32,66,83,84,55,73,98],
             animationDelay: function (idx) {
                 return idx * 10 + 200;
             }
         },{
             name: '正常数据条数',
             type: 'bar',
-            data: data6,
+            data: [23,66,43,87,63,99,34],
             animationDelay: function (idx) {
                 return idx * 10 + 250;
             }
         },{
             name: '正常数据比例',
             type: 'bar',
-            data: data7,
+            data: [82,57,34,99,53,69,36],
             animationDelay: function (idx) {
                 return idx * 10 + 300;
             }
@@ -282,14 +281,59 @@ option = {
         return idx * 5;
     }
 };
-
-// 使用刚指定的配置项和数据显示图表。
 myChart.setOption(option);
 
-// 基于准备好的dom，初始化echarts实例
+var myXmlHttpRequest1 = getXmlHttpObject();
+var tenantId;
+if(myXmlHttpRequest1){
+    var url1 = "/api/rule/tenant";
+    myXmlHttpRequest1.open("get",url1,true);
+    myXmlHttpRequest1.onreadystatechange = proce1;
+    myXmlHttpRequest1.send(null);
+}
+function  proce1() {
+    if(myXmlHttpRequest1.readyState == 4){
+
+        var tenantIdj = myXmlHttpRequest1.responseText;
+        var tenantIde = JSON.parse(tenantIdj);
+        //var tenantIde = eval("("+tenantId+")");
+        tenantId = tenantIde.tenantId;
+    }
+}
+
+var deviceGroup = [];
+myXmlHttpRequest2 = getXmlHttpObject();
+if (myXmlHttpRequest2) {
+    //var url3 = "toajax?username=" + document.getElementById("username").value;
+    var url2 = "/api/device/alldevices?limit=20";// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
+    //myXmlHttpRequest.open("get",url,true);
+    myXmlHttpRequest2.open("get", url2, true);//url="http://10.108.218.64:8090/api/analysis/device"
+    myXmlHttpRequest2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    myXmlHttpRequest2.onreadystatechange = proce2;
+    //myXmlHttpRequest.send(null);
+    myXmlHttpRequest2.send(null);
+}
+
+function proce2() {
+
+    if (myXmlHttpRequest2.readyState == 4) {
+
+        var mes = myXmlHttpRequest2.responseText;
+        var meso = eval("(" + mes + ")");
+        //window.alert(meso.datagroup[0].deviceId);
+        //window.alert(meso.datagroup.length);
+        for (var i = 0; i < meso.length; i++) {
+            deviceGroup.push(meso[i].name);
+            deviceGroup.push(meso[i].id);
+        }
+    }
+}
 var inputStartDate = "";
 var inputEndDate = "";
-var splitNum = 7;
+var splitNum = "";
+var deviceSelect = "";
+var deviceSelect1 = "";
+var subtext = "";
 var finalDate = "";
 
 function starttoend(dateId) {
@@ -303,208 +347,195 @@ function starttoend(dateId) {
     if (dateId == "fname2") {
         splitNum = document.getElementById(dateId).value;
     }
-}
-myXmlHttpRequest = getXmlHttpObject();
-var tenantId;
-if(myXmlHttpRequest){
-    var url = "/api/rule/tenant";
-    myXmlHttpRequest.open("get",url,true);
-    myXmlHttpRequest.onreadystatechange = proce;
-    myXmlHttpRequest.send(null);
-}
-function  proce() {
-    if(myXmlHttpRequest.readyState == 4){
-
-        var tenantIdj = myXmlHttpRequest.responseText;
-        var tenantIde = JSON.parse(tenantIdj);
-        //var tenantIde = eval("("+tenantId+")");
-        tenantId = tenantIde.tenantId;
+    if (dateId == "fname3") {
+        deviceSelect = document.getElementById(dateId).value;
+    }
+    if (dateId == "fname4") {
+        deviceSelect1 = document.getElementById(dateId).value;
     }
 }
+
 function showData() {
 
-    if((inputStartDate != "") && (inputEndDate != "")){
+    if((inputStartDate != "") && (inputEndDate != "") && (splitNum != "") && ((deviceSelect != "")||(deviceSelect1 != ""))){
+
+        myXmlHttpRequest3 = getXmlHttpObject();
         document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
-        if(myXmlHttpRequest){
+        if(myXmlHttpRequest3){
             //var url = "toajax?username=" + document.getElementById("username").value;
-            var url = "http://39.104.186.210:8090/api/analysis/data";//url="http://39.104.186.210:8090/api/analysis/data";getselectdata
+            var url3 = "http://39.104.186.210:8090/api/analysis/data";//url="http://39.104.186.210:8090/api/analysis/data";getselectdata
             var startTime = new Date(inputStartDate);
             var startTimeChuo = startTime.getTime();
             var endTime = new Date(inputEndDate);
             var endTimeChuo = endTime.getTime();
-            var data = "tenantId="+tenantId+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum;
+            var radios = document.getElementsByName('Fruit');
+            var data = "";
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // 弹出选中值
+                    if(radios[i].value == 'device'){
+                        subtext = '按设备名称查询';
+                        deviceSelect1 = deviceGroup[(deviceGroup.indexOf(deviceSelect1)+1)];
+                        data = "tenantId="+tenantId+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum+"&deviceId="+deviceSelect1;
+                        deviceSelect1 = "";
+                    }else {
+                        subtext = '按设备类型查询';
+                        data = "tenantId="+tenantId+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum+"&deviceType="+deviceSelect;
+                        deviceSelect = "";
+                    }
+                }
+            }
             //myXmlHttpRequest.open("get",url,true);
-            myXmlHttpRequest.open("post",url,true);
-            myXmlHttpRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-            myXmlHttpRequest.onreadystatechange = proce;
+            myXmlHttpRequest3.open("post",url3,true);
+            myXmlHttpRequest3.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            myXmlHttpRequest3.onreadystatechange = proce3;
             //myXmlHttpRequest.send(null);
-            myXmlHttpRequest.send(data);
+            myXmlHttpRequest3.send(data);
         }
 
-        function proce() {
+        function proce3() {
 
-            if (myXmlHttpRequest.readyState == 4) {
+            if (myXmlHttpRequest3.readyState == 4) {
                 document.getElementById("YWaitDialog").setAttribute("style","display:none;");
-                var myChart = echarts.init(document.getElementById('main'));
-                $("#main").css("display","none");
-                $("#main").fadeIn(3000);
-                var xAxisData = [];
-                var data1 = [];
-                var data2 = [];
-                var data3 = [];
-                var data4 = [];
-                var data5 = [];
-                var data6 = [];
-                var data7 = [];
-                var mes = myXmlHttpRequest.responseText;
-                window.alert(mes);
+                var mes = myXmlHttpRequest3.responseText;
                 var mes1 = JSON.parse(mes);
                 meso = eval("("+mes1+")");
-                for (var item in meso.data[0]){
-                    var item1 = parseInt(item);
-                    xAxisData.push(timestampToTime(item1));
-                    data1.push(meso.data[0][item]);
-                }
-                for (var item in meso.data[2]){
-                    data2.push(meso.data[2][item]);
-                }
-                for (var item in meso.data[1]){
-                    data3.push(meso.data[1][item]);
-                }
-                for (var item in meso.data[3]){
-                    data4.push(meso.data[3][item]);
-                }
-                for (var item in meso.data[4]){
-                    data5.push(meso.data[4][item]);
-                }
-                for (var item in meso.data[5]){
-                    data6.push(meso.data[5][item]);
-                }
-                for (var item in meso.data[6]){
-                    data7.push(meso.data[6][item]);
-                }
-                //window.alert(meso.data[0]["0"]);
-                //window.alert(Object.keys(meso.data).length);
-                /*for(var i=0; i<splitNum; i++){
-                    xAxisData.push(i);
-                }
-                for(var i=0; i<Object.keys(meso.data).length;i++){
-                    data1.push(meso.data[i]["0"]);
-                }
-                for(var i=0; i<Object.keys(meso.data).length;i++){
-                    data2.push(meso.data[i]["2"]);
-                }
-                for(var i=0; i<Object.keys(meso.data).length;i++){
-                    data3.push(meso.data[i]["1"]);
-                }
-                for(var i=0; i<Object.keys(meso.data).length;i++){
-                    data4.push(meso.data[i]["3"]);
-                }
-                for(var i=0; i<Object.keys(meso.data).length;i++){
-                    data5.push(meso.data[i]["4"]);
-                }
-                for(var i=0; i<Object.keys(meso.data).length;i++){
-                    data6.push(meso.data[i]["5"]);
-                }
-                for(var i=0; i<Object.keys(meso.data).length;i++){
-                    data7.push(meso.data[i]["6"]);
-                }*/
-
-                option = {
-                    title: {
-                        text: '统计数据 ' + "  设备" + deviceNum
-                    },
-                    legend: {
-                        data: ['最大值', '均值', '最小值','标准差','数据条数','正常数据条数','正常数据比例'],
-                        align: 'left'
-                    },
-                    toolbox: {
-                        // y: 'bottom',
-                        feature: {
-                            magicType: {
-                                type: ['stack', 'tiled']
-                            },
-                            dataView: {},
-                            saveAsImage: {
-                                pixelRatio: 2
-                            }
-                        }
-                    },
-                    tooltip: {},
-                    xAxis: {
-                        data: xAxisData,
-                        silent: false,
-                        splitLine: {
-                            show: false
-                        }
-                    },
-                    yAxis: {
-                        name: '温度'
-                    },
-                    series: [{
-                        name: '最大值',
-                        type: 'bar',
-                        data: data1,
-                        animationDelay: function (idx) {
-                            return idx * 10;
-                        }
-                    }, {
-                        name: '均值',
-                        type: 'bar',
-                        data: data2,
-                        animationDelay: function (idx) {
-                            return idx * 10 + 100;
-                        }
-                    },
-                        {
-                            name: '最小值',
-                            type: 'bar',
-                            data: data3,
-                            animationDelay: function (idx) {
-                                return idx * 10;
-                            }
-                        },
-                        {
-                            name: '标准差',
-                            type: 'bar',
-                            data: data4,
-                            animationDelay: function (idx) {
-                                return idx * 10;
-                            }
-                        },
-                        {
-                            name: '数据条数',
-                            type: 'bar',
-                            data: data5,
-                            animationDelay: function (idx) {
-                                return idx * 10;
-                            }
-                        },
-                        {
-                            name: '正常数据条数',
-                            type: 'bar',
-                            data: data6,
-                            animationDelay: function (idx) {
-                                return idx * 10;
-                            }
-                        },
-                        {
-                            name: '正常数据比例',
-                            type: 'bar',
-                            data: data7,
-                            animationDelay: function (idx) {
-                                return idx * 10;
-                            }
-                        }
-                    ],
-                    animationEasing: 'elasticOut',
-                    animationDelayUpdate: function (idx) {
-                        return idx * 5;
+                if(meso.status == 'success'){
+                    var xAxisData = [];
+                    var data1 = [];
+                    var data2 = [];
+                    var data3 = [];
+                    var data4 = [];
+                    var data5 = [];
+                    var data6 = [];
+                    var data7 = [];
+                    for (var item in meso.data[0]){
+                        var item1 = parseInt(item);
+                        xAxisData.push(timestampToTime(item1));
+                        data1.push(meso.data[0][item]);
                     }
-                };
+                    for (var item in meso.data[2]){
+                        data2.push(meso.data[2][item]);
+                    }
+                    for (var item in meso.data[1]){
+                        data3.push(meso.data[1][item]);
+                    }
+                    for (var item in meso.data[3]){
+                        data4.push(meso.data[3][item]);
+                    }
+                    for (var item in meso.data[4]){
+                        data5.push(meso.data[4][item]);
+                    }
+                    for (var item in meso.data[5]){
+                        data6.push(meso.data[5][item]);
+                    }
+                    for (var item in meso.data[6]){
+                        data7.push(meso.data[6][item]);
+                    }
+                    var myChart = echarts.init(document.getElementById('main'));
+                    option = {
+                        title: {
+                            text: subtext,
+                            subtext: '精确查询  :'+inputStartDate+' - '+inputEndDate,
+                            subtextStyle:{
+                                left: 'center'
+                            }
+                        },
+                        legend: {
+                            data: ['最大值', '均值', '最小值','标准差','数据条数','正常数据条数','正常数据比例'],
+                            align: 'left'
+                        },
+                        toolbox: {
+                            // y: 'bottom',
+                            feature: {
+                                magicType: {
+                                    type: ['stack', 'tiled']
+                                },
+                                dataView: {},
+                                saveAsImage: {
+                                    pixelRatio: 2
+                                }
+                            }
+                        },
+                        tooltip: {},
+                        xAxis: {
+                            data: xAxisData,
+                            silent: false,
+                            splitLine: {
+                                show: false
+                            }
+                        },
+                        yAxis: {
+                            //name: '温度'
+                        },
+                        series: [{
+                            name: '最大值',
+                            type: 'bar',
+                            data: data1,
+                            animationDelay: function (idx) {
+                                return idx * 10;
+                            }
+                        }, {
+                            name: '均值',
+                            type: 'bar',
+                            data: data2,
+                            animationDelay: function (idx) {
+                                return idx * 10 + 100;
+                            }
+                        },
+                            {
+                                name: '最小值',
+                                type: 'bar',
+                                data: data3,
+                                animationDelay: function (idx) {
+                                    return idx * 10;
+                                }
+                            },
+                            {
+                                name: '标准差',
+                                type: 'bar',
+                                data: data4,
+                                animationDelay: function (idx) {
+                                    return idx * 10;
+                                }
+                            },
+                            {
+                                name: '数据条数',
+                                type: 'bar',
+                                data: data5,
+                                animationDelay: function (idx) {
+                                    return idx * 10;
+                                }
+                            },
+                            {
+                                name: '正常数据条数',
+                                type: 'bar',
+                                data: data6,
+                                animationDelay: function (idx) {
+                                    return idx * 10;
+                                }
+                            },
+                            {
+                                name: '正常数据比例',
+                                type: 'bar',
+                                data: data7,
+                                animationDelay: function (idx) {
+                                    return idx * 10;
+                                }
+                            }
+                        ],
+                        animationEasing: 'elasticOut',
+                        animationDelayUpdate: function (idx) {
+                            return idx * 5;
+                        }
+                    };
 
-                // 使用刚指定的配置项和数据显示图表。
-                myChart.setOption(option);
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                }else {
+                    window.alert('没有匹配的数据');
+                }
+
             }
         }
     }else{
@@ -562,12 +593,6 @@ $('#test12').hover(
     }
 );
 
-$('#modelchange').click(
-    function () {
-        window.alert($("#sqlText").val()+"已提交");
-    }
-);
-
 $('#test4').hover(
     function () {
         $('#test2').fadeIn(1000);
@@ -601,6 +626,60 @@ $('#test5').hover(
     },function () {
         $('#test6').fadeOut(1000);
         $('#test7').fadeOut(1000);
+    }
+);
+
+$('input[type=radio][name=Fruit]').change(function() {
+    if (this.value == 'type') {
+        $('#modaldiv').children('span').remove();
+        $('#modaldiv').children('select').remove();
+        $spanType = $('<span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>设备类型</strong> </span>\n' +
+            '                    <select id="fname3" onchange="starttoend(this.id)">\n' +
+            '                        <option></option>\n' +
+            '                        <option>temperature</option>\n' +
+            '                        <option>humidity</option>\n' +
+            '                        <option>pressure</option>\n' +
+            '                        <option>deformation</option>\n' +
+            '                        <option>velocity</option>\n' +
+            '                        <option>light</option>\n' +
+            '                    </select>');
+        $('#modaldiv').prepend($spanType);
+    }
+    else if (this.value == 'device') {
+        $('#modaldiv').children('span').remove();
+        $('#modaldiv').children('select').remove();
+        $spanDevice = $('<span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>设备名称</strong> </span>\n' +
+            '                    <select id="fname4" style="margin-left: 1%" onchange="starttoend(this.id)">\n' +
+            '                        <option></option>\n' +
+            '                        <option>21</option>\n' +
+            '                        <option>22</option>\n' +
+            '                        <option>23</option>\n' +
+            '                        <option>24</option>\n' +
+            '                        <option>25</option>\n' +
+            '                        <option>26</option>\n' +
+            '                    </select>');
+        $('#modaldiv').append($spanDevice);
+        for (var i=0; i<deviceGroup.length; i=i+2){
+            $deviceOption = $('<option></option>');
+            $deviceOption.html(deviceGroup[i]);
+            $('#fname4').append($deviceOption);
+        }
+    }
+});
+
+$('#mohuquery').change(
+    function () {
+        if($(this).val() == '近三天' || $(this).val() == '近一周' || $(this).val() == '近一月'){
+            window.alert('需要模糊查询接口');
+        }
+    }
+);
+
+$('#dropzone').hover(
+    function () {
+        $('#dropli').fadeIn(500);
+    },function () {
+        $('#dropli').fadeOut(500);
     }
 );
 

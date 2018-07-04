@@ -2,16 +2,16 @@ $("#main").css("display","none");
 $("#main1").css("display","none");
 $("#main2").css("display","none");
 $("#main3").css("display","none");
-$("#main").fadeIn(3000);
-$("#main1").fadeIn(5000);
-$("#main2").fadeIn(7000);
-$("#main3").fadeIn(9000);
+$("#main").fadeIn(1000);
+$("#main1").fadeIn(2000);
+$("#main2").fadeIn(3000);
+$("#main3").fadeIn(4000);
 var myChart = echarts.init(document.getElementById('main'));
 
 option = {
     title : {
         text: '设备数量',
-        subtext: '',
+        subtext: '近一周',
         x:'center'
     },
     tooltip : {
@@ -30,12 +30,12 @@ option = {
             radius : '55%',
             center: ['50%', '60%'],
             data:[
-                {value:null, name:'压力传感器'},
-                {value:null, name:'温度传感器'},
-                {value:null, name:'湿度传感器'},
-                {value:null, name:'形变传感器'},
-                {value:null, name:'速率传感器'},
-                {value:null, name:'光照传感器'}
+                {value:1, name:'压力传感器'},
+                {value:2, name:'温度传感器'},
+                {value:3, name:'湿度传感器'},
+                {value:4, name:'形变传感器'},
+                {value:3, name:'速率传感器'},
+                {value:2, name:'光照传感器'}
             ],
             itemStyle: {
                 emphasis: {
@@ -57,7 +57,7 @@ var myChart1 = echarts.init(document.getElementById('main1'));
 option1 = {
     title : {
         text: '数据数量',
-        subtext: '',
+        subtext: '近一周',
         x:'center'
     },
     tooltip : {
@@ -76,12 +76,12 @@ option1 = {
             radius : '55%',
             center: ['50%', '60%'],
             data:[
-                {value:null, name:'压力传感器'},
-                {value:null, name:'温度传感器'},
-                {value:null, name:'湿度传感器'},
-                {value:null, name:'形变传感器'},
-                {value:null, name:'速率传感器'},
-                {value:null, name:'光照传感器'}
+                {value:1, name:'压力传感器'},
+                {value:2, name:'温度传感器'},
+                {value:3, name:'湿度传感器'},
+                {value:2, name:'形变传感器'},
+                {value:5, name:'速率传感器'},
+                {value:1, name:'光照传感器'}
             ],
             itemStyle: {
                 emphasis: {
@@ -103,7 +103,7 @@ var myChart2 = echarts.init(document.getElementById('main2'));
 option2 = {
     title : {
         text: '正常数据数量',
-        subtext: '',
+        subtext: '近一周',
         x:'center'
     },
     tooltip : {
@@ -122,12 +122,12 @@ option2 = {
             radius : '55%',
             center: ['50%', '60%'],
             data:[
-                {value:null, name:'压力传感器'},
-                {value:null, name:'温度传感器'},
-                {value:null, name:'湿度传感器'},
-                {value:null, name:'形变传感器'},
-                {value:null, name:'速率传感器'},
-                {value:null, name:'光照传感器'}
+                {value:4, name:'压力传感器'},
+                {value:2, name:'温度传感器'},
+                {value:5, name:'湿度传感器'},
+                {value:3, name:'形变传感器'},
+                {value:1, name:'速率传感器'},
+                {value:2, name:'光照传感器'}
             ],
             itemStyle: {
                 emphasis: {
@@ -147,49 +147,61 @@ myChart2.setOption(option2);
 var myChart3 = echarts.init(document.getElementById('main3'));
 
 option3 = {
-    title : {
-        text: '正常数据占有率',
-        subtext: '',
-        x:'center'
+    title: {
+        text: '正常数据比例',
+        subtext: '近一周',
+        x: 'center'
     },
-    tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-    },
-    legend: {
-        orient: 'vertical',
-        left: 'left',
-        data: ['压力传感器','温度传感器','湿度传感器','形变传感器','速率传感器','光照传感器']
-    },
-    series : [
-        {
-            name: '传感器数量',
-            type: 'pie',
-            radius : '55%',
-            center: ['50%', '60%'],
-            data:[
-                {value:null, name:'压力传感器'},
-                {value:null, name:'温度传感器'},
-                {value:null, name:'湿度传感器'},
-                {value:null, name:'形变传感器'},
-                {value:null, name:'速率传感器'},
-                {value:null, name:'光照传感器'}
-            ],
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
+    toolbox: {
+        // y: 'bottom',
+        feature: {
+            magicType: {
+                type: ['stack', 'tiled']
+            },
+            dataView: {},
+            saveAsImage: {
+                pixelRatio: 2
             }
         }
-    ]
+    },
+    tooltip: {},
+    xAxis: {
+        data: ['压力传感','温度传感','湿度传感','形变传感','速度传感','光照传感'],
+        silent: false,
+        splitLine: {
+            show: false
+        }
+    },
+    yAxis: {
+        name: '百分率'
+    },
+    series: [{
+        name: '百分率',
+        type: 'bar',
+        barWidth: 25,
+        data: [
+            {value:24,itemStyle:{color: '#b34038'}},
+            {value:12,itemStyle:{color: '#c9856b'}},
+            {value:45,itemStyle:{color: '#9cc5b0'}},
+            {value:33,itemStyle:{color: '#7d9e85'}},
+            {value:14,itemStyle:{color: '#6f9fa7'}},
+            {value:25,itemStyle:{color: '#344553'}}
+            ],
+        animationDelay: function (idx) {
+            return idx * 10;
+        }
+    }
+    ],
+    animationEasing: 'elasticOut',
+    animationDelayUpdate: function (idx) {
+        return idx * 5;
+    }
 };
 
 // 使用刚指定的配置项和数据显示图表。
 myChart3.setOption(option3);
 
-function getData() {
+/*function getData() {
 
     document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
     function getXmlHttpObject() {
@@ -420,7 +432,7 @@ function getData() {
             // 使用刚指定的配置项和数据显示图表。
             myChart3.setOption(option3);
             //window.alert(meso.data[0]["0"]);
-            //window.alert(Object.keys(meso.data).length);
+            //window.alert(Object.keys(meso.data).length);*/
             /*for (var i = 0; i < splitNum; i++) {
                 xAxisData.push(i);
             }
@@ -445,11 +457,298 @@ function getData() {
             for (var i = 0; i < Object.keys(meso.data).length; i++) {
                 data7.push(meso.data[i]["6"]);
             }*/
-        }
+        /*}
+    }
+}*/
+
+function timestampToTime(timestamp) {
+    var date = new Date(timestamp);
+    Y = date.getFullYear() + '-';
+    M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    D = (date.getDate()+1 < 10 ? '0'+(date.getDate()) : date.getDate()) + ' ';
+    h = date.getHours() + ':';
+    m = date.getMinutes() + ':';
+    s = date.getSeconds();
+    return Y+M+D+h+m+s;
+}
+function getXmlHttpObject() {
+
+    var xmlHttpRequest;
+    if(window.ActiveXObject){
+        xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    else{
+        xmlHttpRequest = new XMLHttpRequest();
+    }
+    return xmlHttpRequest;
+}
+var myXmlHttpRequest1 = getXmlHttpObject();
+var tenantId;
+if(myXmlHttpRequest1){
+    var url = "/api/rule/tenant";
+    myXmlHttpRequest1.open("get",url,false);
+    myXmlHttpRequest1.onreadystatechange = proce1;
+    myXmlHttpRequest1.send(null);
+}
+function  proce1() {
+    if(myXmlHttpRequest1.readyState == 4){
+
+        var tenantIdj = myXmlHttpRequest1.responseText;
+        var tenantIde = JSON.parse(tenantIdj);
+        //var tenantIde = eval("("+tenantId+")");
+        tenantId = tenantIde.tenantId;
     }
 }
 
-var navCount;
+var myXmlHttpRequest2=getXmlHttpObject();
+var inputStartDate = "";
+var inputEndDate = "";
+var splitNum = "";
+var finalDate = "";
+function starttoend(dateId) {
+
+    if (dateId == "fname") {
+        inputStartDate = document.getElementById(dateId).value;
+    }
+    if (dateId == "fname1") {
+        inputEndDate = document.getElementById(dateId).value;
+    }
+}
+
+function showData() {
+
+    if((inputStartDate != "") && (inputEndDate != "")){
+        document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
+        if(myXmlHttpRequest2){
+            //var url = "toajax?username=" + document.getElementById("username").value;
+            var url = "http://39.104.186.210:8090/api/analysis/device";//url="http://39.104.186.210:8090/api/analysis/data";getselectdata
+            var startTime = new Date(inputStartDate);
+            var startTimeChuo = startTime.getTime();
+            var endTime = new Date(inputEndDate);
+            var endTimeChuo = endTime.getTime();
+            var data = "tenantId="+tenantId+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo;
+            //myXmlHttpRequest.open("get",url,true);
+            myXmlHttpRequest2.open("post",url,true);
+            myXmlHttpRequest2.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            myXmlHttpRequest2.onreadystatechange = proce2;
+            //myXmlHttpRequest.send(null);
+            myXmlHttpRequest2.send(data);
+        }
+
+        function proce2() {
+
+            if (myXmlHttpRequest2.readyState == 4) {
+                document.getElementById("YWaitDialog").setAttribute("style","display:none;");
+                var mes = myXmlHttpRequest2.responseText;
+                var mes1 = JSON.parse(mes);
+                meso = eval("(" + mes1 + ")");
+                if(meso.status == 'success'){
+                    var myChart = echarts.init(document.getElementById('main'));
+
+                    option = {
+                        title : {
+                            text: '设备数量',
+                            subtext: '精确查询  :'+inputStartDate+' - '+inputEndDate,
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            left: 'left',
+                            data: ['压力传感器','温度传感器','湿度传感器','形变传感器','速率传感器','光照传感器']
+                        },
+                        series : [
+                            {
+                                name: '传感器数量',
+                                type: 'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data:[
+                                    {value:meso.data.deviceCount.pressure, name:'压力传感器'},
+                                    {value:meso.data.deviceCount.temperature, name:'温度传感器'},
+                                    {value:meso.data.deviceCount.humidity, name:'湿度传感器'},
+                                    {value:meso.data.deviceCount.deformation, name:'形变传感器'},
+                                    {value:meso.data.deviceCount.velocity, name:'速率传感器'},
+                                    {value:meso.data.deviceCount.light, name:'光照传感器'}
+                                ],
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart1 = echarts.init(document.getElementById('main1'));
+
+                    option1 = {
+                        title : {
+                            text: '数据数量',
+                            subtext: '精确查询  :'+inputStartDate+' - '+inputEndDate,
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            left: 'left',
+                            data: ['压力传感器','温度传感器','湿度传感器','形变传感器','速率传感器','光照传感器']
+                        },
+                        series : [
+                            {
+                                name: '传感器数量',
+                                type: 'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data:[
+                                    {value:meso.data.dataCount.pressure, name:'压力传感器'},
+                                    {value:meso.data.dataCount.temperature, name:'温度传感器'},
+                                    {value:meso.data.dataCount.humidity, name:'湿度传感器'},
+                                    {value:meso.data.dataCount.deformation, name:'形变传感器'},
+                                    {value:meso.data.dataCount.velocity, name:'速率传感器'},
+                                    {value:meso.data.dataCount.light, name:'光照传感器'}
+                                ],
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart1.setOption(option1);
+
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart2 = echarts.init(document.getElementById('main2'));
+
+                    option2 = {
+                        title : {
+                            text: '正常数据数量',
+                            subtext: '精确查询  :'+inputStartDate+' - '+inputEndDate,
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            left: 'left',
+                            data: ['压力传感器','温度传感器','湿度传感器','形变传感器','速率传感器','光照传感器']
+                        },
+                        series : [
+                            {
+                                name: '传感器数量',
+                                type: 'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data:[
+                                    {value:meso.data.usualDataCount.pressure, name:'压力传感器'},
+                                    {value:meso.data.usualDataCount.temperature, name:'温度传感器'},
+                                    {value:meso.data.usualDataCount.humidity, name:'湿度传感器'},
+                                    {value:meso.data.usualDataCount.deformation, name:'形变传感器'},
+                                    {value:meso.data.usualDataCount.velocity, name:'速率传感器'},
+                                    {value:meso.data.usualDataCount.light, name:'光照传感器'}
+                                ],
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart2.setOption(option2);
+
+                    var myChart3 = echarts.init(document.getElementById('main3'));
+
+                    option3 = {
+                        title: {
+                            text: '正常数据比例',
+                            subtext: '精确查询  :'+inputStartDate+' - '+inputEndDate,
+                            x: 'center'
+                        },
+                        toolbox: {
+                            // y: 'bottom',
+                            feature: {
+                                magicType: {
+                                    type: ['stack', 'tiled']
+                                },
+                                dataView: {},
+                                saveAsImage: {
+                                    pixelRatio: 2
+                                }
+                            }
+                        },
+                        tooltip: {},
+                        xAxis: {
+                            data: ['压力传感','温度传感','湿度传感','形变传感','速度传感','光照传感'],
+                            silent: false,
+                            splitLine: {
+                                show: false
+                            }
+                        },
+                        yAxis: {
+                            name: '百分率'
+                        },
+                        series: [{
+                            name: '百分率',
+                            type: 'bar',
+                            barWidth: 25,
+                            data: [
+                                {value:meso.data.usualDataCount.pressure,itemStyle:{color: '#b34038'}},
+                                {value:meso.data.usualDataCount.temperature,itemStyle:{color: '#c9856b'}},
+                                {value:meso.data.usualDataCount.humidity,itemStyle:{color: '#9cc5b0'}},
+                                {value:meso.data.usualDataCount.deformation,itemStyle:{color: '#7d9e85'}},
+                                {value:meso.data.usualDataCount.velocity,itemStyle:{color: '#6f9fa7'}},
+                                {value:meso.data.usualDataCount.light,itemStyle:{color: '#344553'}}
+                            ],
+                            animationDelay: function (idx) {
+                                return idx * 10;
+                            }
+                        }
+                        ],
+                        animationEasing: 'elasticOut',
+                        animationDelayUpdate: function (idx) {
+                            return idx * 5;
+                        }
+                    };
+
+// 使用刚指定的配置项和数据显示图表。
+                    myChart3.setOption(option3);
+                }else {
+                    window.alert("没有匹配的数据");
+                }
+
+            }
+        }
+    }else{
+        window.alert("输入有误");
+    }
+
+}
+
+/*var navCount;
 navCount = localStorage.getItem("navCount");
 if(navCount==null){
     navCount=0;
@@ -486,6 +785,14 @@ $("#test1").click(
         navCount++;
         localStorage.setItem("navCount",navCount);
     }
+);*/
+
+$('#mohuquery').change(
+    function () {
+        if($(this).val() == '近三天' || $(this).val() == '近一周' || $(this).val() == '近一月'){
+            window.alert('需要模糊查询接口');
+        }
+    }
 );
 
 $('#test4').hover(
@@ -521,5 +828,13 @@ $('#test5').hover(
     },function () {
         $('#test6').fadeOut(1000);
         $('#test7').fadeOut(1000);
+    }
+);
+
+$('#dropzone').hover(
+    function () {
+        $('#dropli').fadeIn(500);
+    },function () {
+        $('#dropli').fadeOut(500);
     }
 );
