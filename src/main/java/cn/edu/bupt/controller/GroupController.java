@@ -28,7 +28,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
 
 
     //获取客户管理的设备组
-    @RequestMapping(value = "/?", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/tenantGroups", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getTenantGroups(@RequestParam int limit, @RequestParam(required = false) String textSearch,
                                     @RequestParam(required = false) String idOffset,
