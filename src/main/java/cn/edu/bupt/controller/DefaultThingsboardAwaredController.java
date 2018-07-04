@@ -86,17 +86,19 @@ public class DefaultThingsboardAwaredController {
 
     public Integer getTenantId(){
         HttpSession sess = request.getSession();
-        String res = HttpUtil.getAccessToken(sess);
-        JsonObject jo = (JsonObject)new JsonParser().parse(res);
-        Integer tenantId = jo.get("tenant_id").getAsInt();
+        Integer tenantId = (Integer) sess.getAttribute("tenant_id");
+//        String res = HttpUtil.getAccessToken(sess);
+//        JsonObject jo = (JsonObject)new JsonParser().parse(res);
+//        Integer tenantId = jo.get("tenant_id").getAsInt();
         return tenantId;
     }
 
     public Integer getCustomerId(){
         HttpSession sess = request.getSession();
-        String res = HttpUtil.getAccessToken(sess);
-        JsonObject jo = (JsonObject)new JsonParser().parse(res);
-        Integer customerId = jo.get("customer_id").getAsInt();
+        Integer customerId = (Integer) sess.getAttribute("customer_id");
+//        String res = HttpUtil.getAccessToken(sess);
+//        JsonObject jo = (JsonObject)new JsonParser().parse(res);
+//        Integer customerId = jo.get("customer_id").getAsInt();
         return customerId;
     }
 }
