@@ -2,16 +2,17 @@
     <div class="container">
         <div class="left_Dashboard">
             <div id="dblist_title">仪表板列表</div>
-            <div class="dashboard dashboard_add" data-toggle="modal" data-target="#addDashboard">
-                <div class="add_item" style="line-height: 120px">
-                    +添加仪表板
+            <div class="chooseBtn dashboard dashboard_add" data-toggle="modal" data-target="#addDashboard">
+                <div class="db_add_item">
+                    <p>+添加仪表板</p>
                 </div>
             </div>
 
-            <div ng-repeat="dashboard in Dashboards" class="dashboard" ng-click="showDBDetail(dashboard)"
-                 ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
-                    {{dashboard.name}}
-                    <i class="fa fa-trash-o fa-lg dashboardicon shand" title="删除"></i>
+            <div ng-repeat="dashboard in Dashboards" class="chooseBtn dashboard" ng-click="showDBDetail(dashboard)">
+                <div>
+                    <i class="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+                    <p>{{dashboard.name}}</p>
+                </div>
             </div>
             <br/>
         </div>
@@ -21,7 +22,7 @@
                 <canvas id="myChart1" height="180"></canvas>
             </div>
             <div class="dashboard_add dashboard_item" style="border-style: dashed;" data-toggle="modal" data-target="#addDBWidget">
-                <div class="add_item" style="line-height: 250px">
+                <div class="dbwidget_add_item">
                 +添加展示组件
                 </div>
             </div>
@@ -83,7 +84,7 @@
                         <td><select id="db_widget" ng-model="db_widget_device" ng-options="x.name for x in Widgets">
                             <option value="" disabled>--请选择组件--</option>
                         </select></td></tr>
-                        <tr><td>展示数据：</td></tr>
+                        <tr><td>起止时间：</td></tr>
                     </table>
                 </div>
                 <div class="modal-footer">

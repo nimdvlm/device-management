@@ -171,7 +171,6 @@ ul,li{
     font-size: 30px;
     text-align: center;
     display: block;
-
 }
 .chooseBtn div p{
     text-align: center;
@@ -620,7 +619,7 @@ pluginsGroup
     overflow:hidden;
 }
 .block{
-    height: 200px;
+    min-height: 210px;
     width: 30%;
     float: left;
     border: 1px solid rgba(43, 76, 227, 0.2);
@@ -662,32 +661,33 @@ pluginsGroup
     margin-left:220px ;
 }
 .dashboard{
-    position:relative;
+    margin-left: 0;
     height: 120px;
-    border: 1px solid rgba(43, 76, 227, 0.2);
-    margin:15px 10px 0 0;
-    cursor:pointer;
+    width: 180px;
+    padding-top: 30px;
 }
 .dashboard_add{
     border-style: dashed;
     cursor: pointer;
 }
-.add_item{
+.db_add_item{
     text-align: center;
     font-size: 20px;
-    color: rgba(43, 76, 227, 0.4);
+    color: #c0c0c0;
+    line-height: 40px
 }
-.dashboardicon{
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+.dbwidget_add_item{
+    line-height: 250px;
+    text-align: center;
+    font-size: 25px;
+    color: rgba(43, 76, 227, 0.4);
 }
 .dashboard_item{
     float: left;
     width: 47%;
     margin: 15px 5px;
     border: 1px solid rgba(25, 100, 173, 0.5);
-    height: 250px;
+    min-height: 270px;
 }
 #addDBwidget_table tr{
     height: 40px;
