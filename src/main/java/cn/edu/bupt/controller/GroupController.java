@@ -27,11 +27,44 @@ import javax.servlet.http.HttpSession;
 public class GroupController extends DefaultThingsboardAwaredController{
 
 
+    //获取客户管理的设备组
+    @RequestMapping(value = "/tenantGroups", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getTenantGroups(@RequestParam int limit, @RequestParam(required = false) String textSearch,
+                                    @RequestParam(required = false) String idOffset,
+                                    @RequestParam(required = false) String textOffset) {
+
+
+        String requestAddr = "/api/v1/deviceaccess/groups/"+getTenantId()+"/1" +"?limit=" + limit;
+        if(textSearch != null){
+            requestAddr = requestAddr + "&textSearch=" + textSearch;
+        }
+        if(idOffset != null){
+            requestAddr = requestAddr + "&idOffset=" + idOffset;
+        }
+        if(textOffset != null){
+            requestAddr = requestAddr + "&textOffset=" + textOffset;
+        }
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr ,
+                    null,
+                    request.getSession());
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+        return retSuccess(decode(responseContent)) ;
+    }
+
+
     /**
      * 该接口的requestBody为包含一个groupName的json
      * @param deviceGroupInfo
      * @return
      */
+
+
     //增
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -39,6 +72,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
 
         JsonObject groupInfoJson = (JsonObject)new JsonParser().parse(deviceGroupInfo);
         groupInfoJson.addProperty("tenantId", getTenantId());
+        groupInfoJson.addProperty("customerId", getCustomerId());
         String requestAddr = "/api/v1/deviceaccess/group" ;
 
         String responseContent = null ;

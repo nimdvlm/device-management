@@ -1,5 +1,5 @@
-﻿<div ng-controller="RuleCtrl">
-    <div class="DG_Main_View">
+﻿<div class="content-wrapper" ng-controller="RuleCtrl">
+    <div class="container">
         <!--右侧视图-->
         <div class="RightView">
             <div class="DGAssignContainer">
@@ -10,7 +10,7 @@
                            data-toggle="modal" data-target="#startRule"></i>
                         <i class="fa fa-ban fa-lg ruleicon shand userDelete" ng-show="Rulestop" title="暂停规则"
                            data-toggle="modal" data-target="#stopRule"></i>
-                        <i class="fa fa-trash-o fa-lg ruleicon shand" title="删除此规则"
+                        <i class="fa fa-trash-o fa-lg ruleicon shand userDelete" title="删除此规则"
                            data-toggle="modal" data-target="#delRule"></i>
                     </div>
                 </div>
@@ -219,6 +219,7 @@
                 <button style="margin-left:5px" class="btn btn-primary btn-sm user" data-toggle="modal"
                         data-target="#addRule">+ 创建规则
                 </button>
+                <!--
                 <div class="SearchDG">
                 <span>搜索：<input type="text" style="width: 130px" placeholder="请输入规则id"
                                 ng-model="$parent.ruleid"/></span>
@@ -226,24 +227,21 @@
                     <i class="fa fa-search fa-lg shand" aria-hidden="true"></i>
                 </span>
                 </div>
+                -->
+                <div class="input-group SearchDG">
+                    <input type="text" class="form-control" placeholder="请输入规则名称..." id="searchRuleText">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-click="searchRule()"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
 
             </div>
             <div class="DGContainer" style="margin-left: -15px">
-                <div ng-repeat="rule in Rules" ng-show="showAllRule" class="chooseBtn RuleBtn" ng-click="showrule(rule)"
+                <div ng-repeat="rule in Rules" class="chooseBtn RuleBtn" ng-click="showrule(rule)"
                      ng-style="rule.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                     <div>
                         <i class="fa fa-puzzle-piece fa-2x "></i>
                         <p>{{rule.rule.name}}</p>
-                    </div>
-                </div>
-
-                <!--搜索展示视图-->
-                <div ng-show="showInfoRule">
-                    <div class="chooseBtn RuleBtn" ng-click="showrule(searchresult)">
-                        <div>
-                            <i class="fa fa-puzzle-piece fa-2x "></i>
-                            <p>{{searchresult.rule.name}}</p>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
-mainApp.controller("tenantCtrl",function ($scope,$resource) {
-//设置全局变量
+mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($scope,$resource,$location) {
+    $scope.$location = $location;
+    //设置全局变量
     var tenantID;
 
 //设置右侧详情初始状态
@@ -154,4 +155,4 @@ mainApp.controller("tenantCtrl",function ($scope,$resource) {
     };
 
 
-});
+}]);

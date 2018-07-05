@@ -1,5 +1,4 @@
-﻿<div ng-controller="abilityCtrl">
-
+﻿<div class="content-wrapper" ng-controller="abilityCtrl">
 
     <div clas="SMTitle">
         <div style="margin-top: 32px">
@@ -24,7 +23,7 @@
                 <i class="glyphicon glyphicon-plus userDelete" title="创建服务"></i>
                 </span>
                 <span data-toggle="modal" class="abilityDelete" data-target="#deleteSM">
-                <i class="glyphicon glyphicon-trash" title="删除服务组"></i>
+                <i class="glyphicon glyphicon-trash userDelete" title="删除服务组"></i>
                 </span>
                 <span data-toggle="modal" data-target="#SMDetail" class="items">
                 <p class="style">厂商：{{items.manufacturer.manufacturerName}}</p>
@@ -50,7 +49,7 @@
                     <td>{{arr.serviceName}}</td>
                     <td>{{arr.serviceDescription}}</td>
                     <td>{{arr.serviceType}}</td>
-                    <td><button class="btn btn-sm btn-danger user" ng-click="deleteAA(arr)">删除</button></td>
+                    <td><button class="btn btn-sm btn-danger userDelete" ng-click="deleteAA(arr)">删除</button></td>
                 </tr>
                 </tbody>
             </table>
