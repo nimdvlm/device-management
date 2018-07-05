@@ -189,4 +189,11 @@ mainApp.controller("customerCtrl",["$scope","$resource","$location",function ($s
         });
     }
 
+    //样式
+    $(".highlight").mouseover(function () {
+        $(this).css("color","#337ab7");
+    });
+    $(".highlight").mouseout(function () {
+        $(this).css("color","#305680");
+    });
 }]);
