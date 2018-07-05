@@ -188,14 +188,23 @@ DEVICELIST STYLES
 }
 
 #deviceListChart,#customerChart,#customerUserChart{
-    width: 40%;
+    width: 35%;
     float: right;
     border: 1px solid #c0c0c0;
     border-radius: 10px;
     margin-right: 20px;
     margin-top: 10px;
-    /*position: fixed;*/
-    /*right: 10px;*/
+    position: fixed;
+    right: 1%;
+    top: 18%;
+}
+#cancelAssign{
+    float: right;
+    border-radius: 3px;
+    background: rgb(255, 255, 255);
+    color: #305680;
+    border-color: #adadad;
+    border-width: 0.5px;
 }
 
 .attName{
