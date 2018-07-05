@@ -393,6 +393,9 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
             $scope.deviceGroupAssign = deviceGroupAssignObj.get({deviceId:$scope.deviceInfo.id,groupId:groupId},
                 function (resp) {
                     toastr.success("设备分配成功！");
+                    setTimeout(function () {
+                        window.location.reload();
+                    },1000);
                 },function (err) {
                     toastr.error("设备分配失败！");
                 });
@@ -406,6 +409,9 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
             $scope.customerAssign = customerAssignObj.get({deviceId:$scope.deviceInfo.id,customerId:customerId},
                 function (resp) {
                     toastr.success("设备分配成功！");
+                    setTimeout(function () {
+                        window.location.reload();
+                    },1000);
                 },function (err) {
                     toastr.error("设备分配失败！");
                 });
