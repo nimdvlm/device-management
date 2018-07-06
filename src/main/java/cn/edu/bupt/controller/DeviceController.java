@@ -295,7 +295,7 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     }
 
     //取消分配客户下的所有设备
-    @RequestMapping(value = "/unassign/customer/{customerId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/unassign/customerDevices/{customerId}", method = RequestMethod.DELETE)
     @ResponseBody
     public String unAssignCustomerDevices(@PathVariable("customerId") String cId){
         String requestAddr = "/api/v1/deviceaccess/unassign/" + getTenantId() + "/" + cId;

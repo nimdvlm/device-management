@@ -197,7 +197,7 @@ mainApp.controller("customerCtrl",["$scope","$resource","$location",function ($s
     };
     //清空客户组所有设备
     $scope.deleteCustomerDevice = function () {
-        var emptyObj = $resource("/api/device/unassign/customer/:customerId");
+        var emptyObj = $resource("/api/device/unassign/customerDevices/:customerId");
         var emptyInfo = emptyObj.delete({customerId:$scope.customerId},{},function (resp) {
             toastr.success("已清空当前客户组所有设备！");
             setTimeout(function () {
