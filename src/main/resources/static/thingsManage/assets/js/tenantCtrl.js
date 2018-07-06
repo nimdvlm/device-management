@@ -27,13 +27,13 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
 
     /*鼠标移入动画效果*/
     $scope.fadeSiblings = function () {
-        $(".homeBackgroundstyle").mouseover(function () {
+        $(".chooseBtn").mouseover(function () {
             $(this).siblings().stop().fadeTo(300, 0.3);
         });
     };
     /*鼠标移出动画效果*/
     $scope.reSiblings = function () {
-        $(".homeBackgroundstyle").mouseout(function () {
+        $(".chooseBtn").mouseout(function () {
             $(this).siblings().stop().fadeTo(300, 1);
         });
     };
