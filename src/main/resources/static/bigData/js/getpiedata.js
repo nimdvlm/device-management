@@ -362,8 +362,15 @@ function showData() {
     var h1 = $('#fnameh1').val();
     var min1 = $('#fnamemin1').val();
     var s1 = $('#fnames1').val();
-    if((inputStartDate != "") && (inputEndDate != "")){
+    if (inputStartDate == ""){
+        window.alert("请输入开始时间");
+        $('#modelchange').removeAttr("data-dismiss");
+    }else if(inputEndDate == ""){
+        window.alert("请输入结束时间");
+        $('#modelchange').removeAttr("data-dismiss");
+    }else {
         document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
+        $('#modelchange').attr("data-dismiss","modal");
         if(myXmlHttpRequest2){
             //var url = "toajax?username=" + document.getElementById("username").value;
             var url = "http://39.104.186.210:8090/api/analysis/device";//url="http://39.104.186.210:8090/api/analysis/data";getselectdata
@@ -592,10 +599,7 @@ function showData() {
 
             }
         }
-    }else{
-        window.alert("输入有误");
     }
-
 }
 
 /*var navCount;
