@@ -364,161 +364,165 @@ function drawstatistics(h,min,s,h1,min1,s1,subtext,urldata) {
         if (myXmlHttpRequest3.readyState == 4) {
             document.getElementById("YWaitDialog").setAttribute("style","display:none;");
             var mes = myXmlHttpRequest3.responseText;
-            var mes1 = JSON.parse(mes);
-            meso = eval("("+mes1+")");
-            if(meso.status == 'success'){
-                var xAxisData = [];
-                var data1 = [];
-                var data2 = [];
-                var data3 = [];
-                var data4 = [];
-                var data5 = [];
-                var data6 = [];
-                var data7 = [];
-                for (var item in meso.data[0]){
-                    var item1 = parseInt(item);
-                    xAxisData.push(timestampToTime(item1));
-                    data1.push(meso.data[0][item]);
-                }
-                for (var item in meso.data[2]){
-                    data2.push(meso.data[2][item]);
-                }
-                for (var item in meso.data[1]){
-                    data3.push(meso.data[1][item]);
-                }
-                for (var item in meso.data[3]){
-                    data4.push(meso.data[3][item]);
-                }
-                for (var item in meso.data[4]){
-                    data5.push(meso.data[4][item]);
-                }
-                for (var item in meso.data[5]){
-                    data6.push(meso.data[5][item]);
-                }
-                for (var item in meso.data[6]){
-                    data7.push(meso.data[6][item]);
-                }
-                var myChart = echarts.init(document.getElementById('main'));
-                if(h<10){
-                    h = "0" + h;
-                }
-                if(min<10){
-                    min = "0" + min;
-                }
-                if(s<10){
-                    s = "0" + s;
-                }
-                if(h1<10){
-                    h1 = "0" + h1;
-                }
-                if(min1<10){
-                    min1 = "0" + min1;
-                }
-                if(s1<10){
-                    s1 = "0" + s1;
-                }
-                option = {
-                    title: {
-                        text: subtext,
-                        subtext: '精确查询：'+inputStartDate+' '+h+':'+min+':'+s+' - '+inputEndDate+' '+h1+':'+min1+':'+s1,
-                        subtextStyle:{
-                            left: 'center'
-                        }
-                    },
-                    legend: {
-                        data: ['最大值', '均值', '最小值','标准差','数据条数','正常数据条数','正常数据比例'],
-                        align: 'left'
-                    },
-                    toolbox: {
-                        // y: 'bottom',
-                        feature: {
-                            magicType: {
-                                type: ['stack', 'tiled']
-                            },
-                            dataView: {},
-                            saveAsImage: {
-                                pixelRatio: 2
-                            }
-                        }
-                    },
-                    tooltip: {},
-                    xAxis: {
-                        data: xAxisData,
-                        silent: false,
-                        splitLine: {
-                            show: false
-                        }
-                    },
-                    yAxis: {
-                        //name: '温度'
-                    },
-                    series: [{
-                        name: '最大值',
-                        type: 'bar',
-                        data: data1,
-                        animationDelay: function (idx) {
-                            return idx * 10;
-                        }
-                    }, {
-                        name: '均值',
-                        type: 'bar',
-                        data: data2,
-                        animationDelay: function (idx) {
-                            return idx * 10 + 100;
-                        }
-                    },
-                        {
-                            name: '最小值',
-                            type: 'bar',
-                            data: data3,
-                            animationDelay: function (idx) {
-                                return idx * 10;
-                            }
-                        },
-                        {
-                            name: '标准差',
-                            type: 'bar',
-                            data: data4,
-                            animationDelay: function (idx) {
-                                return idx * 10;
-                            }
-                        },
-                        {
-                            name: '数据条数',
-                            type: 'bar',
-                            data: data5,
-                            animationDelay: function (idx) {
-                                return idx * 10;
-                            }
-                        },
-                        {
-                            name: '正常数据条数',
-                            type: 'bar',
-                            data: data6,
-                            animationDelay: function (idx) {
-                                return idx * 10;
-                            }
-                        },
-                        {
-                            name: '正常数据比例',
-                            type: 'bar',
-                            data: data7,
-                            animationDelay: function (idx) {
-                                return idx * 10;
-                            }
-                        }
-                    ],
-                    animationEasing: 'elasticOut',
-                    animationDelayUpdate: function (idx) {
-                        return idx * 5;
-                    }
-                };
-
-                // 使用刚指定的配置项和数据显示图表。
-                myChart.clear();
-                myChart.setOption(option);
+            if (mes == ""){
+                window.alert("返回值为null");
             }else {
-                window.alert('没有匹配的数据');
+                var mes1 = JSON.parse(mes);
+                meso = eval("("+mes1+")");
+                if(meso.status == 'success'){
+                    var xAxisData = [];
+                    var data1 = [];
+                    var data2 = [];
+                    var data3 = [];
+                    var data4 = [];
+                    var data5 = [];
+                    var data6 = [];
+                    var data7 = [];
+                    for (var item in meso.data[0]){
+                        var item1 = parseInt(item);
+                        xAxisData.push(timestampToTime(item1));
+                        data1.push(meso.data[0][item]);
+                    }
+                    for (var item in meso.data[2]){
+                        data2.push(meso.data[2][item]);
+                    }
+                    for (var item in meso.data[1]){
+                        data3.push(meso.data[1][item]);
+                    }
+                    for (var item in meso.data[3]){
+                        data4.push(meso.data[3][item]);
+                    }
+                    for (var item in meso.data[4]){
+                        data5.push(meso.data[4][item]);
+                    }
+                    for (var item in meso.data[5]){
+                        data6.push(meso.data[5][item]);
+                    }
+                    for (var item in meso.data[6]){
+                        data7.push(meso.data[6][item]);
+                    }
+                    var myChart = echarts.init(document.getElementById('main'));
+                    if(h<10){
+                        h = "0" + h;
+                    }
+                    if(min<10){
+                        min = "0" + min;
+                    }
+                    if(s<10){
+                        s = "0" + s;
+                    }
+                    if(h1<10){
+                        h1 = "0" + h1;
+                    }
+                    if(min1<10){
+                        min1 = "0" + min1;
+                    }
+                    if(s1<10){
+                        s1 = "0" + s1;
+                    }
+                    option = {
+                        title: {
+                            text: subtext,
+                            subtext: '精确查询：'+inputStartDate+' '+h+':'+min+':'+s+' - '+inputEndDate+' '+h1+':'+min1+':'+s1,
+                            subtextStyle:{
+                                left: 'center'
+                            }
+                        },
+                        legend: {
+                            data: ['最大值', '均值', '最小值','标准差','数据条数','正常数据条数','正常数据比例'],
+                            align: 'left'
+                        },
+                        toolbox: {
+                            // y: 'bottom',
+                            feature: {
+                                magicType: {
+                                    type: ['stack', 'tiled']
+                                },
+                                dataView: {},
+                                saveAsImage: {
+                                    pixelRatio: 2
+                                }
+                            }
+                        },
+                        tooltip: {},
+                        xAxis: {
+                            data: xAxisData,
+                            silent: false,
+                            splitLine: {
+                                show: false
+                            }
+                        },
+                        yAxis: {
+                            //name: '温度'
+                        },
+                        series: [{
+                            name: '最大值',
+                            type: 'bar',
+                            data: data1,
+                            animationDelay: function (idx) {
+                                return idx * 10;
+                            }
+                        }, {
+                            name: '均值',
+                            type: 'bar',
+                            data: data2,
+                            animationDelay: function (idx) {
+                                return idx * 10 + 100;
+                            }
+                        },
+                            {
+                                name: '最小值',
+                                type: 'bar',
+                                data: data3,
+                                animationDelay: function (idx) {
+                                    return idx * 10;
+                                }
+                            },
+                            {
+                                name: '标准差',
+                                type: 'bar',
+                                data: data4,
+                                animationDelay: function (idx) {
+                                    return idx * 10;
+                                }
+                            },
+                            {
+                                name: '数据条数',
+                                type: 'bar',
+                                data: data5,
+                                animationDelay: function (idx) {
+                                    return idx * 10;
+                                }
+                            },
+                            {
+                                name: '正常数据条数',
+                                type: 'bar',
+                                data: data6,
+                                animationDelay: function (idx) {
+                                    return idx * 10;
+                                }
+                            },
+                            {
+                                name: '正常数据比例',
+                                type: 'bar',
+                                data: data7,
+                                animationDelay: function (idx) {
+                                    return idx * 10;
+                                }
+                            }
+                        ],
+                        animationEasing: 'elasticOut',
+                        animationDelayUpdate: function (idx) {
+                            return idx * 5;
+                        }
+                    };
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.clear();
+                    myChart.setOption(option);
+                }else {
+                    window.alert('没有匹配的数据');
+                }
             }
         }
     }
