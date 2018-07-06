@@ -163,6 +163,18 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         $scope.model = data.model;
         $scope.customerId = data.customerId;
         $scope.lifeTime = formatDate(new Date(data.lifeTime));
+        //通过客户组id获取客户组名称
+        $.ajax({
+            url:"/api/account/customerName?customerId="+data.customerId,
+            dataType:"text",
+            type:"GET",
+            async:false,
+            contentType:"application/json; charset=utf-8",
+            success:function (suc) {
+                $scope.customerName = suc;
+                console.log(suc);
+            }
+        });
     };
 
 
