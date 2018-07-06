@@ -265,8 +265,8 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @RequestMapping(value = "/assign/customer/{deviceId}/{customerId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String assignDeviceToCustomer(@PathVariable("deviceId") String dId, @PathVariable("customerId") Integer cId){
-        String requestAddr = String.format("/api/v1/deviceaccess/assign/group/%s/%s", dId, cId);
-        String responseContent = "";
+        String requestAddr = String.format("/api/v1/deviceaccess/assign/customer/%s/%s", dId, cId);
+        String responseContent = null;
 
         try {
             responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
@@ -295,10 +295,10 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     }
 
     //取消分配客户下的所有设备
-    @RequestMapping(value = "/unassign/customer", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/unassign/customerDevices/{customerId}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String unAssignCustomerDevices(){
-        String requestAddr = "/api/v1/deviceaccess/unassign/" + getTenantId() + "/" + getCustomerId();
+    public String unAssignCustomerDevices(@PathVariable("customerId") String cId){
+        String requestAddr = "/api/v1/deviceaccess/unassign/" + getTenantId() + "/" + cId;
         String responseContent = null;
         try {
             responseContent = HttpUtil.sendDeletToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
@@ -310,14 +310,15 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     }
 
     //获取客户的所有设备
-    @RequestMapping(value = "/customerDevices", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/customerDevices/{customerId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getCustomerDevices(@RequestParam int limit,
+    public String getCustomerDevices(@PathVariable("customerId") Integer cId,
+                                     @RequestParam int limit,
                                      @RequestParam(required = false) String textSearch,
                                      @RequestParam(required = false) String idOffset,
                                      @RequestParam(required = false) String textOffset) {
 
-        String requestAddr = "/api/v1/deviceaccess/customerdevices/" + getTenantId() + "/" + getCustomerId()
+        String requestAddr = "/api/v1/deviceaccess/customerdevices/" + getTenantId() + "/" + cId
                 + "?limit=" + limit;
         if (textSearch != null) {
             requestAddr = requestAddr + "&textSearch=" + textSearch;

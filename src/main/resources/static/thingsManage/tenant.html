@@ -1,18 +1,18 @@
 <div ng-controller="tenantCtrl" class="content-wrapper">
-    <div class="parent">
+    <div class="container">
         <!--租户头部模型-->
-        <div class="tenantLoyout">
-            <h4 class="tenantHeader">租户
+        <div class="col-md-7">
+            <div class="header-line">租户
                 <button style="margin-left:10px" class="btn btn-primary btn-sm" data-toggle="modal"
                         data-target="#addTenantGroup" id="addTenant">+ 创建租户
                 </button>
-            </h4>
+            </div>
         </div>
 
         <!--下侧控件模块-->
         <div class="tenantRow">
-            <div class="pluginIcon">
-                <div ng-repeat="item in tenantGroups" ng-click="showTenantDetail(item)" class="homeBackgroundstyle" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+            <div id="tenantIcon">
+                <div ng-repeat="item in tenantGroups" ng-click="showTenantDetail(item)" class="chooseBtn tenantChoose" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                     <div>
                         <span title="租户"><i class="fa fa-home fa-2x"></i></span>
                         <p class="stylePulgin">{{item.title}}</p>

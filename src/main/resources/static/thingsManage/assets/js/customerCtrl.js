@@ -187,6 +187,33 @@ mainApp.controller("customerCtrl",["$scope","$resource","$location",function ($s
                 toastr.error("修改客户组信息失败！");
             }
         });
-    }
+    };
 
+    //展示客户组下所有设备
+    $scope.showDeviceList = function () {
+      var deviceListObj = $resource("/api/device/customerDevices/:customerId?limit=1000");
+      $scope.deviceListInfo = deviceListObj.query({customerId:$scope.customerId});
+      console.log($scope.deviceListInfo);
+    };
+    //清空客户组所有设备
+    $scope.deleteCustomerDevice = function () {
+        var emptyObj = $resource("/api/device/unassign/customerDevices/:customerId");
+        var emptyInfo = emptyObj.delete({customerId:$scope.customerId},{},function (resp) {
+            toastr.success("已清空当前客户组所有设备！");
+            setTimeout(function () {
+                window.location.reload();
+            },1000);
+        },function (err) {
+            toastr.error("清空当前客户组所有设备失败！");
+        });
+    };
+    
+
+    //样式
+    $(".highlight").mouseover(function () {
+        $(this).css("color","#337ab7");
+    });
+    $(".highlight").mouseout(function () {
+        $(this).css("color","#305680");
+    });
 }]);

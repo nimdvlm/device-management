@@ -7,13 +7,13 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
 
     /*鼠标移入动画效果*/
     $scope.fadeSiblings = function () {
-        $(".homeBackgroundstyle").mouseover(function () {
+        $(".pluginChoose").mouseover(function () {
             $(this).siblings().stop().fadeTo(300, 0.3);
         });
     };
     /*鼠标移出动画效果*/
     $scope.reSiblings = function () {
-        $(".homeBackgroundstyle").mouseout(function () {
+        $(".pluginChoose").mouseout(function () {
             $(this).siblings().stop().fadeTo(300, 1);
         });
     };
