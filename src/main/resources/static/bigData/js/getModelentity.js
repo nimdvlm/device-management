@@ -212,7 +212,6 @@ function getResult(obj) {
         var appIdString = $(obj).parent().parent().children().find("p").eq(1).html();
         var url2 = "http://39.104.186.210:8090/api/app/real-predict?appId="+appIdString;// /api/device/alldevices?limit=20http://10.108.219.218:8100/api/v1/tenant/devices/2?limit=20;http://10.108.219.218:80/api/device/alldevices?limit=20
         //myXmlHttpRequest.open("get",url,true);
-        window.alert(url2);
         myXmlHttpRequest2.open("get", url2, true);//url="http://10.108.218.64:8090/api/analysis/device"
         myXmlHttpRequest2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         myXmlHttpRequest2.onreadystatechange = proce2;
