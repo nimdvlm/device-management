@@ -53,6 +53,7 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                var last = $scope.deviceList.length - 1;
                console.log($scope.deviceList);
                console.log($scope.deviceList.length);
+
                for(var i=0;i<$scope.deviceList.length;i++){
                    allDeviceId.push($scope.deviceList[i].id);
                }
@@ -69,7 +70,22 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                            $("#"+temp).css({color:"rgb(220, 220, 220)"});
                        }
                    }
+
+                   //优先级最高，过期设备和快过期设备的提示
+                   for(var i=0;i<$scope.deviceList.length;i++){
+                       if($scope.deviceList[i].alarm){
+                           console.log($scope.deviceList[i].alarm);
+                           if($scope.deviceList[i].alarm === "red"){
+                               $("#"+$scope.deviceList[i].id).css("color","red");
+                           }else if($scope.deviceList[i].alarm === "orange"){
+                               $("#"+$scope.deviceList[i].id).css("color","orange");
+                           }
+                       }
+                   }
+
                });
+
+
                /*用于翻页*/
                nextDeviceId = $scope.deviceList[last].id;
                nextDeviceName = $scope.deviceList[last].name;
@@ -205,6 +221,19 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                                 $("#"+temp).css({color:"rgb(220, 220, 220)"});
                             }
                         }
+
+
+                        //优先级最高，过期设备和快过期设备的提示
+                        for(var i=0;i<$scope.deviceList.length;i++){
+                            if($scope.deviceList[i].alarm){
+                                console.log($scope.deviceList[i].alarm);
+                                if($scope.deviceList[i].alarm === "red"){
+                                    $("#"+$scope.deviceList[i].id).css("color","red");
+                                }else if($scope.deviceList[i].alarm === "orange"){
+                                    $("#"+$scope.deviceList[i].id).css("color","orange");
+                                }
+                            }
+                        }
                     });
 
                     nextDeviceId = $scope.deviceList[last].id;
@@ -261,6 +290,18 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                                 console.log(resp[temp]);
                                 if(resp[temp] === "offline"){
                                     $("#"+temp).css({color:"rgb(220, 220, 220)"});
+                                }
+                            }
+
+                            //优先级最高，过期设备和快过期设备的提示
+                            for(var i=0;i<$scope.deviceList.length;i++){
+                                if($scope.deviceList[i].alarm){
+                                    console.log($scope.deviceList[i].alarm);
+                                    if($scope.deviceList[i].alarm === "red"){
+                                        $("#"+$scope.deviceList[i].id).css("color","red");
+                                    }else if($scope.deviceList[i].alarm === "orange"){
+                                        $("#"+$scope.deviceList[i].id).css("color","orange");
+                                    }
                                 }
                             }
                         });
@@ -333,6 +374,18 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                             console.log(resp[temp]);
                             if(resp[temp] === "offline"){
                                 $("#"+temp).css({color:"rgb(220, 220, 220)"});
+                            }
+                        }
+
+                        //优先级最高，过期设备和快过期设备的提示
+                        for(var i=0;i<$scope.deviceList.length;i++){
+                            if($scope.deviceList[i].alarm){
+                                console.log($scope.deviceList[i].alarm);
+                                if($scope.deviceList[i].alarm === "red"){
+                                    $("#"+$scope.deviceList[i].id).css("color","red");
+                                }else if($scope.deviceList[i].alarm === "orange"){
+                                    $("#"+$scope.deviceList[i].id).css("color","orange");
+                                }
                             }
                         }
                     });
