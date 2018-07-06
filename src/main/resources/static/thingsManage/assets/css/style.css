@@ -405,38 +405,36 @@ DEVICELIST STYLES
 }
 /* =============================================================
 serviceGroup
-============================================================ */
-.abilityBackgroundstyle{
-    width: 235px;
-    height: 145px;
-    border-radius: 5px;
-    margin-top: 30px;
-    margin-left: 15px;
-    float: left;
 
+============================================================ */
+.abilityIcon{
+    width: 65%;
+    float: left;
+    margin-left: 10px;
+}
+.abilityBackgroundstyle{
+    width: 220px;
+    height: 135px;
+    border-radius: 10px;
+    margin-top: 25px;
+    margin-left: 20px;
+    float: left;
     cursor: pointer;
-    padding: 20px;
+    padding-top: 10px;
+    padding-left: 10px;
     border: 2px solid #c0c0c0;
     background: white;
-
 }
-.homeIconstyle{
 
-    color:  #305680;
-    font-size: 30px;
-    margin-top: -7px;
-    margin-left: 0px;
-}
 .abilityPlus{
-    float: right;
-    font-size: x-large;
-    color: #305680;
-    margin-top: -10px;
+    font-size: large;
+    padding-left: 130px;
+
 }
 .abilityDelete{
     font-size: large;
-    margin-top: -10px;
-    margin-left: 8px;
+    padding-left: 15px;
+
 }
 .style{
     color:  #305680;
@@ -445,41 +443,19 @@ serviceGroup
     margin-left: 15px;
     margin-top: 5px;
 }
-.mainDiv{
-    margin: 100px 210px 75px 350px;
-}
-.positionThree{
-    margin-left: 650px;
-    margin-bottom: 0px;
-}
-.positionFour{
-    margin-left: 430px;
-}
-.positionFive{
-    margin-right: auto;
-}
-.span2{
-    margin-left: 666px;
-}
+
 .abilityChart{
-    margin:30px 0 0 670px;
-    padding-top: 5px;
-    width:460px;
-    height:516px;
-    overflow-y: auto;
     float: right;
-    margin-left: 790px;
+    width:32%;
+    height:520px;
+    background: white;
+    border: 1px solid rgb(212,212,212);
     position: fixed;
-    background: rgba(255,253,255,0.69);
-    border-radius: 5px;
-}
-.abilityIcon{
-    width: 70%;
-    float: left;
-    padding-top:10px;
+    overflow-y: auto;
+    margin-left: 800px;
+    margin-top: 30px;
 
 }
-
 /* =============================================================
 pluginsGroup
 ============================================================ */

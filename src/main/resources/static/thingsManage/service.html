@@ -1,40 +1,37 @@
 ﻿<div class="content-wrapper" ng-controller="abilityCtrl">
-
-    <div clas="SMTitle">
-        <div style="margin-top: 32px">
-            <span class="header-line" style="font-size: 27px;font-weight: 600">服务组
-            <button style="margin-left:10px" class="btn btn-primary btn-sm user" data-toggle="modal"
+    <div class="container">
+        <div clas="SMTitle">
+            <div class="col-md-7">
+                <span class="header-line">服务组
+                <button style="margin-left:10px" class="btn btn-primary btn-sm user" data-toggle="modal"
                     data-target="#addServiceGroup">+ 创建服务组
-            </button>
-            </span>
-            <!--span class="SMsearch">
-                <input class="span2" type="text" placeholder="输入设备类型" id="searchAbilityText">
-                <button><span ng-click="searchAbility()" title="搜索"><i class="glyphicon glyphicon-search"></i> </span></button>
-            </span-->
+                </button>
+                </span>
+                <!--span class="SMsearch">
+                    <input class="span2" type="text" placeholder="输入设备类型" id="searchAbilityText">
+                    <button><span ng-click="searchAbility()" title="搜索"><i class="glyphicon glyphicon-search"></i> </span></button>
+                </span-->
+            </div>
         </div>
-    </div>
-
         <!--模块控件-->
-    <div class="abilityIcon">
-        <!--左右分布控件模块-->
-        <div ng-repeat="items in abilityGroups" class="abilityBackgroundstyle" ng-click="show(items)" ng-style="items.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
-                <span title="服务组"><i class="fa fa-cog homeIconstyle"></i></span>
+        <div class="abilityIcon">
+            <div ng-repeat="items in abilityGroups" class="abilityBackgroundstyle" ng-click="show(items)" ng-style="items.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                <div data-toggle="modal" data-target="#SMDetail" class="items">
+                <p class="style"><i class="fa fa-cog fa-cart-plus"></i>&nbsp;厂商：{{items.manufacturer.manufacturerName}}</p>
+                <p class="style"><i class="fa fa-cog fa-cart-plus"></i>&nbsp;设备类型：{{items.deviceType.deviceTypeName}}</p>
+                <p class="style"><i class="fa fa-cog fa-cart-plus"></i>&nbsp;设备型号：{{items.model.modelName}}</p>
+                </div>
                 <span class="abilityPlus" data-toggle="modal" data-target="#createSM">
                 <i class="glyphicon glyphicon-plus userDelete" title="创建服务"></i>
                 </span>
                 <span data-toggle="modal" class="abilityDelete" data-target="#deleteSM">
                 <i class="glyphicon glyphicon-trash userDelete" title="删除服务组"></i>
                 </span>
-                <span data-toggle="modal" data-target="#SMDetail" class="items">
-                <p class="style">厂商：{{items.manufacturer.manufacturerName}}</p>
-                <p class="style">设备类型：{{items.deviceType.deviceTypeName}}</p>
-                <p class="style"> 设备型号：{{items.model.modelName}}</p>
-                </span>
+            </div>
         </div>
-    </div>
 
-    <!--右侧表格分布-->
-    <div class="abilityChart">
+        <!--右侧表格分布-->
+        <div class="abilityChart">
             <table class="table table-hover table-bordered table-striped" id="searchTextResults">
                 <thead>
                 <tr class="bg-info">
@@ -53,7 +50,12 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
     </div>
+
+
+
+
 
 
         <!--创建能力组弹出界面-->
