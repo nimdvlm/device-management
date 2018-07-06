@@ -483,14 +483,6 @@ serviceGroup
 /* =============================================================
 pluginsGroup
 ============================================================ */
-.upperLayout{
-    height: 110px;
-    width: 73%;
-    float: left;
-    background: #c0c0c036;
-    margin: 6px 10px 5px -45px;
-}
-
 .pluginActiveposition{
     margin-left: 250px;
     color: #305680;
@@ -504,10 +496,6 @@ pluginsGroup
 }
 .header-line{
     font-size: 30px;
-    font-weight: 600;
-    margin-left: 30px;
-    font-family: Microsoft YaHei;
-
 }
 .stylePulgin{
     color:  #305680;
@@ -516,28 +504,40 @@ pluginsGroup
     text-align: center;
     margin-top: 5px;
 }
-.homeBackgroundstyle{
-    margin: 30px 10px 0 20px;
-    cursor: pointer;
-    padding: 20px;
-    width: 150px;
-    height: 100px;
-    border: 2px solid #c0c0c0;
-    float: left;
-    border-radius: 10px;
-    background: white;
-
+.pluginChoose{
+    width:180px ;
+    margin-left: 20px;
+    padding:15px 5px;
+}
+.pluginRightView{
+    float: right;
+    padding-top: 10px;
+    width:45%;
+    min-width: 350px;
 }
 .pluginChart{
-    background: #c0c0c036;
-    width:505px;
-    height:240px;
-    margin:6px 10px 0 795px;
-    padding-top: 5px;
-    float: right;
-    font-family: inherit;
-    position: fixed;
+    border:1px solid rgb(212,212,212);
+    background-color: #fdfdfd;
+    padding:3px 0 0 0;
+    height: 230px;
+
 }
+.displayInterface{
+    border:1px solid rgb(212,212,212);
+    background-color: #fdfdfd;
+    margin:2px 0 0 0;
+    overflow-y: auto;
+}
+/*
+width: 35%;
+    float: right;
+    border: 1px solid #c0c0c0;
+    border-radius: 10px;
+    margin-right: 20px;
+    margin-top: 10px;
+    position: fixed;
+    right: 1%;
+    top: 18%;
 .lowerLayout{
     width: 73%;
     height: 1000px;
@@ -546,16 +546,23 @@ pluginsGroup
     background: #c0c0c036;
     margin: 1px 10px 5px -45px;
 }
-.pluginIcon{
+.upperLayout{
+    height: 110px;
+    width: 73%;
+    float: left;
+    background: #c0c0c036;
+    margin: 6px 10px 5px -45px;
+}
+
+
+
+
+*/
+/*插件模块控件位置*/
+#pluginIcon{
+    width:50%;
     float: left;
     margin-left: 10px;
-}
-.positionTwo{
-    margin-left: 25px;
-}
-.postionOne{
-    margin-left: 180px;
-
 }
 .btnPosition{
     margin-top: 20px;
@@ -574,17 +581,7 @@ pluginsGroup
     color: #0f0f0f;
     font-weight: 400;
 }
-.displayInterface{
-    background: #c0c0c036;
-    margin:252px 10px 0 795px;
-    padding-top: 5px;
-    width:505px;
-    height:415px;
-    float: right;
-    position: fixed;
-    overflow: auto;
 
-}
 .PluginInterfaceInfo{
     font-size: 23px;
     color: #305680;
