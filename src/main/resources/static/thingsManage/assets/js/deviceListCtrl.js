@@ -4,6 +4,8 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
 
     var parentName;//用于记录父设备名称
 
+    var showNum = 9;//用于记录每次显示多少个设备
+
     var preDeviceIdArr = [];//用于记录设备列表展示时向前翻页
     var preDeviceNameArr = [];//用于设备列表展示时向前翻页
     var preDeviceId;//用于设备列表展示时向前翻页
@@ -14,16 +16,33 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
 
     var allDeviceId = [];//用于获取当前页面的设备的状态信息
 
+    var initUrl;
+    var prePageUrl;
 
+    var customerId = $.cookie("customerId");
     /*设备列表信息获取与展示*/
 
     /*返回值为所有设备信息*/
-    var obj = $resource("/api/device/alldevices?limit=1000");
-    $scope.deviceListAll = obj.query();
+    if($.cookie("userLevel") === "CUSTOMER_USER"){
+        initUrl = "/api/device/customerDevices/"+customerId+"?limit="+showNum;
+        prePageUrl = "/api/device/customerDevices/"+customerId+"?limit="+showNum+"&idOffset="+nextDeviceId+"&textOffset="+nextDeviceName;
+    }else if($.cookie("userLevel") === "TENANT_ADMIN"){
+        initUrl = "/api/device/alldevices?limit="+showNum;
+        prePageUrl = "/api/device/alldevices?limit="+showNum+"&idOffset="+nextDeviceId+"&textOffset="+nextDeviceName;
+    }
+
+    if($.cookie("userLevel") === "CUSTOMER_USER"){
+        var obj = $resource("/api/device/customerDevices/"+customerId+"?limit=1000");
+        $scope.deviceListAll = obj.query();
+    }else if($.cookie("userLevel") === "TENANT_ADMIN"){
+        var obj = $resource("/api/device/alldevices?limit=1000");
+        $scope.deviceListAll = obj.query();
+    }
+
 
    /*返回值为限制个数的所有设备信息*/
     $.ajax({
-        url:"/api/device/alldevices?limit=9",
+        url:initUrl,
         contentType: "application/json; charset=utf-8",
         async: false,
         type:"GET",
@@ -34,6 +53,7 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                var last = $scope.deviceList.length - 1;
                console.log($scope.deviceList);
                console.log($scope.deviceList.length);
+
                for(var i=0;i<$scope.deviceList.length;i++){
                    allDeviceId.push($scope.deviceList[i].id);
                }
@@ -50,7 +70,22 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                            $("#"+temp).css({color:"rgb(220, 220, 220)"});
                        }
                    }
+
+                   //优先级最高，过期设备和快过期设备的提示
+                   for(var i=0;i<$scope.deviceList.length;i++){
+                       if($scope.deviceList[i].alarm){
+                           console.log($scope.deviceList[i].alarm);
+                           if($scope.deviceList[i].alarm === "red"){
+                               $("#"+$scope.deviceList[i].id).css("color","red");
+                           }else if($scope.deviceList[i].alarm === "orange"){
+                               $("#"+$scope.deviceList[i].id).css("color","orange");
+                           }
+                       }
+                   }
+
                });
+
+
                /*用于翻页*/
                nextDeviceId = $scope.deviceList[last].id;
                nextDeviceName = $scope.deviceList[last].name;
@@ -128,6 +163,18 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         $scope.model = data.model;
         $scope.customerId = data.customerId;
         $scope.lifeTime = formatDate(new Date(data.lifeTime));
+        //通过客户组id获取客户组名称
+        $.ajax({
+            url:"/api/account/customerName?customerId="+data.customerId,
+            dataType:"text",
+            type:"GET",
+            async:false,
+            contentType:"application/json; charset=utf-8",
+            success:function (suc) {
+                $scope.customerName = suc;
+                console.log(suc);
+            }
+        });
     };
 
 
@@ -147,7 +194,7 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
 
 
 
-    var showNum = 9;//用于记录每次显示多少个设备
+
     /*选择每页显示多少设备*/
     $scope.deviceListNumChoose = function () {
         if($("#deviceListNum").val() === ""){
@@ -158,7 +205,7 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         // console.log(showNum);
         setTimeout(function () {
             $.ajax({
-                url:"/api/device/alldevices?limit="+showNum,
+                url:initUrl,
                 contentType: "application/json; charset=utf-8",
                 async: false,
                 type:"GET",
@@ -186,6 +233,19 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                                 $("#"+temp).css({color:"rgb(220, 220, 220)"});
                             }
                         }
+
+
+                        //优先级最高，过期设备和快过期设备的提示
+                        for(var i=0;i<$scope.deviceList.length;i++){
+                            if($scope.deviceList[i].alarm){
+                                console.log($scope.deviceList[i].alarm);
+                                if($scope.deviceList[i].alarm === "red"){
+                                    $("#"+$scope.deviceList[i].id).css("color","red");
+                                }else if($scope.deviceList[i].alarm === "orange"){
+                                    $("#"+$scope.deviceList[i].id).css("color","orange");
+                                }
+                            }
+                        }
                     });
 
                     nextDeviceId = $scope.deviceList[last].id;
@@ -204,9 +264,14 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
     $scope.nextDeviceInfo = function () {
         console.log(nextDeviceId);
         console.log(nextDeviceName);
+        if($.cookie("userLevel") === "CUSTOMER_USER"){
+            prePageUrl = "/api/device/customerDevices/"+customerId+"?limit="+showNum+"&idOffset="+nextDeviceId+"&textOffset="+nextDeviceName;
+        }else if($.cookie("userLevel") === "TENANT_ADMIN"){
+            prePageUrl = "/api/device/alldevices?limit="+showNum+"&idOffset="+nextDeviceId+"&textOffset="+nextDeviceName;
+        }
         if(nextDeviceId && nextDeviceName){
             $.ajax({
-                url:"/api/device/alldevices?limit="+showNum+"&idOffset="+nextDeviceId+"&textOffset="+nextDeviceName,
+                url:prePageUrl,
                 contentType: "application/json; charset=utf-8",
                 async: false,
                 type:"GET",
@@ -239,6 +304,18 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                                     $("#"+temp).css({color:"rgb(220, 220, 220)"});
                                 }
                             }
+
+                            //优先级最高，过期设备和快过期设备的提示
+                            for(var i=0;i<$scope.deviceList.length;i++){
+                                if($scope.deviceList[i].alarm){
+                                    console.log($scope.deviceList[i].alarm);
+                                    if($scope.deviceList[i].alarm === "red"){
+                                        $("#"+$scope.deviceList[i].id).css("color","red");
+                                    }else if($scope.deviceList[i].alarm === "orange"){
+                                        $("#"+$scope.deviceList[i].id).css("color","orange");
+                                    }
+                                }
+                            }
                         });
 
                         nextDeviceId = $scope.deviceList[last].id;
@@ -267,11 +344,21 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
         }
         else{
             if(pageNum == 2){
-                url = "/api/device/alldevices?limit="+showNum;
+                if($.cookie("userLevel") === "CUSTOMER_USER"){
+                    url = "/api/device/customerDevices/"+customerId+"?limit="+showNum;
+                }else if($.cookie("userLevel") === "TENANT_ADMIN"){
+                    url = "/api/device/alldevices?limit="+showNum;
+                }
+
             }else{
                 preDeviceId = preDeviceIdArr[pageNum-3];
                 preDeviceName = preDeviceNameArr[pageNum - 3];
-                url = "/api/device/alldevices?limit="+showNum+"&idOffset="+preDeviceId+"&textOffset="+preDeviceName;
+                if($.cookie("userLevel") === "CUSTOMER_USER"){
+                    url = "/api/device/customerDevices/"+customerId+"?limit="+showNum+"&idOffset="+preDeviceId+"&textOffset="+preDeviceName;
+                }else if($.cookie("userLevel") === "TENANT_ADMIN"){
+                    url = "/api/device/alldevices?limit="+showNum+"&idOffset="+preDeviceId+"&textOffset="+preDeviceName;
+                }
+
             }
             $.ajax({
                 url:url,
@@ -299,6 +386,18 @@ mainApp.controller("deviceListCtrl",["$scope","$resource",function ($scope,$reso
                             console.log(resp[temp]);
                             if(resp[temp] === "offline"){
                                 $("#"+temp).css({color:"rgb(220, 220, 220)"});
+                            }
+                        }
+
+                        //优先级最高，过期设备和快过期设备的提示
+                        for(var i=0;i<$scope.deviceList.length;i++){
+                            if($scope.deviceList[i].alarm){
+                                console.log($scope.deviceList[i].alarm);
+                                if($scope.deviceList[i].alarm === "red"){
+                                    $("#"+$scope.deviceList[i].id).css("color","red");
+                                }else if($scope.deviceList[i].alarm === "orange"){
+                                    $("#"+$scope.deviceList[i].id).css("color","orange");
+                                }
                             }
                         }
                     });

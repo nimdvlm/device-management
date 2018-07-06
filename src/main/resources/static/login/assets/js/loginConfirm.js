@@ -28,6 +28,7 @@ $(document).ready(function () {
                     $.cookie("userLevel",msgJson.authority);
                     $.cookie("tenantId",msgJson.tenant_id);
                     $.cookie("userId",msgJson.user_id);
+                    $.cookie("customerId",msgJson.customer_id);
                    /* userLevel = msgJson.authority;
                     tenant = msgJson.tenant_id;
                     userId = msgJson.user_id;
