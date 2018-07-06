@@ -2,10 +2,22 @@ function timestampToTime(timestamp) {
     var date = new Date(timestamp);
     Y = date.getFullYear() + '-';
     M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-    D = (date.getDate()+1 < 10 ? '0'+(date.getDate()) : date.getDate()) + ' ';
-    h = date.getHours() + ':';
-    m = date.getMinutes() + ':';
-    s = date.getSeconds();
+    D = (date.getDate()+1 < 10 ? '0'+(date.getDate()) : date.getDate()) + '\n';
+    if (date.getHours()<10){
+        h = "0"+date.getHours() + ':';
+    }else {
+        h = date.getHours() + ':';
+    }
+    if (date.getMinutes()<10){
+        m = "0"+date.getMinutes() + ':';
+    }else {
+        m = date.getMinutes() + ':';
+    }
+    if (date.getSeconds()<10){
+        s = "0"+date.getSeconds();
+    }else {
+        s = date.getSeconds();
+    }
     return Y+M+D+h+m+s;
 }
 
@@ -179,115 +191,11 @@ for(var i=0; i<Object.keys(meso.data).length;i++){
 //    xAxisData.push(day[i]);
 //}
 
-var myChart = echarts.init(document.getElementById('main'));
-var xAxisData = [];
-var day = [];
-var data1 = [];
-var data2 = [];
-var data3 = [];
-var data4 = [];
-var data5 = [];
-var data6 = [];
-var data7 = [];
-
-option = {
-    title: {
-        text: '数据分析',
-        subtext: '近一周',
-        subtextStyle:{}
-    },
-    legend: {
-        data: ['最大值', '均值','最小值','标准差','数据条数','正常数据条数','正常数据比例'],
-        align: 'left'
-    },
-    toolbox: {
-        // y: 'bottom',
-        feature: {
-            magicType: {
-                type: ['stack', 'tiled']
-            },
-            dataView: {},
-            saveAsImage: {
-                pixelRatio: 2
-            }
-        }
-    },
-    tooltip: {},
-    xAxis: {
-        data: ['周一','周二','周三','周四','周五','周六','周日'],
-        silent: false,
-        splitLine: {
-            show: false
-        }
-    },
-    yAxis: {
-        //name:'温度'
-    },
-    series: [{
-        name: '最大值',
-        type: 'bar',
-        data: [12,55,33,62,95,43,66],
-        animationDelay: function (idx) {
-            return idx * 10;
-        }
-    }, {
-        name: '均值',
-        type: 'bar',
-        data: [43,22,78,46,64,89,60],
-        animationDelay: function (idx) {
-            return idx * 10 + 50;
-        }
-    },
-        {
-            name: '最小值',
-            type: 'bar',
-            data: [84,53,36,65,43,99,25],
-            animationDelay: function (idx) {
-                return idx * 100;
-            }
-        },{
-            name: '标准差',
-            type: 'bar',
-            data: [63,32,77,40,95,27,13],
-            animationDelay: function (idx) {
-                return idx * 10 + 150;
-            }
-        },{
-            name: '数据条数',
-            type: 'bar',
-            data: [32,66,83,84,55,73,98],
-            animationDelay: function (idx) {
-                return idx * 10 + 200;
-            }
-        },{
-            name: '正常数据条数',
-            type: 'bar',
-            data: [23,66,43,87,63,99,34],
-            animationDelay: function (idx) {
-                return idx * 10 + 250;
-            }
-        },{
-            name: '正常数据比例',
-            type: 'bar',
-            data: [82,57,34,99,53,69,36],
-            animationDelay: function (idx) {
-                return idx * 10 + 300;
-            }
-        }
-
-    ],
-    animationEasing: 'elasticOut',
-    animationDelayUpdate: function (idx) {
-        return idx * 5;
-    }
-};
-myChart.setOption(option);
-
 var myXmlHttpRequest1 = getXmlHttpObject();
 var tenantId;
 if(myXmlHttpRequest1){
     var url1 = "/api/rule/tenant";
-    myXmlHttpRequest1.open("get",url1,true);
+    myXmlHttpRequest1.open("get",url1,false);
     myXmlHttpRequest1.onreadystatechange = proce1;
     myXmlHttpRequest1.send(null);
 }
@@ -298,6 +206,35 @@ function  proce1() {
         var tenantIde = JSON.parse(tenantIdj);
         //var tenantIde = eval("("+tenantId+")");
         tenantId = tenantIde.tenantId;
+    }
+}
+var myXmlHttpRequest5 = getXmlHttpObject();
+if(myXmlHttpRequest5){
+    var url5 = "http://39.104.186.210:8090/api/device/device-types?tenantId="+tenantId;
+    myXmlHttpRequest5.open("get",url5,false);
+    myXmlHttpRequest5.onreadystatechange = proce5;
+    myXmlHttpRequest5.send(null);
+}
+function  proce5() {
+    if(myXmlHttpRequest5.readyState == 4){
+
+        var deviceType = myXmlHttpRequest5.responseText;
+        var deviceType1 = JSON.parse(deviceType);
+        var deviceType2 = eval("("+deviceType1+")");
+        for (var i=0; i<deviceType2.deviceTypes.length; i++){
+            if (i==0){
+                $option = $('<option></option>');
+                $option.html(deviceType2.deviceTypes[i]);
+                $option.attr("selected","selected");
+                $('#mohuquery1').append($option);
+            }else {
+                $option = $('<option></option>');
+                $option.html(deviceType2.deviceTypes[i]);
+                $('#mohuquery1').append($option);
+            }
+        }
+        recentBarAjax(7,deviceType2.deviceTypes[0]);
+
     }
 }
 
@@ -336,27 +273,31 @@ var deviceSelect1 = "";
 var subtext = "";
 var finalDate = "";
 
-function starttoend(dateId) {
-
-    if (dateId == "fname") {
-        inputStartDate = document.getElementById(dateId).value;
-    }
-    if (dateId == "fname1") {
-        inputEndDate = document.getElementById(dateId).value;
-    }
-    if (dateId == "fname2") {
-        splitNum = document.getElementById(dateId).value;
-    }
-    if (dateId == "fname3") {
-        deviceSelect = document.getElementById(dateId).value;
-    }
-    if (dateId == "fname4") {
-        deviceSelect1 = document.getElementById(dateId).value;
-    }
-}
-
 function showData() {
 
+    var radios = document.getElementsByName('Fruit');
+    for (var a = 0, length = radios.length; a < length; a++) {
+        if (radios[a].checked) {
+            // 弹出选中值
+            if(radios[a].value == 'device'){
+                inputStartDate = $('#fname').val();
+                inputEndDate = $('#fname1').val();
+                splitNum = $('#fname2').val();
+                deviceSelect1 = $('#fname4').val();
+            }else {
+                inputStartDate = $('#fname').val();
+                inputEndDate = $('#fname1').val();
+                splitNum = $('#fname2').val();
+                deviceSelect = $('#fname3').val();
+            }
+        }
+    }
+    var h = $('#fnameh').val();
+    var min = $('#fnamemin').val();
+    var s = $('#fnames').val();
+    var h1 = $('#fnameh1').val();
+    var min1 = $('#fnamemin1').val();
+    var s1 = $('#fnames1').val();
     if((inputStartDate != "") && (inputEndDate != "") && (splitNum != "") && ((deviceSelect != "")||(deviceSelect1 != ""))){
 
         myXmlHttpRequest3 = getXmlHttpObject();
@@ -365,21 +306,20 @@ function showData() {
             //var url = "toajax?username=" + document.getElementById("username").value;
             var url3 = "http://39.104.186.210:8090/api/analysis/data";//url="http://39.104.186.210:8090/api/analysis/data";getselectdata
             var startTime = new Date(inputStartDate);
-            var startTimeChuo = startTime.getTime();
+            var startTimeChuo = startTime.getTime()+h*3600*1000+min*60*1000+s*1000-8*3600*1000;
             var endTime = new Date(inputEndDate);
-            var endTimeChuo = endTime.getTime();
-            var radios = document.getElementsByName('Fruit');
+            var endTimeChuo = endTime.getTime()+h1*3600*1000+min1*60*1000+s1*1000-8*3600*1000;
             var data = "";
             for (var i = 0, length = radios.length; i < length; i++) {
                 if (radios[i].checked) {
                     // 弹出选中值
                     if(radios[i].value == 'device'){
-                        subtext = '按设备名称查询';
+                        subtext = '设备名称：'+deviceSelect1;
                         deviceSelect1 = deviceGroup[(deviceGroup.indexOf(deviceSelect1)+1)];
                         data = "tenantId="+tenantId+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum+"&deviceId="+deviceSelect1;
                         deviceSelect1 = "";
                     }else {
-                        subtext = '按设备类型查询';
+                        subtext = '设备类型：'+deviceSelect;
                         data = "tenantId="+tenantId+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum+"&deviceType="+deviceSelect;
                         deviceSelect = "";
                     }
@@ -433,10 +373,28 @@ function showData() {
                         data7.push(meso.data[6][item]);
                     }
                     var myChart = echarts.init(document.getElementById('main'));
+                    if(h<10){
+                        h = "0" + h;
+                    }
+                    if(min<10){
+                        min = "0" + min;
+                    }
+                    if(s<10){
+                        s = "0" + s;
+                    }
+                    if(h1<10){
+                        h1 = "0" + h1;
+                    }
+                    if(min1<10){
+                        min1 = "0" + min1;
+                    }
+                    if(s1<10){
+                        s1 = "0" + s1;
+                    }
                     option = {
                         title: {
                             text: subtext,
-                            subtext: '精确查询  :'+inputStartDate+' - '+inputEndDate,
+                            subtext: '精确查询：'+inputStartDate+' '+h+':'+min+':'+s+' - '+inputEndDate+' '+h1+':'+min1+':'+s1,
                             subtextStyle:{
                                 left: 'center'
                             }
@@ -531,6 +489,7 @@ function showData() {
                     };
 
                     // 使用刚指定的配置项和数据显示图表。
+                    myChart.clear();
                     myChart.setOption(option);
                 }else {
                     window.alert('没有匹配的数据');
@@ -634,7 +593,7 @@ $('input[type=radio][name=Fruit]').change(function() {
         $('#modaldiv').children('span').remove();
         $('#modaldiv').children('select').remove();
         $spanType = $('<span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>设备类型</strong> </span>\n' +
-            '                    <select id="fname3" onchange="starttoend(this.id)">\n' +
+            '                    <select id="fname3" style="margin-left: 1%">\n' +
             '                        <option></option>\n' +
             '                        <option>temperature</option>\n' +
             '                        <option>humidity</option>\n' +
@@ -649,7 +608,7 @@ $('input[type=radio][name=Fruit]').change(function() {
         $('#modaldiv').children('span').remove();
         $('#modaldiv').children('select').remove();
         $spanDevice = $('<span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>设备名称</strong> </span>\n' +
-            '                    <select id="fname4" style="margin-left: 1%" onchange="starttoend(this.id)">\n' +
+            '                    <select id="fname4" style="margin-left: 1%">\n' +
             '                        <option></option>\n' +
             '                        <option>21</option>\n' +
             '                        <option>22</option>\n' +
@@ -669,9 +628,36 @@ $('input[type=radio][name=Fruit]').change(function() {
 
 $('#mohuquery').change(
     function () {
-        if($(this).val() == '近三天' || $(this).val() == '近一周' || $(this).val() == '近一月'){
-            window.alert('需要模糊查询接口');
+        var days;
+        var day = $('#mohuquery').val();
+        if (day == '近三天'){
+            days = 3;
+        }else if (day == '近一周'){
+            days = 7;
+        }else if (day == '近一月'){
+            days = 30;
+        }else {
+            window.alert("输入错误");
         }
+        var deviceType = $('#mohuquery1').val();
+        recentBarAjax(days,deviceType);
+    }
+);
+$('#mohuquery1').change(
+    function () {
+        var days;
+        var day = $('#mohuquery').val();
+        if (day == '近三天'){
+            days = 3;
+        }else if (day == '近一周'){
+            days = 7;
+        }else if (day == '近一月'){
+            days = 30;
+        }else {
+            window.alert("输入有误");
+        }
+        var deviceType = $('#mohuquery1').val();
+        recentBarAjax(days,deviceType);
     }
 );
 
@@ -682,6 +668,124 @@ $('#dropzone').hover(
         $('#dropli').fadeOut(500);
     }
 );
+
+function drawRecentBar(deviceType,subtext,legend,day,series) {
+
+    var myChart = echarts.init(document.getElementById('main'));
+    option = {
+        title: {
+            text: '设备类型：'+deviceType,
+            subtext: '模糊查询：'+subtext,
+            subtextStyle:{}
+        },
+        legend: {
+            data: legend,
+            align: 'left'
+        },
+        toolbox: {
+            // y: 'bottom',
+            feature: {
+                magicType: {
+                    type: ['stack', 'tiled']
+                },
+                dataView: {},
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        tooltip: {},
+        xAxis: {
+            data: day,
+            silent: false,
+            splitLine: {
+                show: false
+            }
+        },
+        yAxis: {
+            //name:'温度'
+        },
+        series: series,
+        animationEasing: 'elasticOut',
+        animationDelayUpdate: function (idx) {
+            return idx * 5;
+        }
+    };
+    myChart.clear();
+    myChart.setOption(option);
+}
+
+function recentBarAjax(days,deviceType) {
+
+    var myXmlHttpRequest4 = getXmlHttpObject();
+    if(myXmlHttpRequest4){
+        var url4 = "http://39.104.186.210:8090/api/analysis/recent-data?tenantId="+tenantId+"&days="+days;
+        myXmlHttpRequest4.open("get",url4,true);
+        myXmlHttpRequest4.onreadystatechange = proce4;
+        myXmlHttpRequest4.send(null);
+    }
+    function  proce4() {
+        if(myXmlHttpRequest4.readyState == 4){
+
+            var recentGroup = myXmlHttpRequest4.responseText;
+            var mes = JSON.parse(recentGroup);
+            var meso = eval("("+mes+")");
+            var day = [];
+            var data = [];
+            var seriesGroup = [];
+            var legend = [];
+            var i=0;
+            for (var item in meso){
+
+                if(i==0){
+                    for (var item1 in meso[item]){
+                        day.push(item1);
+                    }
+                }
+                i++;
+                for (var item1 in meso[item]){
+                    data.push(meso[item][item1][deviceType]);
+                }
+                if (item == 'maxValue'){
+                    item = '最大值';
+                }
+                if (item == 'meanValue'){
+                    item = '均值';
+                }
+                if (item == 'stddevValue'){
+                    item = '标准差';
+                }
+                if (item == 'dataCount'){
+                    item = '数据条数';
+                }
+                if (item == 'minValue'){
+                    item = '最小值';
+                }
+                legend.push(item);
+                var series = {
+                    name: item,
+                    type: 'bar',
+                    data: data,
+                    animationDelay: function (idx) {
+                        return idx * 100;
+                    }
+                };
+                seriesGroup.push(series);
+                data = [];
+            }
+
+            if (days == 3){
+                drawRecentBar(deviceType,"近三天",legend,day,seriesGroup);
+            }else if (days == 7){
+                drawRecentBar(deviceType,"近一周",legend,day,seriesGroup);
+            }else if (days == 30){
+                drawRecentBar(deviceType,"近一月",legend,day,seriesGroup);
+            }else {
+                window.alert("输入有误");
+            }
+        }
+    }
+}
 
 //var timestamp1 = Date.parse(new Date());
 //window.alert(timestamp1);
