@@ -43,6 +43,24 @@ public class CustomerController extends DefaultThingsboardAwaredController{
         }
     }
 
+    @RequestMapping(value = "/customerName",params = {"customerId"}, method = RequestMethod.GET)
+    @ResponseBody
+    public String getCustomerName(@RequestParam Integer customerId){
+        String requestAddr = API_PREFIX+"customerName";
+        StringBuffer param = new StringBuffer();
+        param.append("customerId").append("=").append(customerId);
+        requestAddr = requestAddr + "?" + param ;
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getAccountServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+            return responseContent;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+    }
+
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
     @ResponseBody
     public String createCustomer(@RequestBody String customerInfo) {
