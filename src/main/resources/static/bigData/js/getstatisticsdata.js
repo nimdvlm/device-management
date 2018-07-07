@@ -271,10 +271,16 @@ var splitNum = "";
 var deviceSelect = "";
 var deviceSelect1 = "";
 var subtext = "";
-var finalDate = "";
+var urldata = "";
 
 function showData() {
 
+    var h = $('#fnameh').val();
+    var min = $('#fnamemin').val();
+    var s = $('#fnames').val();
+    var h1 = $('#fnameh1').val();
+    var min1 = $('#fnamemin1').val();
+    var s1 = $('#fnames1').val();
     var radios = document.getElementsByName('Fruit');
     for (var a = 0, length = radios.length; a < length; a++) {
         if (radios[a].checked) {
@@ -284,60 +290,83 @@ function showData() {
                 inputEndDate = $('#fname1').val();
                 splitNum = $('#fname2').val();
                 deviceSelect1 = $('#fname4').val();
+                if ((deviceSelect1 == "请选择设备名称")){
+                    window.alert("请选择设备名称");
+                    $('#modelchange').removeAttr("data-dismiss");
+                }else if ((inputStartDate == "")){
+                    window.alert("请输入开始时间");
+                    $('#modelchange').removeAttr("data-dismiss");
+                }else if ((inputEndDate == "")){
+                    window.alert("请输入结束时间");
+                    $('#modelchange').removeAttr("data-dismiss");
+                }else if ((splitNum == "")){
+                    window.alert("请输入分段个数");
+                    $('#modelchange').removeAttr("data-dismiss");
+                }else {
+                    $('#modelchange').attr("data-dismiss","modal");
+                    var startTime = new Date(inputStartDate);
+                    var startTimeChuo = startTime.getTime()+h*3600*1000+min*60*1000+s*1000-8*3600*1000;
+                    var endTime = new Date(inputEndDate);
+                    var endTimeChuo = endTime.getTime()+h1*3600*1000+min1*60*1000+s1*1000-8*3600*1000;
+                    subtext = '设备名称：'+deviceSelect1;
+                    deviceSelect1 = deviceGroup[(deviceGroup.indexOf(deviceSelect1)+1)];
+                    urldata = "tenantId="+tenantId+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum+"&deviceId="+deviceSelect1;
+                    drawstatistics(h,min,s,h1,min1,s1,subtext,urldata);
+                }
             }else {
                 inputStartDate = $('#fname').val();
                 inputEndDate = $('#fname1').val();
                 splitNum = $('#fname2').val();
                 deviceSelect = $('#fname3').val();
+                if ((deviceSelect == "请选择设备类型")){
+                    window.alert("请选择设备类型");
+                    $('#modelchange').removeAttr("data-dismiss");
+                }else if ((inputStartDate == "")){
+                    window.alert("请输入开始时间");
+                    $('#modelchange').removeAttr("data-dismiss");
+                }else if ((inputEndDate == "")){
+                    window.alert("请输入结束时间");
+                    $('#modelchange').removeAttr("data-dismiss");
+                }else if ((splitNum == "")){
+                    window.alert("请输入分段个数");
+                    $('#modelchange').removeAttr("data-dismiss");
+                }else {
+                    $('#modelchange').attr("data-dismiss","modal");
+                    var startTime1 = new Date(inputStartDate);
+                    var startTimeChuo1 = startTime1.getTime()+h*3600*1000+min*60*1000+s*1000-8*3600*1000;
+                    var endTime1 = new Date(inputEndDate);
+                    var endTimeChuo1 = endTime1.getTime()+h1*3600*1000+min1*60*1000+s1*1000-8*3600*1000;
+                    subtext = '设备类型：'+deviceSelect;
+                    urldata = "tenantId="+tenantId+"&startTime="+startTimeChuo1+"&endTime="+endTimeChuo1+"&partNum="+splitNum+"&deviceType="+deviceSelect;
+                    drawstatistics(h,min,s,h1,min1,s1,subtext,urldata);
+                }
             }
         }
     }
-    var h = $('#fnameh').val();
-    var min = $('#fnamemin').val();
-    var s = $('#fnames').val();
-    var h1 = $('#fnameh1').val();
-    var min1 = $('#fnamemin1').val();
-    var s1 = $('#fnames1').val();
-    if((inputStartDate != "") && (inputEndDate != "") && (splitNum != "") && ((deviceSelect != "")||(deviceSelect1 != ""))){
+}
 
-        myXmlHttpRequest3 = getXmlHttpObject();
-        document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
-        if(myXmlHttpRequest3){
-            //var url = "toajax?username=" + document.getElementById("username").value;
-            var url3 = "http://39.104.186.210:8090/api/analysis/data";//url="http://39.104.186.210:8090/api/analysis/data";getselectdata
-            var startTime = new Date(inputStartDate);
-            var startTimeChuo = startTime.getTime()+h*3600*1000+min*60*1000+s*1000-8*3600*1000;
-            var endTime = new Date(inputEndDate);
-            var endTimeChuo = endTime.getTime()+h1*3600*1000+min1*60*1000+s1*1000-8*3600*1000;
-            var data = "";
-            for (var i = 0, length = radios.length; i < length; i++) {
-                if (radios[i].checked) {
-                    // 弹出选中值
-                    if(radios[i].value == 'device'){
-                        subtext = '设备名称：'+deviceSelect1;
-                        deviceSelect1 = deviceGroup[(deviceGroup.indexOf(deviceSelect1)+1)];
-                        data = "tenantId="+tenantId+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum+"&deviceId="+deviceSelect1;
-                        deviceSelect1 = "";
-                    }else {
-                        subtext = '设备类型：'+deviceSelect;
-                        data = "tenantId="+tenantId+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum+"&deviceType="+deviceSelect;
-                        deviceSelect = "";
-                    }
-                }
-            }
-            //myXmlHttpRequest.open("get",url,true);
-            myXmlHttpRequest3.open("post",url3,true);
-            myXmlHttpRequest3.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-            myXmlHttpRequest3.onreadystatechange = proce3;
-            //myXmlHttpRequest.send(null);
-            myXmlHttpRequest3.send(data);
-        }
+function drawstatistics(h,min,s,h1,min1,s1,subtext,urldata) {
+    myXmlHttpRequest3 = getXmlHttpObject();
+    document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
+    if(myXmlHttpRequest3){
+        //var url = "toajax?username=" + document.getElementById("username").value;
+        var url3 = "http://39.104.186.210:8090/api/analysis/data";//url="http://39.104.186.210:8090/api/analysis/data";getselectdata
+        //myXmlHttpRequest.open("get",url,true);
+        myXmlHttpRequest3.open("post",url3,true);
+        myXmlHttpRequest3.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        myXmlHttpRequest3.onreadystatechange = proce3;
+        //myXmlHttpRequest.send(null);
+        myXmlHttpRequest3.send(urldata);
+    }
 
-        function proce3() {
+    function proce3() {
 
-            if (myXmlHttpRequest3.readyState == 4) {
-                document.getElementById("YWaitDialog").setAttribute("style","display:none;");
-                var mes = myXmlHttpRequest3.responseText;
+        if (myXmlHttpRequest3.readyState == 4) {
+            document.getElementById("YWaitDialog").setAttribute("style","display:none;");
+            var mes = myXmlHttpRequest3.responseText;
+            if (mes == ""){
+                window.alert("返回值为null");
+            }else {
                 var mes1 = JSON.parse(mes);
                 meso = eval("("+mes1+")");
                 if(meso.status == 'success'){
@@ -494,13 +523,9 @@ function showData() {
                 }else {
                     window.alert('没有匹配的数据');
                 }
-
             }
         }
-    }else{
-        window.alert("输入有误");
     }
-
 }
 
 /*var navCount;
@@ -594,7 +619,7 @@ $('input[type=radio][name=Fruit]').change(function() {
         $('#modaldiv').children('select').remove();
         $spanType = $('<span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>设备类型</strong> </span>\n' +
             '                    <select id="fname3" style="margin-left: 1%">\n' +
-            '                        <option></option>\n' +
+            '                        <option>请选择设备类型</option>\n' +
             '                        <option>temperature</option>\n' +
             '                        <option>humidity</option>\n' +
             '                        <option>pressure</option>\n' +
@@ -609,7 +634,7 @@ $('input[type=radio][name=Fruit]').change(function() {
         $('#modaldiv').children('select').remove();
         $spanDevice = $('<span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>设备名称</strong> </span>\n' +
             '                    <select id="fname4" style="margin-left: 1%">\n' +
-            '                        <option></option>\n' +
+            '                        <option>请选择设备名称</option>\n' +
             '                        <option>21</option>\n' +
             '                        <option>22</option>\n' +
             '                        <option>23</option>\n' +

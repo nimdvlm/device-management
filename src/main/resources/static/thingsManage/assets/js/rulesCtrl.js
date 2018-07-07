@@ -7,6 +7,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.index = 0;
     $scope.showsendmail = false;
     $scope.showrestful = false;
+    $scope.showupdatemessage = false;
     $scope.showPluginMail = false;
     $scope.showrestfulPOST = false;
     $scope.RESTMethod = ["POST", "DELETE", "GET"];
@@ -244,6 +245,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             console.log("判断添加插件类型为MailPlugin");
             $scope.showsendmail = true;
             $scope.showrestful = false;
+            $scope.showupdatemessage=false;
             data.method = "POST";
             $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/mailplugin/sendMail";
             console.log("MailUrl：" + data.url);
@@ -251,9 +253,19 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             console.log("判断添加插件类型为RestfulPlugin");
             $scope.showrestful = true;
             $scope.showsendmail = false;
+            $scope.showupdatemessage=false;
             tempurl = data.url;
             $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/restfulplugin/sendRequest";
-        } else {
+        } else if(data.name=="updateMessagePlugin"){
+            //@TODO 待填写
+            console.log("判断添加插件类型为updateMessagePlugin");
+            $scope.showupdatemessage=true;
+            $scope.showsendmail = false;
+            $scope.showrestful = false;
+
+            $scope.RuleaddPluginUrl="http://"+data.url+"api/v1/updatemessageplugin/updateMessage/insert"
+        }
+        else {
             console.log("判断添加插件类型为其他")
             $scope.showsendmail = false;
         }
@@ -299,6 +311,17 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             $scope.formData.transform.url = $scope.RuleaddPluginUrl;
             $scope.formData.transform.method = "POST";
             $scope.formData.transform.requestBody = $scope.RestfulBody;
+        }else if($scope.RuleaddPlugin.name == "updatemessagePlugin"){
+            //插件为updatemessage时requestbody
+            $scope.UpdatemessagereqBody={};
+            $scope.UpdatemessagereqBody.message=$('addUpdateMessageText').val();
+            $scope.UpdatemessagereqBody.messageType="fromModule";
+            $scope.UpdatemessagereqBody.tenantId=$.cookie("tenantId");
+
+            $scope.formData.transform.name = $scope.RuleaddPlugin.name;
+            $scope.formData.transform.url = $scope.RuleaddPluginUrl;
+            $scope.formData.transform.method = "POST";
+            $scope.formData.transform.requestBody = $scope.UpdatemesrequestBody;
         }
         console.log("新建规则-创建插件:");
         console.log($scope.formData.transform);

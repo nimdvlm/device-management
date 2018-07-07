@@ -78,13 +78,13 @@ function getdata(){
                 var divadd1 = document.createElement("div");
                 var divaddall = document.createElement("div");
                 var button1 = document.createElement("button");
-                button1.setAttribute("style","width:50%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                button1.setAttribute("style","width:50%;font-size:11px;border: 1px solid #4b4f51; margin: 0; padding:4% 4%");
                 button1.setAttribute("data-toggle","modal");
                 button1.setAttribute("data-target","#myModal");
                 button1.setAttribute("onclick","addModel(this)");
                 button1.innerHTML = '添加实例';
                 var button2 = document.createElement("button");
-                button2.setAttribute("style","width:50%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                button2.setAttribute("style","width:50%;font-size:11px;border: 1px solid #4b4f51; margin: 0; padding:4% 4%");
                 button2.setAttribute("data-toggle","modal");
                 button2.setAttribute("data-target","#myModal1");
                 button2.setAttribute("onclick","viewModel(this)");
@@ -111,36 +111,36 @@ function getdata(){
                 divaddall.appendChild(divadd);
                 divaddall.appendChild(divadd1);
                 document.body.appendChild(divaddall);
-                $('body').append($('<div id="main2" style="width: 100%;margin-left:20px; margin-top:250px; font-size:16px">\n' +
-                    '    <h1 style="color: white;font-size: 16px; margin-left: 1%">自定义模型</h1>\n' +
+                $('body').append($('<div style="width: 100%;height:40px;background: transparent;color: white;margin-top: 15.5%"><p style=" margin-left: 35px;margin-top: 10px;float: left; font-size: 16px">自定义模型</p>\n' +
+                    '    <a id="addcustommodel" href="#"><button style="float: right;margin-right: 20px">+ 添加模型</button></a>\n' +
                     '</div>'));
-                for (var e=0; e<10; e++){
+                for (var e=0; e<11; e++){
                     var divadd2 = document.createElement("div");
                     var divadd3 = document.createElement("div");
                     var divaddall1 = document.createElement("div");
                     var button11 = document.createElement("button");
-                    button11.setAttribute("style","width:33.3%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                    button11.setAttribute("style","width:33.3%;font-size:11px;border: 1px solid #4b4f51; margin: 0; padding:4% 4%");
                     button11.setAttribute("data-toggle","modal");
                     button11.setAttribute("data-target","#myModal");
                     button11.setAttribute("onclick","addModel1(this)");
-                    button11.innerHTML = '添加';
+                    button11.innerHTML = '添加实例';
                     var button21 = document.createElement("button");
-                    button21.setAttribute("style","width:33.3%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                    button21.setAttribute("style","width:33.3%;font-size:11px;border: 1px solid #4b4f51; margin: 0; padding:4% 4%");
                     button21.setAttribute("data-toggle","modal");
                     button21.setAttribute("data-target","#myModal1");
                     button21.setAttribute("onclick","viewModel1(this)");
-                    button21.innerHTML = '详情';
+                    button21.innerHTML = '查看详情';
                     var button13 = document.createElement("button");
-                    button13.setAttribute("style","width:33.3%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                    button13.setAttribute("style","width:33.3%;font-size:11px;border: 1px solid #4b4f51; margin: 0; padding:4% 4%");
                     button13.setAttribute("data-toggle","modal");
                     button13.setAttribute("data-target","#myModal1");
                     button13.setAttribute("onclick","deleteModel1(this)");
-                    button13.innerHTML = '删除';
+                    button13.innerHTML = '删除模型';
                     divadd3.setAttribute("style","width: 100%;height:10%;display:block");
-                    if(i%4 == 0){
-                        divaddall1.setAttribute("style","width: 15%;height: 18%;margin-top: 3%;margin-left: 14%;float:left");
+                    if (e<3){
+                        divaddall1.setAttribute("style","width: 15%;height: 18%;margin-top: 1.5%;margin-left: 14%;float:left");
                     }else {
-                        divaddall1.setAttribute("style","width: 15%;height: 18%;margin-top: 3%;margin-left: 4%;float:left");
+                        divaddall1.setAttribute("style","width: 15%;height: 18%;margin-top: 5.5%;margin-left: 14%;float:left");
                     }
                     divadd2.setAttribute("class", "card");
                     divadd2.setAttribute("style", "display:none;background: #fffae3;margin-right: 0px; width:100%; height:90%");
@@ -417,8 +417,13 @@ function addModel(obj) {
 function viewModel(obj) {
 
     var index = modelDetail.indexOf(parseInt($(obj).parent().parent().find('p').eq(1).html()));
-    $('#view1').html("模型名称:"+modelDetail[index-1]);
-    $('#view2').html("模型ID:&nbsp;&nbsp;&nbsp;"+modelDetail[index]);
-    $('#view3').html("模型参数:"+modelDetail[index+1]);
+    $('#view1').html("模型名称:&nbsp;&nbsp;&nbsp;"+modelDetail[index-1]);
+    $('#view2').html("模型ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+modelDetail[index]);
+    $('#view3').html("模型参数:&nbsp;&nbsp;&nbsp;"+modelDetail[index+1]);
 
 }
+
+$('#addcustommodel').click(
+    function () {
+        window.alert("需要创建自定义模型接口");
+    });
