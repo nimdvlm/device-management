@@ -407,6 +407,7 @@
                                                                       id="pluginmethodMail"
                                                                       value="POST"/>
                                 </p>
+                                <!--判断是restful插件-->
                                 <p ng-show="showrestful">请求方式：<select id="pluginmethodRest"
                                                                       ng-model="RuleaddPlugin.method"
                                                                       ng-options="x for x in RESTMethod"
@@ -419,6 +420,12 @@
                                 <p ng-show="showrestfulPOST"><span
                                         style="vertical-align:top">Requestbody：</span><textarea
                                         style="height:120px;width: 70%;" ng-model="RestfulBody.body"></textarea>
+                                </p>
+
+                                <!--判断是updatemessage插件-->
+                                <p ng-show="showupdatemessage"><span
+                                        style="vertical-align:top">Message：</span><textarea
+                                        style="height:120px;width: 70%;" id="addUpdateMessageText"></textarea>
                                 </p>
 
                                 <!--判断是sendmail后显示-->
