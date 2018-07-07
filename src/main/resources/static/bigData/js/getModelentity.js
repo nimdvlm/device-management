@@ -34,10 +34,8 @@ function getdata1() {
             var mes = myXmlHttpRequest1.responseText;
             var mes1 = JSON.parse(mes);
             var meso = eval("(" + mes1 + ")");
-
             //window.alert(meso.datagroup[0].deviceId);
             //window.alert(meso.datagroup.length);
-
             for (var j = 0; j < meso.data.length; j++) {
                 entityDetail.push(meso.data[j].app_id);
                 entityDetail.push(meso.data[j].app_name);
@@ -49,23 +47,23 @@ function getdata1() {
                 var divadd1 = document.createElement("div");
                 var divaddall = document.createElement("div");
                 var button1 = document.createElement("button");
-                button1.setAttribute("style","width:20%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                button1.setAttribute("style","width:25%;font-size:11px;padding:4% 6%;border: 1px solid #4b4f51; margin: 0");
                 button1.setAttribute("data-toggle","modal");
                 button1.setAttribute("data-target","#myModal");
                 button1.setAttribute("onclick","viewEntity(this)");
-                button1.innerHTML = '查';
+                button1.innerHTML = '查看';
                 var button2 = document.createElement("button");
-                button2.setAttribute("style","width:30%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                button2.setAttribute("style","width:25%;font-size:11px;;padding:4% 6%;border: 1px solid #4b4f51; margin: 0");
                 button2.setAttribute("onclick","startEntity(this)");
                 button2.innerHTML = '启动';
                 var button4 = document.createElement("button");
-                button4.setAttribute("style","width:30%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                button4.setAttribute("style","width:25%;font-size:11px;;padding:4% 6%;border: 1px solid #4b4f51; margin: 0");
                 button4.setAttribute("onclick","getResult(this)");
                 button4.innerHTML = '预测';
                 var button3 = document.createElement("button");
-                button3.setAttribute("style","width:20%;font-size:11px;border: 1px solid #4b4f51; margin: 0");
+                button3.setAttribute("style","width:25%;font-size:11px;;padding:4% 6%;border: 1px solid #4b4f51; margin: 0");
                 button3.setAttribute("onclick","deleteEntity(this)");
-                button3.innerHTML = '删';
+                button3.innerHTML = '删除';
                 divadd1.setAttribute("style","width: 100%;height:10%;display:block");
                 if(j%4 == 0){
                     divaddall.setAttribute("style","width: 15%;height: 18%;margin-top: 3%;margin-left: 14%;float:left");
@@ -174,7 +172,7 @@ function viewEntity(obj) {
         viewInputString = viewInputString+"&nbsp;&nbsp;&nbsp;输入参数-"+entityDetail[viewIndex+4][i].type+","+"绑定设备ID-"+entityDetail[viewIndex+4][i].device_id+"<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     }
     $('#view5').html("实例输入："+viewInputString);
-    $('#view6').html("实例输出："+entityDetail[viewIndex+5]);
+    $('#view6').html("实例输出：&nbsp;&nbsp;&nbsp;"+entityDetail[viewIndex+5]);
 }
 
 function startEntity(obj) {
