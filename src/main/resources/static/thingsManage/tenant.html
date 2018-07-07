@@ -51,13 +51,12 @@
                      </tr>
                      </thead>
                      <tbody>
-                     <tr>
-                         <td>TenantAdmin@bupt.edu.cn</td>
-                         <td><button class="btn btn-sm btn-info" ng-click="dd()">查看详情</button>
-                             <button class="btn btn-sm btn-success" ng-click="dd()">编辑</button>
-                             <button class="btn btn-sm btn-danger" ng-click="dd()">删除</button></td>
-                     </tr>
+                     <tr ng-repeat="arr in tenantAdminInfo">
+                         <td>{{arr.name}}</td>
+                         <td><button class="btn btn-sm btn-info" data-toggle="modal" data-target="#showAdminInfo" ng-click="showAdminInfo(arr)">查看详情</button>
 
+                             <button class="btn btn-sm btn-danger" ng-click="deleteAdmin(arr)">删除</button></td>
+                     </tr>
                      </tbody>
                  </table>
             </div>
@@ -122,43 +121,7 @@
         </div>
     </div>
 
-    <!--创建租户管理员模态框-->
 
-    <div class="modal fade" id="addTenantManager" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h3 class="modal-title user" style="color: #305680;font-weight: 600">
-                        创建租户管理员
-                    </h3>
-                </div>
-                <div class="modal-body" id="abilityInfo">
-                    <label class="col-sm-3 control-label" style="text-align: left">
-                        <span style="color: red;">*</span>名称
-                    </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" id="manufacturerName" required/>
-                </div>
-                <div class="modal-body">
-                    <label class="col-sm-3 control-label" style="text-align: left">
-                        <span style="color: red;">*</span>密码
-                    </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" id="deviceType" required/>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="addAM()">
-                        创建
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        取消
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!--编辑模态框-->
 
@@ -229,6 +192,85 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
                     <button type="button" class="btn btn-primary"  data-dismiss="modal" ng-click="deleteTenant()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--Admin查看详情模态框-->
+    <div class="modal fade" id="showAdminInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h3 class="modal-title user" style="color: #305680;font-weight: 600">
+                        租户管理员详情
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <h4 class="lineSpacing">姓名：{{adminInformation.name}}</h4><hr>
+                    <h4 class="lineSpacing">邮箱：{{adminInformation.email}}</h4><hr>
+                    <h4 class="lineSpacing">权限：{{adminInformation.authority}}</h4><hr>
+                    <h4 class="lineSpacing">附加消息：{{adminInformation.additional_info}}</h4><hr>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        确定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<!--Admin创建租户管理员模态框-->
+    <div class="modal fade" id="addTenantManager" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h3 class="modal-title user" style="color: #305680;font-weight: 600">
+                        创建租户管理员
+                    </h3>
+                </div>
+                <div class="modal-body" id="abilityInfo">
+                    <label class="col-sm-3 control-label" style="text-align: left">
+                        <span style="color: red;">*</span>姓名
+                    </label>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="adminName" required/>
+                </div>
+                <div class="modal-body">
+                    <label class="col-sm-3 control-label" style="text-align: left">
+                        <span style="color: red;">*</span>邮箱
+                    </label>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="adminEmail" required/>
+                </div>
+                <div class="modal-body">
+                    <label class="col-sm-3 control-label" style="text-align: left">
+                        <span style="color: red;">*</span>密码
+                    </label>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="adminPassword" required/>
+                </div>
+                <div class="modal-body">
+                    <label class="col-sm-3 control-label" style="text-align: left">
+                        <span style="color: red;">*</span>备注
+                    </label>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="adminAdditional_info" required/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="modalConfirmCreateAdmin" ng-click="addAdmin(arr)">
+                        创建
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        取消
+                    </button>
                 </div>
             </div>
         </div>
