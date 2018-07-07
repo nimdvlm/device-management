@@ -65,10 +65,18 @@ function getdata1() {
                 button3.setAttribute("onclick","deleteEntity(this)");
                 button3.innerHTML = '删除';
                 divadd1.setAttribute("style","width: 100%;height:10%;display:block");
-                if(j%4 == 0){
-                    divaddall.setAttribute("style","width: 15%;height: 18%;margin-top: 3%;margin-left: 14%;float:left");
+                if (j<4){
+                    if(j%4 == 0){
+                        divaddall.setAttribute("style","width: 15%;height: 18%;margin-top: 4.5%;margin-left: 14%;float:left");
+                    }else {
+                        divaddall.setAttribute("style","width: 15%;height: 18%;margin-top: 4.5%;margin-left: 4%;float:left");
+                    }
                 }else {
-                    divaddall.setAttribute("style","width: 15%;height: 18%;margin-top: 3%;margin-left: 4%;float:left");
+                    if(j%4 == 0){
+                        divaddall.setAttribute("style","width: 15%;height: 18%;margin-top: 5%;margin-left: 14%;float:left");
+                    }else {
+                        divaddall.setAttribute("style","width: 15%;height: 18%;margin-top: 5%;margin-left: 4%;float:left");
+                    }
                 }
                 divadd.setAttribute("class", "card");
                 divadd.setAttribute("style", "display:none;background: #fffae3;margin-right: 0px; width:100%; height:90%");
