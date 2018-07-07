@@ -64,6 +64,11 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
             $scope.tenantDetailShow = value;
 
         })
+        /*点击显示租户管理员详情*/
+        var tenantAdminDetail = $resource('/api/account/tenant/users?tenantId=:adminID'+'&limit=9&page=0',{adminID:tenantID});
+        $scope.tenantAdminInfo = tenantAdminDetail.query();
+        //console.log($scope.tenantAdminInfo);
+
     }
 
 //修改租户信息（通过body中的ID来获取指定租户）
@@ -153,6 +158,82 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
             toastr.error("删除失败！");
         });
     };
+
+//Admin查看租户管理员详情
+    $scope.showAdminInfo = function (value) {
+       //console.log(value);
+
+       var adminInfo = $resource('/api/account/user?userId=:userID',{userID:'@id'});
+       adminInfo.get({userID:value.id}).$promise.then(function (items) {
+           $scope.adminInformation = items;
+       })
+    }
+
+//Admin创建租户管理员
+    $("#createManager").click(function () {
+        $("#adminName").removeClass("input-err");
+        $("#addTenantManager input").each(function () {     //each为每个匹配元素规定要运行的函数
+            $(this).val("");
+        });
+    });
+
+    $scope.addAdmin = function (vale) {
+        $("#modalConfirmCreateAdmin").attr("data-dismiss","modal");//attr设置或返回被选元素的属性或值；
+        if($("#adminName").val()){
+            var name = $("#adminName").val();
+            var additional_info = $("#adminAdditional_info").val();
+            var email = $("#adminEmail").val();
+            var password = $("#adminPassword").val();
+            var createAdminInfo = '{"tenant_id":'+'"'+tenantID+'"'+',"name":'+'"'+name+'"'+',"additional_info":'+'"'+additional_info+'"'+',"email":'+'"'+email+'"'+',"password":'+'"'+password+'"'+'}';
+            console.log(createAdminInfo);
+            $.ajax({
+                url:"/api/account/tenantAdmin",
+                data:createAdminInfo,
+                type:"POST",
+                contentType: "application/json; charset=utf-8",//post请求必须
+                success:function (resp) {
+                    toastr.success("创建成功！");
+                    setTimeout(function () {
+                        window.location.reload();
+                    },1000);
+                },
+                error:function (err) {
+                    alert("创建失败！");
+                }
+            });
+
+        }else{
+            /*增加提示效果*/
+            $("#adminName").addClass("input-err");
+            $("#modalConfirmCreateAdmin").removeAttr("data-dismiss");
+            $('#adminName').on('focus', function() {
+                $(this).removeClass('input-err');
+            });
+        }
+
+
+    }
+
+
+//Admin删除租户管理员
+    $scope.deleteAdmin = function (data) {
+        //console.log(data);
+        var result = confirm("确定删除此租户管理员？");
+        if(result){
+            var deleteAdmin = $resource("/api/account/user?userId=:userID",{userID:"@id"});
+            deleteAdmin.delete({userID:data.id},{},function (resp) {
+                toastr.success("删除成功！");
+                setTimeout(function () {
+                    window.location.reload();
+                },1000);
+            },function (err) {
+                alert("删除失败！");
+            });
+        }else {
+            alert("不删除?");
+        }
+    }
+
 
 
 }]);

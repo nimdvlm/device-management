@@ -410,10 +410,10 @@ serviceGroup
 .abilityIcon{
     width: 65%;
     float: left;
-    margin-left: 10px;
+
 }
 .abilityBackgroundstyle{
-    width: 220px;
+    width: 210px;
     height: 135px;
     border-radius: 10px;
     margin-top: 25px;
@@ -452,7 +452,7 @@ serviceGroup
     border: 1px solid rgb(212,212,212);
     position: fixed;
     overflow-y: auto;
-    margin-left: 800px;
+    margin-left: 745px;
     margin-top: 30px;
 
 }
@@ -488,7 +488,7 @@ pluginsGroup
 .pluginRightView{
     float: right;
     padding-top: 10px;
-    width:45%;
+    width:44%;
     min-width: 350px;
 }
 .pluginChart{
@@ -712,7 +712,7 @@ width: 35%;
 }
 .tenantRight{
     position: absolute;
-    margin-left: 765px;
+    margin-left: 740px;
     top:88px;
     height: 640px;
     width: 35%;
@@ -788,6 +788,7 @@ width: 35%;
     border-right: 2px solid #c0c0c0;
     position: fixed;
     overflow-y: auto;
+    text-align: center;
 
 }
 #tenantAue #tenantTow #tenantThere #createManager{
