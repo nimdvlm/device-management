@@ -44,7 +44,7 @@ mainApp.controller("customerCtrl",["$scope","$resource","$location",function ($s
 
     //选中客户组信息展示
     $scope.showCustomer = function (data) {
-        var offset = $('#customerChart').offset().top-190;
+        var offset = $('#customerChart').offset().top-215;
         console.log(offset);
         $('html, body').animate({scrollTop:offset}, 1000);
         $scope.customersInfo.forEach(function (items) {

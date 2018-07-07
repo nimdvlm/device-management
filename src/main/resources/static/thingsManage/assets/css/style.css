@@ -154,7 +154,7 @@ ul,li{
     text-align: center;
 }
 .chooseBtn{
-    margin-top: 25px;
+    margin-top: 3%;
     margin-left: 20px;
     cursor: pointer;
     padding: 20px;
@@ -249,7 +249,7 @@ DEVICELIST STYLES
     cursor: pointer;
 }
 #preDevice,#nextDevice{
-    margin-top: 17%;
+    margin-top: 15%;
     width: 2%;
     height: 30px;
     float: left;
@@ -281,7 +281,13 @@ DEVICELIST STYLES
     width: 20%;
     text-align: center;
 }
-
+.labelDiv{
+    float: left;
+    margin-right: 10px;
+}
+.labelDiv span{
+    color: #6f6e6e;
+}
 /* =============================================================
    DeviceGroup
  ============================================================ */
