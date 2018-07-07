@@ -61,10 +61,20 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
         .when("/homeTenant",{
             templateUrl:"homeTenant.html",
             controller:"homePageCtrl"
-    })
-        .otherwise({
-            redirectTo:"/homePage"
         });
+    if($.cookie("userLevel") === "SYS_ADMIN"){
+        console.log("系统权限跳转")
+        $routeProvider
+            .otherwise({
+                redirectTo:"/homeTenant"
+            });
+    }else{
+        console.log("其他权限跳转")
+        $routeProvider
+            .otherwise({
+                redirectTo:"/homePage"
+            });
+    }
 }]);
 
 mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope,$location,$resource) {
