@@ -240,7 +240,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //点击添加规则-根据插件名判断插件类型
     $scope.change = function (data) {
         $scope.RuleaddPluginUrl=data.url;
-        console.log("url:"+data.url)
+        console.log(data)
         if (data.name == "MailPlugin") {
             console.log("判断添加插件类型为MailPlugin");
             $scope.showsendmail = true;
@@ -256,14 +256,14 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             $scope.showupdatemessage=false;
             tempurl = data.url;
             $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/restfulplugin/sendRequest";
-        } else if(data.name=="updateMessagePlugin"){
+        } else if(data.name=="UpdateMessagePlugin"){
             //@TODO 待填写
             console.log("判断添加插件类型为updateMessagePlugin");
             $scope.showupdatemessage=true;
             $scope.showsendmail = false;
             $scope.showrestful = false;
 
-            $scope.RuleaddPluginUrl="http://"+data.url+"api/v1/updatemessageplugin/updateMessage/insert"
+            $scope.RuleaddPluginUrl=data.url+"/api/v1/updatemessageplugin/updateMessage/insert"
         }
         else {
             console.log("判断添加插件类型为其他")
@@ -300,28 +300,34 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             $scope.MailrequestBody.subject = $('#addTranMailSub').val();
             $scope.MailrequestBody.text = $('#addTranMailText').val();
 
-            $scope.showaddTransform = true;
             $scope.formData.transform.name = $scope.RuleaddPlugin.name;
             $scope.formData.transform.url = $scope.RuleaddPluginUrl;
             $scope.formData.transform.method = "POST";
             $scope.formData.transform.requestBody = $scope.MailrequestBody;
-        } else if ($scope.RuleaddPlugin.name == "RestfulPlugin") {
+
             $scope.showaddTransform = true;
+        } else if ($scope.RuleaddPlugin.name == "RestfulPlugin") {
+            //判断插件类型为restfulplugin时请求格式
             $scope.formData.transform.name = $scope.RuleaddPlugin.name;
             $scope.formData.transform.url = $scope.RuleaddPluginUrl;
             $scope.formData.transform.method = "POST";
             $scope.formData.transform.requestBody = $scope.RestfulBody;
-        }else if($scope.RuleaddPlugin.name == "updatemessagePlugin"){
+
+            $scope.showaddTransform = true;
+        }else if($scope.RuleaddPlugin.name == "UpdateMessagePlugin"){
             //插件为updatemessage时requestbody
             $scope.UpdatemessagereqBody={};
-            $scope.UpdatemessagereqBody.message=$('addUpdateMessageText').val();
+            $scope.UpdatemessagereqBody.message=$('#addUpdateMessageText').val();
             $scope.UpdatemessagereqBody.messageType="fromModule";
             $scope.UpdatemessagereqBody.tenantId=$.cookie("tenantId");
 
             $scope.formData.transform.name = $scope.RuleaddPlugin.name;
             $scope.formData.transform.url = $scope.RuleaddPluginUrl;
             $scope.formData.transform.method = "POST";
-            $scope.formData.transform.requestBody = $scope.UpdatemesrequestBody;
+            $scope.formData.transform.requestBody = $scope.UpdatemessagereqBody;
+
+            //插件详情表格
+            $scope.showaddTransform=true
         }
         console.log("新建规则-创建插件:");
         console.log($scope.formData.transform);
@@ -408,8 +414,11 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         $('#filternamealert').hide();
         $scope.showsendmail = false;
         $scope.showrestful = false;
+        $scope.showupdatemessage = false;
+
         $scope.showPluginMail = false;
         $scope.showrestfulPOST = false;
+        $scope.RuleaddPluginUrl=""
     };
 
     $scope.clearForm = function () {
@@ -426,5 +435,6 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         InitformData();
         $scope.showaddFilter = false;
         $scope.showaddTransform = false;
+        $scope.RuleaddPluginUrl=""
     };
 });
