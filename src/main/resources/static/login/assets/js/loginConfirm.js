@@ -2,10 +2,18 @@
 // var tenant;
 // var userId;
 $(document).ready(function () {
+    /*Enter回车登录*/
+    $(document).keydown(function () {
+        if(event.keyCode == 13){
+            $("#login").click();
+        }
+    });
+
 
     /*
        登录验证
    */
+
     $("#login").click(function () {
         var userName = $("#form-username").val();
         var password = $("#form-password").val();
