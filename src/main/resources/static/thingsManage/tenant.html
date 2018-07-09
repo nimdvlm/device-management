@@ -39,7 +39,7 @@
                 <h4 class="lineSpacing">电话：{{tenantDetailShow.phone}}</h4><hr>
                 <h4 class="lineSpacing">地址：{{tenantDetailShow.address}}</h4><hr>
                 <h4 class="lineSpacing">附加消息：{{tenantDetailShow.additional_info}}</h4><hr>
-                <h4 class="lineSpacing">操作：<button class="btn btn-sm btn-info" ng-click="$location.path('tenantAdmin')">查看租户下租户管理员</button></h4><hr>
+                <h4 class="lineSpacing">操作：<button class="btn btn-sm btn-info" ng-click="$location.path('tenantAdmin')" ng-click="showTenantTow()">查看租户下租户管理员</button></h4><hr>
             </div>
             <div id="tenantAdministrator">
                  <table border="1" width="100%">
@@ -214,7 +214,7 @@
                     <h4 class="lineSpacing">姓名：{{adminInformation.name}}</h4><hr>
                     <h4 class="lineSpacing">邮箱：{{adminInformation.email}}</h4><hr>
                     <h4 class="lineSpacing">权限：{{adminInformation.authority}}</h4><hr>
-                    <h4 class="lineSpacing">附加消息：{{adminInformation.additional_info}}</h4><hr>
+                    <h4 class="lineSpacing">附加消息：{{adminInformation.additional_info}}</h4>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">
