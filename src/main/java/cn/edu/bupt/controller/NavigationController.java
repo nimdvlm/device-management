@@ -25,9 +25,7 @@ public class NavigationController {
     }
 
     @RequestMapping("/signin")
-    public String  login() {
-        return "static/login/index";
-    }
+    public String  login() { return "static/login/index"; }
 
     @RequestMapping("/modifyPassword")
     public String  modifyPassword() {
