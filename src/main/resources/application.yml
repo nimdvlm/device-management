@@ -29,6 +29,10 @@ service-management:
  host: 39.104.189.84
  port: 30080
 
+dashboard:
+ host: 39.104.189.84
+ port: 30080
+
 account:
 #  host: 39.104.165.155
 #  port: 8400
