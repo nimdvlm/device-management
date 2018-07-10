@@ -56,7 +56,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
         //初始化右侧视图
         $scope.Ruleitem = $scope.Rules[0];//必须在success函数里才能取到Rules[0]
-        //console.log("query获取的数据："+$scope.Rules);//bug:控制台打印[obj obj]
+        $scope.RulePlugins=$scope.Ruleitem.transforms
+
         console.log("query函数内的Rules：");
         console.log($scope.Rules);
         console.log("取第一个对象：");
@@ -93,6 +94,9 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         $scope.Ruleitem = rule;
         console.log("rule in rules:");
         console.log($scope.Ruleitem);
+
+        $scope.RulePlugins=rule.transforms
+
         //判断规则运行状态
         if ($scope.Ruleitem.rule.state == "ACTIVE") {
             $scope.isActive = true;
@@ -103,16 +107,21 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             $scope.Rulestart = true;
             $scope.Rulestop = false;
         }
-
-        //判断规则中插件类型
-        if ($scope.Ruleitem.transform.name == "MailPlugin") {
-            $scope.showPluginMail = true;
-        } else {
-            $scope.showPluginMail = false;
-        }
         //把数据发送给表格控制器
         $scope.$broadcast('senddata', $scope.Ruleitem);
     };
+
+    //根据插件类型展示div
+    $scope.showplugin=function(RPitem,i) {
+        if (RPitem.name.search("Mail")) {
+            console.log("当前插件为mail")
+            document.getElementById('plugin_mail_'+i).style.display='block'
+            document.getElementById('plugin_'+i).style.display='none'
+        } else {
+            document.getElementById('plugin_mail_'+i).style.display='none'
+            document.getElementById('plugin_'+i).style.display='block'
+        }
+    }
 
     //模糊搜索规则
     $scope.searchRule = function () {
