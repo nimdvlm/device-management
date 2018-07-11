@@ -8,24 +8,39 @@
                 </div>
             </div>
 
-            <div ng-repeat="dashboard in Dashboards" class="chooseBtn dashboard" ng-click="showDBDetail(dashboard)">
+            <div ng-repeat="db in Dashboards" class="chooseBtn dashboard" ng-click="showDBDetail(db)">
                 <div>
                     <i class="fa fa-tachometer fa-2x" aria-hidden="true"></i>
-                    <p>{{dashboard.name}}</p>
+                    <p>{{db.name}}</p>
                 </div>
             </div>
             <br/>
         </div>
         <div class="right_Dashboard" ng-show="isChoose">
-            <h3>仪表板&nbsp;&nbsp;>&nbsp;&nbsp;{{dbItem.name}}</h3>
-            <div class="dashboard_item">
-                <canvas id="myChart1" height="180"></canvas>
-            </div>
-            <div class="dashboard_add dashboard_item" style="border-style: dashed;" data-toggle="modal" data-target="#addDBWidget">
-                <div class="dbwidget_add_item">
-                +添加展示组件
+            <div>
+                <h3 style="display : inline">仪表板&nbsp;&nbsp;>&nbsp;&nbsp;{{dbItem.name}}</h3>
+                <div style="float: right;margin-right: 20px">
+                    <span data-toggle="modal" data-target="#addEntity">
+                        <i class="glyphicon glyphicon-plus fa-lg shand dbicon" title="创建实例"></i>
+                    </span>
+                    <span data-toggle="modal" data-target="#delDashboard">
+                        <i class="glyphicon glyphicon-trash fa-lg shand dbicon" title="删除仪表板"></i>
+                    </span>
                 </div>
             </div>
+
+            <div class="dashboard_item" ng-repeat="entity in entitys">
+                <canvas id="entityChart_{{$index}}" height="180"></canvas>
+            </div>
+
+            <div ng-show="isShowEmpty" class="showEmpty">
+                <p>仪表板为空，请添加实例</p>
+            </div>
+            <!--<div class="dashboard_add dashboard_item" style="border-style: dashed;" data-toggle="modal" data-target="#addDBWidget">-->
+                <!--<div class="dbwidget_add_item">-->
+                <!--+添加展示组件-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 
@@ -45,7 +60,7 @@
                 <div class="modal-body">
 
                     <label>仪表板名称：</label>
-                            <td><input id="db_name" name="db_name" type="text" ng-model="db_name"/>
+                            <td><input id="add_db_name" name="add_db_name" type="text"/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭
@@ -60,7 +75,7 @@
 
 
     <!--modal添加Widget-->
-    <div class="modal fade" id="addDBWidget" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade" id="addEntity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -97,5 +112,33 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
+
+    <!--modal删除仪表板-->
+    <div class="modal fade" id="delDashboard" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        删除仪表板
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    确定删除此仪表板？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="delDashboard()">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
 
 </div>

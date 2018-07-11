@@ -675,9 +675,9 @@ width: 35%;
 }
 .dashboard{
     margin-left: 0;
-    height: 120px;
+    height: 100px;
     width: 180px;
-    padding-top: 30px;
+    margin-top: 15px;
 }
 .dashboard_add{
     border-style: dashed;
@@ -704,6 +704,12 @@ width: 35%;
 }
 #addDBwidget_table tr{
     height: 40px;
+}
+.dbicon{
+    margin:0 10px;
+}
+.dbicon:hover{
+    color: #df5b58;
 }
 /*=======================================tenantGroup===========================================*/
 /*底层阴影
