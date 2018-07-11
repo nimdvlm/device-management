@@ -697,10 +697,13 @@ width: 35%;
 }
 .dashboard_item{
     float: left;
-    width: 47%;
-    margin: 15px 5px;
+    width: 80%;
+    margin-top: 55px;
+    margin-left:55px;
     border: 1px solid rgba(25, 100, 173, 0.5);
     min-height: 270px;
+    box-shadow: 1px 2px 1px rgba(0,0,0,0.172);
+    background-color: white;
 }
 #addDBwidget_table tr{
     height: 40px;
@@ -710,6 +713,14 @@ width: 35%;
 }
 .dbicon:hover{
     color: #df5b58;
+}
+.entity_title{
+    padding: 10px 15px;
+    background-color: #f8f9fb;
+}
+#entity_name{
+    font-size: 25px;
+    color:#1964ad;
 }
 /*=======================================tenantGroup===========================================*/
 /*底层阴影

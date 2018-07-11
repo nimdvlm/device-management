@@ -30,11 +30,17 @@
             </div>
 
             <div class="dashboard_item" ng-repeat="entity in entitys">
-                <canvas id="entityChart_{{$index}}" height="180"></canvas>
+                <div class="entity_title">
+                    <span id="entity_name">{{entity.name}}</span>
+                    <span data-toggle="modal" data-target="#delEntity" ng-click="getEntityId(entity)" style="float: right;margin-top: 10px">
+                        <i class="glyphicon glyphicon-trash shand dbicon" title="删除当前实例"></i>
+                    </span>
+                </div>
+                <canvas id="entityChart_{{$index}}" min-height="500"></canvas>
             </div>
 
             <div ng-show="isShowEmpty" class="showEmpty">
-                <p>仪表板为空，请添加实例</p>
+                <p>仪表板为空，点击+添加组建实例</p>
             </div>
             <!--<div class="dashboard_add dashboard_item" style="border-style: dashed;" data-toggle="modal" data-target="#addDBWidget">-->
                 <!--<div class="dbwidget_add_item">-->
@@ -74,7 +80,7 @@
     </div>
 
 
-    <!--modal添加Widget-->
+    <!--modal添加Entity-->
     <div class="modal fade" id="addEntity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -133,6 +139,33 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消
                     </button>
                     <button type="button" class="btn btn-primary" ng-click="delDashboard()">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!--modal删除Entity-->
+    <div class="modal fade" id="delEntity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        删除实例
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    确定删除当前实例？{{entity.id}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="delEntity()">
                         确定
                     </button>
                 </div>
