@@ -53,8 +53,8 @@
                             data-target="#refreshDevice"  ng-click="activePlugin()">激活插件</button>
                     <button class="btn btn-danger user" data-toggle="modal"
                             data-target="#refreshDevice"  ng-click="stopPlugin()">暂停插件</button>
-                    <button class="btn btn-primary" data-toggle="modal"
-                            data-target="#operatingStatus"  ng-click="operatingStatus()">运行状态</button>
+                    <button id="runingStatus" class="btn btn-primary" data-toggle="modal"
+                            data-target="#operatingStatus">运行状态</button>
                 </div>
             </div>
 
@@ -92,13 +92,9 @@
                 </h3>
             </div>
             <div class="modal-body">
-                <p >CONTENT-LENGTH：</p><hr>
-                <p>MESSAGE-ID：</p><hr>
-                <p>SUBSCRIPTION：</p><hr>
-                <p>CONTENT-TYPE：</p><hr>
-                <p>DESTINATION：</p><hr>
-                <p>CONTENT-LENTTH：</p><hr>
-                <p>OTHERS：</p>
+                <h4>插件被请求次数：<strong style="color: #305680">{{frameBody}}</strong></h4><hr>
+                <h4>MailController被请求次数：<strong style="color: #305680">{{frameBody}}</strong></h4>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
