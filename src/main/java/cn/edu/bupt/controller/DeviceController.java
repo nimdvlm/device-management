@@ -353,18 +353,21 @@ public class DeviceController extends DefaultThingsboardAwaredController {
         JsonArray array = jsonObject.getAsJsonArray("data");
         for(JsonElement je : array){
             JsonObject jo = je.getAsJsonObject();
-            if(jo.get("lifeTime").getAsLong() == 0){
-                continue;
-            }
-            //判断时间间隔是否小于6个月大于1个月
-            if(((jo.get("lifeTime").getAsLong() - System.currentTimeMillis())/1000 < 15552000) &&
-                    ((jo.get("lifeTime").getAsLong() - System.currentTimeMillis())/1000 > 2678400)){
-                jo.addProperty("alarm", "orange");
+            try {
+                if (jo.get("lifeTime").getAsLong() == 0) {
+                    continue;
+                }
+                //判断时间间隔是否小于6个月大于1个月
+                if (((jo.get("lifeTime").getAsLong() - System.currentTimeMillis()) / 1000 < 15552000) && ((jo.get("lifeTime").getAsLong() - System.currentTimeMillis()) / 1000 > 2678400)) {
+                    jo.addProperty("alarm", "orange");
 
-            }
-            //小于一个月
-            if((jo.get("lifeTime").getAsLong() - System.currentTimeMillis())/1000 < 2678400){
-                jo.addProperty("alarm", "red");
+                }
+                //小于一个月
+                if ((jo.get("lifeTime").getAsLong() - System.currentTimeMillis()) / 1000 < 2678400) {
+                    jo.addProperty("alarm", "red");
+                }
+            }catch (Exception e){
+                continue;
             }
         }
         return array.toString();
