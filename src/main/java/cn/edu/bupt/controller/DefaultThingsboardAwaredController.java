@@ -50,6 +50,12 @@ public class DefaultThingsboardAwaredController {
     @Value("${account.port}")
     String accountPort ;
 
+    @Value("${dashboard.host}")
+    String dashboardHost ;
+
+    @Value("${dashboard.port}")
+    String dashboardPort ;
+
     @Autowired
     HttpServletRequest request;
 
@@ -74,6 +80,10 @@ public class DefaultThingsboardAwaredController {
 
     protected String getServiceManagementServer() {
         return serviceManagementHost+":"+serviceManagementPort ;
+    }
+
+    protected String getDashboardServer() {
+        return dashboardHost+":"+dashboardPort ;
     }
 
     protected String retSuccess(String msg) {

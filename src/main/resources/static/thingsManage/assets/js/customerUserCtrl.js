@@ -35,7 +35,7 @@ mainApp.controller("customerUserCtrl",["$scope","$resource","$location",function
     };
 
     $scope.showUserInfo = function (data) {
-        var offset = $('#customerChart').offset().top-215;
+        var offset = $('#customerUserChart').offset().top-215;
         console.log(offset);
         $('html, body').animate({scrollTop:offset}, 1000);
         $scope.userInfo.forEach(function (items) {
