@@ -1,5 +1,6 @@
 <div class="content-wrapper" ng-controller="dashboardCtrl">
     <div class="container">
+        <!--左侧视图-->
         <div class="left_Dashboard">
             <div id="dblist_title">仪表板列表</div>
             <div class="chooseBtn dashboard dashboard_add" data-toggle="modal" data-target="#addDashboard">
@@ -16,11 +17,18 @@
             </div>
             <br/>
         </div>
+        <!--右侧视图-->
+        <div class="right_Dashboard" ng-show="!isChoose">
+            <div class="showEmpty">
+                点击左侧列表选择仪表板
+            </div>
+        </div>
+
         <div class="right_Dashboard" ng-show="isChoose">
             <div>
                 <h3 style="display : inline">仪表板&nbsp;&nbsp;>&nbsp;&nbsp;{{dbItem.name}}</h3>
                 <div style="float: right;margin-right: 20px">
-                    <span data-toggle="modal" data-target="#addEntity">
+                    <span data-toggle="modal" data-target="#addEntity" ng-click="getAllDevice()">
                         <i class="glyphicon glyphicon-plus fa-lg shand dbicon" title="创建实例"></i>
                     </span>
                     <span data-toggle="modal" data-target="#delDashboard">
@@ -40,7 +48,7 @@
             </div>
 
             <div ng-show="isShowEmpty" class="showEmpty">
-                <p>仪表板为空，点击+添加组建实例</p>
+                <p>仪表板为空，请添加组件实例</p>
             </div>
             <!--<div class="dashboard_add dashboard_item" style="border-style: dashed;" data-toggle="modal" data-target="#addDBWidget">-->
                 <!--<div class="dbwidget_add_item">-->
@@ -69,7 +77,7 @@
                             <td><input id="add_db_name" name="add_db_name" type="text"/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cleanForm()">关闭
                     </button>
                     <button type="button" class="btn btn-primary" ng-click="addDashboard()">
                         确定
@@ -78,7 +86,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
-
 
     <!--modal添加Entity-->
     <div class="modal fade" id="addEntity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -96,22 +103,21 @@
                 <div class="modal-body">
                     <table id="addDBwidget_table">
                         <tr><td>组件名称：</td>
-                            <td><input id="db_widget_name" name="db_name" type="text"/></td></tr>
+                            <td><input ng-model="add_entity_name" name="add_entity_name" type="text"/></td></tr>
                         <tr><td>关联设备：</td>
-                        <td><select id="db_device" ng-model="db_widget_device" ng-options="x.name for x in DeviceName">
+                        <td><select id="db_device" ng-model="add_entity_device" ng-options="x.name for x in DeviceName">
                             <option value="" disabled>--请选择设备--</option>
                             </select></td></tr>
                         <tr><td>组件类型：</td>
-                        <td><select id="db_widget" ng-model="db_widget_device" ng-options="x.name for x in Widgets">
+                        <td><select id="db_widget" ng-model="add_entity_type" ng-options="x.name for x in Widgets">
                             <option value="" disabled>--请选择组件--</option>
                         </select></td></tr>
-                        <tr><td>起止时间：</td></tr>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cleanForm()">关闭
                     </button>
-                    <button type="button" class="btn btn-primary" ng-click="addDBWidget()">
+                    <button type="button" class="btn btn-primary" ng-click="addEntity()">
                         确定
                     </button>
                 </div>

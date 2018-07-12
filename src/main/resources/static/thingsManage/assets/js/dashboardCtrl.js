@@ -2,14 +2,7 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
     $scope.db_device;
     $scope.isShowEmpty=false;
 
-    //测试数据
-    //$scope.Dashboards=[{"name":"Test1 Dashboard","id":1},
-    //    {"name":"Test2 Dashboard","id":2},
-    //    {"name":"Test3 Dashboard","id":3},
-    //   {"name":"Test4 Dashboard","id":4}]
-    $scope.Widgets=[{"name":"Line"},
-        {"name":"Pie"},
-        {"name":"Doughnut"}]
+    $scope.Widgets=[{"name":"line"}]
     $scope.isChoose=false;
 
     //获取cookie中各种Id
@@ -18,14 +11,18 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
 
 
     //获取所有dashboard
-    var Dashboard = $resource('/api/dashboard/getAllDashboard');
+    var Dashboard = $resource('/api/dashboard/getAllDashboard', {}, {
+    //解决 Expected response to contain an array but got an object 问题
+        query: {method: 'GET', isArray: true}
+    });
     $scope.Dashboards = Dashboard.query();
+
 
     //右侧展示视图
     $scope.showDBDetail=function (item) {
         console.log(item)
 
-        $scope.dbItem=item;
+        $scope.dbItem=item;//当前dashbaord
 
         $scope.isChoose=true;
 
@@ -37,6 +34,7 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
             if(resp==null||resp==""){
                 $scope.isShowEmpty=true;
                 $scope.entitys=""
+
             }else{
                 $scope.isShowEmpty=false;
                 $scope.entitys=resp
@@ -54,7 +52,7 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
     /*    webSocket start  */
     var ws;
 
-    //@TODO entity展示实时数据
+    //@TODO websocket实时数据
     $scope.showRealtime=function (i) {
         var i=i;
         var entity=$scope.entitys[i]
@@ -71,8 +69,9 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         var url = 'ws://39.104.189.84:30080/api/v1/deviceaccess/websocket';
         //listenWs(url);
 
-        var _ts=1531101929//测试
-        setInterval(test,1500)//测试
+        //测试用模拟数据
+        var _ts=1531101929
+        setInterval(test,1500)
 
         function listenWs(url) {
             if(ws instanceof WebSocket){
@@ -209,7 +208,8 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         });
         return myChart
     }
-    /*时间格式化*/
+
+    //时间格式化
     function formatDate(now) {
         //var year=now.getFullYear();
         //var month=now.getMonth()+1;
@@ -237,22 +237,44 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         })
     }
 
-    //创建entity
-    //@TODO 创建entity
-
-    //创建entity时获取所有设备名
-    var Device = $resource("/api/device/alldevices?limit=1000");
-    $scope.Devices = Device.query(function () {
-        $scope.DeviceName = getDevicesName();
-    });
-    function getDevicesName() {
-        var _DeviceName=[];
-        $scope.Devices.forEach(function (item) {
-            _DeviceName.push({name:item.name,id:item.id});//name和id的对象数组
-        })
-        return _DeviceName
+    //获取所有设备名
+    $scope.getAllDevice=function () {
+        var Device = $resource("/api/device/alldevices?limit=1000");
+        $scope.Devices = Device.query(function () {
+            $scope.DeviceName = getDevicesName();
+        });
+        function getDevicesName() {
+            var _DeviceName = [];
+            $scope.Devices.forEach(function (item) {
+                _DeviceName.push({name: item.name, id: item.id});//name和id的对象数组
+            })
+            return _DeviceName
+        }
     }
 
+
+    //创建entity
+    $scope.addEntity=function () {
+        var formData={}
+
+        formData.name=$scope.add_entity_name
+        formData.device_id=$scope.add_entity_device.id
+        formData.entity_type=$scope.add_entity_type.name
+        formData.dashboard_id=$scope.dbItem.id
+
+        console.log(formData)
+        var addEntity = $resource('/api/dashboard/entity/insert');
+        addEntity.save({}, formData)
+            .$promise.then(function (resp) {
+            console.log("创建成功")
+            if(resp.id!=""){
+                location.reload();
+            }else{
+                toastr.warning("666！");
+            }
+        })
+
+    }
 
     //删除dashboard
     $scope.delDashboard=function () {
@@ -267,17 +289,18 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         });
     }
 
-    //删除entity
+    //获取当前entityId
     $scope.getEntityId=function (entity) {
         $scope.entity_id=entity.id
     }
 
+    //删除entity
     $scope.delEntity=function () {
         console.log("删除实例："+$scope.entity_id)
 
         var delDB = $resource('/api/dashboard/entity/delete/:id', {id: '@id'});
-        delDB.delete({}, {id: $scope.dbItem.id}, function (resp) {
-            console.log("删除成功:id=" + id);
+        delDB.delete({}, {id: $scope.entity_id}, function (resp) {
+            console.log("删除成功:id=" + $scope.entity_id);
             $("#delDashboard").modal("hide");
             location.reload();
         }, function (resp) {
@@ -286,6 +309,13 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         });
     }
 
-
-
+    //清除表格
+    $scope.cleanForm=function () {
+        $(':input').each(function () {
+            var type = this.type;
+            var tag = this.tagName.toLowerCase(); // normalize case
+            if (type == 'text' || type == 'password' || tag == 'textarea')
+                this.value = "";
+        });
+    }
 }]);
