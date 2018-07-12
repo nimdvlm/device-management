@@ -29,7 +29,31 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @ResponseBody
     public String getDevicesCount(){
 
-        String requestAddr = "/api/v1/deviceaccess/tenant/deviceCount/"  + getTenantId();
+        String requestAddr = "/api/v1/deviceaccess/tenant/deviceCount?tenantId="  + getTenantId();
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+        try {
+            return retSuccess(responseContent) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+    }
+
+    @ApiOperation(value="获取客户所有设备的数量", notes="获取客户所有设备的数量")
+    @RequestMapping(value = "/customer/devicesCount", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getCustomerDevicesCount(@RequestParam Integer customerId){
+
+        String requestAddr = "/api/v1/deviceaccess/customer/deviceCount?tenantId="+getTenantId()+"&customerId="  + customerId;
 
         String responseContent = null ;
         try {
@@ -66,7 +90,9 @@ public class DeviceController extends DefaultThingsboardAwaredController {
          * {"name":"test0name","type":"default","additionalInfo":{"description":"jhdajd"}}
          */
         JsonObject deviceInfoJson = (JsonObject)new JsonParser().parse(deviceInfo);
-
+        if(deviceInfoJson.get("lifeTime").getAsString().equals("NaN")){
+            deviceInfoJson.add("lifeTime",null);
+        }
         if(deviceInfoJson.has("parentDeviceId") && deviceInfoJson.get("parentDeviceId").getAsString().equals("undefined")){
             deviceInfoJson.remove("parentDeviceId");
             deviceInfoJson.addProperty("parentDeviceId","");
