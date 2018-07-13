@@ -136,7 +136,7 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
         });
     })
     
- /*查看插件运行状态*/
+ /*查看插件运行状态websocket*/
 
  $("#runingStatus").click(function () {
      var stompClient = null;
