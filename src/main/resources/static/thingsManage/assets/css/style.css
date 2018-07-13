@@ -411,7 +411,6 @@ DEVICELIST STYLES
 }
 /* =============================================================
 serviceGroup
-
 ============================================================ */
 .abilityIcon{
     width: 60%;
@@ -421,7 +420,7 @@ serviceGroup
 }
 .abilityBackgroundstyle{
     width: 210px;
-    height: 135px;
+    height: 138px;
     border-radius: 10px;
     margin-top: 25px;
     margin-left: 20px;
@@ -435,12 +434,12 @@ serviceGroup
 
 .abilityPlus{
     font-size: large;
-    padding-left: 130px;
-
+    margin-left: 100px;
+    display: inline-block;
 }
 .abilityDelete{
     font-size: large;
-    padding-left: 15px;
+    display: inline-block;
 
 }
 .style{
@@ -465,15 +464,6 @@ serviceGroup
 
 }
 /* =============================================================
-width: 35%;
-    float: right;
-    border: 1px solid #c0c0c0;
-    border-radius: 10px;
-    margin-right: 20px;
-    margin-top: 10px;
-    position: fixed;
-    right: 1%;
-    top: 18%;
 pluginsGroup
 ============================================================ */
 .pluginActiveposition{

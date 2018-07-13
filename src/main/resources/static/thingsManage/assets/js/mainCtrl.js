@@ -89,6 +89,10 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
         $(".userDelete").css({cursor:"text",color:"#333"});
         $(".userDelete").removeClass("highlight");
     }
+    /*权限管理*/
+    if($.cookie("userLevel") === "TENANT_ADMIN"){
+        $(".tenant").attr("disabled","disabled");
+    }
 
     /*侧边栏选中效果*/
     var href  = window.location.hash;
