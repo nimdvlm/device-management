@@ -3,6 +3,33 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
    var abilityId = [];
    $scope.result = new Array();
 
+    /*权限管理*/
+    if($.cookie("userLevel") === "CUSTOMER_USER"){
+        $scope.flag=true;
+
+    }
+
+    /*权限管理
+  var module = angular.module('mainApp', [])
+        .directive('onFinish', function ($timeout) {
+            return {
+                restrict: 'A',
+                link: function (scope, element, attr) {
+                    if (scope.$last === true) {
+                        $timeout(function () {
+                            scope.$emit('ngRepeatFinished');
+                        });
+                    }
+                }
+            }});
+    $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+        //这里写获取dom的操作，
+        $(".userDelete").removeAttr("data-target");
+        $(".userDelete").css({cursor:"text",color:"#333"});
+        $(".userDelete").removeClass("highlight");
+    });
+*/
+
 
     /*能力组信息获取与展示*/
     var abilityGroup = $resource('/api/v1/abilityGroup');
@@ -218,26 +245,6 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
         }
     }
 
-    if($.cookie("userLevel") === "CUSTOMER_USER"){
-        $(".userDelete").removeAttr("data-target");
-        $(".userDelete").css({cursor:"text",color:"#333"});
-        $(".userDelete").removeClass("highlight");
-    }
 
-    /*var module = angular.module('fang', [])
-        .directive('onFinish', function ($timeout) {
-            return {
-                restrict: 'A',
-                link: function (scope, element, attr) {
-                    if (scope.$last === true) {
-                        $timeout(function () {
-                            scope.$emit('ngRepeatFinished');
-                        });
-                    }
-                }
-            }});
-    $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-        //这里写获取dom的操作，
-    });*/
 
 });
