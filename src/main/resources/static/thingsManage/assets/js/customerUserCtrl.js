@@ -57,19 +57,71 @@ mainApp.controller("customerUserCtrl",["$scope","$resource","$location",function
     $scope.customerUserLimit = function () {
         if($("#customerUserNum").val() === ""){
             setTimeout(function () {
-                userLimit = 9;
+               /* userLimit = 9;
                 var userCurrentObj = $resource("/api/account/customer/users?customerId=:customerId&limit=:userLimit&page=:currentUserPage");
                 $scope.userInfo = userCurrentObj.query({customerId:customerId,userLimit:userLimit,currentUserPage:(currentUserPage-1)});//所有客户组信息
                 console.log($scope.userInfo);
+
+
+                //获取分页总数
+                $.ajax({
+                    url:"/api/account/customer/usersPage?customerId="+customerId+"&limit="+userLimit,
+                    type:"GET",
+                    dataType:"text",
+                    async:false,
+                    success:function (msg) {
+                        totalUserPages = Number(msg);
+                        console.log(totalUserPages);
+                    }
+                });
+                Page({
+                    num:totalUserPages,					//页码数
+                    startnum:1,				//指定页码
+                    elem:$('#customerUserPage'),		//指定的元素
+                    callback:function(n){	//回调函数
+                        console.log(n);//当前页号
+                        currentUserPage = Number(n);
+                        var userCurrentObj = $resource("/api/account/customer/users?customerId=:customerId&limit=:userLimit&page=:currentUserPage");
+                        $scope.userInfo = userCurrentObj.query({customerId:customerId,userLimit:userLimit,currentUserPage:(currentUserPage-1)});//所有客户组信息
+                        console.log($scope.userInfo);
+                    }
+                });*/
+               window.location.reload();
             },1000);
 
         }else{
             setTimeout(function () {
                 userLimit = $("#customerUserNum").val();
                 console.log(userLimit);
-                var userCurrentObj = $resource("/api/account/customer/users?customerId=:customerId&limit=:userLimit&page=:currentUserPage");
-                $scope.userInfo = userCurrentObj.query({customerId:customerId,userLimit:userLimit,currentUserPage:(currentUserPage-1)});//所有客户组信息
+               /* var userCurrentObj = $resource("/api/account/customer/users?customerId=:customerId&limit=:userLimit&page=:currentUserPage");
+                $scope.userInfo = userCurrentObj.query({customerId:customerId,userLimit:userLimit,currentUserPage:(currentUserPage-1)});//所有客户组信息*/
+                var userCurrentObj = $resource("/api/account/customer/users?customerId=:customerId&limit=:userLimit&page=0");
+                $scope.userInfo = userCurrentObj.query({customerId:customerId,userLimit:userLimit});//第一页所有客户信息
                 console.log($scope.userInfo);
+
+                //获取分页总数
+                $.ajax({
+                    url:"/api/account/customer/usersPage?customerId="+customerId+"&limit="+userLimit,
+                    type:"GET",
+                    dataType:"text",
+                    async:false,
+                    success:function (msg) {
+                        totalUserPages = Number(msg);
+                        console.log(totalUserPages);
+                    }
+                });
+                Page({
+                    num:totalUserPages,					//页码数
+                    startnum:1,				//指定页码
+                    elem:$('#customerUserPage'),		//指定的元素
+                    callback:function(n){	//回调函数
+                        console.log(n);//当前页号
+                        currentUserPage = Number(n);
+                        var userCurrentObj = $resource("/api/account/customer/users?customerId=:customerId&limit=:userLimit&page=:currentUserPage");
+                        $scope.userInfo = userCurrentObj.query({customerId:customerId,userLimit:userLimit,currentUserPage:(currentUserPage-1)});//所有客户组信息
+                        console.log($scope.userInfo);
+                    }
+                });
             },1000);
         }
 
