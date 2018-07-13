@@ -47,4 +47,33 @@ public class EventController extends DefaultThingsboardAwaredController {
         }
 
     }
+
+    @RequestMapping(value = "/newest/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getDevices(@PathVariable("deviceId") String deviceId,
+                             @RequestParam int limit) {
+
+        String requestAddr = "/api/v1/deviceaccess/event/newest/"  + getTenantId() +
+                "/" + deviceId + "?limit=" + limit;
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+        try {
+            JsonObject j = (JsonObject)new JsonParser().parse(responseContent);
+            String a = j.getAsJsonArray("data").toString();
+            a = a.replaceAll("\"\\{","\\{");
+            a = a.replaceAll("\\}\"","\\}");
+            a = a.replaceAll("\\\\","");
+            return retSuccess(a);
+        } catch (Exception e) {
+            return retFail(e.toString());
+        }
+
+    }
 }
