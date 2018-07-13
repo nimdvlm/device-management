@@ -50,7 +50,8 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
 
 
     /*    webSocket start  */
-    var ws;
+    var ws
+    var KeySets=[]
 
     //@TODO websocket实时数据
     $scope.showRealtime=function (i) {
@@ -67,11 +68,11 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
 
         //获取websocket实时数据
         var url = 'ws://39.104.189.84:30080/api/v1/deviceaccess/websocket';
-        //listenWs(url);
+        listenWs(url);
 
         //测试用模拟数据
-        var _ts=1531101929
-        setInterval(test,1500)
+        //var _ts=1531101929
+        //setInterval(test,1500)
 
         function listenWs(url) {
             if(ws instanceof WebSocket){
@@ -87,6 +88,7 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
 
             ws.onclose = function (e) {
                 log("Disconnected: ");
+                KeySets=[]
             };
             // Listen for connection errors
             ws.onerror = function (e) {
@@ -125,13 +127,14 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         }
     }
 
+
+
     //更新数据
     function updateChart(message,myChart){
         console.log("更新ing...")
         var tempDate,tempKey,tempValue
         var message=message
         var chart=myChart
-        var chart_data=myChart.data.datasets[0].data
 
         //整理数据
         for(var i in message.data) {
@@ -142,27 +145,61 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
             tempKey = message.data[i].key;
             tempValue = message.data[i].value;
 
-            chart.data.labels.push(tempDate)
-            chart_data.push(tempValue)
+                if($.inArray(tempKey,KeySets)>=0&&KeySets.length!==0){
+                    var y=KeySets.indexOf(tempKey)
+                    chart.data.datasets[y].data.push(tempValue)
+                    //此处为待解决问题。二者时间戳不一致
+                    if(y==0)
+                    chart.data.labels.push(tempDate)
+                }else{
+                    KeySets.push(tempKey)
+                    chart=newLine(chart)
+                    var x=KeySets.indexOf(tempKey)
+                    chart.data.datasets[x].label=tempKey
+                    chart.data.datasets[x].data.push(tempValue)
+
+                }
+
 
             //为了美观，超过20个则删除
-            if(chart_data.length>20){
-                chart_data.shift()
-                chart.data.labels.shift();
+            if(chart.data.datasets[0].data.length>13){
+                chart.data.labels.shift()
+                chart.data.datasets.forEach(function(dataset) {
+                    dataset.data.shift();
+             });
             }
-
-            //多条线的情况
-            // chart.data.datasets.forEach(function(dataset){
-            //     dataset.data.push(tempValue);
-            // });
             chart.update();
         }
 
     }
 
+    //添加新曲线
+    function newLine(myChart) {
+        var ranR=220-Math.ceil(Math.random()*2)*50
+        var ranG=220-Math.ceil(Math.random()*2)*50
+        var ranB=220-Math.ceil(Math.random()*2)*50
+        var mychart=myChart
+
+        var newLine={
+            label:"",
+            backgroundColor: "rgba("+ranR+","+ranG+","+ranB+",0.5)", //背景填充色
+            borderColor: "rgba("+ranR+","+ranG+","+ranB+",1)", //路径颜色
+            pointBackgroundColor: "rgba("+ranR+","+ranG+","+ranB+",1)", //数据点颜色
+            pointBorderColor: "#fff", //数据点边框颜色
+            pointHoverBackgroundColor:"55bae7",
+            //下面的四个属性是chart_1_x版本中的，update不支持
+            // fillColor: "rgba(220,220,220,0.5)",
+            // strokeColor: "rgba(220,220,220,1)",
+            // pointColor: "rgba(220,220,220,1)",
+            // pointStrokeColor: "#fff",
+            data: [] //对象数据
+        }
+        mychart.data.datasets.push(newLine)
+        return mychart
+    }
+
     //绘制图表
     function drawChart(deviceId,type,i) {
-        var label="设备id:"+deviceId
         var num=i
 
         //折线图
@@ -173,14 +210,7 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
                 //折线图需要为每个数据点设置一标签。这是显示在X轴上。
                 labels: [],
                 //数据集（y轴数据范围随数据集合中的data中的最大或最小数据而动态改变的）
-                datasets: [{
-                    label:label,
-                    fillColor: "rgba(220,220,220,0.5)", //背景填充色
-                    strokeColor: "rgba(220,220,220,1)", //路径颜色
-                    pointColor: "rgba(220,220,220,1)", //数据点颜色
-                    pointStrokeColor: "#fff", //数据点边框颜色
-                    data: [] //对象数据
-                }]
+                datasets: []
             },
             options: {
                 scales: {
@@ -192,14 +222,8 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
                 },
                 title: {
                     display: false
-                    // text: title,
-                    // fontSize: 20,
-                    // fontFamily: "Microsoft YaHei",
-                    // fontStyle: 'normal',
-                    // fontColor: '#1964ad'
                 },
                 legend: {
-                    //display:false
                     position:'bottom'
                 }
 
@@ -216,9 +240,9 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         var date=now.getDate();
         var hour=now.getHours();
         var minute=now.getMinutes();
-        //var second=now.getSeconds();
+        var second=now.getSeconds();
         //return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
-        return hour+":"+minute;
+        return hour+":"+minute+":"+second;
     }
     /*    webSocket end   */
 
