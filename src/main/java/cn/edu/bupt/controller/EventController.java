@@ -14,7 +14,7 @@ public class EventController extends DefaultThingsboardAwaredController {
 
     @RequestMapping(value = "/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getDevices(@PathVariable("deviceId") String deviceId,
+    public String getEvents(@PathVariable("deviceId") String deviceId,
                              @RequestParam int limit,
                              @RequestParam long startTime,
                              @RequestParam long endTime,
@@ -50,11 +50,15 @@ public class EventController extends DefaultThingsboardAwaredController {
 
     @RequestMapping(value = "/newest/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getDevices(@PathVariable("deviceId") String deviceId,
-                             @RequestParam int limit) {
+    public String getLastEvents(@PathVariable("deviceId") String deviceId,
+                             @RequestParam int limit, @RequestParam(required = false) String idOffset) {
 
         String requestAddr = "/api/v1/deviceaccess/event/newest/"  + getTenantId() +
                 "/" + deviceId + "?limit=" + limit;
+
+        if(idOffset != null){
+            requestAddr = requestAddr + "&idOffset=" + idOffset;
+        }
 
         String responseContent = null ;
         try {
