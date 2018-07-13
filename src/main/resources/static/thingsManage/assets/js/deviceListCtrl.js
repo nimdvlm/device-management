@@ -814,7 +814,6 @@ $scope.searchDevice = function () {
 
     /*--------显示遥测数据-------------*/
 /*时间格式化*/
-
     function formatDate(now) {
         var year=now.getFullYear();
         var month=now.getMonth()+1;
