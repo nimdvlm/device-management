@@ -21,10 +21,10 @@
                 <p class="style"><i class="fa fa-cog fa-cart-plus"></i>&nbsp;设备类型：{{items.deviceType.deviceTypeName}}</p>
                 <p class="style"><i class="fa fa-cog fa-cart-plus"></i>&nbsp;设备型号：{{items.model.modelName}}</p>
                 </div>
-                <span class="abilityPlus" data-toggle="modal" data-target="#createSM">
+                <span type="button"  class="btn abilityPlus" data-toggle="modal" data-target="#createSM" ng-disabled="flag">
                 <i class="glyphicon glyphicon-plus userDelete" title="创建服务"></i>
                 </span>
-                <span data-toggle="modal" class="abilityDelete" data-target="#deleteSM">
+                <span type="button" class="btn abilityDelete" data-toggle="modal" data-target="#deleteSM" ng-disabled="flag">
                 <i class="glyphicon glyphicon-trash userDelete" title="删除服务组"></i>
                 </span>
             </div>
@@ -46,7 +46,7 @@
                     <td>{{arr.serviceName}}</td>
                     <td>{{arr.serviceDescription}}</td>
                     <td>{{arr.serviceType}}</td>
-                    <td><button class="btn btn-sm btn-danger userDelete" ng-click="deleteAA(arr)">删除</button></td>
+                    <td><button class="btn btn-sm btn-danger" ng-disabled="flag" ng-click="deleteAA(arr)">删除</button></td>
                 </tr>
                 </tbody>
             </table>
