@@ -561,13 +561,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="data in eventInfo">
+                            <tr ng-repeat="data in eventInfo" class="eventContent">
                                 <td>{{data.body.methodName}}</td>
                                 <td>{{data.body.serviceName}}</td>
                                 <td>{{data.body.status}}</td>
                                 <td>{{data.body.uid}}</td>
                                 <td>{{data.createdTime * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             </tr>
+                        <tr id="eventPageBtn">
+                            <td></td>
+                            <td><button class="btn btn-primary" id="preEvent" ng-click="preEvent()">上一页</button></td>
+                            <td></td>
+                            <td><button class="btn btn-primary" id="nextEvent" ng-click="nextEvent()">下一页</button></td>
+                            <td></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
