@@ -2,6 +2,7 @@ package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.web.bind.annotation.*;
@@ -41,9 +42,8 @@ public class RuleController extends DefaultThingsboardAwaredController{
             return retFail(e.toString()) ;
         }
 
-        responseContent = encodeJson(responseContent);
-        JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
-        return retSuccess(array.toString());
+        JsonArray newArray = encodeJson(responseContent);
+        return retSuccess(newArray.toString());
     }
 
     @RequestMapping(value = "/{ruleId}",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
@@ -62,8 +62,8 @@ public class RuleController extends DefaultThingsboardAwaredController{
             return retFail(e.toString()) ;
         }
 
-        responseContent = encodeJson(responseContent);
-        return retSuccess(responseContent);
+        JsonArray newArray = encodeJson(responseContent);
+        return retSuccess(newArray.toString());
     }
 
     @RequestMapping(value = "/ruleByTenant",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
@@ -87,9 +87,9 @@ public class RuleController extends DefaultThingsboardAwaredController{
             return retFail(e.toString()) ;
         }
 
-        responseContent = encodeJson(responseContent);
-        JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
-        return retSuccess(array.toString());
+
+        JsonArray newArray = encodeJson(responseContent);
+        return retSuccess(newArray.toString());
     }
 
     @RequestMapping(value = "/ruleByTenant/{textSearch}",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
@@ -113,9 +113,8 @@ public class RuleController extends DefaultThingsboardAwaredController{
             return retFail(e.toString()) ;
         }
 
-        responseContent = encodeJson(responseContent);
-        JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
-        return retSuccess(array.toString());
+        JsonArray newArray = encodeJson(responseContent);
+        return retSuccess(newArray.toString());
     }
 
     @RequestMapping(value = "/tenant",method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
@@ -310,10 +309,32 @@ public class RuleController extends DefaultThingsboardAwaredController{
         return tenantId;
     }*/
 
-    private  String encodeJson(String respondStr){
-        respondStr=respondStr.replaceAll("\\\\","");
-        respondStr=respondStr.replaceAll("\"\\{","\\{");
-        respondStr=respondStr.replaceAll("\"\\}\"","\"\\}");
-        return respondStr;
+    private JsonArray encodeJson(String responseContent){
+        JsonArray newArray = new JsonArray();
+        JsonArray array = new JsonParser().parse(responseContent).getAsJsonArray();
+        for(JsonElement jsonElement:array){
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            JsonArray transforms = jsonObject.get("transforms").getAsJsonArray();
+            JsonArray newTransforms = new JsonArray();
+            for(JsonElement transform:transforms){
+                JsonObject jsonObj = transform.getAsJsonObject();
+                JsonObject requestBody = new JsonParser().parse(jsonObj.get("requestBody").getAsString()).getAsJsonObject()  ;
+                try{
+                    JsonObject body = new JsonParser().parse(requestBody.get("body").getAsString()).getAsJsonObject();
+                    requestBody.remove("body");
+                    requestBody.add("body",body);
+                } catch (Exception e){
+
+                } finally {
+                    jsonObj.remove("requestBody");
+                    jsonObj.add("requestBody",requestBody);
+                    newTransforms.add(jsonObj);
+                }
+            }
+            jsonObject.remove("transforms");
+            jsonObject.add("transforms",newTransforms);
+            newArray.add(jsonObject);
+        }
+        return newArray;
     }
 }

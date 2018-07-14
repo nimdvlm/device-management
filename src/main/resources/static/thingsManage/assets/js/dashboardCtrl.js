@@ -37,6 +37,24 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
 
             }else{
                 $scope.isShowEmpty=false;
+
+                //根据设备id获取设备名称
+                resp.forEach(function (entity) {
+                    $.ajax({
+                        url:"/api/device/name/"+entity.device_id,
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        type:"GET",
+                        success:function(msg) {
+                            entity.device_name = msg;
+                        },
+                        error:function (err) {
+                            entity.device_name = "";
+                        }
+                    });
+                })
+                //$resource.get方法会把接受的string类型变为object
+
                 $scope.entitys=resp
 
                 //ng-repeat直接getElementById获取不到
@@ -53,7 +71,6 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
     var ws
     var KeySets=[]
 
-    //@TODO websocket实时数据
     $scope.showRealtime=function (i) {
         var i=i;
         var entity=$scope.entitys[i]
@@ -126,8 +143,6 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
             updateChart(message,myChart)
         }
     }
-
-
 
     //更新数据
     function updateChart(message,myChart){
@@ -261,15 +276,17 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         })
     }
 
+
     //获取所有设备名
     $scope.getAllDevice=function () {
         var Device = $resource("/api/device/alldevices?limit=1000");
         $scope.Devices = Device.query(function () {
-            $scope.DeviceName = getDevicesName();
+            $scope.DeviceName = getDevicesName($scope.Devices);
         });
-        function getDevicesName() {
+
+        function getDevicesName(arr) {
             var _DeviceName = [];
-            $scope.Devices.forEach(function (item) {
+            arr.forEach(function (item) {
                 _DeviceName.push({name: item.name, id: item.id});//name和id的对象数组
             })
             return _DeviceName

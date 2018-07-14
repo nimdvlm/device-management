@@ -42,8 +42,8 @@
                 <div class="item" ng-controller="RulefilterCtrl">
                     <div class="gridStyle RulegridStyle" ui-grid="gridOptions" style="height: 130px"></div>
                 </div>
-                <!--plugin展示折叠效果-->
-                <div ng-repeat="RP in RulePlugins">
+                <!--plugin展示折叠效果1-->
+                <!--div ng-repeat="RP in RulePlugins">
                     <div class="item">
                     <div class="panel-group" id="showplugin">
                         <div class="panel panel-default">
@@ -70,66 +70,50 @@
                         </div>
                     </div>
                 </div>
+                </div-->
+
+
+                <!--plugin展示表格折叠效果2-->
+                <div class="item">
+                    <table class="table table-bordered table-hover table-striped" ng-show="!showEmpty" style="table-layout:fixed">
+                        <thead>
+                        <tr>
+                            <td style="width: 30px"></td>
+                            <td>规则名</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat-start="data in RulePlugins">
+                            <td>
+                                <button class="btn btn-xs" ng-if="data.expanded" ng-click="data.expanded=false">-</button>
+                                <button class="btn btn-xs" ng-if="!data.expanded" ng-click="data.expanded=true;showplugin(data,$index)">+</button>
+                            </td>
+                            <td>{{data.name}}</td>
+                        </tr>
+                        <tr ng-show="data.expanded" ng-repeat-end="">
+                            <td></td>
+                            <td colspan="1" style="word-wrap:break-word">
+                                <p>规则名称：{{data.name}}</p>
+                                <p>跳转地址：{{data.url}}</p>
+                                <div id="plugin_{{$index}}">
+                                    <p>请求方法：{{data.requestBody.method}}</p>
+                                    <p>请求地址：{{data.requestBody.url}}</p>
+                                </div>
+                                <div id="plugin_mail_{{$index}}" style="display: none">
+                                    <p>收件人：{{data.requestBody.to}}</p>
+                                    <p>事务：{{data.requestBody.subject}}</p>
+                                    <p>内容：{{data.requestBody.text}}</p>
+                                </div>
+                                <div id="plugin_updatemessage_{{$index}}" style="display: none">
+                                    <p>消息：{{data.requestBody.message}}</p>
+                                    <p>消息类型：{{data.requestBody.messageType}}</p>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-            <!--modal编辑规则名称-->
-            <!--div class="modal fade" id="editRuleName" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                &times;
-                            </button>
-                            <h4 class="modal-title">
-                                编辑规则名称
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>规则名：<input type="text" placeholder="{{Ruleitem.name}}"
-                                          ng-model="$parent.editrulename"></input>
-                            </p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                            </button>
-                            <button type="button" class="btn btn-primary" ng-click="editRuleName()">
-                                确定
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div-->
-
-            <!--modal编辑规则描述-->
-            <!--div class="modal fade" id="editRuleDes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                &times;
-                            </button>
-                            <h4 class="modal-title">
-                                编辑规则描述
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>规则名称：System Telemetry Rule</p>
-                            <p>规则描述：<input type="text" name="NewDGName" id="RuleModalInput"></input>
-                            </p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                            </button>
-                            <button type="button" class="btn btn-primary">
-                                确定
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div-->
 
             <!--modal删除规则-->
             <div class="modal fade" id="delRule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -301,24 +285,15 @@
                             <!--添加插件-->
                             <h4>添加插件</h4>
                             <!--添加插件后显示-->
-                            <table ng-show="showaddTransform" class="table table-bordered table-hover addfiltertab">
-                                <tbody>
+                            <table class="table table-bordered table-hover addfiltertab" ng-show="showaddTransform">
+                                <thead><!--bootstrap的table样式，简单快捷-->
                                 <tr>
-                                    <th style="width: 100px;text-align: center">插件名称</th>
-                                    <td>{{formData.transform.name}}</td>
+                                    <th>插件名称</th>
                                 </tr>
-                                <!--判断插件是邮件的情况下显示-->
-                                <tr ng-show="showsendmail" ng-repeat="mailto in fchat.replies">
-                                    <th style="text-align: center">收件人{{$index+1}}</th>
-                                    <td>{{mailto.value}}</td>
-                                </tr>
-                                <tr ng-show="showsendmail">
-                                    <th style="text-align: center">邮件标题</th>
-                                    <td>{{formData.transform.requestBody.subject}}</td>
-                                </tr>
-                                <tr ng-show="showsendmail">
-                                    <th style="text-align: center">邮件内容</th>
-                                    <td>{{formData.transform.requestBody.text}}</td>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="plugin in formData.transforms">
+                                    <td>{{plugin.name}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -372,7 +347,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal"
-                                ng-click="clearFilterPlugin()">关闭
+                                ng-click="clearFilterPlugin('#addruleFilter')">关闭
                         </button>
                         <button type="button" class="btn btn-primary" ng-click="subFilter()">
                             确定
@@ -397,14 +372,15 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <form name="addplugin">
+                        <div ng-show="!isPluginReady">获取插件中...请耐心等待</div>
+                        <form name="addplugin" ng-show="isPluginReady">
                             <p>名&emsp;&emsp;称：<select ng-model="RuleaddPlugin" ng-change="change(RuleaddPlugin)"
                                                       id="addpluginselect"
                                                       ng-options="x.name for x in Plugin">
                                 <option value="" disabled>--请选择插件--</option>
                             </select>
                             </p>
-                            <p>描&emsp;&emsp;述：{{RuleaddPlugin.describe}}</p>
+                            <p style="word-wrap:break-word">描&emsp;&emsp;述：{{RuleaddPlugin.describe}}</p>
                             <p>跳转地址：{{RuleaddPluginUrl}}</p>
                             <p ng-show="showsendmail">请求方式：<input type="text" name="method" disabled="disabled"
                                                                   id="pluginmethodMail"
@@ -418,11 +394,11 @@
                                 <option value="" disabled>--请选择请求方式--</option>
                             </select>
                             </p>
-                            <p ng-show="showrestful">请求地址：<input type="text" ng-model="RestfulBody.url"
+                            <p ng-show="showrestful">请求地址：<input type="text" id="RestfulBody_url"
                                                                  style="width: 75%;"/></p>
                             <p ng-show="showrestfulPOST"><span
                                     style="vertical-align:top">Requestbody：</span><textarea
-                                    style="height:120px;width: 70%;" ng-model="RestfulBody.body"></textarea>
+                                    style="height:120px;width: 70%;" id="RestfulBody_body"></textarea>
                             </p>
 
                             <!--判断是updatemessage插件-->
@@ -466,7 +442,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal"
-                                ng-click="clearFilterPlugin()">关闭
+                                ng-click="clearFilterPlugin('#addruleTransform')">关闭
                         </button>
                         <button type="button" class="btn btn-primary" ng-click="subTransform()"
                                 data-dismiss="modal">

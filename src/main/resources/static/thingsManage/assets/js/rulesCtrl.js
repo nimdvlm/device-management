@@ -10,6 +10,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.showupdatemessage = false;
     $scope.showPluginMail = false;
     $scope.showrestfulPOST = false;
+    $scope.isPluginReady=false
     $scope.RESTMethod = ["POST", "DELETE", "GET"];
     $scope.RestfulBody = {};
     $scope.RuleaddPluginUrl="";//用于解决url重复赋值bug
@@ -25,9 +26,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
                 "additional_info": ""
             },
             "filters": [],
-            "transform": {
-                "requestBody": {}
-            }
+            "transforms": []
         };
         console.log("提交表单初始化");
     }
@@ -37,6 +36,13 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         this.name = name;
         this.type = type;
         this.jsCode = jscode;
+    }
+    
+    function ObjTransform(name,url,method,requestBody) {
+        this.name=name;
+        this.url=url;
+        this.method=method;
+        this.requestBody=requestBody;
     }
 
     //获取当前租户ID
@@ -77,10 +83,6 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
      * 原因：同步打印，还没有从后台取完数据
      * 在query()里实际上是异步打印
      * query(params,success,error)第二个参数调用了promise的success***/
-    //console.log("query函数外的Rules：")
-    //console.log($scope.Rules);
-    //console.log("取第一个对象：");
-    //console.log($scope.Rules[0]);
 
     //右侧展示视图
     $scope.showrule = function (rule) {
@@ -112,14 +114,23 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     };
 
     //根据插件类型展示div
-    $scope.showplugin=function(RPitem,i) {
-        if (RPitem.name.search("Mail")) {
+    $scope.showplugin=function(data,i) {
+        //ng-if指令不会提前渲染DOM，所以报着不到id错。改用ng-show即可
+        console.log(data.name,i)
+        if (data.name.search(/Mail/i)>=0) {
             console.log("当前插件为mail")
-            document.getElementById('plugin_mail_'+i).style.display='block'
             document.getElementById('plugin_'+i).style.display='none'
-        } else {
+            document.getElementById('plugin_mail_'+i).style.display='block'
+            document.getElementById('plugin_updatemessage_'+i).style.display='none'
+        } else if(data.name.search(/Update/i)>=0){
+            console.log("当前插件为updatemessage")
+            document.getElementById('plugin_'+i).style.display='none'
             document.getElementById('plugin_mail_'+i).style.display='none'
+            document.getElementById('plugin_updatemessage_'+i).style.display='block'
+            }else{
             document.getElementById('plugin_'+i).style.display='block'
+            document.getElementById('plugin_mail_'+i).style.display='none'
+            document.getElementById('plugin_updatemessage_'+i).style.display='none'
         }
     }
 
@@ -152,23 +163,6 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             alert("输入不能为空!");
         }
     };
-
-    // 编辑规则名
-    /*********无该功能接口
-     $scope.editRuleName=function(){
-        if ($scope.editrulename != "" && $scope.editrulename != null){
-            var editRule = $resource('http://localhost:8081/api/rule/:id', {id: '@id'});
-            editRule.save({id: $scope.Ruleitem.id.id},$scope.editrulename)
-                .$promise.then(function (resp) {
-                console.log("信息修改成功:id=" + $scope.Ruleitem.id.id + ";name=" + $scope.Ruleitem.name);
-                $("#editDGName").modal("hide");
-               location.reload();
-            });
-        }else{
-           alert("输入不能为空!");
-        }
-    }
-     *********/
 
     //删除规则
     $scope.delRule = function () {
@@ -237,6 +231,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.getAllplugin = function () {
         var getAllPLUGINS = $resource("/api/plugin/allPlugins");
         $scope.allPlugins = getAllPLUGINS.query({}, function () {
+            $scope.isPluginReady=true
             $scope.Plugin = $scope.allPlugins;
             //初始化select.value，解决显示一行空白项bug
             //若初始化为第一个插件信息，判断插件类型的函数要写双份(待改)
@@ -248,35 +243,37 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //点击添加规则-根据插件名判断插件类型
     $scope.change = function (data) {
-        $scope.RuleaddPluginUrl=data.url;
         console.log(data)
-        if (data.name == "MailPlugin") {
-            console.log("判断添加插件类型为MailPlugin");
-            $scope.showsendmail = true;
-            $scope.showrestful = false;
-            $scope.showupdatemessage=false;
-            data.method = "POST";
-            $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/mailplugin/sendMail";
-            console.log("MailUrl：" + data.url);
-        } else if (data.name == "RestfulPlugin") {
-            console.log("判断添加插件类型为RestfulPlugin");
-            $scope.showrestful = true;
-            $scope.showsendmail = false;
-            $scope.showupdatemessage=false;
-            tempurl = data.url;
-            $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/restfulplugin/sendRequest";
-        } else if(data.name=="UpdateMessagePlugin"){
-            //@TODO 待填写
-            console.log("判断添加插件类型为updateMessagePlugin");
-            $scope.showupdatemessage=true;
-            $scope.showsendmail = false;
-            $scope.showrestful = false;
+        //清空现场时会报错
+        if(data!=null) {
+            $scope.RuleaddPluginUrl = data.url;
+            if (data.name == "MailPlugin") {
+                console.log("判断添加插件类型为MailPlugin");
+                $scope.showsendmail = true;
+                $scope.showrestful = false;
+                $scope.showupdatemessage = false;
+                data.method = "POST";
+                $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/mailplugin/sendMail";
+                console.log("MailUrl：" + data.url);
+            } else if (data.name == "RestfulPlugin") {
+                console.log("判断添加插件类型为RestfulPlugin");
+                $scope.showrestful = true;
+                $scope.showsendmail = false;
+                $scope.showupdatemessage = false;
+                tempurl = data.url;
+                $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/restfulplugin/sendRequest";
+            } else if (data.name == "UpdateMessagePlugin") {
+                console.log("判断添加插件类型为updateMessagePlugin");
+                $scope.showupdatemessage = true;
+                $scope.showsendmail = false;
+                $scope.showrestful = false;
 
-            $scope.RuleaddPluginUrl=data.url+"/api/v1/updatemessageplugin/updateMessage/insert"
-        }
-        else {
-            console.log("判断添加插件类型为其他")
-            $scope.showsendmail = false;
+                $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/updatemessageplugin/updateMessage/insert"
+            }
+            else {
+                console.log("判断添加插件类型为其他")
+                $scope.showsendmail = false;
+            }
         }
     }
 
@@ -284,17 +281,18 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.changemethod = function (method) {
         if (method == "POST") {
             $scope.showrestfulPOST = true;
-            $scope.RestfulBody.body = "{\"result\": \"success\"}";
+            $("#RestfulBody_body").val("{\"result\": \"success\"}");
+            //$("#RestfulBody_body").val("{'result': 'success'}");
         } else {
             $scope.showrestfulPOST = false;
-            $scope.RestfulBody.body = "";
+            $("#RestfulBody_body").val("");
         }
-        $scope.RestfulBody.method = method;
-        $scope.RestfulBody.url = tempurl + "/api/test/send" + method + "Request";
+        $("#RestfulBody_url").val(tempurl + "/api/test/send" + method + "Request");
     }
 
     //点击添加规则-添加插件
     $scope.subTransform = function () {
+        var transform={}
         //判断添加类型为MailPlugin
         if ($scope.RuleaddPlugin.name == "MailPlugin") {
             //解决ng-repeat动态遍历空数组报错bug
@@ -309,20 +307,23 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             $scope.MailrequestBody.subject = $('#addTranMailSub').val();
             $scope.MailrequestBody.text = $('#addTranMailText').val();
 
-            $scope.formData.transform.name = $scope.RuleaddPlugin.name;
-            $scope.formData.transform.url = $scope.RuleaddPluginUrl;
-            $scope.formData.transform.method = "POST";
-            $scope.formData.transform.requestBody = $scope.MailrequestBody;
+            transform.name = $scope.RuleaddPlugin.name;
+            transform.url = $scope.RuleaddPluginUrl;
+            transform.method = "POST";
+            transform.requestBody = $scope.MailrequestBody;
 
-            $scope.showaddTransform = true;
         } else if ($scope.RuleaddPlugin.name == "RestfulPlugin") {
             //判断插件类型为restfulplugin时请求格式
-            $scope.formData.transform.name = $scope.RuleaddPlugin.name;
-            $scope.formData.transform.url = $scope.RuleaddPluginUrl;
-            $scope.formData.transform.method = "POST";
-            $scope.formData.transform.requestBody = $scope.RestfulBody;
+            var restfulbody={}
+            restfulbody.method=$scope.RuleaddPlugin.method
+            restfulbody.url=$("#RestfulBody_url").val()
+            restfulbody.body=$("#RestfulBody_body").val()
 
-            $scope.showaddTransform = true;
+            transform.name = $scope.RuleaddPlugin.name;
+            transform.url = $scope.RuleaddPluginUrl;
+            transform.method = "POST";
+            transform.requestBody = restfulbody;
+
         }else if($scope.RuleaddPlugin.name == "UpdateMessagePlugin"){
             //插件为updatemessage时requestbody
             $scope.UpdatemessagereqBody={};
@@ -330,30 +331,40 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             $scope.UpdatemessagereqBody.messageType="fromModule";
             $scope.UpdatemessagereqBody.tenantId=$.cookie("tenantId");
 
-            $scope.formData.transform.name = $scope.RuleaddPlugin.name;
-            $scope.formData.transform.url = $scope.RuleaddPluginUrl;
-            $scope.formData.transform.method = "POST";
-            $scope.formData.transform.requestBody = $scope.UpdatemessagereqBody;
-
-            //插件详情表格
-            $scope.showaddTransform=true
+            transform.name = $scope.RuleaddPlugin.name;
+            transform.url = $scope.RuleaddPluginUrl;
+            transform.method = "POST";
+            transform.requestBody = $scope.UpdatemessagereqBody;
         }
+
+        $scope.formData.transforms.push(new ObjTransform(transform.name,transform.url,transform.method,transform.requestBody))
+        transform={}
+
         console.log("新建规则-创建插件:");
-        console.log($scope.formData.transform);
+        console.log($scope.formData.transforms);
+        $scope.showaddTransform = true;
         $("input[type=reset]").trigger("click");
+
+
+        //清理案发现场
+        var pluginid='#addruleTransform'
+        $scope.clearFilterPlugin(pluginid)
     }
 
     //添加规则
     $scope.createRule = function () {
         if ($scope.formData.rule.name != "" && $scope.formData.rule.name != null) {
             $('#rulenamealert').hide();
+            console.log("formData");
             console.log($scope.formData);
             var addRULE = $resource('/api/rule/create');
             addRULE.save({}, $scope.formData)
                 .$promise.then(function (resp) {
-                console.log("新建规则成功");
+                toastr.success("创建规则成功！");
                 $("#addRule").modal("hide");
                 location.reload();
+            },function (err) {
+                toastr.success("创建规则失败！");
             });
         } else {
             $('#rulenamealert').show();
@@ -408,8 +419,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     };
 
     /******modal关闭后清除数据******/
-    $scope.clearFilterPlugin = function () {
-        $(':input').each(function () {
+    $scope.clearFilterPlugin = function (id) {
+        $(id+' input').each(function () {
             var type = this.type;
             var tag = this.tagName.toLowerCase(); // normalize case
             if (type == 'text' || type == 'password' || tag == 'textarea')
@@ -427,6 +438,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
         $scope.showPluginMail = false;
         $scope.showrestfulPOST = false;
+        $scope.isPluginReady=false
         $scope.RuleaddPluginUrl=""
     };
 
