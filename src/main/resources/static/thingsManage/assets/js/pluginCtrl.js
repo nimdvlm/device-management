@@ -156,8 +156,8 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
                     var adaper = function (json) {
                         var newArr = [];
                         var map = {
-                            "a": 1,
-                            "b": 2
+                            "requestCount": 1,
+                            "MailController": 2
                         }
                         for(var i in map){
                             newArr[map[i]] = json[i];
@@ -165,35 +165,18 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
                         return newArr;
                     }
                     adaper(json1);
-                    console.log(json1);
-                    console.log(json1[16]);
-                    console.log(json1[69]);
-                    console.log(json1[70]);
-                    var item = ".";
+                    //console.log(json1);
 
-                    var newarr = [];
-                    for(var i=0;i<json1.length;i++){
-                        if(json1[i] != item){
-                            newarr.push(json1[i]);
-                            }
-                        }
-                        console.log(newarr);
-                    var info = JSON.stringify( newarr );
-                    console.log(info);
+                    var info = json1.replace("com.tjlcast.mailPlugin.controller.MailController","MailController")
+                    //console.log(info);
+                    var jsonObj =  JSON.parse(info);
+                    //console.log(jsonObj);
+                    //console.log(jsonObj.MailController);
+                    $scope.frameBody = jsonObj.requestCount;
+                    $scope.mailController = jsonObj.MailController;
 
 
-                    /*console.log("frame:");
-                    console.log(frame) ;
-                    console.log(frame.body);
-                    $scope.frameInfo = JSON.parse(frame.body);
-                    console.log($scope.frameInfo);
-                    $scope.frameBody = $scope.frameInfo.requestCount;
-                    console.log($scope.frameInfo.requestCount);
-                    console.log($scope.frameInfo[com.tjlcast.mailPlugin.controller.MailController]);
-                    $scope.mainPligin = $scope.frameInfo[com.tjlcast.mailPlugin.controller.MailController];*/
-                    //console.log($scope.mainPligin);
                 }) ;
-                //console.log("res:")
                 //console.log(res) ;
             });
     }
@@ -222,10 +205,7 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
 
     connect() ;
 
- $("#runingStatus").click(function () {
 
-
- })
 
 
  
