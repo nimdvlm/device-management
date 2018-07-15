@@ -33,11 +33,12 @@
     font-size: 16px;
     margin-left: 25px;
 }
-#firstSpan{
-    margin-left: 70px;
-}
-#quit,#backIcon{
+#backIcon{
+    margin-left: 500px;
     cursor: pointer;
+}
+#dropQuit{
+    color: #ffffff;
 }
 #headMenuFont{
     /*color: #cacaca;*/
@@ -46,7 +47,10 @@
     font-weight: bold;
     margin-left: 50px;
 }
-
+.dropdown-user li{
+    margin:9px 2px;
+    font-size: 14px;
+}
 
 
 

@@ -133,10 +133,10 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
 
             $(this).siblings().stop().fadeTo(300, 1);
         });
-        $("#quit,#backIcon").mouseover(function () {
+        $("#dropQuit,#backIcon").mouseover(function () {
             $(this).css("color","#c0c0c0");
         });
-        $("#quit,#backIcon").mouseout(function () {
+        $("#dropQuit,#backIcon").mouseout(function () {
             $(this).css("color","#ffffff");
         });
 

@@ -137,60 +137,93 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
     })
     
  /*查看插件运行状态websocket*/
+    var stompClient = null;
+
+    // 开启socket连接
+    function connect() {
+        var socket = new SockJS('http://39.104.189.84:30080/api/v1/smartruler/socket');
+        stompClient = Stomp.over(socket);
+        stompClient.connect(
+            {}
+            , function () {
+                //alert("Connected!") ;
+                //alert("begin to send") ;
+                stompClient.send("/plugins/metrics/details", {}, "mailplugin:8300") ;
+
+                var res = stompClient.subscribe("/plugins/metrics/response/mailplugin/8300", function(frame){
+                    console.log(frame.body);
+                    var json1 = frame.body;
+                    var adaper = function (json) {
+                        var newArr = [];
+                        var map = {
+                            "a": 1,
+                            "b": 2
+                        }
+                        for(var i in map){
+                            newArr[map[i]] = json[i];
+                        }
+                        return newArr;
+                    }
+                    adaper(json1);
+                    console.log(json1);
+                    console.log(json1[16]);
+                    console.log(json1[69]);
+                    console.log(json1[70]);
+                    var item = ".";
+
+                    var newarr = [];
+                    for(var i=0;i<json1.length;i++){
+                        if(json1[i] != item){
+                            newarr.push(json1[i]);
+                            }
+                        }
+                        console.log(newarr);
+                    var info = JSON.stringify( newarr );
+                    console.log(info);
+
+
+                    /*console.log("frame:");
+                    console.log(frame) ;
+                    console.log(frame.body);
+                    $scope.frameInfo = JSON.parse(frame.body);
+                    console.log($scope.frameInfo);
+                    $scope.frameBody = $scope.frameInfo.requestCount;
+                    console.log($scope.frameInfo.requestCount);
+                    console.log($scope.frameInfo[com.tjlcast.mailPlugin.controller.MailController]);
+                    $scope.mainPligin = $scope.frameInfo[com.tjlcast.mailPlugin.controller.MailController];*/
+                    //console.log($scope.mainPligin);
+                }) ;
+                //console.log("res:")
+                //console.log(res) ;
+            });
+    }
+
+    // 断开socket连接
+    function disconnect() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+        }
+        setConnected(falses);
+        //alert("Disconnected");
+    }
+
+    // 向‘/app/change-notice’服务端发送消息
+    function sendName() {
+        var value = "hello tjlcast.";
+        //alert("send" + value) ;
+        stompClient.send("/app/change-notice", {}, value);
+    }
+
+    function subscribe_app() {
+        stompClient.subscribe("/app/app_subscribe", function(frame){
+            console.log(frame) ;
+        })
+    }
+
+    connect() ;
 
  $("#runingStatus").click(function () {
-     var stompClient = null;
 
-     // 开启socket连接
-     function connect() {
-         var socket = new SockJS('http://39.104.189.84:30080/api/v1/smartruler/socket');
-         stompClient = Stomp.over(socket);
-         stompClient.connect(
-             {}
-             , function () {
-                 //alert("Connected!") ;
-                 //alert("begin to send") ;
-                 stompClient.send("/plugins/metrics/details", {}, "mailplugin:8300") ;
-
-                 var res = stompClient.subscribe("/plugins/metrics/response/mailplugin/8300", function(frame){
-                     console.log("frame:")
-                     console.log(frame) ;
-                     console.log(frame.body) ;
-                     $scope.frameInfo = JSON.parse(frame.body);
-                     //console.log($scope.frameInfo);
-                     $scope.frameBody = $scope.frameInfo.requestCount;
-                     //console.log($scope.frameBody);
-                    // console.log($scope.frameInfo.com.tjlcast.mailPlugin.controller.MailController);
-                     //$scope.mainPligin = $scope.frameInfo.com.tjlcast.mailPlugin.controller.MailController;
-                 }) ;
-                 //console.log("res:")
-                 //console.log(res) ;
-             });
-     }
-
-     // 断开socket连接
-     function disconnect() {
-         if (stompClient != null) {
-             stompClient.disconnect();
-         }
-         setConnected(falses);
-         //alert("Disconnected");
-     }
-
-     // 向‘/app/change-notice’服务端发送消息
-     function sendName() {
-         var value = "hello tjlcast.";
-         //alert("send" + value) ;
-         stompClient.send("/app/change-notice", {}, value);
-     }
-
-     function subscribe_app() {
-         stompClient.subscribe("/app/app_subscribe", function(frame){
-             console.log(frame) ;
-         })
-     }
-
-     connect() ;
 
  })
 
