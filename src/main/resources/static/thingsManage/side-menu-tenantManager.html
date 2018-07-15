@@ -109,30 +109,26 @@
             </div>
 
             <div class="col-md-7 col-sm-12">
-
                 <span class="upSideMenu" id="backIcon"><i class="fa fa-reply"></i>返回上一级</span>
-
                 <span class="dropdown upSideMenu" >
                     <span class="dropdown-toggle" data-toggle="dropdown" id="dropQuit">
                         <i class="fa fa-user"></i>个人中心 &nbsp;<i class="fa fa-caret-down"></i>
                     </span>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> 当前用户：<span ng-cloak>{{currentUser}}</span></a>
+                        <li><a><i class="fa fa-user fa-fw"></i> 当前用户：<span ng-cloak>{{currentUser}}</span></a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="#"><i class="fa fa-line-chart"></i>用户等级：<span ng-cloak>{{currentUserLevel}}</span></a>
+                        <li><a><i class="fa fa-line-chart"></i>用户等级：<span ng-cloak>{{currentUserLevel}}</span></a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href="" ng-click="$location.path('tenantAdmin')"><i class="fa fa-gear fa-fw"></i> 设置 </a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="#" ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> 退出登录</a>
+                        <li><a ng-click="logout()" id="logout"><i class="fa fa-sign-out fa-fw"></i> 退出登录</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </span>
-
-
 
             </div>
 
