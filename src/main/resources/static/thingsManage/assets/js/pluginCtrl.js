@@ -139,6 +139,7 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
  /*查看插件运行状态websocket*/
     var stompClient = null;
 
+
     // 开启socket连接
     function connect() {
         var socket = new SockJS('http://39.104.189.84:30080/api/v1/smartruler/socket');
