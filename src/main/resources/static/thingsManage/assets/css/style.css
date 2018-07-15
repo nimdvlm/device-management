@@ -39,6 +39,7 @@
 }
 #dropQuit{
     color: #ffffff;
+    cursor: pointer;
 }
 #headMenuFont{
     /*color: #cacaca;*/
