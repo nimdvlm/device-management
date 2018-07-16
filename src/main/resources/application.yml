@@ -8,6 +8,12 @@ security.basic.enabled: false
 server:
     port: 80
 
+spring:
+  http:
+    multipart:
+      max-file-size: 100Mb
+      max-request-size: 100Mb
+
 # OpenIoT 配置
 bupt.thingsboard:
   #host: 10.108.216.193 # for cc
@@ -30,6 +36,10 @@ service-management:
  port: 30080
 
 dashboard:
+ host: 39.104.189.84
+ port: 30080
+
+userDocument:
  host: 39.104.189.84
  port: 30080
 
