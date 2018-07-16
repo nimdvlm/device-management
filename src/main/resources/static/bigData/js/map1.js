@@ -19,10 +19,10 @@ mapData = mapjson.map(function (serieData, idx) {
     return res;
 });
 var zoomValue = 4;
-var windowWidth = document.body.clientWidth;
+/*var windowWidth = document.body.clientWidth;
 if(windowWidth > 1900){
     zoomValue = 5;
-}
+}*/
 myChart.setOption({
     bmap: {
         center: [105.13066322374, 39.240018034923],
