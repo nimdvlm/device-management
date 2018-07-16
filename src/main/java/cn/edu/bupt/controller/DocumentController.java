@@ -92,4 +92,10 @@ public class DocumentController {
         }
         return "上传失败";
     }
+
+    @RequestMapping(value = "/delete/{fileName}/{fileType}", method = RequestMethod.DELETE)
+    public void deleteFile(@PathVariable("fileName") String fileName, @PathVariable("fileType") String fileType){
+        File file = new File("/root/doc/"+fileName+"."+fileType);
+        file.delete();
+    }
 }
