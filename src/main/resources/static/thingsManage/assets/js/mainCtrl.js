@@ -56,7 +56,7 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
         })
         .when("/tenantAdmin",{
             templateUrl:"tenantAdmin.html",
-            controller:"tenantAdminCtrl"
+            controller:"mainCtrl"
         })
         .when("/homeTenant",{
             templateUrl:"homeTenant.html",
@@ -150,6 +150,7 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
             async:false,
             success:function (msg) {
                 console.log(msg);
+                userInfo = msg
                 $scope.currentUser = msg.name;
                 $scope.currentUserLevel = msg.authority;
             },
@@ -158,6 +159,38 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
             }
         });
 
+        /*-=====个人中心用户信息修改======-*/
+
+        console.log(userInfo.id);
+        $scope.NAME = userInfo.name;
+        $scope.EMAIL = userInfo.email;
+        $scope.INFO = userInfo.additional_info;
+        $scope.editUser = function () {
+        //console.log($scope.tenantGroupID);
+        //console.log($scope.tenantTitle);
+        //console.log(tenantID);
+        var email=$("#userEmail").val();
+        var additional_info=$("#userSay").val();
+        var name=$("#userName").val();
+        var editTenantUser = '{"id":'+'"'+userInfo.id+'"'+',"email":'+'"'+email+'"'+',"name":'+'"'+name+'"'+',"additional_info":'+'"'+additional_info+'"'+'}';
+        //console.log(editTenantUser);
+        $.ajax({
+            url:"/api/account/user",
+            data:editTenantUser,
+            type:"PUT",
+            contentType: "application/json; charset=utf-8",//post请求必须
+            success:function () {
+                toastr.success("修改成功！");
+                setTimeout(function () {
+                    window.location.reload();
+                },1000);
+            },
+            error:function () {
+                alert("编辑失败");
+            }
+        });
+
+    }
 
 
 
