@@ -343,4 +343,99 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
     });
      *******/
     /******样例END*******/
+
+    /**广播事件**/
+    /**socket连接**/
+    var stompClient = null;
+
+    console.log("begin!") ;
+
+    // 开启socket连接
+    function connect() {
+
+
+        var socket = new SockJS('http://39.104.189.84:30080/api/v1/updatemessageplugin');
+        stompClient = Stomp.over(socket);
+
+        var data=[]
+
+        stompClient.connect(
+            {}
+            , function () {
+                console.log("Connected!") ;
+                console.log("begin to send") ;
+                stompClient.send("/plugins/updateMessage/fromModule", {},JSON.stringify({'tenantId': 2})) ;
+
+                var res = stompClient.subscribe("/plugins/updateMessage/response/fromModule/2", function(frame){
+                    var body=JSON.parse(frame.body)
+                    //根据body的数据类型做相应处理
+                    if(isArray(body)){
+                        console.log("初始20条")
+                        data=body
+                    }else{
+                        console.log("新消息")
+                        data.splice(0,0,body)
+                        data.pop()
+                    }
+                    data.forEach(function (item) {
+                        item.date=formatDate(new Date(item.ts))
+                    })
+                    $scope.BroadcastNews=data
+                    $scope.$apply()
+                    console.log($scope.BroadcastNews)
+                }) ;
+                console.log(res) ;
+            });
+    }
+
+    // 断开socket连接
+    function disconnect() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+        }
+        setConnected(falses);
+        console.log("Disconnect")
+    }
+
+    /*    // 向‘/app/change-notice’服务端发送消息
+     function sendName() {
+     var value = "hello tjlcast.";
+     alert("send" + value) ;
+     stompClient.send("/app/change-notice", {}, value);
+     }
+
+     function subscribe_app() {
+     stompClient.subscribe("/app/app_subscribe", function(frame){
+     alert(frame) ;
+     })
+     }*/
+
+    connect() ;
+
+    //时间格式化
+    function formatDate(now) {
+        //var year=now.getFullYear();
+        var month=now.getMonth()+1;
+        var date=now.getDate();
+        var hour=now.getHours();
+        var minute=now.getMinutes();
+        if(minute<10){
+            minute="0"+minute
+        }
+        if(hour<10){
+            hour="0"+hour
+        }
+        //var second=now.getSeconds();
+        return month+"-"+date+" "+hour+":"+minute;
+    }
+
+    //判断接受消息的数据类型
+    function isArray(value){
+        if (typeof Array.isArray === "function") {
+            return Array.isArray(value);
+        }else{
+            return Object.prototype.toString.call(value) === "[object Array]";
+        }
+    }
+    /**广播事件END**/
 }]);

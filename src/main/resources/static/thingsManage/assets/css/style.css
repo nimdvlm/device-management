@@ -626,11 +626,8 @@ width: 35%;
 }
 .block{
     min-height: 210px;
-    width: 30%;
-    float: left;
-    margin:10px 15px;
-    text-align: center;
-    margin: 10px 15px;
+    height:33%;
+    margin:20px 15px;
     text-align: center;
     background-color: white;
     box-shadow: 1px 1px 5px #888888;
@@ -644,13 +641,30 @@ width: 35%;
 .block_title{
     font-size: 25px;
     color: #1964ad;
-    padding-top: 15px;
+    padding-top: 25px;
 }
 .no_broadcast{
     text-align: center;
     font-size: 25px;
     line-height: 200px;
     color: rgba(43, 76, 227, 0.4);
+}
+.home_flex{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.count_flex{
+    flex-direction: column;
+    width: 33%;
+    margin-left: 5%;
+}
+.flex_chart{
+    margin-left: 5%;
+    flex:1;
 }
 /* =============================================================
         Dashboard

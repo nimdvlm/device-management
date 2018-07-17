@@ -197,7 +197,7 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
 
         var newLine={
             label:"",
-            backgroundColor: "rgba("+ranR+","+ranG+","+ranB+",0.5)", //背景填充色
+            //backgroundColor: "rgba("+ranR+","+ranG+","+ranB+",0.5)", //背景填充色
             borderColor: "rgba("+ranR+","+ranG+","+ranB+",1)", //路径颜色
             pointBackgroundColor: "rgba("+ranR+","+ranG+","+ranB+",1)", //数据点颜色
             pointBorderColor: "#fff", //数据点边框颜色
@@ -256,6 +256,15 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         var hour=now.getHours();
         var minute=now.getMinutes();
         var second=now.getSeconds();
+        if(second<10){
+            second="0"+second
+        }
+        if(minute<10){
+            minute="0"+minute
+        }
+        if(hour<10){
+            hour="0"+hour
+        }
         //return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
         return hour+":"+minute+":"+second;
     }
