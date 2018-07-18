@@ -21,6 +21,12 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
     //右侧展示视图
     $scope.showDBDetail=function (item) {
         console.log(item)
+        //展示视图添加样式
+        $scope.Dashboards.forEach(function (items) {
+            if (item != items) items.style = {}
+        });
+        item.style = {"border": "2px solid #305680"};
+
 
         $scope.dbItem=item;//当前dashbaord
 
@@ -368,4 +374,16 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
                 this.value = "";
         });
     }
+
+    //鼠标移入移出动画效果
+    $scope.fadeSiblings = function () {
+        $(".chooseBtn").mouseover(function () {
+            $(this).siblings().stop().fadeTo(300, 0.3);
+        });
+    };
+    $scope.reSiblings = function () {
+        $(".chooseBtn").mouseout(function () {
+            $(this).siblings().stop().fadeTo(300, 1);
+        });
+    };
 }]);

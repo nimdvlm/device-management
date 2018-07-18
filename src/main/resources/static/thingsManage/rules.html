@@ -35,51 +35,46 @@
                 </div>
             </div>
             <div class="DGAssignContainer">
-                <!--filter显示表格-->
                 <div class="DGTitle DGminTitle">
                     <p class="RightviewTitle">规则详情</p>
                 </div>
-                <div class="item" ng-controller="RulefilterCtrl">
-                    <div class="gridStyle RulegridStyle" ui-grid="gridOptions" style="height: 130px"></div>
-                </div>
-                <!--plugin展示折叠效果1-->
-                <!--div ng-repeat="RP in RulePlugins">
-                    <div class="item">
-                    <div class="panel-group" id="showplugin">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">{{RP.name}}插件
-                                    <i data-toggle="collapse" data-parent="#showplugin" class="shand fa fa-angle-double-down"
-                                       data-target="#showpluginitem" ng-click="showplugin(RP,$index)" style="float: right"></i>
-                                </h3>
-                            </div>
-                            <div id="showpluginitem" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <p>跳转地址：{{RP.url}}</p>
-                                    <div id="plugin_{{$index}}">
-                                        <p>请求方法：{{RP.requestBody.method}}</p>
-                                        <p>请求地址：{{RP.requestBody.url}}</p>
-                                    </div>
-                                    <div id="plugin_mail_{{$index}}" style="display: none">
-                                        <p>收件人：{{RP.requestBody.to}}</p>
-                                        <p>事务：{{RP.requestBody.subject}}</p>
-                                        <p>内容：{{RP.requestBody.text}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div-->
 
+                <!--filter展示表格折叠效果-->
+                <div class="item">
+                    <table class="table table-bordered table-hover table-striped" style="table-layout:fixed">
+                        <thead>
+                        <tr>
+                            <td style="width: 30px"></td>
+                            <td>过滤器详情</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat-start="data in RuleFilters">
+                            <td>
+                                <button class="btn btn-xs" ng-if="data.expanded" ng-click="data.expanded=false">-</button>
+                                <button class="btn btn-xs" ng-if="!data.expanded" ng-click="data.expanded=true">+</button>
+                            </td>
+                            <td>{{data.name}}</td>
+                        </tr>
+                        <tr ng-show="data.expanded" ng-repeat-end="">
+                            <td></td>
+                            <td colspan="1">
+                                <p>过滤器名称：{{data.name}}</p>
+                                <p>过滤器类型：{{data.type||"无"}}</p>
+                                <p>JS代码：<pre id="rule_jscode">{{data.jsCode}}</pre></p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                <!--plugin展示表格折叠效果2-->
+                <!--plugin展示表格折叠效果-->
                 <div class="item">
                     <table class="table table-bordered table-hover table-striped" ng-show="!showEmpty" style="table-layout:fixed">
                         <thead>
                         <tr>
                             <td style="width: 30px"></td>
-                            <td>规则名</td>
+                            <td>插件详情</td>
                         </tr>
                         </thead>
                         <tbody>
@@ -92,7 +87,7 @@
                         </tr>
                         <tr ng-show="data.expanded" ng-repeat-end="">
                             <td></td>
-                            <td colspan="1" style="word-wrap:break-word">
+                            <td colspan="1" style="word-wrap:break-word;word-break: break-all">
                                 <p>规则名称：{{data.name}}</p>
                                 <p>跳转地址：{{data.url}}</p>
                                 <div id="plugin_{{$index}}">
@@ -381,7 +376,7 @@
                             </select>
                             </p>
                             <p style="word-wrap:break-word">描&emsp;&emsp;述：{{RuleaddPlugin.describe}}</p>
-                            <p>跳转地址：{{RuleaddPluginUrl}}</p>
+                            <p style="word-break: break-all">跳转地址：{{RuleaddPluginUrl}}</p>
                             <p ng-show="showsendmail">请求方式：<input type="text" name="method" disabled="disabled"
                                                                   id="pluginmethodMail"
                                                                   value="POST"/>
