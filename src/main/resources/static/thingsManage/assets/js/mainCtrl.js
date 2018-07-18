@@ -162,6 +162,7 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
         /*-=====个人中心用户信息修改======-*/
 
         console.log(userInfo.id);
+        //console.log(userInfo.additional_info);
         $scope.NAME = userInfo.name;
         $scope.EMAIL = userInfo.email;
         $scope.INFO = userInfo.additional_info;
