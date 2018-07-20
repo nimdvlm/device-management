@@ -196,14 +196,14 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
 
     //添加新曲线
     function newLine(myChart) {
-        var ranR=220-Math.ceil(Math.random()*2)*50
-        var ranG=220-Math.ceil(Math.random()*2)*50
-        var ranB=220-Math.ceil(Math.random()*2)*50
+        var ranR=220-Math.ceil(Math.random()*3)*50
+        var ranG=220-Math.ceil(Math.random()*3)*50
+        var ranB=220-Math.ceil(Math.random()*3)*50
         var mychart=myChart
 
         var newLine={
             label:"",
-            //backgroundColor: "rgba("+ranR+","+ranG+","+ranB+",0.5)", //背景填充色
+            backgroundColor: "rgba(255,255,255,0.1)", //背景填充色
             borderColor: "rgba("+ranR+","+ranG+","+ranB+",1)", //路径颜色
             pointBackgroundColor: "rgba("+ranR+","+ranG+","+ranB+",1)", //数据点颜色
             pointBorderColor: "#fff", //数据点边框颜色
