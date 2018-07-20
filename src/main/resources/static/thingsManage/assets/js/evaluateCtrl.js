@@ -8,10 +8,27 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
 
 
     /*get文件的下载*/
-    $scope.fileDown = function (url, name) {
-        console.log("ssss");
-        window.location.href = "http://39.104.84.131/api/document/download/三化物联网平台需求规格说明书/doc" ;
-    };
+    $("#downFile").on("click",function () {
+        $.ajax({
+            url:"/api/document/download/物联网平台/pptx",
+            type:"GET",
+            success:function () {
+                alert("下载成功！");
+            },
+            error:function () {
+                alert("编辑失败");
+            }
+        });
+    })
+
+
+
+
+
+
+
+
+
     /*================================
     //附件下载
     $scope.fileDown = function (url, name) {
@@ -69,7 +86,20 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
 
 
 
-
+      /*delete删除文档*/
+    $scope.delFile = function(data){
+        var result = confirm("确定删除此文件？");
+        if(result){
+            var deleteFile = $resource('/api/document/delete/物联网平台/pptx');
+            deleteFile.delete({},{},function(){
+                alert("删除成功");
+            },function () {
+                alert("删除失败！");
+            });
+        }else {
+            alert("不删除?");
+        }
+    }
 
 
 
