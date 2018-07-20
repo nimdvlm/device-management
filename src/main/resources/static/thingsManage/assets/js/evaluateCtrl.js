@@ -11,7 +11,7 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
     $("#downFile").on("click",function () {
         $.ajax({
             url:"/api/document/download/物联网平台/pptx",
-            type:"PUT",
+            type:"GET",
             success:function () {
                 alert("下载成功！");
             },
