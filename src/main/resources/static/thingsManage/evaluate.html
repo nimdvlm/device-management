@@ -4,7 +4,7 @@
             <div class="col-md-7">
                 <span class="header-line">用户手册
                 <button style="margin-left:10px" class="btn btn-primary btn-sm user" data-toggle="modal"
-                        data-target="#addServiceGroup">+ 上传文件
+                        data-target="#upFile">+ 上传文件
                 </button>
                 </span>
             </div>
@@ -28,26 +28,13 @@
                                 </thead>
                                 <tbody>
                                 <tr class="odd gradeX">
-                                    <td>Trident</td>
-                                    <td><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-cloud-download"></i>  下载</button>&nbsp;
-                                        <button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-trash"></i>  删除</button>
+                                    <td>三化物联网平台需求规格说明书.doc</td>
+                                    <td><button class="btn btn-primary btn-xs" id="downFile" ng-click="fileDown()"><i class="glyphicon glyphicon-cloud-download"></i>  下载</button>&nbsp;
+                                        <button class="btn btn-primary btn-xs" id="delFile"><i class="glyphicon glyphicon-trash"></i>  删除</button>
                                     </td>
                                 </tr>
-                                <tr class="even gradeC">
-                                    <td>Trident</td>
-                                    <td><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-cloud-download"></i>  下载</button>&nbsp;
-                                        <button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-trash"></i>  删除</button></td>
-                                </tr>
-                                <tr class="odd gradeA">
-                                    <td>Trident</td>
-                                    <td><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-cloud-download"></i>  下载</button>&nbsp;
-                                        <button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-trash"></i>  删除</button></td>
-                                </tr>
-                                <tr class="even gradeA">
-                                    <td>Trident</td>
-                                    <td><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-cloud-download"></i>  下载</button>&nbsp;
-                                        <button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-trash"></i>  删除</button></td>
-                                </tr>
+
+
                                 </tbody>
                             </table>
                         </div>
@@ -55,6 +42,37 @@
                 </div>
             </div>
         </div>
+        <!--上传文件模态框-->
+        <div class="modal fade" id="upFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h3 class="modal-title" id="myModalLabel" style="color: #305680;font-weight: 600">
+                            上传文件
+                        </h3>
+                    </div>
+                    <div class="modal-body">
+                        <label class="update-label">请选择上传的文件位置：</label>
+                            <a href="javascript:;" class="file-a" name="file">
+                                <input class="file" ngf-select type="file" ng-model="file" name="file" readonly="readonly" />浏览...
+                            </a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="subFile()">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
     </div>
 </div>
 

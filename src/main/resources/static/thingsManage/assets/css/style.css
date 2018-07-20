@@ -31,11 +31,13 @@
     ============================================================ */
 .upSideMenu{
     font-size: 16px;
-    margin-left: 25px;
+}
+#userCenter{
+    margin-left: 500px;
+    cursor: pointer;
 }
 #backIcon{
-    margin-left: 450px;
-    cursor: pointer;
+    margin-left: 25px;
 }
 #dropQuit{
     color: #ffffff;
