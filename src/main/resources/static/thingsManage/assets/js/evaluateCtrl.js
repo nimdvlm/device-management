@@ -8,6 +8,19 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
 
 
     /*get文件的下载*/
+    $("#downFile").on("click",function () {
+        $.ajax({
+            url:"/api/document/download/物联网平台/pptx",
+            type:"PUT",
+            success:function () {
+                alert("下载成功！");
+            },
+            error:function () {
+                alert("编辑失败");
+            }
+        });
+    })
+
 
 
 
