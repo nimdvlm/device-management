@@ -90,8 +90,8 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
     $scope.delFile = function(data){
         var result = confirm("确定删除此文件？");
         if(result){
-            var deleteFile = $resource('/api/document/delete/:id/:type');
-            deleteFile.delete({id:物联网平台,type:pptx},{},function(){
+            var deleteFile = $resource('/api/document/delete/物联网平台/pptx');
+            deleteFile.delete({},{},function(){
                 alert("删除成功");
             },function () {
                 alert("删除失败！");
