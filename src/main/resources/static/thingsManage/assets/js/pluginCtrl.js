@@ -85,9 +85,9 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
                     //alert("Connected!") ;
                     //alert("begin to send") ;
 
-                    stompClient.send("/plugins/metrics/details", {}, pluginName+":8300") ;
+                    stompClient.send("/plugins/metrics/details", {}, pluginName+":"+str[1]) ;
 
-                    var res = stompClient.subscribe("/plugins/metrics/response/"+pluginName+"/8300", function(frame){
+                    var res = stompClient.subscribe("/plugins/metrics/response/"+pluginName+"/"+str[1], function(frame){
                         console.log(frame.body);
                         var jsonObj =  JSON.parse(frame.body);
                         var newArr = [];
