@@ -2,8 +2,10 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
 
     var str = new Array();
 
+
     var pluginGroup = $resource('/api/rule/allPlugins');
     $scope.pluginGroups = pluginGroup.query();
+    //console.log($scope.pluginGroups);
 
     /*鼠标移入动画效果*/
     $scope.fadeSiblings = function () {
@@ -28,6 +30,8 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
         });
         /*给点击元素加上特定样式*/
         item.style = {"border": "2px solid #305680"};
+        var pluginName= item.name.toLowerCase();
+        console.log(pluginName);
         $scope.name = item.name;
         $scope.url = item.url;
         $scope.describe = item.describe;
@@ -66,6 +70,97 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
             }
             $scope.interfaceArray = arry;
         })
+
+        /*================查看插件运行状态websocket==========*/
+        var stompClient = null;
+
+
+        // 开启socket连接
+        function connect() {
+            var socket = new SockJS('http://39.104.189.84:30080/api/v1/smartruler/socket');
+            stompClient = Stomp.over(socket);
+            stompClient.connect(
+                {}
+                , function () {
+                    //alert("Connected!") ;
+                    //alert("begin to send") ;
+
+                    stompClient.send("/plugins/metrics/details", {}, pluginName+":"+str[1]) ;
+
+                    var res = stompClient.subscribe("/plugins/metrics/response/"+pluginName+"/"+str[1], function(frame){
+                        console.log(frame.body);
+                        var jsonObj =  JSON.parse(frame.body);
+                        var newArr = [];
+                        $.each(jsonObj, function(i,val) {
+                            //console.log(i); //获取键值
+                            console.log(val);
+                            newArr.push(val);
+                        });
+                        //console.log(newArr);
+                        $scope.frameBody = newArr[0];
+                        $scope.mailController = newArr[1];
+                        /*=====================================
+                        var json1 = frame.body;
+                        var adaper = function (json) {
+                            var newArr = [];
+                            var map = {
+                                "requestCount": 1,
+                                "MailController": 2
+                            }
+                            for(var i in map){
+                                newArr[map[i]] = json[i];
+                            }
+                            return newArr;
+                        }
+                        adaper(json1);
+                        //console.log(json1);
+
+                        var info = json1.replace("com.tjlcast.mailPlugin.controller.MailController","MailController");
+                        //console.log(info);
+                        var jsonObj =  JSON.parse(info);
+                        //console.log(jsonObj);
+                        //console.log(jsonObj.MailController);
+                        var json1 = frame.body;
+                        var info = json1.replace("com.tjlcast.mailPlugin.controller.MailController","MailController");
+                        var jsonObj =  JSON.parse(info);
+                        $scope.frameBody = jsonObj.requestCount;
+                        $scope.mailController = jsonObj.MailController;
+                        ======================================================*/
+
+                    }) ;
+                    //console.log(res) ;
+                });
+        }
+
+        // 断开socket连接
+        function disconnect() {
+            if (stompClient != null) {
+                stompClient.disconnect();
+            }
+            setConnected(falses);
+            //alert("Disconnected");
+        }
+
+        // 向‘/app/change-notice’服务端发送消息
+        function sendName() {
+            var value = "hello tjlcast.";
+            //alert("send" + value) ;
+            stompClient.send("/app/change-notice", {}, value);
+        }
+
+        function subscribe_app() {
+            stompClient.subscribe("/app/app_subscribe", function(frame){
+                console.log(frame) ;
+            })
+        }
+
+        connect() ;
+
+
+
+
+
+
 
     }
 
@@ -136,75 +231,7 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
         });
     })
     
- /*查看插件运行状态websocket*/
-    var stompClient = null;
 
-
-    // 开启socket连接
-    function connect() {
-        var socket = new SockJS('http://39.104.189.84:30080/api/v1/smartruler/socket');
-        stompClient = Stomp.over(socket);
-        stompClient.connect(
-            {}
-            , function () {
-                //alert("Connected!") ;
-                //alert("begin to send") ;
-                stompClient.send("/plugins/metrics/details", {}, "mailplugin:8300") ;
-
-                var res = stompClient.subscribe("/plugins/metrics/response/mailplugin/8300", function(frame){
-                    console.log(frame.body);
-                    var json1 = frame.body;
-                    var adaper = function (json) {
-                        var newArr = [];
-                        var map = {
-                            "requestCount": 1,
-                            "MailController": 2
-                        }
-                        for(var i in map){
-                            newArr[map[i]] = json[i];
-                        }
-                        return newArr;
-                    }
-                    adaper(json1);
-                    //console.log(json1);
-
-                    var info = json1.replace("com.tjlcast.mailPlugin.controller.MailController","MailController")
-                    //console.log(info);
-                    var jsonObj =  JSON.parse(info);
-                    //console.log(jsonObj);
-                    //console.log(jsonObj.MailController);
-                    $scope.frameBody = jsonObj.requestCount;
-                    $scope.mailController = jsonObj.MailController;
-
-
-                }) ;
-                //console.log(res) ;
-            });
-    }
-
-    // 断开socket连接
-    function disconnect() {
-        if (stompClient != null) {
-            stompClient.disconnect();
-        }
-        setConnected(falses);
-        //alert("Disconnected");
-    }
-
-    // 向‘/app/change-notice’服务端发送消息
-    function sendName() {
-        var value = "hello tjlcast.";
-        //alert("send" + value) ;
-        stompClient.send("/app/change-notice", {}, value);
-    }
-
-    function subscribe_app() {
-        stompClient.subscribe("/app/app_subscribe", function(frame){
-            console.log(frame) ;
-        })
-    }
-
-    connect() ;
 
 
 
