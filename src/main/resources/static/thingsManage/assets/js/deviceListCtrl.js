@@ -1364,9 +1364,13 @@ $("#modalCloseEvent,#closeEvent").click(function () {
         $("#eventStartTime").val("");//清空起始时间
         $("#eventEndTime").val("");//清空终止时间
         $(".eventContent").empty();
+        lastEventId = [];
+        subLastEventId = [];
 });
 var lastEventId = [];//用于记录idOffset进行翻页
 var eventPage;//用于记录当前页号，从0开始
+var subLastEventId = [];//用于记录idOffset进行翻页
+var subEventPage;//用于记录当前页号，从0开始
 $scope.showEvent = function () {
     $.ajax({
         url:"/api/event/newest/"+$scope.deviceInfo.id+"?limit=5",
@@ -1386,77 +1390,79 @@ $scope.showEvent = function () {
             console.log(err);
         }
     });
-};
 
-//设备事件上一页
-$scope.preEvent = function () {
-    if(eventPage === 0){
-        toastr.warning("当前已是最新设备事件！");
-    }
-    else if(eventPage === 1){
-        $.ajax({
-            url:"/api/event/newest/"+$scope.deviceInfo.id+"?limit=5",
-            type:"GET",
-            dataType:"json",
-            async:false,
-            contentType: "application/json; charset=utf-8",
-            success:function (msg) {
-                console.log(msg);
-                $scope.eventInfo = msg;
-                eventPage--;
-            },
-            error:function (err) {
-                console.log(err);
-            }
-        });
-    }
-    else{
-        $.ajax({
-            url: "/api/event/newest/"+$scope.deviceInfo.id+"?limit=5&idOffset="+lastEventId[eventPage-2],
-            type:"GET",
-            dataType:"json",
-            async:false,
-            contentType: "application/json; charset=utf-8",
-            success:function (msg) {
-                console.log(msg);
-                $scope.eventInfo = msg;
-                eventPage--;
-            },
-            error:function (err) {
-                console.log(err);
-            }
-        });
-    }
-
-};
-
-//设备事件下一页
-$scope.nextEvent = function () {
-    $.ajax({
-        url: "/api/event/newest/"+$scope.deviceInfo.id+"?limit=5&idOffset="+lastEventId[eventPage],
-        type:"GET",
-        dataType:"json",
-        async:false,
-        contentType: "application/json; charset=utf-8",
-        success:function (msg) {
-            if(msg.length === 5){
-                console.log(msg);
-                $scope.eventInfo = msg;
-                eventPage++;
-                console.log(msg.length);
-            }
-            else{
-                toastr.warning("当前已是最后一页！");
-            }
-
-        },
-        error:function (err) {
-            console.log(err);
-
+    //设备事件上一页
+    $scope.preEvent = function () {
+        if(eventPage === 0){
+            toastr.warning("当前已是最新设备事件！");
         }
-    });
+        else if(eventPage === 1){
+            $.ajax({
+                url:"/api/event/newest/"+$scope.deviceInfo.id+"?limit=5",
+                type:"GET",
+                dataType:"json",
+                async:false,
+                contentType: "application/json; charset=utf-8",
+                success:function (msg) {
+                    console.log(msg);
+                    $scope.eventInfo = msg;
+                    eventPage--;
+                },
+                error:function (err) {
+                    console.log(err);
+                }
+            });
+        }
+        else{
+            $.ajax({
+                url: "/api/event/newest/"+$scope.deviceInfo.id+"?limit=5&idOffset="+lastEventId[eventPage-2],
+                type:"GET",
+                dataType:"json",
+                async:false,
+                contentType: "application/json; charset=utf-8",
+                success:function (msg) {
+                    console.log(msg);
+                    $scope.eventInfo = msg;
+                    eventPage--;
+                },
+                error:function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+    };
+
+    //设备事件下一页
+    $scope.nextEvent = function () {
+        $.ajax({
+            url: "/api/event/newest/"+$scope.deviceInfo.id+"?limit=5&idOffset="+lastEventId[eventPage],
+            type:"GET",
+            dataType:"json",
+            async:false,
+            contentType: "application/json; charset=utf-8",
+            success:function (msg) {
+                if(msg.length === 5){
+                    console.log(lastEventId[eventPage]);
+                    console.log(msg);
+                    $scope.eventInfo = msg;
+                    eventPage++;
+                    console.log(msg.length);
+                }
+                else{
+                    toastr.warning("当前已是最后一页！");
+                }
+            },
+            error:function (err) {
+                console.log(err);
+            }
+        });
+    };
 };
+
+//按时间戳查看设备事件
 $scope.subEventTime = function () {
+    subLastEventId = [];
     console.log($scope.deviceInfo.id);
     if($("#eventStartTime").val()==="" || $("#eventEndTime").val()==="" ){
         toastr.warning("起始时间无效!");
@@ -1480,15 +1486,86 @@ $scope.subEventTime = function () {
                 async:false,
                 contentType: "application/json; charset=utf-8",
                 success:function (msg) {
+                    subEventPage = 0;
                     console.log(msg);
                     $scope.eventInfo = msg;
+                    subLastEventId.push(msg[msg.length-1].id);
                 },
                 error:function (err) {
                     console.log(err);
                 }
             });
-            console.log($scope.eventInfo);
+
+            //设备事件上一页
+            $scope.preEvent = function () {
+                if(subEventPage === 0){
+                    toastr.warning("当前已是第一页！");
+                }
+                else if(subEventPage === 1){
+                    $.ajax({
+                        url:"/api/event/"+$scope.deviceInfo.id+"?limit=20&startTime="+eventStartStamp+"&endTime="+eventEndStamp,
+                        type:"GET",
+                        dataType:"json",
+                        async:false,
+                        contentType: "application/json; charset=utf-8",
+                        success:function (msg) {
+                            console.log(msg);
+                            $scope.eventInfo = msg;
+                            subEventPage--;
+                            subLastEventId.push(msg[msg.length-1].id);
+                        },
+                        error:function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+                else{
+                    $.ajax({
+                        url: "/api/event/"+$scope.deviceInfo.id+"?limit=20&startTime="+eventStartStamp+"&endTime="+eventEndStamp+"&idOffset="+subLastEventId[subEventPage-2],
+                        type:"GET",
+                        dataType:"json",
+                        async:false,
+                        contentType: "application/json; charset=utf-8",
+                        success:function (msg) {
+                            console.log(msg);
+                            $scope.eventInfo = msg;
+                            subEventPage--;
+                            subLastEventId.push(msg[msg.length-1].id);
+                        },
+                        error:function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            };
+
+            //设备事件下一页
+            $scope.nextEvent = function () {
+                $.ajax({
+                    url: "/api/event/"+$scope.deviceInfo.id+"?limit=20&startTime="+eventStartStamp+"&endTime="+eventEndStamp+"&idOffset="+subLastEventId[subEventPage],
+                    type:"GET",
+                    dataType:"json",
+                    async:false,
+                    contentType: "application/json; charset=utf-8",
+                    success:function (msg) {
+                        if(msg.length > 0){
+                            console.log(msg);
+                            $scope.eventInfo = msg;
+                            subEventPage++;
+                            subLastEventId.push(msg[msg.length-1].id);
+                        }
+                        else{
+                            toastr.warning("当前已是最后一页！");
+                        }
+                    },
+                    error:function (err) {
+                        console.log(err);
+                    }
+                });
+            };
         }
+
+        console.log($scope.eventInfo);
     }
 };
 
