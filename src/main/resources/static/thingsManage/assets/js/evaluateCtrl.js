@@ -8,10 +8,14 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
 
 
     /*get文件的下载*/
-    $scope.fileDown = function (url, name) {
-        console.log("ssss");
-        window.location.href = "http://39.104.84.131/api/document/download/三化物联网平台需求规格说明书/doc" ;
-    };
+
+
+
+
+
+
+
+
     /*================================
     //附件下载
     $scope.fileDown = function (url, name) {

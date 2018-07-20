@@ -93,12 +93,18 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
                         var newArr = [];
                         $.each(jsonObj, function(i,val) {
                             //console.log(i); //获取键值
-                            console.log(val);
-                            newArr.push(val);
+                            //console.log(val);
+                            if(i != "requestCount"){
+                                newArr.push(val);
+                            }
+
                         });
                         //console.log(newArr);
-                        $scope.frameBody = newArr[0];
-                        $scope.mailController = newArr[1];
+                        $scope.frameBody = jsonObj.requestCount;
+                        $scope.MailController = newArr[0];
+
+
+
                         /*=====================================
                         var json1 = frame.body;
                         var adaper = function (json) {
