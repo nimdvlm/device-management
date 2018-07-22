@@ -1480,7 +1480,7 @@ $scope.subEventTime = function () {
             $scope.eventInfo = eventObj.query({deviceId:$scope.deviceInfo.id,eventStartTime:eventStartStamp,eventEndTime:eventEndStamp});
             console.log($scope.eventInfo);*/
             $.ajax({
-                url:"/api/event/"+$scope.deviceInfo.id+"?limit=20&startTime="+eventStartStamp+"&endTime="+eventEndStamp,
+                url:"/api/event/"+$scope.deviceInfo.id+"?limit=5&startTime="+eventStartStamp+"&endTime="+eventEndStamp,
                 type:"GET",
                 dataType:"json",
                 async:false,
@@ -1503,7 +1503,7 @@ $scope.subEventTime = function () {
                 }
                 else if(subEventPage === 1){
                     $.ajax({
-                        url:"/api/event/"+$scope.deviceInfo.id+"?limit=20&startTime="+eventStartStamp+"&endTime="+eventEndStamp,
+                        url:"/api/event/"+$scope.deviceInfo.id+"?limit=5&startTime="+eventStartStamp+"&endTime="+eventEndStamp,
                         type:"GET",
                         dataType:"json",
                         async:false,
@@ -1521,7 +1521,7 @@ $scope.subEventTime = function () {
                 }
                 else{
                     $.ajax({
-                        url: "/api/event/"+$scope.deviceInfo.id+"?limit=20&startTime="+eventStartStamp+"&endTime="+eventEndStamp+"&idOffset="+subLastEventId[subEventPage-2],
+                        url: "/api/event/"+$scope.deviceInfo.id+"?limit=5&startTime="+eventStartStamp+"&endTime="+eventEndStamp+"&idOffset="+subLastEventId[subEventPage-2],
                         type:"GET",
                         dataType:"json",
                         async:false,
@@ -1542,7 +1542,7 @@ $scope.subEventTime = function () {
             //设备事件下一页
             $scope.nextEvent = function () {
                 $.ajax({
-                    url: "/api/event/"+$scope.deviceInfo.id+"?limit=20&startTime="+eventStartStamp+"&endTime="+eventEndStamp+"&idOffset="+subLastEventId[subEventPage],
+                    url: "/api/event/"+$scope.deviceInfo.id+"?limit=5&startTime="+eventStartStamp+"&endTime="+eventEndStamp+"&idOffset="+subLastEventId[subEventPage],
                     type:"GET",
                     dataType:"json",
                     async:false,
