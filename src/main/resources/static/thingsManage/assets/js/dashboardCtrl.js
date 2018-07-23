@@ -21,6 +21,12 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
     //右侧展示视图
     $scope.showDBDetail=function (item) {
         console.log(item)
+        //展示视图添加样式
+        $scope.Dashboards.forEach(function (items) {
+            if (item != items) items.style = {}
+        });
+        item.style = {"border": "2px solid #305680"};
+
 
         $scope.dbItem=item;//当前dashbaord
 
@@ -190,14 +196,14 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
 
     //添加新曲线
     function newLine(myChart) {
-        var ranR=220-Math.ceil(Math.random()*2)*50
-        var ranG=220-Math.ceil(Math.random()*2)*50
-        var ranB=220-Math.ceil(Math.random()*2)*50
+        var ranR=220-Math.ceil(Math.random()*3)*50
+        var ranG=220-Math.ceil(Math.random()*3)*50
+        var ranB=220-Math.ceil(Math.random()*3)*50
         var mychart=myChart
 
         var newLine={
             label:"",
-            backgroundColor: "rgba("+ranR+","+ranG+","+ranB+",0.5)", //背景填充色
+            backgroundColor: "rgba(255,255,255,0.1)", //背景填充色
             borderColor: "rgba("+ranR+","+ranG+","+ranB+",1)", //路径颜色
             pointBackgroundColor: "rgba("+ranR+","+ranG+","+ranB+",1)", //数据点颜色
             pointBorderColor: "#fff", //数据点边框颜色
@@ -256,6 +262,15 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         var hour=now.getHours();
         var minute=now.getMinutes();
         var second=now.getSeconds();
+        if(second<10){
+            second="0"+second
+        }
+        if(minute<10){
+            minute="0"+minute
+        }
+        if(hour<10){
+            hour="0"+hour
+        }
         //return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
         return hour+":"+minute+":"+second;
     }
@@ -359,4 +374,16 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
                 this.value = "";
         });
     }
+
+    //鼠标移入移出动画效果
+    $scope.fadeSiblings = function () {
+        $(".chooseBtn").mouseover(function () {
+            $(this).siblings().stop().fadeTo(300, 0.3);
+        });
+    };
+    $scope.reSiblings = function () {
+        $(".chooseBtn").mouseout(function () {
+            $(this).siblings().stop().fadeTo(300, 1);
+        });
+    };
 }]);

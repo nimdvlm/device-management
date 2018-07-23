@@ -60,13 +60,15 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
         var tenantDetail = $resource('/api/account/tenant?tenantId=:tenantID',{tenantID:'@id'});
         //console.log(item.id);
         tenantDetail.get({tenantID:item.id}).$promise.then(function (value) {
-            //console.log(value.title);
+            //console.log(value);
             $scope.tenantDetailShow = value;
 
         })
         /*点击显示租户管理员详情*/
         var tenantAdminDetail = $resource('/api/account/tenant/users?tenantId=:adminID'+'&limit=9&page=0',{adminID:tenantID});
         $scope.tenantAdminInfo = tenantAdminDetail.query();
+        console.log("value2:");
+        console.log($scope.tenantAdminInfo);
         //console.log($scope.tenantAdminInfo);
 
     }

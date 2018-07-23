@@ -1,4 +1,4 @@
-<div ng-controller="tenantAdminCtrl" class="content-wrapper">
+<div ng-controller="mainCtrl" class="content-wrapper">
     <div class="container">
         <div class="col-md-7">
             <h1 class="header-line page-header">
@@ -18,26 +18,18 @@
                             <form role="form">
                                 <div class="form-group">
                                     <label>用户名:</label>
-                                    <input class="form-control" placeholder="Enter name">
-                                </div>
-                                <div class="form-group">
-                                    <label>密码:</label>
-                                    <input class="form-control" placeholder="Enter password">
-                                </div>
-                                <div class="form-group">
-                                    <label>确认密码:</label>
-                                    <input class="form-control" placeholder="Enter password again">
+                                    <input class="form-control" id="userName" value={{NAME}}>
                                 </div>
                                 <div class="form-group">
                                     <label>邮箱:</label>
-                                    <input class="form-control" placeholder="Enter email">
+                                    <input class="form-control" id="userEmail" value={{EMAIL}}>
 
                                 </div>
                                 <div class="form-group">
                                     <label>备注信息:</label>
-                                    <input class="form-control" placeholder="Enter information">
+                                    <input class="form-control" id="userSay" value={{INFO}}>
                                 </div><br>
-                                <button type="submit" class="btn btn-default">Submit Button</button>
+                                <button type="submit" class="btn btn-default" ng-click="editUser()">Submit Button</button>
                                 <button type="reset" class="btn btn-default">Reset Button</button>
                             </form>
                         </div>
@@ -47,34 +39,25 @@
                                 <fieldset disabled="">
                                     <div class="form-group">
                                         <label>用户名:</label>
-                                        <input class="form-control" placeholder="Enter text">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>密码:</label>
-                                        <input class="form-control" placeholder="Enter text">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>确认密码:</label>
-                                        <input class="form-control" placeholder="Enter text">
+                                        <input class="form-control" placeholder={{NAME}}>
                                     </div>
                                     <div class="form-group">
                                         <label>邮箱:</label>
-                                        <input class="form-control" placeholder="Enter text">
+                                        <input class="form-control" placeholder={{EMAIL}}>
 
                                     </div>
                                     <div class="form-group">
                                         <label>备注信息:</label>
-                                        <input class="form-control" placeholder="Enter text">
+                                        <input class="form-control" placeholder={{INFO}}>
                                     </div>
                                 </fieldset>
                             </form>
-
-                            </div>
                         </div>
                     </div>
                 </div>
               </div>
             </div>
+        </div>
 
 
         </div>

@@ -53,11 +53,11 @@
                                 <p>设备名称：{{data.name}}</p>
                                 <p>设备ID：{{data.id}}</p>
                                 <p>设备类型：{{data.deviceType}}</p>
-                                <p>父类设备：{{data.parentDeviceId}}</p>
-                                <p>厂商：{{data.manufacture}}</p>
-                                <p>型号：{{data.model}}</p>
-                                <p>状态：{{data.status}}</p>
-                                <p>位置：{{data.location}}</p>
+                                <p>父类设备：{{data.parentDeviceId||"无"}}</p>
+                                <p>厂商：{{data.manufacture||"无"}}</p>
+                                <p>型号：{{data.model||"无"}}</p>
+                                <p>状态：{{data.status||"无"}}</p>
+                                <p>位置：{{data.location||"无"}}</p>
                                 <p>
                                     <button class="btn btn-primary user" data-toggle="modal"
                                             data-target="#refreshDevice" ng-click="setValue(data)">更新设备
@@ -359,11 +359,10 @@
                 <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
                         data-target="#addDeviceGroup">+ 创建设备组
                 </button>
-                <div class="SearchDG">
-                    <span>搜索：<input type="text" style="width: 130px" placeholder="输入设备组名称"
-                                    ng-model="$parent.dgname"/></span>
-                    <span class="Searchicon" ng-click="searchDG()" title="搜索">
-                        <i class="fa fa-search fa-lg shand" aria-hidden="true"></i>
+                <div class="input-group SearchDG">
+                    <input type="text" class="form-control" placeholder="请输入设备组名称..." ng-model="$parent.dgname">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-click="searchDG()"><i class="fa fa-search"></i></button>
                     </span>
                 </div>
 

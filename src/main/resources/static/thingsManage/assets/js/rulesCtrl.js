@@ -63,6 +63,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         //初始化右侧视图
         $scope.Ruleitem = $scope.Rules[0];//必须在success函数里才能取到Rules[0]
         $scope.RulePlugins=$scope.Ruleitem.transforms
+        $scope.RuleFilters=$scope.Ruleitem.filters
 
         console.log("query函数内的Rules：");
         console.log($scope.Rules);
@@ -98,6 +99,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         console.log($scope.Ruleitem);
 
         $scope.RulePlugins=rule.transforms
+        $scope.RuleFilters=rule.filters
 
         //判断规则运行状态
         if ($scope.Ruleitem.rule.state == "ACTIVE") {
@@ -110,7 +112,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             $scope.Rulestop = false;
         }
         //把数据发送给表格控制器
-        $scope.$broadcast('senddata', $scope.Ruleitem);
+        //$scope.$broadcast('senddata', $scope.Ruleitem);
     };
 
     //根据插件类型展示div

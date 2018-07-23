@@ -1,4 +1,6 @@
-mainApp.controller("tenantAdminCtrl",["$scope","$resource","$location",function ($scope,$resource,$location) {
+mainApp.controller("adminCtrl", function ($scope, $resource) {
     $scope.$location = $location;
 
-}]);
+
+
+});

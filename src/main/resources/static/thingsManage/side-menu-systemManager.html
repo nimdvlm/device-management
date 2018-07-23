@@ -67,12 +67,12 @@
 
     <!--Rule-->
     <script type="text/javascript" src="static/thingsManage/assets/js/rulesCtrl.js"></script>
-    <script type="text/javascript" src="static/thingsManage/assets/js/rulefilterCtrl.js"></script>
 
     <!--ServiceGroup-->
     <script type="text/javascript" src="static/thingsManage/assets/js/serviceCtrl.js"></script>
     <script type="text/javascript" src="static/thingsManage/assets/js/pluginCtrl.js"></script>
     <script type="text/javascript" src="static/thingsManage/assets/js/tenantCtrl.js"></script>
+    <script type="text/javascript" src="static/thingsManage/assets/js/evaluateCtrl.js"></script>
     <!--Customer-->
     <script type="text/javascript" src="static/thingsManage/assets/js/customerCtrl.js"></script>
     <script type="text/javascript" src="static/thingsManage/assets/js/pager.js"></script>
@@ -86,6 +86,8 @@
     <!--plugins-->
     <script type="text/javascript" src="static/thingsManage/assets/js/sockjs.min.js"></script>
     <script type="text/javascript" src="static/thingsManage/assets/js/stomp.min.js"></script>
+    <script type="text/javascript" src="static/thingsManage/assets/js/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="static/thingsManage/assets/js/ng-file-upload-shim.min.js"></script>
 </head>
 <body ng-controller="mainCtrl">
 
@@ -103,9 +105,7 @@
                    </span>
             </div>
             <div class="col-md-7 col-sm-12">
-                <span class="upSideMenu" id="backIcon"><i class="fa fa-reply"></i>返回上一级</span>
-
-                <span class="dropdown upSideMenu" >
+                <span class="dropdown upSideMenu"  id="userCenter" >
                     <span class="dropdown-toggle" data-toggle="dropdown" id="dropQuit">
                         <i class="fa fa-user"></i>个人中心 &nbsp;<i class="fa fa-caret-down"></i>
                     </span>
@@ -116,11 +116,14 @@
                         <li><a href="#"><i class="fa fa-line-chart"></i>用户等级：<span ng-cloak>{{currentUserLevel}}</span></a>
                         </li>
                         <li class="divider"></li>
+                        <li><a href="" ng-click="$location.path('tenantAdmin')"><i class="fa fa-gear fa-fw"></i> 设置 </a>
+                        </li>
+                        <li class="divider"></li>
                         <li><a href="#" ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> 退出登录</a>
                         </li>
                     </ul>
-                    <!-- /.dropdown-user -->
-                </span>
+                    </span>
+                <span class="upSideMenu" id="backIcon"><i class="fa fa-reply"></i>返回上一级</span>
             </div>
         </div>
     </div>

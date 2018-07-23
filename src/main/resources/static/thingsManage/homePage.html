@@ -1,32 +1,49 @@
 ﻿<div class="content-wrapper" ng-controller="homePageCtrl">
     <div class="container">
-        <div class="block">
-            <div class="block_title">设备数量</div>
-            <div class="block_number">
-                {{Devices_Number}}
+        <div class="home_flex flex_chart">
+            <!--统计图表-->
+            <div class="block" style="width: 47%">
+                <canvas id="myChart2" height="180"></canvas>
+            </div>
+            <div class="block" style="width: 47%">
+                <canvas id="myChart1" height="180"></canvas>
             </div>
         </div>
-        <div class="block">
-            <div class="block_title">插件数量</div>
-            <div class="block_number">
-                {{Plugin_Number}}
+        <div class="home_flex">
+            <!--统计数字-->
+            <div class="home_flex count_flex">
+                <div class="block">
+                    <div class="block_title">设备数量</div>
+                    <div class="block_number">
+                        {{Devices_Number}}
+                    </div>
+                </div>
+                <div class="block">
+                    <div class="block_title">插件数量</div>
+                    <div class="block_number">
+                        {{Plugin_Number}}
+                    </div>
+                </div>
+                <div class="block">
+                    <div class="block_title">规则数量</div>
+                    <div class="block_number">
+                        {{Rule_Number}}
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="block">
-            <div class="block_title">规则数量</div>
-            <div class="block_number">
-                {{Rule_Number}}
-            </div>
-        </div>
-        <div class="block">
-            <canvas id="myChart2" height="180"></canvas>
-        </div>
-        <div class="block">
-            <canvas id="myChart1" height="180"></canvas>
-        </div>
-        <div class="block">
-            <div class="no_broadcast">
-                暂无广播事件
+            <!--日志广播-->
+            <div class="block" style="width:60%;text-align:left;padding:20px 20px 0 20px">
+                <div>
+                    <div class="block_title" style="padding-top: 0;margin-bottom: 10px">广播事件</div>
+                </div>
+                <table class="orders-table table" style="margin-bottom: 0">
+                    <tbody>
+                    <tr ng-repeat="new in BroadcastNews">
+                        <td style="font-size: 12px">{{new.message}}</td>
+                        <td style="color:#BBB;font-size: 10px">{{new.date}}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
