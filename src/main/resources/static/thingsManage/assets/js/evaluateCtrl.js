@@ -3,8 +3,33 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
     /*get获取全部文档*/
     var evaluateGroup = $resource('/api/document/allFile');
     $scope.evaluateGroups = evaluateGroup.query();
-    console.log("获取文档成功：");
-    console.log($scope.evaluateGroups);
+    var evaluate = $scope.evaluateGroups;//将获取到的json对象赋值给evaluate；
+    //var evaluate = {"filenames":"[物联网平台.pptx, 三化物联网平台单元测试.docx, 三化物联网平台概要设计.docx, 三化物联网平台架构设计.docx, 账户系统单元测试.docx, 大数据平台单元测试.docx, 大数据平台UI设计.doc, 三化物联网平台数据库设计.docx, 大数据平台原型设计.docx, 日志单元测试.docx, 三化物联网平台UI设计.docx, 三化物联网平台系统原型.docx, 三化物联网平台需求规格说明书.doc]"}
+    //console.log(evaluate);
+    //console.log(evaluate.filenames);
+    evaluate.filenames=evaluate.filenames.replace("[","");//去除[]
+    evaluate.filenames=evaluate.filenames.replace("]","");
+    var strs= new Array(); //定义一数组
+    strs=evaluate.filenames.split(","); //字符分割
+    console.log(strs);
+    var len = strs.length;
+    console.log(len);
+    var Arr = new Array();
+    for(var i=0;i<len;i++){
+        var str = [];
+        var str = strs[i].split(".");
+        var jsonStr = {name:str[0],type:str[1]};
+        Arr.push(jsonStr);
+    }
+    console.log(Arr);
+    console.log(Arr[0].name);
+    console.log(Arr[0].type);
+
+
+
+
+
+
 
 
     /*get文件的下载*/
@@ -20,11 +45,6 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
             }
         });
     })
-
-
-
-
-
 
 
 

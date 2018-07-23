@@ -5,7 +5,8 @@ mainApp.controller("pluginCtrl", function ($scope, $resource){
 
     var pluginGroup = $resource('/api/rule/allPlugins');
     $scope.pluginGroups = pluginGroup.query();
-    //console.log($scope.pluginGroups);
+    console.log("pluginGroups:");
+    console.log($scope.pluginGroups);
 
     /*鼠标移入动画效果*/
     $scope.fadeSiblings = function () {
