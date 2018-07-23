@@ -652,6 +652,7 @@ body.login {
 /** waiting **/
 
 .waiting {
+	z-index: 9999;
 	background-color: transparent;
 	margin: 10% 35% 0 35%;
 	height: 30%;
@@ -692,7 +693,7 @@ body.login {
 	left: 50%;
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
-	background-color: #F88863;/*F88863*/
+	background-color: #ffffff;/*F88863*/
 	width: 5px;
 	height: 5px;
 	border-radius: 100%;
@@ -706,7 +707,7 @@ body.login {
 .waiting .spinner .spin .branch:nth-child(1) {
 	-webkit-animation: extend1 2s ease-out infinite;
 	animation: extend1 2s ease-out infinite;
-	background-color: #AC4147;
+	background-color: #ffffff;
 }
 .waiting .spinner .spin .branch:nth-child(1):before, .waiting .spinner .spin .branch:nth-child(1):after {
 	width: 10px;

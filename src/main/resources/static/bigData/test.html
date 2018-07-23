@@ -1,31 +1,27 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<style type="text/css">
-		body {
-			margin: 0;
-		}
-		#main {
-			height: 100%;
-		}
-	</style>
-	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/echarts.min.js"></script>
 </head>
 <body>
-<select id="mohuquery" style="margin-top: 15px;margin-left: 5px">
-	<option>近一天</option>
-	<option>近三天</option>
-	<option selected="selected">近一周</option>
-	<option>近一月</option>
-</select>
-
+<div style="width: 800px;height: 600px" id="asd"></div>
 <script type="text/javascript">
-	$('#mohuquery').change(
-		function () {
-			window.alert('111');
-        }
-	)
+    var myChart = echarts.init(document.getElementById('asd'));
+    option = {
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [0, 0.1, 0.22, 0.35, 0.5, 0.7, 1],
+            type: 'line',
+            smooth: true
+        }]
+    };
+    myChart.setOption(option);
 </script>
-
 </body>
 </html>

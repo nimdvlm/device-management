@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="skin1/css/index.css">
+    <title>海量分析</title>
+</head>
+<body>
+<div class="testing">
+    <section class="user" style="background: url('skin1/img/bg.png') no-repeat">
+        <div style="float: left;width: 40%;height: 26px;padding: 25px 0 0 25px">
+            <p style="font-size: 24px;color: white;margin: 0">大数据平台</p>
+        </div>
+        <div class="buttons" style="width: 55%;padding-top: 15px">
+            <a href="device1.html"><input type="button" style="border: none; width: 12%; float: left; height:38px;font-size: 12px; margin-left: 11%" value="首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页"/></a>
+            <a href="ocean.html"><input type="button" style="background:#ffffff;color:#000000;border: none;width: 12%; float: left; height:38px;font-size: 12px" value="海量分析"/></a>
+            <a href="statistics1.html"><input type="button" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" value="数据分析"/></a>
+            <ul id="dropzone" style="float: left; width: 12%;margin-left: 5px">
+                <li style="width: 100%"><a href="modelmanage.html"><input type="button" style="border: none;width: 100%; height:38px;font-size: 12px;margin: 0" value="模型管理"/></a></li>
+                <!--<li style="width: 100%; display:none;" id="dropli"><a href="modelentity.html"><input type="button" style="border: none;width: 100%; height:38px;font-size: 12px;margin: 0" value="模型应用"/></a></li>-->
+            </ul>
+            <a href="pre.html"><input type="button" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" value="预测管理"/></a>
+            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" value="返回上一级"/></a>
+            <input type="button" value="退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" onclick="quitThings()" />
+            <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
+            <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
+        </div>
+    </section>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">精确查询(4月-5月)</h4>
+            </div>
+            <div class="modal-body">
+                <span style="width: 10%;font-size: 15px;color: gray;margin-left: 3%"><strong>开始时间</strong></span><input style="width: 30%;margin-left: 1%" type="date" id="fname">
+                <select id="fnameh" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>时</strong></span>
+                <select id="fnamemin" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>分</strong></span>
+                <select id="fnames" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>秒</strong></span><br/>
+                <span style="width: 10%;font-size: 15px;color: gray;margin-left: 3%"><strong>结束时间</strong></span><input style="width: 30%;margin-left: 1%" type="date" id="fname1">
+                <select id="fnameh1" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>时</strong></span>
+                <select id="fnamemin1" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>分</strong></span>
+                <select id="fnames1" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>秒</strong></span><br/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="modelchange" type="button" class="btn btn-primary" onclick="showData()">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="waiting" id="YWaitDialog">
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <h1 style="color: #ffffff">loading</h1>
+</div>
+
+<div class="t_container">
+    <div style="width: 100%;height: 53px;background: transparent;color: white"><p style="width: 60px; display: inline; margin-left: 30px">模糊查询</p>
+        <select id="mohuquery" style="margin-top: 15px; margin-left: 5px; color: #000000">
+            <option>近一天</option>
+            <option>近三天</option>
+            <option selected="selected">近一周</option>
+            <option>近一月</option>
+        </select>
+        <a id="query1" href="#"><button data-toggle="modal" data-target="#myModal" style="float: right;margin-right: 20px;margin-top: 15px">精确查询</button></a>
+    </div>
+    <main class="t_main">
+        <div class="t_box" id="chart_1"></div>
+        <div class="t_box" id="chart_2"></div>
+        <div class="t_box" id="chart_3"></div>
+        <div class="t_box" id="chart_4"></div>
+    </main>
+</div>
+</body>
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/common.js"></script>
+<script src="js/getUrlParam.js"></script>
+<script src="js/starttoend.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="theme/dark.js"></script>
+<script src="skin1/js/index.js"></script>
+</html>

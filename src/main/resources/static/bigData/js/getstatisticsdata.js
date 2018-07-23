@@ -208,7 +208,7 @@ function  proce1() {
         tenantId = tenantIde.tenantId;
     }
 }
-var myXmlHttpRequest5 = getXmlHttpObject();
+/*var myXmlHttpRequest5 = getXmlHttpObject();
 if(myXmlHttpRequest5){
     var url5 = "http://39.104.186.210:8090/api/device/device-types?tenantId="+tenantId;
     myXmlHttpRequest5.open("get",url5,false);
@@ -232,11 +232,11 @@ function  proce5() {
                 $option.html(deviceType2.deviceTypes[i]);
                 $('#mohuquery1').append($option);
             }
-        }
-        recentBarAjax(7,deviceType2.deviceTypes[0]);
+        }*/
+        recentBarAjax(30,'temperature');
 
-    }
-}
+//    }
+//}
 
 var deviceGroup = [];
 myXmlHttpRequest2 = getXmlHttpObject();
@@ -401,7 +401,7 @@ function drawstatistics(h,min,s,h1,min1,s1,subtext,urldata) {
                     for (var item in meso.data[6]){
                         data7.push(meso.data[6][item]);
                     }
-                    var myChart = echarts.init(document.getElementById('main'));
+                    var myChart = echarts.init(document.getElementById('chart_map'),'dark');
                     if(h<10){
                         h = "0" + h;
                     }
@@ -651,7 +651,7 @@ $('input[type=radio][name=Fruit]').change(function() {
     }
 });
 
-$('#mohuquery').change(
+/*$('#mohuquery').change(
     function () {
         var days;
         var day = $('#mohuquery').val();
@@ -667,11 +667,11 @@ $('#mohuquery').change(
         var deviceType = $('#mohuquery1').val();
         recentBarAjax(days,deviceType);
     }
-);
-$('#mohuquery1').change(
+);*/
+$('#button1').click(
     function () {
         var days;
-        var day = $('#mohuquery').val();
+        var day = $('.selectbutton1').html();
         if (day == '近三天'){
             days = 3;
         }else if (day == '近一周'){
@@ -681,8 +681,179 @@ $('#mohuquery1').change(
         }else {
             window.alert("输入有误");
         }
-        var deviceType = $('#mohuquery1').val();
+        var deviceType = 'temperature';
         recentBarAjax(days,deviceType);
+        $('li button').removeClass('selectbutton');
+        $(this).attr("class","selectbutton");
+
+    }
+);
+$('#button2').click(
+    function () {
+        var days;
+        var day = $('.selectbutton1').html();
+        if (day == '近三天'){
+            days = 3;
+        }else if (day == '近一周'){
+            days = 7;
+        }else if (day == '近一月'){
+            days = 30;
+        }else {
+            window.alert("输入有误");
+        }
+        var deviceType = 'humidity';
+        recentBarAjax(days,deviceType);
+        $('li button').removeClass('selectbutton');
+        $(this).attr("class","selectbutton");
+    }
+);
+$('#button3').click(
+    function () {
+        var days;
+        var day = $('.selectbutton1').html();
+        if (day == '近三天'){
+            days = 3;
+        }else if (day == '近一周'){
+            days = 7;
+        }else if (day == '近一月'){
+            days = 30;
+        }else {
+            window.alert("输入有误");
+        }
+        var deviceType = 'pressure';
+        recentBarAjax(days,deviceType);
+        $('li button').removeClass('selectbutton');
+        $(this).attr("class","selectbutton");
+    }
+);
+$('#button4').click(
+    function () {
+        var days;
+        var day = $('.selectbutton1').html();
+        if (day == '近三天'){
+            days = 3;
+        }else if (day == '近一周'){
+            days = 7;
+        }else if (day == '近一月'){
+            days = 30;
+        }else {
+            window.alert("输入有误");
+        }
+        var deviceType = 'deformation';
+        recentBarAjax(days,deviceType);
+        $('li button').removeClass('selectbutton');
+        $(this).attr("class","selectbutton");
+    }
+);
+$('#button5').click(
+    function () {
+        var days;
+        var day = $('.selectbutton1').html();
+        if (day == '近三天'){
+            days = 3;
+        }else if (day == '近一周'){
+            days = 7;
+        }else if (day == '近一月'){
+            days = 30;
+        }else {
+            window.alert("输入有误");
+        }
+        var deviceType = 'velocity';
+        recentBarAjax(days,deviceType);
+        $('li button').removeClass('selectbutton');
+        $(this).attr("class","selectbutton");
+    }
+);
+$('#button6').click(
+    function () {
+        var days;
+        var day = $('.selectbutton1').html();
+        if (day == '近三天'){
+            days = 3;
+        }else if (day == '近一周'){
+            days = 7;
+        }else if (day == '近一月'){
+            days = 30;
+        }else {
+            window.alert("输入有误");
+        }
+        var deviceType = 'light';
+        recentBarAjax(days,deviceType);
+        $('li button').removeClass('selectbutton');
+        $(this).attr("class","selectbutton");
+    }
+);
+
+$('#button7').click(
+    function () {
+        var deviceType;
+        var deviceTypes = $('.selectbutton').html();
+        if (deviceTypes == '温度传感器'){
+            deviceType = 'temperature';
+        }else if (deviceTypes == '湿度传感器'){
+            deviceType = 'humidity';
+        }else if (deviceTypes == '压力传感器'){
+            deviceType = 'pressure';
+        }else if (deviceTypes == '形变传感器'){
+            deviceType = 'deformation';
+        }else if (deviceTypes == '速率传感器'){
+            deviceType = 'velocity';
+        }else if (deviceTypes == '光照传感器'){
+            deviceType = 'light';
+        }else {
+            window.alert("输入有误");
+        }
+        recentBarAjax(3,deviceType);
+        $('li button').removeClass('selectbutton1');
+        $(this).attr("class","selectbutton1");
+    }
+);
+$('#button8').click(
+    function () {
+        var deviceType;
+        var deviceTypes = $('.selectbutton').html();
+        if (deviceTypes == '温度传感器'){
+            deviceType = 'temperature';
+        }else if (deviceTypes == '湿度传感器'){
+            deviceType = 'humidity';
+        }else if (deviceTypes == '压力传感器'){
+            deviceType = 'pressure';
+        }else if (deviceTypes == '形变传感器'){
+            deviceType = 'deformation';
+        }else if (deviceTypes == '速率传感器'){
+            deviceType = 'velocity';
+        }else if (deviceTypes == '光照传感器'){
+            deviceType = 'light';
+        }else {
+            window.alert("输入有误");
+        }
+        recentBarAjax(7,deviceType);
+        $('li button').removeClass('selectbutton1');
+        $(this).attr("class","selectbutton1");
+    }
+);
+$('#button9').click(
+    function () {
+        var deviceType;
+        var deviceTypes = $('.selectbutton').html();
+        if (deviceTypes == '温度传感器'){
+            deviceType = 'temperature';
+        }else if (deviceTypes == '湿度传感器'){
+            deviceType = 'humidity';
+        }else if (deviceTypes == '压力传感器'){
+            deviceType = 'pressure';
+        }else if (deviceTypes == '形变传感器'){
+            deviceType = 'deformation';
+        }else if (deviceTypes == '速率传感器'){
+            deviceType = 'velocity';
+        }else if (deviceTypes == '光照传感器'){
+            deviceType = 'light';
+        }else {
+            window.alert("输入有误");
+        }
+        recentBarAjax(30,deviceType);
+        $('li button').removeClass('selectbutton1');
+        $(this).attr("class","selectbutton1");
     }
 );
 
@@ -696,28 +867,27 @@ $('#dropzone').hover(
 
 function drawRecentBar(deviceType,subtext,legend,day,series) {
 
-    var myChart = echarts.init(document.getElementById('main'));
+    var myChart = echarts.init(document.getElementById('chart_map'),'dark');
     option = {
+        backgroundColor:'',
+        grid: {
+            top: '20%',
+            left: '10%',
+            width: '80%',
+            height: '60%'
+        },
         title: {
             text: '设备类型：'+deviceType,
             subtext: '模糊查询：'+subtext,
-            subtextStyle:{}
+            subtextStyle:{},
+            top: '10%',
+            left: '2%'
         },
         legend: {
             data: legend,
-            align: 'left'
-        },
-        toolbox: {
-            // y: 'bottom',
-            feature: {
-                magicType: {
-                    type: ['stack', 'tiled']
-                },
-                dataView: {},
-                saveAsImage: {
-                    pixelRatio: 2
-                }
-            }
+            align: 'left',
+            top: '10%',
+            left: '33%'
         },
         tooltip: {},
         xAxis: {

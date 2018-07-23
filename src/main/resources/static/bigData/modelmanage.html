@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>数据分析</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css" media="all" />
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/style1.css">
+    <style>
+        .t_btn {
+            margin-top: 20px;
+        }
+
+        .t_btn li {
+            display: inline-block;
+            margin: 0 0px 20px 15px;
+        }
+
+        .t_btn button,
+        .t_a {
+            display: inline-block;
+            padding: 10px 5px;
+            width: 85px;
+            border-style: solid;
+            border-width: 0;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            line-height: normal;
+            margin: 0 0 0.5em 0;
+            position: relative;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+            font-size: 1em;
+            background-color: #2C58A6;
+            border-color: #0263ff;
+            color: white;
+            box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset !important;
+            margin-right: 0.5em;
+            border-radius: 4px;
+        }
+
+        .t_divbtn{
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 5px;
+            width: 85px;
+            border-style: solid;
+            border-width: 0;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            line-height: normal;
+            margin: 0 0 0.5em 0;
+            position: relative;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+            font-size: 1em;
+            background-color: #2C58A6;
+            border-color: #0263ff;
+            color: white;
+            box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset !important;
+            margin-right: 0.5em;
+            border-radius: 4px;
+        }
+
+        .t_btn .selectbutton {
+            background-color: white;
+            color: #2C58A6;
+        }
+
+        .t_btn .selectbutton1 {
+            background-color: white;
+            color: #2C58A6;
+        }
+
+        .t_height {
+            line-height: 80px;
+            position: absolute;
+            right: 28px;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+<!--main-->
+<div class="testing" style="border-bottom: 1px ridge #ccc">
+
+    <section class="user">
+        <div style="float: left;width: 40%;height: 26px;padding: 25px 0 0 25px">
+            <p style="font-size: 24px;color: white;margin: 0">大数据平台</p>
+        </div>
+        <div class="buttons" style="width: 55%;padding-top: 15px">
+            <a href="device1.html"><input type="button" style="border: none; width: 12%; float: left; height:38px;font-size: 12px; margin-left: 11%" value="首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页"/></a>
+            <a href="ocean.html"><input type="button" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" value="海量分析"/></a>
+            <a href="statistics1.html"><input type="button" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" value="数据分析"/></a>
+            <ul id="dropzone" style="float: left; width: 12%;margin-left: 5px">
+                <li style="width: 100%"><a href="modelmanage.html"><input type="button" style="background:#ffffff;color:#000000;border: none;width: 100%; height:38px;font-size: 12px;margin: 0" value="模型管理"/></a></li>
+                <!--<li style="width: 100%; display:none;" id="dropli"><a href="modelentity.html"><input type="button" style="border: none;width: 100%; height:38px;font-size: 12px;margin: 0" value="模型应用"/></a></li>-->
+            </ul>
+            <a href="pre.html"><input type="button" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" value="预测管理"/></a>
+            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" value="返回上一级"/></a>
+            <input type="button" value="退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" onclick="quitThings()" />
+            <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
+            <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
+        </div>
+    </section>
+</div>
+<div class="data_content" style="float: left">
+    <div class="data_main">
+        <div class="main_left fl">
+            <div class="left_1">
+                <ul class="t_btn">
+                    <p id="addbutton1" style="color: white;font-size: 14px">通用模型</p>
+                    <br><br>
+                    <p id="addbutton2" style="color: white;font-size: 14px">自定义模型</p>
+                    <br><br>
+                    <p id="addbutton3" style="color: white;font-size: 14px">模型应用</p>
+                </ul>
+            </div>
+            <div class="left_2" style="display:none">
+                <div class="main_title">
+                    湖南省地图
+                </div>
+            </div>
+        </div>
+        <div class="main_center fl">
+            <div class="center_text t_cos0">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                <!--右下边框-->
+                <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title">
+                    模型管理
+                </div>
+                <div id="chart_map" style="width:100%;height:100%;">
+                    <p style="color: white;font-size: 20px;margin-top: 7%;text-align: center">通用模型</p><br><br><br>
+                    <p style="color: white;font-size: 20px;margin-top: 3%;margin-left: 35%">模型名称：</p><br><br><br><br><br>
+                    <p style="color: white;font-size: 20px;margin-left: 35%">模型描述：</p><br><br><br><br><br>
+                    <p style="color: white;font-size: 20px;margin-left: 35%">模型ID ：</p><br><br><br><br><br>
+                    <p style="color: white;font-size: 20px;margin-left: 35%">模型路径：</p><br><br><br><br><br>
+                    <p style="color: white;font-size: 20px;margin-left: 35%">模型输入：</p><br><br><br><br><br>
+                    <!--<button class="t_divbtn" style="width:8%;height: 5.5%;margin-left: 46%;margin-top: 3%;font-size: 16px">添加应用</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/getUrlParam.js"></script>
+<script src="js/starttoend.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="theme/dark.js"></script>
+<script src="js/modelmanage.js"></script>
+</html>
