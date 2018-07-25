@@ -12,12 +12,15 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
             var evaluate = JSON.parse(msg);
             console.log(evaluate);
             console.log(evaluate.filenames);
-            evaluate.filenames=evaluate.filenames.replace("[","");//去除[]
-            evaluate.filenames=evaluate.filenames.replace("]","");
-            var strs= new Array(); //定义一数组
-            strs=evaluate.split(","); //以字符逗号分割字符串，返回数组
-            console.log(strs);
-            var len = strs.length;
+            console.log(evaluate.filenames instanceof Array);
+
+
+            //evaluate.filenames=evaluate.filenames.replace("[","");//去除[]
+            //evaluate.filenames=evaluate.filenames.replace("]","");
+            //var strs= new Array(); //定义一数组
+            //strs=evaluate.split(","); //以字符逗号分割字符串，返回数组
+            //console.log(strs);
+            var len = evaluate.filenames.length;
             console.log(len);
             for(var i=0;i<len;i++){
                 var str = [];
@@ -36,9 +39,10 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
     
 
     /*=============测试代码
-    var evaluate = {"filenames":"[物联网平台.pptx, 三化物联网平台单元测试.docx, 三化物联网平台概要设计.docx, 三化物联网平台架构设计.docx, 账户系统单元测试.docx, 大数据平台单元测试.docx, 大数据平台UI设计.doc, 三化物联网平台数据库设计.docx, 大数据平台原型设计.docx, 日志单元测试.docx, 三化物联网平台UI设计.docx, 三化物联网平台系统原型.docx, 三化物联网平台需求规格说明书.doc]"}
-    //console.log(evaluate);
-    //console.log(evaluate.filenames);
+    var evaluate = '{"filenames":"[物联网平台.pptx, 三化物联网平台单元测试.docx, 三化物联网平台概要设计.docx, 三化物联网平台架构设计.docx, 账户系统单元测试.docx, 大数据平台单元测试.docx, 大数据平台UI设计.doc, 三化物联网平台数据库设计.docx, 大数据平台原型设计.docx, 日志单元测试.docx, 三化物联网平台UI设计.docx, 三化物联网平台系统原型.docx, 三化物联网平台需求规格说明书.doc]"}';
+    var evaluate = JSON.parse(evaluate);
+    console.log(evaluate);
+    console.log(evaluate.filenames);
     evaluate.filenames=evaluate.filenames.replace("[","");//去除[]
     evaluate.filenames=evaluate.filenames.replace("]","");
     var strs= new Array(); //定义一数组
@@ -53,16 +57,17 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
         var jsonStr = {name:str[0],type:str[1]};
         Arr.push(jsonStr);
     }
-    //console.log(Arr);
+    console.log(Arr);
 
-    //console.log(Arr[0].name);
-    //console.log(Arr[0].type);
+    console.log(Arr[0].name);
+    console.log(Arr[0].type);
     $scope.arrayItem = Arr;
     //console.log($scope.arrayItem);//能正常显示在前端；======================================================================*/
 
 
-    /*get文件的下载*/
+    /*get文件的下载
     $("#downFile").on("click",function (item) {
+        console.log(item);
         $.ajax({
             url:"/api/document/download/"+ item.name+"/"+item.type,
             type:"GET",
@@ -73,9 +78,10 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
                 alert("编辑失败");
             }
         });
-    })
-    /*delete删除文档*/
+    })*/
+    /*delete删除文档
     $scope.delFile = function(item){
+        console.log(item);
         var result = confirm("确定删除此文件？");
         if(result){
             var deleteFile = $resource('/api/document/delete/'+item.name+'/'+item.type);
@@ -87,7 +93,7 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
         }else {
             alert("不删除?");
         }
-    }
+    }*/
 
 
 
