@@ -2,6 +2,7 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
 
     /*=====================================get获取全部文档==============================================*/
     var Arr = new Array();
+    var strs= new Array();//定义一数组
     $.ajax({
         url:'/api/document/allFile',
         contentType: "application/json; charset=utf-8",
@@ -13,13 +14,10 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
             console.log(evaluate);
             console.log(evaluate.filenames);
             console.log(evaluate.filenames instanceof Array);
-
-
-            //evaluate.filenames=evaluate.filenames.replace("[","");//去除[]
-            //evaluate.filenames=evaluate.filenames.replace("]","");
-            //var strs= new Array(); //定义一数组
-            //strs=evaluate.split(","); //以字符逗号分割字符串，返回数组
-            //console.log(strs);
+            evaluate.filenames=evaluate.filenames.replace("[","");//去除[]
+            evaluate.filenames=evaluate.filenames.replace("]","");
+            strs=evaluate.filenames.split(","); //以字符逗号分割字符串，返回数组
+            console.log(strs);
             var len = evaluate.filenames.length;
             console.log(len);
             for(var i=0;i<len;i++){
