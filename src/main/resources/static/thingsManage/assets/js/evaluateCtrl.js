@@ -18,7 +18,7 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
             evaluate.filenames=evaluate.filenames.replace("]","");
             strs=evaluate.filenames.split(","); //以字符逗号分割字符串，返回数组
             console.log(strs);
-            var len = evaluate.filenames.length;
+            var len = strs.length;
             console.log(len);
             for(var i=0;i<len;i++){
                 var str = [];
