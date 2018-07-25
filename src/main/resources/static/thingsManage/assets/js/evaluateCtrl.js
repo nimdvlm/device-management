@@ -15,11 +15,11 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
             evaluate.filenames=evaluate.filenames.replace("[","");//去除[]
             evaluate.filenames=evaluate.filenames.replace("]","");
             var strs= new Array(); //定义一数组
-            strs=evaluate.split(","); //字符分割
+            strs=evaluate.split(","); //以字符逗号分割字符串，返回数组
             console.log(strs);
             var len = strs.length;
             console.log(len);
-            var Arr = new Array();
+
             for(var i=0;i<len;i++){
                 var str = [];
                 var str = strs[i].split(".");
