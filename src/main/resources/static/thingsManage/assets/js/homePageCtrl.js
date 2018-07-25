@@ -1,8 +1,51 @@
 mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resource) {
+    $scope.showBroadcast=false
+
+    //获取当前tenantId
+    var tenantid=$.cookie("tenantId");
+
+    // //获取设备个数
+    // console.log($.cookie());
+    // if($.cookie("userLevel") === "CUSTOMER_USER"){
+    //     console.log("客户权限")
+    //     var getDevice = $resource('/api/device/customer/devicesCount');
+    // }else {
+    //     console.log("租户权限")
+    //     var getDevice = $resource('/api/device/tenant/devicesCount');
+    // }
+    // $scope.Devices_Number=getDevice.get()
+    //     .$promise.then(function (resp) {
+    //         console.log("resp")
+    //         console.log(resp)
+    //         $scope.Devices_Number=resp
+    //     });
+    // console.log("设备个数："+$scope.Devices_Number);
+
+    //获取设备个数
+    getDeviceCount()
+
+    function getDeviceCount() {
+        if($.cookie("userLevel") === "CUSTOMER_USER"){
+            console.log("客户权限")
+            var url = '/api/device/customer/devicesCount';
+        }else {
+            console.log("租户权限")
+            var url = '/api/device/tenant/devicesCount';
+        }
+        $.ajax({
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            type: "GET",
+            success: function (msg) {
+                $scope.Devices_Number = msg;
+            }
+        });
+    }
+
+    //获取设备上下线状态
     var Device = $resource("/api/device/alldevices?limit=1000");
     $scope.Devices = Device.query(function () {
-        $scope.Devices_Number=$scope.Devices.length;
-        console.log("设备个数："+$scope.Devices_Number);
         var DeviceName=getDevicesName()
 
         var DeviceState=$resource("/api/device/status");
@@ -105,9 +148,8 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
         var _error=0
         var devicekey
 
-        for(var i=0;i<$scope.Devices_Number;i++){
+        for(var i=0;i<$scope.Devices.length;i++){
             devicekey=DeviceName[i]
-            console.log(data[devicekey])
             if (data[devicekey] === "offline") {
                 _offline++;
             }else if(data[devicekey] === "online"){
@@ -165,186 +207,8 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
     }
 
 
-
-    /*************************
-     * 样例部分
-     *
-    //直方图
-    var ctx = document.getElementById("myChart1").getContext("2d");
-    var myChart1 = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六","星期日"],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3,15],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 20, 147, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(255, 20,147, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            },
-            title: {
-                display: true,
-                text: '本周设备运行数量统计',
-                fontSize:25,
-                fontFamily:"Microsoft YaHei"
-            },
-            legend: {
-                display:false
-            }
-
-        }
-    });
-
-    //折线图
-    ctx = document.getElementById("myChart2").getContext("2d");
-    var myLineChart = new Chart(ctx,{
-        type:'line',
-        data:{
-            //折线图需要为每个数据点设置一标签。这是显示在X轴上。
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            //数据集（y轴数据范围随数据集合中的data中的最大或最小数据而动态改变的）
-            datasets: [{
-                fillColor: "rgba(220,220,220,0.5)", //背景填充色
-                strokeColor: "rgba(220,220,220,1)", //路径颜色
-                pointColor: "rgba(220,220,220,1)", //数据点颜色
-                pointStrokeColor: "#fff", //数据点边框颜色
-                data: [10, 59, 90, 81, 56, 55, 40] //对象数据
-            }, {
-                fillColor: "rgba(151,187,205,0.5)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "#fff",
-                data: [28, 48, 40, 19, 96, 27, 200]
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            },
-            title: {
-                display: true,
-                text: '年度设备运行情况',
-                fontSize:25,
-                fontFamily:"Microsoft YaHei"
-            },
-            legend: {
-                display:false
-            }
-
-        }
-
-    });
-
-    //甜甜圈1
-    ctx=document.getElementById("myChart3").getContext("2d");
-    var myDoughnutChart1 = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [20, 2, 5],
-                backgroundColor: [
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255,99,132,1)',
-                    'rgba(255, 206, 86, 1)'
-                ],
-                borderWidth: 1
-
-            }],
-            labels: [
-                '运行中',
-                '故障',
-                '已停止'
-            ]
-        },
-        options: {
-            title: {
-                display: true,
-                text: '设备运行情况',
-                fontSize:25,
-                fontFamily:"Microsoft YaHei"
-            },
-            legend: {
-                position:'top'
-            }
-        }
-    });
-
-    //甜甜圈2
-    ctx=document.getElementById("myChart4").getContext("2d");
-    var myDoughnutChart2 = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [10, 3, 1],
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-
-            }],
-            labels: [
-                '激活',
-                '暂停',
-                '故障'
-            ]
-        },
-        options: {
-            title: {
-                display: true,
-                text: '规则运行情况',
-                fontSize:25,
-                fontFamily:"Microsoft YaHei"
-            },
-            legend: {
-                position:'top'
-            }
-        }
-    });
-     *******/
-    /******样例END*******/
-
     /**广播事件**/
+
     /**socket连接**/
     var stompClient = null;
 
@@ -364,9 +228,9 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
             , function () {
                 console.log("Connected!") ;
                 console.log("begin to send") ;
-                stompClient.send("/plugins/updateMessage/fromModule", {},JSON.stringify({'tenantId': 2})) ;
+                stompClient.send("/plugins/updateMessage/fromModule", {},JSON.stringify({'tenantId': tenantid})) ;
 
-                var res = stompClient.subscribe("/plugins/updateMessage/response/fromModule/2", function(frame){
+                var res = stompClient.subscribe("/plugins/updateMessage/response/fromModule/"+tenantid, function(frame){
                     var body=JSON.parse(frame.body)
                     //根据body的数据类型做相应处理
                     if(isArray(body)){
@@ -380,7 +244,15 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
                     data.forEach(function (item) {
                         item.date=formatDate(new Date(item.ts))
                     })
+                    if(data === undefined || data.length == 0){
+                        $scope.showBroadcast=false
+                    }else {
+                        console.log("判断有数据，显示广播内容")
+                        $scope.showBroadcast=true
+                    }
+
                     $scope.BroadcastNews=data
+
                     $scope.$apply()
                     console.log($scope.BroadcastNews)
                 }) ;
