@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- Required Stylesheets -->
+<link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/text.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/fluid.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/mws.style.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/icons/icons.css" media="screen" />
+
+<!-- Demo and Plugin Stylesheets -->
+<link rel="stylesheet" type="text/css" href="css/demo.css" media="screen" />
+
+<link rel="stylesheet" type="text/css" href="plugins/colorpicker/colorpicker.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="plugins/jimgareaselect/css/imgareaselect-default.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="plugins/fullcalendar/fullcalendar.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="plugins/fullcalendar/fullcalendar.print.css" media="print" />
+<link rel="stylesheet" type="text/css" href="plugins/tipsy/tipsy.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="plugins/sourcerer/Sourcerer-1.2.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="plugins/jgrowl/jquery.jgrowl.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="plugins/spinner/spinner.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/jui/jquery.ui.css" media="screen" />
+
+<!-- Theme Stylesheet -->
+<link rel="stylesheet" type="text/css" href="css/mws.theme.css" media="screen" />
+
+<title>大数据平台-数据管理</title>
+
+</head>
+
+<body>
+
+	<div id="mws-header" class="clearfix">
+        	<div id="mws-logo-wrap">
+                <p style="color: white;font-size: 24px;margin-top: 13px;margin-left: 15px">大数据平台</p>
+			</div>
+    </div>
+    
+    <div id="mws-wrapper">
+		<div id="mws-sidebar-stitch"></div>
+		<div id="mws-sidebar-bg"></div>
+        <div id="mws-sidebar">
+            <div id="mws-navigation">
+            	<ul>
+                	<li><a href="../bigData/device1.html" class="mws-i-24 i-home">Dashboard</a></li>
+                    <li><a href="table.html" style="color: #c8d350" class="mws-i-24 i-list">数据管理</a></li>
+                    <li><a href="etl.html" class="mws-i-24 i-chart">数据ETL</a></li>
+                    <li><a href="model.html" class="mws-i-24 i-file-cabinet">模型管理</a></li>
+                    <li><a href="predict.html" class="mws-i-24 i-blocks-images">预测管理</a></li>
+                    <li><a href="datadig.html" class="mws-i-24 i-cog">数据挖掘</a></li>
+                    <li><a href="http://39.104.186.210:8888" class="mws-i-24 i-polaroids">线上开发</a></li>
+                    <li><a href="/home?TENANT_ADMIN&2&1" class="mws-i-24 i-alert-2">返回上一级</a></li>
+                	<!--<li><a href="charts.html" class="mws-i-24 i-chart">Charts</a></li>
+                	<li><a href="calendar.html" class="mws-i-24 i-day-calendar">Calendar</a></li>
+                	<li><a href="files.html" class="mws-i-24 i-file-cabinet">File Manager</a></li>
+                	<li class="active"><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>
+                	<li>
+                    	<a href="#" class="mws-i-24 i-list">Forms</a>
+                        <ul>
+                        	<li><a href="form_layouts.html">Layouts</a></li>
+                        	<li><a href="form_elements.html">Elements</a></li>
+                        </ul>
+                    </li>
+                	<li><a href="widgets.html" class="mws-i-24 i-cog">Widgets</a></li>
+                	<li><a href="typography.html" class="mws-i-24 i-text-styling">Typography</a></li>
+                	<li><a href="grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
+                	<li><a href="gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>
+                	<li><a href="error.html" class="mws-i-24 i-alert-2">Error Page</a></li>
+                	<li>
+                    	<a href="icons.html" class="mws-i-24 i-pacman">
+                        	Icons <span class="mws-nav-tooltip">2000+</span>
+                        </a>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+        
+        <div id="mws-container" class="clearfix">
+            <div class="container">
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span class="mws-i-24 i-list">数据管理</span>
+                    </div>
+                    <div class="mws-panel-body">
+                        <table class="mws-datatable-fn mws-table">
+                            <thead>
+                                <tr>
+                                    <th>Permission</th>
+                                    <th>Count</th>
+                                    <th>Owner</th>
+                                    <th>Group</th>
+                                    <th>Size</th>
+                                    <th>Last Modified</th>
+                                    <th>Directory</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5693</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526349600000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5647</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526357500000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5703</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526358000000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5643</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526358200000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5694</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526358800000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5673</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526359200000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5675</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526359900000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5668</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526363800000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5654</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526370400000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5624</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526377800000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5653</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526382000000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5630</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526395700000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5657</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526407800000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5689</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526525400000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5683</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526578900000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5663</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526658900000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>-rw-r--r--</td>
+                                    <td>2</td>
+                                    <td>spark</td>
+                                    <td class="center">supergroup</td>
+                                    <td class="center">5671</td>
+                                    <td class="center">2018-05-28 18:58</td>
+                                    <td class="center">/data/device-data-1526698300000</td>
+                                    <td><button style="color: white;background: red">删除</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="plugins/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="plugins/colorpicker/colorpicker.js"></script>
+    <script type="text/javascript" src="plugins/spinner/ui.spinner.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/demo.js"></script>
+
+<script type="text/javascript">
+    $('button').click(
+        function () {
+            $(this).parent().parent().remove();
+        }
+    );
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- Required Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/text.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/fluid.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/mws.style.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/icons/icons.css" media="screen" />
+
+    <!-- Demo and Plugin Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="css/demo.css" media="screen" />
+
+    <link rel="stylesheet" type="text/css" href="plugins/colorpicker/colorpicker.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="plugins/jimgareaselect/css/imgareaselect-default.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="plugins/fullcalendar/fullcalendar.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="plugins/fullcalendar/fullcalendar.print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="plugins/tipsy/tipsy.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="plugins/sourcerer/Sourcerer-1.2.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="plugins/jgrowl/jquery.jgrowl.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="plugins/spinner/spinner.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/jui/jquery.ui.css" media="screen" />
+
+    <!-- Theme Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/mws.theme.css" media="screen" />
+
+    <!-- JavaScript Plugins -->
+
+    <title>大数据平台-模型管理</title>
+
+</head>
+
+<body>
+
+<div id="mws-header" class="clearfix">
+    <div id="mws-logo-wrap">
+        <p style="color: white;font-size: 24px;margin-top: 13px;margin-left: 15px">大数据平台</p>
+    </div>
+</div>
+
+<div id="mws-wrapper">
+    <div id="mws-sidebar-stitch"></div>
+    <div id="mws-sidebar-bg"></div>
+    <div id="mws-sidebar">
+        <div id="mws-navigation">
+            <ul>
+                <li><a href="../bigData/device1.html" class="mws-i-24 i-home">Dashboard</a></li>
+                <li><a href="table.html" class="mws-i-24 i-list">数据管理</a></li>
+                <li><a href="etl.html" class="mws-i-24 i-chart">数据ETL</a></li>
+                <li><a href="model.html" style="color: #c8d350" class="mws-i-24 i-file-cabinet">模型管理</a></li>
+                <li><a href="predict.html" class="mws-i-24 i-blocks-images">预测管理</a></li>
+                <li><a href="datadig.html" class="mws-i-24 i-cog">数据挖掘</a></li>
+                <li><a href="http://39.104.186.210:8888" class="mws-i-24 i-polaroids">线上开发</a></li>
+                <li><a href="/home?TENANT_ADMIN&2&1" class="mws-i-24 i-alert-2">返回上一级</a></li>
+                <!--<li><a href="charts.html" class="mws-i-24 i-chart">Charts</a></li>
+                <li><a href="calendar.html" class="mws-i-24 i-day-calendar">Calendar</a></li>
+                <li><a href="files.html" class="mws-i-24 i-file-cabinet">File Manager</a></li>
+                <li class="active"><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>
+                <li>
+                    <a href="#" class="mws-i-24 i-list">Forms</a>
+                    <ul>
+                        <li><a href="form_layouts.html">Layouts</a></li>
+                        <li><a href="form_elements.html">Elements</a></li>
+                    </ul>
+                </li>
+                <li><a href="widgets.html" class="mws-i-24 i-cog">Widgets</a></li>
+                <li><a href="typography.html" class="mws-i-24 i-text-styling">Typography</a></li>
+                <li><a href="grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
+                <li><a href="gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>
+                <li><a href="error.html" class="mws-i-24 i-alert-2">Error Page</a></li>
+                <li>
+                    <a href="icons.html" class="mws-i-24 i-pacman">
+                        Icons <span class="mws-nav-tooltip">2000+</span>
+                    </a>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+
+    <div id="mws-container" class="clearfix">
+        <div class="container">
+            <div class="mws-panel grid_8">
+                <div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span class="mws-i-24 i-file-cabinet">模型管理</span>
+                    </div>
+                    <div class="mws-panel-body">
+                        <div class="mws-panel-toolbar top clearfix">
+                            <ul>
+                                <li><a href="http://39.104.186.210:8888" class="mws-ic-16 ic-accept">创建并部署模型（密码bupt）</a></li>
+                                <li><a href="#" id="delete1" class="mws-ic-16 ic-cross">删除模型</a></li>
+                            </ul>
+                        </div>
+                        <table class="mws-table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>模型名称</th>
+                                <th>模型描述</th>
+                                <th>模型类型</th>
+                                <th>模型ID</th>
+                                <th>模型路径</th>
+                                <th>模型输入</th>
+                            </tr>
+                            </thead>
+                            <tbody id="add1"></tbody>
+                        </table>
+                    </div><br><br>
+
+                    <div class="mws-panel-header">
+                        <span class="mws-i-24 i-list">模型应用</span>
+                    </div>
+                    <div class="mws-panel-body">
+                        <div class="mws-panel-toolbar top clearfix">
+                            <ul>
+                                <li><a id="button3" href="#" class="mws-ic-16 ic-accept">创建模型应用</a></li>
+                                <li><a href="#" id="delete2" class="mws-ic-16 ic-cross">删除模型应用</a></li>
+                            </ul>
+                        </div>
+                        <table class="mws-datatable-fn mws-table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>应用名称</th>
+                                <th>所属模型ID</th>
+                                <th>所属租户ID</th>
+                                <th>应用ID</th>
+                                <th>停止时间</th>
+                                <th>模型输入</th>
+                            </tr>
+                            </thead>
+                            <tbody id="add2"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="plugins/jquery.dataTables.js"></script>
+<script type="text/javascript" src="plugins/colorpicker/colorpicker.js"></script>
+<script type="text/javascript" src="plugins/spinner/ui.spinner.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/demo.js"></script>
+
+<script type="text/javascript">
+    $('button').click(
+        function () {
+            $(this).parent().parent().remove();
+        }
+    );
+</script>
+<script type="text/javascript">
+    htmlobj=$.ajax({url:"http://39.104.186.210:8090/api/model/get-general-model",async:false});
+    var mes = htmlobj.responseText;
+    var mesj = JSON.parse(mes);
+    var meso = eval("("+mesj+")");
+    for (var i=0; i < meso.data.length; i++){
+        $add = $('<tr class="gradeX"></tr>');
+        $add1 = $('<td><input class="abc" type="checkbox" /></td>');
+        $add2 = $('<td></td>');
+        $add3 = $('<td></td>');
+        $add4 = $('<td></td>');
+        $add5 = $('<td></td>');
+        $add6 = $('<td></td>');
+        $add7 = $('<td></td>');
+        $add2.html(meso.data[i].model_name);
+        $add3.html(meso.data[i].model_desc);
+        $add4.html('通用模型');
+        $add5.html(meso.data[i].model_id);
+        $add6.html(meso.data[i].model_path);
+        $add7.html(meso.data[i].model_input[0]+','+ meso.data[i].model_input[1]);
+        $add.append($add1);
+        $add.append($add2);
+        $add.append($add3);
+        $add.append($add4);
+        $add.append($add5);
+        $add.append($add6);
+        $add.append($add7);
+        $('#add1').append($add);
+    }
+
+    htmlobj1=$.ajax({url:"http://39.104.186.210:8090/api/model/get-tenant-model?tenantId=2",async:false});
+    var mes1 = htmlobj1.responseText;
+    var mesj1 = JSON.parse(mes1);
+    var meso1 = eval("("+mesj1+")");
+    for (var j=0; j < meso1.data.length; j++){
+        $add = $('<tr class="gradeX"></tr>');
+        $add1 = $('<td><input class="abc" type="checkbox" /></td>');
+        $add2 = $('<td></td>');
+        $add3 = $('<td></td>');
+        $add4 = $('<td></td>');
+        $add5 = $('<td></td>');
+        $add6 = $('<td></td>');
+        $add7 = $('<td></td>');
+        $add2.html(meso1.data[j].model_name);
+        $add3.html(meso1.data[j].model_desc);
+        $add4.html('自定义模型');
+        $add5.html(meso1.data[j].model_id);
+        $add6.html(meso1.data[j].model_path);
+        $add7.html(meso1.data[j].model_input[0]+','+ meso1.data[j].model_input[1]);
+        $add.append($add1);
+        $add.append($add2);
+        $add.append($add3);
+        $add.append($add4);
+        $add.append($add5);
+        $add.append($add6);
+        $add.append($add7);
+        $('#add1').append($add);
+    }
+
+    htmlobj2=$.ajax({url:"http://39.104.186.210:8090/api/app/get-app",async:false});
+    var mes2 = htmlobj2.responseText;
+    var mesj2 = JSON.parse(mes2);
+    var meso2 = eval("("+mesj2+")");
+    for (var k=0; k < meso2.data.length; k++){
+        $add = $('<tr class="gradeX"></tr>');
+        $add1 = $('<td><input class="abc1"type="checkbox" /></td>');
+        $add2 = $('<td></td>');
+        $add3 = $('<td></td>');
+        $add4 = $('<td></td>');
+        $add5 = $('<td></td>');
+        $add6 = $('<td></td>');
+        $add7 = $('<td></td>');
+        $add2.html(meso2.data[k].app_name);
+        $add3.html(meso2.data[k].model_id);
+        $add4.html(meso2.data[k].tenant_id);
+        $add5.html(meso2.data[k].model_id);
+        $add6.html(meso2.data[k].stop_time);
+        $add7.html(meso2.data[k].app_input[0].type+'(所属设备ID：'+ meso2.data[k].app_input[0].devide_id+')'+"，"+meso2.data[k].app_input[1].type+'(所属设备ID：'+ meso2.data[k].app_input[1].devide_id+')');
+        $add.append($add1);
+        $add.append($add2);
+        $add.append($add3);
+        $add.append($add4);
+        $add.append($add5);
+        $add.append($add6);
+        $add.append($add7);
+        $('#add2').append($add);
+    }
+
+    $('#button3').click(
+        function () {
+            window.alert("暂不支持");
+        }
+    );
+
+    $('#delete1').click(
+        function () {
+            $('.abc:checked').parent().parent().remove();
+        }
+    )
+    $('#delete2').click(
+        function () {
+            $('.abc1:checked').parent().parent().remove();
+        }
+    )
+
+</script>
+
+</body>
+</html>
