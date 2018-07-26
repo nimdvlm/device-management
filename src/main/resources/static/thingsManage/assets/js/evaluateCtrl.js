@@ -1,4 +1,26 @@
-mainApp.controller('evaluateCtrl', function ($scope,$resource) {
+mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
+
+
+    /*POST上传文件*/
+    var uploader = $scope.uploader = new FileUploader({
+        url:'/api/document/upload'
+    });
+    $scope.uploadStatus = $scope.uploadStatus1 = false;
+    $scope.clearItems = function(){    //重新选择文件时，清空队列，达到覆盖文件的效果
+        uploader.clearQueue();
+    }
+    uploader.onAfterAddingFile = function(fileItem) {
+        $scope.fileItem = fileItem._file;    //添加文件之后，把文件信息赋给scope
+    };
+    uploader.onSuccessItem = function (fileItem,response,status,headers) {
+        alert("success");
+    };
+    uploader.onErrorItem = function (fileItem,response,status,headers) {
+        alert("error");
+    };
+
+
+
 
     /*=====================================get获取全部文档==============================================*/
     var Arr = new Array();
@@ -9,17 +31,17 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
         async: false,
         type:"GET",
         success:function(msg) {
-            console.log(msg);
+            //console.log(msg);
             var evaluate = JSON.parse(msg);
-            console.log(evaluate);
-            console.log(evaluate.filenames);
-            console.log(evaluate.filenames instanceof Array);
+            //console.log(evaluate);
+            //console.log(evaluate.filenames);
+            //console.log(evaluate.filenames instanceof Array);
             evaluate.filenames=evaluate.filenames.replace("[","");//去除[]
             evaluate.filenames=evaluate.filenames.replace("]","");
             strs=evaluate.filenames.split(","); //以字符逗号分割字符串，返回数组
-            console.log(strs);
+            //console.log(strs);
             var len = strs.length;
-            console.log(len);
+            //console.log(len);
             for(var i=0;i<len;i++){
                 var str = [];
                 var str = strs[i].split(".");
@@ -28,11 +50,9 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
             }
         }
     });
-    console.log(Arr);
-    console.log(Arr[0].name);
-    console.log(Arr[0].type);
+    //console.log(Arr);
+    //console.log(Arr[0].name);
     $scope.arrayItem = Arr;
-    console.log($scope.arrayItem);
 
     
 
@@ -56,34 +76,32 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
         Arr.push(jsonStr);
     }
     console.log(Arr);
-
-    console.log(Arr[0].name);
-    console.log(Arr[0].type);
     $scope.arrayItem = Arr;
-    //console.log($scope.arrayItem);//能正常显示在前端；======================================================================*/
+    //console.log($scope.arrayItem);//能正常显示在前端；
+
+======================================================================*/
+    /*get文件的下载*/
+    $scope.fileDown = function (data) {
+        console.log(data);
+        var result = confirm("下载此文件？");
+        if(result){
+            var downFile = $resource('/api/document/download/:filename/:filetype');
+            downFile.get({filename:data.name,filetype:data.type},{},function () {
+                alert("下载成功");
+            });
+        }else {
+            alert("不下载？");
+        }
+    }
 
 
-    /*get文件的下载
-    $("#downFile").on("click",function (item) {
-        console.log(item);
-        $.ajax({
-            url:"/api/document/download/"+ item.name+"/"+item.type,
-            type:"GET",
-            success:function () {
-                alert("下载成功！");
-            },
-            error:function () {
-                alert("编辑失败");
-            }
-        });
-    })*/
-    /*delete删除文档
-    $scope.delFile = function(item){
-        console.log(item);
+    /*delete删除文档*/
+    $scope.delFile = function(data){
+        console.log(data);
         var result = confirm("确定删除此文件？");
         if(result){
-            var deleteFile = $resource('/api/document/delete/'+item.name+'/'+item.type);
-            deleteFile.delete({},{},function(){
+            var deleteFile = $resource('/api/document/delete/:filename/:filetype');
+            deleteFile.delete({filename:data.name,filetype:data.type},{},function(){
                 alert("删除成功");
             },function () {
                 alert("删除失败！");
@@ -91,7 +109,11 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
         }else {
             alert("不删除?");
         }
-    }*/
+    }
+
+
+
+
 
 
 
@@ -151,7 +173,19 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource) {
         };*/
 
 
-
+    /*$("#downFile").on("click",function (item) {
+           console.log(item);
+           $.ajax({
+               url:"/api/document/download/"+ item.name+"/"+item.type,
+               type:"GET",
+               success:function () {
+                   alert("下载成功！");
+               },
+               error:function () {
+                   alert("编辑失败");
+               }
+           });
+       })*/
 
 
 
