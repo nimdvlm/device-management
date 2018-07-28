@@ -7,7 +7,8 @@ function quitThings() {
             console.log(msg);
             window.location.href="/";
         }
-    });}
+    });
+}
 
 $("#backThings").click(function () {
     var href = window.location.search;//取?后的参数

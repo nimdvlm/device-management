@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- Required Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/text.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/fluid.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/mws.style.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/icons/icons.css" media="screen" />
+
+    <!-- Demo and Plugin Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="css/demo.css" media="screen" />
+
+    <link rel="stylesheet" type="text/css" href="plugins/colorpicker/colorpicker.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="plugins/jimgareaselect/css/imgareaselect-default.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="plugins/fullcalendar/fullcalendar.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="plugins/fullcalendar/fullcalendar.print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="plugins/tipsy/tipsy.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="plugins/sourcerer/Sourcerer-1.2.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="plugins/jgrowl/jquery.jgrowl.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="plugins/spinner/spinner.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/jui/jquery.ui.css" media="screen" />
+
+    <!-- Theme Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/mws.theme.css" media="screen" />
+
+    <title>大数据平台-数据ETL</title>
+
+</head>
+
+<body>
+
+<div id="mws-header" class="clearfix">
+    <div id="mws-logo-wrap">
+        <p style="color: white;font-size: 24px;margin-top: 13px;margin-left: 15px">大数据平台</p>
+    </div>
+</div>
+
+<div id="mws-wrapper">
+    <div id="mws-sidebar-stitch"></div>
+    <div id="mws-sidebar-bg"></div>
+    <div id="mws-sidebar">
+        <div id="mws-navigation">
+            <ul>
+                <li><a href="../bigData/device1.html" class="mws-i-24 i-home">Dashboard</a></li>
+                <li><a href="table.html" class="mws-i-24 i-list">数据管理</a></li>
+                <ul>
+                    <li id="ul1" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据ETL</a></li>
+                    <li style="background: #000000"><a style="color: #c8d350" href="etl.html" class="mws-i-24 i-chart">数据ETL处理</a></li>
+                    <li style="background: #000000"><a href="etl1.html" class="mws-i-24 i-chart">已有数据ETL</a></li>
+                    <li style="background: #000000"><a href="etl2.html" class="mws-i-24 i-chart">上传数据ETL</a></li>
+                </ul>
+                <ul>
+                    <li id="ul2" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据分析</a></li>
+                    <li style="background: #000000"><a href="../bigData/ocean.html" class="mws-i-24 i-polaroids">常规分析</a></li>
+                    <li style="background: #000000"><a href="../bigData/statistics1.html" class="mws-i-24 i-polaroids">数据分析</a></li>
+                    <li style="background: #000000"><a href="sql.html" class="mws-i-24 i-polaroids">SQL</a></li>
+                </ul>
+                <ul>
+                    <li id="ul3" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据预测</a></li>
+                    <li style="background: #000000"><a href="predict.html" class="mws-i-24 i-blocks-images">数据预测</a></li>
+                    <li style="background: #000000"><a href="model.html" class="mws-i-24 i-blocks-images">模型管理</a></li>
+                </ul>
+                <ul>
+                    <li id="ul4" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据挖掘</a></li>
+                    <li style="background: #000000"><a href="datadig.html" class="mws-i-24 i-cog">数据挖掘</a></li>
+                    <li style="background: #000000"><a href="model1.html" class="mws-i-24 i-cog">模型管理</a></li>
+                </ul>
+                <li><a href="http://39.104.186.210:8888" class="mws-i-24 i-list">线上开发</a></li>
+                <li><a href="/home?TENANT_ADMIN&2&1" class="mws-i-24 i-list">返回上一级</a></li>
+                <!--<li><a href="charts.html" class="mws-i-24 i-chart">Charts</a></li>
+                <li><a href="calendar.html" class="mws-i-24 i-day-calendar">Calendar</a></li>
+                <li><a href="files.html" class="mws-i-24 i-file-cabinet">File Manager</a></li>
+                <li class="active"><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>
+                <li>
+                    <a href="#" class="mws-i-24 i-list">Forms</a>
+                    <ul>
+                        <li><a href="form_layouts.html">Layouts</a></li>
+                        <li><a href="form_elements.html">Elements</a></li>
+                    </ul>
+                </li>
+                <li><a href="widgets.html" class="mws-i-24 i-cog">Widgets</a></li>
+                <li><a href="typography.html" class="mws-i-24 i-text-styling">Typography</a></li>
+                <li><a href="grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
+                <li><a href="gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>
+                <li><a href="error.html" class="mws-i-24 i-alert-2">Error Page</a></li>
+                <li>
+                    <a href="icons.html" class="mws-i-24 i-pacman">
+                        Icons <span class="mws-nav-tooltip">2000+</span>
+                    </a>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+
+    <div id="mws-container" class="clearfix">
+        <div class="container">
+            <div class="mws-panel grid_8">
+                <div class="mws-panel-header">
+                    <span class="mws-i-24 i-list">选择数据表</span>
+                </div>
+                <div class="mws-panel-body">
+                    <div class="mws-form-row">
+                        <br>
+                        <label style="float: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选择字段：</label>
+                        <div class="mws-form-item small" style="float: left">
+                            <select id="select1"></select>
+                        </div>
+                        <label style="float: left;margin-left: 12%">选择处理方式：</label>
+                        <div class="mws-form-item small" style="float: left">
+                            <select id="select2">
+                                <option>更改字段</option>
+                                <option>去除空值</option>
+                                <option>转换时间格式</option>
+                            </select>
+                        </div>
+                        <label style="float: left;margin-left: 12%">填充数值：</label>
+                        <div class="mws-form-item small">
+                            <input id="select3" type="text" class="mws-textinput"/>
+                            <button id="select4" style="color: white;background: red;float:right;margin-right: 3%">开始进行ETL处理</button>
+                        </div>
+                        <br>
+                    </div>
+                    <table class="mws-table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Format</th>
+                            <th>Size</th>
+                            <th>Last Modified</th>
+                            <th>Directory</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="gradeA">
+                            <td>user_table</td>
+                            <td>CSV</td>
+                            <td class="center">0.2 KB</td>
+                            <td class="center">2018-05-28 18:58</td>
+                            <td class="center">/data/user-data-1526349600000</td>
+                            <td><button id="button1" style="color: white;background: green">查表</button></td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>device_table</td>
+                            <td>CSV</td>
+                            <td class="center">0.3 KB</td>
+                            <td class="center">2018-05-28 18:58</td>
+                            <td class="center">/data/device-data-1526357500000</td>
+                            <td><button id="button2" style="color: white;background: green">查表</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="mws-panel grid_8">
+                <p id="title1" style="font-size: 18px;margin-left: 5px">数据表名称：device_table</p>
+                <div class="mws-panel-body">
+                    <table class="mws-table">
+                        <thead>
+                        <tr id="thead1">
+                            <!--<th>device_id</th>
+                            <th>name</th>
+                            <th>create_date</th>
+                            <th>tenant_Id</th>
+                            <th>device_type</th>
+                            <th>model</th>
+                            <th>Status</th>-->
+                        </tr>
+                        </thead>
+                        <tbody id="tbody1">
+                        <!--<tr class="gradeA">
+                            <td>8A38B734-284D-3BED-2834-BDA47362B6D0</td>
+                            <td>test_1</td>
+                            <td>2018-07-15  09:28:28</td>
+                            <td>1</td>
+                            <td class="center">temperature</td>
+                            <td class="center">CS-01</td>
+                            <td class="center">running</td>
+                        </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="plugins/jquery.dataTables.js"></script>
+<script type="text/javascript" src="plugins/colorpicker/colorpicker.js"></script>
+<script type="text/javascript" src="plugins/spinner/ui.spinner.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/demo.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+
+<script type="text/javascript">
+
+    $('#select2').change(
+        function () {
+            if($(this).val() == "更改字段"){
+                $('#select3').attr("disabled",false);
+            }else {
+                $('#select3').val("");
+                $('#select3').attr("disabled","disabled");
+            }
+        }
+    );
+
+    var deviceGroup = {device_id:["8A38B734-284D-3BED-2834-BDA47362B6D2","8A38B734-284D-3BED-2834-BDA47362B6D3","8A38B734-284D-3BED-2834-BDA47362B6D4","","8A38B734-284D-3BED-2834-BDA47362B6D6","8A38B734-284D-3BED-2834-BDA47362B6D7","8A38B734-284D-3BED-2834-BDA47362B6D8","8A38B734-284D-3BED-2834-BDA47362B6D9","","8A38B734-284D-3BED-2834-BDA47362B6D0"],
+        name:["test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1"],
+        create_date:["2018-07-15 09:28:28","","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28"],
+        tenant_Id:["1","1","1","","1","1","1","1","1","1"],
+        device_type:["humidity","temperature","humidity","temperature","humidity","temperature","temperature","temperature","temperature","temperature"],
+        model:["CS-01","CS-01","CS-01","CS-01","CS-01","CS-01","CS-01","CS-01","CS-01","CS-01"],
+        status:["running","running","running","running","running","running","running","running","running","running"]
+    };
+    var userGroup = {
+        tenant_Id:["1","1","1","","1","1","1","1","1","1","1","1"],
+        name:["test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1"],
+        create_date:["2018-07-15 09:28:28","","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28"],
+        email:["adjkafha123@sina.com","adjkafha123@sina.com","adjkafha123@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com"],
+        phone:["13849586921","13849586921","13849586921","13849586921","","13849586921","13849586921","13849586921","13849586921","13849586921","13849586921","13849586921"]
+    };
+    for (var item in deviceGroup){
+        $('#select1').append($('<option>'+item+'</option>'));
+        $th = $('<th></th>');
+        $th.html(item);
+        $('#thead1').append($th);
+        for (var j=0; j<deviceGroup[item].length; j++){
+            $tr = $('<tr class="gradeA"></tr>');
+            $('#tbody1').append($tr);
+        }
+        for (var i=0; i<deviceGroup[item].length; i++){
+            $td = $('<td></td>');
+            $td.html(deviceGroup[item][i]);
+            $('#tbody1').find("tr").eq(i).append($td);
+        }
+    }
+    etlprocess(deviceGroup);
+    /*for (var item in deviceGroup){
+        window.alert(item);
+        for (var i=0; i<deviceGroup[item].length; i++){
+            window.alert(deviceGroup[item][i])
+        }
+    }*/
+    function etlprocess(dataGroup){
+        $('#select4').unbind();
+        $('#select4').click(
+            function () {
+                if ($('#select2').val() == "去除空值"){
+                    $('#tbody1').empty();
+                    var a = $('#select1').val();
+                    for (var i0=0; i0<dataGroup[a].length; i0++){
+                        if(dataGroup[a][i0] != ""){
+                            $tr = $('<tr class="gradeA"></tr>');
+                            $tr.attr("id","count"+i0);
+                            $('#tbody1').append($tr);
+                        }
+                    }
+                    for (var i=0; i<dataGroup[a].length; i++){
+                        if(dataGroup[a][i] != ""){
+                            for (var item in dataGroup){
+                                $td = $('<td></td>');
+                                $td.html(dataGroup[item][i]);
+                                $('#count'+i).append($td);
+
+                            }
+                        }
+                    }
+                }else if ($('#select2').val() == "更改字段"){
+                    if ($('#select3').val() == ""){
+                        window.alert("请输入填充数值！");
+                    }else {
+                        $('#thead1').empty();
+                        $('#tbody1').empty();
+                        var b = $('#select1').val();
+                        for (var j0 =0; j0<dataGroup[b].length; j0++){
+                            dataGroup[b][j0] = $('#select3').val();
+                        }
+                        for (var item2 in dataGroup){
+                            $th = $('<th></th>');
+                            $th.html(item2);
+                            $('#thead1').append($th);
+                            for (var j=0; j<dataGroup[item2].length; j++){
+                                $tr = $('<tr class="gradeA"></tr>');
+                                $('#tbody1').append($tr);
+                            }
+                            for (var j1=0; j1<dataGroup[item2].length; j1++){
+                                $td = $('<td></td>');
+                                $td.html(dataGroup[item2][j1]);
+                                $('#tbody1').find("tr").eq(j1).append($td);
+                            }
+                        }
+                    }
+                }else if ($('#select2').val() == "转换时间格式"){
+                    if ($('#select1').val() != "create_date"){
+                        window.alert("该字段不是Date类型，不能转换！");
+                    }else {
+                        $('#thead1').empty();
+                        $('#tbody1').empty();
+                        var c = $('#select1').val();
+                        for (var k0 =0; k0<dataGroup[c].length; k0++){
+                            dataGroup[c][k0] = dataGroup[c][k0].slice(0,10);
+                        }
+                        for (var item3 in dataGroup){
+                            $th = $('<th></th>');
+                            $th.html(item3);
+                            $('#thead1').append($th);
+                            for (var k1=0; k1<dataGroup[item3].length; k1++){
+                                $tr = $('<tr class="gradeA"></tr>');
+                                $('#tbody1').append($tr);
+                            }
+                            for (var k2=0; k2<dataGroup[item3].length; k2++){
+                                $td = $('<td></td>');
+                                $td.html(dataGroup[item3][k2]);
+                                $('#tbody1').find("tr").eq(k2).append($td);
+                            }
+                        }
+                    }
+                }
+            }
+        );
+    }
+
+    $('#button1').click(
+        function(){
+            $('#thead1').empty();
+            $('#tbody1').empty();
+            $('#title1').html("数据表名称：user_table");
+            $('#select1').empty();
+            etlprocess(userGroup);
+            for (var item in userGroup){
+                $('#select1').append($('<option>'+item+'</option>'));
+                $th = $('<th></th>');
+                $th.html(item);
+                $('#thead1').append($th);
+                for (var j=0; j<userGroup[item].length; j++){
+                    $tr = $('<tr class="gradeA"></tr>');
+                    $('#tbody1').append($tr);
+                }
+                for (var i=0; i<userGroup[item].length; i++){
+                    $td = $('<td></td>');
+                    $td.html(userGroup[item][i]);
+                    $('#tbody1').find("tr").eq(i).append($td);
+                }
+            }
+        }
+    );
+    $('#button2').click(
+        function(){
+            $('#thead1').empty();
+            $('#tbody1').empty();
+            $('#title1').html("数据表名称：device_table");
+            $('#select1').empty();
+            etlprocess(deviceGroup);
+            for (var item in deviceGroup){
+                $('#select1').append($('<option>'+item+'</option>'));
+                $th = $('<th></th>');
+                $th.html(item);
+                $('#thead1').append($th);
+                for (var j=0; j<deviceGroup[item].length; j++){
+                    $tr = $('<tr class="gradeA"></tr>');
+                    $('#tbody1').append($tr);
+                }
+                for (var i=0; i<deviceGroup[item].length; i++){
+                    $td = $('<td></td>');
+                    $td.html(deviceGroup[item][i]);
+                    $('#tbody1').find("tr").eq(i).append($td);
+                }
+            }
+        }
+    )
+
+</script>
+
+
+</body>
+</html>
