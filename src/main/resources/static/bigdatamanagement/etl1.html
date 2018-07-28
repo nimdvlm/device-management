@@ -1,17 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <!-- Required Stylesheets -->
-    <link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/mws.style.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/icons/icons.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/reset.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="css/mws.style.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="css/icons/icons.css" media="screen"/>
+
+    <link rel="stylesheet" type="text/css" href="css/text.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/fluid.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/jui/jquery.ui.css" media="screen" />
+
     <!-- Theme Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="css/mws.theme.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/mws.theme.css" media="screen"/>
 
-    <title>已有数据ETL</title>
+    <!-- codemirror -->
+    <link rel="stylesheet" type="text/css" href="plugins/codemirror/codemirror.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="plugins/codemirror/show-hint.css" media="screen"/>
+    <title>SQL</title>
+    <style>
+        .page-title{
+            background: #ffffff;
+            border: 1px solid #dddddd;
+            height: auto;
+            padding: 20px;
+        }
+        .page-title h1{
+            font-weight:bold;
+            font-size: 15px;
+            border-bottom: 1px solid #dddddd;
 
+        }
+        .page-title other{
+            font-size:0.9em;
+            margin:8px 0 0;
+            padding:8px 0 0;
+            width:100%;
+        }
+        .page-title .other ul#dashboard-buttons li {
+            float:left;
+            margin:7px;
+            text-decoration-line: none;
+            list-style-type: none;
+        }
+
+        .page-title .other ul#dashboard-buttons li a {
+            display:block;
+            width:100px;
+            padding:80px 0 0;
+            height:20px;
+            background-repeat:no-repeat;
+            background-position:50% 5px;
+            text-align:center;
+            text-decoration:none;
+        }
+        .page-title .other ul#dashboard-buttons li a.Chart_5 {
+            background-image:url(./images/core/Chart_5.png);
+        }
+
+    </style>
 </head>
 
 <body>
@@ -38,13 +86,17 @@
                 </ul>
                 <ul>
                     <li id="ul2" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据分析</a></li>
-                    <li style="background: #000000"><a href="../bigData/ocean.html" class="mws-i-24 i-polaroids">常规分析</a></li>
-                    <li style="background: #000000"><a href="../bigData/statistics1.html" class="mws-i-24 i-polaroids">数据分析</a></li>
-                    <li style="background: #000000"><a href="sql.html" class="mws-i-24 i-polaroids">SQL</a></li>
+                    <li style="background: #000000"><a href="../bigData/ocean.html"
+                                                       class="mws-i-24 i-polaroids">常规分析</a></li>
+                    <li style="background: #000000"><a href="../bigData/statistics1.html" class="mws-i-24 i-polaroids">数据分析</a>
+                    </li>
+                    <li style="background: #000000"><a href="sql.html"
+                                                       class="mws-i-24 i-polaroids">SQL</a></li>
                 </ul>
                 <ul>
                     <li id="ul3" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据预测</a></li>
-                    <li style="background: #000000"><a href="predict.html" class="mws-i-24 i-blocks-images">数据预测</a></li>
+                    <li style="background: #000000"><a href="predict.html" class="mws-i-24 i-blocks-images">数据预测</a>
+                    </li>
                     <li style="background: #000000"><a href="model.html" class="mws-i-24 i-blocks-images">模型管理</a></li>
                 </ul>
                 <ul>
@@ -54,27 +106,6 @@
                 </ul>
                 <li><a href="http://39.104.186.210:8888" class="mws-i-24 i-list">线上开发</a></li>
                 <li><a href="/home?TENANT_ADMIN&2&1" class="mws-i-24 i-list">返回上一级</a></li>
-                <!--<li><a href="charts.html" class="mws-i-24 i-chart">Charts</a></li>
-                <li><a href="calendar.html" class="mws-i-24 i-day-calendar">Calendar</a></li>
-                <li><a href="files.html" class="mws-i-24 i-file-cabinet">File Manager</a></li>
-                <li class="active"><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>
-                <li>
-                    <a href="#" class="mws-i-24 i-list">Forms</a>
-                    <ul>
-                        <li><a href="form_layouts.html">Layouts</a></li>
-                        <li><a href="form_elements.html">Elements</a></li>
-                    </ul>
-                </li>
-                <li><a href="widgets.html" class="mws-i-24 i-cog">Widgets</a></li>
-                <li><a href="typography.html" class="mws-i-24 i-text-styling">Typography</a></li>
-                <li><a href="grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
-                <li><a href="gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>
-                <li><a href="error.html" class="mws-i-24 i-alert-2">Error Page</a></li>
-                <li>
-                    <a href="icons.html" class="mws-i-24 i-pacman">
-                        Icons <span class="mws-nav-tooltip">2000+</span>
-                    </a>
-                </li>-->
             </ul>
         </div>
     </div>
@@ -82,7 +113,126 @@
     <div id="mws-container" class="clearfix">
         <div class="container">
             <div class="mws-panel grid_8">
-                已有数据ETL
+                <div class="mws-panel-header">
+                    <span class="mws-i-24 i-list">文档展示</span>
+                </div>
+                <div class="mws-panel-body">
+                    <div class="mws-form-row">
+
+                        <div class="page-title">
+                            <h1>现有数据文档</h1>
+                            <div class="other">
+                                <ul id="dashboard-buttons">
+                                    <li>
+                                        <a href="#" class="Chart_5 tooltip" title="文档1">
+                                            文档1
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="Chart_5 tooltip" title="文档2">
+                                            文档2
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="Chart_5 tooltip" title="文档3">
+                                            文档3
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="Chart_5 tooltip" title="文档4">
+                                            文档4
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="Chart_5 tooltip" title="文档5">
+                                            文档5
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <fieldset style="border:none;border-top:1px solid #cec9c9;margin:30px 0 20px;">
+                    <legend style="font-size: 20px;font-weight: 300;padding: 0 10px;margin-left: 20px">拖拽筛选</legend>
+                </fieldset>
+                <div>
+
+                    <span style="color:#3a3d43;">*&nbsp;将文档拖住按至此处</span>
+                </div>
+                <div>
+                    <div style="background-image:url(./images/core/cloud.PNG); height: 150px;width: 260px;background-repeat:no-repeat;text-align: center">
+
+                    </div>
+                </div>
+                <table class="mws-table" id="querytable">
+                    <thead>
+                    <tr>
+                        <th>文件名</th>
+                        <th>大小</th>
+                        <th>状态</th>
+                        <th>格式</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>用户手册部署</td>
+                        <td>24k</td>
+                        <td>安全</td>
+                        <td>docx</td>
+                    </tr>
+                    <tr>
+                        <td>数据分析</td>
+                        <td>2M</td>
+                        <td>安全</td>
+                        <td>doc</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <fieldset style="border:none;border-top:1px solid #cec9c9;margin:30px 0 20px;">
+                    <legend style="font-size: 20px;font-weight: 300;padding: 0 10px;margin-left: 20px">开始筛选</legend>
+                </fieldset>
+                <button id="btnFile" onclick="getElementById('formFile').style.display='inline-table';getElementById('btnFile').style.display='none'" style="margin:10px;cursor: pointer;height: 30px;line-height: 30px;background-color: #3b3c3f;color: #fff;text-align: center;border: none;border-radius: 2px">
+                        开始筛选
+                </button>
+
+
+                <form id="formFile" style="display: none">
+                    <label>选择筛选条件</label>
+                    <div style="display: inline-block;">
+                        <select name="quiz1" style="height: 30px;width: 200px">
+                            <option value="">请选择设备ID</option>
+                            <option value="浙江" selected="">1</option>
+                            <option value="你的工号">2</option>
+                            <option value="你最喜欢的老师">7</option>
+                        </select>
+                    </div>
+                    <div style="display: inline-block">
+                        <select name="quiz1" style="height: 30px;width: 200px">
+                            <option value="">请选择设备ID</option>
+                            <option value="浙江" selected="">1</option>
+                            <option value="你的工号">2</option>
+                            <option value="你最喜欢的老师">7</option>
+                        </select>
+                    </div>
+                    <div style="display: inline-block">
+                        <select name="quiz1" style="height: 30px;width: 200px">
+                            <option value="">请选择设备ID</option>
+                            <option value="浙江" selected="">1</option>
+                            <option value="你的工号">2</option>
+                            <option value="你最喜欢的老师">7</option>
+                        </select>
+                    </div>
+                    <div style="display: inline-block">
+                        <button id="deleteFile" onclick="getElementById('formFile').style.display='none';getElementById('btnFile').style.display='inline-table'" style="margin:10px;cursor: pointer;height: 30px;line-height: 30px;background-color: #BBBBBB;color: #fff;text-align: center;border: none;border-radius: 2px">
+                            删除
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
