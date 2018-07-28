@@ -22,7 +22,7 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
 
 
 
-    /*=====================================get获取全部文档
+    /*=====================================get获取全部文档==============================================*/
     var Arr = new Array();
     var strs= new Array();//定义一数组
     $.ajax({
@@ -53,10 +53,10 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
     //console.log(Arr);
     //console.log(Arr[0].name);
     $scope.arrayItem = Arr;
-==============================================*/
+
     
 
-    /*=============测试代码======================================================================*/
+    /*=============测试代码
     var evaluate = '{"filenames":"[物联网平台.pptx, 三化物联网平台单元测试.docx, 三化物联网平台概要设计.docx, 三化物联网平台架构设计.docx, 账户系统单元测试.docx, 大数据平台单元测试.docx, 大数据平台UI设计.doc, 三化物联网平台数据库设计.docx, 大数据平台原型设计.docx, 日志单元测试.docx, 三化物联网平台UI设计.docx, 三化物联网平台系统原型.docx, 三化物联网平台需求规格说明书.doc]"}';
     var evaluate = JSON.parse(evaluate);
     console.log(evaluate);
@@ -79,7 +79,7 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
     $scope.arrayItem = Arr;
     //console.log($scope.arrayItem);//能正常显示在前端；
 
-
+======================================================================*/
     /*get文件的下载*/
     $scope.fileDown = function (data) {
         console.log(data);
