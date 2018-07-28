@@ -53,7 +53,7 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
     //console.log(Arr);
     //console.log(Arr[0].name);
     $scope.arrayItem = Arr;
-    console.log(Arr.length);
+    //console.log(Arr.length);
     $scope.numberFile = Arr.length;
 
     
@@ -116,8 +116,9 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
         console.log(data);
         console.log(data.name);
         console.log(data.type);
+        var url = "/api/document/delete/"+data.name+"/"+data.type;
         $.ajax({
-            url:'/api/document/delete/'+encodeURI(encodeURI(data.name))+'/'+data.type,
+            url:url,
             type:"DELETE",
             success:function(msg){
                 alert("删除成功");
