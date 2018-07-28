@@ -35,7 +35,7 @@ public class GroupController extends DefaultThingsboardAwaredController{
                                     @RequestParam(required = false) String textOffset) {
 
 
-        String requestAddr = "/api/v1/deviceaccess/groups/"+getTenantId()+"/1" +"?limit=" + limit;
+        String requestAddr = "/api/v1/deviceaccess/groups/tenant/"+getTenantId()+"?limit=" + limit;
         if(textSearch != null){
             requestAddr = requestAddr + "&textSearch=" + textSearch;
         }
