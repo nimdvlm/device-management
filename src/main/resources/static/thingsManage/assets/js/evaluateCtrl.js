@@ -22,7 +22,7 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
 
 
 
-    /*=====================================get获取全部文档==============================================*/
+    /*=====================================get获取全部文档
     var Arr = new Array();
     var strs= new Array();//定义一数组
     $.ajax({
@@ -53,10 +53,10 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
     //console.log(Arr);
     //console.log(Arr[0].name);
     $scope.arrayItem = Arr;
-
+==============================================*/
     
 
-    /*=============测试代码
+    /*=============测试代码======================================================================*/
     var evaluate = '{"filenames":"[物联网平台.pptx, 三化物联网平台单元测试.docx, 三化物联网平台概要设计.docx, 三化物联网平台架构设计.docx, 账户系统单元测试.docx, 大数据平台单元测试.docx, 大数据平台UI设计.doc, 三化物联网平台数据库设计.docx, 大数据平台原型设计.docx, 日志单元测试.docx, 三化物联网平台UI设计.docx, 三化物联网平台系统原型.docx, 三化物联网平台需求规格说明书.doc]"}';
     var evaluate = JSON.parse(evaluate);
     console.log(evaluate);
@@ -79,14 +79,17 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
     $scope.arrayItem = Arr;
     //console.log($scope.arrayItem);//能正常显示在前端；
 
-======================================================================*/
+
     /*get文件的下载*/
     $scope.fileDown = function (data) {
         console.log(data);
+        console.log(data.name);
+        console.log(data.type);
+
         var result = confirm("下载此文件？");
         if(result){
-            var downFile = $resource('/api/document/download/:filename/:filetype');
-            downFile.get({filename:data.name,filetype:data.type},{},function () {
+            var downFile = $resource('/api/document/download/'+ encodeURI(encodeURI(data.name)) +'/'+data.type);
+            downFile.get({},{},function () {
                 alert("下载成功");
             });
         }else {
@@ -98,10 +101,12 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
     /*delete删除文档*/
     $scope.delFile = function(data){
         console.log(data);
+        console.log(data.name);
+        console.log(data.type);
         var result = confirm("确定删除此文件？");
         if(result){
             var deleteFile = $resource('/api/document/delete/:filename/:filetype');
-            deleteFile.delete({filename:data.name,filetype:data.type},{},function(){
+            deleteFile.delete({filename:encodeURI(encodeURI(data.name)),filetype:data.type},{},function(){
                 alert("删除成功");
             },function () {
                 alert("删除失败！");
