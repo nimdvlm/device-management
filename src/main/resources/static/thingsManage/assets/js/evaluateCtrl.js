@@ -80,7 +80,19 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
     //console.log($scope.arrayItem);//能正常显示在前端；
 
 ======================================================================*/
-    /*get文件的下载*/
+
+
+
+
+    /*下载文档*/
+    $scope.fileDown = function (data) {
+        console.log(data);
+        console.log(data.name);
+        console.log(data.type);
+        window.open('/api/document/download/'+ data.name +'/'+data.type);
+    }
+
+    /*get文件的下载
     $scope.fileDown = function (data) {
         console.log(data);
         console.log(data.name);
@@ -95,10 +107,26 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
         }else {
             alert("不下载？");
         }
+    }*/
+
+    $scope.delFile = function(data){
+        console.log(data);
+        console.log(data.name);
+        console.log(data.type);
+        $.ajax({
+            url:'/api/document/delete/'+ encodeURI(encodeURI(data.name)) +'/'+data.type,
+            type:"DELETE",
+            success:function(msg){
+                alert("删除成功");
+            },
+            error:function (err) {
+                alert("删除失败");
+            }
+        });
     }
 
 
-    /*delete删除文档*/
+    /*delete删除文档
     $scope.delFile = function(data){
         console.log(data);
         console.log(data.name);
@@ -114,7 +142,7 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
         }else {
             alert("不删除?");
         }
-    }
+    }*/
 
 
 
