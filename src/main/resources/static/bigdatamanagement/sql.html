@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <!-- Required Stylesheets -->
-    <link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/mws.style.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/icons/icons.css" media="screen" />
-    <!-- Theme Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="css/mws.theme.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/reset.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="css/mws.style.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="css/icons/icons.css" media="screen"/>
 
+    <link rel="stylesheet" type="text/css" href="css/text.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/fluid.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/jui/jquery.ui.css" media="screen" />
+
+    <!-- Theme Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/mws.theme.css" media="screen"/>
+
+    <!-- codemirror -->
+    <link rel="stylesheet" type="text/css" href="plugins/codemirror/codemirror.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="plugins/codemirror/show-hint.css" media="screen"/>
     <title>SQL</title>
 
 </head>
@@ -38,13 +46,17 @@
                 </ul>
                 <ul>
                     <li id="ul2" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据分析</a></li>
-                    <li style="background: #000000"><a href="../bigData/ocean.html" class="mws-i-24 i-polaroids">常规分析</a></li>
-                    <li style="background: #000000"><a href="../bigData/statistics1.html" class="mws-i-24 i-polaroids">数据分析</a></li>
-                    <li style="background: #000000"><a style="color: #c8d350" href="sql.html" class="mws-i-24 i-polaroids">SQL</a></li>
+                    <li style="background: #000000"><a href="../bigData/ocean.html"
+                                                       class="mws-i-24 i-polaroids">常规分析</a></li>
+                    <li style="background: #000000"><a href="../bigData/statistics1.html" class="mws-i-24 i-polaroids">数据分析</a>
+                    </li>
+                    <li style="background: #000000"><a style="color: #c8d350" href="sql.html"
+                                                       class="mws-i-24 i-polaroids">SQL</a></li>
                 </ul>
                 <ul>
                     <li id="ul3" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据预测</a></li>
-                    <li style="background: #000000"><a href="predict.html" class="mws-i-24 i-blocks-images">数据预测</a></li>
+                    <li style="background: #000000"><a href="predict.html" class="mws-i-24 i-blocks-images">数据预测</a>
+                    </li>
                     <li style="background: #000000"><a href="model.html" class="mws-i-24 i-blocks-images">模型管理</a></li>
                 </ul>
                 <ul>
@@ -54,27 +66,6 @@
                 </ul>
                 <li><a href="http://39.104.186.210:8888" class="mws-i-24 i-list">线上开发</a></li>
                 <li><a href="/home?TENANT_ADMIN&2&1" class="mws-i-24 i-list">返回上一级</a></li>
-                <!--<li><a href="charts.html" class="mws-i-24 i-chart">Charts</a></li>
-                <li><a href="calendar.html" class="mws-i-24 i-day-calendar">Calendar</a></li>
-                <li><a href="files.html" class="mws-i-24 i-file-cabinet">File Manager</a></li>
-                <li class="active"><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>
-                <li>
-                    <a href="#" class="mws-i-24 i-list">Forms</a>
-                    <ul>
-                        <li><a href="form_layouts.html">Layouts</a></li>
-                        <li><a href="form_elements.html">Elements</a></li>
-                    </ul>
-                </li>
-                <li><a href="widgets.html" class="mws-i-24 i-cog">Widgets</a></li>
-                <li><a href="typography.html" class="mws-i-24 i-text-styling">Typography</a></li>
-                <li><a href="grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
-                <li><a href="gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>
-                <li><a href="error.html" class="mws-i-24 i-alert-2">Error Page</a></li>
-                <li>
-                    <a href="icons.html" class="mws-i-24 i-pacman">
-                        Icons <span class="mws-nav-tooltip">2000+</span>
-                    </a>
-                </li>-->
             </ul>
         </div>
     </div>
@@ -82,7 +73,86 @@
     <div id="mws-container" class="clearfix">
         <div class="container">
             <div class="mws-panel grid_8">
-                sql
+                <!--<fieldset style="border:none;border-top:1px solid #cec9c9;margin:10px 0 20px;">-->
+                    <!--<legend style="font-size: 20px;font-weight: 300;padding: 0 10px;margin-left: 20px">请输入SQL查询语句-->
+                    <!--</legend>-->
+                <!--</fieldset>-->
+                <div class="mws-panel-header">
+                    <span class="mws-i-24 i-list">请输入SQL查询语句</span>
+                </div>
+                <div class="mws-panel-body">
+                    <div class="mws-form-row">
+                    <textarea rows="5" placeholder="请输入SQL语句..." name="SQLcode" id="SQLcode">
+                        if exists (select * from sysdatabase where name='databaseName')
+                        drop database databastName
+                        go
+                    </textarea></br>
+                    <script type="text/javascript" src="plugins/codemirror/codemirror.js"></script>
+                    <script type="text/javascript" src="plugins/codemirror/show-hint.js"></script>
+                    <script type="text/javascript" src="plugins/codemirror/sql-hint.js"></script>
+                    <script type="text/javascript" src="plugins/codemirror/sql.js"></script>
+                    <script type="text/javascript">
+                        var editor = CodeMirror.fromTextArea(document.getElementById("SQLcode"), {
+                            lineNumbers: true,
+                            matchBrackets: true,
+                            mode: 'text/x-sql',
+                            indentUnit: 4,
+                            indentWithTabs: true,
+                            smartIndent: true,
+                            extraKeys: {"Ctrl": 'autocomplete'},
+                            showCursorWhenSelecting: true
+                        });
+                        editor.setSize('1000px', '300px');
+                    </script>
+                    </div>
+                </div>
+                <div>
+                    <div style="float: right">
+                        <button onclick="getElementById('querytable').style.display='inline-table'" style="margin:10px;cursor: pointer;height: 30px;line-height: 30px;background-color: #3b3c3f;color: #fff;text-align: center;border: none;border-radius: 2px">
+                            查询
+                        </button>
+                    </div>
+                    <span style="color:#3a3d43;">*&nbsp;Ctrl键开启代码提示功能</span>
+                </div>
+                <fieldset style="border:none;border-top:1px solid #cec9c9;margin:30px 0 20px;">
+                    <legend style="font-size: 20px;font-weight: 300;padding: 0 10px;margin-left: 20px">查询结果</legend>
+                </fieldset>
+                <table class="mws-table" id="querytable" style="display: none;">
+                    <thead>
+                    <tr>
+                        <th>deviceCount</th>
+                        <th>dataCount</th>
+                        <th>usualDataCount</th>
+                        <th>usualDataRate</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>"pressure":10</td>
+                        <td>"pressure":34</td>
+                        <td>"pressure":34</td>
+                        <td>"pressure":80%</td>
+                    </tr>
+                    <tr>
+                        <td>"temperature":10</td>
+                        <td>"temperature":41</td>
+                        <td>"temperature":41</td>
+                        <td>"temperature":75%</td>
+                    </tr>
+                    <tr>
+                        <td>"humidity":10</td>
+                        <td>"humidity":52</td>
+                        <td>"humidity":52</td>
+                        <td>"humidity":60%</td>
+                    </tr>
+                    <tr>
+                        <td>"deformation":10</td>
+                        <td>"deformation":48</td>
+                        <td>"deformation":48</td>
+                        <td>"deformation":88%</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
