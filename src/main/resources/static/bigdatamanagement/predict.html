@@ -54,19 +54,20 @@
                 </ul>
                 <ul>
                     <li id="ul2" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据分析</a></li>
+                    <li style="background: #000000"><a href="sql.html" class="mws-i-24 i-polaroids">SQL</a></li>
                     <li style="background: #000000"><a href="../bigData/ocean.html" class="mws-i-24 i-polaroids">常规分析</a></li>
                     <li style="background: #000000"><a href="../bigData/statistics1.html" class="mws-i-24 i-polaroids">数据分析</a></li>
-                    <li style="background: #000000"><a href="sql.html" class="mws-i-24 i-polaroids">SQL</a></li>
                 </ul>
                 <ul>
-                    <li id="ul3" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据预测</a></li>
-                    <li style="background: #000000"><a style="color: #c8d350" href="predict.html" class="mws-i-24 i-blocks-images">数据预测</a></li>
-                    <li style="background: #000000"><a href="model.html" class="mws-i-24 i-blocks-images">模型管理</a></li>
+                    <li id="ul3" style="background: #3b3d47"><a style="color: #c8d350" href="#" class="mws-i-24 i-list">数据预测</a></li>
+                    <li style="background: #000000"><a style="color: #c8d350" href="predict.html" class="mws-i-24 i-blocks-images">预测管理</a></li>
+                    <li style="background: #000000"><a href="../bigData/pre.html" class="mws-i-24 i-blocks-images">预测结果</a></li>
+                    <li style="background: #000000"><a href="model.html" class="mws-i-24 i-blocks-images">预测模型管理</a></li>
                 </ul>
                 <ul>
                     <li id="ul4" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据挖掘</a></li>
                     <li style="background: #000000"><a href="datadig.html" class="mws-i-24 i-cog">数据挖掘</a></li>
-                    <li style="background: #000000"><a href="model1.html" class="mws-i-24 i-cog">模型管理</a></li>
+                    <li style="background: #000000"><a href="model1.html" class="mws-i-24 i-cog">挖掘模型管理</a></li>
                 </ul>
                 <li><a href="http://39.104.186.210:8888" class="mws-i-24 i-list">线上开发</a></li>
                 <li><a href="/home?TENANT_ADMIN&2&1" class="mws-i-24 i-list">返回上一级</a></li>
@@ -113,10 +114,10 @@
                             <th></th>
                             <th>预测任务</th>
                             <th>任务描述</th>
+                            <th>任务ID</th>
                             <th>数据源</th>
                             <th>绑定模型</th>
                             <th>创建时间</th>
-                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody id="add">
@@ -124,37 +125,37 @@
                             <td><input class="abc" type="checkbox" /></td>
                             <td>设备故障率预测与维护-1</td>
                             <td>通过训练的模型预测设备故障率，并给出设备保养维护的时间</td>
+                            <td>1</td>
                             <td>设备一号</td>
                             <td class="center">保养维护预测模型一号</td>
                             <td class="center">2018-05-28 18:58</td>
-                            <td><button style="color: white;background: green" id="result1">获取结果</button></td>
                         </tr>
                         <tr class="gradeA">
                             <td><input class="abc" type="checkbox" /></td>
                             <td>设备故障率预测与维护-2</td>
                             <td>通过训练的模型预测设备故障率，并给出设备保养维护的时间</td>
+                            <td>2</td>
                             <td>设备二号</td>
                             <td class="center">保养维护预测模型二号</td>
                             <td class="center">2018-05-28 19:00</td>
-                            <td><button style="color: white;background: green" id="result2">获取结果</button></td>
                         </tr>
                         <tr class="gradeA">
                             <td><input class="abc" type="checkbox" /></td>
                             <td>设备寿命预测-1</td>
                             <td>通过训练的模型预测设备寿命</td>
+                            <td>3</td>
                             <td>设备一号</td>
                             <td class="center">设备寿命预测模型一号</td>
                             <td class="center">2018-05-28 19:02</td>
-                            <td><button id="result3" style="color: white;background: green">获取结果</button></td>
                         </tr>
                         <tr class="gradeA">
                             <td><input class="abc" type="checkbox" /></td>
                             <td>设备寿命预测-2</td>
                             <td>通过训练的模型预测设备寿命</td>
+                            <td>4</td>
                             <td>设备二号</td>
                             <td class="center">设备寿命预测模型二号</td>
                             <td class="center">2018-05-28 19:03</td>
-                            <td><button id="result4" style="color: white;background: green">获取结果</button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -204,7 +205,7 @@
                         </div>
                     </div>
                     <div class="mws-button-row">
-                        <input id="button1" type="submit" value="创建" class="mws-button blue" />
+                        <input id="button1" type="button" value="创建" class="mws-button blue" />
                     </div>
                 </form>
             </div>
@@ -228,6 +229,7 @@
             $('.abc:checked').parent().parent().remove();
         }
     );
+    var idCount = 5;
     $('#button1').click(
         function () {
             if($('#value1').val()==""){
@@ -238,49 +240,26 @@
                 $add = $('<tr class="gradeA"><td><input class="abc" type="checkbox" /></td></tr>');
                 $add1 = $('<td></td>');
                 $add2 = $('<td></td>');
+                $add6 = $('<td></td>');
                 $add3 = $('<td></td>');
                 $add4 = $('<td></td>');
                 $add5 = $('<td></td>');
-                $add6 = $('<td><button style="color: white;background: green">获取结果</button></td>');
                 $add1.html($('#value1').val());
                 $add2.html($('#value2').val());
+                $add6.html(idCount);
+                idCount++;
                 $add3.html($('#value3').val());
                 $add4.html($('#value4').val());
                 var myDate = new Date();
                 $add5.html(myDate.toLocaleString());
                 $add.append($add1);
                 $add.append($add2);
+                $add.append($add6);
                 $add.append($add3);
                 $add.append($add4);
                 $add.append($add5);
-                $add.append($add6);
                 $('#add').append($add);
-                $add6.children().click(
-                    function () {
-                        window.alert("暂无预测结果！");
-                    }
-                )
             }
-        }
-    );
-    $('#result1').click(
-        function () {
-            window.location.href = "../bigdata/pre.html";
-        }
-    );
-    $('#result2').click(
-        function () {
-            window.location.href = "../bigdata/pre.html";
-        }
-    );
-    $('#result3').click(
-        function () {
-            window.alert("暂无预测结果！");
-        }
-    );
-    $('#result4').click(
-        function () {
-            window.alert("暂无预测结果！");
         }
     );
 

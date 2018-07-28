@@ -56,19 +56,20 @@
                 </ul>
                 <ul>
                     <li id="ul2" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据分析</a></li>
+                    <li style="background: #000000"><a href="sql.html" class="mws-i-24 i-polaroids">SQL</a></li>
                     <li style="background: #000000"><a href="../bigData/ocean.html" class="mws-i-24 i-polaroids">常规分析</a></li>
                     <li style="background: #000000"><a href="../bigData/statistics1.html" class="mws-i-24 i-polaroids">数据分析</a></li>
-                    <li style="background: #000000"><a href="sql.html" class="mws-i-24 i-polaroids">SQL</a></li>
                 </ul>
                 <ul>
-                    <li id="ul3" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据预测</a></li>
-                    <li style="background: #000000"><a href="predict.html" class="mws-i-24 i-blocks-images">数据预测</a></li>
-                    <li style="background: #000000"><a style="color: #c8d350" href="model.html" class="mws-i-24 i-blocks-images">模型管理</a></li>
+                    <li id="ul3" style="background: #3b3d47"><a style="color: #c8d350" href="#" class="mws-i-24 i-list">数据预测</a></li>
+                    <li style="background: #000000"><a href="predict.html" class="mws-i-24 i-blocks-images">预测管理</a></li>
+                    <li style="background: #000000"><a href="../bigData/pre.html" class="mws-i-24 i-blocks-images">预测结果</a></li>
+                    <li style="background: #000000"><a style="color: #c8d350" href="model.html" class="mws-i-24 i-blocks-images">预测模型管理</a></li>
                 </ul>
                 <ul>
                     <li id="ul4" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据挖掘</a></li>
                     <li style="background: #000000"><a href="datadig.html" class="mws-i-24 i-cog">数据挖掘</a></li>
-                    <li style="background: #000000"><a href="model1.html" class="mws-i-24 i-cog">模型管理</a></li>
+                    <li style="background: #000000"><a href="model1.html" class="mws-i-24 i-cog">挖掘模型管理</a></li>
                 </ul>
                 <li><a href="http://39.104.186.210:8888" class="mws-i-24 i-list">线上开发</a></li>
                 <li><a href="/home?TENANT_ADMIN&2&1" class="mws-i-24 i-list">返回上一级</a></li>
@@ -126,32 +127,6 @@
                             <tbody id="add1"></tbody>
                         </table>
                     </div><br><br>
-
-                    <div class="mws-panel-header">
-                        <span class="mws-i-24 i-list">模型应用</span>
-                    </div>
-                    <div class="mws-panel-body">
-                        <div class="mws-panel-toolbar top clearfix">
-                            <ul>
-                                <li><a id="button3" href="#" class="mws-ic-16 ic-accept">创建模型应用</a></li>
-                                <li><a href="#" id="delete2" class="mws-ic-16 ic-cross">删除模型应用</a></li>
-                            </ul>
-                        </div>
-                        <table class="mws-datatable-fn mws-table">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>应用名称</th>
-                                <th>所属模型ID</th>
-                                <th>所属租户ID</th>
-                                <th>应用ID</th>
-                                <th>停止时间</th>
-                                <th>模型输入</th>
-                            </tr>
-                            </thead>
-                            <tbody id="add2"></tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>
@@ -232,8 +207,16 @@
         $add.append($add7);
         $('#add1').append($add);
     }
+    $("#add1").find('tr').eq(0).find('td').eq(1).html("保养维护预测模型一号");
+    $("#add1").find('tr').eq(0).find('td').eq(2).html("预测设备的维护时间");
+    $("#add1").find('tr').eq(1).find('td').eq(1).html("保养维护预测模型二号");
+    $("#add1").find('tr').eq(1).find('td').eq(2).html("预测设备的维护时间");
+    $("#add1").find('tr').eq(2).find('td').eq(1).html("设备寿命预测模型一号");
+    $("#add1").find('tr').eq(2).find('td').eq(2).html("预测设备的使用寿命");
+    $("#add1").find('tr').eq(3).find('td').eq(1).html("设备寿命预测模型二号");
+    $("#add1").find('tr').eq(3).find('td').eq(2).html("预测设备的使用寿命");
 
-    htmlobj2=$.ajax({url:"http://39.104.186.210:8090/api/app/get-app",async:false});
+    /*htmlobj2=$.ajax({url:"http://39.104.186.210:8090/api/app/get-app",async:false});
     var mes2 = htmlobj2.responseText;
     var mesj2 = JSON.parse(mes2);
     var meso2 = eval("("+mesj2+")");
@@ -260,24 +243,13 @@
         $add.append($add6);
         $add.append($add7);
         $('#add2').append($add);
-    }
-
-    $('#button3').click(
-        function () {
-            window.alert("暂不支持");
-        }
-    );
+    }*/
 
     $('#delete1').click(
         function () {
             $('.abc:checked').parent().parent().remove();
         }
-    )
-    $('#delete2').click(
-        function () {
-            $('.abc1:checked').parent().parent().remove();
-        }
-    )
+    );
 
 </script>
 

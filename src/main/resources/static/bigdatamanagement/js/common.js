@@ -35,9 +35,11 @@ $('#ul3').click(
         if(c%2==0){
             $(this).parent().find('li').eq(1).css("display","none");
             $(this).parent().find('li').eq(2).css("display","none");
+            $(this).parent().find('li').eq(3).css("display","none");
         }else {
             $(this).parent().find('li').eq(1).css("display","block");
             $(this).parent().find('li').eq(2).css("display","block");
+            $(this).parent().find('li').eq(3).css("display","block");
         }
         c++;
     }
