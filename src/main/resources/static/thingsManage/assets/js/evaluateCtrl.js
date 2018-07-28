@@ -53,6 +53,8 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
     //console.log(Arr);
     //console.log(Arr[0].name);
     $scope.arrayItem = Arr;
+    console.log(Arr.length);
+    $scope.numberFile = Arr.length;
 
     
 
@@ -78,9 +80,10 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
     console.log(Arr);
     $scope.arrayItem = Arr;
     //console.log($scope.arrayItem);//能正常显示在前端；
+    console.log(Arr.length);
+    $scope.numberFile = Arr.length;
 
 ======================================================================*/
-
 
 
 
@@ -114,7 +117,7 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
         console.log(data.name);
         console.log(data.type);
         $.ajax({
-            url:'/api/document/delete/'+ encodeURI(encodeURI(data.name)) +'/'+data.type,
+            url:'/api/document/delete/'+encodeURI(encodeURI(data.name))+'/'+data.type,
             type:"DELETE",
             success:function(msg){
                 alert("删除成功");
