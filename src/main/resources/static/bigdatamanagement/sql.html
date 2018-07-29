@@ -18,6 +18,10 @@
     <!-- codemirror -->
     <link rel="stylesheet" type="text/css" href="plugins/codemirror/codemirror.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="plugins/codemirror/show-hint.css" media="screen"/>
+
+    <!--zTree-->
+    <link rel="stylesheet" type="text/css" href="plugins/ztree/zTreeStyle/zTreeStyle.css" media="screen"/>
+
     <title>SQL</title>
 
 </head>
@@ -80,29 +84,33 @@
                     <span class="mws-i-24 i-list">请输入SQL查询语句</span>
                 </div>
                 <div class="mws-panel-body">
-                    <div class="mws-form-row">
-                    <textarea rows="5" placeholder="请输入SQL语句..." name="SQLcode" id="SQLcode">
-                        if exists (select * from sysdatabase where name='databaseName')
-                        drop database databastName
-                        go
-                    </textarea></br>
-                    <script type="text/javascript" src="plugins/codemirror/codemirror.js"></script>
-                    <script type="text/javascript" src="plugins/codemirror/show-hint.js"></script>
-                    <script type="text/javascript" src="plugins/codemirror/sql-hint.js"></script>
-                    <script type="text/javascript" src="plugins/codemirror/sql.js"></script>
-                    <script type="text/javascript">
-                        var editor = CodeMirror.fromTextArea(document.getElementById("SQLcode"), {
-                            lineNumbers: true,
-                            matchBrackets: true,
-                            mode: 'text/x-sql',
-                            indentUnit: 4,
-                            indentWithTabs: true,
-                            smartIndent: true,
-                            extraKeys: {"Ctrl": 'autocomplete'},
-                            showCursorWhenSelecting: true
-                        });
-                        editor.setSize('1000px', '300px');
-                    </script>
+                    <div class="mws-form-row" style="height:350px;">
+                        <div style="float: left;width: 20%;height: 100%;background: #f0f6e4">
+                            <div style="text-align: center;margin-top: 5px">数据库目录树</div>
+                            <ul id="filetree" class="ztree" style="height:85%;background: #f0f6e4;overflow-y:scroll;overflow-x:auto;"></ul>
+                        </div>
+                        <textarea rows="5" placeholder="请输入SQL语句..." name="SQLcode" id="SQLcode">
+                            if exists (select * from devicesmodel where name='BUPT_IoT')
+                            SELECT id,tenantId,deviceId,createdAt,updatedAt
+                            FROM devicesmodel;
+                        </textarea></br>
+                        <script type="text/javascript" src="plugins/codemirror/codemirror.js"></script>
+                        <script type="text/javascript" src="plugins/codemirror/show-hint.js"></script>
+                        <script type="text/javascript" src="plugins/codemirror/sql-hint.js"></script>
+                        <script type="text/javascript" src="plugins/codemirror/sql.js"></script>
+                        <script type="text/javascript">
+                            var editor = CodeMirror.fromTextArea(document.getElementById("SQLcode"), {
+                                lineNumbers: true,
+                                matchBrackets: true,
+                                mode: 'text/x-sql',
+                                indentUnit: 4,
+                                indentWithTabs: true,
+                                smartIndent: true,
+                                extraKeys: {"Ctrl": 'autocomplete'},
+                                showCursorWhenSelecting: true
+                            });
+                            editor.setSize('800px', '350px');
+                        </script>
                     </div>
                 </div>
                 <div>
@@ -119,36 +127,41 @@
                 <table class="mws-table" id="querytable" style="display: none;">
                     <thead>
                     <tr>
-                        <th>deviceCount</th>
-                        <th>dataCount</th>
-                        <th>usualDataCount</th>
-                        <th>usualDataRate</th>
+                        <th>id</th>
+                        <th>tenantId</th>
+                        <th>deviceId</th>
+                        <th>createdAt</th>
+                        <th>updatedAt</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>"pressure":10</td>
-                        <td>"pressure":34</td>
-                        <td>"pressure":34</td>
-                        <td>"pressure":80%</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>07fbe290-80c9-11e8-96fa-bfde8340f6ee</td>
+                        <td>15294779724</td>
+                        <td>1532847594</td>
                     </tr>
                     <tr>
-                        <td>"temperature":10</td>
-                        <td>"temperature":41</td>
-                        <td>"temperature":41</td>
-                        <td>"temperature":75%</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>36807cd0-6e1c-11e8-8dc5-59c2cc02320f</td>
+                        <td>1532069434</td>
+                        <td>1532069434</td>
                     </tr>
                     <tr>
-                        <td>"humidity":10</td>
-                        <td>"humidity":52</td>
-                        <td>"humidity":52</td>
-                        <td>"humidity":60%</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>6d090f10-6e1c-11e8-8dc5-59c2cc02320f</td>
+                        <td>1529909441</td>
+                        <td>1529909441</td>
                     </tr>
                     <tr>
-                        <td>"deformation":10</td>
-                        <td>"deformation":48</td>
-                        <td>"deformation":48</td>
-                        <td>"deformation":88%</td>
+                        <td>4</td>
+                        <td>2</td>
+                        <td>5d521440-6e1c-11e8-8dc5-59c2cc02320f</td>
+                        <td>1531246594</td>
+                        <td>1531248734</td>
                     </tr>
                     </tbody>
                 </table>
@@ -158,7 +171,70 @@
 </div>
 
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="plugins/ztree/jquery.ztree.core.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
 
+    var dir="plugins/ztree/zTreeStyle/img/diy/"
+    //zTree
+    var zTreeObj;
+    // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+    var setting = {};
+    // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+    var zNodes = [
+        {name:"user",icon:dir+"table.png", open:false, children:[
+            {name:"id",icon:dir+"byte.png"},
+            {name:"addition_info",icon:dir+"byte.png"},
+            {name:"authority",icon:dir+"byte.png"},
+            {name:"customer_id",icon:dir+"byte.png"},
+            {name:"email",icon:dir+"byte.png"},
+            {name:"name",icon:dir+"byte.png"},
+            {name:"tenant_id",icon:dir+"byte.png"}]},
+        {name:"app",icon:dir+"table.png", open:false, children:[
+            {name:"app_id",icon:dir+"byte.png"},
+            {name:"app_name",icon:dir+"byte.png"},
+            {name:"model_id",icon:dir+"byte.png"},
+            {name:"app_input",icon:dir+"byte.png"},
+            {name:"app_output",icon:dir+"byte.png"},
+            {name:"tenant_id",icon:dir+"byte.png"},
+            {name:"stop_time",icon:dir+"byte.png"}]},
+        {name:"data_model",icon:dir+"table.png", open:false, children:[
+            {name:"model_id",icon:dir+"byte.png"},
+            {name:"model_name",icon:dir+"byte.png"},
+            {name:"model_desc",icon:dir+"byte.png"},
+            {name:"model_input",icon:dir+"byte.png"},
+            {name:"model_path",icon:dir+"byte.png"},
+            {name:"tenant_id",icon:dir+"byte.png"}]},
+        {name:"tenant",icon:dir+"table.png", open:false, children:[
+            {name:"id",icon:dir+"byte.png"},
+            {name:"addition_info",icon:dir+"byte.png"},
+            {name:"address",icon:dir+"byte.png"},
+            {name:"email",icon:dir+"byte.png"},
+            {name:"phone",icon:dir+"byte.png"},
+            {name:"title",icon:dir+"byte.png"}]},
+        {name:"data",icon:dir+"table.png", open:false, children:[
+            {name:"tenant_id",icon:dir+"byte.png"},
+            {name:"device_id",icon:dir+"byte.png"},
+            {name:"device_type",icon:dir+"byte.png"},
+            {name:"value",icon:dir+"byte.png"},
+            {name:"timestamp",icon:dir+"byte.png"}]},
+        {name:"devicesmodel",icon:dir+"table.png", open:false, children:[
+            {name:"id",icon:dir+"byte.png"},
+            {name:"tenantId",icon:dir+"byte.png"},
+            {name:"name",icon:dir+"byte.png"},
+            {name:"deviceId",icon:dir+"byte.png"},
+            {name:"siteId",icon:dir+"byte.png"},
+            {name:"deviceModelUrl",icon:dir+"byte.png"},
+            {name:"compressStatus",icon:dir+"byte.png"},
+            {name:"ossStatus",icon:dir+"byte.png"},
+            {name:"location",icon:dir+"byte.png"},
+            {name:"createAt",icon:dir+"byte.png"},
+            {name:"updateAt",icon:dir+"byte.png"},
+            {name:"version",icon:dir+"byte.png"}]}
+    ];
+    $(document).ready(function(){
+        zTreeObj = $.fn.zTree.init($("#filetree"), setting, zNodes);
+    });
+</script>
 </body>
 </html>
