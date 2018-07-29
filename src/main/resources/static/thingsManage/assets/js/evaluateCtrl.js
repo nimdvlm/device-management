@@ -1,6 +1,11 @@
 mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
 
 
+    /*权限管理*/
+    if($.cookie("userLevel") === "CUSTOMER_USER" || $.cookie("userLevel") === "TENANT_ADMIN"){
+        $scope.flag=true;
+    }
+
     /*POST上传文件*/
     var uploader = $scope.uploader = new FileUploader({
         url:'/api/document/upload'
@@ -83,8 +88,8 @@ mainApp.controller('evaluateCtrl', function ($scope,$resource,FileUploader) {
     console.log(Arr.length);
     $scope.numberFile = Arr.length;
 
-======================================================================*/
 
+======================================================================*/
 
 
     /*下载文档*/

@@ -10,7 +10,7 @@ option1 = {
         }
     },
     legend: {
-        data:['参数一', '参数二', '参数三'],
+        data:['暂停', '运行', '离线'],
         top:'9%'
     },
     grid: {
@@ -33,7 +33,7 @@ option1 = {
     ],
     series : [
         {
-            name:'参数一',
+            name:'暂停',
             type:'bar',
             label: {
                 normal: {
@@ -44,7 +44,7 @@ option1 = {
             data:[200, 170, 240, 244, 200, 220, 210]
         },
         {
-            name:'参数二',
+            name:'运行',
             type:'bar',
             stack: '总量',
             label: {
@@ -55,7 +55,7 @@ option1 = {
             data:[320, 302, 341, 374, 390, 450, 420]
         },
         {
-            name:'参数三',
+            name:'离线',
             type:'bar',
             stack: '总量',
             label: {
@@ -80,16 +80,16 @@ option2 = {
     },
     series : [
         {
-            name: '访问来源',
+            name: '故障预测',
             type: 'pie',
             radius : '60%',
             center: ['50%', '50%'],
             data:[
-                {value:335, name:'参数一'},
-                {value:310, name:'参数二'},
-                {value:234, name:'参数三'},
-                {value:135, name:'参数四'},
-                {value:1548, name:'参数五'}
+                {value:335, name:'6test'},
+                {value:310, name:'curtain_1'},
+                {value:234, name:'curtain_2'},
+                {value:135, name:'doorlock'},
+                {value:1548, name:'PM'}
             ],
             itemStyle: {
                 emphasis: {
@@ -115,7 +115,7 @@ option3 = {
 
     series: [
         {
-            name:'访问来源',
+            name:'设备组',
             type:'pie',
             selectedMode: 'single',
             radius: [0, '40%'],
@@ -131,24 +131,24 @@ option3 = {
                 }
             },
             data:[
-                {value:335, name:'总量', selected:true},
-                {value:679, name:'总量二'},
-                {value:1548, name:'总量三'}
+                {value:335, name:'test2', selected:true},
+                {value:679, name:'curtain'},
+                {value:1548, name:'asdf/asdf'}
             ]
         },
         {
-            name:'访问来源',
+            name:'具体设备',
             type:'pie',
             radius: ['55%', '70%'],
 
             data:[
-                {value:335, name:'参数一'},
-                {value:310, name:'参数二'},
-                {value:234, name:'参数三'},
-                {value:135, name:'参数四'},
-                {value:1048, name:'参数五'},
-                {value:251, name:'参数六'},
-                {value:147, name:'参数七'},
+                {value:335, name:'6test'},
+                {value:310, name:'curtain_1'},
+                {value:234, name:'curtain_2'},
+                {value:135, name:'curtain_3'},
+                {value:1048, name:'test'},
+                {value:251, name:'test2'},
+                {value:147, name:'device'},
                 {value:102, name:'其他'}
             ]
         }
@@ -213,7 +213,7 @@ option4 = {
     }],
     series: [
         {
-            name:'模拟数据',
+            name:'压力传感',
             type:'line',
             smooth:true,
             symbol: 'none',
@@ -263,7 +263,7 @@ option5 = {
     xAxis : [
         {
             type : 'category',
-            data : ['周一','周二','周三','周四','周五','周六','周日']
+            data : ['周一设备增量','周二设备增量','周三设备增量','周四设备增量','周五设备增量','周六设备增量','周日设备增量']
         }
     ],
     yAxis : [
@@ -273,30 +273,30 @@ option5 = {
     ],
     series : [
         {
-            name:'参数一',
+            name:'PM',
             type:'bar',
             data:[320, 332, 301, 334, 390, 330, 320]
         },
         {
-            name:'参数二',
+            name:'6test',
             type:'bar',
             stack: '广告',
             data:[120, 132, 101, 134, 90, 230, 210]
         },
         {
-            name:'参数三',
+            name:'test_1',
             type:'bar',
             stack: '广告',
             data:[220, 182, 191, 234, 290, 330, 310]
         },
         {
-            name:'参数四',
+            name:'curtain_1',
             type:'bar',
             stack: '广告',
             data:[150, 232, 201, 154, 190, 330, 410]
         },
         {
-            name:'参数五',
+            name:'curtain_2',
             type:'bar',
             data:[862, 1018, 964, 1026, 1679, 1600, 1570],
             markLine : {
@@ -311,26 +311,26 @@ option5 = {
             }
         },
         {
-            name:'参数六',
+            name:'doorlock',
             type:'bar',
             barWidth : 5,
             stack: '搜索引擎',
             data:[620, 732, 701, 734, 1090, 1130, 1120]
         },
         {
-            name:'参数七',
+            name:'test2',
             type:'bar',
             stack: '搜索引擎',
             data:[120, 132, 101, 134, 290, 230, 220]
         },
         {
-            name:'参数八',
+            name:'curtain',
             type:'bar',
             stack: '搜索引擎',
             data:[60, 72, 71, 74, 190, 130, 110]
         },
         {
-            name:'其他',
+            name:'123',
             type:'bar',
             stack: '搜索引擎',
             data:[62, 82, 91, 84, 109, 110, 120]
@@ -730,12 +730,12 @@ option9 = {
     // },
     radar: {
         indicator: [
-            {name: '参数一', max: 300},
-            {name: '参数二', max: 250},
-            {name: '参数三', max: 300},
-            {name: '参数四', max: 5},
-            {name: '参数五', max: 200},
-            {name: '参数六', max: 100}
+            {name: '光照传感', max: 300},
+            {name: '温度传感', max: 250},
+            {name: '压力传感', max: 300},
+            {name: '温度传感', max: 5},
+            {name: '温度传感', max: 200},
+            {name: '速度传感', max: 100}
         ],
         shape: 'circle',
         splitNumber: 5,
