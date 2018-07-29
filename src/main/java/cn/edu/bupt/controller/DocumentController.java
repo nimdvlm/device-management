@@ -8,10 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
@@ -45,6 +43,7 @@ public class DocumentController {
     public void downloadFile(@PathVariable("filename") String filename, @PathVariable("fileType") String fileType, HttpServletResponse response, HttpServletRequest request) throws IOException {
         response.setCharacterEncoding(request.getCharacterEncoding());
         response.setContentType("application/octet-stream");
+        //filename = URLDecoder.decode(filename,"UTF-8");
         FileInputStream fis = null;
         try {
             File file = new File("/root/doc/"+filename+"."+fileType);
@@ -79,6 +78,7 @@ public class DocumentController {
 
             // 获取文件名
             String fileName = file.getOriginalFilename();
+            fileName = URLDecoder.decode(fileName,"UTF-8");
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
             String filePath = "/root/doc";
             String path = filePath +"/"+ fileName;
@@ -94,8 +94,14 @@ public class DocumentController {
     }
 
     @RequestMapping(value = "/delete/{fileName}/{fileType}", method = RequestMethod.DELETE)
-    public void deleteFile(@PathVariable("fileName") String fileName, @PathVariable("fileType") String fileType){
+    public void deleteFile(@PathVariable("fileName") String fileName, @PathVariable("fileType") String fileType) throws UnsupportedEncodingException {
+        //fileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
+        System.out.println("enter");
         File file = new File("/root/doc/"+fileName+"."+fileType);
-        file.delete();
+        System.out.println(file.getName()+"|"+file.exists());
+        if(file.exists()){
+            System.out.println(file.delete());
+        }
+
     }
 }
