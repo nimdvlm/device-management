@@ -1345,7 +1345,7 @@ $scope.showDetail = function () {
                 data:json,
                 contentType: "application/json; charset=utf-8",//post请求必须
                 dataType:"text",
-                type:"POST",
+                type:"GET",
                 success:function(msg){
                     toastr.success("应用成功！");
                 },

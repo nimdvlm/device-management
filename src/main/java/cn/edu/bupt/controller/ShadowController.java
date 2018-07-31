@@ -26,7 +26,7 @@ public class ShadowController extends DefaultThingsboardAwaredController {
 
     private static AtomicInteger requester = new AtomicInteger();
     
-    @RequestMapping(value = "/{deviceId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/control/{deviceId}",method = RequestMethod.GET)
     public String getDeviceShadow(@PathVariable("deviceId") String deviceId){
         String url = "http://"+getDeviceAccessServer()+"/api/v1/deviceaccess/device/"+deviceId;
         try{
