@@ -1569,6 +1569,28 @@ $scope.subEventTime = function () {
     }
 };
 
+    //获取设备个数
+    getDeviceCount()
+
+    function getDeviceCount() {
+        if($.cookie("userLevel") === "CUSTOMER_USER"){
+            console.log("客户权限")
+            var url = '/api/device/customer/devicesCount';
+        }else {
+            console.log("租户权限")
+            var url = '/api/device/tenant/devicesCount';
+        }
+        $.ajax({
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            type: "GET",
+            success: function (msg) {
+                $scope.Devices_Number = msg;
+            }
+        });
+    }
+
 
     /* =============================================================
          jquery动画效果
