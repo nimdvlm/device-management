@@ -103,7 +103,7 @@ public class CustomerController extends DefaultThingsboardAwaredController{
     public void deleteCustomer(@RequestParam Integer customerId) {
         String requestAddr = API_PREFIX + "customer";
         StringBuffer param = new StringBuffer();
-        param.append("customerId").append("=").append(customerId);
+        param.append("customerId").append("=").append(customerId).append("&tenantId=").append(getTenantId());
         requestAddr = requestAddr + "?" + param ;
         String responseContent = null;
         try {
