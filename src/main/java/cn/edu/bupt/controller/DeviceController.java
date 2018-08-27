@@ -72,6 +72,58 @@ public class DeviceController extends DefaultThingsboardAwaredController {
 
     }
 
+    @ApiOperation(value="获取租户模糊查询后设备的数量", notes="获取租户模糊查询后设备的数量")
+    @RequestMapping(value = "/tenant/devices/searchCount", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getTenantDevicesCountByTextSearch(@RequestParam String textSearch){
+
+        String requestAddr = "/api/v1/deviceaccess/tenant/devices/SearchCount/" + getTenantId() + "?textSearch=" + textSearch;
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+        try {
+            return retSuccess(responseContent) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+    }
+
+    @ApiOperation(value="获取客户模糊查询后设备的数量", notes="获取客户模糊查询后设备的数量")
+    @RequestMapping(value = "/customer/devices/searchCount", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getCustomerDevicesCountByTextSearch(@RequestParam Integer customerId,
+                                                      @RequestParam String textSearch){
+
+        String requestAddr = "/api/v1/deviceaccess/tenant/devices/SearchCount/"
+                + getTenantId() + "/"+ customerId +"?textSearch=" + textSearch;
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendGetToThingsboard("http://" + getDeviceAccessServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+        try {
+            return retSuccess(responseContent) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+    }
+
+
+
 
     /**
      * 获取租户所有设备的信息
