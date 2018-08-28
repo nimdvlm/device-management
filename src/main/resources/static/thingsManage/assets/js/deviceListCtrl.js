@@ -740,10 +740,18 @@ mainApp.controller("deviceListCtrl", ["$scope", "$resource", function ($scope, $
 
     $scope.searchDevice = function () {
         var textSearch = $("#searchDeviceText").val();
+        var url
 
         //get搜索设备数量L
+        if ($.cookie("userLevel") === "CUSTOMER_USER") {
+            console.log("客户权限")
+            url="/api/device/customer/searchCount?textSearch=" + textSearch
+        } else {
+            console.log("租户权限")
+            url="/api/device/tenant/searchCount?textSearch=" + textSearch
+        }
         $.ajax({
-            url: "/api/device/tenant/searchCount?textSearch=" + textSearch,
+            url: url,
             contentType: "application/json; charset=utf-8",
             async: false,
             type: "GET",
