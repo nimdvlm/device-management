@@ -51,9 +51,9 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @ApiOperation(value="获取客户所有设备的数量", notes="获取客户所有设备的数量")
     @RequestMapping(value = "/customer/devicesCount", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getCustomerDevicesCount(@RequestParam Integer customerId){
+    public String getCustomerDevicesCount(){
 
-        String requestAddr = "/api/v1/deviceaccess/customer/deviceCount?tenantId="+getTenantId()+"&customerId="  + customerId;
+        String requestAddr = "/api/v1/deviceaccess/customer/deviceCount?tenantId="+getTenantId()+"&customerId="+ getCustomerId();
 
         String responseContent = null ;
         try {
