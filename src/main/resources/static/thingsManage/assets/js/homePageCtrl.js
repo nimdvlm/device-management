@@ -44,7 +44,13 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
     }
 
     //获取设备上下线状态
-    var Device = $resource("/api/device/alldevices?limit=1000");
+    var customerId = $.cookie("customerId");
+    if ($.cookie("userLevel") === "CUSTOMER_USER") {
+        var Device = $resource("/api/device/customerDevices/" + customerId + "?limit=1000");
+    } else if ($.cookie("userLevel") === "TENANT_ADMIN") {
+        var Device = $resource("/api/device/alldevices?limit=1000");
+    }
+
     $scope.Devices = Device.query(function () {
         var DeviceName=getDevicesName()
 
