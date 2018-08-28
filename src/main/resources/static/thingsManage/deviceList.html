@@ -50,6 +50,11 @@
             <div class="labelDiv">
                 <div style="width: 30px;height: 10px;background: red;border-radius: 3px;"></div><span>警告</span>
             </div>
+
+            <!--L显示搜索设备个数-->
+            <div style="margin-left: 35%" ng-if="ifSearch">
+                <span>共搜索到   {{searchCount}}    个设备</span>
+            </div>
         </div>
         <div class="row">
         <div id="preDevice" ng-click="preDeviceInfo()"><i class="fa fa-chevron-left"></i></div>
