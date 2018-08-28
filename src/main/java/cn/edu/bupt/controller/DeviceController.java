@@ -99,9 +99,9 @@ public class DeviceController extends DefaultThingsboardAwaredController {
     @ApiOperation(value="获取客户所查询设备的数量", notes="获取客户所查询设备的数量")
     @RequestMapping(value = "/customer/searchCount", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getCustomerDevicesSearchCount(@RequestParam Integer customerId,@RequestParam String textSearch){
+    public String getCustomerDevicesSearchCount(@RequestParam String textSearch){
 
-        String requestAddr = "/api/v1/deviceaccess/customerdevices/SearchCount/+"+getTenantId()+"/"  + customerId + "?textSearch="  + textSearch;
+        String requestAddr = "/api/v1/deviceaccess/customerdevices/SearchCount/"+getTenantId()+"/"  + getCustomerId() + "?textSearch="  + textSearch;
 
         String responseContent = null ;
         try {
