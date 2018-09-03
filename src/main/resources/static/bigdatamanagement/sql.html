@@ -194,7 +194,7 @@
     var zNodes = [];
     $(document).ready(function(){
 
-        $.get("http://10.210.50.164:8092/api/sql/tables",function (data) {
+        $.get("http://127.0.0.1:8092/api/sql/tables",function (data) {
             for (var i=0; i<data.length; i++){
                 var table_name = data[i].table_name;
                 var field =[];
@@ -209,7 +209,7 @@
         $("#search").click(
             function () {
                 var code = $("#SQLcode").val();
-                $.get("http://10.210.50.164:8092/api/sql/exec-sql?sql="+code,function (data) {
+                $.get("http://127.0.0.1:8092/api/sql/exec-sql?sql="+code,function (data) {
                     $("#thead").empty();
                     $("#tbody").empty();
                     $tr = $("<tr></tr>");
