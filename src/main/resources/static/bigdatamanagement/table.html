@@ -159,7 +159,7 @@
             "                            <th>Last Modified</th>\n" +
             "                            <th>Type</th>\n" +
             "                            <th>Path</th>\n" +
-            "                            <th></th>\n" +
+            "                            <th>操作</th>\n" +
             "                        </tr>\n" +
             "                        </thead>\n" +
             "                        <tbody id=\"tbody\">\n" +
@@ -218,10 +218,16 @@
 
         $('.deleteButton').click(
             function () {
-                var trIndexs = $(this).parent().parent().attr("trIndex");
-                var trIndex = Number(trIndexs);
-                dataGroup.splice(trIndex,1);
-                drawTables(dataGroup,"");
+                $.get("http://127.0.0.1:8092/api/hdfs/deleteFiles?path=" + $(this).parent().parent().find("td").eq(7).html(), function (data) {
+                    if (data.code == "200"){
+                        var trIndexs = $(this).parent().parent().attr("trIndex");
+                        var trIndex = Number(trIndexs);
+                        dataGroup.splice(trIndex,1);
+                        drawTables(dataGroup,"");
+                    }else {
+                        window.alert("删除失败！");
+                    }
+                });
             }
         );
     }
