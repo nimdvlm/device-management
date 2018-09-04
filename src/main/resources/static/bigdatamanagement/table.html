@@ -137,6 +137,7 @@
 
 <script type="text/javascript">
 
+    var dataGroup;
     ajax("/");
 
     $("#path").click(
@@ -145,79 +146,90 @@
         }
     );
 
+    function drawTables(data,path) {
+        $("#tablediv").empty();
+        $table = $("<table id=\"datatable\" class=\"mws-datatable-fn mws-table\">\n" +
+            "                        <thead>\n" +
+            "                        <tr>\n" +
+            "                            <th>Permission</th>\n" +
+            "                            <th>Count</th>\n" +
+            "                            <th>Owner</th>\n" +
+            "                            <th>Group</th>\n" +
+            "                            <th>Size</th>\n" +
+            "                            <th>Last Modified</th>\n" +
+            "                            <th>Type</th>\n" +
+            "                            <th>Path</th>\n" +
+            "                            <th></th>\n" +
+            "                        </tr>\n" +
+            "                        </thead>\n" +
+            "                        <tbody id=\"tbody\">\n" +
+            "                        </tbody>\n" +
+            "                    </table>");
+        $("#tablediv").append($table);
+        for (var i=0; i<data.length; i++){
+            $tr = $("<tr style='background-color: #f2f2f2;'></tr>");
+            $tr.attr("trIndex",i);
+            /*$tr = $("<tr trIndex='"+i+"' style='background-color: #f2f2f2;'></tr>");*/
+
+            $td1 = $("<td>"+data[i].permission+"</td>");
+            $tr.append($td1);
+            $("#tbody").append($tr);
+
+            $td2 = $("<td>"+data[i].childrenNum+"</td>");
+            $tr.append($td2);
+            $("#tbody").append($tr);
+
+            $td3 = $("<td>"+data[i].owner+"</td>");
+            $tr.append($td3);
+            $("#tbody").append($tr);
+
+            $td4 = $("<td>"+data[i].group+"</td>");
+            $tr.append($td4);
+            $("#tbody").append($tr);
+
+            $td5 = $("<td>"+data[i].blockSize+"</td>");
+            $tr.append($td5);
+            $("#tbody").append($tr);
+
+            var mt = formatDate(new Date(data[i].modificationTime));
+            $td6 = $("<td>"+mt+"</td>");
+            $tr.append($td6);
+            $("#tbody").append($tr);
+
+            $td7 = $("<td>"+data[i].type+"</td>");
+            $tr.append($td7);
+            $("#tbody").append($tr);
+
+            $td8 = $("<td>"+data[i].path+"</td>");
+            $tr.append($td8);
+            $("#tbody").append($tr);
+
+            if (path == "/"){
+                $td9 = $("<td><button disabled='disabled' class='deleteButton' style='color: white;background: grey'>删除</button></td>");
+            }else {
+                $td9 = $("<td><button class='deleteButton' style='color: white;background: red'>删除</button></td>");
+            }
+            $tr.append($td9);
+            $("#tbody").append($tr);
+
+        }
+        var datatable = $("#datatable");
+        datatable.dataTable({"sPaginationType" : "full_numbers"});
+
+        $('.deleteButton').click(
+            function () {
+                var trIndexs = $(this).parent().parent().attr("trIndex");
+                var trIndex = Number(trIndexs);
+                dataGroup.splice(trIndex,1);
+                drawTables(dataGroup,"");
+            }
+        );
+    }
+
     function ajax(path) {
         $.get("http://127.0.0.1:8092/api/hdfs/getFiles?path="+path+"&owner=spark&group=supergroup",function (data) {
-
-            $("#tablediv").empty();
-            $table = $("<table id=\"datatable\" class=\"mws-datatable-fn mws-table\">\n" +
-                "                        <thead>\n" +
-                "                        <tr>\n" +
-                "                            <th>Permission</th>\n" +
-                "                            <th>Count</th>\n" +
-                "                            <th>Owner</th>\n" +
-                "                            <th>Group</th>\n" +
-                "                            <th>Size</th>\n" +
-                "                            <th>Last Modified</th>\n" +
-                "                            <th>Type</th>\n" +
-                "                            <th>Path</th>\n" +
-                "                            <th></th>\n" +
-                "                        </tr>\n" +
-                "                        </thead>\n" +
-                "                        <tbody id=\"tbody\">\n" +
-                "                        </tbody>\n" +
-                "                    </table>");
-            $("#tablediv").append($table);
-            for (var i=0; i<data.length; i++){
-                $tr = $("<tr style='background-color: #f2f2f2;'></tr>");
-                $td1 = $("<td>"+data[i].permission+"</td>");
-                $tr.append($td1);
-                $("#tbody").append($tr);
-
-                $td2 = $("<td>"+data[i].childrenNum+"</td>");
-                $tr.append($td2);
-                $("#tbody").append($tr);
-
-                $td3 = $("<td>"+data[i].owner+"</td>");
-                $tr.append($td3);
-                $("#tbody").append($tr);
-
-                $td4 = $("<td>"+data[i].group+"</td>");
-                $tr.append($td4);
-                $("#tbody").append($tr);
-
-                $td5 = $("<td>"+data[i].blockSize+"</td>");
-                $tr.append($td5);
-                $("#tbody").append($tr);
-
-                var mt = formatDate(new Date(data[i].modificationTime));
-                $td6 = $("<td>"+mt+"</td>");
-                $tr.append($td6);
-                $("#tbody").append($tr);
-
-                $td7 = $("<td>"+data[i].type+"</td>");
-                $tr.append($td7);
-                $("#tbody").append($tr);
-
-                $td8 = $("<td>"+data[i].path+"</td>");
-                $tr.append($td8);
-                $("#tbody").append($tr);
-
-                if (path == "/"){
-                    $td9 = $("<td><button disabled='disabled' class='deleteButton' style='color: white;background: grey'>删除</button></td>");
-                }else {
-                    $td9 = $("<td><button class='deleteButton' style='color: white;background: red'>删除</button></td>");
-                }
-                $tr.append($td9);
-                $("#tbody").append($tr);
-
-            }
-            var datatable = $("#datatable");
-            datatable.dataTable({"sPaginationType" : "full_numbers"});
-            $('button').click(
-                function () {
-                    window.alert("暂无此功能");
-                }
-            );
+            dataGroup = data;
+            drawTables(dataGroup,path);
         });
     }
 
