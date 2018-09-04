@@ -99,11 +99,13 @@
     <div id="mws-container" class="clearfix">
         <div class="container">
             <div class="mws-panel grid_8">
-                <div class="mws-panel-header">
+                <input style="width: 87%;height: 20px" type="text" value="/" id="path1"/>
+                <input style="margin-left: 3%;font-size: 20px" value="搜索当前路径" type="button" id="path"/>
+                <div style="margin-top: 2%" class="mws-panel-header">
                     <span class="mws-i-24 i-list">数据管理</span>
                 </div>
-                <div class="mws-panel-body">
-                    <table class="mws-datatable-fn mws-table">
+                <div id="tablediv" class="mws-panel-body">
+                    <!--<table id="datatable" class="mws-datatable-fn mws-table">
                         <thead>
                         <tr>
                             <th>Permission</th>
@@ -112,183 +114,12 @@
                             <th>Group</th>
                             <th>Size</th>
                             <th>Last Modified</th>
-                            <th>Directory</th>
+                            <th>Type</th>
+                            <th>Path</th>
                             <th></th>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5693</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526349600000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5647</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526357500000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5703</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526358000000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5643</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526358200000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5694</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526358800000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5673</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526359200000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5675</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526359900000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5668</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526363800000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5654</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526370400000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5624</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526377800000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5653</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526382000000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5630</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526395700000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5657</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526407800000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5689</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526525400000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5683</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526578900000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5663</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526658900000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>-rw-r--r--</td>
-                            <td>2</td>
-                            <td>spark</td>
-                            <td class="center">supergroup</td>
-                            <td class="center">5671</td>
-                            <td class="center">2018-05-28 18:58</td>
-                            <td class="center">/data/device-data-1526698300000</td>
-                            <td><button style="color: white;background: red">删除</button></td>
-                        </tr>
                         </tbody>
-                    </table>
+                    </table>-->
                 </div>
             </div>
         </div>
@@ -305,13 +136,92 @@
 <script type="text/javascript" src="js/common.js"></script>
 
 <script type="text/javascript">
-    $('button').click(
+
+    ajax("/");
+
+    $("#path").click(
         function () {
-            $(this).parent().parent().remove();
+            ajax($("#path1").val());
         }
     );
-</script>
 
+    function ajax(path) {
+        $.get("http://127.0.0.1:8092/api/hdfs/getFiles?path="+path+"&owner=spark&group=supergroup",function (data) {
+
+            $("#tablediv").empty();
+            $table = $("<table id=\"datatable\" class=\"mws-datatable-fn mws-table\">\n" +
+                "                        <thead>\n" +
+                "                        <tr>\n" +
+                "                            <th>Permission</th>\n" +
+                "                            <th>Count</th>\n" +
+                "                            <th>Owner</th>\n" +
+                "                            <th>Group</th>\n" +
+                "                            <th>Size</th>\n" +
+                "                            <th>Last Modified</th>\n" +
+                "                            <th>Type</th>\n" +
+                "                            <th>Path</th>\n" +
+                "                            <th></th>\n" +
+                "                        </tr>\n" +
+                "                        </thead>\n" +
+                "                        <tbody id=\"tbody\">\n" +
+                "                        </tbody>\n" +
+                "                    </table>");
+            $("#tablediv").append($table);
+            for (var i=0; i<data.length; i++){
+                $tr = $("<tr style='background-color: #f2f2f2;'></tr>");
+                $td1 = $("<td>"+data[i].permission+"</td>");
+                $tr.append($td1);
+                $("#tbody").append($tr);
+
+                $td2 = $("<td>"+data[i].childrenNum+"</td>");
+                $tr.append($td2);
+                $("#tbody").append($tr);
+
+                $td3 = $("<td>"+data[i].owner+"</td>");
+                $tr.append($td3);
+                $("#tbody").append($tr);
+
+                $td4 = $("<td>"+data[i].group+"</td>");
+                $tr.append($td4);
+                $("#tbody").append($tr);
+
+                $td5 = $("<td>"+data[i].blockSize+"</td>");
+                $tr.append($td5);
+                $("#tbody").append($tr);
+
+                var mt = formatDate(new Date(data[i].modificationTime));
+                $td6 = $("<td>"+mt+"</td>");
+                $tr.append($td6);
+                $("#tbody").append($tr);
+
+                $td7 = $("<td>"+data[i].type+"</td>");
+                $tr.append($td7);
+                $("#tbody").append($tr);
+
+                $td8 = $("<td>"+data[i].path+"</td>");
+                $tr.append($td8);
+                $("#tbody").append($tr);
+
+                if (path == "/"){
+                    $td9 = $("<td><button disabled='disabled' class='deleteButton' style='color: white;background: grey'>删除</button></td>");
+                }else {
+                    $td9 = $("<td><button class='deleteButton' style='color: white;background: red'>删除</button></td>");
+                }
+                $tr.append($td9);
+                $("#tbody").append($tr);
+
+            }
+            var datatable = $("#datatable");
+            datatable.dataTable({"sPaginationType" : "full_numbers"});
+            $('button').click(
+                function () {
+                    window.alert("暂无此功能");
+                }
+            );
+        });
+    }
+
+</script>
 
 </body>
 </html>
