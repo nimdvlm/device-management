@@ -6,7 +6,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
+import org.apache.shiro.web.session.mgt.WebSessionKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -122,6 +126,35 @@ public class LoginController extends DefaultThingsboardAwaredController {
         session.setAttribute("token",newAccessTokenJson.get("access_token").getAsString());
         session.setAttribute("refreshToken",newAccessTokenJson.get("refresh_token").getAsString());
         return newAccessTokenJson.get("access_token").getAsString();
+    }
+
+    @RequestMapping(value = "/authorize", method = RequestMethod.GET)
+    @ResponseBody
+    public String authorize(){
+
+        String sessionID = request.getRequestedSessionId();
+
+        boolean status = false;
+        SessionKey key = new WebSessionKey(sessionID,request,response);
+        try{
+            Session se = SecurityUtils.getSecurityManager().getSession(key);
+            Object obj = se.getAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
+            if(obj != null){
+                status = (Boolean) obj;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            Session se = null;
+            Object obj = null;
+        }
+
+        if(status == true){
+            return request.getSession().getAttribute("token").toString();
+        }else {
+            response.setStatus(401);
+            return "unauthorized";
+        }
     }
 
 }
