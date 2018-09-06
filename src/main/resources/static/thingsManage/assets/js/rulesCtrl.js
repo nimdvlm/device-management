@@ -19,6 +19,11 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         {name: '对同类型设备配置过滤器', type: 2},
         {name: '自定义JS代码配置过滤器', type: 3}]
 
+    $scope.text_deviceid = "绑定"
+    $scope.text_devicetype = "绑定"
+    $scope.text_devicemodel = "绑定"
+
+
     InitformData();
 
     function InitformData() {
@@ -216,32 +221,73 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     var addfilterJS = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId=='35818ec0-5a65-11e8-b66a-e5d2dad89b7c'&&key=='1231' && value>101){return true;}  else{return false;}}";
     document.getElementById('addfilterjs').value = addfilterJS;
 
-    //点击添加规则-添加过滤器-单个设备严格配置
-    $scope.showDeviceName = function () {
-        if ($scope.ifDeviceName === true) {
-            $scope.ifDeviceName = false
+    //点击添加规则-添加过滤器-选择配置方式
+    $scope.changefiltertype = function (data) {
+        if (data.type === 2) {
+            //获取所有厂商信息
+            var manufacturerObj = $resource("/api/v1/abilityGroup/manufacturers");
+            $scope.manufacturerInfo = manufacturerObj.query();
+
+            $scope.getDeviceType = function (myManufacture) {
+                /*根据厂商查询设备类型*/
+                if (myManufacture) {
+                    var manufacturerId = myManufacture.manufacturerId
+                    var deviceTypeObj = $resource("/api/v1/abilityGroup/deviceTypes?manufacturerId=" + manufacturerId);
+                    $scope.deviceTypeInfo = deviceTypeObj.query();
+
+                    /*根据厂商和设备类型查询设备型号*/
+                    $scope.getDeviceModel = function (myDeviceType) {
+                        console.log($scope.myDeviceType)
+                        if (myDeviceType) {
+                            var deviceTypeId = myDeviceType.deviceTypeId
+                            var deviceModelObj = $resource("/api/v1/abilityGroup/models?manufacturerId=" + manufacturerId + "&deviceTypeId=" + deviceTypeId);
+                            $scope.deviceModelInfo = deviceModelObj.query();
+                        }
+                    }
+                } else {
+                    $scope.myDeviceType = undefined
+                    $scope.myDeviceModel = undefined
+                }
+            }
+        }
+    }
+
+    //点击添加规则-添加过滤器-单个设备-绑定设备ID
+    $scope.showDeviceID = function () {
+        if ($scope.ifDeviceID === true) {
+            $scope.text_deviceid = "绑定"
+            $scope.ifDeviceID = false
         } else {
-            $scope.ifDeviceName = true
+            $scope.text_deviceid = "解绑"
+            $scope.ifDeviceID = true
         }
         return false
     }
 
-    //点击添加规则-添加过滤器-同类型设备显示设备类型
+    //点击添加规则-添加过滤器-同类型设备-绑定设备类型
     $scope.showDeviceType = function () {
         if ($scope.ifDeviceType === true) {
+            $scope.text_devicetype = "绑定"
             $scope.ifDeviceType = false
         } else {
+            $scope.text_devicetype = "解绑"
+            $scope.text_devicemodel = "绑定"
             $scope.ifDeviceType = true
+            $scope.ifDeviceModel = false
         }
         return false
     }
 
-    //点击添加规则-添加过滤器-同类型设备显示型号
+    //点击添加规则-添加过滤器-同类型设备-绑定设备型号
     $scope.showDeviceModel = function () {
         if ($scope.ifDeviceModel === true) {
+            $scope.text_devicemodel = "绑定"
             $scope.ifDeviceModel = false
         } else {
+            $scope.text_devicemodel = "解绑"
+            $scope.text_devicetype = "绑定"
             $scope.ifDeviceModel = true
+            $scope.ifDeviceType = false
         }
         return false
     }
@@ -250,45 +296,105 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.subFilter = function () {
         var filterjs = ""
 
-        if ($('#addfiltername').val() != "") {
-            $('#filternamealert').hide();
-            $scope.showaddFilter = true;
-            if ($scope.addFilterType.type === 1) {
-                console.log("配置类型1-按单个设备配置")
-                if ($scope.ifDeviceName) {
-                    console.log("配置设备ID+名称")
-                    filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId=='" + $('#add_filter_deviceid').val() + "'&& name=='" + $('#add_filter_name').val() + "'&&key=='" + $('#add_filter_key1').val() + "' && value" + $('#add_filter_value1').val() + "){return true;}  else{return false;}}"
-                } else {
-                    console.log("仅配置设备ID")
-                    filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId=='" + $('#add_filter_deviceid').val() + "'&&key=='" + $('#add_filter_key1').val() + "' && value" + $('#add_filter_value1').val() + "){return true;}  else{return false;}}"
+        if ($('#addfiltername').val() !== '') {
+            if ($scope.addFilterType) {
+                if ($scope.addFilterType.type === 1) {
+                    //console.log("配置类型1-按单个设备配置")
+                    if ($scope.ifDeviceID) {
+                        //console.log("配置设备ID+名称")
+                        if ($('#add_filter_deviceid').val() !== '' && $('#add_filter_devicename').val() !== '')
+                            if ($('#add_filter_key1').val() !== '' && $('#add_filter_value1').val() !== '')
+                                filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId=='" + $('#add_filter_deviceid').val() + "'&& name=='" + $('#add_filter_devicename').val() + "'&&key=='" + $('#add_filter_key1').val() + "' && value" + $('#add_filter_value1').val() + "){return true;}  else{return false;}}"
+                            else {
+                                toastr.warning("请填写过滤规则")
+                                return false
+                            }
+                        else {
+                            toastr.warning("请填写完整设备信息")
+                            return false
+                        }
+                    } else {
+                        //console.log("仅配置设备名称")
+                        if ($('#add_filter_devicename').val() !== '')
+                            if ($('#add_filter_key1').val() !== '' && $('#add_filter_value1').val() !== '')
+                                filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(name=='" + $('#add_filter_devicename').val() + "'&&key=='" + $('#add_filter_key1').val() + "' && value" + $('#add_filter_value1').val() + "){return true;}  else{return false;}}"
+                            else {
+                                toastr.warning("请填写过滤规则")
+                                return false
+                            }
+                        else {
+                            toastr.warning("请填写设备名称")
+                            return false
+                        }
+                    }
                 }
-            }
-            if ($scope.addFilterType.type === 2) {
-                console.log("配置类型2-按设备类型配置")
-                if ($scope.ifDeviceType) {
-                    console.log("配置厂商+设备类型")
-                    filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(manufacture=='" + $('#add_filter_manufacture').val() + "'&& deviceType=='" + $('#add_filter_devicetype').val() + "'&&key=='" + $('#add_filter_key2').val() + "' && value" + $('#add_filter_value2').val() + "){return true;}  else{return false;}}"
-                } else if ($scope.ifDeviceModel) {
-                    console.log("配置设备厂商+设备类型+设备型号")
-                    filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(manufacture=='" + $('#add_filter_manufacture').val() + "'&& deviceType=='" + $('#add_filter_devicetype').val() + "'&& model=='" + $('#add_filter_devicemodel').val() + "'&&key=='" + $('#add_filter_key2').val() + "' && value" + $('#add_filter_value2').val() + "){return true;}  else{return false;}}"
-                } else {
-                    console.log("仅配置厂商")
-                    filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(manufacture=='" + $('#add_filter_manufacture').val() + "'&&key=='" + $('#add_filter_key2').val() + "' && value" + $('#add_filter_value2').val() + "){return true;}  else{return false;}}"
+                if ($scope.addFilterType.type === 2) {
+                    //console.log("配置类型2-按设备类型配置")
+                    if ($scope.ifDeviceType) {
+                        //console.log("配置厂商+设备类型")
+
+                        if ($scope.myManufacture && $scope.myDeviceType) {
+                            if ($('#add_filter_key2').val() !== '' && $('#add_filter_value2').val() !== '') {
+                                filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(manufacture=='" + $scope.myManufacture.manufacturerName + "'&& deviceType=='" + $scope.myDeviceType.deviceTypeName + "'&&key=='" + $('#add_filter_key2').val() + "' && value" + $('#add_filter_value2').val() + "){return true;}  else{return false;}}"
+                            } else {
+                                toastr.warning("请填写过滤规则")
+                                return false
+                            }
+                        } else {
+                            toastr.warning("请配置厂商信息")
+                            return false
+                        }
+                    } else if ($scope.ifDeviceModel) {
+                        //console.log("配置设备厂商+设备类型+设备型号")
+                        if ($scope.myManufacture && $scope.myDeviceType && $scope.myDeviceModel) {
+                            if ($('#add_filter_key2').val() !== '' && $('#add_filter_value2').val() !== '') {
+                                filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(manufacture=='" + $scope.myManufacture.manufacturerName + "'&& deviceType=='" + $scope.myDeviceType.deviceTypeName + "'&& model=='" + $scope.myDeviceModel.modelName + "'&&key=='" + $('#add_filter_key2').val() + "' && value" + $('#add_filter_value2').val() + "){return true;}  else{return false;}}"
+                            } else {
+                                toastr.warning("请填写过滤规则")
+                                return false
+                            }
+                        } else {
+                            toastr.warning("请配置厂商信息")
+                            return false
+                        }
+                    } else {
+                        //console.log("仅配置厂商")
+                        if ($scope.myManufacture) {
+                            if ($('#add_filter_key2').val() !== '' && $('#add_filter_value2').val() !== '') {
+                                filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(manufacture=='" + $scope.myManufacture.manufacturerName + "'&&key=='" + $('#add_filter_key2').val() + "' && value" + $('#add_filter_value2').val() + "){return true;}  else{return false;}}"
+                            } else {
+                                toastr.warning("请填写过滤规则")
+                                return false
+                            }
+                        } else {
+                            toastr.warning("请选择厂商名称")
+                            return false
+                        }
+                    }
                 }
+                if ($scope.addFilterType.type === 3) {
+                    //console.log("配置类型3-自定义js")
+                    filterjs = $('#addfilterjs').val()
+                }
+
+                //生成请求体
+                //console.log("filterjs:" + filterjs)
+                $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(), $('#addfiltertype').val(), filterjs));
+                console.log($scope.formData.filters);
+
+                //清理现场
+                $("input[type=reset]").trigger("click");
+                $scope.clearFilterPlugin('#addruleFilter')
+
+                $scope.showaddFilter = true;
+                document.getElementById('addfilterjs').value = addfilterJS;
+                /****若出现嵌套model添加一次儿子后闪退bug，把js命令换成data-dismiss*****/
+                $("#addruleFilter").modal("hide");
+            } else {
+                toastr.warning("请选择过滤器配置类型")
             }
-            if ($scope.addFilterType.type === 3) {
-                console.log("配置类型3-自定义js")
-                filterjs = $('#addfilterjs').val()
-            }
-            console.log("filterjs:" + filterjs)
-            $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(), $('#addfiltertype').val(), filterjs));
-            console.log($scope.formData.filters);
-            $("input[type=reset]").trigger("click");
-            document.getElementById('addfilterjs').value = addfilterJS;
-            /****若出现嵌套model添加一次儿子后闪退bug，把js命令换成data-dismiss*****/
-            $("#addruleFilter").modal("hide");
         } else {
-            $('#filternamealert').show();
+            toastr.warning("请填写过滤器名称")
         }
     }
 
@@ -506,12 +612,17 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         $scope.isPluginReady = false
         $scope.RuleaddPluginUrl = ""
 
+        $scope.ifDeviceID = false
         $scope.ifDeviceType = false
         $scope.ifDeviceModel = false
         $scope.ifDeviceName = false
 
-        $scope.addFilterType = undefined//用于重置select
+        $scope.text_deviceid = "绑定"
+        $scope.text_devicetype = "绑定"
+        $scope.text_devicemodel = "绑定"
 
+        $scope.addFilterType = undefined//用于重置select
+        console.log("恢复现场")
     };
 
     $scope.clearForm = function () {
