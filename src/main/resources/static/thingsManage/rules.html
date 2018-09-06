@@ -62,7 +62,7 @@
                             <td></td>
                             <td colspan="1">
                                 <p>过滤器名称：{{data.name}}</p>
-                                <p>过滤器类型：{{data.type||"无"}}</p>
+                                <!--<p>过滤器类型：{{data.type||"无"}}</p>-->
                                 <p>JS代码：
                                 <pre id="rule_jscode">{{data.jsCode}}</pre>
                                 </p>
@@ -336,11 +336,11 @@
                             <p><span class="StarMark">*</span>过滤器名称：<input type="text" name="addname"
                                                                            id="addfiltername"
                                                                            placeholder="请输入过滤器名称" required/>
-                                <span class="alertempty" id="filternamealert">请输入过滤器名称</span>
+                                <!--<span class="alertempty" id="filternamealert">请输入过滤器名称</span>-->
                             </p>
                             <p style="margin-left: 10px;">按类型配置：
                                 <select ng-model="addFilterType" class="selectNeedClear"
-                                        ng-options="x.name for x in FilterType">
+                                        ng-options="x.name for x in FilterType" ng-change="changefiltertype(addFilterType)">
                                     <option value="" disabled>--请选择配置类型--</option>
                                 </select>
                             </p>
@@ -349,17 +349,17 @@
                                 <hr/>
                                 <table>
                                     <tr>
-                                        <td><span class="StarMark">*</span>目标设备ID：</td>
-                                        <td><input id="add_filter_deviceid" placeholder="请填写绑定设备ID"
-                                                   style="margin-bottom:5px "/>
-                                            <a href="javascript:void(0)" ng-click="showDeviceName()"
-                                               style="padding-left: 20px">严格配置</a></td>
-                                    </tr>
-                                    <tr ng-if="ifDeviceName">
                                         <td><span class="StarMark">*</span>设备名称：</td>
-                                        <td><input id="add_filter_name" placeholder="请填写绑定设备名称"
+                                        <td><input id="add_filter_devicename" placeholder="请填写绑定设备名称"
+                                                   style="margin-bottom:5px "/>
+                                            <a href="javascript:void(0)" ng-click="showDeviceID()"
+                                               style="padding-left: 20px" id="link_bind_device">{{text_deviceid}}设备ID</a></td>
+                                    </tr>
+                                    <tr ng-if="ifDeviceID">
+                                        <td><span class="StarMark">*</span>设备ID：</td>
+                                        <td><input id="add_filter_deviceid" placeholder="请填写绑定设备ID"
                                                    style="margin-bottom:5px "/><span
-                                                style="padding-left: 20px;color: #db122f">注：设备名称应与设备ID对应</span></td>
+                                                style="padding-left: 20px;color: #a8a8a8">设备ID应与设备名称对应</span></td>
                                     </tr>
                                     <tr>
                                         <td><span class="StarMark">*</span>过滤规则key：</td>
@@ -378,23 +378,38 @@
                                 <hr/>
                                 <table>
                                     <tr>
-                                        <td><span class="StarMark">*</span>目标厂商：</td>
-                                        <td><input id="add_filter_manufacture" type="text" placeholder="请填写绑定厂商名称"
-                                                   style="margin-bottom:5px "/>
+                                        <td><span class="StarMark">*</span>绑定厂商：</td>
+                                        <td>
+                                            <!--<input id="add_filter_manufacture" type="text" placeholder="请填写绑定厂商名称">-->
+                                            <select ng-model="myManufacture" style="margin-bottom:5px"
+                                            ng-change="getDeviceType(myManufacture)" ng-options="x.manufacturerName for x in manufacturerInfo">
+                                                <option value="" disabled>--请选择厂商--</option>
+                                            </select>
                                             <a href="javascript:void(0)" ng-click="showDeviceType()"
-                                               style="padding-left: 20px">配置设备类型</a>
+                                               style="padding-left: 20px">{{text_devicetype}}设备类型</a>
                                             <a href="javascript:void(0)" ng-click="showDeviceModel()"
-                                               style="padding-left: 20px">配置设备型号</a></td>
+                                               style="padding-left: 20px">{{text_devicemodel}}设备型号</a></td>
                                     </tr>
                                     <tr ng-if="ifDeviceType||ifDeviceModel">
-                                        <td><span class="StarMark">*</span>目标设备类型：</td>
-                                        <td><input id="add_filter_devicetype" type="text" placeholder="请填写绑定设备类型"
-                                                   style="margin-bottom:5px "/></td>
+                                        <td><span class="StarMark">*</span>设备类型：</td>
+                                        <td>
+                                            <!--<input id="add_filter_devicetype" type="text" placeholder="请填写绑定设备类型"/>-->
+                                            <select ng-model="$parent.myDeviceType" style="margin-bottom:5px"
+                                                    ng-change="getDeviceModel(myDeviceType)" ng-options="x.deviceTypeName for x in deviceTypeInfo">
+                                                <option value="" disabled>--请选择设备类型--</option>
+                                            </select>
+                                        </td>
                                     </tr>
                                     <tr ng-if="ifDeviceModel">
-                                        <td><span class="StarMark">*</span>目标设备型号：</td>
-                                        <td><input id="add_filter_devicemodel" type="text" placeholder="请填写绑定设备型号"
-                                                   style="margin-bottom:5px "/></td>
+                                        <td><span class="StarMark">*</span>设备型号：</td>
+                                        <td>
+                                            <!--<input id="add_filter_devicemodel" type="text" placeholder="请填写绑定设备型号"-->
+                                                   <!--style="margin-bottom:5px "/>-->
+                                            <select ng-model="$parent.myDeviceModel" style="margin-bottom:5px"
+                                            ng-options="x.modelName for x in deviceModelInfo">
+                                                <option value="" disabled>--请选择设备型号--</option>
+                                            </select>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><span class="StarMark">*</span>过滤规则key：</td>
