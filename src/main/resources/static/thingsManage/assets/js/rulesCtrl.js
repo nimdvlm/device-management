@@ -10,10 +10,19 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.showupdatemessage = false;
     $scope.showPluginMail = false;
     $scope.showrestfulPOST = false;
-    $scope.isPluginReady=false
+    $scope.isPluginReady = false
     $scope.RESTMethod = ["POST", "DELETE", "GET"];
     $scope.RestfulBody = {};
-    $scope.RuleaddPluginUrl="";//用于解决url重复赋值bug
+    $scope.RuleaddPluginUrl = "";//用于解决url重复赋值bug
+
+    $scope.FilterType = [{name: '对单个设备配置过滤器', type: 1},
+        {name: '对同类型设备配置过滤器', type: 2},
+        {name: '自定义JS代码配置过滤器', type: 3}]
+
+    $scope.text_deviceid = "绑定"
+    $scope.text_devicetype = "绑定"
+    $scope.text_devicemodel = "绑定"
+
 
     InitformData();
 
@@ -37,12 +46,12 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         this.type = type;
         this.jsCode = jscode;
     }
-    
-    function ObjTransform(name,url,method,requestBody) {
-        this.name=name;
-        this.url=url;
-        this.method=method;
-        this.requestBody=requestBody;
+
+    function ObjTransform(name, url, method, requestBody) {
+        this.name = name;
+        this.url = url;
+        this.method = method;
+        this.requestBody = requestBody;
     }
 
     //获取当前租户ID
@@ -62,8 +71,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
         //初始化右侧视图
         $scope.Ruleitem = $scope.Rules[0];//必须在success函数里才能取到Rules[0]
-        $scope.RulePlugins=$scope.Ruleitem.transforms
-        $scope.RuleFilters=$scope.Ruleitem.filters
+        $scope.RulePlugins = $scope.Ruleitem.transforms
+        $scope.RuleFilters = $scope.Ruleitem.filters
 
         console.log("query函数内的Rules：");
         console.log($scope.Rules);
@@ -98,8 +107,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         console.log("rule in rules:");
         console.log($scope.Ruleitem);
 
-        $scope.RulePlugins=rule.transforms
-        $scope.RuleFilters=rule.filters
+        $scope.RulePlugins = rule.transforms
+        $scope.RuleFilters = rule.filters
 
         //判断规则运行状态
         if ($scope.Ruleitem.rule.state == "ACTIVE") {
@@ -116,23 +125,23 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     };
 
     //根据插件类型展示div
-    $scope.showplugin=function(data,i) {
+    $scope.showplugin = function (data, i) {
         //ng-if指令不会提前渲染DOM，所以报着不到id错。改用ng-show即可
-        console.log(data.name,i)
-        if (data.name.search(/Mail/i)>=0) {
+        console.log(data.name, i)
+        if (data.name.search(/Mail/i) >= 0) {
             console.log("当前插件为mail")
-            document.getElementById('plugin_'+i).style.display='none'
-            document.getElementById('plugin_mail_'+i).style.display='block'
-            document.getElementById('plugin_updatemessage_'+i).style.display='none'
-        } else if(data.name.search(/Update/i)>=0){
+            document.getElementById('plugin_' + i).style.display = 'none'
+            document.getElementById('plugin_mail_' + i).style.display = 'block'
+            document.getElementById('plugin_updatemessage_' + i).style.display = 'none'
+        } else if (data.name.search(/Update/i) >= 0) {
             console.log("当前插件为updatemessage")
-            document.getElementById('plugin_'+i).style.display='none'
-            document.getElementById('plugin_mail_'+i).style.display='none'
-            document.getElementById('plugin_updatemessage_'+i).style.display='block'
-            }else{
-            document.getElementById('plugin_'+i).style.display='block'
-            document.getElementById('plugin_mail_'+i).style.display='none'
-            document.getElementById('plugin_updatemessage_'+i).style.display='none'
+            document.getElementById('plugin_' + i).style.display = 'none'
+            document.getElementById('plugin_mail_' + i).style.display = 'none'
+            document.getElementById('plugin_updatemessage_' + i).style.display = 'block'
+        } else {
+            document.getElementById('plugin_' + i).style.display = 'block'
+            document.getElementById('plugin_mail_' + i).style.display = 'none'
+            document.getElementById('plugin_updatemessage_' + i).style.display = 'none'
         }
     }
 
@@ -140,27 +149,27 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.searchRule = function () {
         var textSearch = $("#searchRuleText").val();
         console.log(textSearch)
-        if (textSearch!= "" && textSearch!= null) {
-            var searchRuleObj = $resource("/api/rule/ruleByTenant/"+textSearch);
+        if (textSearch != "" && textSearch != null) {
+            var searchRuleObj = $resource("/api/rule/ruleByTenant/" + textSearch);
             $scope.searchRuleInfo = searchRuleObj.query();
             console.log($scope.searchRuleInfo);
             console.log($scope.searchRuleInfo.length);
             $scope.searchRuleInfo.$promise.then(function (value) {
-                if(value == false){
+                if (value == false) {
                     toastr.warning("规则名称输入有误，无此设备！");
                     setTimeout(function () {
                         window.location.reload();
-                    },1000);
+                    }, 1000);
                 }
-                else{
-                    $scope.searchresult =value ;
+                else {
+                    $scope.searchresult = value;
                     $scope.Rules = $scope.searchRuleInfo;
-                    $("#searchDeviceText").on("focus",function () {
+                    $("#searchDeviceText").on("focus", function () {
                         $(this).val("");
                     })
                 }
             });
-            }
+        }
         else {
             alert("输入不能为空!");
         }
@@ -209,23 +218,183 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
      添加规则
      ============================================================ */
     //"js代码"文本框初始化
-    var addfilterJS = "function filter(deviceId,key,value){if(deviceId=='35818ec0-5a65-11e8-b66a-e5d2dad89b7c'&&key=='1231' && value>101){return true;}  else{return false;}}";
+    var addfilterJS = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId=='35818ec0-5a65-11e8-b66a-e5d2dad89b7c'&&key=='1231' && value>101){return true;}  else{return false;}}";
     document.getElementById('addfilterjs').value = addfilterJS;
+
+    //点击添加规则-添加过滤器-选择配置方式
+    $scope.changefiltertype = function (data) {
+        if (data.type === 2) {
+            //获取所有厂商信息
+            var manufacturerObj = $resource("/api/v1/abilityGroup/manufacturers");
+            $scope.manufacturerInfo = manufacturerObj.query();
+
+            $scope.getDeviceType = function (myManufacture) {
+                /*根据厂商查询设备类型*/
+                if (myManufacture) {
+                    var manufacturerId = myManufacture.manufacturerId
+                    var deviceTypeObj = $resource("/api/v1/abilityGroup/deviceTypes?manufacturerId=" + manufacturerId);
+                    $scope.deviceTypeInfo = deviceTypeObj.query();
+
+                    /*根据厂商和设备类型查询设备型号*/
+                    $scope.getDeviceModel = function (myDeviceType) {
+                        console.log($scope.myDeviceType)
+                        if (myDeviceType) {
+                            var deviceTypeId = myDeviceType.deviceTypeId
+                            var deviceModelObj = $resource("/api/v1/abilityGroup/models?manufacturerId=" + manufacturerId + "&deviceTypeId=" + deviceTypeId);
+                            $scope.deviceModelInfo = deviceModelObj.query();
+                        }
+                    }
+                } else {
+                    $scope.myDeviceType = undefined
+                    $scope.myDeviceModel = undefined
+                }
+            }
+        }
+    }
+
+    //点击添加规则-添加过滤器-单个设备-绑定设备ID
+    $scope.showDeviceID = function () {
+        if ($scope.ifDeviceID === true) {
+            $scope.text_deviceid = "绑定"
+            $scope.ifDeviceID = false
+        } else {
+            $scope.text_deviceid = "解绑"
+            $scope.ifDeviceID = true
+        }
+        return false
+    }
+
+    //点击添加规则-添加过滤器-同类型设备-绑定设备类型
+    $scope.showDeviceType = function () {
+        if ($scope.ifDeviceType === true) {
+            $scope.text_devicetype = "绑定"
+            $scope.ifDeviceType = false
+        } else {
+            $scope.text_devicetype = "解绑"
+            $scope.text_devicemodel = "绑定"
+            $scope.ifDeviceType = true
+            $scope.ifDeviceModel = false
+        }
+        return false
+    }
+
+    //点击添加规则-添加过滤器-同类型设备-绑定设备型号
+    $scope.showDeviceModel = function () {
+        if ($scope.ifDeviceModel === true) {
+            $scope.text_devicemodel = "绑定"
+            $scope.ifDeviceModel = false
+        } else {
+            $scope.text_devicemodel = "解绑"
+            $scope.text_devicetype = "绑定"
+            $scope.ifDeviceModel = true
+            $scope.ifDeviceType = false
+        }
+        return false
+    }
 
     //点击添加规则-添加过滤器
     $scope.subFilter = function () {
-        //H5 required属性无效bug
-        if ($('#addfiltername').val() != "") {
-            $('#filternamealert').hide();
-            $scope.showaddFilter = true;
-            $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(), $('#addfiltertype').val(), $('#addfilterjs').val()));
-            console.log($scope.formData.filters);
-            $("input[type=reset]").trigger("click");
-            document.getElementById('addfilterjs').value = addfilterJS;
-            /****若出现嵌套model添加一次儿子后闪退bug，把js命令换成data-dismiss*****/
-            $("#addruleFilter").modal("hide");
+        var filterjs = ""
+
+        if ($('#addfiltername').val() !== '') {
+            if ($scope.addFilterType) {
+                if ($scope.addFilterType.type === 1) {
+                    //console.log("配置类型1-按单个设备配置")
+                    if ($scope.ifDeviceID) {
+                        //console.log("配置设备ID+名称")
+                        if ($('#add_filter_deviceid').val() !== '' && $('#add_filter_devicename').val() !== '')
+                            if ($('#add_filter_key1').val() !== '' && $('#add_filter_value1').val() !== '')
+                                filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId=='" + $('#add_filter_deviceid').val() + "'&& name=='" + $('#add_filter_devicename').val() + "'&&key=='" + $('#add_filter_key1').val() + "' && value" + $('#add_filter_value1').val() + "){return true;}  else{return false;}}"
+                            else {
+                                toastr.warning("请填写过滤规则")
+                                return false
+                            }
+                        else {
+                            toastr.warning("请填写完整设备信息")
+                            return false
+                        }
+                    } else {
+                        //console.log("仅配置设备名称")
+                        if ($('#add_filter_devicename').val() !== '')
+                            if ($('#add_filter_key1').val() !== '' && $('#add_filter_value1').val() !== '')
+                                filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(name=='" + $('#add_filter_devicename').val() + "'&&key=='" + $('#add_filter_key1').val() + "' && value" + $('#add_filter_value1').val() + "){return true;}  else{return false;}}"
+                            else {
+                                toastr.warning("请填写过滤规则")
+                                return false
+                            }
+                        else {
+                            toastr.warning("请填写设备名称")
+                            return false
+                        }
+                    }
+                }
+                if ($scope.addFilterType.type === 2) {
+                    //console.log("配置类型2-按设备类型配置")
+                    if ($scope.ifDeviceType) {
+                        //console.log("配置厂商+设备类型")
+
+                        if ($scope.myManufacture && $scope.myDeviceType) {
+                            if ($('#add_filter_key2').val() !== '' && $('#add_filter_value2').val() !== '') {
+                                filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(manufacture=='" + $scope.myManufacture.manufacturerName + "'&& deviceType=='" + $scope.myDeviceType.deviceTypeName + "'&&key=='" + $('#add_filter_key2').val() + "' && value" + $('#add_filter_value2').val() + "){return true;}  else{return false;}}"
+                            } else {
+                                toastr.warning("请填写过滤规则")
+                                return false
+                            }
+                        } else {
+                            toastr.warning("请配置厂商信息")
+                            return false
+                        }
+                    } else if ($scope.ifDeviceModel) {
+                        //console.log("配置设备厂商+设备类型+设备型号")
+                        if ($scope.myManufacture && $scope.myDeviceType && $scope.myDeviceModel) {
+                            if ($('#add_filter_key2').val() !== '' && $('#add_filter_value2').val() !== '') {
+                                filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(manufacture=='" + $scope.myManufacture.manufacturerName + "'&& deviceType=='" + $scope.myDeviceType.deviceTypeName + "'&& model=='" + $scope.myDeviceModel.modelName + "'&&key=='" + $('#add_filter_key2').val() + "' && value" + $('#add_filter_value2').val() + "){return true;}  else{return false;}}"
+                            } else {
+                                toastr.warning("请填写过滤规则")
+                                return false
+                            }
+                        } else {
+                            toastr.warning("请配置厂商信息")
+                            return false
+                        }
+                    } else {
+                        //console.log("仅配置厂商")
+                        if ($scope.myManufacture) {
+                            if ($('#add_filter_key2').val() !== '' && $('#add_filter_value2').val() !== '') {
+                                filterjs = "function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(manufacture=='" + $scope.myManufacture.manufacturerName + "'&&key=='" + $('#add_filter_key2').val() + "' && value" + $('#add_filter_value2').val() + "){return true;}  else{return false;}}"
+                            } else {
+                                toastr.warning("请填写过滤规则")
+                                return false
+                            }
+                        } else {
+                            toastr.warning("请选择厂商名称")
+                            return false
+                        }
+                    }
+                }
+                if ($scope.addFilterType.type === 3) {
+                    //console.log("配置类型3-自定义js")
+                    filterjs = $('#addfilterjs').val()
+                }
+
+                //生成请求体
+                //console.log("filterjs:" + filterjs)
+                $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(),"", filterjs));
+                console.log($scope.formData.filters);
+
+                //清理现场
+                $("input[type=reset]").trigger("click");
+                $scope.clearFilterPlugin('#addruleFilter')
+
+                $scope.showaddFilter = true;
+                document.getElementById('addfilterjs').value = addfilterJS;
+                /****若出现嵌套model添加一次儿子后闪退bug，把js命令换成data-dismiss*****/
+                $("#addruleFilter").modal("hide");
+            } else {
+                toastr.warning("请选择过滤器配置类型")
+            }
         } else {
-            $('#filternamealert').show();
+            toastr.warning("请填写过滤器名称")
         }
     }
 
@@ -233,7 +402,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.getAllplugin = function () {
         var getAllPLUGINS = $resource("/api/plugin/allPlugins");
         $scope.allPlugins = getAllPLUGINS.query({}, function () {
-            $scope.isPluginReady=true
+            $scope.isPluginReady = true
             $scope.Plugin = $scope.allPlugins;
             //初始化select.value，解决显示一行空白项bug
             //若初始化为第一个插件信息，判断插件类型的函数要写双份(待改)
@@ -247,7 +416,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.change = function (data) {
         console.log(data)
         //清空现场时会报错
-        if(data!=null) {
+        if (data != null) {
             $scope.RuleaddPluginUrl = data.url;
             if (data.name == "MailPlugin") {
                 console.log("判断添加插件类型为MailPlugin");
@@ -294,7 +463,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //点击添加规则-添加插件
     $scope.subTransform = function () {
-        var transform={}
+        var transform = {}
         //判断添加类型为MailPlugin
         if ($scope.RuleaddPlugin.name == "MailPlugin") {
             //解决ng-repeat动态遍历空数组报错bug
@@ -316,22 +485,22 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
         } else if ($scope.RuleaddPlugin.name == "RestfulPlugin") {
             //判断插件类型为restfulplugin时请求格式
-            var restfulbody={}
-            restfulbody.method=$scope.RuleaddPlugin.method
-            restfulbody.url=$("#RestfulBody_url").val()
-            restfulbody.body=$("#RestfulBody_body").val()
+            var restfulbody = {}
+            restfulbody.method = $scope.RuleaddPlugin.method
+            restfulbody.url = $("#RestfulBody_url").val()
+            restfulbody.body = $("#RestfulBody_body").val()
 
             transform.name = $scope.RuleaddPlugin.name;
             transform.url = $scope.RuleaddPluginUrl;
             transform.method = "POST";
             transform.requestBody = restfulbody;
 
-        }else if($scope.RuleaddPlugin.name == "UpdateMessagePlugin"){
+        } else if ($scope.RuleaddPlugin.name == "UpdateMessagePlugin") {
             //插件为updatemessage时requestbody
-            $scope.UpdatemessagereqBody={};
-            $scope.UpdatemessagereqBody.message=$('#addUpdateMessageText').val();
-            $scope.UpdatemessagereqBody.messageType="fromModule";
-            $scope.UpdatemessagereqBody.tenantId=$.cookie("tenantId");
+            $scope.UpdatemessagereqBody = {};
+            $scope.UpdatemessagereqBody.message = $('#addUpdateMessageText').val();
+            $scope.UpdatemessagereqBody.messageType = "fromModule";
+            $scope.UpdatemessagereqBody.tenantId = $.cookie("tenantId");
 
             transform.name = $scope.RuleaddPlugin.name;
             transform.url = $scope.RuleaddPluginUrl;
@@ -339,8 +508,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             transform.requestBody = $scope.UpdatemessagereqBody;
         }
 
-        $scope.formData.transforms.push(new ObjTransform(transform.name,transform.url,transform.method,transform.requestBody))
-        transform={}
+        $scope.formData.transforms.push(new ObjTransform(transform.name, transform.url, transform.method, transform.requestBody))
+        transform = {}
 
         console.log("新建规则-创建插件:");
         console.log($scope.formData.transforms);
@@ -349,7 +518,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
 
         //清理案发现场
-        var pluginid='#addruleTransform'
+        var pluginid = '#addruleTransform'
         $scope.clearFilterPlugin(pluginid)
     }
 
@@ -365,7 +534,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
                 toastr.success("创建规则成功！");
                 $("#addRule").modal("hide");
                 location.reload();
-            },function (err) {
+            }, function (err) {
                 toastr.success("创建规则失败！");
             });
         } else {
@@ -422,13 +591,13 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     /******modal关闭后清除数据******/
     $scope.clearFilterPlugin = function (id) {
-        $(id+' input').each(function () {
+        $(id + ' input').each(function () {
             var type = this.type;
             var tag = this.tagName.toLowerCase(); // normalize case
             if (type == 'text' || type == 'password' || tag == 'textarea')
                 this.value = "";
             else if (tag == 'select')
-                this.selectedIndex = 1;
+                this.prop('selectedIndex', 0);
         });
 
         //恢复现场
@@ -440,8 +609,20 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
         $scope.showPluginMail = false;
         $scope.showrestfulPOST = false;
-        $scope.isPluginReady=false
-        $scope.RuleaddPluginUrl=""
+        $scope.isPluginReady = false
+        $scope.RuleaddPluginUrl = ""
+
+        $scope.ifDeviceID = false
+        $scope.ifDeviceType = false
+        $scope.ifDeviceModel = false
+        $scope.ifDeviceName = false
+
+        $scope.text_deviceid = "绑定"
+        $scope.text_devicetype = "绑定"
+        $scope.text_devicemodel = "绑定"
+
+        $scope.addFilterType = undefined//用于重置select
+        console.log("恢复现场")
     };
 
     $scope.clearForm = function () {
@@ -458,6 +639,6 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         InitformData();
         $scope.showaddFilter = false;
         $scope.showaddTransform = false;
-        $scope.RuleaddPluginUrl=""
+        $scope.RuleaddPluginUrl = ""
     };
 });
