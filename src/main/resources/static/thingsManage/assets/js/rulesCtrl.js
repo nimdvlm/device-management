@@ -379,7 +379,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
                 //生成请求体
                 //console.log("filterjs:" + filterjs)
-                $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(), $('#addfiltertype').val(), filterjs));
+                $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(),"", filterjs));
                 console.log($scope.formData.filters);
 
                 //清理现场
