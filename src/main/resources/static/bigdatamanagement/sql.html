@@ -89,81 +89,22 @@
                             <div style="text-align: center;margin-top: 5px">数据库目录树</div>
                             <ul id="filetree" class="ztree" style="height:85%;background: #f0f6e4;overflow-y:scroll;overflow-x:auto;"></ul>
                         </div>
-                        <textarea rows="5" placeholder="请输入SQL语句..." name="SQLcode" id="SQLcode">
-                            if exists (select * from devicesmodel where name='BUPT_IoT')
-                            SELECT id,tenantId,deviceId,createdAt,updatedAt
-                            FROM devicesmodel;
-                        </textarea></br>
-                        <script type="text/javascript" src="plugins/codemirror/codemirror.js"></script>
-                        <script type="text/javascript" src="plugins/codemirror/show-hint.js"></script>
-                        <script type="text/javascript" src="plugins/codemirror/sql-hint.js"></script>
-                        <script type="text/javascript" src="plugins/codemirror/sql.js"></script>
-                        <script type="text/javascript">
-                            var editor = CodeMirror.fromTextArea(document.getElementById("SQLcode"), {
-                                lineNumbers: true,
-                                matchBrackets: true,
-                                mode: 'text/x-sql',
-                                indentUnit: 4,
-                                indentWithTabs: true,
-                                smartIndent: true,
-                                extraKeys: {"Ctrl": 'autocomplete'},
-                                showCursorWhenSelecting: true
-                            });
-                            editor.setSize('800px', '350px');
-                        </script>
+                        <textarea rows="5" placeholder="请输入SQL语句..." name="SQLcode" id="SQLcode" style="height: 340px;width: 870px;font-size: 16px">select * from user;</textarea><br>
                     </div>
                 </div>
+
                 <div>
                     <div style="float: right">
-                        <button onclick="getElementById('querytable').style.display='inline-table'" style="margin:10px;cursor: pointer;height: 30px;line-height: 30px;background-color: #3b3c3f;color: #fff;text-align: center;border: none;border-radius: 2px">
-                            查询
-                        </button>
+                        <button id="search" style="margin:10px;cursor: pointer;height: 30px;line-height: 30px;background-color: #3b3c3f;color: #fff;text-align: center;border: none;border-radius: 2px">查询</button>
                     </div>
                     <span style="color:#3a3d43;">*&nbsp;Ctrl键开启代码提示功能</span>
                 </div>
                 <fieldset style="border:none;border-top:1px solid #cec9c9;margin:30px 0 20px;">
                     <legend style="font-size: 20px;font-weight: 300;padding: 0 10px;margin-left: 20px">查询结果</legend>
                 </fieldset>
-                <table class="mws-table" id="querytable" style="display: none;">
-                    <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>tenantId</th>
-                        <th>deviceId</th>
-                        <th>createdAt</th>
-                        <th>updatedAt</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>07fbe290-80c9-11e8-96fa-bfde8340f6ee</td>
-                        <td>15294779724</td>
-                        <td>1532847594</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>36807cd0-6e1c-11e8-8dc5-59c2cc02320f</td>
-                        <td>1532069434</td>
-                        <td>1532069434</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>2</td>
-                        <td>6d090f10-6e1c-11e8-8dc5-59c2cc02320f</td>
-                        <td>1529909441</td>
-                        <td>1529909441</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>2</td>
-                        <td>5d521440-6e1c-11e8-8dc5-59c2cc02320f</td>
-                        <td>1531246594</td>
-                        <td>1531248734</td>
-                    </tr>
-                    </tbody>
+                <table class="mws-table" id="querytable">
+                    <thead id="thead"></thead>
+                    <tbody id="tbody"></tbody>
                 </table>
             </div>
         </div>
@@ -173,15 +114,34 @@
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="plugins/ztree/jquery.ztree.core.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
+
+<script type="text/javascript" src="plugins/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="plugins/codemirror/show-hint.js"></script>
+<script type="text/javascript" src="plugins/codemirror/sql-hint.js"></script>
+<script type="text/javascript" src="plugins/codemirror/sql.js"></script>
+<!--<script type="text/javascript">
+    var editor = CodeMirror.fromTextArea(document.getElementById("SQLcode"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        mode: 'text/x-sql',
+        indentUnit: 4,
+        indentWithTabs: true,
+        smartIndent: true,
+        extraKeys: {"Ctrl": 'autocomplete'},
+        showCursorWhenSelecting: true
+    });
+    editor.setSize('800px', '350px');
+</script>-->
+
 <script type="text/javascript">
 
-    var dir="plugins/ztree/zTreeStyle/img/diy/"
+    var dir="plugins/ztree/zTreeStyle/img/diy/";
     //zTree
     var zTreeObj;
     // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
     var setting = {};
     // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
-    var zNodes = [
+    /*var zNodes = [
         {name:"user",icon:dir+"table.png", open:false, children:[
             {name:"id",icon:dir+"byte.png"},
             {name:"addition_info",icon:dir+"byte.png"},
@@ -231,10 +191,46 @@
             {name:"createAt",icon:dir+"byte.png"},
             {name:"updateAt",icon:dir+"byte.png"},
             {name:"version",icon:dir+"byte.png"}]}
-    ];
+    ];*/
+    var zNodes = [];
     $(document).ready(function(){
-        zTreeObj = $.fn.zTree.init($("#filetree"), setting, zNodes);
-    });
+
+        $.get("http://39.104.186.210:8092/api/sql/tables",function (data) {
+            for (var i=0; i<data.length; i++){
+                var table_name = data[i].table_name;
+                var field =[];
+                for (var j=0; j<data[i].cloumns.length; j++){
+                    field.push({name:data[i].cloumns[j],icon:dir+"byte.png"})
+                }
+                zNodes.push({name:table_name,icon:dir+"table.png", open:false, children:field});
+                zTreeObj = $.fn.zTree.init($("#filetree"), setting, zNodes);
+            }
+        });
+
+        $("#search").click(
+            function () {
+                var code = $("#SQLcode").val();
+                $.get("http://39.104.186.210:8092/api/sql/exec-sql?sql="+code,function (data) {
+                    $("#thead").empty();
+                    $("#tbody").empty();
+                    $tr = $("<tr></tr>");
+                    for (var item in data[0]){
+                        $th = $("<th>"+item+"</th>");
+                        $tr.append($th);
+                    }
+                    $("#thead").append($tr);
+                    for (var i=0; i<data.length; i++){
+                        $tr = $("<tr></tr>");
+                        for (var item in data[i]){
+                            $td = $("<td>"+data[i][item]+"</td>");
+                            $tr.append($td);
+                        }
+                        $("#tbody").append($tr);
+                    }
+                })
+            }
+        )
+    })
 </script>
 </body>
 </html>

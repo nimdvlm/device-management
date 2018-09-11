@@ -51,8 +51,10 @@
                         <tbody>
                         <tr ng-repeat-start="data in RuleFilters">
                             <td>
-                                <button class="btn btn-xs" ng-if="data.expanded" ng-click="data.expanded=false">-</button>
-                                <button class="btn btn-xs" ng-if="!data.expanded" ng-click="data.expanded=true">+</button>
+                                <button class="btn btn-xs" ng-if="data.expanded" ng-click="data.expanded=false">-
+                                </button>
+                                <button class="btn btn-xs" ng-if="!data.expanded" ng-click="data.expanded=true">+
+                                </button>
                             </td>
                             <td>{{data.name}}</td>
                         </tr>
@@ -60,8 +62,10 @@
                             <td></td>
                             <td colspan="1">
                                 <p>过滤器名称：{{data.name}}</p>
-                                <p>过滤器类型：{{data.type||"无"}}</p>
-                                <p>JS代码：<pre id="rule_jscode">{{data.jsCode}}</pre></p>
+                                <!--<p>过滤器类型：{{data.type||"无"}}</p>-->
+                                <p>JS代码：
+                                <pre id="rule_jscode">{{data.jsCode}}</pre>
+                                </p>
                             </td>
                         </tr>
                         </tbody>
@@ -70,7 +74,8 @@
 
                 <!--plugin展示表格折叠效果-->
                 <div class="item">
-                    <table class="table table-bordered table-hover table-striped" ng-show="!showEmpty" style="table-layout:fixed">
+                    <table class="table table-bordered table-hover table-striped" ng-show="!showEmpty"
+                           style="table-layout:fixed">
                         <thead>
                         <tr>
                             <td style="width: 30px"></td>
@@ -80,8 +85,11 @@
                         <tbody>
                         <tr ng-repeat-start="data in RulePlugins">
                             <td>
-                                <button class="btn btn-xs" ng-if="data.expanded" ng-click="data.expanded=false">-</button>
-                                <button class="btn btn-xs" ng-if="!data.expanded" ng-click="data.expanded=true;showplugin(data,$index)">+</button>
+                                <button class="btn btn-xs" ng-if="data.expanded" ng-click="data.expanded=false">-
+                                </button>
+                                <button class="btn btn-xs" ng-if="!data.expanded"
+                                        ng-click="data.expanded=true;showplugin(data,$index)">+
+                                </button>
                             </td>
                             <td>{{data.name}}</td>
                         </tr>
@@ -212,7 +220,8 @@
                 <div class="input-group SearchDG">
                     <input type="text" class="form-control" placeholder="请输入规则名称..." id="searchRuleText">
                     <span class="input-group-btn">
-                        <button class="btn btn-primary" type="button" ng-click="searchRule()"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-primary" type="button" ng-click="searchRule()"><i
+                                class="fa fa-search"></i></button>
                     </span>
                 </div>
 
@@ -327,16 +336,101 @@
                             <p><span class="StarMark">*</span>过滤器名称：<input type="text" name="addname"
                                                                            id="addfiltername"
                                                                            placeholder="请输入过滤器名称" required/>
-                                <span class="alertempty" id="filternamealert">请输入过滤器名称</span>
+                                <!--<span class="alertempty" id="filternamealert">请输入过滤器名称</span>-->
                             </p>
-                            <p style="margin-left: 10px">过滤器类型：<input type="text" name="addtype" disabled="disabled"
-                                                                      id="addfiltertype"
-                                                                      placeholder="待定"/>
+                            <p style="margin-left: 10px;">按类型配置：
+                                <select ng-model="addFilterType" class="selectNeedClear"
+                                        ng-options="x.name for x in FilterType" ng-change="changefiltertype(addFilterType)">
+                                    <option value="" disabled>--请选择配置类型--</option>
+                                </select>
                             </p>
-                            <p style="margin-left: 10px;vertical-align:top;">JS&emsp;代&emsp;码：<textarea
-                                    name="addjscode" id="addfilterjs"
-                                    style="height:150px;width: 470px"/>
-                            </p>
+                            <!--配置1-单个设备-->
+                            <div ng-show="addFilterType.type===1">
+                                <hr/>
+                                <table>
+                                    <tr>
+                                        <td><span class="StarMark">*</span>设备名称：</td>
+                                        <td><input id="add_filter_devicename" placeholder="请填写绑定设备名称"
+                                                   style="margin-bottom:5px "/>
+                                            <a href="javascript:void(0)" ng-click="showDeviceID()"
+                                               style="padding-left: 20px" id="link_bind_device">{{text_deviceid}}设备ID</a></td>
+                                    </tr>
+                                    <tr ng-if="ifDeviceID">
+                                        <td><span class="StarMark">*</span>设备ID：</td>
+                                        <td><input id="add_filter_deviceid" placeholder="请填写绑定设备ID"
+                                                   style="margin-bottom:5px "/><span
+                                                style="padding-left: 20px;color: #a8a8a8">设备ID应与设备名称对应</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="StarMark">*</span>过滤规则key：</td>
+                                        <td><input id="add_filter_key1" type="text" placeholder="例：temperature"
+                                                   style="margin-bottom:5px "/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="StarMark">*</span>过滤规则value：</td>
+                                        <td><input id="add_filter_value1" type="text" placeholder="例：>50"
+                                                   style="margin-bottom:5px "/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!--配置2-同类型设备-->
+                            <div ng-show="addFilterType.type===2">
+                                <hr/>
+                                <table>
+                                    <tr>
+                                        <td><span class="StarMark">*</span>绑定厂商：</td>
+                                        <td>
+                                            <!--<input id="add_filter_manufacture" type="text" placeholder="请填写绑定厂商名称">-->
+                                            <select ng-model="myManufacture" style="margin-bottom:5px"
+                                            ng-change="getDeviceType(myManufacture)" ng-options="x.manufacturerName for x in manufacturerInfo">
+                                                <option value="" disabled>--请选择厂商--</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng-click="showDeviceType()"
+                                               style="padding-left: 20px">{{text_devicetype}}设备类型</a>
+                                            <a href="javascript:void(0)" ng-click="showDeviceModel()"
+                                               style="padding-left: 20px">{{text_devicemodel}}设备型号</a></td>
+                                    </tr>
+                                    <tr ng-if="ifDeviceType||ifDeviceModel">
+                                        <td><span class="StarMark">*</span>设备类型：</td>
+                                        <td>
+                                            <!--<input id="add_filter_devicetype" type="text" placeholder="请填写绑定设备类型"/>-->
+                                            <select ng-model="$parent.myDeviceType" style="margin-bottom:5px"
+                                                    ng-change="getDeviceModel(myDeviceType)" ng-options="x.deviceTypeName for x in deviceTypeInfo">
+                                                <option value="" disabled>--请选择设备类型--</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="ifDeviceModel">
+                                        <td><span class="StarMark">*</span>设备型号：</td>
+                                        <td>
+                                            <!--<input id="add_filter_devicemodel" type="text" placeholder="请填写绑定设备型号"-->
+                                                   <!--style="margin-bottom:5px "/>-->
+                                            <select ng-model="$parent.myDeviceModel" style="margin-bottom:5px"
+                                            ng-options="x.modelName for x in deviceModelInfo">
+                                                <option value="" disabled>--请选择设备型号--</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="StarMark">*</span>过滤规则key：</td>
+                                        <td><input id="add_filter_key2" type="text" placeholder="例：temperature"
+                                                   style="margin-bottom:5px "/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="StarMark">*</span>过滤规则value：</td>
+                                        <td><input id="add_filter_value2" type="text" placeholder="例：>50"
+                                                   style="margin-bottom:5px "/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!--配置3-自定义js代码-->
+                            <div ng-show="addFilterType.type===3">
+                                <hr/>
+                                <div style="margin-left: 10px;vertical-align:top;">JS&emsp;代&emsp;码：<textarea
+                                        name="addjscode" id="addfilterjs"
+                                        style="height:150px;width: 470px"/>
+                                </div>
+                            </div>
                             <input type="reset" style="display:none;"/>
                         </form>
                     </div>

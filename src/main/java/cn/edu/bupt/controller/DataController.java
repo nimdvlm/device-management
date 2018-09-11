@@ -104,8 +104,6 @@ public class DataController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent);
     }
 
-
-
     //获取所有属性
     @RequestMapping(value="/getKeyAttribute/{deviceId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     public String getKeyAttributes(@PathVariable("deviceId") String deviceId) {
