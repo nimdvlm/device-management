@@ -218,7 +218,7 @@
 
         $('.deleteButton').click(
             function () {
-                $.get("http://127.0.0.1:8092/api/hdfs/deleteFiles?path=" + $(this).parent().parent().find("td").eq(7).html(), function (data) {
+                $.get("http://39.104.186.210:8092/api/hdfs/deleteFiles?path=" + $(this).parent().parent().find("td").eq(7).html(), function (data) {
                     if (data.code == "200"){
                         var trIndexs = $(this).parent().parent().attr("trIndex");
                         var trIndex = Number(trIndexs);
@@ -233,7 +233,7 @@
     }
 
     function ajax(path) {
-        $.get("http://127.0.0.1:8092/api/hdfs/getFiles?path="+path+"&owner=spark&group=supergroup",function (data) {
+        $.get("http://39.104.186.210:8092/api/hdfs/getFiles?path="+path+"&owner=spark&group=supergroup",function (data) {
             dataGroup = data;
             drawTables(dataGroup,path);
         });

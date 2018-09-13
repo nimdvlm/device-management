@@ -130,4 +130,22 @@ public class DashboardController extends DefaultThingsboardAwaredController {
         return retSuccess(responseContent);
     }
 
+    @RequestMapping(value = "/entity/updateEntity", method = RequestMethod.PUT, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String updateEntity(@RequestBody String entity){
+        String requestAddr = "/api/v1/dashboard/entity/update";
+
+        JsonObject entityjson = (JsonObject)new JsonParser().parse(entity);
+
+        String responseContent = null ;
+        try {
+            responseContent = HttpUtil.sendPutToThingsboard("http://" + getDashboardServer() + requestAddr,
+                    null, entityjson, request.getSession()) ;
+            return retSuccess(responseContent) ;
+        } catch (Exception e) {
+            return retFail(e.toString()) ;
+        }
+
+    }
+
 }

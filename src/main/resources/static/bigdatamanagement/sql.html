@@ -92,6 +92,7 @@
                         <textarea rows="5" placeholder="请输入SQL语句..." name="SQLcode" id="SQLcode" style="height: 340px;width: 870px;font-size: 16px">select * from user;</textarea><br>
                     </div>
                 </div>
+
                 <div>
                     <div style="float: right">
                         <button id="search" style="margin:10px;cursor: pointer;height: 30px;line-height: 30px;background-color: #3b3c3f;color: #fff;text-align: center;border: none;border-radius: 2px">查询</button>
@@ -194,7 +195,7 @@
     var zNodes = [];
     $(document).ready(function(){
 
-        $.get("http://127.0.0.1:8092/api/sql/tables",function (data) {
+        $.get("http://39.104.186.210:8092/api/sql/tables",function (data) {
             for (var i=0; i<data.length; i++){
                 var table_name = data[i].table_name;
                 var field =[];
@@ -209,7 +210,7 @@
         $("#search").click(
             function () {
                 var code = $("#SQLcode").val();
-                $.get("http://127.0.0.1:8092/api/sql/exec-sql?sql="+code,function (data) {
+                $.get("http://39.104.186.210:8092/api/sql/exec-sql?sql="+code,function (data) {
                     $("#thead").empty();
                     $("#tbody").empty();
                     $tr = $("<tr></tr>");
