@@ -19,6 +19,19 @@ $(document).ready(function () {
     var tenantId = $.cookie("tenantId");
     var userId = $.cookie("userId");
     console.log($.cookie());
+
+    var token = undefined;
+    $.ajax({
+        url: "/api/user/authorize",
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        type: "GET",
+        success: function (msg) {
+            token = msg;
+        }
+    });
+
+
     $("#thingsManage").click(function () {
         if(userLevel == "CUSTOMER_USER"){
                 window.location.href = "/thingsUserManager";
@@ -31,8 +44,11 @@ $(document).ready(function () {
         }
     });
     $("#3dPages").click(function () {
-        window.open("http://39.104.189.84:8800?id="+tenantId);
+        if(token !== undefined){
+            window.open("http://39.104.189.84:8800?id="+tenantId+"&token="+token);
+        }
     });
+
     $("#bigData").click(function () {
        window.location.href = "../bigData/device1.html?id="+tenantId;
     });
