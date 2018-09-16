@@ -1,15 +1,15 @@
 mainApp.controller("widgetsLibraryCtrl", function ($scope, $resource) {
     show();
-    setInterval(show,4000);
+    setInterval(show, 4000);
 
     function show() {
-        var random_1=Math.ceil(Math.random()*20);
-        var random_2=Math.ceil(Math.random()*20);
-        var random_3=Math.ceil(Math.random()*20);
-        var random_4=Math.ceil(Math.random()*20);
-        var random_5=Math.ceil(Math.random()*20);
-        var random_6=Math.ceil(Math.random()*20);
-        var random_7=Math.ceil(Math.random()*20);
+        var random_1 = Math.ceil(Math.random() * 20);
+        var random_2 = Math.ceil(Math.random() * 20);
+        var random_3 = Math.ceil(Math.random() * 20);
+        var random_4 = Math.ceil(Math.random() * 20);
+        var random_5 = Math.ceil(Math.random() * 20);
+        var random_6 = Math.ceil(Math.random() * 20);
+        var random_7 = Math.ceil(Math.random() * 20);
 
         // //甜甜圈
         // var ctx=document.getElementById("Doughnut").getContext("2d");
@@ -86,10 +86,10 @@ mainApp.controller("widgetsLibraryCtrl", function ($scope, $resource) {
         var myChart1 = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六","星期日"],
+                labels: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
                 datasets: [{
                     label: '# of Votes',
-                    data: [random_1, random_2, random_3, random_4, random_5, random_6,random_7],
+                    data: [random_1, random_2, random_3, random_4, random_5, random_6, random_7],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -115,7 +115,7 @@ mainApp.controller("widgetsLibraryCtrl", function ($scope, $resource) {
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true
                         }
                     }]
                 },
@@ -128,7 +128,7 @@ mainApp.controller("widgetsLibraryCtrl", function ($scope, $resource) {
                     fontColor: '#1964ad'
                 },
                 legend: {
-                    display:false
+                    display: false
                 }
 
             }
@@ -136,9 +136,9 @@ mainApp.controller("widgetsLibraryCtrl", function ($scope, $resource) {
 
         //折线图
         ctx = document.getElementById("LineChart").getContext("2d");
-        var myLineChart = new Chart(ctx,{
-            type:'line',
-            data:{
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
                 //折线图需要为每个数据点设置一标签。这是显示在X轴上。
                 labels: ["January", "February", "March", "April", "May", "June", "July"],
                 //数据集（y轴数据范围随数据集合中的data中的最大或最小数据而动态改变的）
@@ -160,7 +160,7 @@ mainApp.controller("widgetsLibraryCtrl", function ($scope, $resource) {
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true
                         }
                     }]
                 },
@@ -173,12 +173,52 @@ mainApp.controller("widgetsLibraryCtrl", function ($scope, $resource) {
                     fontColor: '#1964ad'
                 },
                 legend: {
-                    display:false
+                    display: false
                 }
 
             }
 
         });
+
+        //仪表盘
+        var myChart = echarts.init(document.getElementById('Dashboard'));
+        var option = {
+            title: {
+                text: '仪表盘',
+                left: "center",
+                top:'10px',
+                textStyle: {
+                    fontSize: 20,
+                    fontWeight:'normal',
+                    fontFamily: "Microsoft YaHei",
+                    fontStyle: 'normal',
+                    color: '#1964ad'
+                }
+            },
+            tooltip: { //弹窗组件
+                formatter: "{a} <br/>{b} : {c}%"
+            },
+            series: [{
+                name: '仪表盘',
+                type: 'gauge',
+                radius: '70%',
+                center: ['50%', '60%'],
+                //detail: {formatter: '{value}%'},
+                detail:{show:false},
+                data: [{value: 45, name: ''}],
+                axisLine:{lineStyle:{width:20}},
+                splitLine:{length:25},
+                pointer: {
+                    width:2
+                }
+            }]
+
+        };
+        myChart.setOption(option);
+        setInterval(function () {//把option.series[0].data[0].value的值使用random()方法获取一个随机数
+            option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+            myChart.setOption(option, true);
+        }, 4000);
     }
 
 
