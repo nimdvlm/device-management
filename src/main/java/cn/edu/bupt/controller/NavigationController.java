@@ -75,6 +75,9 @@ public class NavigationController {
         return "static/thingsManage/deviceList";
     }
 
+    @RequestMapping("/deviceModelManagement")
+    public String deviceModelManagement() {return "static/thingsManage/deviceModelManagement";}
+
     @RequestMapping("/deviceGroup")
     public String  homepage() {
         return "static/thingsManage/deviceGroup";
@@ -133,4 +136,5 @@ public class NavigationController {
     public String homeTenant() {return "static/thingsManage/homeTenant";}
     @RequestMapping("/tenantAdmin")
     public String tenantAdmin() {return "static/thingsManage/tenantAdmin";}
+
 }

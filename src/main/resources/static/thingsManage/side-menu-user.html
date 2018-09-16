@@ -70,7 +70,7 @@
     <script type="text/javascript" src="static/thingsManage/assets/js/pluginCtrl.js"></script>
     <script type="text/javascript" src="static/thingsManage/assets/js/tenantCtrl.js"></script>
     <script type="text/javascript" src="static/thingsManage/assets/js/evaluateCtrl.js"></script>
-
+    <script type="text/javascript" src="static/thingsManage/assets/js/deviceModelCtrl.js"></script>
     <!--Customer-->
     <script type="text/javascript" src="static/thingsManage/assets/js/customerCtrl.js"></script>
     <script type="text/javascript" src="static/thingsManage/assets/js/pager.js"></script>
@@ -143,7 +143,12 @@
                     <i class="fa fa-home fontStyle"></i>
                     <span class="textStyle">首页</span>
                 </a>
-
+            </li>
+            <li class="side-menu-icon tenantMenu" id="deviceModelManagement">
+                <a href="" title="设备型号管理" ng-click="$location.path('deviceModelManagement')">
+                    <i class="fa fa-wrench fontStyle"></i>
+                    <span class="textStyle">设备型号管理</span>
+                </a>
             </li>
             <li class="side-menu-icon userMenu" id="deviceList">
              <a href="" title="设备列表" ng-click="$location.path('deviceList')">

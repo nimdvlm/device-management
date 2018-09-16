@@ -58,6 +58,10 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
             templateUrl:"tenantAdmin.html",
             controller:"mainCtrl"
         })
+        .when("/deviceModelManagement",{
+            templateUrl:"deviceModelManagement.html",
+            controller:"mainCtrl"
+        })
         .when("/homeTenant",{
             templateUrl:"homeTenant.html",
             controller:"homePageCtrl"
@@ -95,7 +99,9 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
     }
 
     /*侧边栏选中效果*/
-    var href  = window.location.hash;
+    var href = window.location.hash;
+    console.log("侧边栏选中效果");
+    console.log(href);
     var hrefClass = href.substring(2,href.length);
     console.log(hrefClass);
     $("#"+hrefClass).css("background","#4f6f93");
