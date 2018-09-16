@@ -111,4 +111,23 @@ public class TenantController extends DefaultThingsboardAwaredController{
             return retFail(e.toString()) ;
         }
     }
+
+    @RequestMapping(value = "/tenant/updateSuspendedStatus", params = {  "suspended","tenantId" }, method = RequestMethod.PUT)
+    @ResponseBody
+    public void updateSuspended(@RequestParam Boolean suspended,@RequestParam int tenantId) {
+        String requestAddr = API_PREFIX + "updateSuspendedStatus";
+        StringBuffer param = new StringBuffer();
+        param.append("suspended").append("=").append(suspended).append("&").append("id").append("=").append(tenantId);
+        requestAddr = requestAddr + "?" + param ;
+        try {
+            Response responseContent = HttpUtil.sendPut("http://" + getAccountServer() + requestAddr,
+                    null,
+                    null,
+                    request.getSession()) ;
+            response.setStatus(responseContent.code());
+            responseContent.body().string();
+        } catch (Exception e) {
+            retFail(e.toString()) ;
+        }
+    }
 }
