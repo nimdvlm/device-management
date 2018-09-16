@@ -1,6 +1,6 @@
 <div class="content-wrapper" ng-controller="deviceModelCtrl">
     <div class="container">
-        <div clas="SMTitle">
+        <div class="row">
             <div class="col-md-7">
                 <span class="header-line">设备管理型号
                 <button style="margin-left:10px" class="btn btn-primary btn-sm user" data-toggle="modal"
@@ -11,12 +11,17 @@
         </div>
 
 
-
-
-
-
-
-
+        <!--div class="row">
+            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
+            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
+            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
+            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
+            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
+            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
+            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
+            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
+            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
+        </div-->
     </div>
 
 
@@ -49,7 +54,19 @@
                     <label class="col-sm-3 control-label" style="text-align: left">
                         <span style="color: red;">*</span>设备型号
                     </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" id="model" required/>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="deviceModel" required/>
+                </div>
+                <div class="modal-body">
+                    <label class="col-sm-3 control-label" style="text-align: left">
+                        <span style="color: red;">*</span>图标
+                    </label>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="potatoIcon" required/>
+                </div>
+                <div class="modal-body">
+                    <label class="col-sm-3 control-label" style="text-align: left">
+                        <span style="color: red;">*</span>限制生存时间
+                    </label>
+                    <input type="text" style="pixels: 300px" placeholder="必填" id="LimitTime" required/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" ng-click="addDeviceModel()">
