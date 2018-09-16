@@ -60,7 +60,21 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
         var tenantDetail = $resource('/api/account/tenant?tenantId=:tenantID',{tenantID:'@id'});
         //console.log(item.id);
         tenantDetail.get({tenantID:item.id}).$promise.then(function (value) {
-            //console.log(value);
+            console.log("查看是否显示disable");
+            console.log(value);
+            $scope.tenantDisable = value.suspendedStatus;
+            console.log($scope.tenantDisable);
+            $scope.tenantId = value.id;
+            console.log($scope.tenantId);
+            //判断显示哪种按钮；
+            if($scope.tenantDisable == "false"){
+                $scope.enable_disable = true;
+                $scope.tenantDisable = false;
+            }else {
+                $scope.enable_disable = false;
+                $scope.tenantDisable = true;
+            }
+
             $scope.tenantDetailShow = value;
 
         })
@@ -236,6 +250,33 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
         }
     }
 
+
+
+
+    $scope.enableDisable = function () {
+        /*console.log($scope.tenantDisable);
+        console.log($scope.tenantId);
+        console.log($scope.enable_disable);*/
+        $scope.enable_disable = !$scope.enable_disable;
+        $scope.tenantDisable = !$scope.tenantDisable;
+
+        $.ajax({
+            url: "/api/account/tenant/updateSuspendedStatus?suspended="+$scope.tenantDisable+"&tenantId="+$scope.tenantId,
+            contentType: "application/json; charset=utf-8",//post请求必须
+            dataType: "text",
+            type: "PUT",
+            success: function () {
+                toastr.success("success!");
+                setTimeout(function () {
+                    window.location.reload();
+                },1000);
+            },
+            error: function () {
+                toastr.error("失败！");
+
+            }
+        });
+    }
 
 
 }]);

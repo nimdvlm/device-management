@@ -39,7 +39,11 @@
                     <h4 class="lineSpacing">电话：{{tenantDetailShow.phone}}</h4><hr>
                     <h4 class="lineSpacing">地址：{{tenantDetailShow.address}}</h4><hr>
                     <h4 class="lineSpacing">附加消息：{{tenantDetailShow.additional_info}}</h4><hr>
-                    <h4 class="lineSpacing">操作：<button class="btn btn-sm btn-info" ng-click="$location.path('tenantAdmin')" ng-click="showTenantTow()">查看租户下租户管理员</button></h4><hr>
+                    <h4 class="lineSpacing">操作：
+                        <button class="btn btn-sm btn-info" ng-click="$location.path('tenantAdmin')" ng-click="showTenantTow()">查看租户下租户管理员</button>
+                        <button class="btn btn-sm btn-success ng-hide" ng-show="!enable_disable" ng-click="enableDisable()"><i class="fa fa-lock"></i>  启用租户管理员</button>
+                        <button class="btn btn-sm btn-danger" ng-show="enable_disable" ng-click="enableDisable()"><i class="fa fa-unlock"></i>  禁用租户管理员</button>
+                    </h4><hr>
                 </div>
                 <div id="tenantAdministrator">
                     <table border="1" width="100%">
