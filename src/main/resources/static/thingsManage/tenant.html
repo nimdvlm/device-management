@@ -1,17 +1,19 @@
 <div ng-controller="tenantCtrl" class="content-wrapper">
     <div class="container">
         <!--租户头部模型-->
-        <div class="col-md-7">
-            <div class="header-line">租户
-                <button style="margin-left:10px" class="btn btn-primary btn-sm" data-toggle="modal"
-                        data-target="#addTenantGroup" id="addTenant">+ 创建租户
-                </button>
+        <div class="row">
+            <div class="col-md-7">
+                <div class="header-line">租户
+                    <button style="margin-left:10px" class="btn btn-primary btn-sm" data-toggle="modal"
+                            data-target="#addTenantGroup" id="addTenant">+ 创建租户
+                    </button>
+                </div>
             </div>
         </div>
 
         <!--下侧控件模块-->
-        <div class="tenantRow">
-            <div id="tenantIcon">
+        <div class="row">
+            <div class="tenantRow col-md-7">
                 <div ng-repeat="item in tenantGroups" ng-click="showTenantDetail(item)" class="chooseBtn tenantChoose" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                     <div>
                         <span title="租户"><i class="fa fa-home fa-2x"></i></span>
@@ -19,48 +21,54 @@
                     </div>
                 </div>
             </div>
+
+            <div class="tenantRight col-md-5">
+                <div id="tenantDetail">
+                    <ul style="cursor: pointer">
+                        <li><a class="active" id="tenantAue" ng-click="showTenantAue()">租户</a></li>
+                        <li><a id="tenantTow" ng-click="showTenantTow()">租户管理员</a></li>
+                        <li class="right" data-toggle="modal" data-target="#addTenantChange"><a id="tenantThere"><strong><i class="glyphicon glyphicon-pencil"></i>编辑</strong></a></li>
+                        <li class="right" data-toggle="modal" data-target="#addTenantManager"><a id="createManager"><strong><i class="glyphicon glyphicon-plus"></i>创建租户管理员</strong></a></li>
+                    </ul>
+                </div>
+                <div id="detailShow">
+                    <h2 class="lineSpacing">租户信息详情<i class="glyphicon glyphicon-trash" title="删除租户" data-toggle="modal"
+                                                     data-target="#deleteTenantModal" style="left: 250px;font-size: 24px"></i></h2>
+                    <h4 class="lineSpacing">姓名：{{tenantDetailShow.title}}</h4><hr>
+                    <h4 class="lineSpacing">邮箱：{{tenantDetailShow.email}}</h4><hr>
+                    <h4 class="lineSpacing">电话：{{tenantDetailShow.phone}}</h4><hr>
+                    <h4 class="lineSpacing">地址：{{tenantDetailShow.address}}</h4><hr>
+                    <h4 class="lineSpacing">附加消息：{{tenantDetailShow.additional_info}}</h4><hr>
+                    <h4 class="lineSpacing">操作：<button class="btn btn-sm btn-info" ng-click="$location.path('tenantAdmin')" ng-click="showTenantTow()">查看租户下租户管理员</button></h4><hr>
+                </div>
+                <div id="tenantAdministrator">
+                    <table border="1" width="100%">
+                        <h2>租户管理员详情</h2>
+                        <thead>
+                        <tr>
+                            <th width="60%">租户管理员名称</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="arr in tenantAdminInfo">
+                            <td>{{arr.name}}</td>
+                            <td><button class="btn btn-sm btn-info" data-toggle="modal" data-target="#showAdminInfo" ng-click="showAdminInfo(arr)">查看详情</button>
+
+                                <button class="btn btn-sm btn-danger" ng-click="deleteAdmin(arr)">删除</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
         </div>
+
 
         <!--右侧栏详情-->
-        <div class="tenantRight">
-            <div id="tenantDetail">
-                <ul>
-                    <li><a class="active" id="tenantAue" ng-click="showTenantAue()">租户</a></li>
-                    <li><a id="tenantTow" ng-click="showTenantTow()">租户管理员</a></li>
-                    <li class="right" data-toggle="modal" data-target="#addTenantChange"><a id="tenantThere"><strong><i class="glyphicon glyphicon-pencil"></i>编辑</strong></a></li>
-                    <li class="right" data-toggle="modal" data-target="#addTenantManager"><a id="createManager"><strong><i class="glyphicon glyphicon-plus"></i>创建租户管理员</strong></a></li>
-                </ul>
-            </div>
-            <div id="detailShow">
-                <h2 class="lineSpacing">租户信息详情<i class="glyphicon glyphicon-trash" title="删除租户" data-toggle="modal"
-                                                      data-target="#deleteTenantModal" style="left: 250px;font-size: 24px"></i></h2>
-                <h4 class="lineSpacing">姓名：{{tenantDetailShow.title}}</h4><hr>
-                <h4 class="lineSpacing">邮箱：{{tenantDetailShow.email}}</h4><hr>
-                <h4 class="lineSpacing">电话：{{tenantDetailShow.phone}}</h4><hr>
-                <h4 class="lineSpacing">地址：{{tenantDetailShow.address}}</h4><hr>
-                <h4 class="lineSpacing">附加消息：{{tenantDetailShow.additional_info}}</h4><hr>
-                <h4 class="lineSpacing">操作：<button class="btn btn-sm btn-info" ng-click="$location.path('tenantAdmin')" ng-click="showTenantTow()">查看租户下租户管理员</button></h4><hr>
-            </div>
-            <div id="tenantAdministrator">
-                 <table border="1" width="100%">
-                     <h2>租户管理员详情</h2>
-                     <thead>
-                     <tr>
-                         <th width="60%">租户管理员名称</th>
-                         <th>操作</th>
-                     </tr>
-                     </thead>
-                     <tbody>
-                     <tr ng-repeat="arr in tenantAdminInfo">
-                         <td>{{arr.name}}</td>
-                         <td><button class="btn btn-sm btn-info" data-toggle="modal" data-target="#showAdminInfo" ng-click="showAdminInfo(arr)">查看详情</button>
 
-                             <button class="btn btn-sm btn-danger" ng-click="deleteAdmin(arr)">删除</button></td>
-                     </tr>
-                     </tbody>
-                 </table>
-            </div>
-        </div>
 
 
     </div>
