@@ -94,7 +94,7 @@
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
-                            <span style="color: red;">*</span>姓名
+                            <span style="color: red;">*</span>名称
                         </label>
                         <input type="text" name="name" ng-model="name" style="pixels: 300px" placeholder="必填" id="tenantName" required/>
                         <span class="warning ng-hide" ng-show="myForm.name.$dirty && myForm.name.$invalid">
@@ -103,17 +103,16 @@
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
-                            <span style="color: red;">*</span>邮箱
+                            邮箱
                         </label>
-                        <input style="pixels: 300px" type="email" name="email" ng-model="email" placeholder="必填" id="tenantEmail"  required/>
+                        <input style="pixels: 300px" type="email" name="email" ng-model="email" placeholder="必填" id="tenantEmail"/>
                         <span class="warning ng-hide" ng-show="myForm.email.$dirty && myForm.email.$invalid">
-                            <span ng-show="myForm.email.$error.required">邮箱是必须的</span>
                             <span ng-show="myForm.email.$error.email">非法的邮箱地址</span>
                         </span>
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
-                            <span style="color: red;">*</span>电话
+                            电话
                         </label>
                         <input type="number" name="phone" ng-model="phone" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" style="pixels: 300px" placeholder="必填" id="tenantPhone"/>
                         <span class="warning ng-hide" ng-show="myForm.phone.$dirty && myForm.phone.$invalid">
@@ -123,13 +122,13 @@
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
-                            <span style="color: red;">*</span>地址
+                            地址
                         </label>
                         <input type="text" style="pixels: 300px" placeholder="必填" id="tenantAddress"/>
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
-                            <span style="color: red;">*</span>备注
+                            备注
                         </label>
                         <input type="text" style="pixels: 300px" placeholder="必填" id="tenantInfo" />
                     </div>
@@ -159,7 +158,7 @@
                         &times;
                     </button>
                     <h3 class="modal-title user" style="color: #305680;font-weight: 600">
-                        创建租户
+                        编辑租户
                     </h3>
                 </div>
                 <div class="modal-body">
@@ -170,25 +169,25 @@
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
-                        <span style="color: red;">*</span>邮箱
+                        邮箱
                     </label>
                     <input type="text" style="pixels: 300px" placeholder="必填" id="reTenantEmail"  required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
-                        <span style="color: red;">*</span>电话
+                        电话
                     </label>
                     <input type="text" style="pixels: 300px" placeholder="必填" id="reTenantPhone" required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
-                        <span style="color: red;">*</span>地址
+                        地址
                     </label>
                     <input type="text" style="pixels: 300px" placeholder="必填" id="reTenantAddress" required/>
                 </div>
                 <div class="modal-body">
                     <label class="col-sm-3 control-label" style="text-align: left">
-                        <span style="color: red;">*</span>附加消息
+                        附加消息
                     </label>
                     <input type="text" style="pixels: 300px" placeholder="必填" id="reTenantInfo" required/>
                 </div>
@@ -239,6 +238,8 @@
                     <h4 class="lineSpacing">姓名：{{adminInformation.name}}</h4><hr>
                     <h4 class="lineSpacing">邮箱：{{adminInformation.email}}</h4><hr>
                     <h4 class="lineSpacing">权限：{{adminInformation.authority}}</h4><hr>
+                    <h4 class="lineSpacing">电话：{{adminInformation.phone}}</h4><hr>
+                    <h4 class="lineSpacing">微信：{{adminInformation.we_chat}}</h4><hr>
                     <h4 class="lineSpacing">附加消息：{{adminInformation.additional_info}}</h4>
                 </div>
                 <div class="modal-footer">
@@ -296,7 +297,7 @@
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
-                            <span style="color: red;">*</span>电话
+                            电话
                         </label>
                         <input type="number" name="phone" ng-model="phone" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" style="pixels: 300px" placeholder="必填" id="adminPhone"/>
                         <span class="warning ng-hide" ng-show="myTenantForm.phone.$dirty && myTenantForm.phone.$invalid">
@@ -306,13 +307,13 @@
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
-                            <span style="color: red;">*</span>微信
+                            微信
                         </label>
                         <input type="text" style="pixels: 300px" placeholder="必填" id="adminWe_chart"/>
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
-                            <span style="color: red;">*</span>备注
+                            备注
                         </label>
                         <input type="text" style="pixels: 300px" placeholder="必填" id="adminAdditional_info"/>
                     </div>

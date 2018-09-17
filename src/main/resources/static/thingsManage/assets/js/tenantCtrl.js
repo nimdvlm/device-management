@@ -146,8 +146,10 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
                         window.location.reload();
                     },1000);
                 },
-                error:function (err) {
-                    alert("创建失败！");
+                error:function (jqXHR, textStatus, errorThrown) {
+                    //alert(jqXHR.responseText);
+                    //alert(JSON.parse(jqXHR.responseText).message);
+                    toastr.error(JSON.parse(jqXHR.responseText).message);
                 }
             });
 
@@ -182,7 +184,9 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
        var adminInfo = $resource('/api/account/user?userId=:userID',{userID:'@id'});
        adminInfo.get({userID:value.id}).$promise.then(function (items) {
            $scope.adminInformation = items;
+           //console.log(items);
        })
+
     }
 
 //Admin创建租户管理员
@@ -215,8 +219,12 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
                         window.location.reload();
                     },1000);
                 },
-                error:function (err) {
-                    alert("创建失败！");
+                error:function (jqXHR, textStatus, errorThrown) {
+                    //alert(jqXHR.responseText);
+                   // alert(JSON.parse(jqXHR.responseText).message);
+
+                    toastr.error(JSON.parse(jqXHR.responseText).message);
+
                 }
             });
 
