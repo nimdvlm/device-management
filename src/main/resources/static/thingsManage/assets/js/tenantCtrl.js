@@ -200,7 +200,9 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
             var additional_info = $("#adminAdditional_info").val();
             var email = $("#adminEmail").val();
             var password = $("#adminPassword").val();
-            var createAdminInfo = '{"tenant_id":'+'"'+tenantID+'"'+',"name":'+'"'+name+'"'+',"additional_info":'+'"'+additional_info+'"'+',"email":'+'"'+email+'"'+',"password":'+'"'+password+'"'+'}';
+            var phone = $("#adminPhone").val();
+            var we_chat = $("#adminWe_chart").val();
+            var createAdminInfo = '{"tenant_id":'+'"'+tenantID+'"'+',"name":'+'"'+name+'"'+',"additional_info":'+'"'+additional_info+'"'+',"email":'+'"'+email+'"'+',"password":'+'"'+password+'"'+',"phone":'+'"'+phone+'"'+',"we_chat":'+'"'+we_chat+'"'+'}';
             console.log(createAdminInfo);
             $.ajax({
                 url:"/api/account/tenantAdmin",

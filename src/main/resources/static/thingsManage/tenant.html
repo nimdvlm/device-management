@@ -115,9 +115,8 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             <span style="color: red;">*</span>电话
                         </label>
-                        <input type="number" name="phone" ng-model="phone" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" style="pixels: 300px" placeholder="必填" id="tenantPhone" required/>
+                        <input type="number" name="phone" ng-model="phone" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" style="pixels: 300px" placeholder="必填" id="tenantPhone"/>
                         <span class="warning ng-hide" ng-show="myForm.phone.$dirty && myForm.phone.$invalid">
-                            <span ng-show="myForm.phone.$error.required">手机是必须的</span>
                             <span ng-show="myForm.phone.$error.number">只能输入数字</span>
                             <span ng-show="myForm.phone.$error.pattern">手机格式不正确</span>
                         </span>
@@ -126,19 +125,13 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             <span style="color: red;">*</span>地址
                         </label>
-                        <input type="text" style="pixels: 300px" name="address" ng-model="address" placeholder="必填" id="tenantAddress" required/>
-                        <span class="warning ng-hide" ng-show="myForm.address.$dirty && myForm.address.$invalid">
-                            <span ng-show="myForm.address.$error.required">必填项</span>
-                        </span>
+                        <input type="text" style="pixels: 300px" placeholder="必填" id="tenantAddress"/>
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
                             <span style="color: red;">*</span>备注
                         </label>
-                        <input type="text" style="pixels: 300px" name="addInfomation" ng-model="addInfomation" placeholder="必填" id="tenantInfo" required/>
-                        <span class="warning ng-hide" ng-show="myForm.addInfomation.$dirty && myForm.addInfomation.$invalid">
-                            <span ng-show="myForm.addInfomation.$error.required">必填项</span>
-                        </span>
+                        <input type="text" style="pixels: 300px" placeholder="必填" id="tenantInfo" />
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalConfirmCreateTenant" ng-click="createTenant()">
@@ -303,12 +296,25 @@
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
+                            <span style="color: red;">*</span>电话
+                        </label>
+                        <input type="number" name="phone" ng-model="phone" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" style="pixels: 300px" placeholder="必填" id="adminPhone"/>
+                        <span class="warning ng-hide" ng-show="myTenantForm.phone.$dirty && myTenantForm.phone.$invalid">
+                            <span ng-show="myTenantForm.phone.$error.number">只能输入数字</span>
+                            <span ng-show="myTenantForm.phone.$error.pattern">手机格式不正确</span>
+                        </span>
+                    </div>
+                    <div class="modal-body">
+                        <label class="col-sm-3 control-label" style="text-align: left">
+                            <span style="color: red;">*</span>微信
+                        </label>
+                        <input type="text" style="pixels: 300px" placeholder="必填" id="adminWe_chart"/>
+                    </div>
+                    <div class="modal-body">
+                        <label class="col-sm-3 control-label" style="text-align: left">
                             <span style="color: red;">*</span>备注
                         </label>
-                        <input type="text" style="pixels: 300px" name="beiInfo" ng-model="beiInfo" placeholder="必填" id="adminAdditional_info" required/>
-                        <span class="warning ng-hide" ng-show="myTenantForm.beiInfo.$dirty && myTenantForm.beiInfo.$invalid">
-                            <span ng-show="myTenantForm.beiInfo.$error.required">必填项</span>
-                        </span>
+                        <input type="text" style="pixels: 300px" placeholder="必填" id="adminAdditional_info"/>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" id="modalConfirmCreateAdmin" ng-click="addAdmin(arr)">
