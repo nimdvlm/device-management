@@ -110,8 +110,8 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
                     window.location.reload();
                 },1000);
             },
-            error:function () {
-                alert("编辑失败");
+            error:function (jqXHR, textStatus, errorThrown) {
+                toastr.error(JSON.parse(jqXHR.responseText).message);
             }
         });
 

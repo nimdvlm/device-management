@@ -105,7 +105,7 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             邮箱
                         </label>
-                        <input style="pixels: 300px" type="email" name="email" ng-model="email" placeholder="必填" id="tenantEmail"/>
+                        <input style="pixels: 300px" type="email" name="email" ng-model="email" id="tenantEmail"/>
                         <span class="warning ng-hide" ng-show="myForm.email.$dirty && myForm.email.$invalid">
                             <span ng-show="myForm.email.$error.email">非法的邮箱地址</span>
                         </span>
@@ -114,7 +114,7 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             电话
                         </label>
-                        <input type="number" name="phone" ng-model="phone" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" style="pixels: 300px" placeholder="必填" id="tenantPhone"/>
+                        <input type="number" name="phone" ng-model="phone" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" style="pixels: 300px" id="tenantPhone"/>
                         <span class="warning ng-hide" ng-show="myForm.phone.$dirty && myForm.phone.$invalid">
                             <span ng-show="myForm.phone.$error.number">只能输入数字</span>
                             <span ng-show="myForm.phone.$error.pattern">手机格式不正确</span>
@@ -124,13 +124,13 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             地址
                         </label>
-                        <input type="text" style="pixels: 300px" placeholder="必填" id="tenantAddress"/>
+                        <input type="text" style="pixels: 300px" id="tenantAddress"/>
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
                             备注
                         </label>
-                        <input type="text" style="pixels: 300px" placeholder="必填" id="tenantInfo" />
+                        <input type="text" style="pixels: 300px" id="tenantInfo" />
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalConfirmCreateTenant" ng-click="createTenant()">
@@ -153,52 +153,63 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h3 class="modal-title user" style="color: #305680;font-weight: 600">
-                        编辑租户
-                    </h3>
-                </div>
-                <div class="modal-body">
-                    <label class="col-sm-3 control-label" style="text-align: left">
-                        <span style="color: red;">*</span>姓名
-                    </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" value="{{tenantDetailShow.title}}" id="reTenantName" required/>
-                </div>
-                <div class="modal-body">
-                    <label class="col-sm-3 control-label" style="text-align: left">
-                        邮箱
-                    </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" id="reTenantEmail"  required/>
-                </div>
-                <div class="modal-body">
-                    <label class="col-sm-3 control-label" style="text-align: left">
-                        电话
-                    </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" id="reTenantPhone" required/>
-                </div>
-                <div class="modal-body">
-                    <label class="col-sm-3 control-label" style="text-align: left">
-                        地址
-                    </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" id="reTenantAddress" required/>
-                </div>
-                <div class="modal-body">
-                    <label class="col-sm-3 control-label" style="text-align: left">
-                        附加消息
-                    </label>
-                    <input type="text" style="pixels: 300px" placeholder="必填" id="reTenantInfo" required/>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="editTenant()">
-                        确定
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        取消
-                    </button>
-                </div>
+                <form name="myEditForm" novalidate>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h3 class="modal-title user" style="color: #305680;font-weight: 600">
+                            编辑租户
+                        </h3>
+                    </div>
+                    <div class="modal-body">
+                        <label class="col-sm-3 control-label" style="text-align: left">
+                            <span style="color: red;">*</span>姓名
+                        </label>
+                        <input type="text" style="pixels: 300px" placeholder="必填" value="{{tenantDetailShow.title}}" id="reTenantName" required/>
+                    </div>
+                    <div class="modal-body">
+                        <label class="col-sm-3 control-label" style="text-align: left">
+                            邮箱
+                        </label>
+                        <input type="email" name="editEmail" ng-model="editEmail" style="pixels: 300px" id="reTenantEmail"/>
+                        <span class="warning ng-hide" ng-show="myEditForm.editEmail.$dirty && myEditForm.editEmail.$invalid">
+                        <span ng-show="myEditForm.editEmail.$error.email">非法的邮箱地址</span>
+                    </span>
+                    </div>
+
+                    <div class="modal-body">
+                        <label class="col-sm-3 control-label" style="text-align: left">
+                            电话
+                        </label>
+                        <input type="number" name="phone" ng-model="phone" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" style="pixels: 300px" id="reTenantPhone"/>
+                        <span class="warning ng-hide" ng-show="myEditForm.phone.$dirty && myEditForm.phone.$invalid">
+                            <span ng-show="myEditForm.phone.$error.number">只能输入数字</span>
+                            <span ng-show="myEditForm.phone.$error.pattern">手机格式不正确</span>
+                        </span>
+                    </div>
+                    <div class="modal-body">
+                        <label class="col-sm-3 control-label" style="text-align: left">
+                            地址
+                        </label>
+                        <input type="text" style="pixels: 300px" id="reTenantAddress" required/>
+                    </div>
+                    <div class="modal-body">
+                        <label class="col-sm-3 control-label" style="text-align: left">
+                            附加消息
+                        </label>
+                        <input type="text" style="pixels: 300px" id="reTenantInfo" required/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="editTenant()">
+                            确定
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            取消
+                        </button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
@@ -299,7 +310,7 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             电话
                         </label>
-                        <input type="number" name="phone" ng-model="phone" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" style="pixels: 300px" placeholder="必填" id="adminPhone"/>
+                        <input type="number" name="phone" ng-model="phone" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" style="pixels: 300px" id="adminPhone"/>
                         <span class="warning ng-hide" ng-show="myTenantForm.phone.$dirty && myTenantForm.phone.$invalid">
                             <span ng-show="myTenantForm.phone.$error.number">只能输入数字</span>
                             <span ng-show="myTenantForm.phone.$error.pattern">手机格式不正确</span>
@@ -309,13 +320,13 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             微信
                         </label>
-                        <input type="text" style="pixels: 300px" placeholder="必填" id="adminWe_chart"/>
+                        <input type="text" style="pixels: 300px" id="adminWe_chart"/>
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
                             备注
                         </label>
-                        <input type="text" style="pixels: 300px" placeholder="必填" id="adminAdditional_info"/>
+                        <input type="text" style="pixels: 300px" id="adminAdditional_info"/>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" id="modalConfirmCreateAdmin" ng-click="addAdmin(arr)">
