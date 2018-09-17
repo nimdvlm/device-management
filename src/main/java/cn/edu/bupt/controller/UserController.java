@@ -37,7 +37,7 @@ public class UserController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString()) ;
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -54,7 +54,7 @@ public class UserController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString());
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -71,7 +71,7 @@ public class UserController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString());
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -88,7 +88,7 @@ public class UserController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString());
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -105,6 +105,7 @@ public class UserController extends DefaultThingsboardAwaredController{
                     request.getSession());
             response.setStatus(responseContent.code());
         } catch (Exception e) {
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -124,7 +125,7 @@ public class UserController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString()) ;
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -143,7 +144,7 @@ public class UserController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString()) ;
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -163,7 +164,7 @@ public class UserController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString()) ;
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -182,7 +183,7 @@ public class UserController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString()) ;
+            throw new RuntimeException(e.toString());
         }
     }
 

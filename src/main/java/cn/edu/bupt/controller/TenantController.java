@@ -1,5 +1,6 @@
 package cn.edu.bupt.controller;
 
+import cn.edu.bupt.exception.RequestException;
 import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -39,7 +40,7 @@ public class TenantController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString()) ;
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -56,7 +57,7 @@ public class TenantController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString());
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -73,14 +74,14 @@ public class TenantController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString());
+            throw new RuntimeException(e.toString());
         }
     }
 
     @Transactional
     @RequestMapping(value = "/tenant",params = {"tenantId"}, method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteTenant(@RequestParam Integer tenantId) {
+    public void deleteTenant(@RequestParam Integer tenantId){
         String requestAddr = API_PREFIX + "tenant";
         StringBuffer param = new StringBuffer();
         param.append("tenantId").append("=").append(tenantId);
@@ -90,6 +91,7 @@ public class TenantController extends DefaultThingsboardAwaredController{
                     request.getSession());
             response.setStatus(responseContent.code());
         } catch (Exception e) {
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -108,7 +110,7 @@ public class TenantController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString()) ;
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -127,7 +129,7 @@ public class TenantController extends DefaultThingsboardAwaredController{
             response.setStatus(responseContent.code());
             responseContent.body().string();
         } catch (Exception e) {
-            retFail(e.toString()) ;
+            throw new RuntimeException(e.toString());
         }
     }
 }
