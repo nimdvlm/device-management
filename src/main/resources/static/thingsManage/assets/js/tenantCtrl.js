@@ -76,8 +76,15 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
             }
 
             $scope.tenantDetailShow = value;
+            console.log("查看显示租户详情");
+            console.log($scope.tenantDetailShow);
+            $scope.reTenantName = $scope.tenantDetailShow.title;
+            $scope.reTenantEmail = $scope.tenantDetailShow.email;
+            $scope.reTenantPhone = parseInt($scope.tenantDetailShow.phone);
+            $scope.reTenantAddress = $scope.tenantDetailShow.address;
+            $scope.reTenantInfo = $scope.tenantDetailShow.additional_info;
 
-        })
+        });
         /*点击显示租户管理员详情*/
         var tenantAdminDetail = $resource('/api/account/tenant/users?tenantId=:adminID'+'&limit=9&page=0',{adminID:tenantID});
         $scope.tenantAdminInfo = tenantAdminDetail.query();
@@ -92,16 +99,23 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
         //console.log($scope.tenantGroupID);
         //console.log($scope.tenantTitle);
         //console.log(tenantID);
-        var email=$("#reTenantEmail").val();
+        var editTenantGroup = {};
+        editTenantGroup.id = $scope.tenantGroupID;
+        editTenantGroup.email = $scope.reTenantEmail;
+        editTenantGroup.title = $scope.reTenantName;
+        editTenantGroup.additional_info = $scope.reTenantInfo;
+        editTenantGroup.phone = $scope.reTenantPhone;
+        editTenantGroup.address = $scope.reTenantAddress;
+       /* var email=$("#reTenantEmail").val();
         var additional_info=$("#reTenantInfo").val();
         var phone=$("#reTenantPhone").val();
-        var address=$("#reTenantAddress").val();
-
-        var editTenantGroup = '{"id":'+'"'+$scope.tenantGroupID+'"'+',"email":'+'"'+email+'"'+',"title":'+'"'+$scope.tenantTitle+'"'+',"additional_info":'+'"'+additional_info+'"'+',"phone":'+'"'+phone+'"'+',"address":'+'"'+address+'"'+'}';
-        console.log(editTenantGroup);
+        var address=$("#reTenantAddress").val();*/
+        //var editTenantGroup = '{"id":'+'"'+$scope.tenantGroupID+'"'+',"email":'+'"'+email+'"'+',"title":'+'"'+$scope.tenantTitle+'"'+',"additional_info":'+'"'+additional_info+'"'+',"phone":'+'"'+phone+'"'+',"address":'+'"'+address+'"'+'}';
+       $scope.editTenantGroup = JSON.stringify(editTenantGroup);
+        console.log($scope.editTenantGroup);
         $.ajax({
             url:"/api/account/tenant",
-            data:editTenantGroup,
+            data:$scope.editTenantGroup,
             type:"PUT",
             contentType: "application/json; charset=utf-8",//post请求必须
             success:function () {

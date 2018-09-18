@@ -166,15 +166,15 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             <span style="color: red;">*</span>姓名
                         </label>
-                        <input type="text" style="pixels: 300px" placeholder="必填" value="{{tenantDetailShow.title}}" id="reTenantName" required/>
+                        <input type="text" style="pixels: 300px" placeholder="必填" ng-model="reTenantName" id="reTenantName" required/>
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
                             邮箱
                         </label>
-                        <input type="email" name="editEmail" ng-model="editEmail" style="pixels: 300px" id="reTenantEmail"/>
-                        <span class="warning ng-hide" ng-show="myEditForm.editEmail.$dirty && myEditForm.editEmail.$invalid">
-                        <span ng-show="myEditForm.editEmail.$error.email">非法的邮箱地址</span>
+                        <input type="email" name="reTenantEmail" ng-model="reTenantEmail" style="pixels: 300px" id="reTenantEmail"/>
+                        <span class="warning ng-hide" ng-show="myEditForm.reTenantEmail.$dirty && myEditForm.reTenantEmail.$invalid">
+                        <span ng-show="myEditForm.reTenantEmail.$error.email">非法的邮箱地址</span>
                     </span>
                     </div>
 
@@ -182,23 +182,23 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             电话
                         </label>
-                        <input type="number" name="phone" ng-model="phone" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" style="pixels: 300px" id="reTenantPhone"/>
-                        <span class="warning ng-hide" ng-show="myEditForm.phone.$dirty && myEditForm.phone.$invalid">
-                            <span ng-show="myEditForm.phone.$error.number">只能输入数字</span>
-                            <span ng-show="myEditForm.phone.$error.pattern">手机格式不正确</span>
+                        <input type="number" name="reTenantPhone" ng-model="reTenantPhone" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" style="pixels: 300px" id="reTenantPhone"/>
+                        <span class="warning ng-hide" ng-show="myEditForm.reTenantPhone.$dirty && myEditForm.reTenantPhone.$invalid">
+                            <span ng-show="myEditForm.reTenantPhone.$error.number">只能输入数字</span>
+                            <span ng-show="myEditForm.reTenantPhone.$error.pattern">手机格式不正确</span>
                         </span>
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
                             地址
                         </label>
-                        <input type="text" style="pixels: 300px" id="reTenantAddress" required/>
+                        <input type="text" style="pixels: 300px" ng-model="reTenantAddress" id="reTenantAddress" required/>
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
                             附加消息
                         </label>
-                        <input type="text" style="pixels: 300px" id="reTenantInfo" required/>
+                        <input type="text" style="pixels: 300px" ng-model="reTenantInfo" id="reTenantInfo" required/>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" ng-click="editTenant()">
@@ -304,6 +304,17 @@
                         <input type="password" name="password" ng-model="password" style="pixels: 300px" placeholder="必填" id="adminPassword" required/>
                         <span class="warning ng-hide" ng-show="myTenantForm.password.$dirty && myTenantForm.password.$invalid">
                             <span ng-show="myTenantForm.password.$error.required">必填项</span>
+                        </span>
+                    </div>
+
+                    <div class="modal-body">
+                        <label class="col-sm-3 control-label" style="text-align: left">
+                            <span style="color: red;">*</span>确认密码
+                        </label>
+                        <input type="password"ng-model="passwordagain" name="passwordagain" style="pixels: 300px" placeholder="必填" id="reAdminPassword" required/>
+                        <span class="warning ng-hide" ng-show="myTenantForm.password.$valid">
+                            <span ng-show="myTenantForm.passwordagain.$error.required">必填项</span>
+                            <span ng-show="passwordagain!=password">两次密码输入不一致</span>
                         </span>
                     </div>
                     <div class="modal-body">
