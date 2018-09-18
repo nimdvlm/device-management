@@ -425,13 +425,26 @@ DEVICELIST STYLES
     word-wrap: break-word;
 }
 /* =============================================================
-serviceGroup
+serviceGroup  &   deviceModelManagement
 ============================================================ */
+.deviceTypeIcon{
+    width: 100%;
+}
+.deviceTypeIconStyle{
+    width: 22%;
+    height: 170px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid #c0c0c0;
+    background: white;
+    margin: 16px;
+    display: inline-block;
+}
+
 .abilityIcon{
     width: 60%;
     float: left;
     margin-left: 10px;
-
 }
 .abilityBackgroundstyle{
     width: 210px;

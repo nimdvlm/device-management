@@ -10,22 +10,22 @@
             </div>
         </div>
 
+        <div class="deviceTypeIcon">
+            <div class="deviceTypeIconStyle" ng-repeat="item in deviceTypeGroups" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                <p class="style" style="padding-top: 5px"><i class="fa fa-angle-double-right fa-cart-plus"></i> 厂商：{{item.manufacturer.manufacturerName}} <i title="删除" ng-click="deleteDeviceType(item)" style="float: right;margin-right: 10px" class="glyphicon glyphicon-trash"></i></p>
+                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备类型：{{item.deviceType.deviceTypeName}}</p>
+                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 型号：{{item.model.modelName}}</p>
+                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 图标：{{item.model.deviceIcon}}</p>
+                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备在线时间：{{item.model.limitLifetime}}</p>
+            </div>
+        </div>
 
-        <!--div class="row">
-            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
-            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
-            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
-            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
-            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
-            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
-            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
-            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
-            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="height: 50px;background: red;margin: 10px"></div>
-        </div-->
+
+
     </div>
 
 
-    <!--创建能力组弹出界面-->
+    <!--创建设备模态框-->
     <div class="modal fade" id="addDeviceModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
