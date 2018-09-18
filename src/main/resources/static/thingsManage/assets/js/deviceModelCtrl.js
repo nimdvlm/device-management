@@ -20,31 +20,49 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
 
 
     /*删除*/
-    $scope.deleteDeviceType = function (item) {
+    $scope.deleteDeviceTypeIcon = function (item) {
         console.log(item);
         console.log(item.model.modelId);
+        $scope.modelId = item.model.modelId;
+    };
+    $scope.deleteDeviceType = function () {
         var deleteDevice = $resource('/api/devicetype/delete?modelId=:id');
-        deleteDevice.delete({id: item.model.modelId},{} , function (resp) {
-            console.log(resp);
-            alert("删除success！");
-            location.reload();
+        deleteDevice.delete({id: $scope.modelId},{} , function (resp) {
+            //console.log(resp);
+            toastr.success("删除成功！");
+            setTimeout(function () {
+                window.location.reload();
+            },500);
         }, function (resp) {
-            console.log("删除失败");
-            alert("删除失败！")
+            toastr.error("删除失败！");
         });
     }
 
-    /*删除能力组
-    $scope.delAG = function () {
-        var delAGObj = $resource('/api/v1/abilityGroup?modelId=:id');
-        delAGObj.delete({id: modelId},{} , function (resp) {
+    $scope.addDeviceModel = function () {
+        var createDeviceModel = {};
+        createDeviceModel.manufacturerName = $("#manufacturerName").val();
+        createDeviceModel.deviceType = $("#deviceType").val();
+        createDeviceModel.model = $("#deviceModel").val();
+        createDeviceModel.icon = $("#potatoIcon").val();
+        createDeviceModel.limit_lifetime = $("#LimitTime").val();
+        $scope.createDeviceModel = JSON.stringify(createDeviceModel);
+        console.log($scope.createDeviceModel);
+        var createDeviceGroupObj =  $resource("/api/devicetype/insert");
+        $scope.deviceInfomation = createDeviceGroupObj.save({},$scope.createDeviceModel,function (resp) {
             //console.log(resp);
-            $("#deleteSM").modal("hide");
-            location.reload();
-        }, function (resp) {
-            console.log("删除失败");
-            alert("删除失败！")
+            toastr.success("新增设备成功！");
+            setTimeout(function () {
+                window.location.reload();
+            },500);
+        },function (error) {
+            toastr.error("新增设备失败！");
         });
-    }*/
+    }
+
+
+
+
+
+
 
 });

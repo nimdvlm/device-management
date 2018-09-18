@@ -12,7 +12,8 @@
 
         <div class="deviceTypeIcon">
             <div class="deviceTypeIconStyle" ng-repeat="item in deviceTypeGroups" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
-                <p class="style" style="padding-top: 5px"><i class="fa fa-angle-double-right fa-cart-plus"></i> 厂商：{{item.manufacturer.manufacturerName}} <i title="删除" ng-click="deleteDeviceType(item)" style="float: right;margin-right: 10px" class="glyphicon glyphicon-trash"></i></p>
+                <p class="style" style="padding-top: 5px"><i class="fa fa-angle-double-right fa-cart-plus"></i> 厂商：{{item.manufacturer.manufacturerName}}
+                    <i title="删除" data-toggle="modal" data-target="#deleteSM" ng-click="deleteDeviceTypeIcon(item)" style="float: right;margin-right: 10px" class="glyphicon glyphicon-trash"></i></p>
                 <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备类型：{{item.deviceType.deviceTypeName}}</p>
                 <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 型号：{{item.model.modelName}}</p>
                 <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 图标：{{item.model.deviceIcon}}</p>
@@ -79,7 +80,32 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
-
+    <!--删除能力组界面弹出框-->
+    <div class="modal fade" id="deleteSM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModaLabel">
+                        删除设备型号管理
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    确定删除此设备型号管理？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="deleteDeviceType()">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
 
 
 </div>
