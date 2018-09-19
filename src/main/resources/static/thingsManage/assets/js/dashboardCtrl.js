@@ -320,6 +320,9 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         formData.entity_type=$scope.add_entity_type.name
         formData.dashboard_id=$scope.dbItem.id
 
+        //@TODO 从子组建获取position
+        formData.position="100px"//后端接口调整，临时赋值为常值
+
         console.log(formData)
         var addEntity = $resource('/api/dashboard/entity/insert');
         addEntity.save({}, formData)
