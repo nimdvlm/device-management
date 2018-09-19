@@ -1,11 +1,22 @@
 package cn.edu.bupt.controller;
 
+import cn.edu.bupt.utils.HttpUtil;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by Administrator on 2017/12/23.
@@ -16,8 +27,13 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class NavigationController {
 
+
+
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private HttpServletResponse response;
 
     @RequestMapping("/")
     public String  index() {
@@ -48,6 +64,42 @@ public class NavigationController {
     @RequestMapping("/home")
     public String  getHomepage() {
         return "static/login/chooseIndex";
+    }
+
+    @RequestMapping("/autoLogin")
+    public String  autoLogin(@RequestParam String username, @RequestParam String password) {
+        HttpSession session = request.getSession();
+        session.setAttribute("username", username);
+        session.setAttribute("password", password);
+
+        String res = HttpUtil.getAccessToken(session);
+        JsonObject responseJson = (JsonObject) new JsonParser().parse(res);
+        if(responseJson.has("error")){
+            response.setStatus(400);
+            session.removeAttribute("username");
+            session.removeAttribute("password");
+        }else if(responseJson.has("access_token")){
+            UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
+            Subject subject = SecurityUtils.getSubject();
+            subject.login(usernamePasswordToken);   //完成登录
+        }
+
+        Cookie userLevel = new Cookie("userLevel",responseJson.get("authority").getAsString());
+        Cookie tenantId = new Cookie("tenantId",responseJson.get("tenant_id").getAsString());
+        Cookie userId = new Cookie("userId",responseJson.get("user_id").getAsString());
+        Cookie customerId = new Cookie("customerId",responseJson.get("customer_id").getAsString());
+        response.addCookie(userLevel);
+        response.addCookie(tenantId);
+        response.addCookie(userId);
+        response.addCookie(customerId);
+        String authority = responseJson.get("authority").getAsString();
+        if(authority.equals("TENANT_ADMIN")) {
+            return "redirect:/thingsTenantManager";
+        }else if(authority.equals("SYS_ADMIN")){
+            return "redirect:/thingsSystemManager";
+        }else{
+            return "redirect:/thingsUserManager";
+        }
     }
 
     @RequestMapping("/thingsUserManager")

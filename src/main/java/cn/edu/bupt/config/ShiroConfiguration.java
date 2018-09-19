@@ -31,6 +31,7 @@ public class ShiroConfiguration {
         bean.setSuccessUrl("/homepages");
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap=new LinkedHashMap<>();
+        filterChainDefinitionMap.put("/autoLogin", "anon"); //表示可以匿名访问
         filterChainDefinitionMap.put("/login", "anon"); //表示可以匿名访问
         filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/signup", "anon");
