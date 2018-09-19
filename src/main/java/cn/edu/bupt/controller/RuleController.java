@@ -294,6 +294,133 @@ public class RuleController extends DefaultThingsboardAwaredController{
         return retSuccess("");
     }
 
+    @RequestMapping(value = "/updateRule", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateRule(@RequestBody String ruleInfo){
+        String requestAddr = "/api/v1/smartruler/updateRule";
+        JsonObject ruleInfoJson = (JsonObject)new JsonParser().parse(ruleInfo);
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getSmartRulerServer() + requestAddr,
+                    null,
+                    ruleInfoJson,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/updateFilter", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateFilter(@RequestBody String filterInfo){
+        String requestAddr = "/api/v1/smartruler/updateFilter";
+        JsonObject ruleInfoJson = (JsonObject)new JsonParser().parse(filterInfo);
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getSmartRulerServer() + requestAddr,
+                    null,
+                    ruleInfoJson,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/updateTransform", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateTransform(@RequestBody String transformInfo){
+        String requestAddr = "/api/v1/smartruler/updateTransform";
+        JsonObject ruleInfoJson = (JsonObject)new JsonParser().parse(transformInfo);
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getSmartRulerServer() + requestAddr,
+                    null,
+                    ruleInfoJson,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/deleteFilter/{filterId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String deleteFilter(@PathVariable("filterId") String filterId){
+        String requestAddr = "/api/v1/smartruler/deleteFilter/"+filterId;
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getSmartRulerServer() + requestAddr,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/deleteTransform/{transformId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String deleteTransform(@PathVariable("transformId") String transformId){
+        String requestAddr = "/api/v1/smartruler/deleteTransform/"+transformId;
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getSmartRulerServer() + requestAddr,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/addFilter/{ruleId}", method = RequestMethod.POST)
+    @ResponseBody
+    public String addFilter(@RequestBody String filterInfo, @PathVariable("ruleId") String ruleId){
+        String requestAddr = "/api/v1/smartruler/addFilter/"+ruleId;
+        JsonObject ruleInfoJson = (JsonObject)new JsonParser().parse(filterInfo);
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getSmartRulerServer() + requestAddr,
+                    null,
+                    ruleInfoJson,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
+    @RequestMapping(value = "/addTransform/{ruleId}", method = RequestMethod.POST)
+    @ResponseBody
+    public String addTransform(@RequestBody String transformInfo, @PathVariable("ruleId") String ruleId){
+        String requestAddr = "/api/v1/smartruler/addTransform/"+ruleId;
+        JsonObject ruleInfoJson = (JsonObject)new JsonParser().parse(transformInfo);
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getSmartRulerServer() + requestAddr,
+                    null,
+                    ruleInfoJson,
+                    request.getSession());
+        }catch(Exception e){
+            return retFail(e.toString()) ;
+        }
+
+        return retSuccess(responseContent);
+    }
+
     private String getErrorMsg(Exception e) {
         JsonObject errorInfoJson = new JsonObject();
         errorInfoJson.addProperty("response_code", 1);
