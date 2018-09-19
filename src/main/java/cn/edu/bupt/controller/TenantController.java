@@ -1,12 +1,17 @@
 package cn.edu.bupt.controller;
 
+import cn.edu.bupt.exception.RequestException;
 import cn.edu.bupt.utils.HttpUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by CZX on 2018/5/6.
@@ -15,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/account")
 @Slf4j
 public class TenantController extends DefaultThingsboardAwaredController{
+
+    @Autowired
+    private HttpServletResponse response;
 
     public static final String API_PREFIX = "/api/v1/account/";
 
@@ -25,14 +33,14 @@ public class TenantController extends DefaultThingsboardAwaredController{
         StringBuffer param = new StringBuffer();
         param.append("tenantId").append("=").append(tenantId);
         requestAddr = requestAddr + "?" + param ;
-        String responseContent = null ;
         try {
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getAccountServer() + requestAddr,
+            Response responseContent = HttpUtil.sendGet("http://" + getAccountServer() + requestAddr,
                     null,
                     request.getSession()) ;
-            return responseContent;
+            response.setStatus(responseContent.code());
+            return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString()) ;
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -41,15 +49,15 @@ public class TenantController extends DefaultThingsboardAwaredController{
     public String createTenant(@RequestBody String tenantInfo) {
         String requestAddr = API_PREFIX + "tenant";
         JsonObject TenantInfoJson = (JsonObject) new JsonParser().parse(tenantInfo);
-        String responseContent = null;
         try {
-            responseContent = HttpUtil.sendPostToThingsboard("http://" + getAccountServer() + requestAddr,
+            Response responseContent = HttpUtil.sendPost("http://" + getAccountServer() + requestAddr,
                     null,
                     TenantInfoJson,
                     request.getSession());
-            return responseContent;
+            response.setStatus(responseContent.code());
+            return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString());
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -58,31 +66,32 @@ public class TenantController extends DefaultThingsboardAwaredController{
     public String updateTenant(@RequestBody String tenantInfo) {
         String requestAddr = API_PREFIX + "tenant";
         JsonObject TenantInfoJson = (JsonObject) new JsonParser().parse(tenantInfo);
-        String responseContent = null;
         try {
-            responseContent = HttpUtil.sendPutToThingsboard("http://" + getAccountServer() + requestAddr,
+            Response responseContent = HttpUtil.sendPut("http://" + getAccountServer() + requestAddr,
                     null,
                     TenantInfoJson,
                     request.getSession());
-            return responseContent;
+            response.setStatus(responseContent.code());
+            return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString());
+            throw new RuntimeException(e.toString());
         }
     }
 
     @Transactional
     @RequestMapping(value = "/tenant",params = {"tenantId"}, method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteTenant(@RequestParam Integer tenantId) {
+    public void deleteTenant(@RequestParam Integer tenantId){
         String requestAddr = API_PREFIX + "tenant";
         StringBuffer param = new StringBuffer();
         param.append("tenantId").append("=").append(tenantId);
         requestAddr = requestAddr + "?" + param ;
-        String responseContent = null;
         try {
-            responseContent = HttpUtil.sendDeletToThingsboard("http://" + getAccountServer() + requestAddr,
+            Response responseContent = HttpUtil.sendDelet("http://" + getAccountServer() + requestAddr,
                     request.getSession());
+            response.setStatus(responseContent.code());
         } catch (Exception e) {
+            throw new RuntimeException(e.toString());
         }
     }
 
@@ -94,14 +103,33 @@ public class TenantController extends DefaultThingsboardAwaredController{
         StringBuffer param = new StringBuffer();
         param.append("limit").append("=").append(limit).append("&").append("page").append("=").append(page);
         requestAddr = requestAddr + "?" + param ;
-        String responseContent = null;
         try {
-            responseContent = HttpUtil.sendGetToThingsboard("http://" + getAccountServer() + requestAddr,
+            Response responseContent = HttpUtil.sendGet("http://" + getAccountServer() + requestAddr,
                     null,
                     request.getSession()) ;
-            return responseContent;
+            response.setStatus(responseContent.code());
+            return responseContent.body().string();
         } catch (Exception e) {
-            return retFail(e.toString()) ;
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    @RequestMapping(value = "/tenant/updateSuspendedStatus", params = {  "suspended","tenantId" }, method = RequestMethod.PUT)
+    @ResponseBody
+    public void updateSuspended(@RequestParam Boolean suspended,@RequestParam int tenantId) {
+        String requestAddr = API_PREFIX + "updateSuspendedStatus";
+        StringBuffer param = new StringBuffer();
+        param.append("suspended").append("=").append(suspended).append("&").append("id").append("=").append(tenantId);
+        requestAddr = requestAddr + "?" + param ;
+        try {
+            Response responseContent = HttpUtil.sendPut("http://" + getAccountServer() + requestAddr,
+                    null,
+                    null,
+                    request.getSession()) ;
+            response.setStatus(responseContent.code());
+            responseContent.body().string();
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
         }
     }
 }

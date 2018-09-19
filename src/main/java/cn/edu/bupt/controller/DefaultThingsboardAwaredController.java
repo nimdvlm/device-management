@@ -56,6 +56,12 @@ public class DefaultThingsboardAwaredController {
     @Value("${dashboard.port}")
     String dashboardPort ;
 
+    @Value("${devicetype-management.host}")
+    String deviceTypeManagementHost ;
+
+    @Value("${devicetype-management.port}")
+    String deviceTypeManagementPort ;
+
     @Autowired
     HttpServletRequest request;
 
@@ -84,6 +90,10 @@ public class DefaultThingsboardAwaredController {
 
     protected String getDashboardServer() {
         return dashboardHost+":"+dashboardPort ;
+    }
+
+    protected String getDeviceTypeManagementServer() {
+        return deviceTypeManagementHost+":"+deviceTypeManagementPort ;
     }
 
     protected String retSuccess(String msg) {

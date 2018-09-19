@@ -60,10 +60,31 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
         var tenantDetail = $resource('/api/account/tenant?tenantId=:tenantID',{tenantID:'@id'});
         //console.log(item.id);
         tenantDetail.get({tenantID:item.id}).$promise.then(function (value) {
-            //console.log(value);
-            $scope.tenantDetailShow = value;
+            console.log("查看是否显示disable");
+            console.log(value);
+            $scope.tenantDisable = value.suspendedStatus;
+            console.log($scope.tenantDisable);
+            $scope.tenantId = value.id;
+            console.log($scope.tenantId);
+            //判断显示哪种按钮；
+            if($scope.tenantDisable == "false"){
+                $scope.enable_disable = true;
+                $scope.tenantDisable = false;
+            }else {
+                $scope.enable_disable = false;
+                $scope.tenantDisable = true;
+            }
 
-        })
+            $scope.tenantDetailShow = value;
+            console.log("查看显示租户详情");
+            console.log($scope.tenantDetailShow);
+            $scope.reTenantName = $scope.tenantDetailShow.title;
+            $scope.reTenantEmail = $scope.tenantDetailShow.email;
+            $scope.reTenantPhone = parseInt($scope.tenantDetailShow.phone);
+            $scope.reTenantAddress = $scope.tenantDetailShow.address;
+            $scope.reTenantInfo = $scope.tenantDetailShow.additional_info;
+
+        });
         /*点击显示租户管理员详情*/
         var tenantAdminDetail = $resource('/api/account/tenant/users?tenantId=:adminID'+'&limit=9&page=0',{adminID:tenantID});
         $scope.tenantAdminInfo = tenantAdminDetail.query();
@@ -78,16 +99,23 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
         //console.log($scope.tenantGroupID);
         //console.log($scope.tenantTitle);
         //console.log(tenantID);
-        var email=$("#reTenantEmail").val();
+        var editTenantGroup = {};
+        editTenantGroup.id = $scope.tenantGroupID;
+        editTenantGroup.email = $scope.reTenantEmail;
+        editTenantGroup.title = $scope.reTenantName;
+        editTenantGroup.additional_info = $scope.reTenantInfo;
+        editTenantGroup.phone = $scope.reTenantPhone;
+        editTenantGroup.address = $scope.reTenantAddress;
+       /* var email=$("#reTenantEmail").val();
         var additional_info=$("#reTenantInfo").val();
         var phone=$("#reTenantPhone").val();
-        var address=$("#reTenantAddress").val();
-
-        var editTenantGroup = '{"id":'+'"'+$scope.tenantGroupID+'"'+',"email":'+'"'+email+'"'+',"title":'+'"'+$scope.tenantTitle+'"'+',"additional_info":'+'"'+additional_info+'"'+',"phone":'+'"'+phone+'"'+',"address":'+'"'+address+'"'+'}';
-        console.log(editTenantGroup);
+        var address=$("#reTenantAddress").val();*/
+        //var editTenantGroup = '{"id":'+'"'+$scope.tenantGroupID+'"'+',"email":'+'"'+email+'"'+',"title":'+'"'+$scope.tenantTitle+'"'+',"additional_info":'+'"'+additional_info+'"'+',"phone":'+'"'+phone+'"'+',"address":'+'"'+address+'"'+'}';
+       $scope.editTenantGroup = JSON.stringify(editTenantGroup);
+        console.log($scope.editTenantGroup);
         $.ajax({
             url:"/api/account/tenant",
-            data:editTenantGroup,
+            data:$scope.editTenantGroup,
             type:"PUT",
             contentType: "application/json; charset=utf-8",//post请求必须
             success:function () {
@@ -96,8 +124,8 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
                     window.location.reload();
                 },1000);
             },
-            error:function () {
-                alert("编辑失败");
+            error:function (jqXHR, textStatus, errorThrown) {
+                toastr.error(JSON.parse(jqXHR.responseText).message);
             }
         });
 
@@ -132,8 +160,10 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
                         window.location.reload();
                     },1000);
                 },
-                error:function (err) {
-                    alert("创建失败！");
+                error:function (jqXHR, textStatus, errorThrown) {
+                    //alert(jqXHR.responseText);
+                    //alert(JSON.parse(jqXHR.responseText).message);
+                    toastr.error(JSON.parse(jqXHR.responseText).message);
                 }
             });
 
@@ -168,7 +198,9 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
        var adminInfo = $resource('/api/account/user?userId=:userID',{userID:'@id'});
        adminInfo.get({userID:value.id}).$promise.then(function (items) {
            $scope.adminInformation = items;
+           //console.log(items);
        })
+
     }
 
 //Admin创建租户管理员
@@ -186,7 +218,9 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
             var additional_info = $("#adminAdditional_info").val();
             var email = $("#adminEmail").val();
             var password = $("#adminPassword").val();
-            var createAdminInfo = '{"tenant_id":'+'"'+tenantID+'"'+',"name":'+'"'+name+'"'+',"additional_info":'+'"'+additional_info+'"'+',"email":'+'"'+email+'"'+',"password":'+'"'+password+'"'+'}';
+            var phone = $("#adminPhone").val();
+            var we_chat = $("#adminWe_chart").val();
+            var createAdminInfo = '{"tenant_id":'+'"'+tenantID+'"'+',"name":'+'"'+name+'"'+',"additional_info":'+'"'+additional_info+'"'+',"email":'+'"'+email+'"'+',"password":'+'"'+password+'"'+',"phone":'+'"'+phone+'"'+',"we_chat":'+'"'+we_chat+'"'+'}';
             console.log(createAdminInfo);
             $.ajax({
                 url:"/api/account/tenantAdmin",
@@ -199,8 +233,12 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
                         window.location.reload();
                     },1000);
                 },
-                error:function (err) {
-                    alert("创建失败！");
+                error:function (jqXHR, textStatus, errorThrown) {
+                    //alert(jqXHR.responseText);
+                   // alert(JSON.parse(jqXHR.responseText).message);
+
+                    toastr.error(JSON.parse(jqXHR.responseText).message);
+
                 }
             });
 
@@ -236,6 +274,33 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
         }
     }
 
+
+
+
+    $scope.enableDisable = function () {
+        /*console.log($scope.tenantDisable);
+        console.log($scope.tenantId);
+        console.log($scope.enable_disable);*/
+        $scope.enable_disable = !$scope.enable_disable;
+        $scope.tenantDisable = !$scope.tenantDisable;
+
+        $.ajax({
+            url: "/api/account/tenant/updateSuspendedStatus?suspended="+$scope.tenantDisable+"&tenantId="+$scope.tenantId,
+            contentType: "application/json; charset=utf-8",//post请求必须
+            dataType: "text",
+            type: "PUT",
+            success: function () {
+                toastr.success("success!");
+                setTimeout(function () {
+                    window.location.reload();
+                },1000);
+            },
+            error: function () {
+                toastr.error("失败！");
+
+            }
+        });
+    }
 
 
 }]);

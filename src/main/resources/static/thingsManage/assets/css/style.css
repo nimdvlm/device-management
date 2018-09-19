@@ -93,7 +93,7 @@
             padding: 17px 25px;
         }
         #side-menu ul .tenantMenu{
-            padding: 15px 25px;
+            padding: 13px 25px;
         }
 
         #side-menu ul li a i {
@@ -425,13 +425,26 @@ DEVICELIST STYLES
     word-wrap: break-word;
 }
 /* =============================================================
-serviceGroup
+serviceGroup  &   deviceModelManagement
 ============================================================ */
+.deviceTypeIcon{
+    width: 100%;
+}
+.deviceTypeIconStyle{
+    width: 22%;
+    height: 170px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid #c0c0c0;
+    background: white;
+    margin: 16px;
+    display: inline-block;
+}
+
 .abilityIcon{
     width: 60%;
     float: left;
     margin-left: 10px;
-
 }
 .abilityBackgroundstyle{
     width: 210px;
@@ -477,6 +490,9 @@ serviceGroup
 
     margin-top: 30px;
 
+}
+.warning{
+    color: red;
 }
 /* =============================================================
 pluginsGroup
@@ -715,15 +731,18 @@ width: 35%;
     color: rgba(43, 76, 227, 0.4);
 }
 .dashboard_item{
-    float: left;
-    width: 50%;
-    top: 200px;
-    left:500px;
+    /*float: left;*/
+    width: 25%;
+    /*top: 200px;
+    left:500px;*/
     border: 1px solid rgba(25, 100, 173, 0.5);
     min-height: 270px;
     box-shadow: 1px 2px 1px rgba(0,0,0,0.172);
     background-color: white;
     position: absolute;
+}
+.showEchartsChart{
+    top: 200px;
 }
 #addDBwidget_table tr{
     height: 40px;
@@ -759,11 +778,6 @@ width: 35%;
 
 }
 */
-#tenantIcon{
-    margin-right: 500px;
-    float: left;
-    margin-left: 10px;
-}
 .tenantChoose{
     width: 150px;
     height: 100px;

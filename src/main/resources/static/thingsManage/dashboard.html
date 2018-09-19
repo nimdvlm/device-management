@@ -35,18 +35,36 @@
                     <span data-toggle="modal" data-target="#delDashboard">
                         <i class="glyphicon glyphicon-trash fa-lg shand dbicon" title="删除仪表板"></i>
                     </span>
+                    <span>
+                        <i class="glyphicon glyphicon-check fa-lg shand dbicon" ng-click="saveEditDashboard()" title="保存仪表盘"></i>
+                    </span>
                 </div>
             </div>
-
-            <div class="dashboard_item wei" wei-yi ng-repeat="entity in entitys">
+            <!--div class="dashboard_item" wei-yi left="left" top="top" ng-repeat="entity in entitys track by $index">
                 <div class="entity_title">
                     <span id="entity_name">{{entity.name}}</span>
-                    <span data-toggle="modal" data-target="#delEntity" ng-click="getEntityId(entity)" style="float: right;margin-top: 10px">
+                    <span ng-click="delEntity(entity)" style="float: right;margin-top: 10px">
                         <i class="glyphicon glyphicon-trash shand dbicon" title="删除当前实例"></i>
                     </span>
                     <span>&emsp;设备：{{entity.device_name}}</span>
                 </div>
-                <canvas id="entityChart_{{$index}}" min-height="500"></canvas>
+                <canvas id="entityChart_{{$index}}" min-height="400"></canvas>
+                <span ng-click="saveEntity(entity,i)"  style="float: right;margin-top: 10px" id="saveEntity_{{$index}}">
+                        <i class="glyphicon glyphicon-check shand dbicon" title="保存当前实例"></i>
+                </span>
+            </div-->
+            <div class="dashboard_item" wei-yi ng-repeat="entity in entitys track by $index" ng-mousedown="weiYi_mouseDown($index,item)" ng-mouseover="weiYi_mouseover($index)" ng-mouseup="weiYi_mouseup($index)">
+                <div class="entity_title">
+                    <span id="entity_name">{{entity.name}}</span>
+                    <span ng-click="delEntity(entity)" style="float: right;margin-top: 10px">
+                        <i class="glyphicon glyphicon-trash shand dbicon" title="删除当前实例"></i>
+                    </span>
+                    <span>&emsp;设备：{{entity.device_name}}</span>
+                </div>
+                <canvas id="entityChart_{{$index}}" min-height="400"></canvas>
+                <span ng-click="saveEntity(entity,i)"  style="float: right;margin-top: 10px" id="saveEntity_{{$index}}">
+                        <i class="glyphicon glyphicon-check shand dbicon" title="保存当前实例"></i>
+                </span>
             </div>
 
             <div ng-show="isShowEmpty" class="showEmpty">
@@ -136,7 +154,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">
+                    <h4 class="modal-title" id="myModal">
                         删除仪表板
                     </h4>
                 </div>
@@ -150,8 +168,8 @@
                         确定
                     </button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
+            </div>
+        </div>
     </div>
 
     <!--modal删除Entity-->
@@ -177,8 +195,8 @@
                         确定
                     </button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
+            </div>
+        </div>
     </div>
 
 

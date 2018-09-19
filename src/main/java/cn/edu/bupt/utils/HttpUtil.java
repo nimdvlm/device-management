@@ -81,6 +81,35 @@ public class HttpUtil {
         return sendRequireToThingsboard(request, session);
     }
 
+    public static Response sendPost(String url, Map<String,String> headers, JsonObject requestBody, HttpSession session) throws Exception{
+        String str ;
+        if(requestBody==null){
+            str = "";
+        }else{
+            str = requestBody.toString();
+        }
+        RequestBody body = RequestBody.create(JSON, str);
+        Request.Builder buider = new Request.Builder()
+                .url(url)
+                .post(body);
+
+        String tocken = (String)session.getAttribute("token");
+        if(tocken==null){
+            getAccessToken(session);
+        }
+        tocken = (String)session.getAttribute("token");
+        buider.header("Authorization","Bearer "+tocken);
+
+        if(headers!=null){
+            for(Map.Entry<String,String> entry:headers.entrySet()){
+                buider.header(entry.getKey(),entry.getValue());
+            }
+        }
+        Request request = buider.build();
+
+        return sendRequire(request, session);
+    }
+
     public static String sendPutToThingsboard(String url, Map<String,String> headers, JsonObject requestBody,HttpSession session) throws Exception{
         String str ;
         if(requestBody==null){
@@ -110,6 +139,35 @@ public class HttpUtil {
         return sendRequireToThingsboard(request, session);
     }
 
+    public static Response sendPut(String url, Map<String,String> headers, JsonObject requestBody,HttpSession session) throws Exception{
+        String str ;
+        if(requestBody==null){
+            str = "";
+        }else{
+            str = requestBody.toString();
+        }
+        RequestBody body = RequestBody.create(JSON, str);
+        Request.Builder buider = new Request.Builder()
+                .url(url)
+                .put(body);
+
+        String tocken = (String)session.getAttribute("token");
+        if(tocken==null){
+            getAccessToken(session);
+        }
+        tocken = (String)session.getAttribute("token");
+        buider.header("Authorization","Bearer "+tocken);
+
+        if(headers!=null){
+            for(Map.Entry<String,String> entry:headers.entrySet()){
+                buider.header(entry.getKey(),entry.getValue());
+            }
+        }
+        Request request = buider.build();
+
+        return sendRequire(request, session);
+    }
+
     public static String sendDeletToThingsboard(String url,HttpSession session) throws Exception{
         Request.Builder buider = new Request.Builder()
                 .url(url)
@@ -123,6 +181,21 @@ public class HttpUtil {
         Request request = buider.build();
 
         return sendRequireToThingsboard(request, session);
+    }
+
+    public static Response sendDelet(String url,HttpSession session) throws Exception{
+        Request.Builder buider = new Request.Builder()
+                .url(url)
+                .delete() ;
+        String tocken = (String)session.getAttribute("token");
+        if(tocken==null){
+            getAccessToken(session);
+        }
+        tocken = (String)session.getAttribute("token");
+        buider.header("Authorization","Bearer "+tocken);
+        Request request = buider.build();
+
+        return sendRequire(request, session);
     }
 
     public static String sendGetToThingsboard(String url, Map<String,String> headers, HttpSession session) throws Exception{
@@ -147,6 +220,30 @@ public class HttpUtil {
         Request request = buider.build();
 
         return sendRequireToThingsboard(request, session);
+    }
+
+    public static Response sendGet(String url, Map<String,String> headers, HttpSession session) throws Exception{
+
+        Request.Builder buider = new Request.Builder()
+                .url(url)
+                .get() ;
+
+
+        String tocken = (String)session.getAttribute("token");
+        if(tocken==null){
+            getAccessToken(session);
+        }
+        tocken = (String)session.getAttribute("token");
+        buider.header("Authorization","Bearer "+tocken);
+
+        if(headers!=null){
+            for(Map.Entry<String,String> entry:headers.entrySet()){
+                buider.header(entry.getKey(),entry.getValue());
+            }
+        }
+        Request request = buider.build();
+
+        return sendRequire(request, session);
     }
 
     public static String getAccessToken(HttpSession session){
@@ -269,6 +366,11 @@ public class HttpUtil {
             }
         }
         return response.body().string();
+    }
+
+    private static Response sendRequire(Request request, HttpSession session) throws Exception{
+        Response response = httpClient.newCall(request).execute();
+        return response;
     }
 
     /**

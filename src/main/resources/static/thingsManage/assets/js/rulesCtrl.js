@@ -379,7 +379,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
                 //生成请求体
                 //console.log("filterjs:" + filterjs)
-                $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(),"", filterjs));
+                $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(), "", filterjs));
                 console.log($scope.formData.filters);
 
                 //清理现场
@@ -525,18 +525,22 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //添加规则
     $scope.createRule = function () {
         if ($scope.formData.rule.name != "" && $scope.formData.rule.name != null) {
-            $('#rulenamealert').hide();
-            console.log("formData");
-            console.log($scope.formData);
-            var addRULE = $resource('/api/rule/create');
-            addRULE.save({}, $scope.formData)
-                .$promise.then(function (resp) {
-                toastr.success("创建规则成功！");
-                $("#addRule").modal("hide");
-                location.reload();
-            }, function (err) {
-                toastr.success("创建规则失败！");
-            });
+            if ($scope.formData.filters.length && $scope.formData.transforms.length) {
+                $('#rulenamealert').hide();
+                console.log("formData");
+                console.log($scope.formData);
+                var addRULE = $resource('/api/rule/create');
+                addRULE.save({}, $scope.formData)
+                    .$promise.then(function (resp) {
+                    toastr.success("创建规则成功！");
+                    $("#addRule").modal("hide");
+                    location.reload();
+                }, function (err) {
+                    toastr.success("创建规则失败！");
+                });
+            } else {
+                toastr.error("新增规则需要配置过滤器和插件！");
+            }
         } else {
             $('#rulenamealert').show();
         }
