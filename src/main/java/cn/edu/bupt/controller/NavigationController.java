@@ -120,7 +120,7 @@ public class NavigationController {
                 return "redirect:http://39.104.189.84:30000/";
 
             default:
-                throw new RuntimeException("Bad Module Name");
+                throw new IllegalArgumentException("Bad Module Name");
 
 
         }
