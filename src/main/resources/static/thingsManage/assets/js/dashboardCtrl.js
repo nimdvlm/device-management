@@ -15,12 +15,9 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         query: {method: 'GET', isArray: true}
     });
     $scope.Dashboards = Dashboard.query();
-    console.log($scope.Dashboards);
 
     //右侧展示视图
     $scope.showDBDetail=function (item) {
-        console.log("右侧试图展示；");
-        console.log(item);//数组
         //展示视图添加样式
         $scope.Dashboards.forEach(function (items) {
             if (item != items) items.style = {}
@@ -56,8 +53,6 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
                     });
                 });
                 //$resource.get方法会把接受的string类型变为object
-                console.log("查看函数中的内容：");
-                console.log(resp);
                 $scope.entitys=resp;
 
                 /*for(var j=0;j<resp.length;j++){
@@ -90,7 +85,7 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
 
 
     /*    webSocket start  */
-    var ws
+    var ws=[]
     var KeySets=[]
 
     $scope.showRealtime=function (i) {
@@ -107,38 +102,43 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
 
         //获取websocket实时数据
         var url = 'ws://39.104.189.84:30080/api/v1/deviceaccess/websocket';
-        listenWs(url);
+        listenWs(url,i);
 
         //测试用模拟数据
         //var _ts=1531101929
         //setInterval(test,1500)
 
-        function listenWs(url) {
-            if(ws instanceof WebSocket){
-                ws.close();
+        function listenWs(url,i) {
+            var i
+            //var ws=[]
+            ws[i]=''
+            if(ws[i] instanceof WebSocket){
+                console.log("关闭已有websocket")
+                ws[i].close();
             }
 
-            ws = new WebSocket(url);
+            ws[i] = new WebSocket(url);
 
-            ws.onopen = function (e) {
-                log("Connected");
+            ws[i].onopen = function (e) {
+                log("Connected ",i);
+                KeySets[i]=new Array() //每个chart维护一个keyset
                 sendMessage('{"deviceId":"' + deviceId + '"}');
             };
 
-            ws.onclose = function (e) {
-                log("Disconnected: ");
+            ws[i].onclose = function (e) {
+                log("Disconnected ",i);
                 KeySets=[]
             };
             // Listen for connection errors
-            ws.onerror = function (e) {
-                log("Error ");
+            ws[i].onerror = function (e) {
+                log("Error ",i);
             };
             // Listen for new messages arriving at the client
-            ws.onmessage = function (e) {
+            ws[i].onmessage = function (e) {
                 //e是返回体
                 log("Message received: " + e.data);
                 message = JSON.parse(e.data);
-                updateChart(message,myChart)
+                updateChart(message,myChart,i)
             }
         }
 
@@ -148,7 +148,8 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         }
 
         function sendMessage(msg) {
-            ws.send(msg);
+            //console.log(ws[i])
+            ws[i].send(msg);
             log("Message sent");
         }
 
@@ -162,13 +163,15 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
             ]}
 
             //更新数据
-            updateChart(message,myChart)
+            //updateChart(message,myChart)
         }
     }
 
     //更新数据
-    function updateChart(message,myChart){
+    function updateChart(message,myChart,i){
+        var x=i
         console.log("更新ing...")
+        //console.log(myChart)
         var tempDate,tempKey,tempValue
         var message=message
         var chart=myChart
@@ -182,18 +185,20 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
             tempKey = message.data[i].key;
             tempValue = message.data[i].value;
 
-                if($.inArray(tempKey,KeySets)>=0&&KeySets.length!==0){
-                    var y=KeySets.indexOf(tempKey)
+                if($.inArray(tempKey,KeySets[x])>=0&&KeySets[x].length!==0){
+                    var y=KeySets[x].indexOf(tempKey)
                     chart.data.datasets[y].data.push(tempValue)
                     //此处为待解决问题。二者时间戳不一致
                     if(y==0)
                     chart.data.labels.push(tempDate)
                 }else{
-                    KeySets.push(tempKey)
+                    //KeySets[x]=new Array()
+                    KeySets[x].push(tempKey)
+                    //console.log(KeySets)
                     chart=newLine(chart)
-                    var x=KeySets.indexOf(tempKey)
-                    chart.data.datasets[x].label=tempKey
-                    chart.data.datasets[x].data.push(tempValue)
+                    var a=KeySets[x].indexOf(tempKey)
+                    chart.data.datasets[a].label=tempKey
+                    chart.data.datasets[a].data.push(tempValue)
 
                 }
 
@@ -334,7 +339,6 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         formData.entity_type=$scope.add_entity_type.name;
         formData.dashboard_id=$scope.dbItem.id;
 
-        //@TODO 从子组建获取position
         formData.diffX = "420px";
         formData.diffY = "150px";
         //formData.position=JSON.stringify({left:420,top:150});//后端接口调整，临时赋值为常值
