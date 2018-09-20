@@ -93,7 +93,8 @@
             padding: 17px 25px;
         }
         #side-menu ul .tenantMenu{
-            padding: 13px 25px;
+            padding: 13px 15px;
+            font-size: 11px;
         }
 
         #side-menu ul li a i {
