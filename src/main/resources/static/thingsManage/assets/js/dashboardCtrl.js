@@ -429,6 +429,8 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
             document.onmouseup = function (el) {
                 this.onmousemove = null;
                 this.onmouseup = null;
+                console.log($scope.endLeft);
+                console.log($scope.endTop);
             }
         }
     }
@@ -436,9 +438,9 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
     $scope.saveEntity = function (entity) {
         console.log("entity");
         console.log(entity);
-
+        console.log($scope.endLeft);
+        console.log($scope.endTop);
         var createEntity = {};
-
         createEntity.id = entity.id;
         createEntity.dashboard_id = entity.dashboard_id;
         createEntity.device_id = entity.device_id;

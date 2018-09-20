@@ -55,12 +55,12 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
         var createDeviceGroupObj =  $resource("/api/devicetype/insert");
         $scope.deviceInfomation = createDeviceGroupObj.save({},$scope.createDeviceModel,function (resp) {
             console.log(resp);
-            toastr.success("新增设备成功！");
-            /*setTimeout(function () {
+            toastr.success("创建成功！");
+            setTimeout(function () {
                 window.location.reload();
-            },500);*/
+            },500);
         },function (error) {
-            toastr.error("新增设备失败！");
+            toastr.error("创建失败！");
         });
     }
 
