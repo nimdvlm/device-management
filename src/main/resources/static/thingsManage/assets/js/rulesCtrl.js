@@ -204,13 +204,124 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //暂停规则
     $scope.stopRule = function () {
         //$scope.state2 = "UNACTIVE";
-        var editRule = $resource('/api/rule/suspend/:id', {id: '@id'});
+        var stopRule = $resource('/api/rule/suspend/:id', {id: '@id'});
         //editRule.save({id: $scope.Ruleitem.rule.ruleId}, $scope.state2)
-        editRule.save({id: $scope.Ruleitem.rule.ruleId})
+        stopRule.save({id: $scope.Ruleitem.rule.ruleId})
             .$promise.then(function (resp) {
             console.log("规则暂停成功:id=" + $scope.Ruleitem.rule.ruleId);
             $("#editDGName").modal("hide");
             location.reload();
+        });
+    }
+
+    //编辑规则信息
+    $scope.editRuleInfo=function () {
+        var data={}
+
+        data.ruleId=$scope.Ruleitem.rule.ruleId
+        data.tenantId=$.cookie("tenantId")
+        data.additional_info=$('#editRuleInfo_addition').val()
+        data.name=$('#editRuleInfo_name').val()
+        data.state=$scope.Ruleitem.rule.state
+        console.log(data)
+
+        //$resource只能接受对象
+        // var editRuleInfo = $resource('/api/rule/updateRule');
+        // editRuleInfo.save({},data)
+        //     .$promise.then(function (resp) {
+        //     console.log(resp)
+        // });
+
+        $.ajax({
+            url: "/api/rule/updateRule",
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify(data),
+            async: false,
+            type: "POST",
+            dataType: "text",
+            success: function (msg) {
+                console.log(msg)
+                if(msg==='ok'){
+                    toastr.success('编辑规则成功')
+                }
+                location.reload();
+            }
+        });
+    }
+    
+    //编辑过滤器-传递当前Filter对象
+    $scope.showEditFilterModal=function (index) {
+        var scope=angular.element($('#Filter'+index)[0]).scope()
+
+        $scope.editfilter=scope.data
+        console.log($scope.editfilter)
+    }
+
+    //编辑过滤器
+    $scope.editFilter=function () {
+        var data={}
+
+        console.log('filter:')
+        data.filterId=$scope.editfilter.filterId
+        data.type=''
+        data.name=$('#editFilter_name').val()
+        data.jsCode=$('#editFilter_jscode').val()
+        console.log(data)
+
+        $.ajax({
+            url: "/api/rule/updateFilter",
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify(data),
+            async: false,
+            type: "POST",
+            dataType: "text",
+            success: function (msg) {
+                console.log(msg)
+                if(msg==='ok'){
+                    toastr.success('修改过滤器成功')
+                }
+                location.reload()
+            }
+        });
+    }
+
+    //编辑插件-传递当前Plugin象
+    $scope.showEditPluginModal=function (index) {
+        var scope=angular.element($('#Plugin'+index)[0]).scope()
+
+        $scope.editplugin=scope.data
+        console.log($scope.editplugin)
+    }
+
+    //编辑插件
+    $scope.editPlugin=function () {
+        var data={}
+        var requestBody=$('#editPlugin_requestBody').val()
+        console.log(requestBody)
+
+        console.log('plugin:')
+        data.transformId=$scope.editplugin.transformId
+        data.name=$('#editPlugin_name').val()
+        data.url=$('#editPlugin_url').val()
+        data.method='POST'
+        data.requestBody=JSON.parse(requestBody)
+        console.log(data)
+        console.log(JSON.stringify(data))
+
+        $.ajax({
+            url: "/api/rule/updateTransform",
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify(data),
+            async: false,
+            type: "POST",
+            dataType: "text",
+            success: function (msg) {
+                console.log(msg)
+                if(msg==='ok'){
+                    toastr.success('修改插件成功')
+                }
+                location.reload()
+            }
         });
     }
 
