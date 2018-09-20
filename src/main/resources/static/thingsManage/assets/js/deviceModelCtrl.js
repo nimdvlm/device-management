@@ -44,16 +44,21 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
         createDeviceModel.deviceType = $("#deviceType").val();
         createDeviceModel.model = $("#deviceModel").val();
         createDeviceModel.icon = $("#potatoIcon").val();
-        createDeviceModel.limit_lifetime = $("#LimitTime").val();
+        createDeviceModel.limit_lifetime = $("#limitTime").val();
+        console.log(createDeviceModel.limit_lifetime);
+        if (createDeviceModel.limit_lifetime == ""){
+            createDeviceModel.limit_lifetime = 0;
+        }
+        console.log(createDeviceModel.limit_lifetime);
         $scope.createDeviceModel = JSON.stringify(createDeviceModel);
         console.log($scope.createDeviceModel);
         var createDeviceGroupObj =  $resource("/api/devicetype/insert");
         $scope.deviceInfomation = createDeviceGroupObj.save({},$scope.createDeviceModel,function (resp) {
-            //console.log(resp);
+            console.log(resp);
             toastr.success("新增设备成功！");
-            setTimeout(function () {
+            /*setTimeout(function () {
                 window.location.reload();
-            },500);
+            },500);*/
         },function (error) {
             toastr.error("新增设备失败！");
         });
