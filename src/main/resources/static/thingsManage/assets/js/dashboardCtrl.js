@@ -335,7 +335,9 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         formData.dashboard_id=$scope.dbItem.id;
 
         //@TODO 从子组建获取position
-        formData.position=JSON.stringify({left:420,top:150});//后端接口调整，临时赋值为常值
+        formData.diffX = "420px";
+        formData.diffY = "150px";
+        //formData.position=JSON.stringify({left:420,top:150});//后端接口调整，临时赋值为常值
 
         console.log(formData)
         var addEntity = $resource('/api/dashboard/entity/insert');
@@ -442,7 +444,8 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         createEntity.device_id = entity.device_id;
         createEntity.name = entity.name;
         createEntity.entity_type = entity.entity_type;
-        createEntity.position = JSON.stringify({left:$scope.endLeft,top:$scope.endTop});
+        createEntity.diffX = $scope.endLeft+"px";
+        createEntity.diffY = $scope.endTop+"px";
         console.log("entity选择的位置为：");
         console.log(createEntity);
         $scope.createEntity = JSON.stringify(createEntity);
@@ -453,7 +456,7 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
             dataType:'text',
             contentType: "application/json; charset=utf-8",//post请求必须
             success:function (resp) {
-                toastr.success("创建成功！");
+                toastr.success("保存成功！");
                 console.log("success");
                 console.log("保存成功");
             },

@@ -54,7 +54,7 @@
                 </span>
             </div-->
             <div class="row">
-                <div class="dashboard_item" ng-repeat="entity in entitys track by $index" id="drag_{{$index}}" ng-mousedown="weiYi_mouseDown($index)" ng-mouseover="weiYi_mouseover($index)" ng-mouseup="weiYi_mouseup($index)">
+                <div class="dashboard_item" ng-repeat="entity in entitys track by $index" id="drag_{{$index}}" style="left: {{entity.diffX}};top: {{entity.diffY}};" ng-mousedown="weiYi_mouseDown($index)" ng-mouseover="weiYi_mouseover($index)" ng-mouseup="weiYi_mouseup($index)">
                     <div class="entity_title">
                         <span id="entity_name">{{entity.name}}</span>
                         <span ng-click="delEntity(entity)" style="float: right;margin-top: 10px">
