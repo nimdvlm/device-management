@@ -93,13 +93,14 @@ public class NavigationController {
         response.addCookie(userId);
         response.addCookie(customerId);
         String authority = responseJson.get("authority").getAsString();
-        if(authority.equals("TENANT_ADMIN")) {
-            return "redirect:/thingsTenantManager";
-        }else if(authority.equals("SYS_ADMIN")){
-            return "redirect:/thingsSystemManager";
-        }else{
-            return "redirect:/thingsUserManager";
-        }
+//        if(authority.equals("TENANT_ADMIN")) {
+//            return "redirect:/thingsTenantManager";
+//        }else if(authority.equals("SYS_ADMIN")){
+//            return "redirect:/thingsSystemManager";
+//        }else{
+//            return "redirect:/thingsUserManager";
+//        }
+        return "redirect:/home";
     }
 
     @RequestMapping("/thingsUserManager")
