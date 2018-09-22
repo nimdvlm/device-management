@@ -433,12 +433,12 @@ serviceGroup  &   deviceModelManagement
 }
 .deviceTypeIconStyle{
     width: 22%;
-    height: 170px;
+    height: 180px;
     border-radius: 6px;
     cursor: pointer;
     border: 2px solid #c0c0c0;
     background: white;
-    margin: 16px;
+    margin: 15px;
     display: inline-block;
 }
 
