@@ -264,7 +264,7 @@
 
 
 
-<!--Admin创建租户管理员模态框-->
+<!--创建租户管理员模态框-->
     <div class="modal fade" id="addTenantManager" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -311,7 +311,7 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             <span style="color: red;">*</span>确认密码
                         </label>
-                        <input type="password"ng-model="passwordagain" name="passwordagain" style="pixels: 300px" placeholder="必填" id="reAdminPassword" required/>
+                        <input type="password" ng-model="passwordagain" name="passwordagain" style="pixels: 300px" placeholder="必填" id="reAdminPassword" required/>
                         <span class="warning ng-hide" ng-show="myTenantForm.password.$valid">
                             <span ng-show="myTenantForm.passwordagain.$error.required">必填项</span>
                             <span ng-show="passwordagain!=password">两次密码输入不一致</span>

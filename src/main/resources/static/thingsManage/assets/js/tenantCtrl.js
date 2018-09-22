@@ -203,14 +203,22 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
 
     }
 
-//Admin创建租户管理员
+//创建租户管理员
     $("#createManager").click(function () {
         $("#adminName").removeClass("input-err");
         $("#addTenantManager input").each(function () {     //each为每个匹配元素规定要运行的函数
             $(this).val("");
         });
     });
+    $("#reAdminPassword").blur(function(){
+        if($("#adminPassword").val()!=$("#reAdminPassword").val()){
 
+            alert("两次输入的密码不一致");
+            //$("#adminPassword").val();
+            //$("#reAdminPassword").val();
+
+        }
+    });
     $scope.addAdmin = function (vale) {
         $("#modalConfirmCreateAdmin").attr("data-dismiss","modal");//attr设置或返回被选元素的属性或值；
         if($("#adminName").val()){
@@ -222,6 +230,10 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
             var we_chat = $("#adminWe_chart").val();
             var createAdminInfo = '{"tenant_id":'+'"'+tenantID+'"'+',"name":'+'"'+name+'"'+',"additional_info":'+'"'+additional_info+'"'+',"email":'+'"'+email+'"'+',"password":'+'"'+password+'"'+',"phone":'+'"'+phone+'"'+',"we_chat":'+'"'+we_chat+'"'+'}';
             console.log(createAdminInfo);
+            console.log("校验密码是否正确");
+            //校验密码是否正确
+            //var rePassword = $("#reAdminPassword").val();
+
             $.ajax({
                 url:"/api/account/tenantAdmin",
                 data:createAdminInfo,
