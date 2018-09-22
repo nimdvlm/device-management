@@ -1,3 +1,4 @@
+$("#collapse").trigger("click");
 function timestampToTime(timestamp) {
     var date = new Date(timestamp);
     Y = date.getFullYear() + '-';
@@ -191,7 +192,7 @@ for(var i=0; i<Object.keys(meso.data).length;i++){
 //    xAxisData.push(day[i]);
 //}
 
-var myXmlHttpRequest1 = getXmlHttpObject();
+/*var myXmlHttpRequest1 = getXmlHttpObject();
 var tenantId;
 if(myXmlHttpRequest1){
     var url1 = "/api/rule/tenant";
@@ -207,7 +208,8 @@ function  proce1() {
         //var tenantIde = eval("("+tenantId+")");
         tenantId = tenantIde.tenantId;
     }
-}
+}*/
+
 /*var myXmlHttpRequest5 = getXmlHttpObject();
 if(myXmlHttpRequest5){
     var url5 = "http://39.104.186.210:8090/api/device/device-types?tenantId="+tenantId;
@@ -310,7 +312,7 @@ function showData() {
                     var endTimeChuo = endTime.getTime()+h1*3600*1000+min1*60*1000+s1*1000-8*3600*1000;
                     subtext = '设备名称：'+deviceSelect1;
                     deviceSelect1 = deviceGroup[(deviceGroup.indexOf(deviceSelect1)+1)];
-                    urldata = "tenantId="+tenantId+"&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum+"&deviceId="+deviceSelect1;
+                    urldata = "tenantId=2&startTime="+startTimeChuo+"&endTime="+endTimeChuo+"&partNum="+splitNum+"&deviceId="+deviceSelect1;
                     drawstatistics(h,min,s,h1,min1,s1,subtext,urldata);
                 }
             }else {
@@ -337,7 +339,7 @@ function showData() {
                     var endTime1 = new Date(inputEndDate);
                     var endTimeChuo1 = endTime1.getTime()+h1*3600*1000+min1*60*1000+s1*1000-8*3600*1000;
                     subtext = '设备类型：'+deviceSelect;
-                    urldata = "tenantId="+tenantId+"&startTime="+startTimeChuo1+"&endTime="+endTimeChuo1+"&partNum="+splitNum+"&deviceType="+deviceSelect;
+                    urldata = "tenantId=2&startTime="+startTimeChuo1+"&endTime="+endTimeChuo1+"&partNum="+splitNum+"&deviceType="+deviceSelect;
                     drawstatistics(h,min,s,h1,min1,s1,subtext,urldata);
                 }
             }
@@ -350,7 +352,7 @@ function drawstatistics(h,min,s,h1,min1,s1,subtext,urldata) {
     document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
     if(myXmlHttpRequest3){
         //var url = "toajax?username=" + document.getElementById("username").value;
-        var url3 = "http://39.104.186.210:8090/api/analysis/data";//url="http://39.104.186.210:8090/api/analysis/data";getselectdata
+        var url3 = "http://39.104.186.210:8092/api/analysis/data";//url="http://39.104.186.210:8090/api/analysis/data";getselectdata
         //myXmlHttpRequest.open("get",url,true);
         myXmlHttpRequest3.open("post",url3,true);
         myXmlHttpRequest3.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -367,8 +369,7 @@ function drawstatistics(h,min,s,h1,min1,s1,subtext,urldata) {
             if (mes == ""){
                 window.alert("返回值为null");
             }else {
-                var mes1 = JSON.parse(mes);
-                meso = eval("("+mes1+")");
+                var meso = JSON.parse(mes);
                 if(meso.status == 'success'){
                     var xAxisData = [];
                     var data1 = [];
@@ -421,16 +422,27 @@ function drawstatistics(h,min,s,h1,min1,s1,subtext,urldata) {
                         s1 = "0" + s1;
                     }
                     option = {
+                        backgroundColor:'',
+                        grid: {
+                            top: '20%',
+                            left: '10%',
+                            width: '80%',
+                            height: '60%'
+                        },
                         title: {
                             text: subtext,
                             subtext: '精确查询：'+inputStartDate+' '+h+':'+min+':'+s+' - '+inputEndDate+' '+h1+':'+min1+':'+s1,
                             subtextStyle:{
                                 left: 'center'
-                            }
+                            },
+                            top: '10%',
+                            left: '2%'
                         },
                         legend: {
                             data: ['最大值', '均值', '最小值','标准差','数据条数','正常数据条数','正常数据比例'],
-                            align: 'left'
+                            align: 'left',
+                            top: '10%',
+                            left: '33%'
                         },
                         toolbox: {
                             // y: 'bottom',
@@ -867,7 +879,7 @@ $('#dropzone').hover(
 
 function drawRecentBar(deviceType,subtext,legend,day,series) {
 
-    var myChart = echarts.init(document.getElementById('chart_map'),'dark');
+    var myChart = echarts.init(document.getElementById('chart_map'));
     option = {
         backgroundColor:'',
         grid: {
@@ -914,7 +926,7 @@ function recentBarAjax(days,deviceType) {
 
     var myXmlHttpRequest4 = getXmlHttpObject();
     if(myXmlHttpRequest4){
-        var url4 = "http://39.104.186.210:8090/api/analysis/recent-data?tenantId="+tenantId+"&days="+days;
+        var url4 = "http://39.104.186.210:8092/api/analysis/recent-data?tenantId=2&days="+days;
         myXmlHttpRequest4.open("get",url4,true);
         myXmlHttpRequest4.onreadystatechange = proce4;
         myXmlHttpRequest4.send(null);
@@ -923,8 +935,7 @@ function recentBarAjax(days,deviceType) {
         if(myXmlHttpRequest4.readyState == 4){
 
             var recentGroup = myXmlHttpRequest4.responseText;
-            var mes = JSON.parse(recentGroup);
-            var meso = eval("("+mes+")");
+            var meso = JSON.parse(recentGroup);
             var day = [];
             var data = [];
             var seriesGroup = [];

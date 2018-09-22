@@ -1,669 +1,458 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <!-- Required Stylesheets -->
-    <link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/text.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/fluid.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/mws.style.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/icons/icons.css" media="screen" />
-
-    <!-- Demo and Plugin Stylesheets -->
-    <link rel="stylesheet" type="text/css" href="css/demo.css" media="screen" />
-
-    <link rel="stylesheet" type="text/css" href="plugins/colorpicker/colorpicker.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="plugins/jimgareaselect/css/imgareaselect-default.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="plugins/fullcalendar/fullcalendar.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="plugins/fullcalendar/fullcalendar.print.css" media="print" />
-    <link rel="stylesheet" type="text/css" href="plugins/tipsy/tipsy.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="plugins/sourcerer/Sourcerer-1.2.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="plugins/jgrowl/jquery.jgrowl.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="plugins/spinner/spinner.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/jui/jquery.ui.css" media="screen" />
-
-    <!-- Theme Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="css/mws.theme.css" media="screen" />
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>大数据平台-数据ETL</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-table.css" rel="stylesheet">
+    <link href="css/bootstrap-select.css" rel="stylesheet">
 
+    <style>
+        .abc {
+            margin-left: 1% !important;
+        }
+        .abc0:hover{
+            background-color: #337ab7 !important;
+        }
+        .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+            width: 20%;
+            margin-left: 4%;
+        }
+
+    </style>
 </head>
+<body style="padding-top: 50px;height: 100%">
 
-<body>
+<nav class="navbar navbar-fixed-top" style="background-color: #337ab7">
 
-<div id="mws-header" class="clearfix">
-    <div id="mws-logo-wrap">
-        <p style="color: white;font-size: 24px;margin-top: 13px;margin-left: 15px">大数据平台</p>
+    <div class="navbar-header" style="margin-left: 10px">
+        <a class="navbar-brand" href="#" style="color: white">大数据平台</a>
     </div>
-</div>
+    <div class="navbar-collapse">
+        <!--<ul class="nav navbar-nav">
+            <li><a href="/userformPage.do"  class="abc0"style="color: #faf2cc">用户管理</a></li>
+            <li class="dropdown">
+                <a href="#" class="abc" style="color: white" data-toggle="dropdown">我的网盘<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/uploadPage.do">springmvc</a></li>
+                    <li><a href="#">springsecurity</a></li>
+                    <li><a href="#">spring</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">DAO</li>
+                    <li><a href="#">mybatis</a></li>
+                    <li><a href="#">hibenate</a></li>
+                </ul>
+            </li>
+        </ul>-->
+        <ul class="navbar-right navbar-form">
+            <!--<div class="form-group">
+                <input type="text" placeholder="Email" class="form-control">
+            </div>-->
+            <a href="/home?TENANT_ADMIN&2&1"><button id="logout" type="submit" class="btn btn-primary" style="margin-right: 40px">返回上一级</button></a>
+        </ul>
+    </div><!--/.nav-collapse -->
 
-<div id="mws-wrapper">
-    <div id="mws-sidebar-stitch"></div>
-    <div id="mws-sidebar-bg"></div>
-    <div id="mws-sidebar">
-        <div id="mws-navigation">
-            <ul>
-                <li><a href="../bigData/device1.html" class="mws-i-24 i-home">Dashboard</a></li>
-                <li><a href="table.html" class="mws-i-24 i-list">数据管理</a></li>
-                <ul>
-                    <li id="ul1" style="background: #3b3d47"><a style="color: #c8d350" href="#" class="mws-i-24 i-list">数据ETL</a></li>
-                    <li style="background: #000000"><a style="color: #c8d350" href="etl.html" class="mws-i-24 i-chart">数据ETL处理</a></li>
-                    <li style="background: #000000"><a href="etl1.html" class="mws-i-24 i-chart">已有数据ETL</a></li>
-                    <li style="background: #000000"><a href="etl2.html" class="mws-i-24 i-chart">上传数据ETL</a></li>
+</nav>
+
+<div class="row" style="height: 100%">
+    <div class="col-md-2" style="box-shadow: 1px 1px 3px #e5e5e5;height: 1400px;width: 13%">
+        <ul id="main-nav" class="nav nav-stacked">
+            <li>
+                <a href="../bigData/device1.html">
+                    <i class="glyphicon glyphicon-th-large">&nbsp;</i>
+                    数据管理
+                </a>
+            </li>
+            <li>
+                <a href="sql.html">
+                    <i class="glyphicon glyphicon-search">&nbsp;</i>
+                    SQL查询
+                </a>
+            </li>
+            <li>
+                <a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-stats">&nbsp;</i>
+                    数据分析
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">2</span>
+                </a>
+                <ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="../bigData/ocean.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 常规分析</a></li>
+                    <li><a href="../bigData/statistics1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 数据分析</a></li>
+                    <!--<li><a href="#"><i class="glyphicon glyphicon-edit">&nbsp;</i> 修改密码</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-eye-open">&nbsp;</i> 日志查看</a></li>-->
                 </ul>
-                <ul>
-                    <li id="ul2" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据分析</a></li>
-                    <li style="background: #000000"><a href="sql.html" class="mws-i-24 i-polaroids">SQL</a></li>
-                    <li style="background: #000000"><a href="../bigData/ocean.html" class="mws-i-24 i-polaroids">常规分析</a></li>
-                    <li style="background: #000000"><a href="../bigData/statistics1.html" class="mws-i-24 i-polaroids">数据分析</a></li>
+            </li>
+            <li class="active" style="background-color: #eeeeee">
+                <a href="etl.html">
+                    <i class="glyphicon glyphicon-cog">&nbsp;</i>
+                    数据ETL
+                </a>
+            </li>
+            <li>
+                <a href="#systemSetting1" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+                    数据预测
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">2</span>
+                </a>
+                <ul id="systemSetting1" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="predict.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 数据预测</a></li>
+                    <li><a href="model.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 预测模型管理</a></li>
                 </ul>
-                <ul>
-                    <li id="ul3" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据预测</a></li>
-                    <li style="background: #000000"><a href="predict.html" class="mws-i-24 i-blocks-images">预测管理</a></li>
-                    <li style="background: #000000"><a href="../bigData/pre.html" class="mws-i-24 i-blocks-images">预测结果</a></li>
-                    <li style="background: #000000"><a href="model.html" class="mws-i-24 i-blocks-images">预测模型管理</a></li>
+            </li>
+            <li>
+                <a href="#systemSetting2" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-leaf">&nbsp;</i>
+                    数据挖掘
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">2</span>
+                </a>
+                <ul id="systemSetting2" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="datadig.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 数据挖掘</a></li>
+                    <li><a href="model1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 挖掘模型管理</a></li>
                 </ul>
-                <ul>
-                    <li id="ul4" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据挖掘</a></li>
-                    <li style="background: #000000"><a href="datadig.html" class="mws-i-24 i-cog">数据挖掘</a></li>
-                    <li style="background: #000000"><a href="model1.html" class="mws-i-24 i-cog">挖掘模型管理</a></li>
-                </ul>
-                <li><a href="http://39.104.186.210:8888" class="mws-i-24 i-list">线上开发</a></li>
-                <li><a href="/home?TENANT_ADMIN&2&1" class="mws-i-24 i-alert-2">返回上一级</a></li>
-                <!--<li><a href="charts.html" class="mws-i-24 i-chart">Charts</a></li>
-                <li><a href="calendar.html" class="mws-i-24 i-day-calendar">Calendar</a></li>
-                <li><a href="files.html" class="mws-i-24 i-file-cabinet">File Manager</a></li>
-                <li class="active"><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>
-                <li>
-                    <a href="#" class="mws-i-24 i-list">Forms</a>
-                    <ul>
-                        <li><a href="form_layouts.html">Layouts</a></li>
-                        <li><a href="form_elements.html">Elements</a></li>
-                    </ul>
-                </li>
-                <li><a href="widgets.html" class="mws-i-24 i-cog">Widgets</a></li>
-                <li><a href="typography.html" class="mws-i-24 i-text-styling">Typography</a></li>
-                <li><a href="grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
-                <li><a href="gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>
-                <li><a href="error.html" class="mws-i-24 i-alert-2">Error Page</a></li>
-                <li>
-                    <a href="icons.html" class="mws-i-24 i-pacman">
-                        Icons <span class="mws-nav-tooltip">2000+</span>
-                    </a>
-                </li>-->
-            </ul>
-        </div>
+            </li>
+            <li>
+                <a href="http://39.104.186.210:8888">
+                    <i class="glyphicon glyphicon-cloud">&nbsp;</i>
+                    线上开发
+                </a>
+            </li>
+        </ul>
     </div>
 
-    <div id="mws-container" class="clearfix">
-        <div class="container">
-            <div class="mws-panel grid_8">
-                查看表结构：<select id="viewtable" style="margin-right: 40%"></select>
-                上传数据表文件：<input id="uploadfile" type="file" name="file"/>
-                <input id="upload" type="submit" value="上传"/>
-                <table class="mws-table" style="margin-top: 1%">
-                    <thead>
-                    <tr id="trtable"></tr>
-                    </thead>
-                </table>
-                <div class="mws-panel-header" style="margin-top: 3%">
-                    <span class="mws-i-24 i-list">数据ETL处理</span>
+    <div class="col-md-10">
+        <div class="container"  style="padding: 30px 15px;width: 90%">
+            <div class="panel panel-primary" style="margin-top: 1%">
+                <div class="panel-heading" style="text-align: center">
+                    <h3 class="panel-title">数据表选择</h3>
                 </div>
-                <div class="mws-panel-body">
-                    <div class="mws-form-row" id="add0">
-                        <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选择处理方式：
-                        <select id="select1" style="margin-right: 23%">
-                            <option>字段过滤</option>
-                            <option>字段删除</option>
-                            <option>去除空值</option>
-                            <option>填充空值</option>
-                            <option>字段切分</option>
-                            <option>字段融合</option>
-                            <option>数值运算</option>
-                        </select>
-                        另存为：&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="select2"/>
-                        <button id="select3" style="color: white;background: red;float:right;margin-right: 3%">开始进行ETL处理</button><br><br><br>
-                        <div id="divselect">
-                            <label style="margin-left:3%;float: left">选择字段：</label>
-                            <div class="mws-form-item small" style="float: left">
-                                <select id="add1_1"></select>
-                            </div>
-                            <label style="margin-left:15%;float: left">选择条件：</label>
-                            <div class="mws-form-item small" style="float: left">
-                                <select id="add2_1">
-                                    <option>==</option>
-                                    <option>></option>
-                                    <option><</option>
-                                    <option>>=</option>
-                                    <option><=</option>
-                                    <option>!=</option>
-                                </select>
-                            </div>
-                            <label style="float: left;margin-left: 15%">填充数值：</label>
-                            <div class="mws-form-item small">
-                                <input id="add3_1" type="text" class="mws-textinput"/>
-                                <button type="button" style="margin-right: 4%;float: right" id="select4">+ 添加条件</button>
-                            </div>
-                            <br>
-                        </div>
+                <div class="panel panel-body">
+                    <select id="select2" class="selectpicker abc" data-live-search="true" data-live-search-placeholder="搜索" title="选择数据库">
+                        <option selected="selected">mysql</option>
+                        <option>nosql</option>
+                    </select>
+                    <select id="select1" onchange="selectchange(this)" class="selectpicker abc" data-live-search="true" data-live-search-placeholder="搜索" title="ETL处理必须先选择数据表"></select>
+                    <div id="divtable" class="panel-body" style="text-align: center">
+                        <table id="realTime_Table">
+                            <thead id="thead"></thead>
+                            <tbody id="tbody"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-           <!-- <div class="mws-panel grid_8">
-                <p id="title1" style="font-size: 18px;margin-left: 5px">数据表字段：device_table</p>
-                <div class="mws-panel-body">
-                    <table class="mws-table">
-                        <thead>
-                        <tr id="thead1">
-                            &lt;!&ndash;<th>device_id</th>
-                            <th>name</th>
-                            <th>create_date</th>
-                            <th>tenant_Id</th>
-                            <th>device_type</th>
-                            <th>model</th>
-                            <th>Status</th>&ndash;&gt;
-                        </tr>
-                        </thead>
-                        <tbody id="tbody1">
-                        &lt;!&ndash;<tr class="gradeA">
-                            <td>8A38B734-284D-3BED-2834-BDA47362B6D0</td>
-                            <td>test_1</td>
-                            <td>2018-07-15  09:28:28</td>
-                            <td>1</td>
-                            <td class="center">temperature</td>
-                            <td class="center">CS-01</td>
-                            <td class="center">running</td>
-                        </tr>&ndash;&gt;
-                        </tbody>
-                    </table>
-                </div>
-            </div>-->
-        </div>
 
+            <div class="panel panel-primary" style="margin-top: 2%">
+                <div class="panel-heading" style="text-align: center">
+                    <h3 class="panel-title">数据ETL处理</h3>
+                </div>
+                <div class="panel panel-body">
+                    <div class="panel-body" id="etlbody">
+                        <input type="text" id="text1" class="form-control" placeholder="数据表另存为" autofocus required style="width: 20%;display: inline">
+                        <button type="button" class="btn-warning btn-xs" id="button1" style="margin-left: 26%">+ 添加处理方式</button>
+                        <button type="button" class="btn-danger btn-sm" id="button2" style="float: right">开始ETL处理</button><br><br><br>
+                        <div id="index0">
+                            <select class="selectpicker" onchange="processchange(this)" data-live-search="true" data-live-search-placeholder="搜索" title="选择处理方式">
+                                <option>字段过滤</option>
+                                <option>字段删除</option>
+                                <option>去除空值</option>
+                                <option>填充空值</option>
+                                <option>字段切分</option>
+                            </select>
+                            <select id="test" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择待处理字段"></select>
+                            <select class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择条件（先选择处理方式）"></select>
+                            <input type="text" class="form-control" style="display: inline;width: 200px;margin-left: 5%" placeholder="填写数值（先选择处理方式）"><br><br>
+                        </div>
+                        <!--<button type="button" class="btn-primary btn" id="button2" style="margin-left: 46%;display: block">开始ETL处理</button>-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary" style="margin-top: 2%">
+                <div class="panel-heading" style="text-align: center">
+                    <h3 class="panel-title">数据表文件上传</h3>
+                </div>
+                <div class="panel panel-body">
+                    <div class="panel-body" style="text-align: center">
+                        <input class="form-control" id="uploadfile" type="file" name="file" style="width: 90%;display: inline"/>
+                        <button class="btn btn-primary" id="upload" type="button" style="margin-left: 1%">上传文件</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--<fieldset style="border:none;border-top:1px solid #cec9c9;margin:30px 0 20px;">
+                <legend style="font-size: 20px;font-weight: 300;padding: 0 10px;margin-left: 20px">查询结果</legend>
+            </fieldset>-->
+        </div>
     </div>
 </div>
 
-<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="plugins/jquery.dataTables.js"></script>
-<script type="text/javascript" src="plugins/colorpicker/colorpicker.js"></script>
-<script type="text/javascript" src="plugins/spinner/ui.spinner.js"></script>
-<script type="text/javascript" src="js/jquery-ui.js"></script>
-<script type="text/javascript" src="js/demo.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
-
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-table.js"></script>
+<script src="js/bootstrap-table-zh-CN.js"></script>
+<script src="js/bootstrap-select.js"></script>
 <script type="text/javascript">
 
-    var constructure;
-    var count = 1;
-    var currenttable;
-    $.get("http://39.104.186.210:8092/api/etl/table-struct",function (data) {
-        constructure = data;
-        currenttable = constructure[0].columns;
-        for(var i=0; i<constructure.length; i++){
-            $option = $("<option>"+constructure[i].table_name+"</option>");
-            $("#viewtable").append($option);
+    var structdata;
+    var current_tructdata;
+    var count=0;
+
+    $.get("http://39.104.186.210:8092/api/etl/table-struct?db_type=mysql",function (data) {
+        structdata = data;
+        for (var i=0; i<data.length; i++) {
+            $option = $("<option>"+structdata[i].table_name+"</option>");
+            $("#select1").append($option);
         }
-        $th0 = $("<th>"+constructure[0].table_name+"表所有字段："+"</th>");
-        $("#trtable").append($th0);
-        for (var j=0; j<constructure[0].columns.length; j++){
-            $th1 = $("<th>"+constructure[0].columns[j]+"</th>");
-            $("#trtable").append($th1);
-            $option2 = $("<option>"+constructure[0].columns[j]+"</option>");
-            $("#add1_1").append($option2);
-        }
+        $("#select1").selectpicker("refresh");
     });
 
-    $("#viewtable").change(
-        function(){
-            var tableValue = $(this).val();
-            $("#trtable").empty();
-            $("#add1_1").empty();
-            $th0 = $("<th>"+tableValue+"表所有字段："+"</th>");
-            $("#trtable").append($th0);
-            for (var i=0; i<constructure.length; i++){
-                if (tableValue == constructure[i].table_name){
-                    currenttable = constructure[i].columns;
-                    $("#add0").find("select").eq(1).empty();
-                    for (var j=0; j<constructure[i].columns.length; j++){
-                        $th1 = $("<th>"+constructure[i].columns[j]+"</th>");
-                        $("#trtable").append($th1);
-                        $option2 = $("<option>"+constructure[i].columns[j]+"</option>");
-                        $("#add0").find("select").eq(1).append($option2);
-                    }
-                }
-            }
+    $("#realTime_Table").bootstrapTable({
+        search: true,
+        pagination: true,
+        pageSize: 10,
+        pageList: [5, 10, 15, 20, 50, 100],
+        locale: "zh-CN",
+        striped: true,
+        showColumns: true,
+        sortable: true,
+        sortName: "time"
+    });
 
-        }
-    );
+    function sendAjax(source_table,target_table,db_type,transform_args) {
 
-    $("#select1").change(
-        function () {
-            count = 1;
-            $("#divselect").empty();
-            var type1 = $('#select1').val();
-            if (type1 == "字段过滤"){
-                $("#divselect").append($('<div><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                    '                        <div class="mws-form-item small" style="float: left">\n' +
-                    '                            <select></select>\n' +
-                    '                        </div>\n' +
-                    '                        <label style="margin-left:15%;float: left">选择条件：</label>\n' +
-                    '                        <div class="mws-form-item small" style="float: left">\n' +
-                    '                            <select>\n' +
-                    '                                <option>==</option>\n' +
-                    '                                <option>></option>\n' +
-                    '                                <option><</option>\n' +
-                    '                                <option>>=</option>\n' +
-                    '                                <option><=</option>\n' +
-                    '                                <option>!=</option>\n' +
-                    '                            </select>\n' +
-                    '                        </div>\n' +
-                    '                        <label style="float: left;margin-left: 15%">填充数值：</label>\n' +
-                    '                        <div class="mws-form-item small">\n' +
-                    '                            <input type="text" class="mws-textinput"/>\n' +
-                    '                            <button type="button" style="margin-right: 4%;float: right" id="select4">+ 添加条件</button>\n' +
-                    '                        </div>\n' +
-                    '                        <br></div>'));
-                for (var j=0; j<currenttable.length; j++){
-                    $option2 = $("<option>"+currenttable[j]+"</option>");
-                    $("#add0").find("select").eq(1).append($option2);
-                }
-                $("#select4").click(
-                    function () {
-                        $("#divselect").append($('<div><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                            '                        <div class="mws-form-item small" style="float: left">\n' +
-                            '                            <select></select>\n' +
-                            '                        </div>\n' +
-                            '                        <label style="margin-left:15%;float: left">选择条件：</label>\n' +
-                            '                        <div class="mws-form-item small" style="float: left">\n' +
-                            '                            <select>\n' +
-                            '                                <option>==</option>\n' +
-                            '                                <option>></option>\n' +
-                            '                                <option><</option>\n' +
-                            '                                <option>>=</option>\n' +
-                            '                                <option><=</option>\n' +
-                            '                                <option>!=</option>\n' +
-                            '                            </select>\n' +
-                            '                        </div>\n' +
-                            '                        <label style="float: left;margin-left: 15%">填充数值：</label>\n' +
-                            '                        <div class="mws-form-item small">\n' +
-                            '                            <input type="text" class="mws-textinput"/>\n' +
-                            '                            <button type="button" style="margin-right: 4%;float: right" onclick="deletecon(this)">- 删除条件</button>\n' +
-                            '                        </div>\n' +
-                            '                        <br></div>'));
-                        for (var j=0; j<currenttable.length; j++){
-                            $option2 = $("<option>"+currenttable[j]+"</option>");
-                            $("#add0").find("select").eq(count*2+1).append($option2);
-                        }
-                        count++;
-                    }
-                );
-
-            }else if (type1 == "字段删除"){
-                $("#divselect").append($('<div style="height: 42px"><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                    '                        <div class="mws-form-item small" style="float: left">\n' +
-                    '                            <select></select>\n' +
-                    '                        </div>\n' +
-                    '                        <div class="mws-form-item small">\n' +
-                    '                            <button type="button" style="margin-right: 4%;float: right" id="select4">+ 添加条件</button>\n' +
-                    '                        </div>\n' +
-                    '                        <br></div>'));
-                for (var j1=0; j1<currenttable.length; j1++){
-                    $option2 = $("<option>"+currenttable[j1]+"</option>");
-                    $("#add0").find("select").eq(1).append($option2);
-                }
-                $("#select4").click(
-                    function () {
-                        $("#divselect").append($('<div style="height: 42px"><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                            '                        <div class="mws-form-item small" style="float: left">\n' +
-                            '                            <select></select>\n' +
-                            '                        </div>\n' +
-                            '                        <div class="mws-form-item small">\n' +
-                            '                            <button type="button" style="margin-right: 4%;float: right" onclick="deletecon(this)">- 删除条件</button>\n' +
-                            '                        </div>\n' +
-                            '                        <br></div>'));
-                        for (var j=0; j<currenttable.length; j++){
-                            $option2 = $("<option>"+currenttable[j]+"</option>");
-                            $("#add0").find("select").eq(count+1).append($option2);
-                        }
-                        count++;
-                    }
-                );
-
-            }else if (type1 == "去除空值"){
-                $("#divselect").append($('<div style="height: 42px"><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                    '                        <div class="mws-form-item small" style="float: left">\n' +
-                    '                            <select></select>\n' +
-                    '                        </div>\n' +
-                    '                        <div class="mws-form-item small">\n' +
-                    '                            <button type="button" style="margin-right: 4%;float: right" id="select4">+ 添加条件</button>\n' +
-                    '                        </div>\n' +
-                    '                        <br></div>'));
-                for (var j2=0; j2<currenttable.length; j2++){
-                    $option2 = $("<option>"+currenttable[j2]+"</option>");
-                    $("#add0").find("select").eq(1).append($option2);
-                }
-                $("#select4").click(
-                    function () {
-                        $("#divselect").append($('<div style="height: 42px"><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                            '                        <div class="mws-form-item small" style="float: left">\n' +
-                            '                            <select></select>\n' +
-                            '                        </div>\n' +
-                            '                        <div class="mws-form-item small">\n' +
-                            '                            <button type="button" style="margin-right: 4%;float: right" onclick="deletecon(this)">- 删除条件</button>\n' +
-                            '                        </div>\n' +
-                            '                        <br></div>'));
-                        for (var j=0; j<currenttable.length; j++){
-                            $option2 = $("<option>"+currenttable[j]+"</option>");
-                            $("#add0").find("select").eq(count+1).append($option2);
-                        }
-                        count++;
-                    }
-                );
-            }
-            else if (type1 == "填充空值"){
-                $("#divselect").append($('<div><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                    '                        <div class="mws-form-item small" style="float: left">\n' +
-                    '                            <select></select>\n' +
-                    '                        </div>\n' +
-                    '                        <label style="float: left;margin-left: 25%">填充数值：</label>\n' +
-                    '                        <div class="mws-form-item small">\n' +
-                    '                            <input type="text" class="mws-textinput"/>\n' +
-                    '                            <button type="button" style="margin-right: 4%;float: right" id="select4">+ 添加条件</button>\n' +
-                    '                        </div>\n' +
-                    '                        <br></div>'));
-                for (var j3=0; j3<currenttable.length; j3++){
-                    $option2 = $("<option>"+currenttable[j3]+"</option>");
-                    $("#add0").find("select").eq(1).append($option2);
-                }
-                $("#select4").click(
-                    function () {
-                        $("#divselect").append($('<div><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                            '                        <div class="mws-form-item small" style="float: left">\n' +
-                            '                            <select></select>\n' +
-                            '                        </div>\n' +
-                            '                        <label style="float: left;margin-left: 25%">填充数值：</label>\n' +
-                            '                        <div class="mws-form-item small">\n' +
-                            '                            <input type="text" class="mws-textinput"/>\n' +
-                            '                            <button type="button" style="margin-right: 4%;float: right" onclick="deletecon(this)">- 删除条件</button>\n' +
-                            '                        </div>\n' +
-                            '                        <br></div>'));
-                        for (var j=0; j<currenttable.length; j++){
-                            $option2 = $("<option>"+currenttable[j]+"</option>");
-                            $("#add0").find("select").eq(count+1).append($option2);
-                        }
-                        count++;
-                    }
-                );
-
-            }
-            else if (type1 == "字段切分"){
-                $("#divselect").append($('<div style="height: 42px"><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                    '                        <div class="mws-form-item small" style="float: left">\n' +
-                    '                            <select></select>\n' +
-                    '                        </div>\n' +
-                    '                        <label style="margin-left:25%;float: left">以符号切分：</label>\n' +
-                    '                        <div class="mws-form-item small" style="float: left">\n' +
-                    '                            <select>\n' +
-                    '                                <option>-</option>\n' +
-                    '                                <option>_</option>\n' +
-                    '                                <option>.</option>\n' +
-                    '                                <option>*</option>\n' +
-                    '                                <option>@</option>\n' +
-                    '                                <option>$</option>\n' +
-                    '                            </select>\n' +
-                    '                        </div>\n' +
-                    '                        <div class="mws-form-item small">\n' +
-                    '                            <button type="button" style="margin-right: 4%;float: right" id="select4">+ 添加条件</button>\n' +
-                    '                        </div>\n' +
-                    '                        <br></div>'));
-                for (var j4=0; j4<currenttable.length; j4++){
-                    $option2 = $("<option>"+currenttable[j4]+"</option>");
-                    $("#add0").find("select").eq(1).append($option2);
-                }
-                $("#select4").click(
-                    function () {
-                        $("#divselect").append($('<div style="height: 42px"><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                            '                        <div class="mws-form-item small" style="float: left">\n' +
-                            '                            <select></select>\n' +
-                            '                        </div>\n' +
-                            '                        <label style="margin-left:25%;float: left">以符号切分：</label>\n' +
-                            '                        <div class="mws-form-item small" style="float: left">\n' +
-                            '                            <select>\n' +
-                            '                                <option>-</option>\n' +
-                            '                                <option>_</option>\n' +
-                            '                                <option>.</option>\n' +
-                            '                                <option>*</option>\n' +
-                            '                                <option>@</option>\n' +
-                            '                                <option>$</option>\n' +
-                            '                            </select>\n' +
-                            '                        </div>\n' +
-                            '                        <div class="mws-form-item small">\n' +
-                            '                            <button type="button" style="margin-right: 4%;float: right" onclick="deletecon(this)">- 删除条件</button>\n' +
-                            '                        </div>\n' +
-                            '                        <br></div>'));
-                        for (var j=0; j<currenttable.length; j++){
-                            $option2 = $("<option>"+currenttable[j]+"</option>");
-                            $("#add0").find("select").eq(count*2+1).append($option2);
-                        }
-                        count++;
-                    }
-                );
-            }
-            else if (type1 == "字段融合"){
-                $("#divselect").append($('<div style="height: 42px"><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                    '                        <div class="mws-form-item small" style="float: left">\n' +
-                    '                            <select></select>\n' +
-                    '                        </div>\n' +
-                    '                        <div class="mws-form-item small">\n' +
-                    '                            <button type="button" style="margin-right: 4%;float: right" id="select4">+ 添加条件</button>\n' +
-                    '                        </div>\n' +
-                    '                        <br></div>'));
-                for (var j5=0; j5<currenttable.length; j5++){
-                    $option2 = $("<option>"+currenttable[j5]+"</option>");
-                    $("#add0").find("select").eq(1).append($option2);
-                }
-                $("#select4").click(
-                    function () {
-                        $("#divselect").append($('<div style="height: 42px"><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                            '                        <div class="mws-form-item small" style="float: left">\n' +
-                            '                            <select></select>\n' +
-                            '                        </div>\n' +
-                            '                        <div class="mws-form-item small">\n' +
-                            '                            <button type="button" style="margin-right: 4%;float: right" onclick="deletecon(this)">- 删除条件</button>\n' +
-                            '                        </div>\n' +
-                            '                        <br></div>'));
-                        for (var j=0; j<currenttable.length; j++){
-                            $option2 = $("<option>"+currenttable[j]+"</option>");
-                            $("#add0").find("select").eq(count+1).append($option2);
-                        }
-                        count++;
-                    }
-                );
-            }
-            else if (type1 == "数值运算"){
-                $("#divselect").append($('<div style="height: 42px"><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                    '                        <div class="mws-form-item small" style="float: left">\n' +
-                    '                            <select></select>\n' +
-                    '                        </div>\n' +
-                    '                        <label style="margin-left:25%;float: left">数值运算：</label>\n' +
-                    '                        <div class="mws-form-item small" style="float: left">\n' +
-                    '                            <select id="operation">\n' +
-                    '                                <option>均值</option>\n' +
-                    '                                <option>求和</option>\n' +
-                    '                            </select>\n' +
-                    '                        </div>\n' +
-                    '                        <div class="mws-form-item small">\n' +
-                    '                            <button type="button" style="margin-right: 4%;float: right" id="select4">+ 添加条件</button>\n' +
-                    '                        </div>\n' +
-                    '                        <br></div>'));
-                for (var j6=0; j6<currenttable.length; j6++){
-                    $option2 = $("<option>"+currenttable[j6]+"</option>");
-                    $("#add0").find("select").eq(1).append($option2);
-                }
-                $("#select4").click(
-                    function () {
-                        $("#divselect").append($('<div style="height: 42px"><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                            '                        <div class="mws-form-item small" style="float: left">\n' +
-                            '                            <select></select>\n' +
-                            '                        </div>\n' +
-                            '                        <div class="mws-form-item small">\n' +
-                            '                            <button type="button" style="margin-right: 4%;float: right" onclick="deletecon(this)">- 删除条件</button>\n' +
-                            '                        </div>\n' +
-                            '                        <br></div>'));
-                        for (var j=0; j<currenttable.length; j++){
-                            $option2 = $("<option>"+currenttable[j]+"</option>");
-                            if (count == 1){
-                                $("#add0").find("select").eq(count*2+1).append($option2);
-                            }else {
-                                $("#add0").find("select").eq(count+2).append($option2);
-                            }
-                        }
-                        count++;
-                    }
-                );
-            } else {
-                window.alert("选择处理方式有误");
-            }
-        });
-
-    $("#select4").click(
-        function () {
-            $("#divselect").append($('<div><label style="margin-left:3%;float: left">选择字段：</label>\n' +
-                '                        <div class="mws-form-item small" style="float: left">\n' +
-                '                            <select></select>\n' +
-                '                        </div>\n' +
-                '                        <label style="margin-left:15%;float: left">选择条件：</label>\n' +
-                '                        <div class="mws-form-item small" style="float: left">\n' +
-                '                            <select>\n' +
-                '                                <option>==</option>\n' +
-                '                                <option>></option>\n' +
-                '                                <option><</option>\n' +
-                '                                <option>>=</option>\n' +
-                '                                <option><=</option>\n' +
-                '                                <option>!=</option>\n' +
-                '                            </select>\n' +
-                '                        </div>\n' +
-                '                        <label style="float: left;margin-left: 15%">填充数值：</label>\n' +
-                '                        <div class="mws-form-item small">\n' +
-                '                            <input type="text" class="mws-textinput"/>\n' +
-                '                            <button type="button" style="margin-right: 4%;float: right" id="select4" onclick="deletecon(this)">- 删除条件</button>\n' +
-                '                        </div>\n' +
-                '                        <br></div>'));
-            for (var j=0; j<currenttable.length; j++){
-                $option2 = $("<option>"+currenttable[j]+"</option>");
-                $("#add0").find("select").eq(count*2+1).append($option2);
-            }
-            count++;
-        }
-    );
-
-    function deletecon(data) {
-        $(data).parent().parent().remove();
-        count--;
-    }
-
-    function sendAjax(source_table,target_table,type,args) {
-
-        var jsonObj = {"source_table":source_table,"target_table":target_table,"db_type":"mysql","transform_args":[{"type":type,"args":args}]};
+        var jsonObj = {"source_table":source_table,"target_table":target_table,"db_type":db_type,"transform_args":transform_args};
         $.post("http://39.104.186.210:8092/api/etl/transform",JSON.stringify(jsonObj),function (msg) {
             window.alert(JSON.stringify(msg));
         });
     }
 
-    $("#select3").click(
+    $("#button2").click(
         function () {
-            var source_table = $('#viewtable').val();
-            var target_table = $('#select2').val();
-            var type;
-            var args =[];
-            var type1 = $('#select1').val();
-            if (type1 == "字段过滤"){
-                type = "filter";
-                for (var i=0; i<count; i++){
-                    var args_item = {"column":$("#add0").find("select").eq(i*2+1).val(),"cmp":$("#add0").find("select").eq(i*2+2).val(),"value":Number($("#add0").find("input").eq(i+1).val())};
-                    args.push(args_item);
-                }
-            }else if (type1 == "字段删除"){
-                type = "drop";
-                for (var i1=0; i1<count; i1++){
-                    args.push($("#add0").find("select").eq(i1+1).val());
-                }
-            }else if (type1 == "去除空值"){
-                type = "dropna";
-                for (var i2=0; i2<count; i2++){
-                    args.push($("#add0").find("select").eq(i2+1).val());
-                }
-            }
-            else if (type1 == "填充空值"){
-                type = "fillna";
-                for (var i3=0; i3<count; i3++){
-                    var args_item1 = {"column":$("#divselect").find("select").eq(i3).val(),"value":$("#divselect").find("input").eq(i3).val()};
-                    args.push(args_item1);
-                }
-            }
-            else if (type1 == "字段切分"){
-                type = "split";
-                for (var i4=0; i4<count; i4++){
-                    var args_item2 = {"source_column":$("#divselect").find("select").eq(i4*2).val(),"split_flag":$("#divselect").find("select").eq(i4*2+1).val()};
-                    args.push(args_item2);
-                }
-            }
-            else if (type1 == "字段融合"){
-                type = "merge";
-                var shuzu = [];
-                for (var i5=0; i5<count; i5++){
-                    shuzu.push($("#divselect").find("select").eq(i5).val());
-                }
-                args.push({"source_columns":shuzu,"split_flag":","});
-            }
-            else if (type1 == "数值运算"){
-                type = "math";
-                var shuzu1 = [];
-                var aa = $("#operation").val();
-                var bb;
-                if (aa == "均值"){
-                    bb = "mean";
-                }else {
-                    bb = "sum";
-                }
-                for (var i6=0 ;i6<count; i6++){
-                    if (i6 == 0){
-                        shuzu1.push($("#divselect").find("select").eq(0).val());
-                    }else {
-                        shuzu1.push($("#divselect").find("select").eq(i6+1).val());
+            if ($("#select1").val() == "") {
+                window.alert("必须先选择数据表！");
+            }else {
+                var transform_args = [];
+                var filterargs = [];
+                var dropargs = [];
+                var dropnaargs = [];
+                var fillnaargs = [];
+                var splitargs = [];
+                var mathargs = [];
+                var source_table = $("#select1").val();
+                var target_table = $("#text1").val();
+                var db_type = $("#select2").val();
+
+                for (var i=0; i<count+1; i++) {
+                    $div = $("#index"+i);
+                    if ($div.children().children().val() == "字段过滤") {
+
+                        var args_item = {"column":$div.children().eq(1).children().val(),"cmp":$div.children().eq(2).children().val(),"value":Number($div.children().eq(3).val())};
+                        filterargs.push(args_item);
+
+                    }else if ($div.children().children().val() == "字段删除") {
+
+                        dropargs.push($div.children().eq(1).children().val());
+
+                    }else if ($div.children().children().val() == "去除空值") {
+
+                        dropnaargs.push($div.children().eq(1).children().val());
+
+                    }else if ($div.children().children().val() == "填充空值") {
+
+                        var args_item1 = {"column":$div.children().eq(1).children().val(),"value":$div.children().eq(2).val()};
+                        fillnaargs.push(args_item1);
+
+                    }else if ($div.children().children().val() == "字段切分") {
+
+                        var args_item2 = {"source_column":$div.children().eq(1).children().val(),"split_flag":$div.children().eq(2).val()};
+                        splitargs.push(args_item2);
+
                     }
                 }
-                args.push({"function":bb,"source_columns":shuzu1});
-            }else {
-                window.alert("选择处理方式有误");
+                if (filterargs != "") {
+
+                    transform_args.push({"type":"filter","args":filterargs});
+
+                }
+                if (dropargs != "") {
+
+                    transform_args.push({"type":"drop","args":dropargs});
+
+                }
+                if (dropnaargs != "") {
+
+                    transform_args.push({"type":"dropna","args":dropnaargs});
+
+                }
+                if (fillnaargs != "") {
+
+                    transform_args.push({"type":"fillna","args":fillnaargs});
+
+                }
+                if (splitargs != "") {
+
+                    transform_args.push({"type":"split","args":splitargs});
+                }
+                sendAjax(source_table,target_table,db_type,transform_args);
             }
-            sendAjax(source_table,target_table,type,args);
         }
     );
 
-    //var jsonObj = {"source_table":"rule","db_type":"mysql","transform_args":[{"type":"filter","args":[{"column":"ruleId","cmp":">=","value":34}]}]};
-      //var   jsonObj = {"source_table":"test","db_type":"mysql","transform_args":[{"type":"merge","args":[{"source_columns":["1","3"],"split_flag":"#"},{"source_columns":["2","3"],"split_flag":"#"}]}]};
-    /*$.ajax({
-        type : "post",
-        url :  "http://39.104.186.210:8092/api/etl/transform",
-        data : JSON.stringify(jsonObj),
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-
-        success:function(msg) {
-            window.alert(msg);
-            window.alert(JSON.stringify(msg));
-            window.alert(typeof msg);
+    function processchange(dom) {
+        if ($(dom).val() == "字段删除") {
+            $(dom).parent().next().nextAll().remove();
+            $(dom).parent().next().after($("<br><br>"));
+        } else if($(dom).val() == "字段过滤") {
+            $(dom).parent().next().nextAll().remove();
+            $select = $("<select class=\"selectpicker\" data-live-search=\"true\" data-live-search-placeholder=\"搜索\" title=\"选择过滤条件\">" +
+                "<option>></option>" +
+                "<option><</option>" +
+                "<option>==</option>" +
+                "<option>!=</option>" +
+                "<option>>=</option>" +
+                "<option><=</option>" +
+                "</select>");
+            $text = $("<input type=\"text\" class=\"form-control\" style=\"display: inline;width: 200px;margin-left: 5%\" placeholder=\"填写数值\"><br><br>");
+            $(dom).parent().next().after($text);
+            $(dom).parent().next().after($select);
+            $select.selectpicker("refresh");
+        } else if($(dom).val() == "去除空值") {
+            $(dom).parent().next().nextAll().remove();
+            $(dom).parent().next().after($("<br><br>"));
+        } else if($(dom).val() == "填充空值") {
+            $(dom).parent().next().nextAll().remove();
+            $text = $("<input type=\"text\" class=\"form-control\" style=\"display: inline;width: 200px;margin-left: 5%\" placeholder=\"填写数值\">");
+            $(dom).parent().next().after($("<br><br>"));
+            $(dom).parent().next().after($text);
+        } else if($(dom).val() == "字段切分") {
+            $(dom).parent().next().nextAll().remove();
+            $text = $("<input type=\"text\" class=\"form-control\" style=\"display: inline;width: 200px;margin-left: 5%\" placeholder=\"填入切分符号\">");
+            $(dom).parent().next().after($("<br><br>"));
+            $(dom).parent().next().after($text);
+        } else {
+            window.alert("选择的处理方式有误！");
         }
-    });*/
+    }
 
-    /*$.post("http://39.104.186.210:8092/api/etl/transform",JSON.stringify(jsonObj),function (msg) {
-        window.alert(msg);
-        window.alert(JSON.stringify(msg));
-        window.alert(typeof msg);
-    });*/
+    $("#button1").click(
+        function () {
+            if ($("#select1").val() == "") {
+                window.alert("先选择数据表才能添加条件");
+            } else {
+                count++;
+                $div = $("<div style='margin-left: 10px'></div>");
+                $div.attr("id","index"+count);
+                $select1 = $("<select class=\"selectpicker\" onchange='processchange(this)' data-live-search=\"true\" data-live-search-placeholder=\"搜索\" title=\"选择处理方式\">\n" +
+                    "                            <option>字段过滤</option>\n" +
+                    "                            <option>字段删除</option>\n" +
+                    "                            <option>去除空值</option>\n" +
+                    "                            <option>填充空值</option>\n" +
+                    "                            <option>字段切分</option>\n" +
+                    "                        </select>");
+                $select2 = $("<select id='test1' class=\"selectpicker\" data-live-search=\"true\" data-live-search-placeholder=\"搜索\" title=\"选择待处理字段\"></select>");
+                for (var i=0; i<current_tructdata.length; i++) {
+                    $option = $("<option>"+current_tructdata[i]+"</option>");
+                    $select2.append($option);
+                }
+                $select3 = $("<select class=\"selectpicker\" data-live-search=\"true\" data-live-search-placeholder=\"搜索\" title=\"选择条件（先选择处理方式）\"></select>");
+                $div.append($select1);
+                $div.append($select2);
+                $div.append($select3);
+                $div.append($("<input type=\"text\" class=\"form-control\" style=\"display: inline;width: 200px;margin-left: 5%\" placeholder=\"填入数值（先选择处理方式）\"><br><br>"));
+                $("#etlbody").append($div);
+                $select1.selectpicker("refresh");
+                $select2.selectpicker("refresh");
+                $select3.selectpicker("refresh");
+            }
+        }
+    );
+
+    function selectchange(dom) {
+        $("#divtable").empty();
+        $("#divtable").append($("<table id=\"realTime_Table\">\n" +
+            "                        <thead id=\"thead\"></thead>\n" +
+            "                        <tbody id=\"tbody\"></tbody>\n" +
+            "                    </table>"));
+        var select1value = $(dom).val();
+        for (var i=0; i<structdata.length; i++) {
+            if (select1value == structdata[i].table_name) {
+                current_tructdata = structdata[i].columns;
+                $tr = $("<tr></tr>");
+                for (var j=0; j<structdata[i].columns.length; j++) {
+                    $th = $("<th>"+structdata[i].columns[j]+"</th>");
+                    $tr.append($th);
+                }
+                $("#thead").append($tr);
+            }
+        }
+        $("#realTime_Table").bootstrapTable({
+            search: true,
+            pagination: true,
+            pageSize: 10,
+            pageList: [5, 10, 15, 20, 50, 100],
+            locale: "zh-CN",
+            striped: true,
+            showColumns: true,
+            sortable: true,
+            sortName: "time"
+        });
+        $("#realTime_Table").find("td").remove();
+
+        for (var k=0; k<count+1; k++) {
+            $select1 = $("#index"+k).children().eq(1).children().eq(0);
+            $select1.empty();
+            for (var z=0; z<current_tructdata.length; z++) {
+                $option = $("<option>"+current_tructdata[z]+"</option>");
+                $select1.append($option);
+            }
+            $select1.selectpicker("refresh");
+        }
+    }
+
+    $("#select2").change(
+        function () {
+            $.get("http://39.104.186.210:8092/api/etl/table-struct?db_type="+$(this).val(),function (data) {
+                structdata = data;
+                $select1 = $("#select1");
+                $select1.empty();
+                for (var i=0; i<data.length; i++) {
+                    $option = $("<option>"+structdata[i].table_name+"</option>");
+                    $select1.append($option);
+                }
+                $select1.selectpicker("refresh");
+
+                for (var j=0; j<count+1; j++) {
+                    $indexdiv = $("#index"+j);
+                    $indexdiv.children().eq(1).children().eq(0).empty();
+                    $indexdiv.children().eq(1).children().selectpicker("refresh");
+                }
+
+                $divtable = $("#divtable");
+                $divtable.empty();
+                $divtable.append($("<table id=\"realTime_Table\">\n" +
+                    "                            <thead id=\"thead\"></thead>\n" +
+                    "                            <tbody id=\"tbody\"></tbody>\n" +
+                    "                        </table>"));
+                $("#realTime_Table").bootstrapTable({
+                    search: true,
+                    pagination: true,
+                    pageSize: 10,
+                    pageList: [5, 10, 15, 20, 50, 100],
+                    locale: "zh-CN",
+                    striped: true,
+                    showColumns: true,
+                    sortable: true,
+                    sortName: "time"
+                });
+
+                $select1.next().trigger("click");
+            });
+        }
+    );
 
     $("#upload").click(function () {
         var formData = new FormData();
@@ -690,186 +479,7 @@
         });
     });
 
-
-
-    /* $('#select2').change(
-        function () {
-            if($(this).val() == "更改字段"){
-                $('#select3').attr("disabled",false);
-            }else {
-                $('#select3').val("");
-                $('#select3').attr("disabled","disabled");
-            }
-        }
-    );
-
-    var deviceGroup = {device_id:["8A38B734-284D-3BED-2834-BDA47362B6D2","8A38B734-284D-3BED-2834-BDA47362B6D3","8A38B734-284D-3BED-2834-BDA47362B6D4","","8A38B734-284D-3BED-2834-BDA47362B6D6","8A38B734-284D-3BED-2834-BDA47362B6D7","8A38B734-284D-3BED-2834-BDA47362B6D8","8A38B734-284D-3BED-2834-BDA47362B6D9","","8A38B734-284D-3BED-2834-BDA47362B6D0"],
-        name:["test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1"],
-        create_date:["2018-07-15 09:28:28","","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28"],
-        tenant_Id:["1","1","1","","1","1","1","1","1","1"],
-        device_type:["humidity","temperature","humidity","temperature","humidity","temperature","temperature","temperature","temperature","temperature"],
-        model:["CS-01","CS-01","CS-01","CS-01","CS-01","CS-01","CS-01","CS-01","CS-01","CS-01"],
-        status:["running","running","running","running","running","running","running","running","running","running"]
-    };
-    var userGroup = {
-        tenant_Id:["1","1","1","","1","1","1","1","1","1","1","1"],
-        name:["test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1","test_1"],
-        create_date:["2018-07-15 09:28:28","","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28","2018-07-15 09:28:28"],
-        email:["adjkafha123@sina.com","adjkafha123@sina.com","adjkafha123@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com","adjkafha@sina.com"],
-        phone:["13849586921","13849586921","13849586921","13849586921","","13849586921","13849586921","13849586921","13849586921","13849586921","13849586921","13849586921"]
-    };
-    for (var item in deviceGroup){
-        $('#select1').append($('<option>'+item+'</option>'));
-        $th = $('<th></th>');
-        $th.html(item);
-        $('#thead1').append($th);
-        for (var j=0; j<deviceGroup[item].length; j++){
-            $tr = $('<tr class="gradeA"></tr>');
-            $('#tbody1').append($tr);
-        }
-        for (var i=0; i<deviceGroup[item].length; i++){
-            $td = $('<td></td>');
-            $td.html(deviceGroup[item][i]);
-            $('#tbody1').find("tr").eq(i).append($td);
-        }
-    }
-    etlprocess(deviceGroup);
-    /!*for (var item in deviceGroup){
-        window.alert(item);
-        for (var i=0; i<deviceGroup[item].length; i++){
-            window.alert(deviceGroup[item][i])
-        }
-    }*!/
-    function etlprocess(dataGroup){
-        $('#select4').unbind();
-        $('#select4').click(
-            function () {
-                if ($('#select2').val() == "去除空值"){
-                    $('#tbody1').empty();
-                    var a = $('#select1').val();
-                    for (var i0=0; i0<dataGroup[a].length; i0++){
-                        if(dataGroup[a][i0] != ""){
-                            $tr = $('<tr class="gradeA"></tr>');
-                            $tr.attr("id","count"+i0);
-                            $('#tbody1').append($tr);
-                        }
-                    }
-                    for (var i=0; i<dataGroup[a].length; i++){
-                        if(dataGroup[a][i] != ""){
-                            for (var item in dataGroup){
-                                $td = $('<td></td>');
-                                $td.html(dataGroup[item][i]);
-                                $('#count'+i).append($td);
-
-                            }
-                        }
-                    }
-                }else if ($('#select2').val() == "更改字段"){
-                    if ($('#select3').val() == ""){
-                        window.alert("请输入填充数值！");
-                    }else {
-                        $('#thead1').empty();
-                        $('#tbody1').empty();
-                        var b = $('#select1').val();
-                        for (var j0 =0; j0<dataGroup[b].length; j0++){
-                            dataGroup[b][j0] = $('#select3').val();
-                        }
-                        for (var item2 in dataGroup){
-                            $th = $('<th></th>');
-                            $th.html(item2);
-                            $('#thead1').append($th);
-                            for (var j=0; j<dataGroup[item2].length; j++){
-                                $tr = $('<tr class="gradeA"></tr>');
-                                $('#tbody1').append($tr);
-                            }
-                            for (var j1=0; j1<dataGroup[item2].length; j1++){
-                                $td = $('<td></td>');
-                                $td.html(dataGroup[item2][j1]);
-                                $('#tbody1').find("tr").eq(j1).append($td);
-                            }
-                        }
-                    }
-                }else if ($('#select2').val() == "转换时间格式"){
-                    if ($('#select1').val() != "create_date"){
-                        window.alert("该字段不是Date类型，不能转换！");
-                    }else {
-                        $('#thead1').empty();
-                        $('#tbody1').empty();
-                        var c = $('#select1').val();
-                        for (var k0 =0; k0<dataGroup[c].length; k0++){
-                            dataGroup[c][k0] = dataGroup[c][k0].slice(0,10);
-                        }
-                        for (var item3 in dataGroup){
-                            $th = $('<th></th>');
-                            $th.html(item3);
-                            $('#thead1').append($th);
-                            for (var k1=0; k1<dataGroup[item3].length; k1++){
-                                $tr = $('<tr class="gradeA"></tr>');
-                                $('#tbody1').append($tr);
-                            }
-                            for (var k2=0; k2<dataGroup[item3].length; k2++){
-                                $td = $('<td></td>');
-                                $td.html(dataGroup[item3][k2]);
-                                $('#tbody1').find("tr").eq(k2).append($td);
-                            }
-                        }
-                    }
-                }
-            }
-        );
-    }
-
-    $('#button1').click(
-        function(){
-            $('#thead1').empty();
-            $('#tbody1').empty();
-            $('#title1').html("数据表名称：user_table");
-            $('#select1').empty();
-            etlprocess(userGroup);
-            for (var item in userGroup){
-                $('#select1').append($('<option>'+item+'</option>'));
-                $th = $('<th></th>');
-                $th.html(item);
-                $('#thead1').append($th);
-                for (var j=0; j<userGroup[item].length; j++){
-                    $tr = $('<tr class="gradeA"></tr>');
-                    $('#tbody1').append($tr);
-                }
-                for (var i=0; i<userGroup[item].length; i++){
-                    $td = $('<td></td>');
-                    $td.html(userGroup[item][i]);
-                    $('#tbody1').find("tr").eq(i).append($td);
-                }
-            }
-        }
-    );
-    $('#button2').click(
-        function(){
-            $('#thead1').empty();
-            $('#tbody1').empty();
-            $('#title1').html("数据表名称：device_table");
-            $('#select1').empty();
-            etlprocess(deviceGroup);
-            for (var item in deviceGroup){
-                $('#select1').append($('<option>'+item+'</option>'));
-                $th = $('<th></th>');
-                $th.html(item);
-                $('#thead1').append($th);
-                for (var j=0; j<deviceGroup[item].length; j++){
-                    $tr = $('<tr class="gradeA"></tr>');
-                    $('#tbody1').append($tr);
-                }
-                for (var i=0; i<deviceGroup[item].length; i++){
-                    $td = $('<td></td>');
-                    $td.html(deviceGroup[item][i]);
-                    $('#tbody1').find("tr").eq(i).append($td);
-                }
-            }
-        }
-    )*/
-
 </script>
-
 
 </body>
 </html>
