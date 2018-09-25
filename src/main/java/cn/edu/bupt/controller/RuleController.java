@@ -383,6 +383,7 @@ public class RuleController extends DefaultThingsboardAwaredController{
         return retSuccess(responseContent);
     }
 
+
     @RequestMapping(value = "/addFilter/{ruleId}", method = RequestMethod.POST)
     @ResponseBody
     public String addFilter(@RequestBody String filterInfo, @PathVariable("ruleId") String ruleId){
