@@ -285,6 +285,26 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         });
     }
 
+    //删除过滤器
+    $scope.delFilter=function () {
+        var filterId=$scope.editfilter.filterId
+
+        $.ajax({
+            url: "/api/rule/deleteFilter/"+filterId,
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            type: "DELETE",
+            dataType: "text",
+            success: function (msg) {
+                console.log(msg)
+                if(msg==='ok'){
+                    toastr.success('删除过滤器成功')
+                }
+                location.reload()
+            }
+        });
+    }
+
     //编辑插件-传递当前Plugin象
     $scope.showEditPluginModal=function (index) {
         var scope=angular.element($('#Plugin'+index)[0]).scope()
@@ -319,6 +339,26 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
                 console.log(msg)
                 if(msg==='ok'){
                     toastr.success('修改插件成功')
+                }
+                location.reload()
+            }
+        });
+    }
+
+    //删除插件
+    $scope.delPlugin=function () {
+        var transformId=$scope.editplugin.transformId
+
+        $.ajax({
+            url: "/api/rule/deleteTransform/"+transformId,
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            type: "DELETE",
+            dataType: "text",
+            success: function (msg) {
+                console.log(msg)
+                if(msg==='ok'){
+                    toastr.success('删除插件成功')
                 }
                 location.reload()
             }

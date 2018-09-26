@@ -48,6 +48,16 @@ public class NavigationController {
         return "static/login/modifyPassword";
     }
 
+    @RequestMapping("/rolePool")
+    public String  getRolePool() {
+        return "template/RolePool";
+    }
+
+    @RequestMapping("/userPool")
+    public String  getUserPool() {
+        return "template/UserPool";
+    }
+
     @RequestMapping("/allocationCenterIndex")
     public String  allocationCenter() {
         return "static/allocationCenter/allocationCenterIndex";
@@ -118,6 +128,9 @@ public class NavigationController {
 
             case "k8s":
                 return "redirect:http://39.104.189.84:30000/";
+
+            case "auth":
+                return "redirect:/userPool";
 
             default:
                 throw new IllegalArgumentException("Bad Module Name");

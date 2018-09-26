@@ -41,6 +41,24 @@ public class UserController extends DefaultThingsboardAwaredController{
         }
     }
 
+    @RequestMapping(value = "/tenant/user",params = {"tenantId"}, method = RequestMethod.GET)
+    @ResponseBody
+    public String getUserByTenantId(@RequestParam Integer tenantId){
+        String requestAddr = API_PREFIX+"tenant/user";
+        StringBuffer param = new StringBuffer();
+        param.append("tenantId").append("=").append(tenantId);
+        requestAddr = requestAddr + "?" + param ;
+        try {
+            Response responseContent = HttpUtil.sendGet("http://" + getAccountServer() + requestAddr,
+                    null,
+                    request.getSession()) ;
+            response.setStatus(responseContent.code());
+            return responseContent.body().string();
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
     @RequestMapping(value = "/tenantAdmin", method = RequestMethod.POST)
     @ResponseBody
     public String createTenantAdmin(@RequestBody String userInfo){
