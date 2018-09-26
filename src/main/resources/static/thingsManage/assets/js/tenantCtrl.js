@@ -46,10 +46,11 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
 
 //通过ID获取租户详情
     $scope.showTenantDetail = function (item) {
+        console.log(item);
         $scope.tenantGroupID = item.id;
         $scope.tenantTitle = item.title;
         tenantID = item.id;
-        //console.log(item.id);
+        console.log(item.id);
         /*除点击元素外其他元素均无特殊样式*/
         $scope.tenantGroups.forEach(function (items) {
             if(item != items) items.style = {}

@@ -36,7 +36,7 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
         }, function (resp) {
             toastr.error("删除失败！");
         });
-    }
+    };
 
     $scope.addDeviceModel = function () {
         var createDeviceModel = {};
@@ -46,19 +46,37 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
         createDeviceModel.icon = $("#potatoIcon").val();
         createDeviceModel.limit_lifetime = $("#limitTime").val();
         console.log(createDeviceModel.limit_lifetime);
+        console.log("time");
         if (createDeviceModel.limit_lifetime == ""){
             createDeviceModel.limit_lifetime = 0;
+        }else {
+            var firstNum = createDeviceModel.limit_lifetime.substring(0,1);
+            console.log(firstNum);
+            var secondNum = createDeviceModel.limit_lifetime.substring(1,2);
+            console.log(secondNum);
+            var thirdNum = createDeviceModel.limit_lifetime.substring(3,4);
+            console.log(thirdNum);
+            var fourthNum = createDeviceModel.limit_lifetime.substring(4,5);
+            console.log(fourthNum);
+            var fifthNum = createDeviceModel.limit_lifetime.substring(6,7);
+            console.log(fifthNum);
+            var sixthNum = createDeviceModel.limit_lifetime.substring(7,8);
+            console.log(sixthNum);
+            const longNum = parseInt(firstNum)*10*3600000 + parseInt(secondNum)*3600000 + parseInt(thirdNum)*10*60000 + parseInt(fourthNum)*60000 + parseInt(fifthNum)*10*1000 + parseInt(sixthNum)*1000;
+
+            console.log(longNum);
+            createDeviceModel.limit_lifetime = longNum;
         }
-        console.log(createDeviceModel.limit_lifetime);
+
         $scope.createDeviceModel = JSON.stringify(createDeviceModel);
         console.log($scope.createDeviceModel);
         var createDeviceGroupObj =  $resource("/api/devicetype/insert");
         $scope.deviceInfomation = createDeviceGroupObj.save({},$scope.createDeviceModel,function (resp) {
             console.log(resp);
-            toastr.success("创建成功！");
+            /*toastr.success("创建成功！");
             setTimeout(function () {
                 window.location.reload();
-            },500);
+            },500);*/
         },function (error) {
             toastr.error("创建失败！");
         });

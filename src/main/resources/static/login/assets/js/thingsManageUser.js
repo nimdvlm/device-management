@@ -52,7 +52,30 @@ $(document).ready(function () {
     $("#bigData").click(function () {
        window.location.href = "../bigData/device1.html?id="+tenantId;
     });
-
-
+    $("#logout").click(function () {
+        console.log("success");
+        $.ajax({
+            url:"/api/user/logout",
+            contentType: "application/json; charset=utf-8",
+            type:"GET",
+            success:function(msg) {
+                console.log(msg);
+                window.location.href="/";
+            }
+        });
+    });
+    /*退出登录
+    $("#logout").click = function () {
+        console.log("sssssssssssss");
+        $.ajax({
+            url:"/api/user/logout",
+            contentType: "application/json; charset=utf-8",
+            type:"GET",
+            success:function(msg) {
+                console.log(msg);
+                window.location.href="/";
+            }
+        });
+    };*/
 
 });
