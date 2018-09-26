@@ -93,7 +93,8 @@
             padding: 17px 25px;
         }
         #side-menu ul .tenantMenu{
-            padding: 13px 25px;
+            padding: 12px 20px;
+            font-size: 11px;
         }
 
         #side-menu ul li a i {
@@ -114,7 +115,7 @@
     font-size: 20px;
 }
 .textStyle{
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }
 #searchKey{
@@ -732,14 +733,15 @@ width: 35%;
 }
 .dashboard_item{
     /*float: left;*/
-    width: 25%;
+    width: 30%;
     /*top: 200px;
     left:500px;*/
     border: 1px solid rgba(25, 100, 173, 0.5);
     min-height: 270px;
     box-shadow: 1px 2px 1px rgba(0,0,0,0.172);
     background-color: white;
-    position: absolute;
+    display: inline-block;
+    position:absolute;
 }
 .showEchartsChart{
     top: 200px;

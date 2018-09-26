@@ -26,7 +26,7 @@
         </div>
 
         <div class="right_Dashboard" ng-show="isChoose">
-            <div>
+            <div class="row">
                 <h3 style="display : inline">仪表板&nbsp;&nbsp;>&nbsp;&nbsp;{{dbItem.name}}</h3>
                 <div style="float: right;margin-right: 20px">
                     <span data-toggle="modal" data-target="#addEntity" ng-click="getAllDevice()">
@@ -40,7 +40,7 @@
                     </span>
                 </div>
             </div>
-            <!--div class="dashboard_item" wei-yi left="left" top="top" ng-repeat="entity in entitys track by $index">
+            <!--div class="dashboard_item" wei-yi ng-repeat="entity in entitys track by $index" ng-mousedown="weiYi_mouseDown($index,item)" ng-mouseover="weiYi_mouseover($index)" ng-mouseup="weiYi_mouseup($index)">
                 <div class="entity_title">
                     <span id="entity_name">{{entity.name}}</span>
                     <span ng-click="delEntity(entity)" style="float: right;margin-top: 10px">
@@ -53,7 +53,26 @@
                         <i class="glyphicon glyphicon-check shand dbicon" title="保存当前实例"></i>
                 </span>
             </div-->
-            <div class="dashboard_item" wei-yi ng-repeat="entity in entitys track by $index" ng-mousedown="weiYi_mouseDown($index,item)" ng-mouseover="weiYi_mouseover($index)" ng-mouseup="weiYi_mouseup($index)">
+            <div class="row">
+                <div class="dashboard_item" ng-repeat="entity in entitys track by $index" id="drag_{{$index}}" style="left: {{entity.diffX}};top: {{entity.diffY}};" ng-mousedown="weiYi_mouseDown($index)" ng-mouseover="weiYi_mouseover($index)" ng-mouseup="weiYi_mouseup($index)">
+                    <div class="entity_title">
+                        <span id="entity_name">{{entity.name}}</span>
+                        <span ng-click="delEntity(entity)" style="float: right;margin-top: 10px">
+                                <i class="glyphicon glyphicon-trash shand dbicon" title="删除当前实例"></i>
+                            </span>
+                        <span>&emsp;设备：{{entity.device_name}}</span>
+                    </div>
+                    <canvas id="entityChart_{{$index}}" min-height="400"></canvas>
+                    <span ng-click="saveEntity(entity)"  style="float: right;margin-top: 10px" id="saveEntity_{{$index}}">
+                            <i class="glyphicon glyphicon-check shand dbicon" title="保存当前实例"></i>
+                        </span>
+
+                </div>
+            </div>
+
+
+
+            <!--div class="dashboard_item" wei-yi ng-repeat="entity in entitys" ng-mousedown="weiYi_mouseDown($index,item)" ng-mouseover="weiYi_mouseover($index)" ng-mouseup="weiYi_mouseup($index)">
                 <div class="entity_title">
                     <span id="entity_name">{{entity.name}}</span>
                     <span ng-click="delEntity(entity)" style="float: right;margin-top: 10px">
@@ -63,9 +82,10 @@
                 </div>
                 <canvas id="entityChart_{{$index}}" min-height="400"></canvas>
                 <span ng-click="saveEntity(entity,i)"  style="float: right;margin-top: 10px" id="saveEntity_{{$index}}">
-                        <i class="glyphicon glyphicon-check shand dbicon" title="保存当前实例"></i>
+                    <i class="glyphicon glyphicon-check shand dbicon" title="保存当前实例"></i>
                 </span>
-            </div>
+            </div-->
+
 
             <div ng-show="isShowEmpty" class="showEmpty">
                 <p>仪表板为空，请添加组件实例</p>

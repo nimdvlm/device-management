@@ -1,11 +1,22 @@
 package cn.edu.bupt.controller;
 
+import cn.edu.bupt.utils.HttpUtil;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by Administrator on 2017/12/23.
@@ -16,8 +27,13 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class NavigationController {
 
+
+
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private HttpServletResponse response;
 
     @RequestMapping("/")
     public String  index() {
@@ -48,6 +64,67 @@ public class NavigationController {
     @RequestMapping("/home")
     public String  getHomepage() {
         return "static/login/chooseIndex";
+    }
+
+    @RequestMapping("/autoLogin")
+    public String  autoLogin(@RequestParam String username, @RequestParam String password,@RequestParam String module){
+        HttpSession session = request.getSession();
+        session.setAttribute("username", username);
+        session.setAttribute("password", password);
+
+        String res = HttpUtil.getAccessToken(session);
+        JsonObject responseJson = (JsonObject) new JsonParser().parse(res);
+        if(responseJson.has("error")){
+            session.removeAttribute("username");
+            session.removeAttribute("password");
+            throw new IllegalArgumentException(responseJson.get("error_description").getAsString());
+        }else if(responseJson.has("access_token")){
+            UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
+            Subject subject = SecurityUtils.getSubject();
+            subject.login(usernamePasswordToken);   //完成登录
+        }
+
+        Cookie userLevel = new Cookie("userLevel",responseJson.get("authority").getAsString());
+        Cookie tenantId = new Cookie("tenantId",responseJson.get("tenant_id").getAsString());
+        Cookie userId = new Cookie("userId",responseJson.get("user_id").getAsString());
+        Cookie customerId = new Cookie("customerId",responseJson.get("customer_id").getAsString());
+        response.addCookie(userLevel);
+        response.addCookie(tenantId);
+        response.addCookie(userId);
+        response.addCookie(customerId);
+        String authority = responseJson.get("authority").getAsString();
+        module = module.toLowerCase();
+        switch(module){
+            case "thingsmanager":
+                if(authority.equals("TENANT_ADMIN")) {
+                    return "redirect:/thingsTenantManager";
+                }else if(authority.equals("SYS_ADMIN")){
+                    return "redirect:/thingsSystemManager";
+                }else{
+                    return "redirect:/thingsUserManager";
+                }
+
+            case "bigdata":
+                return "redirect:/bigData/device1.html?id="+responseJson.get("user_id").getAsString();
+
+            case "gis":
+                return "redirect:http://39.104.189.84:8800/?id="+responseJson.get("user_id").getAsString()+"&token="+responseJson.get("access_token").getAsString();
+
+            case "disconf":
+                return "redirect:http://39.104.189.84:30090/main.html";
+
+            case "log":
+                return "redirect:http://39.104.189.84:30190";
+
+            case "k8s":
+                return "redirect:http://39.104.189.84:30000/";
+
+            default:
+                throw new IllegalArgumentException("Bad Module Name");
+
+
+        }
+
     }
 
     @RequestMapping("/thingsUserManager")
@@ -119,16 +196,24 @@ public class NavigationController {
     public String customerUserCtrl() {return "static/thingsManage/customerUser";}
 
     @RequestMapping("/statisticsDevice")
-    public String statisticsDevice() { return  "static/bigData/device1"; }
+    public String statisticsDevice() {
+        return  "static/bigData/device1";
+    }
 
     @RequestMapping("/statisticsData")
-    public String statisticsData() {return  "static/bigData/statisticsdata";}
+    public String statisticsData() {
+        return  "static/bigData/statisticsdata";
+    }
 
     @RequestMapping("/realtimeDevice")
-    public String realtimeDevice() {return "static/bigData/device2";}
+    public String realtimeDevice() {
+        return "static/bigData/device2";
+    }
 
     @RequestMapping("/realtimeData")
-    public String realtimeData() {return "static/bigData/dydatatrue";}
+    public String realtimeData() {
+        return "static/bigData/dydatatrue";
+    }
 
     @RequestMapping("/historicalData")
     public String historicalData() {return "static/bigData/hisdata";}

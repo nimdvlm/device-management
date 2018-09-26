@@ -2,8 +2,6 @@
 mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($scope,$resource,$timeout) {
     $scope.db_device;
     $scope.isShowEmpty=false;
-
-
     $scope.Widgets=[{"name":"line"}]
     $scope.isChoose=false;
 
@@ -11,42 +9,33 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
     var tenantId = $.cookie("tenantId")
     var customerId = $.cookie("customerId")
 
-
     //获取所有左侧视图dashboard仪表盘
     var Dashboard = $resource('/api/dashboard/getAllDashboard', {}, {
     //解决 Expected response to contain an array but got an object 问题
         query: {method: 'GET', isArray: true}
     });
     $scope.Dashboards = Dashboard.query();
-    console.log($scope.Dashboards);
-
 
     //右侧展示视图
     $scope.showDBDetail=function (item) {
-        console.log("右侧试图展示；");
-        console.log(item);
         //展示视图添加样式
         $scope.Dashboards.forEach(function (items) {
             if (item != items) items.style = {}
         });
         item.style = {"border": "2px solid #305680"};
-
-
         $scope.dbItem=item;//当前dashbaord
-
         $scope.isChoose=true;
 
         //获取当前dashbaord下entity
         var Entity = $resource('/api/dashboard/entity/getByDashboardId/:id', {id: '@id'});
         var entitys=Entity.query({},{id: item.id},function(resp){
-            console.log(resp);
             if(resp==null||resp==""){
                 $scope.isShowEmpty=true;
                 $scope.entitys="";
             }else{
                 $scope.isShowEmpty=false;
 
-                //根据设备id获取设备名称
+                //根据设备id获取设备名称===================为什么需要重新遍历名字后又重新赋值？
                 resp.forEach(function (entity) {
                     $.ajax({
                         url:"/api/device/name/"+entity.device_id,
@@ -54,6 +43,8 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
                         async: false,
                         type:"GET",
                         success:function(msg) {
+                            //console.log("查看获取成功后的字段内容");
+                            //console.log(msg)
                             entity.device_name = msg;
                         },
                         error:function (err) {
@@ -62,8 +53,18 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
                     });
                 });
                 //$resource.get方法会把接受的string类型变为object
-
                 $scope.entitys=resp;
+
+                /*for(var j=0;j<resp.length;j++){
+                    var drag = document.getElementById("drag_"+j);
+                    if (resp[j].position != "null" || resp[j].position != "100px"){
+                        var left = JSON.parse(resp[j].position).left;
+                        var top = JSON.parse(resp[j].position).top;
+                        drag.style.left = left+'px';
+                        drag.style.top = top+'px';
+                    }
+                }*/
+
 
                 //ng-repeat直接getElementById获取不到
                 $timeout(function () {
@@ -74,9 +75,17 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         })
     };
 
+    /*$scope.option = {
+        curr:[{name:"456test",device_name:"temp&hum_2"},{name:"1234576",device_name:"temp&hum_3"}] //当前页数
+    };*/
+
+
+
+
+
 
     /*    webSocket start  */
-    var ws
+    var ws=[]
     var KeySets=[]
 
     $scope.showRealtime=function (i) {
@@ -92,39 +101,49 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         var myChart=drawChart(deviceId,type,i)
 
         //获取websocket实时数据
+<<<<<<< HEAD
         var url = 'ws://'+window.Config.WsAddress+'/api/v1/deviceaccess/websocket';
         listenWs(url);
+=======
+        var url = 'ws://39.104.189.84:30080/api/v1/deviceaccess/websocket';
+        listenWs(url,i);
+>>>>>>> cf193be56ce13bf0edf5cd8f0056d4aa1a8d4cb8
 
         //测试用模拟数据
         //var _ts=1531101929
         //setInterval(test,1500)
 
-        function listenWs(url) {
-            if(ws instanceof WebSocket){
-                ws.close();
+        function listenWs(url,i) {
+            var i
+            //var ws=[]
+            ws[i]=''
+            if(ws[i] instanceof WebSocket){
+                console.log("关闭已有websocket")
+                ws[i].close();
             }
 
-            ws = new WebSocket(url);
+            ws[i] = new WebSocket(url);
 
-            ws.onopen = function (e) {
-                log("Connected");
+            ws[i].onopen = function (e) {
+                log("Connected ",i);
+                KeySets[i]=new Array() //每个chart维护一个keyset
                 sendMessage('{"deviceId":"' + deviceId + '"}');
             };
 
-            ws.onclose = function (e) {
-                log("Disconnected: ");
+            ws[i].onclose = function (e) {
+                log("Disconnected ",i);
                 KeySets=[]
             };
             // Listen for connection errors
-            ws.onerror = function (e) {
-                log("Error ");
+            ws[i].onerror = function (e) {
+                log("Error ",i);
             };
             // Listen for new messages arriving at the client
-            ws.onmessage = function (e) {
+            ws[i].onmessage = function (e) {
                 //e是返回体
                 log("Message received: " + e.data);
                 message = JSON.parse(e.data);
-                updateChart(message,myChart)
+                updateChart(message,myChart,i)
             }
         }
 
@@ -134,7 +153,8 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         }
 
         function sendMessage(msg) {
-            ws.send(msg);
+            //console.log(ws[i])
+            ws[i].send(msg);
             log("Message sent");
         }
 
@@ -148,13 +168,15 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
             ]}
 
             //更新数据
-            updateChart(message,myChart)
+            //updateChart(message,myChart)
         }
     }
 
     //更新数据
-    function updateChart(message,myChart){
+    function updateChart(message,myChart,i){
+        var x=i
         console.log("更新ing...")
+        //console.log(myChart)
         var tempDate,tempKey,tempValue
         var message=message
         var chart=myChart
@@ -168,18 +190,20 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
             tempKey = message.data[i].key;
             tempValue = message.data[i].value;
 
-                if($.inArray(tempKey,KeySets)>=0&&KeySets.length!==0){
-                    var y=KeySets.indexOf(tempKey)
+                if($.inArray(tempKey,KeySets[x])>=0&&KeySets[x].length!==0){
+                    var y=KeySets[x].indexOf(tempKey)
                     chart.data.datasets[y].data.push(tempValue)
                     //此处为待解决问题。二者时间戳不一致
                     if(y==0)
                     chart.data.labels.push(tempDate)
                 }else{
-                    KeySets.push(tempKey)
+                    //KeySets[x]=new Array()
+                    KeySets[x].push(tempKey)
+                    //console.log(KeySets)
                     chart=newLine(chart)
-                    var x=KeySets.indexOf(tempKey)
-                    chart.data.datasets[x].label=tempKey
-                    chart.data.datasets[x].data.push(tempValue)
+                    var a=KeySets[x].indexOf(tempKey)
+                    chart.data.datasets[a].label=tempKey
+                    chart.data.datasets[a].data.push(tempValue)
 
                 }
 
@@ -315,19 +339,20 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
     $scope.addEntity=function () {
         var formData={}
 
-        formData.name=$scope.add_entity_name
-        formData.device_id=$scope.add_entity_device.id
-        formData.entity_type=$scope.add_entity_type.name
-        formData.dashboard_id=$scope.dbItem.id
+        formData.name=$scope.add_entity_name;
+        formData.device_id=$scope.add_entity_device.id;
+        formData.entity_type=$scope.add_entity_type.name;
+        formData.dashboard_id=$scope.dbItem.id;
 
-        //@TODO 从子组建获取position
-        formData.position="100px"//后端接口调整，临时赋值为常值
+        formData.diffX = "420px";
+        formData.diffY = "150px";
+        //formData.position=JSON.stringify({left:420,top:150});//后端接口调整，临时赋值为常值
 
         console.log(formData)
         var addEntity = $resource('/api/dashboard/entity/insert');
         addEntity.save({}, formData)
             .$promise.then(function (resp) {
-            console.log("创建成功")
+            console.log("创建成功");
             if(resp.id!=""){
                 location.reload();
             }else{
@@ -355,15 +380,7 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         $scope.entity_id=entity.id
     };
 
-    //点击可拖动组件
-    $scope.saveEntity = function (entity,i) {
-        var num=i
-        console.log("entity");
-        console.log(entity);
-        console.log("entity选择的位置为：");
-        console.log($scope.left);
-        console.log($scope.top)
-    };
+
     //删除entity
     $scope.delEntity=function (entity) {
         console.log("删除实例："+entity.id);
@@ -403,86 +420,61 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         });
     };
 
-    /*$scope.weiYi_mouseDown = function (index,ev) {
-        console.log(index);
-        console.log(ev);
-        var disX = ev.clientX - $(index).offset().left;
-        console.log(disX);
-        var disY = ev.clientY - $(index).offset().top;
-        console.log(disY);
-    }*/
 
-}]);
-mainApp.directive("weiYi",function(){
-    return{
-        restrict :'A',//A属性,E标签,C类名,D注释
-        scope:{
-            left:'=',
-            top:'='
-        },
-        /*template:'<div style="height: 20px;width: 100px;background: red">'+
-        '<input type="text" ng-model="left" maxlength="2">'+
-        '<input type="text" ng-model="top" maxlength="2">'+
-        '</div>',*/
-        link :function(scope,element,attr){//scope可以接收到的数据//element 当前的元素//attr属性
-            //拖拽的三大事件mousedown,mousemove,mouseup.使用jq绑定事件的方法进行绑定
-            element.on("mousedown",function(ev){
-                /*var brothersinfo=[];//在鼠标起始时获得所有兄弟节点的位置信息
-                //获取兄弟节点的top,left,width(400),height(300)
-                var childs=ev.target.parentNode.children;
-                var brothers=[];
-                for(var i=0;i<childs.length;i++){
-                    if(childs[i]!==ev.target)
-                        brothers.push(childs[i])
-                }
-                console.log(brothers);
-                brothersinfo=[];
-                brothers.forEach(function(item){
-                    brothersinfo.push({'left':parseInt(item.style.left),'top':parseInt(item.style.top),'id':item.id})
-                });
-                console.log(brothersinfo);*/
-                //通过event获取到当前对象
-                var This = $(this);
-                //获取到鼠标离当前元素上边框的距离
-                var disX = ev.clientX - $(this).offset().left;
-                console.log(disX);
-                //获取到元素距离左边框的距离    //因为在拖拽的过程中不变的是鼠标距离元素边框的距离 通过不变和已知求变量
-                var disY = ev.clientY - $(this).offset().top;
-                console.log(disY);
-                /*console.log(attr.data);
-                if(attr.data){
-                    $div=$("<div>");
-                    console.log($div);
-                    $div.css({"width":"100px","height":"100px","border": "2px dotted green","position":"absolute","left":that.offset().left,"top":that.offset().top});
-                    $div.appendTo($("body"));
-                }
-                var x=e.clientX-$(this).offset().left;
-                var y=e.clientY-$(this).offset().top;
-                console.log(x+":"+y);*/
-                $(document).on("mousemove",function(ev){
-                    //将所改变的值通过样式设置给当前元素
-                    This.css({
-                        left:ev.clientX - disX,
-                        top:ev.clientY - disY
-                    });
-                    scope.left = ev.clientX - disX;
-                    scope.top = ev.clientY - disY;
-
-                    /*if(attr.data){
-                        $div.css({"left":e.clientX-x,"top":e.clientY-y});
-                    }else{
-                        that.css({"left":e.clientX-x,"top":e.clientY-y});
-                    }*/
-                });
-                $(document).on("mouseup",function(ev){
-                    //鼠标松开时关闭所有事件
-                    $(document).off();
-                    console.log("最终坐标位置");
-                    console.log(scope.left);
-                    console.log(scope.top);
-
-                })
-            })
+    $scope.weiYi_mouseDown = function (item) {
+        console.log(item);
+        var drag = document.getElementById("drag_"+item);
+        drag.onmousedown = function (el) {
+            var diffX = el.clientX - drag.offsetLeft;//鼠标点击物体那一刻相对于物体左侧边框的距离=点击时的位置相对于浏览器最左边的距离-物体左边框相对于浏览器最左边的距离
+            var diffY = el.clientY - drag.offsetTop;
+            document.onmousemove = function (el) {
+                var left = el.clientX - diffX;
+                var top = el.clientY - diffY;
+                drag.style.left = left+'px';
+                drag.style.top = top+'px';
+                $scope.endLeft = left;
+                $scope.endTop = top;
+            }
+            document.onmouseup = function (el) {
+                this.onmousemove = null;
+                this.onmouseup = null;
+                console.log($scope.endLeft);
+                console.log($scope.endTop);
+            }
         }
     }
-});
+    //保存实体
+    $scope.saveEntity = function (entity) {
+        console.log("entity");
+        console.log(entity);
+        console.log($scope.endLeft);
+        console.log($scope.endTop);
+        var createEntity = {};
+        createEntity.id = entity.id;
+        createEntity.dashboard_id = entity.dashboard_id;
+        createEntity.device_id = entity.device_id;
+        createEntity.name = entity.name;
+        createEntity.entity_type = entity.entity_type;
+        createEntity.diffX = $scope.endLeft+"px";
+        createEntity.diffY = $scope.endTop+"px";
+        console.log("entity选择的位置为：");
+        console.log(createEntity);
+        $scope.createEntity = JSON.stringify(createEntity);
+        $.ajax({
+            url:"/api/dashboard/entity/updateEntity",
+            data:$scope.createEntity,
+            type:"PUT",
+            dataType:'text',
+            contentType: "application/json; charset=utf-8",//post请求必须
+            success:function (resp) {
+                toastr.success("保存成功！");
+                console.log("success");
+                console.log("保存成功");
+            },
+            error:function (err) {
+                alert("创建失败！");
+            }
+        });
+    };
+
+}]);

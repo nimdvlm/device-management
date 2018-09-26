@@ -6,6 +6,8 @@
                 <div class="DGTitle DGminTitle">
                     <span class="RightviewTitle">规则信息</span>
                     <div class="ruleiconcontainer">
+                        <i class="fa fa-edit fa-lg ruleicon shand userDelete" title="编辑此规则"
+                           data-toggle="modal" data-target="#editRuleInfo"></i>
                         <i class="fa fa-power-off fa-lg ruleicon shand userDelete" ng-show="Rulestart" title="激活规则"
                            data-toggle="modal" data-target="#startRule"></i>
                         <i class="fa fa-ban fa-lg ruleicon shand userDelete" ng-show="Rulestop" title="暂停规则"
@@ -49,23 +51,28 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat-start="data in RuleFilters">
+                        <tr ng-repeat-start="data in RuleFilters" id="Filter{{$index}}">
                             <td>
                                 <button class="btn btn-xs" ng-if="data.expanded" ng-click="data.expanded=false">-
                                 </button>
                                 <button class="btn btn-xs" ng-if="!data.expanded" ng-click="data.expanded=true">+
                                 </button>
                             </td>
-                            <td>{{data.name}}</td>
+                            <td>{{data.name}}
+                                <div style="float: right;">
+                                    <i class="fa fa-edit ruleicon shand userDelete" title="编辑此过滤器"
+                                   data-toggle="modal" data-target="#editFilter"
+                                   ng-click="showEditFilterModal($index)"></i>
+                                </div></td>
                         </tr>
                         <tr ng-show="data.expanded" ng-repeat-end="">
                             <td></td>
                             <td colspan="1">
-                                <p>过滤器名称：{{data.name}}</p>
+                                <div>过滤器名称：{{data.name}}</div>
                                 <!--<p>过滤器类型：{{data.type||"无"}}</p>-->
-                                <p>JS代码：
-                                <pre id="rule_jscode">{{data.jsCode}}</pre>
-                                </p>
+                                <div>JS代码：
+                                    <pre id="rule_jscode">{{data.jsCode}}</pre>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
@@ -83,7 +90,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat-start="data in RulePlugins">
+                        <tr ng-repeat-start="data in RulePlugins" id="Plugin{{$index}}">
                             <td>
                                 <button class="btn btn-xs" ng-if="data.expanded" ng-click="data.expanded=false">-
                                 </button>
@@ -91,7 +98,12 @@
                                         ng-click="data.expanded=true;showplugin(data,$index)">+
                                 </button>
                             </td>
-                            <td>{{data.name}}</td>
+                            <td>{{data.name}}
+                                <div style="float: right;">
+                                    <i class="fa fa-edit ruleicon shand userDelete" title="编辑此插件"
+                                       data-toggle="modal" data-target="#editPlugin"
+                                       ng-click="showEditPluginModal($index)"></i>
+                                </div></td>
                         </tr>
                         <tr ng-show="data.expanded" ng-repeat-end="">
                             <td></td>
@@ -116,6 +128,34 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            <!--modal编辑规则-->
+            <div class="modal fade" id="editRuleInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                编辑规则
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>规则名称:<input value={{Ruleitem.rule.name}} id="editRuleInfo_name"/></p>
+                            <p>规则描述:<input value={{Ruleitem.rule.additional_info}} id="editRuleInfo_addition"/></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearForm()">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" ng-click="editRuleInfo()">
+                                确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
             </div>
 
             <!--modal删除规则-->
@@ -192,6 +232,67 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                             </button>
                             <button type="button" class="btn btn-primary" ng-click="stopRule()">
+                                确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+            <!--modal编辑过滤器-->
+            <div class="modal fade" id="editFilter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                编辑过滤器
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>过滤器ID：<span>{{editfilter.filterId}}</span></p>
+                            <p>过滤器名称：<input value="{{editfilter.name}}" id="editFilter_name"/></p>
+                            <p>JS&emsp;代&emsp;码：<textarea rows="7" cols="55" id="editFilter_jscode">{{editfilter.jsCode}}</textarea>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetEdit()">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" ng-click="editFilter()">
+                                确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+            <!--modal编辑插件-->
+            <div class="modal fade" id="editPlugin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                编辑插件
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>插件ID：<span>{{editplugin.transformId}}</span></p>
+                            <p>method：<span>{{editplugin.method}}</span></p>
+                            <p>插件名称：<input value="{{editplugin.name}}" id="editPlugin_name"/></p>
+                            <p>插&emsp;件&emsp;url ：<textarea rows="3" cols="55" id="editPlugin_url">{{editplugin.url}}</textarea></p>
+                            <p>requestBody：<textarea rows="7" cols="55" id="editPlugin_requestBody">{{editplugin.requestBody}}</textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" ng-click="editPlugin()">
                                 确定
                             </button>
                         </div>
@@ -340,7 +441,8 @@
                             </p>
                             <p style="margin-left: 10px;">按类型配置：
                                 <select ng-model="addFilterType" class="selectNeedClear"
-                                        ng-options="x.name for x in FilterType" ng-change="changefiltertype(addFilterType)">
+                                        ng-options="x.name for x in FilterType"
+                                        ng-change="changefiltertype(addFilterType)">
                                     <option value="" disabled>--请选择配置类型--</option>
                                 </select>
                             </p>
@@ -353,7 +455,8 @@
                                         <td><input id="add_filter_devicename" placeholder="请填写绑定设备名称"
                                                    style="margin-bottom:5px "/>
                                             <a href="javascript:void(0)" ng-click="showDeviceID()"
-                                               style="padding-left: 20px" id="link_bind_device">{{text_deviceid}}设备ID</a></td>
+                                               style="padding-left: 20px"
+                                               id="link_bind_device">{{text_deviceid}}设备ID</a></td>
                                     </tr>
                                     <tr ng-if="ifDeviceID">
                                         <td><span class="StarMark">*</span>设备ID：</td>
@@ -382,7 +485,8 @@
                                         <td>
                                             <!--<input id="add_filter_manufacture" type="text" placeholder="请填写绑定厂商名称">-->
                                             <select ng-model="myManufacture" style="margin-bottom:5px"
-                                            ng-change="getDeviceType(myManufacture)" ng-options="x.manufacturerName for x in manufacturerInfo">
+                                                    ng-change="getDeviceType(myManufacture)"
+                                                    ng-options="x.manufacturerName for x in manufacturerInfo">
                                                 <option value="" disabled>--请选择厂商--</option>
                                             </select>
                                             <a href="javascript:void(0)" ng-click="showDeviceType()"
@@ -395,7 +499,8 @@
                                         <td>
                                             <!--<input id="add_filter_devicetype" type="text" placeholder="请填写绑定设备类型"/>-->
                                             <select ng-model="$parent.myDeviceType" style="margin-bottom:5px"
-                                                    ng-change="getDeviceModel(myDeviceType)" ng-options="x.deviceTypeName for x in deviceTypeInfo">
+                                                    ng-change="getDeviceModel(myDeviceType)"
+                                                    ng-options="x.deviceTypeName for x in deviceTypeInfo">
                                                 <option value="" disabled>--请选择设备类型--</option>
                                             </select>
                                         </td>
@@ -404,9 +509,9 @@
                                         <td><span class="StarMark">*</span>设备型号：</td>
                                         <td>
                                             <!--<input id="add_filter_devicemodel" type="text" placeholder="请填写绑定设备型号"-->
-                                                   <!--style="margin-bottom:5px "/>-->
+                                            <!--style="margin-bottom:5px "/>-->
                                             <select ng-model="$parent.myDeviceModel" style="margin-bottom:5px"
-                                            ng-options="x.modelName for x in deviceModelInfo">
+                                                    ng-options="x.modelName for x in deviceModelInfo">
                                                 <option value="" disabled>--请选择设备型号--</option>
                                             </select>
                                         </td>
