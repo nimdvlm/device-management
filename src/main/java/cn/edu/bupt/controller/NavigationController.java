@@ -50,12 +50,12 @@ public class NavigationController {
 
     @RequestMapping("/rolePool")
     public String  getRolePool() {
-        return "template/RolePool";
+        return "static/auth/RolePool";
     }
 
     @RequestMapping("/userPool")
     public String  getUserPool() {
-        return "template/UserPool";
+        return "static/auth/UserPool";
     }
 
     @RequestMapping("/allocationCenterIndex")
