@@ -433,16 +433,25 @@ serviceGroup  &   deviceModelManagement
     width: 100%;
 }
 .deviceTypeIconStyle{
-    width: 22%;
-    height: 180px;
+    /*height: 180px;
     border-radius: 6px;
-    cursor: pointer;
     border: 2px solid #c0c0c0;
-    background: white;
-    margin: 15px;
+    background: white;*/
+    width: 22%;
+
+    cursor: pointer;
+
+    margin: 2% 1%;
     display: inline-block;
 }
-
+.showDefultIcon img{
+    margin-right: 30px;
+    margin-bottom: 30px;
+}
+.newStyle{
+    height: 50px;
+    padding: 10px;
+}
 .abilityIcon{
     width: 60%;
     float: left;

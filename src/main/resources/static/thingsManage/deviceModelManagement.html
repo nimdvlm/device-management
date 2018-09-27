@@ -10,138 +10,69 @@
             </div>
         </div>
 
-        <div class="deviceTypeIcon">
+        <!--div class="deviceTypeIcon">
             <div class="deviceTypeIconStyle" ng-repeat="item in deviceTypeGroups" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                 <p class="style" style="padding-top: 5px"><i class="fa fa-angle-double-right fa-cart-plus"></i> 厂商：{{item.manufacturer.manufacturerName}}
                     <i title="删除" data-toggle="modal" data-target="#deleteSM" ng-click="deleteDeviceTypeIcon(item)" style="float: right;margin-right: 10px" class="glyphicon glyphicon-trash"></i></p>
                 <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备类型：{{item.deviceType.deviceTypeName}}</p>
                 <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 型号：{{item.model.modelName}}</p>
                 <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备图标：{{item.model.deviceIcon}}</p>
-                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备在线时间：{{item.model.limitLifetime}} ms</p>
+                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备在线时间：{{item.model.limitLifetime}}</p>
+            </div>
+        </div-->
+
+        <div class="deviceTypeIcon" id="accordion">
+            <div class="deviceTypeIconStyle" ng-repeat="item in deviceTypeGroups track by $index" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading newStyle">
+                            <h4 class="panel-title style">
+                                <i class="glyphicon glyphicon-th-list"></i> 厂商：{{item.manufacturer.manufacturerName}}
+
+                                <a data-toggle="collapse" data-parent="#accordion" style="float: right"
+                                   href="/#collapseThree_{{$index}}">
+                                    <i class="glyphicon glyphicon-chevron-down"></i>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree_{{$index}}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备类型：{{item.deviceType.deviceTypeName}}</p>
+                                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 型号：{{item.model.modelName}}</p>
+                                <!--p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备图标：{{item.model.deviceIcon}}</p-->
+                                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备图标：<img src="{{item.model.deviceIcon}}" alt="plus" width="30px" height="25px"/></p>
+                                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备在线时间：{{item.model.limitLifetime}}</p>
+                                <i title="删除" style="float: right" data-toggle="modal" data-target="#deleteSM" ng-click="deleteDeviceTypeIcon(item)" class="glyphicon glyphicon-trash"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
+
+
+
         <!--div class="row">
-            <div style="width: 30%;margin-right: 15px;display: inline-block;position: relative">
-                <div class="panel-group" id="accordion11">
+            <div style="width: 30%;margin-right: 15px;display: inline-block;">
+                <div class="panel-group" id="accordion">
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h4 class="panel-title">
+                               点击我进行展开，再次点击我进行折叠。
+                                <i title="删除" data-toggle="modal" data-target="#deleteSM" ng-click="deleteDeviceTypeIcon(item)" class="glyphicon glyphicon-trash"></i>
                                 <a data-toggle="collapse" data-parent="#accordion"
-                                   href="/#collapseThree11">
-                                    点击我进行展开，再次点击我进行折叠。第 3 部分--toggle 方法
+                                   href="/#collapseThree_{{$index}}">
+                                    <i class="glyphicon glyphicon-chevron-down"></i>
                                 </a>
                             </h4>
                         </div>
-                        <div id="collapseThree11" class="panel-collapse collapse">
+                        <div id="collapseThree_{{$index}}" class="panel-collapse collapse">
                             <div class="panel-body">
                                 Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
                                 nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
                                 lomo.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="width: 30%;margin-right: 15px;display: inline-block;position: relative">
-                <div class="panel-group" id="accordion112">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion"
-                                   href="/#collapseThree112">
-                                    点击我进行展开，再次点击我进行折叠。第 3 部分--toggle 方法
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree112" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                                nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-                                lomo.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="width: 30%;margin-right: 15px;display: inline-block;position: relative">
-                <div class="panel-group" id="accordion113">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion"
-                                   href="/#collapseThree113">
-                                    点击我进行展开，再次点击我进行折叠。第 3 部分--toggle 方法
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree113" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                                nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-                                lomo.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="width: 30%;margin-right: 15px;display: inline-block;position: relative">
-                <div class="panel-group" id="accordion114">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion"
-                                   href="/#collapseThree114">
-                                    点击我进行展开，再次点击我进行折叠。第 3 部分--toggle 方法
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree114" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                                nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-                                lomo.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="width: 30%;margin-right: 15px;display: inline-block;position: relative">
-                <div class="panel-group" id="accordion115">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion"
-                                   href="/#collapseThree115">
-                                    点击我进行展开，再次点击我进行折叠。第 3 部分--toggle 方法
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree115" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                                nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-                                lomo.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="width: 30%;margin-right: 15px;display: inline-block;position: relative">
-                <div class="panel-group" id="accordion5">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion"
-                                   href="/#collapseThree5">
-                                    点击我进行展开，再次点击我进行折叠。第 3 部分
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree5" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                Nihil anim keffiyeh helvetica, craft beer labore wes anderson
-                                cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
-                                vice lomo.
                             </div>
                         </div>
                     </div>
@@ -149,14 +80,6 @@
             </div>
 
         </div-->
-
-
-
-
-
-
-
-
 
 
     </div>
@@ -207,8 +130,25 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             设备图标
                         </label>
-                        <input type="file" style="pixels: 300px" id="potatoIcon">
+                        <!--input class="col-sm-6" type="file" style="pixels: 300px" id="potatoIcon"-->
+                        <button class="btn btn-primary btn-sm" ng-click="showIconPictrue()">选择默认图标</button>
                     </div>
+                    <div class="modal-body showDefultIcon ng-hide" ng-show="showDefultIcon" style="margin-left: 25%">
+                        <div class="col-md-12">
+                            <img src="../images/deviceIcon1.png" alt="plus" width="60px" height="45px" ng-click="imgSrcDeviceIcon1()"/>
+                            <img src="../images/deviceIcon2.jpg" alt="plus" width="60px" height="45px" ng-click="imgSrcDeviceIcon2()"/>
+                            <img src="../images/deviceIcon3.png" alt="plus" width="60px" height="45px" ng-click="imgSrcDeviceIcon3()"/>
+                            <img src="../images/title.icon" alt="plus" width="60px" height="45px" ng-click="imgSrcTitle()"/>
+                        </div>
+                        <div class="col-md-12">
+                            <p ng-show="deviceIcon1">选择图片../images/deviceIcon1.png</p>
+                            <p ng-show="deviceIcon2">选择图片../images/deviceIcon2.jpg</p>
+                            <p ng-show="deviceIcon3">选择图片../images/deviceIcon3.png</p>
+                            <p ng-show="title1">选择图片../images/title.icon</p>
+                        </div>
+                    </div>
+
+
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
                             限制生存时间
