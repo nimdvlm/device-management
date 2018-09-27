@@ -23,71 +23,53 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
         console.log( $scope.showDefultIcon);
     };
 
-    /*删除*/
-    $scope.deleteDeviceTypeIcon = function (item) {
-        console.log("点击删除出现字段");
-        console.log(item);
-        console.log(item.model.modelId);
-        $scope.modelId = item.model.modelId;
-    };
-    $scope.deleteDeviceType = function () {
-        var deleteDevice = $resource('/api/devicetype/delete?modelId=:id');
-        deleteDevice.delete({id: $scope.modelId},{} , function (resp) {
-            //console.log(resp);
-            toastr.success("删除成功！");
-            setTimeout(function () {
-                window.location.reload();
-            },500);
-        }, function (resp) {
-            toastr.error("删除失败！");
-        });
-    };
-
 
 
 
     var createDeviceModel = {};
     createDeviceModel.icon = "";
-    $scope.imgSrcDeviceIcon1 = function () {
+    /**/$scope.imgSrcDeviceIcon1 = function () {
         console.log("imgSrcDeviceIcon1");
         createDeviceModel.icon = "../images/deviceIcon1.png";
-        $scope.deviceIcon1 = true;
-        $scope.deviceIcon2 = false;
-        $scope.deviceIcon3 = false;
-        $scope.title1 = false;
-        console.log(createDeviceModel.icon);
-        console.log($scope.deviceIcon1);
+        $scope.deviceIconShow = "../images/deviceIcon1.png";
     };
     $scope.imgSrcDeviceIcon2 = function () {
         console.log("imgSrcDeviceIcon2");
         createDeviceModel.icon = "../images/deviceIcon2.jpg";
-        $scope.deviceIcon1 = false;
-        $scope.deviceIcon2 = true;
-        $scope.deviceIcon3 = false;
-        $scope.title1 = false;
-        console.log(createDeviceModel.icon);
-        console.log($scope.deviceIcon2);
+        $scope.deviceIconShow =  "../images/deviceIcon2.jpg";
     };
     $scope.imgSrcDeviceIcon3 = function () {
         console.log("imgSrcDeviceIcon3");
         createDeviceModel.icon = "../images/deviceIcon3.png";
-        $scope.deviceIcon1 = false;
-        $scope.deviceIcon2 = false;
-        $scope.deviceIcon3 = true;
-        $scope.title1 = false;
-        console.log(createDeviceModel.icon);
-        console.log($scope.deviceIcon3);
+        $scope.deviceIconShow = "../images/deviceIcon3.png";
     };
     $scope.imgSrcTitle = function () {
         console.log("imgSrcDeviceIcon4");
         createDeviceModel.icon = "../images/title.icon";
-        $scope.deviceIcon1 = false;
-        $scope.deviceIcon2 = false;
-        $scope.deviceIcon3 = false;
-        $scope.title1 = true;
-        console.log(createDeviceModel.icon);
-        console.log($scope.title1);
+        $scope.deviceIconShow =  "../images/title.icon";
     };
+    /*$("#imgSrcDeviceIcon1").click(function(){
+        console.log("imgSrcDeviceIcon1");
+        createDeviceModel.icon = "../images/deviceIcon1.png";
+        $("#abcv").val("../images/deviceIcon1.png");
+    });
+    $("#imgSrcDeviceIcon2").click(function(){
+        console.log("imgSrcDeviceIcon2");
+        createDeviceModel.icon = "../images/deviceIcon2.jpg";
+        $("#abcv").val("../images/deviceIcon2.jpg");
+    });
+    $("#imgSrcDeviceIcon3").click(function(){
+        console.log("imgSrcDeviceIcon3");
+        createDeviceModel.icon = "../images/deviceIcon3.png";
+        $("#abcv").val("../images/deviceIcon3.png");
+    });
+    $("#imgSrcTitle").click(function(){
+        console.log("imgSrcDeviceIcon4");
+        createDeviceModel.icon = "../images/title.icon";
+        $("#abcv").val("../images/title.icon");
+    });*/
+
+
     $scope.addDeviceModel = function () {
         createDeviceModel.manufacturerName = $("#manufacturerName").val();
         createDeviceModel.deviceType = $("#deviceType").val();
@@ -136,7 +118,25 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
     }
 
 
-
+    /*删除*/
+    $scope.deleteDeviceTypeIcon = function (item) {
+        console.log("点击删除出现字段");
+        console.log(item);
+        console.log(item.model.modelId);
+        $scope.modelId = item.model.modelId;
+    };
+    $scope.deleteDeviceType = function () {
+        var deleteDevice = $resource('/api/devicetype/delete?modelId=:id');
+        deleteDevice.delete({id: $scope.modelId},{} , function (resp) {
+            //console.log(resp);
+            toastr.success("删除成功！");
+            setTimeout(function () {
+                window.location.reload();
+            },500);
+        }, function (resp) {
+            toastr.error("删除失败！");
+        });
+    };
 
 
 

@@ -131,20 +131,20 @@
                             设备图标
                         </label>
                         <!--input class="col-sm-6" type="file" style="pixels: 300px" id="potatoIcon"-->
-                        <button class="btn btn-primary btn-sm" ng-click="showIconPictrue()">选择默认图标</button>
+                        <button class="btn btn-primary btn-sm" ng-click="showIconPictrue()">点击图片右上角选择默认图标</button>
                     </div>
                     <div class="modal-body showDefultIcon ng-hide" ng-show="showDefultIcon" style="margin-left: 25%">
-                        <div class="col-md-12">
-                            <img src="../images/deviceIcon1.png" alt="plus" width="60px" height="45px" ng-click="imgSrcDeviceIcon1()"/>
-                            <img src="../images/deviceIcon2.jpg" alt="plus" width="60px" height="45px" ng-click="imgSrcDeviceIcon2()"/>
-                            <img src="../images/deviceIcon3.png" alt="plus" width="60px" height="45px" ng-click="imgSrcDeviceIcon3()"/>
-                            <img src="../images/title.icon" alt="plus" width="60px" height="45px" ng-click="imgSrcTitle()"/>
+                        <div class="col-md-12 imgIconDisplay">
+                            <div ng-click="imgSrcDeviceIcon1()" id="imgSrcDeviceIcon1"><img  src="../images/deviceIcon1.png" width="60px" height="45px" /></div>
+
+                            <div ng-click="imgSrcDeviceIcon2()" id="imgSrcDeviceIcon2"><img  src="../images/deviceIcon2.jpg" width="60px" height="45px" /></div>
+
+                            <div ng-click="imgSrcDeviceIcon3()" id="imgSrcDeviceIcon3"><img  src="../images/deviceIcon3.png" width="60px" height="45px" /></div>
+
+                            <div ng-click="imgSrcTitle()" id="imgSrcTitle"><img src="../images/title.icon" width="60px" height="45px" /></div>
                         </div>
                         <div class="col-md-12">
-                            <p ng-show="deviceIcon1">选择图片../images/deviceIcon1.png</p>
-                            <p ng-show="deviceIcon2">选择图片../images/deviceIcon2.jpg</p>
-                            <p ng-show="deviceIcon3">选择图片../images/deviceIcon3.png</p>
-                            <p ng-show="title1">选择图片../images/title.icon</p>
+                            <p>选择图片{{deviceIconShow}}</p>
                         </div>
                     </div>
 

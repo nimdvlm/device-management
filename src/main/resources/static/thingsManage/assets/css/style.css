@@ -444,9 +444,12 @@ serviceGroup  &   deviceModelManagement
     margin: 2% 1%;
     display: inline-block;
 }
-.showDefultIcon img{
+.imgIconDisplay img{
     margin-right: 30px;
     margin-bottom: 30px;
+}
+.imgIconDisplay div{
+    display: inline-block;
 }
 .newStyle{
     height: 50px;
