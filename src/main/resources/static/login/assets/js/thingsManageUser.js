@@ -64,6 +64,9 @@ $(document).ready(function () {
             }
         });
     });
+    $("#accountManagement").click(function () {
+        window.location.href = "/userPool";
+    })
     /*退出登录
     $("#logout").click = function () {
         console.log("sssssssssssss");
