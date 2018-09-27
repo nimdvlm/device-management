@@ -76,7 +76,7 @@ var app = new Vue({
             var vm = this
             var permission_ids = []
             var role_id = vm.activeItem.id
-            var text = '批量删除'
+            var text = '删除'
 
             permission_ids.push(id)
 
@@ -98,7 +98,7 @@ var app = new Vue({
             var permission_ids = []
             var json = {}
             var role_id = vm.activeItem.id
-            var text = '删除'
+            var text = '批量删除'
 
             vm.multipleSelection.forEach(function (item) {
                 permission_ids.push(item.id)

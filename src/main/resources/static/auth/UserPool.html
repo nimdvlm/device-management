@@ -41,8 +41,49 @@
             <el-table :data="tableData" border style="width:100%;max-height:450px;overflow: auto;" row-class-name="tableRow">
                 <el-table-column v-for="column in columns" :prop="column.prop" :label="column.label"
                                  :width="column.width"></el-table-column>
-
+                <el-table-column label="操作" width="150">
+                    <template scope="scope">
+                        <el-button type="primary" size="small"
+                                   @click="manageRole(scope.row.id)">管理角色
+                        </el-button>
+                    </template>
+                </el-table-column>
             </el-table>
+
+            <!--ElementUI dialog-管理角色-->
+            <el-dialog
+                    title="管理角色"
+                    :visible.sync="dialogVisible_MR"
+                    :close-on-click-modal="false">
+                <div>当前用户已拥有角色：</div>
+                <br/>
+                <el-table :data="tableData_ExtraRole" border style="width:100%;" row-class-name="tableRow">
+                    <el-table-column v-for="column in columns_ExtraRole" :prop="column.prop" :label="column.label"
+                                     :width="column.width"></el-table-column>
+                    <el-table-column label="操作" width="100">
+                        <template scope="scope">
+                            <el-button type="danger" size="small"
+                                       @click="delRoleFromUser(scope.row.id)">移除
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <br/>
+                <br/>
+                <div>当前用户未拥有角色：</div>
+                <br/>
+                <el-table :data="tableData_NotOwnedExtraRole" border style="width:100%;max-height:450px;overflow: auto;" row-class-name="tableRow">
+                    <el-table-column v-for="column in columns_ExtraRole" :prop="column.prop" :label="column.label"
+                                     :width="column.width"></el-table-column>
+                    <el-table-column label="操作" width="100">
+                        <template scope="scope">
+                            <el-button type="primary" size="small"
+                                       @click="addRoleToUser(scope.row.id)">添加
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-dialog>
         </div>
     </main>
 </div>
