@@ -173,12 +173,11 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             邮箱
                         </label>
-                        <input type="email" name="reTenantEmail" ng-model="reTenantEmail" style="pixels: 300px" id="reTenantEmail"/>
+                        <input type="email" name="reTenantEmail" ng-model="reTenantEmail" style="pixels: 300px" id="reTenantEmail" ng-pattern="/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/"/>
                         <span class="warning ng-hide" ng-show="myEditForm.reTenantEmail.$dirty && myEditForm.reTenantEmail.$invalid">
-                        <span ng-show="myEditForm.reTenantEmail.$error.email">非法的邮箱地址</span>
+                        <span ng-show="myEditForm.reTenantEmail.$error.pattern">非法的邮箱地址</span>
                     </span>
                     </div>
-
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
                             电话
@@ -292,10 +291,10 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             <span style="color: red;">*</span>邮箱
                         </label>
-                        <input type="email" name="email" ng-model="email" style="pixels: 300px" placeholder="必填" id="adminEmail" required/>
+                        <input type="email" name="email" ng-model="email" style="pixels: 300px" placeholder="必填" id="adminEmail" ng-pattern="/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/" required/>
                         <span class="warning ng-hide" ng-show="myTenantForm.email.$dirty && myTenantForm.email.$invalid">
                             <span ng-show="myTenantForm.email.$error.required">邮箱是必须的</span>
-                            <span ng-show="myTenantForm.email.$error.email">非法的邮箱地址</span>
+                            <span ng-show="myTenantForm.email.$error.pattern">非法的邮箱地址</span>
                         </span>
                     </div>
                     <div class="modal-body">
