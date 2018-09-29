@@ -437,23 +437,37 @@ serviceGroup  &   deviceModelManagement
     border-radius: 6px;
     border: 2px solid #c0c0c0;
     background: white;*/
-    width: 22%;
-
+    width: 25%;
     cursor: pointer;
-
-    margin: 2% 1%;
     display: inline-block;
 }
-.imgIconDisplay img{
+/*.imgIconDisplay img{
     margin-right: 30px;
-    margin-bottom: 30px;
+
 }
+.imgButton1{
+    background:url(../img/deviceIcon1.png) no-repeat center center / 100% 100%;
+    width:60px;
+    height:45px;
+
+}
+.imgButton2{
+    background:url(../img/deviceIcon2.jpg) no-repeat center center / 100% 100%;width:60px;
+    height:45px;
+}
+.imgButton3{
+    background:url(../img/deviceIcon3.png) no-repeat center center / 100% 100%;width:60px;
+    height:45px;
+}
+.imgButton4{
+    background:url(../img/dis_minus.PNG) no-repeat center center / 100% 100%;width:60px;
+    height:45px;
+}*/
 .imgIconDisplay div{
     display: inline-block;
 }
 .newStyle{
-    height: 50px;
-    padding: 10px;
+    padding: 20px 10px;
 }
 .abilityIcon{
     width: 60%;

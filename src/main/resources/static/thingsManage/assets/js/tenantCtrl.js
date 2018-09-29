@@ -130,7 +130,7 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
             }
         });
 
-    }
+    };
 
 //创建租户
     $("#addTenant").click(function () {
@@ -202,8 +202,7 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
            //console.log(items);
        })
 
-    }
-
+    };
 //创建租户管理员
     $("#createManager").click(function () {
         $("#adminName").removeClass("input-err");
@@ -265,7 +264,7 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
         }
 
 
-    }
+    };
 
 
 //Admin删除租户管理员
@@ -285,7 +284,7 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
         }else {
             alert("不删除?");
         }
-    }
+    };
 
 
 

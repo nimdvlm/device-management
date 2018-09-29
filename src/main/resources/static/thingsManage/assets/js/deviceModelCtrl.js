@@ -18,10 +18,10 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
         });
     };*/
     $scope.showDefultIcon = false;
-    $scope.showIconPictrue = function () {
+    /*$scope.showIconPictrue = function () {
         $scope.showDefultIcon = !$scope.showDefultIcon;
         console.log( $scope.showDefultIcon);
-    };
+    };*/
 
 
 
