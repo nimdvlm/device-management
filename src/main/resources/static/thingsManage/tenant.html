@@ -14,7 +14,7 @@
         <!--下侧控件模块-->
         <div class="row">
             <div class="tenantRow col-md-7">
-                <div ng-repeat="item in tenantGroups" ng-click="showTenantDetail(item)" class="chooseBtn tenantChoose" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                <div ng-repeat="item in tenantGroups track by $index" ng-click="showTenantDetail(item.id,$index)" ng-class={'spanVisited':$index==tableType_index}" class="chooseBtn tenantChoose" ng-style="item.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                     <div>
                         <span title="租户"><i class="fa fa-home fa-2x"></i></span>
                         <p class="stylePulgin">{{item.title}}</p>
