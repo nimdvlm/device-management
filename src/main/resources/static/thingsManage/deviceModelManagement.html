@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <div class="deviceTypeIcon">
+        <!--div class="deviceTypeIcon">
             <div class="deviceTypeIconStyle" ng-repeat="item in deviceTypeGroups" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                 <p class="style" style="padding-top: 5px"><i class="fa fa-angle-double-right fa-cart-plus"></i> 厂商：{{item.manufacturer.manufacturerName}}
                     <i title="删除" data-toggle="modal" data-target="#deleteSM" ng-click="deleteDeviceTypeIcon(item)" style="float: right;margin-right: 10px" class="glyphicon glyphicon-trash"></i></p>
@@ -19,8 +19,67 @@
                 <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备图标：{{item.model.deviceIcon}}</p>
                 <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备在线时间：{{item.model.limitLifetime}}</p>
             </div>
+        </div-->
+
+        <div class="deviceTypeIcon" id="accordion">
+            <div class="deviceTypeIconStyle" ng-repeat="item in deviceTypeGroups track by $index" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading newStyle">
+                            <h4 class="panel-title style">
+                                <i class="glyphicon glyphicon-th-list"></i> 厂商：{{item.manufacturer.manufacturerName}}
+
+                                <a data-toggle="collapse" data-parent="#accordion" style="float: right"
+                                   href="/#collapseThree_{{$index}}">
+                                    <i class="glyphicon glyphicon-chevron-down"></i>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree_{{$index}}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备类型：{{item.deviceType.deviceTypeName}}</p>
+                                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 型号：{{item.model.modelName}}</p>
+                                <!--p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备图标：{{item.model.deviceIcon}}</p-->
+                                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备图标：<img src="{{item.model.deviceIcon}}" alt="plus" width="30px" height="25px"/></p>
+                                <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备在线时间：{{item.model.limitLifetime}}</p>
+                                <i title="删除" style="float: right" data-toggle="modal" data-target="#deleteSM" ng-click="deleteDeviceTypeIcon(item)" class="glyphicon glyphicon-trash"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
 
+
+
+        <!--div class="row">
+            <div style="width: 30%;margin-right: 15px;display: inline-block;">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                               点击我进行展开，再次点击我进行折叠。
+                                <i title="删除" data-toggle="modal" data-target="#deleteSM" ng-click="deleteDeviceTypeIcon(item)" class="glyphicon glyphicon-trash"></i>
+                                <a data-toggle="collapse" data-parent="#accordion"
+                                   href="/#collapseThree_{{$index}}">
+                                    <i class="glyphicon glyphicon-chevron-down"></i>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree_{{$index}}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                                nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
+                                lomo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div-->
 
 
     </div>
@@ -71,13 +130,35 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             设备图标
                         </label>
-                        <input type="file" style="pixels: 300px" id="potatoIcon">
+                        <!--input class="col-sm-6" type="file" style="pixels: 300px" id="potatoIcon"-->
+                        <button class="btn btn-primary btn-sm" ng-click="showDefultIcon = !showDefultIcon">选择默认图标</button>
                     </div>
+                    <div class="modal-body showDefultIcon ng-hide" ng-show="showDefultIcon" style="margin-left: 25%">
+                        <div class="imgIconDisplay">
+                            <input name="imgbtn" ng-click="imgSrcDeviceIcon1()" type="image" src="../images/deviceIcon1.png" width="60px" height="45px" border="1">
+                            <input name="imgbtn" ng-click="imgSrcDeviceIcon2()" type="image" src="../images/deviceIcon2.jpg" width="60px" height="45px" border="1">
+                            <input name="imgbtn" ng-click="imgSrcDeviceIcon3()" type="image" src="../images/deviceIcon3.png" width="60px" height="45px" border="1">
+                            <input name="imgbtn" ng-click="imgSrcTitle()" type="image" src="../images/title.icon" width="60px" height="45px" border="1">
+                            <!--div ng-click="imgSrcDeviceIcon1()" id="imgSrcDeviceIcon1"><img  src="../images/deviceIcon1.png" width="60px" height="45px" /></div>
+
+                            <div ng-click="imgSrcDeviceIcon2()" id="imgSrcDeviceIcon2"><img  src="../images/deviceIcon2.jpg" width="60px" height="45px" /></div>
+
+                            <div ng-click="imgSrcDeviceIcon3()" id="imgSrcDeviceIcon3"><img  src="../images/deviceIcon2.jpg" width="60px" height="45px" /></div>
+
+                            <div ng-click="imgSrcTitle()" id="imgSrcTitle"><img src="../images/title.icon" width="60px" height="45px" /></div-->
+                        </div>
+                        <div class="col-md-12">
+                            <p>选择图片{{deviceIconShow}}</p>
+                        </div>
+                    </div>
+
+
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
                             限制生存时间
                         </label>
-                        <input type="text" style="pixels: 300px" id="limitTime"/>
+                        <input type="text" style="pixels: 300px" id="limitTime" placeholder="00:00:00" onchange="javascript:if(!/^[0-5]{1}[0-9]{1}:[0-5]{1}[0-5]{1}:[0-5]{1}[0-5]{1}$/.test(this.value)){alert('时间格式不正确,正确的格式为 00:00:00-23:59:59');this.value=''};" />
+                        <!--input type="time" style="pixels: 300px" id="limitTime"/-->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" ng-click="addDeviceModel()">

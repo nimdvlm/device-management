@@ -31,6 +31,7 @@
     ============================================================ */
 .upSideMenu{
     font-size: 16px;
+    cursor: pointer;
 }
 #userCenter{
     margin-left: 500px;
@@ -432,16 +433,45 @@ serviceGroup  &   deviceModelManagement
     width: 100%;
 }
 .deviceTypeIconStyle{
-    width: 22%;
-    height: 180px;
+    /*height: 180px;
     border-radius: 6px;
-    cursor: pointer;
     border: 2px solid #c0c0c0;
-    background: white;
-    margin: 15px;
+    background: white;*/
+    width: 25%;
+    cursor: pointer;
     display: inline-block;
 }
+/*.imgIconDisplay img{
+    margin-right: 30px;
 
+}
+.imgButton1{
+    background:url(../img/deviceIcon1.png) no-repeat center center / 100% 100%;
+    width:60px;
+    height:45px;
+
+}
+.imgButton2{
+    background:url(../img/deviceIcon2.jpg) no-repeat center center / 100% 100%;width:60px;
+    height:45px;
+}
+.imgButton3{
+    background:url(../img/deviceIcon3.png) no-repeat center center / 100% 100%;width:60px;
+    height:45px;
+}
+.imgButton4{
+    background:url(../img/dis_minus.PNG) no-repeat center center / 100% 100%;width:60px;
+    height:45px;
+}*/
+.spanVisited{
+    border: 2px solid #305680;
+}
+.imgIconDisplay div{
+    display: inline-block;
+}
+.newStyle{
+    padding: 20px 10px;
+}
 .abilityIcon{
     width: 60%;
     float: left;
@@ -896,11 +926,12 @@ width: 35%;
     height: 40px;
 }
 /*=======================================tenantAdmin===========================================*/
-.page-header {
+.pageHeader{
     padding-bottom: 9px;
     margin: 10px 0 45px;
     border-bottom: 1px solid #C7D1DD;
 }
+
 .panel-default > .panel-heading {
     color: #000;
     background-color: #FFFFFF;
@@ -908,7 +939,7 @@ width: 35%;
     font-weight:bold;
 
 }
-.panel-body{
+.panelBody{
     min-height: 500px;
 }
 .boxs{
