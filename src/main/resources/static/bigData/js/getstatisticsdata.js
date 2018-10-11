@@ -993,6 +993,10 @@ function recentBarAjax(days,deviceType) {
     }
 }
 
+function online() {
+    window.open("http://39.104.186.210:8888");
+}
+
 //var timestamp1 = Date.parse(new Date());
 //window.alert(timestamp1);
 //var timestamp1 = new Date();

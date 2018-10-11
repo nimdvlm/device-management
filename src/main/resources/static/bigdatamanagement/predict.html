@@ -100,19 +100,13 @@
                 </ul>
             </li>
             <li>
-                <a href="#systemSetting2" class="nav-header collapsed" data-toggle="collapse">
+                <a href="datadig.html">
                     <i class="glyphicon glyphicon-leaf">&nbsp;</i>
                     数据挖掘
-                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
-                    <span class="label label-warning pull-right">2</span>
                 </a>
-                <ul id="systemSetting2" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
-                    <li><a href="datadig.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
-                    <li><a href="model1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
-                </ul>
             </li>
             <li>
-                <a href="http://39.104.186.210:8888">
+                <a onclick="online()">
                     <i class="glyphicon glyphicon-cloud">&nbsp;</i>
                     线上开发
                 </a>
@@ -149,20 +143,12 @@
                 </div>
                 <div class="modal-body">
                     <div style="margin-left: 3%">
+                        填写应用名称：&nbsp;&nbsp;&nbsp;<input id="modal4" class="form-control" placeholder="填写应用名称" type="text" autofocus style="width: 220px;display: inline"><br><br>
                         选择模型：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal2" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型">
                             <option>1</option>
                             <option>1537191320</option>
-                        </select><br><br>
-                        选择数据源：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal3" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择数据源">
-                            <option>[1,2]</option>
-                            <option>[1,3]</option>
-                            <option>[1,4]</option>
-                            <option>[2,3]</option>
-                            <option>[2,4]</option>
-                            <option>[3,4]</option>
-                            <option>[1,2,3,4]</option>
-                        </select><br><br>
-                        填写应用名称：&nbsp;&nbsp;<input id="modal4" class="form-control" placeholder="填写应用名称" type="text" autofocus style="width: 220px;display: inline">
+                        </select><br><br><br>
+                        <div id="div1">选择数据源：<br><br></div><br>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -181,6 +167,17 @@
 <script src="js/bootstrap-table-zh-CN.js"></script>
 <script src="js/bootstrap-select.js"></script>
 <script type="text/javascript">
+
+    var deviceGroup=[];
+
+    $.get("/api/device/alldevices?limit=100",function (data) {
+        deviceGroup = data;
+        $div1 = $("#div1");
+        for (var j=0; j<deviceGroup.length; j++) {
+            $checkbox = $("<label style='margin-left: 4%'><input class='merge' value="+deviceGroup[j].name+" type=\"checkbox\"/>&nbsp;"+deviceGroup[j].name+" </label> ");
+            $div1.append($checkbox);
+        }
+    });
 
     $("#drop1").trigger("click");
     $.get("http://39.104.186.210:8092/api/app/get-app?tenantId=2",function (data) {
@@ -246,9 +243,19 @@
     $("#modalsubmit").click(
         function () {
             var modelId = $("#modal2").val();
-            var dataSource = $("#modal3").val();
+            var dataSource = [];
             var appName = $("#modal4").val();
-            var url = "http://39.104.186.210:8092/api/app/create-app?tenantId=1&modelId="+modelId+"&dataSource="+dataSource+"&appName="+appName;
+            $("#div1").find("input[type=checkbox]:checked").each(
+                function () {
+                    for (var i=0; i<deviceGroup.length; i++) {
+                        if (deviceGroup[i].name == $(this).val()) {
+                            dataSource.push('"'+deviceGroup[i].id+'"');
+                        }
+                    }
+                }
+            );
+            var url = "http://39.104.186.210:8092/api/app/create-app?tenantId=1&modelId="+modelId+"&dataSource=["+dataSource+"]&appName="+appName;
+            alert(url);
             $.get(url,function (data) {
                 alert(JSON.stringify(data));
                 window.location.href = "predict.html";
@@ -282,6 +289,10 @@
             window.alert(JSON.stringify(data));
             window.location.href = "predict.html";
         })
+    }
+
+    function online() {
+        window.open("http://39.104.186.210:8888");
     }
 
 </script>

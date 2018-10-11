@@ -100,19 +100,13 @@
                 </ul>
             </li>
             <li>
-                <a href="#systemSetting2" class="nav-header collapsed" data-toggle="collapse">
+                <a href="datadig.html">
                     <i class="glyphicon glyphicon-leaf">&nbsp;</i>
                     数据挖掘
-                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
-                    <span class="label label-warning pull-right">2</span>
                 </a>
-                <ul id="systemSetting2" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
-                    <li><a href="datadig.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
-                    <li><a href="model1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
-                </ul>
             </li>
             <li>
-                <a href="http://39.104.186.210:8888">
+                <a onclick="online()">
                     <i class="glyphicon glyphicon-cloud">&nbsp;</i>
                     线上开发
                 </a>
@@ -124,7 +118,6 @@
         <div class="container"  style="padding: 30px 15px">
             <div id="toolbar">
                 <button id="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">创建新模型</button>
-                <button id="button1" class="btn btn-default" data-toggle="modal" data-target="#myModal1">训练模型</button>
             </div>
             <div class="panel panel-primary" style="margin-top: 1%">
                 <div class="panel-heading" style="text-align: center">
@@ -182,10 +175,8 @@
                             <h4 class="modal-title" id="myModalLabel" data-toggle="modal" data-target="#myModal">创建新模型</h4>
                         </div>
                         <div class="modal-body">
-                            <div style="margin-left: 3%">
-                                选择数据源：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal1" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择数据源">
-                                    <option>["AT","V","AP","RH"]</option>
-                                </select><br><br>
+                            <div id="modaldiv1" style="margin-left: 3%">
+                                <div></div>
                                 填写模型名称：&nbsp;&nbsp;<input id="modal2" class="form-control" placeholder="填写模型名称" type="text" autofocus style="width: 220px;display: inline"><br><br>
                                 填写模型描述：&nbsp;&nbsp;<input id="modal3" class="form-control" placeholder="填写模型描述" type="text" autofocus style="width: 220px;display: inline">
                             </div>
@@ -206,22 +197,13 @@
                             <h4 class="modal-title" id="myModalLabel1" data-toggle="modal" data-target="#myModal">训练模型</h4>
                         </div>
                         <div class="modal-body">
-                            <div style="margin-left: 3%">
-                                选择模型id：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal4" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型id">
-
-                                </select><br><br>
-                                选择所需数据表名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal5" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择所需数据表名">
-                                    <option>power_out</option>
-                                </select><br><br>
-                                选择模型输入对应的数据表字段：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal6" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型输入对应的数据表字段">
-                                    <option>["AT","V","AP","RH"]</option>
-                                </select><br><br>
-                                选择模型输出对应的数据表字段：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal7" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型输出对应的数据表字段">
-                                    <option>["PE"]</option>
-                                </select><br><br>
-                                选择模型类型：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal8" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型类型">
+                            <div id="divmodal2" style="margin-left: 3%">
+                                <div></div>
+                                <div id="div3"></div>
+                                <div id="div4"></div>
+                                <div id="div5">选择模型类型：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal8" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型类型">
                                     <option>reg</option>
-                                </select><br><br>
+                                </select><br><br></div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -242,6 +224,10 @@
 <script src="js/bootstrap-table-zh-CN.js"></script>
 <script src="js/bootstrap-select.js"></script>
 <script type="text/javascript">
+
+    var model_id;
+    var table_structure=[];
+    var current_table=[];
 
     $("#collapse1").trigger("click");
     $.get("http://39.104.186.210:8092/api/model/get-general-model",function (data) {
@@ -280,7 +266,8 @@
             $td3 = $("<td>"+data.data[i].model_id+"</td>");
             $td4 = $("<td>"+data.data[i].model_path+"</td>");
             $td5 = $("<td>"+data.data[i].model_input+"</td>");
-            $td6 = $("<td><button type='button' class='btn-xs btn-warning' onclick='delete1(this)'>删除</button></td>");
+            $td6 = $("<td><button type='button' class='btn-xs btn-primary' data-toggle=\"modal\" data-target=\"#myModal1\" onclick='train(this)'>训练</button>" +
+                "<button type='button' class='btn-xs btn-warning' onclick='delete1(this)'>删除</button></td>");
             $tr.append($td1);
             $tr.append($td2);
             $tr.append($td3);
@@ -305,12 +292,38 @@
         });
     });
 
+    $.get("http://39.104.186.210:8092/api/etl/table-struct",function (data) {
+        table_structure = data;
+    });
+
+    $("#button").click(
+        function () {
+            $modaldiv1 = $("#modaldiv1");
+            $modaldiv1.children().eq(0).remove();
+            $.get("http://39.104.186.210:8092/api/device/device-types?tenantId=2",function (data) {
+                $div = $("<div id='modal1'>选择数据源：</div>");
+                $modaldiv1.prepend($div);
+                for (var i=0; i<data.deviceTypes.length; i++) {
+                    $checkbox = $("<label style='margin-left: 4%'><input class='merge' value="+data.deviceTypes[i]+" type=\"checkbox\"/>&nbsp;"+data.deviceTypes[i]+" </label> ");
+                    $div.append($checkbox);
+                }
+                $div.append($("<br><br>"));
+            })
+        }
+    );
+
     $("#modalsubmit").click(
         function () {
-            var input = $("#modal1").val();
+            var input = [];
+            $("#modal1").find("input[type=checkbox]:checked").each(
+                function() {
+                    var a= $(this).val();
+                    input.push('"'+a+'"');
+                }
+            );
             var modelName = $("#modal2").val();
             var modelDesc = $("#modal3").val();
-            $.get("http://39.104.186.210:8092/api/model/create-model?tenantId=1&input="+input+"&modelName="+modelName+"&modelDesc="+modelDesc,function (data) {
+            $.get("http://39.104.186.210:8092/api/model/create-model?tenantId=1&input=["+input+"]&modelName="+modelName+"&modelDesc="+modelDesc,function (data) {
                 window.alert(JSON.stringify(data));
                 window.location.href = "model.html";
             })
@@ -319,22 +332,80 @@
 
     $("#modalsubmit1").click(
         function () {
-            var modelId = $("#modal4").val();
             var sourceTable = $("#modal5").val();
-            var featureColumns = $("#modal6").val();
-            var targetColumns = $("#modal7").val();
-            var modelType = $("#modal8").val();
-            $.get("http://39.104.186.210:8092/api/model/train-model?tenantId=1&modelId="+modelId+"&sourceTable="+sourceTable+"&featureColumns="+featureColumns+"&targetColumns="+targetColumns+"&modelType="+modelType,function (data) {
-                window.alert(JSON.stringify(data));
-            })
+            if (sourceTable == "") {
+                alert("必须先选择数据表");
+            }else {
+                var featureColumns = [];
+                var targetColumns = [];
+                var modelType = $("#modal8").val();
+                $("#div3").find("input[type=checkbox]:checked").each(
+                    function () {
+                        featureColumns.push('"'+$(this).val()+'"');
+                    }
+                );
+                $("#div4").find("input[type=checkbox]:checked").each(
+                    function () {
+                        targetColumns.push('"'+$(this).val()+'"');
+                    }
+                );
+                $.get("http://39.104.186.210:8092/api/model/train-model?tenantId=1&modelId="+model_id+"&sourceTable="+sourceTable+"&featureColumns=["+featureColumns+"]&targetColumns=["+targetColumns+"]&modelType="+modelType,function (data) {
+                    window.alert(JSON.stringify(data));
+                })
+            }
         }
     );
+
+    function train(dom) {
+        $("#div3").remove();
+        $("#div4").remove();
+        model_id = $(dom).parent().parent().children().eq(2).html();
+        $div = $("<div id=\"div2\">选择所需数据表名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select onchange='tableChange()' id=\"modal5\" class=\"selectpicker\" data-live-search=\"true\" data-live-search-placeholder=\"搜索\" title=\"选择所需数据表名\"></select><br><br></div>");
+        $divmodal2 = $("#divmodal2");
+        $divmodal2.children().eq(0).remove();
+        $divmodal2.prepend($div);
+        $select = $("#modal5");
+        for (var i=0; i<table_structure.length; i++) {
+            $option = $("<option>"+table_structure[i].table_name+"</option>");
+            $select.append($option);
+        }
+        $select.selectpicker("refresh");
+    }
+
+    function tableChange() {
+        var tableName = $("#modal5").val();
+        $("#div3").remove();
+        $("#div4").remove();
+        for (var i=0; i<table_structure.length; i++) {
+            if (table_structure[i].table_name == tableName) {
+                current_table = table_structure[i].columns;
+            }
+        }
+        $div3 = $("<div id='div3'>模型的输入对应的数据表字段：</div>");
+        $div4 = $("<div id='div4'>模型的输出对应的数据表字段：</div>");
+        for (var j=current_table.length-1; j>=0; j--) {
+            $checkbox1 = $("<label style='margin-left: 4%'><input class='merge' value="+current_table[j]+" type=\"checkbox\"/>&nbsp;"+current_table[j]+" </label> ");
+            $checkbox2 = $("<label style='margin-left: 4%'><input class='merge' value="+current_table[j]+" type=\"checkbox\"/>&nbsp;"+current_table[j]+" </label> ");
+            $div3.append($checkbox1);
+            $div4.append($checkbox2);
+        }
+        $div3.append($("<br><br>"));
+        $div4.append($("<br><br>"));
+        $div2 = $("#div2");
+        $div2.after($div4);
+        $div2.after($div3);
+
+    }
 
     function delete1(dom) {
         $.get("http://39.104.186.210:8092/api/model/delete-model?tenantId=1&modelId="+$(dom).parent().parent().children().eq(2).html(),function (data) {
             window.alert(JSON.stringify(data));
             window.location.href = "model.html";
         });
+    }
+
+    function online() {
+        window.open("http://39.104.186.210:8888");
     }
 
 </script>

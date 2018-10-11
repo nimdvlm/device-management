@@ -99,20 +99,14 @@
                     <li><a href="model.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
                 </ul>
             </li>
-            <li>
-                <a id="collapse2" href="#systemSetting2" class="nav-header collapsed" data-toggle="collapse">
+            <li class="active" style="background-color: #eeeeee">
+                <a href="datadig.html">
                     <i class="glyphicon glyphicon-leaf">&nbsp;</i>
                     数据挖掘
-                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
-                    <span class="label label-warning pull-right">2</span>
                 </a>
-                <ul id="systemSetting2" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
-                    <li class="active" style="background-color: #eeeeee"><a href="datadig.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
-                    <li><a href="model1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
-                </ul>
             </li>
             <li>
-                <a href="http://39.104.186.210:8888">
+                <a onclick="online()">
                     <i class="glyphicon glyphicon-cloud">&nbsp;</i>
                     线上开发
                 </a>
@@ -122,7 +116,22 @@
 
     <div class="col-md-10">
         <div class="container"  style="padding: 30px 15px">
-            <h1>暂无</h1>
+            <div class="panel panel-primary" style="margin-top: 1%">
+                <div class="panel-heading" style="text-align: center">
+                    <h3 class="panel-title">数据聚类</h3>
+                </div>
+                <div class="panel panel-body">
+                    <div id="divtable" class="panel-body" style="text-align: center">
+                        <div id="toolbar">
+                            <button id="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">自定义聚类分析</button>
+                        </div>
+                        <table id="realTime_Table">
+                            <thead id="thead"></thead>
+                            <tbody id="tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
             <!--<fieldset style="border:none;border-top:1px solid #cec9c9;margin:30px 0 20px;">
                 <legend style="font-size: 20px;font-weight: 300;padding: 0 10px;margin-left: 20px">查询结果</legend>
@@ -133,54 +142,18 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel" data-toggle="modal" data-target="#myModal">创建新模型</h4>
+                            <h4 class="modal-title" id="myModalLabel" data-toggle="modal" data-target="#myModal">自定义聚类分析</h4>
                         </div>
                         <div class="modal-body">
-                            <div style="margin-left: 5%">
-                                <select id="modal1" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择数据源">
-                                    <option>["AT","V","AP","RH"]</option>
-                                </select><br><br>
-                                <input id="modal2" class="form-control" placeholder="填写模型名称" type="text" autofocus style="width: 220px"><br>
-                                <input id="modal3" class="form-control" placeholder="填写模型描述" type="text" autofocus style="width: 220px">
+                            <div id="divmodal" style="margin-left: 5%">
+                                <div id="div1">源表：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal1" class="selectpicker" data-live-search="true" data-live-search-placeholder="选择源表" title="选择源表"></select><br><br></div>
+                                <div id="div2"></div>
+                                类别个数：&nbsp;&nbsp;<input id="modal3" class="form-control" placeholder="填写类别个数" type="text" autofocus style="width: 220px;display: inline">
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                             <button id="modalsubmit" type="button" class="btn btn-primary" data-dismiss="modal">提交更改</button>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal -->
-            </div>
-
-            <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel1" data-toggle="modal" data-target="#myModal">训练模型</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div style="margin-left: 5%">
-                                <select id="modal4" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型id">
-
-                                </select><br><br>
-                                <select id="modal5" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择所需数据表名">
-                                    <option>power_out</option>
-                                </select><br><br>
-                                <select id="modal6" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型输入对应的数据表字段">
-                                    <option>["AT","V","AP","RH"]</option>
-                                </select><br><br>
-                                <select id="modal7" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型输出对应的数据表字段">
-                                    <option>["PE"]</option>
-                                </select><br><br>
-                                <select id="modal8" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型类型">
-                                    <option>reg</option>
-                                </select><br><br>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button id="modalsubmit1" type="button" class="btn btn-primary" data-dismiss="modal">提交更改</button>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal -->
@@ -197,7 +170,127 @@
 <script src="js/bootstrap-select.js"></script>
 <script type="text/javascript">
 
-    $("#collapse2").trigger("click");
+    var table_structure=[];
+    var current_table=[];
+
+    $("#divtable").empty();
+    $("#divtable").append($("<div id=\"toolbar\">\n" +
+        "                            <button id=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#myModal\">自定义聚类分析</button>\n" +
+        "                        </div>\n" +
+        "                        <table id=\"realTime_Table\">\n" +
+        "                            <thead id=\"thead\"><th>类簇（表model）</th><th>中心点向量（特征列：device_type_id,manufacturer_id）</th></thead>\n" +
+        "                            <tbody id=\"tbody\"></tbody>\n" +
+        "                        </table>"));
+    $.get("http://39.104.186.210:8092/api/mining/k-means?sourceTable=model&featureColumns=[\"device_type_id\",\"manufacturer_id\"]&host=172.24.32.169&user=root&passwd=root&dbname=BUPT_IOT&port=3306&n_clusters=6",function (data) {
+        for (var i=0; i<data.cluster_centers.length; i++) {
+            $tr = $("<tr></tr>");
+            $td1 = $("<td>第"+(i+1)+"个</td>");
+            $td2 = $("<td>("+data.cluster_centers[i]+")</td>");
+            $tr.append($td1);
+            $tr.append($td2);
+            $("#tbody").append($tr);
+        }
+        $("#realTime_Table").bootstrapTable({
+            search: true,
+            pagination: true,
+            pageSize: 10,
+            pageList: [5, 10, 15, 20, 50, 100],
+            locale: "zh-CN",
+            striped: true,
+            showColumns: true,
+            sortable: true,
+            sortName: "time",
+            toolbar: "#toolbar"
+        });
+    });
+
+    $("#modalsubmit").click(
+        function () {
+            var a = $("#modal1").val();
+            if (a == "") {
+                alert("必须先选择源表");
+            }else {
+                var b = [];
+                $("#div2").find("input[type=checkbox]:checked").each(
+                    function () {
+                        b.push('"'+$(this).val()+'"');
+                    }
+                );
+                $("#divtable").empty();
+                $("#divtable").append($("<div id=\"toolbar\">\n" +
+                    "                            <button id=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#myModal\">自定义聚类分析</button>\n" +
+                    "                        </div>\n" +
+                    "                        <table id=\"realTime_Table\">\n" +
+                    "                            <thead id=\"thead\"><th>类簇（表"+a+"）</th><th>中心点向量（特征列："+b+"）</th></thead>\n" +
+                    "                            <tbody id=\"tbody\"></tbody>\n" +
+                    "                        </table>"));
+                var c = $("#modal3").val();
+                $.get("http://39.104.186.210:8092/api/mining/k-means?sourceTable="+a+"&featureColumns=["+b+"]&host=172.24.32.169&user=root&passwd=root&dbname=BUPT_IOT&port=3306&n_clusters="+c,function (data) {
+                    for (var i=0; i<data.cluster_centers.length; i++) {
+                        $tr = $("<tr></tr>");
+                        $td1 = $("<td>第"+(i+1)+"个</td>");
+                        $td2 = $("<td>("+data.cluster_centers[i]+")</td>");
+                        $tr.append($td1);
+                        $tr.append($td2);
+                        $("#tbody").append($tr);
+                    }
+                    $("#realTime_Table").bootstrapTable({
+                        search: true,
+                        pagination: true,
+                        pageSize: 10,
+                        pageList: [5, 10, 15, 20, 50, 100],
+                        locale: "zh-CN",
+                        striped: true,
+                        showColumns: true,
+                        sortable: true,
+                        sortName: "time",
+                        toolbar: "#toolbar"
+                    });
+                });
+            }
+        }
+    );
+
+    $.get("http://39.104.186.210:8092/api/etl/table-struct",function (data) {
+        table_structure = data;
+    });
+    
+    $("#button").click(
+        function () {
+            $("#div2").remove();
+            $("#div1").remove();
+            $div1 = $("<div id=\"div1\">源表：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id=\"modal1\" onchange='tableChange()' class=\"selectpicker\" data-live-search=\"true\" data-live-search-placeholder=\"选择源表\" title=\"选择源表\"></select><br><br></div>");
+            $("#divmodal").prepend($div1);
+            $select = $("#modal1");
+            for (var i=0; i<table_structure.length; i++) {
+                $option = $("<option>"+table_structure[i].table_name+"</option>");
+                $select.append($option);
+            }
+            $select.selectpicker("refresh");
+        }
+    );
+
+    function tableChange() {
+        var tableName = $("#modal1").val();
+        $("#div2").remove();
+        for (var i=0; i<table_structure.length; i++) {
+            if (table_structure[i].table_name == tableName) {
+                current_table = table_structure[i].columns;
+            }
+        }
+        $div2 = $("<div id='div2'>特征列：</div>");
+        for (var j=current_table.length-1; j>=0; j--) {
+            $checkbox1 = $("<label style='margin-left: 4%'><input class='merge' value="+current_table[j]+" type=\"checkbox\"/>&nbsp;"+current_table[j]+" </label> ");
+            $checkbox2 = $("<label style='margin-left: 4%'><input class='merge' value="+current_table[j]+" type=\"checkbox\"/>&nbsp;"+current_table[j]+" </label> ");
+            $div2.append($checkbox1);
+        }
+        $div2.append($("<br><br>"));
+        $("#div1").after($div2);
+    }
+
+    function online() {
+        window.open("http://39.104.186.210:8888");
+    }
 
 </script>
 </body>

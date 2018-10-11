@@ -99,19 +99,13 @@
                 </ul>
             </li>
             <li>
-                <a href="#systemSetting2" class="nav-header collapsed" data-toggle="collapse">
+                <a href="../bigdatamanagement/datadig.html">
                     <i class="glyphicon glyphicon-leaf">&nbsp;</i>
                     数据挖掘
-                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
-                    <span class="label label-warning pull-right">2</span>
                 </a>
-                <ul id="systemSetting2" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
-                    <li><a href="../bigdatamanagement/datadig.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
-                    <li><a href="../bigdatamanagement/model1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
-                </ul>
             </li>
             <li>
-                <a href="http://39.104.186.210:8888">
+                <a onclick="online()">
                     <i class="glyphicon glyphicon-cloud">&nbsp;</i>
                     线上开发
                 </a>
@@ -360,6 +354,10 @@
         var minute=now.getMinutes();
         var second=now.getSeconds();
         return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
+    }
+
+    function online() {
+        window.open("http://39.104.186.210:8888");
     }
 
    /*$(function() {
