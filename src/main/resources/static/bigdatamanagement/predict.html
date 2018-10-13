@@ -255,7 +255,6 @@
                 }
             );
             var url = "http://39.104.186.210:8092/api/app/create-app?tenantId=1&modelId="+modelId+"&dataSource=["+dataSource+"]&appName="+appName;
-            alert(url);
             $.get(url,function (data) {
                 alert(JSON.stringify(data));
                 window.location.href = "predict.html";
