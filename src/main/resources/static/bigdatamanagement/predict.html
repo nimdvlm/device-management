@@ -180,7 +180,7 @@
     });
 
     $("#drop1").trigger("click");
-    $.get("http://39.104.186.210:8092/api/app/get-app?tenantId=2",function (data) {
+    $.get("http://39.104.186.210:8092/api/app/get-app",function (data) {
         $("#divtable").append($("<table id=\"realTime_Table\">\n" +
             "                            <thead id=\"thead\" style=\"text-align: center\">\n" +
             "                                <tr>\n" +
