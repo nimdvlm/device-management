@@ -1,5 +1,7 @@
 package cn.edu.bupt.controller;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,24 @@ import cn.edu.bupt.utils.HttpUtil;
 @RestController
 @RequestMapping("/api/data")
 public class DataController extends DefaultThingsboardAwaredController{
+
+    //手动添加属性
+    @RequestMapping(value = "/addAttribute/{deviceId}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    public String addAttribute(@PathVariable("deviceId") String deviceId, @RequestBody String attributes){
+        JsonObject attInfoJson = (JsonObject)new JsonParser().parse(attributes);
+        String Addr = "/api/v1/deviceaccess/attribute/" + deviceId;
+
+        String responseContent = null;
+        try{
+            responseContent = HttpUtil.sendPostToThingsboard("http://" + getDeviceAccessServer() +Addr,
+                    null,
+                    attInfoJson,
+                    request.getSession()) ;
+        }catch (Exception e){
+            return retFail(e.toString()) ;
+        }
+        return retSuccess(responseContent) ;
+    }
 
 
     //后台无此方法，应该是从卡夫卡拿实时数据
