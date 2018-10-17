@@ -75,8 +75,8 @@
                     <span class="label label-warning pull-right">2</span>
                 </a>
                 <ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
-                    <li><a href="../bigData/ocean.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 常规分析</a></li>
-                    <li><a href="../bigData/statistics1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 数据分析</a></li>
+                    <li><a href="../bigData/ocean.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 整体分析</a></li>
+                    <li><a href="../bigData/statistics1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 按类分析</a></li>
                     <!--<li><a href="#"><i class="glyphicon glyphicon-edit">&nbsp;</i> 修改密码</a></li>
                     <li><a href="#"><i class="glyphicon glyphicon-eye-open">&nbsp;</i> 日志查看</a></li>-->
                 </ul>
@@ -155,6 +155,7 @@
                                 <th>模型id</th>
                                 <th>模型路径</th>
                                 <th>模型输入</th>
+                                <th>训练状态</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -198,7 +199,8 @@
                         </div>
                         <div class="modal-body">
                             <div id="divmodal2" style="margin-left: 3%">
-                                <div></div>
+                                <div id="div1"></div>
+                                <div id="div2"></div>
                                 <div id="div3"></div>
                                 <div id="div4"></div>
                                 <div id="div5">选择模型类型：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal8" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型类型">
@@ -266,7 +268,12 @@
             $td3 = $("<td>"+data.data[i].model_id+"</td>");
             $td4 = $("<td>"+data.data[i].model_path+"</td>");
             $td5 = $("<td>"+data.data[i].model_input+"</td>");
-            $td6 = $("<td><button type='button' class='btn-xs btn-primary' data-toggle=\"modal\" data-target=\"#myModal1\" onclick='train(this)'>训练</button>" +
+            if (data.data[i].model_state == 1) {
+                $td6 = $("<td>已完成</td>");
+            }else {
+                $td6 = $("<td>未完成</td>");
+            }
+            $td7 = $("<td><button type='button' class='btn-xs btn-primary' data-toggle=\"modal\" data-target=\"#myModal1\" onclick='train(this)'>训练</button>" +
                 "<button type='button' class='btn-xs btn-warning' onclick='delete1(this)'>删除</button></td>");
             $tr.append($td1);
             $tr.append($td2);
@@ -274,6 +281,7 @@
             $tr.append($td4);
             $tr.append($td5);
             $tr.append($td6);
+            $tr.append($td7);
             $("#tbody1").append($tr);
             $("#modal4").append($("<option>"+data.data[i].model_id+"</option>"));
             $("#modal4").selectpicker("refresh");
@@ -351,6 +359,7 @@
                 );
                 $.get("http://39.104.186.210:8092/api/model/train-model?tenantId=1&modelId="+model_id+"&sourceTable="+sourceTable+"&featureColumns=["+featureColumns+"]&targetColumns=["+targetColumns+"]&modelType="+modelType,function (data) {
                     window.alert(JSON.stringify(data));
+                    location.href = "model.html";
                 })
             }
         }
@@ -362,7 +371,7 @@
         model_id = $(dom).parent().parent().children().eq(2).html();
         $div = $("<div id=\"div2\">选择所需数据表名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select onchange='tableChange()' id=\"modal5\" class=\"selectpicker\" data-live-search=\"true\" data-live-search-placeholder=\"搜索\" title=\"选择所需数据表名\"></select><br><br></div>");
         $divmodal2 = $("#divmodal2");
-        $divmodal2.children().eq(0).remove();
+        $divmodal2.children().eq(1).remove();
         $divmodal2.prepend($div);
         $select = $("#modal5");
         for (var i=0; i<table_structure.length; i++) {

@@ -75,8 +75,8 @@
                     <span class="label label-warning pull-right">2</span>
                 </a>
                 <ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
-                    <li><a href="../bigData/ocean.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 常规分析</a></li>
-                    <li><a href="../bigData/statistics1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 数据分析</a></li>
+                    <li><a href="../bigData/ocean.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 整体分析</a></li>
+                    <li><a href="../bigData/statistics1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 按类分析</a></li>
                     <!--<li><a href="#"><i class="glyphicon glyphicon-edit">&nbsp;</i> 修改密码</a></li>
                     <li><a href="#"><i class="glyphicon glyphicon-eye-open">&nbsp;</i> 日志查看</a></li>-->
                 </ul>
@@ -144,10 +144,7 @@
                 <div class="modal-body">
                     <div style="margin-left: 3%">
                         填写应用名称：&nbsp;&nbsp;&nbsp;<input id="modal4" class="form-control" placeholder="填写应用名称" type="text" autofocus style="width: 220px;display: inline"><br><br>
-                        选择模型：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal2" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型">
-                            <option>1</option>
-                            <option>1537191320</option>
-                        </select><br><br><br>
+                        选择模型：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="modal2" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型"></select><br><br><br>
                         <div id="div1">选择数据源：<br><br></div><br>
                     </div>
                 </div>
@@ -168,7 +165,8 @@
 <script src="js/bootstrap-select.js"></script>
 <script type="text/javascript">
 
-    var deviceGroup=[];
+    var deviceGroup = [];
+    var modelIdGroup = [];
 
     $.get("/api/device/alldevices?limit=100",function (data) {
         deviceGroup = data;
@@ -177,6 +175,16 @@
             $checkbox = $("<label style='margin-left: 4%'><input class='merge' value="+deviceGroup[j].name+" type=\"checkbox\"/>&nbsp;"+deviceGroup[j].name+" </label> ");
             $div1.append($checkbox);
         }
+    });
+
+    $.get("http://39.104.186.210:8092/api/model/get-model-id?tenantId=1",function (data) {
+        $select = $("#modal2");
+        modelIdGroup = data;
+        for (var i=0; i<data.data.length; i++) {
+            $option = $("<option>"+data.data[i].model_name+"</option>");
+            $select.append($option);
+        }
+        $select.selectpicker("refresh");
     });
 
     $("#drop1").trigger("click");
@@ -242,7 +250,13 @@
 
     $("#modalsubmit").click(
         function () {
-            var modelId = $("#modal2").val();
+            var modelName = $("#modal2").val();
+            var modelId;
+            for (var j=0; j<modelIdGroup.data.length; j++) {
+                if (modelName == modelIdGroup.data[j].model_name) {
+                    modelId = modelIdGroup.data[j].model_id;
+                }
+            }
             var dataSource = [];
             var appName = $("#modal4").val();
             $("#div1").find("input[type=checkbox]:checked").each(
