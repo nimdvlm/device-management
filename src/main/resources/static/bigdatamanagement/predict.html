@@ -210,9 +210,9 @@
             var a = "";
             for (var j=0; j<data.data[i].app_input.length; j++){
                 if (j != data.data[i].app_input.length-1) {
-                    a = a + "设备id:"+data.data[i].app_input[j].devide_id+" 属性:"+data.data[i].app_input[j].type + "，";
+                    a = a + "设备id:"+data.data[i].app_input[j].device_id+" 属性:"+data.data[i].app_input[j].type + "，";
                 }else {
-                    a = a + "设备id:"+data.data[i].app_input[j].devide_id+" 属性:"+data.data[i].app_input[j].type;
+                    a = a + "设备id:"+data.data[i].app_input[j].device_id+" 属性:"+data.data[i].app_input[j].type;
                 }
             }
             $td4 = $("<td>"+a+"</td>");
@@ -221,7 +221,7 @@
             $button1 = $("<button type='button' onclick='button1(this)' class='btn-xs btn-danger'>删除</button>");
             $button2 = $("<button type='button' onclick='button2(this)' class='btn-xs btn-success'>启动</button>");
             $button3 = $("<button type='button' onclick='button3(this)' class='btn-xs btn-warning'>停止</button>");
-            $button4 = $("<button type='button' onclick='button4(this)' class='btn-xs btn-info'>预测结果</button>");
+            $button4 = $("<button type='button' onclick='button4(this)' class='btn-xs btn-info'>结果</button>");
             $td6.append($button1);
             $td6.append($button2);
             $td6.append($button3);
