@@ -1,25 +1,25 @@
 mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
-    $scope.isShowAll= true;
+    $scope.isShowAll = true;
     $scope.isShowEmpty = false;
 
     //获取设备组
     /*权限管理*/
     console.log($.cookie());
-    if($.cookie("userLevel") === "CUSTOMER_USER"){
+    if ($.cookie("userLevel") === "CUSTOMER_USER") {
         console.log("客户权限")
         var Devicegroup = $resource('/api/group/customerGroups?limit=20');
-    }else {
+    } else {
         console.log("租户权限")
         var Devicegroup = $resource('/api/group/tenantGroups?limit=20');
     }
     /*获取设备组接口*/
     $scope.DeviceGroups = Devicegroup.query(function () {
         //初始化右侧视图
-        if($scope.DeviceGroups[0]!=null&&$scope.DeviceGroups[0]!=""){
+        if ($scope.DeviceGroups[0] != null && $scope.DeviceGroups[0] != "") {
             $scope.item = $scope.DeviceGroups[0];
 
-            $scope.isShowEmpty=false;
-            $scope.isShowAll=true;
+            $scope.isShowEmpty = false;
+            $scope.isShowAll = true;
             console.log($scope.item);
             //初始化设备组的设备视图
             var DGDEVICES = $resource('/api/group/:id/devices?limit=20', {id: '@id'});
@@ -29,9 +29,9 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                 console.log("$scope.myData");
                 console.log($scope.myData);
             });
-        }else {
-            $scope.isShowEmpty=true;
-            $scope.isShowAll=false;
+        } else {
+            $scope.isShowEmpty = true;
+            $scope.isShowAll = false;
         }
     });
 
@@ -44,9 +44,9 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                 console.log("新建设备组接口连接成功");
                 console.log(resp);
                 $("#addRule").modal("hide");
-                if(resp.id!=""){
+                if (resp.id != "") {
                     location.reload();
-                }else{
+                } else {
                     toastr.warning("不允许创建同名设备！");
                 }
             });
@@ -60,10 +60,10 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         if ($scope.dgname != "" && $scope.dgname != null) {
             //权限管理
             console.log($.cookie());
-            if($.cookie("userLevel") === "CUSTOMER_USER"){
+            if ($.cookie("userLevel") === "CUSTOMER_USER") {
                 console.log("客户权限")
                 var searchDG = $resource('/api/group/customerGroups?limit=20&textSearch=:name', {name: '@name'});
-            }else {
+            } else {
                 console.log("租户权限")
                 var searchDG = $resource('/api/group/tenantGroups?limit=20&textSearch=:name', {name: '@name'});
             }
@@ -123,7 +123,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
         //展示视图添加样式
         $scope.DeviceGroups.forEach(function (items) {
-            if(DG != items) items.style = {}
+            if (DG != items) items.style = {}
         });
         DG.style = {"border": "2px solid #305680"};
         //获取设备组下的设备
@@ -179,12 +179,42 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     var size;//每页显示的数据个数，如果不设置，则最后一页少于pageSize后,再往前翻就只显示最后一页的数据个数
     $scope.showDetail = function (data) {
         var attrDetailObj = $resource("/api/data/getKeyAttribute/:deviceId");
-        var attrDetailInfo = attrDetailObj.query({deviceId:data.id},function (resp) {
-            num = Math.ceil(attrDetailInfo.length / 5);
-            size = 5;
-            initUI(1,5);
+        var attrDetailInfo = attrDetailObj.query({deviceId: data.id}, function (resp) {
+            if (attrDetailInfo.length != 0) {
+                num = Math.ceil(attrDetailInfo.length / 5);
+                size = 5;
+                initUI(1, 5);
+            } else {
+                num = 0;
+                size = 0;
+                initUI(0, 0);
+            }
         });
-        console.log(attrDetailInfo);//获取的所有数据，格式为[{},{}]
+
+        /*按键值搜索*/
+        $scope.findKey = function () {
+            $("#attrDisplay tr").remove();
+            var txt = $("#searchKey").val();
+            var tag = 0;
+            if (txt == "") {
+                initUI(1, 5);
+            } else {
+                for (var i = 0; i < attrDetailInfo.length; i++) {
+                    if (attrDetailInfo[i].key == txt) {
+                        var latestTs = formatDate(new Date(attrDetailInfo[i].lastUpdateTs));
+                        $("#attrDisplay").append('<tr>' + '<td class="list-item">' + latestTs + '</td>' + '<td class="list-item">' + attrDetailInfo[i].key + '</td>' + '<td class="list-item">' + attrDetailInfo[i].value + '</td>' + '</tr>')
+                        tag++;
+                    }
+                }
+                if (tag == 0) {
+                    $("#attrDisplay").append('<tr>' + '<td class="list-item">' + '</td>' + '<td class="list-item">' + '无此键值！' + '</td>' + '<td class="list-item">' + '</td>' + '</tr>')
+                }
+
+            }
+
+        };
+
+        // console.log(attrDetailInfo);//获取的所有数据，格式为[{},{}]
 
         /*==========显示属性==========*/
         //分页功能实现
@@ -194,11 +224,11 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
             //pageNo 当前页号
             //pageSize 页面展示数据个数
             var html = '';
-            for(var i = (pageNo-1)*pageSize; i < pageNo*pageSize; i++) {
+            for (var i = (pageNo - 1) * pageSize; i < pageNo * pageSize; i++) {
                 var item = attrDetailInfo[i];
                 console.log(attrDetailInfo[i]);
                 var latestTs = formatDate(new Date(attrDetailInfo[i].lastUpdateTs));
-                html += '<tr>'+'<td class="list-item">'+latestTs+'</td>'+'<td class="list-item">'+item.key+'</td>'+'<td class="list-item">'+item.value+'</td>'+'</tr>';
+                html += '<tr>' + '<td class="list-item">' + latestTs + '</td>' + '<td class="list-item">' + item.key + '</td>' + '<td class="list-item">' + item.value + '</td>' + '</tr>';
             }
             document.getElementsByClassName('data-list')[0].innerHTML = html;
             pagination({
@@ -206,22 +236,22 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                 total: num,//总共多少页
                 len: 5,//显示出来的点击按钮个数
                 targetId: 'pagination',
-                callback: function() {
+                callback: function () {
                     var me = this;
                     var oPages = document.getElementsByClassName('page-index');
-                    for(var i = 0; i < oPages.length; i++) {
-                        oPages[i].onclick=function() {
-                            if(this.getAttribute('data-index')*pageSize>attrDetailInfo.length){
-                                initUI(this.getAttribute('data-index'),pageSize-this.getAttribute('data-index')*pageSize+attrDetailInfo.length);
-                            }else{
+                    for (var i = 0; i < oPages.length; i++) {
+                        oPages[i].onclick = function () {
+                            if (this.getAttribute('data-index') * pageSize > attrDetailInfo.length) {
+                                initUI(this.getAttribute('data-index'), pageSize - this.getAttribute('data-index') * pageSize + attrDetailInfo.length);
+                            } else {
                                 initUI(this.getAttribute('data-index'), size);
                             }
                         }
                     }
                     var goPage = document.getElementById('go-search');
-                    goPage.onclick = function() {
+                    goPage.onclick = function () {
                         var index = document.getElementById('yeshu').value;
-                        if(!index || (+index > me.total) || (+index < 1)) {
+                        if (!index || (+index > me.total) || (+index < 1)) {
                             return;
                         }
                         initUI(index, size);
@@ -235,7 +265,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
             var limit = $("#attrSelectInfo option:selected").text();
             num = Math.ceil(attrDetailInfo.length / limit);
             size = limit;
-            initUI(1,limit);
+            initUI(1, limit);
         };
         /*===================================================================*/
 
@@ -253,14 +283,17 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         var methodName = new Array();//用于记录所有的methodName
         $('#control_panel').empty();//每次将控制面板清空再渲染
         var controlObject = $resource("/api/v1/ability/:manufacturerName/:deviceTypeName/:modelName");
-        $scope.controlInfo = controlObject.query({manufacturerName:data.manufacture,deviceTypeName:data.deviceType,modelName:data.model});
+        $scope.controlInfo = controlObject.query({
+            manufacturerName: data.manufacture,
+            deviceTypeName: data.deviceType,
+            modelName: data.model
+        });
         $scope.controlInfo.$promise.then(function (value) {
-
 
 
             console.log(value);
 
-            for(var i = 0;i<value.length;i++){
+            for (var i = 0; i < value.length; i++) {
                 var abilityDesJson = JSON.parse(value[i].abilityDes);//将所有abilityDes（string）转成JSON
                 abilityDesArr.push(abilityDesJson);//把abilityDesJson存进数组
                 serviceName.push(abilityDesJson.serviceName);//用于记录所有的服务名（有多少个小控制面板）
@@ -270,11 +303,11 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
                 //每个小控制面板的id为ctrlDiv{{i}}
                 $('#control_panel').append('<div class="col-xs-10 col-sm-6 col-md-4 service-panel"><form><fieldset id="ctrlDiv' + i + '"><legend class="service-control-legend">' + serviceName[i] + '</legend></fieldset></form></div>');
-                console.log("serviceName:"+serviceName[i]);
+                console.log("serviceName:" + serviceName[i]);
                 var params = abilityDesJson.serviceBody.params;//用于记录每一个小控制面板下有多少个控制选项,随i的取值变化而变化
-                console.log("params"+params);
-                console.log("params.length"+params.length);
-                for(var j = 0;j < params.length;j++){
+                console.log("params" + params);
+                console.log("params.length" + params.length);
+                for (var j = 0; j < params.length; j++) {
                     console.log(params[j]);
                     console.log(params[j].value);
 
@@ -284,10 +317,10 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
 
                     //每个小控制面板下的控制按钮id为parma
-                    if(type == 1){
-                        $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="text" class="form-control" id="param'+ i + j +'"  value="' + valueInfo +'"/></div></div>');
+                    if (type == 1) {
+                        $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="text" class="form-control" id="param' + i + j + '"  value="' + valueInfo + '"/></div></div>');
                     }
-                    else if(type == 2){
+                    else if (type == 2) {
                         /*函数：split()
                          功能：使用一个指定的分隔符把一个字符串分割存储到数组*/
                         /* var temp = params[j].value.split(" ");
@@ -298,27 +331,27 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                          console.log("1:"+temp[1]);*/
                         /*var leftStatus = true;
                          var rightStatus = false;*/
-                        $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key +  '</label><div class="col-sm-9"><image src="static/thingsManage/assets/img/off.png" id="param'+i+j+ '" style="cursor: pointer; width: 80px; height: 30px; margin: 0 10px;"></image></div></div>');
+                        $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><image src="static/thingsManage/assets/img/off.png" id="param' + i + j + '" style="cursor: pointer; width: 80px; height: 30px; margin: 0 10px;"></image></div></div>');
                         /* var img = document.getElementById("param"+i+j);
                          img.setAttribute('on', true);
                          img.setAttribute('off', false);*/
-                        $("#param"+i+j).click(function () {
-                            if($(this).attr("src") == "static/thingsManage/assets/img/off.png"){
+                        $("#param" + i + j).click(function () {
+                            if ($(this).attr("src") == "static/thingsManage/assets/img/off.png") {
                                 console.log("off->on");
                                 $(this).removeClass();
                                 $(this).addClass("true");
-                                $(this).attr("src","static/thingsManage/assets/img/on.png");
+                                $(this).attr("src", "static/thingsManage/assets/img/on.png");
 
-                            }else{
+                            } else {
                                 console.log("on->off");
                                 $(this).removeClass();
                                 $(this).addClass("false");
-                                $(this).attr("src","static/thingsManage/assets/img/off.png");
+                                $(this).attr("src", "static/thingsManage/assets/img/off.png");
                             }
 
                         });
                     }
-                    else if(type == 3){
+                    else if (type == 3) {
 
                         /*var temp = params[j].value.split(" ");
                          var lowerBound = temp[0];
@@ -328,20 +361,20 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                         console.log(lowerBound);
                         console.log(upperBound);
                         //html5标签 <input type="number" min="" max="" step="" value=""/>
-                        $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="number" class="form-control" id="param'+ i + j +'" name="rangeInput" min="' + lowerBound + '" max="' + upperBound + '" value="' + lowerBound +'" step="1"/><span>(' + lowerBound + '-' + upperBound + ')</span></div></div>');
-                        console.log("number:"+$("#param"+i+j).val());
+                        $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="number" class="form-control" id="param' + i + j + '" name="rangeInput" min="' + lowerBound + '" max="' + upperBound + '" value="' + lowerBound + '" step="1"/><span>(' + lowerBound + '-' + upperBound + ')</span></div></div>');
+                        console.log("number:" + $("#param" + i + j).val());
                     }
                 }
-                $('#ctrlDiv' + i).append('<button class="btn btn-primary ctrlDivBtn" id="'+i+ '" type="button">应用</button>');
+                $('#ctrlDiv' + i).append('<button class="btn btn-primary ctrlDivBtn" id="' + i + '" type="button">应用</button>');
 
             }
 
 
-            $(".ctrlDivBtn").on("click",function () {
+            $(".ctrlDivBtn").on("click", function () {
                 //注意二维数组的定义方式！！一定要定义在对应循环的上一层
                 var valueArr = new Array();
                 var keyArr = new Array();
-                for(var i = 0;i<value.length;i++) {
+                for (var i = 0; i < value.length; i++) {
                     /*console.log("serviceName:" + serviceName[i]);
                      console.log("methodName:" + methodName[i]);
                      console.log("maxi:"+value.length);*/
@@ -353,27 +386,27 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                     valueArr[i] = new Array();
                     keyArr[i] = new Array();
 
-                    for(var j = 0;j<params.length;j++){
+                    for (var j = 0; j < params.length; j++) {
                         console.log(params[j].key);
                         console.log(params[j].type);
 
-                        if(params[j].type == 2){
+                        if (params[j].type == 2) {
 
-                            if($("#param"+i+j).attr("src") == "static/thingsManage/assets/img/off.png"){
+                            if ($("#param" + i + j).attr("src") == "static/thingsManage/assets/img/off.png") {
                                 valueArr[i][j] = false;
                             }
-                            else if($("#param"+i+j).attr("src") == "static/thingsManage/assets/img/on.png"){
+                            else if ($("#param" + i + j).attr("src") == "static/thingsManage/assets/img/on.png") {
                                 valueArr[i][j] = true;
                             }
                         }
-                        else{
-                            valueArr[i][j] = $("#param"+i+j).val();
+                        else {
+                            valueArr[i][j] = $("#param" + i + j).val();
                         }
                         keyArr[i][j] = params[j].key;
-                        console.log("=========="+i+j+"=============");
-                        console.log("valueInfo:"+ valueArr[i][j]);
-                        console.log("key:"+ keyArr[i][j]);
-                        console.log("==========="+i+j+"============");
+                        console.log("==========" + i + j + "=============");
+                        console.log("valueInfo:" + valueArr[i][j]);
+                        console.log("key:" + keyArr[i][j]);
+                        console.log("===========" + i + j + "============");
 
                     }
                     // console.log(abilityDesArr[i].serviceBody.params.length);
@@ -393,36 +426,36 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                 values.push(methodName[index]);
                 /*jsonObj.serviceName = serviceName[index];
                  jsonObj.methodName = methodName[index];*/
-                for(var i = 0;i < abilityDesArr[index].serviceBody.params.length;i++){
+                for (var i = 0; i < abilityDesArr[index].serviceBody.params.length; i++) {
 
                     // jsonObj.keyArr[index][i] = valueArr[index][i];
-                    var type = document.getElementById("param"+index+i).tagName;
-                    if(type == "IMG"){
-                        var tag = $("#param"+index+i).attr("src");
-                        if(tag == "static/thingsManage/assets/img/off.png"){
+                    var type = document.getElementById("param" + index + i).tagName;
+                    if (type == "IMG") {
+                        var tag = $("#param" + index + i).attr("src");
+                        if (tag == "static/thingsManage/assets/img/off.png") {
                             valueArr[index][i] = false;
-                        }else if(tag == "static/thingsManage/assets/img/on.png"){
+                        } else if (tag == "static/thingsManage/assets/img/on.png") {
                             valueArr[index][i] = true;
                         }
                     }
 
                     keys.push(keyArr[index][i]);
                     values.push(valueArr[index][i]);
-                    console.log("value"+index+i+":"+valueArr[index][i]);
-                    console.log("key"+index+i+":"+keyArr[index][i]);
+                    console.log("value" + index + i + ":" + valueArr[index][i]);
+                    console.log("key" + index + i + ":" + keyArr[index][i]);
                     var json = '{';
                     for (var j = 0; j < keys.length; j++) {
-                        json += '"' + keys[j] +'":"' + values[j] + '",';
+                        json += '"' + keys[j] + '":"' + values[j] + '",';
                     }
-                    json = json.slice(0,json.length-1);
+                    json = json.slice(0, json.length - 1);
                     json += '}';
                 }
-                console.log("json:"+json);
-                console.log( $scope.item.id);
+                console.log("json:" + json);
+                console.log($scope.item.id);
                 var subObj = $resource("/api/shadow/control/:deviceId");
-                var subInfo = subObj.save({deviceId:data.id},json,function (resp) {
+                var subInfo = subObj.save({deviceId: data.id}, json, function (resp) {
                     toastr.success("应用成功！");
-                },function (error) {
+                }, function (error) {
                     toastr.error("应用失败！");
                 });
             });
@@ -432,14 +465,15 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     /*--------显示遥测数据-------------*/
     /*时间格式化*/
     function formatDate(now) {
-        var year=now.getFullYear();
-        var month=now.getMonth()+1;
-        var date=now.getDate();
-        var hour=now.getHours();
-        var minute=now.getMinutes();
-        var second=now.getSeconds();
-        return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
+        var year = now.getFullYear();
+        var month = now.getMonth() + 1;
+        var date = now.getDate();
+        var hour = now.getHours();
+        var minute = now.getMinutes();
+        var second = now.getSeconds();
+        return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
     }
+
     // 判断元素是否在数组中
     function inArray(value, array) {
         var i = array.length;
@@ -453,6 +487,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
     /*    webSocket start  */
     var ws;
+
     function realtimeDevice(deviceId) {
         var url = 'ws://39.104.84.131:8100/websocket';
         var keys = [];
@@ -460,7 +495,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
 
         function listenWs(url) {
-            if(ws instanceof WebSocket){
+            if (ws instanceof WebSocket) {
                 ws.close();
             }
 
@@ -485,7 +520,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                 log("Message received: " + e.data);
                 var message = JSON.parse(e.data);
 
-                for(var i in message.data) {
+                for (var i in message.data) {
                     console.log(message.data[i].ts);
                     console.log(message.data[i].key);
                     console.log(message.data[i].value);
@@ -496,9 +531,9 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                     // 是之前出现过的key，则刷新原来的行
                     if (inArray(key, keys)) {
                         // 遍历table
-                        $('#realtime_data_table tr').each(function(trindex) {
+                        $('#realtime_data_table tr').each(function (trindex) {
                             var tableKey = $(this).children('td').eq(1).text();
-                            if (tableKey === key){
+                            if (tableKey === key) {
                                 $(this).children('td').eq(0).text(telemetryDate);
                                 $(this).children('td').eq(2).text(telemetryValue);
                             }
@@ -526,6 +561,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
             log("Message sent");
         }
     }
+
     /*    webSocket end   */
     /*--------显示遥测数据END-------------*/
     /**************查看详情END****************************/

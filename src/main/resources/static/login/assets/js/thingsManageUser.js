@@ -18,7 +18,20 @@ $(document).ready(function () {
     var userLevel = $.cookie("userLevel");
     var tenantId = $.cookie("tenantId");
     var userId = $.cookie("userId");
-    console.log($.cookie());
+    console.log($.cookie())
+
+    /******不同权限显示不同模块*******/
+    if(userLevel == "CUSTOMER_USER"){
+        $('.systemOnly').hide()
+    }
+    else if(userLevel == "TENANT_ADMIN"){
+        $('.systemOnly').hide()
+    }
+    else if(userLevel == "SYS_ADMIN"){
+        $('.systemOnly').show()
+    }else{
+        $('.systemOnly').hide()
+    }
 
     var token = undefined;
     $.ajax({
@@ -80,5 +93,4 @@ $(document).ready(function () {
             }
         });
     };*/
-
 });
