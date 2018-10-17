@@ -44,7 +44,8 @@ a{
 .t_box{
     width: 42%;
     height: 36%;
-    background: url('../img/t_bg.png') no-repeat;
+    /*background: url('../img/t_bg.png') no-repeat;*/
+    background-color: #eeeeee;
     background-size: 100% 100%;
     display: inline-block;
     float: left;
