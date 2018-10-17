@@ -371,7 +371,7 @@
         model_id = $(dom).parent().parent().children().eq(2).html();
         $div = $("<div id=\"div2\">选择所需数据表名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select onchange='tableChange()' id=\"modal5\" class=\"selectpicker\" data-live-search=\"true\" data-live-search-placeholder=\"搜索\" title=\"选择所需数据表名\"></select><br><br></div>");
         $divmodal2 = $("#divmodal2");
-        $divmodal2.children().eq(1).remove();
+        $divmodal2.children().eq(0).remove();
         $divmodal2.prepend($div);
         $select = $("#modal5");
         for (var i=0; i<table_structure.length; i++) {
