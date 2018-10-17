@@ -1,6 +1,7 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.utils.HttpUtil;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class DeviceTypeManagementController extends DefaultThingsboardAwaredController {
 
     //创建设备型号管理
-    @RequestMapping(value = "/insert",method = RequestMethod.POST)
+    @RequestMapping(value = "/insert",method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public String saveDeviceTypeMana(@RequestBody String json) {
         String url = "http://"+getDeviceTypeManagementServer()+"/api/v1/devicetypemanagement/deviceTypeManagement";
         try{
@@ -19,6 +20,19 @@ public class DeviceTypeManagementController extends DefaultThingsboardAwaredCont
             return retSuccess(response);
         }catch(Exception e){
             return retFail("创建失败: - " + e.toString());
+        }
+    }
+
+    //更新管理组
+    @RequestMapping(value = "/update/{modelId}/{deviceTypeId}/{manufacturerId}", method = RequestMethod.PUT,produces = {"application/json;charset=UTF-8"} )
+    public String updateDeviceTypeMana(@PathVariable("modelId")Integer modelId, @PathVariable("deviceTypeId")Integer deviceTypeId,
+                                     @PathVariable("manufacturerId")Integer manufacturerId, @RequestBody String deviceTypeMana){
+        String url = "http://" + getDeviceTypeManagementServer() + "/api/v1/devicetypemanagement/deviceTypeManagement/"+ modelId + "/"+ deviceTypeId + "/"+ manufacturerId;
+        try{
+            String response = HttpUtil.sendPutToThingsboard(url, null, new JsonParser().parse(deviceTypeMana).getAsJsonObject(), request.getSession());
+            return retSuccess(response);
+        }catch (Exception e){
+            return retFail("更新失败: - " + e.toString());
         }
     }
 
