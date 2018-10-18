@@ -47,7 +47,12 @@
                         <thead>
                         <tr>
                             <td style="width: 30px"></td>
-                            <td>过滤器详情</td>
+                            <td>
+                                <div style="float:right;margin-right: 5px" ng-click="isAddSingleFilter=true">
+                                    <i class="fa fa-plus ruleicon shand" data-toggle="modal"
+                                       data-target="#addruleFilter"></i></div>
+                                过滤器详情
+                            </td>
                         </tr>
                         </thead>
                         <tbody>
@@ -62,11 +67,12 @@
                                 <div style="float: right;">
                                     <i class="fa fa-trash-o fa-lg ruleicon shand userDelete" title="删除此过滤器"
                                        data-toggle="modal" data-target="#delFilter"
-                                    ng-click="showEditFilterModal($index)"></i>
+                                       ng-click="showEditFilterModal($index)"></i>
                                     <i class="fa fa-edit ruleicon shand userDelete" title="编辑此过滤器"
-                                   data-toggle="modal" data-target="#editFilter"
-                                   ng-click="showEditFilterModal($index)"></i>
-                                </div></td>
+                                       data-toggle="modal" data-target="#editFilter"
+                                       ng-click="showEditFilterModal($index)"></i>
+                                </div>
+                            </td>
                         </tr>
                         <tr ng-show="data.expanded" ng-repeat-end="">
                             <td></td>
@@ -87,9 +93,13 @@
                     <table class="table table-bordered table-hover table-striped" ng-show="!showEmpty"
                            style="table-layout:fixed">
                         <thead>
-                        <tr>
-                            <td style="width: 30px"></td>
-                            <td>传输信息详情</td>
+                        <td style="width: 30px"></td>
+                        <td>
+                            <div style="float:right;margin-right: 5px" ng-click="isAddSingleTransform=true;getAllplugin()" >
+                                <i class="fa fa-plus ruleicon shand" data-toggle="modal"
+                                   data-target="#addruleTransform"></i></div>
+                            传输信息详情
+                        </td>
                         </tr>
                         </thead>
                         <tbody>
@@ -109,7 +119,8 @@
                                     <i class="fa fa-edit ruleicon shand userDelete" title="编辑此传输信息"
                                        data-toggle="modal" data-target="#editPlugin"
                                        ng-click="showEditPluginModal($index)"></i>
-                                </div></td>
+                                </div>
+                            </td>
                         </tr>
                         <tr ng-show="data.expanded" ng-repeat-end="">
                             <td></td>
@@ -315,7 +326,8 @@
                         <div class="modal-body">
                             <p>过滤器ID：<span>{{editfilter.filterId}}</span></p>
                             <p>过滤器名称：<input value="{{editfilter.name}}" id="editFilter_name"/></p>
-                            <p>编辑JS代&emsp;码：<textarea rows="7" cols="55" id="editFilter_jscode">{{editfilter.jsCode}}</textarea>
+                            <p>编辑JS代&emsp;码：<textarea rows="7" cols="55"
+                                                      id="editFilter_jscode">{{editfilter.jsCode}}</textarea>
                             </p>
                         </div>
                         <div class="modal-footer">
@@ -346,7 +358,8 @@
                             <p>传输信息ID：<span>{{editplugin.transformId}}</span></p>
                             <p>method：<span>{{editplugin.method}}</span></p>
                             <p>传输信息名称：<input value="{{editplugin.name}}" id="editPlugin_name"/></p>
-                            <p>传输信息url ：<textarea rows="3" cols="55" id="editPlugin_url">{{editplugin.url}}</textarea></p>
+                            <p>传输信息url ：<textarea rows="3" cols="55" id="editPlugin_url">{{editplugin.url}}</textarea>
+                            </p>
                             <p>传输信息内容：<textarea rows="7" cols="55" id="editPlugin_requestBody">{{editplugin.requestBody}}</textarea>
                         </div>
                         <div class="modal-footer">
@@ -706,6 +719,7 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
         </div>
+
 
     </div>
 </div>
