@@ -74,15 +74,15 @@ var app = new Vue({
         },
         deleteTag: function (id) {
             var vm = this
-            var permission_ids = []
             var role_id = vm.activeItem.id
             var text = '删除'
+            var json={}
 
-            permission_ids.push(id)
+            json.id=id
 
             //删除一个role下的permission
             axios.delete("/api/account/permission", {
-                data: permission_ids,
+                data:json ,
                 params: {
                     role_id: role_id
                 }
