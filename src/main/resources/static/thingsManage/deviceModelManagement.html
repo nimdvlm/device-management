@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-7">
-                <span class="header-line">设备管理型号
+                <span class="header-line">设备型号管理
                 <button style="margin-left:10px" class="btn btn-primary btn-sm user" data-toggle="modal"
                         data-target="#addDeviceModel">+ 创建设备型号管理组
                 </button>
@@ -100,9 +100,18 @@
                     </div>
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
+                            <span style="color: red;">*</span>设备型号
+                        </label>
+                        <input type="text" name="deviceModel" ng-model="modifyDeviceModel" style="pixels: 300px" placeholder="必填" required/>
+                        <span class="warning ng-hide" ng-show="myDeviceForm.deviceModel.$dirty || myDeviceForm.deviceModel.$pristine">
+                            <span ng-show="myDeviceForm.deviceModel.$error.required">必填项</span>
+                        </span>
+                    </div>
+                    <div class="modal-body">
+                        <label class="col-sm-3 control-label" style="text-align: left">
                             <span style="color: red;">*</span>厂商
                         </label>
-                        <input type="text" name="manufacturerName" ng-model="manufacturerName" style="pixels: 300px" placeholder="必填" required/>
+                        <input type="text" name="manufacturerName" ng-model="modifyManufacturerName" style="pixels: 300px" placeholder="必填" required/>
                         <span class="warning ng-hide" ng-show="myDeviceForm.manufacturerName.$pristine || myDeviceForm.manufacturerName.$dirty">
                             <span ng-show="myDeviceForm.manufacturerName.$error.required">必填项</span>
                         </span>
@@ -111,25 +120,18 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             <span style="color: red;">*</span>设备类型
                         </label>
-                        <input type="text" name="deviceType" ng-model="deviceType" style="pixels: 300px" placeholder="必填" required/>
+                        <input type="text" name="deviceType" ng-model="modifyDeviceType" style="pixels: 300px" placeholder="必填" required/>
                         <span class="warning ng-hide" ng-show="myDeviceForm.deviceType.$dirty || myDeviceForm.deviceType.$pristine">
                             <span ng-show="myDeviceForm.deviceType.$error.required">必填项</span>
                         </span>
                     </div>
-                    <div class="modal-body">
-                        <label class="col-sm-3 control-label" style="text-align: left">
-                            <span style="color: red;">*</span>设备型号
-                        </label>
-                        <input type="text" name="deviceModel" ng-model="deviceModel" style="pixels: 300px" placeholder="必填" required/>
-                        <span class="warning ng-hide" ng-show="myDeviceForm.deviceModel.$dirty || myDeviceForm.deviceModel.$pristine">
-                            <span ng-show="myDeviceForm.deviceModel.$error.required">必填项</span>
-                        </span>
-                    </div>
+
                     <div class="modal-body">
                         <label class="col-sm-3 control-label" style="text-align: left">
                             设备图标
                         </label>
                         <!--input class="col-sm-6" type="file" style="pixels: 300px" id="potatoIcon"-->
+                        <img ng-show="!showDefultIcon" src="{{modifyDeviceIcom}}" alt="plus" width="30px" height="25px"/>
                         <button class="btn btn-primary btn-sm" ng-click="showDefultIcon = !showDefultIcon">选择默认图标</button>
                     </div>
                     <div class="modal-body showDefultIcon ng-hide" ng-show="showDefultIcon" style="margin-left: 25%">
@@ -153,7 +155,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" ng-click="addDeviceModel()">
+                        <button type="button" class="btn btn-primary" ng-click="modifyDeviceModel()">
                             保存
                         </button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -164,12 +166,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
-
-
-
-
-
-
 
 
 

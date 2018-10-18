@@ -138,7 +138,25 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
         });
     };
 
+    /*编辑查看*/
+    $scope.editDeviceTypeIcon = function (item) {
+        console.log(item);
+        console.log(item.model);
+        console.log(item.model.modelId);
+        var deviceChangeGroup = $resource('/api/devicetype/getById/:modelId');
+        deviceChangeGroup.get({modelId:item.model.modelId},{},function (info) {
+           console.log(info);
+           $scope.modifyDeviceModel = info.modelName;
+           $scope.modifyDeviceIcom = info.deviceIcon;
 
+
+
+
+        });
+
+    }
+
+    /*编辑提交*/
 
 
 });
