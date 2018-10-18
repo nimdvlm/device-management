@@ -62,11 +62,37 @@ public class DeviceTypeManagementController extends DefaultThingsboardAwaredCont
         }
     }
 
-    //获取单个管理组
+    //获取型号
     @RequestMapping(value = "/getById/{modelId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"} )
     @ResponseBody
-    public String getById(@PathVariable("modelId") int modelId){
+    public String getModelById(@PathVariable("modelId") int modelId){
         String url = "http://" + getDeviceTypeManagementServer() + "/api/v1/devicetypemanagement/deviceTypeManagement/"+modelId;
+        try{
+            String response = HttpUtil.sendGetToThingsboard(url,null,request.getSession());
+            return retSuccess(response);
+        }catch(Exception e){
+            return retFail("获取失败: - " + e.toString());
+        }
+    }
+
+    //获取厂商名字
+    @RequestMapping(value = "/manufacturerName/{manufacturerId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"} )
+    @ResponseBody
+    public String getManufacturerName(@PathVariable("manufacturerId") int manufacturerId){
+        String url = "http://" + getDeviceTypeManagementServer() + "/api/v1/devicetypemanagement/deviceTypeManagement/manufacturer"+ manufacturerId;
+        try{
+            String response = HttpUtil.sendGetToThingsboard(url,null,request.getSession());
+            return retSuccess(response);
+        }catch(Exception e){
+            return retFail("获取失败: - " + e.toString());
+        }
+    }
+
+    //获取设备型号名字
+    @RequestMapping(value = "/deviceTypeName/{deviceTypeId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"} )
+    @ResponseBody
+    public String getDeviceTypeName(@PathVariable("deviceTypeId") int deviceTypeId){
+        String url = "http://" + getDeviceTypeManagementServer() + "/api/v1/devicetypemanagement/deviceTypeManagement/deviceType"+ deviceTypeId;
         try{
             String response = HttpUtil.sendGetToThingsboard(url,null,request.getSession());
             return retSuccess(response);
