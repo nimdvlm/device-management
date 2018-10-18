@@ -1625,6 +1625,23 @@ mainApp.controller("deviceListCtrl", ["$scope", "$resource", function ($scope, $
 
 
 
+    $scope.showDeviceAttr = function () {
+        $.ajax({
+            url: "/api/data/getKeyAttribute/"+$scope.ID,
+            dataType: "text",
+            type: "GET",
+            success: function (msg) {
+                console.log("查看自定义调用函数打印结果：");
+                console.log(msg);
+            },
+            error: function (err) {
+                toastr.error("获取属性失败！");
+            }
+        });
+        toastr.success("增加属性成功！");
+    };
+
+
 
 // 添加规格选项addSpecOpetion
     $scope.isshow_attr = false;
@@ -1665,7 +1682,6 @@ mainApp.controller("deviceListCtrl", ["$scope", "$resource", function ($scope, $
             dataType: "text",
             type: "POST",
             success: function (msg) {
-                toastr.success("增加属性成功！");
                 $scope.isshow_attr = false;
                 $scope.deviceAttrArray = [];
                 setTimeout(function () {

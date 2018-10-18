@@ -23,6 +23,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.text_devicetype = "绑定"
     $scope.text_devicemodel = "绑定"
 
+    $scope.isAddSingleFilter = false
+    $scope.isAddSingleTransform = false
 
     InitformData();
 
@@ -533,6 +535,12 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
                 $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(), "", filterjs));
                 console.log($scope.formData.filters);
 
+                if($scope.isAddSingleFilter){
+                    console.log('addSingleFilter')
+                    addSingleFilter($scope.formData.filters[0])
+                    $scope.isAddSingleFilter=false
+                }
+
                 //清理现场
                 $("input[type=reset]").trigger("click");
                 $scope.clearFilterPlugin('#addruleFilter')
@@ -547,6 +555,22 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         } else {
             toastr.warning("请填写过滤器名称")
         }
+    }
+
+    //向某个rule添加单个过滤器
+    function addSingleFilter(data) {
+        var ruleId=$scope.Ruleitem.rule.ruleId
+        $.ajax({
+            url: "/api/rule/addFilter/"+ruleId,
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify(data),
+            async: false,
+            type: "POST",
+            dataType: "text",
+            success: function (msg) {
+                toastr.success("添加过滤器成功")
+            }
+        });
     }
 
     //点击添加规则-点击添加插件,获取所有插件
@@ -667,10 +691,31 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         $scope.showaddTransform = true;
         $("input[type=reset]").trigger("click");
 
+        if($scope.isAddSingleTransform){
+            console.log('addSingleTransform')
+            addSingleTransform($scope.formData.transforms[0])
+            $scope.isAddSingleTransform=false
+        }
 
         //清理案发现场
         var pluginid = '#addruleTransform'
         $scope.clearFilterPlugin(pluginid)
+    }
+
+    //向某个rule添加单个插件
+    function addSingleTransform(data) {
+        var ruleId=$scope.Ruleitem.rule.ruleId
+        $.ajax({
+            url: "/api/rule/addTransform/"+ruleId,
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify(data),
+            async: false,
+            type: "POST",
+            dataType: "text",
+            success: function (msg) {
+                toastr.success("添加传输信息成功")
+            }
+        });
     }
 
     //添加规则

@@ -339,8 +339,8 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         formData.entity_type=$scope.add_entity_type.name;
         formData.dashboard_id=$scope.dbItem.id;
 
-        formData.diffX = "420px";
-        formData.diffY = "150px";
+        formData.diffX = "700px";
+        formData.diffY = "300px";
         //formData.position=JSON.stringify({left:420,top:150});//后端接口调整，临时赋值为常值
 
         console.log(formData)
