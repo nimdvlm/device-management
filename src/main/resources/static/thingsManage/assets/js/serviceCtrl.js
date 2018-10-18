@@ -105,6 +105,14 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
 
     /*创建能力*/
+
+
+    $scope.selectChange = function (item) {
+        console.log(item);
+    };
+
+
+
     var params = [];
     $scope.addAbility = function(){
         $scope.serviceName = $("#serviceName").val();

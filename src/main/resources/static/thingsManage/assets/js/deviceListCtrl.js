@@ -109,7 +109,8 @@ mainApp.controller("deviceListCtrl", ["$scope", "$resource", function ($scope, $
         });
     };
     /*在右侧表格中显示各个设备的信息*/
-    $scope.show = function (data) {
+    $scope.show = function (data){
+
         /*回到顶部*/
         /* var offset = $('#deviceListChart').offset().top-205;
          console.log(offset);
@@ -1621,6 +1622,69 @@ mainApp.controller("deviceListCtrl", ["$scope", "$resource", function ($scope, $
         });
 
     });
+
+
+
+
+// 添加规格选项addSpecOpetion
+    $scope.isshow_attr = false;
+    $scope.deviceAttrArray = [];
+    $scope.addSpecOpetion = function() {
+        $scope.deviceAttrArray.push({});
+    };
+    // 删除规格选项
+    $scope.delSpecOpetion = function(index) {
+        $scope.deviceAttrArray.splice(index, 1);
+        var deviceKeyAttr = "deviceKeyAttr_" + index;
+        var deviceValueAttr = "deviceValueAttr_" + index;
+        $("#" + deviceKeyAttr).val("");
+        $("#" + deviceValueAttr).val("");
+        if ($scope.deviceAttrArray.length == 0){
+            $scope.isshow_attr = false;
+        }
+    };
+
+    $scope.createDeviceAttr = function () {
+        $scope.jsonDataAttr = {};
+        var jsonAtrr={};
+        var lenAtrr = $scope.deviceAttrArray.length;
+        for (var i=0;i<lenAtrr;i++){
+            var deviceKeyAttr = "deviceKeyAttr_" + i;
+            var deviceValueAttr = "deviceValueAttr_" + i;
+            var key = $("#"+deviceKeyAttr).val();
+            jsonAtrr[key]= $("#" + deviceValueAttr).val();
+            $scope.deviceAttrArray.splice(0,1,jsonAtrr);
+        }
+        $scope.jsonDataAttr = $scope.deviceAttrArray[0];
+        console.log($scope.jsonDataAttr);
+
+        $.ajax({
+            url: "/api/data/addAttribute/"+$scope.ID,
+            data: JSON.stringify($scope.jsonDataAttr),
+            contentType: "application/json; charset=utf-8",
+            dataType: "text",
+            type: "POST",
+            success: function (msg) {
+                toastr.success("增加属性成功！");
+                $scope.isshow_attr = false;
+                $scope.deviceAttrArray = [];
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000);
+            },
+            error: function (err) {
+                toastr.error("增加属性失败！");
+            }
+        });
+    };
+
+
+
+
+
+
+
+
 
 }]);
 
