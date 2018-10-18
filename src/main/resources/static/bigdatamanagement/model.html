@@ -98,7 +98,7 @@
                     <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
                     数据预测
                     <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
-                    <span class="label label-warning pull-right">2</span>
+                    <span class="label label-warning pull-right">3</span>
                 </a>
                 <ul id="systemSetting1" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
                     <li><a href="predict.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
@@ -130,9 +130,9 @@
                 <div class="panel-heading" style="text-align: center">
                     <h3 class="panel-title">预测模型管理</h3>
                 </div>
-                <div class="panel panel-body">
+                <div class="panel panel-body" style="font-size: 12px">
                     <div id="divtable1">
-                        <table id="realTime_Table">
+                        <table id="realTime_Table" style="font-size: 12px">
                             <thead id="thead">
                                 <tr>
                                     <th>模型名称</th>
@@ -152,9 +152,9 @@
                 <div class="panel-heading" style="text-align: center">
                     <h3 class="panel-title">预测模型管理（自定义）</h3>
                 </div>
-                <div class="panel panel-body">
+                <div class="panel panel-body" style="font-size: 12px">
                     <div id="divtable2">
-                        <table id="realTime_Table1">
+                        <table id="realTime_Table1" style="font-size: 12px">
                             <thead id="thead1">
                             <tr>
                                 <th>模型名称</th>
@@ -281,8 +281,8 @@
             }else {
                 $td6 = $("<td>未完成</td>");
             }
-            $td7 = $("<td><button type='button' class='btn-xs btn-primary' data-toggle=\"modal\" data-target=\"#myModal1\" onclick='train(this)'>训练</button>" +
-                "<button type='button' class='btn-xs btn-warning' onclick='delete1(this)'>删除</button></td>");
+            $td7 = $("<td><button style='padding: 1px 2px' type='button' class='btn-xs btn-primary' data-toggle=\"modal\" data-target=\"#myModal1\" onclick='train(this)'>训练</button>" +
+                "<button style='padding: 1px 2px' type='button' class='btn-xs btn-warning' onclick='delete1(this)'>删除</button></td>");
             $tr.append($td1);
             $tr.append($td2);
             $tr.append($td3);

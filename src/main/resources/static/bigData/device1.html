@@ -97,7 +97,7 @@
                     <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
                     数据预测
                     <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
-                    <span class="label label-warning pull-right">2</span>
+                    <span class="label label-warning pull-right">3</span>
                 </a>
                 <ul id="systemSetting1" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
                     <li><a href="../bigdatamanagement/predict.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
@@ -193,11 +193,11 @@
 
             <!--<img src="image/test.jpg" class="img-thumbnail">-->
 
-            <div class="panel panel-primary" style="margin-top: 2%">
+            <div class="panel panel-primary" style="margin-top: 0">
                 <div class="panel-heading" style="text-align: center">
                     <h3 class="panel-title">数据管理</h3>
                 </div>
-                <div id="divtable" class="panel-body" style="text-align: center">
+                <div id="divtable" class="panel-body" style="text-align: center; font-size: 12px">
                     <table id="realTime_Table">
                         <thead id="thead"></thead>
                         <tbody id="tbody"></tbody>
@@ -268,7 +268,7 @@
         waiting();
         $.get("http://39.104.186.210:8092/api/hdfs/getFiles?path="+path+"&owner=spark&group=supergroup",function (data) {
 
-            $("#divtable").append("<table id=\"realTime_Table\">\n" +
+            $("#divtable").append("<table id=\"realTime_Table\" style='font-size: 12px'>\n" +
                 "                        <thead id=\"thead\"></thead>\n" +
                 "                        <tbody id=\"tbody\"></tbody>\n" +
                 "                    </table>");

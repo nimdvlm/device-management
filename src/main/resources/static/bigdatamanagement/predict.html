@@ -98,7 +98,7 @@
                     <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
                     数据预测
                     <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
-                    <span class="label label-warning pull-right">2</span>
+                    <span class="label label-warning pull-right">3</span>
                 </a>
                 <ul id="systemSetting1" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
                     <li class="active" style="background-color: #eeeeee"><a href="predict.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
@@ -129,9 +129,9 @@
                     <h3 class="panel-title">预测任务管理</h3>
                 </div>
                 <div id="toolbar">
-                    <button id="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">创建新应用</button>
+                    <button style="font-size: 13px" id="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">创建新应用</button>
                 </div>
-                <div class="panel panel-body">
+                <div class="panel panel-body" style="font-size: 12px">
                     <div id="divtable"></div>
                 </div>
             </div>
@@ -197,7 +197,7 @@
 
     $("#drop1").trigger("click");
     $.get("http://39.104.186.210:8092/api/app/get-app",function (data) {
-        $("#divtable").append($("<table id=\"realTime_Table\">\n" +
+        $("#divtable").append($("<table id=\"realTime_Table\" style='font-size: 12px'>\n" +
             "                            <thead id=\"thead\" style=\"text-align: center\">\n" +
             "                                <tr>\n" +
             "                                    <th>应用名称</th>\n" +
@@ -226,10 +226,10 @@
             $td4 = $("<td>"+a+"</td>");
             $td5 = $("<td>"+data.data[i].tenant_id+"</td>");
             $td6 = $("<td></td>");
-            $button1 = $("<button type='button' onclick='button1(this)' class='btn-xs btn-danger'>删除</button>");
-            $button2 = $("<button type='button' onclick='button2(this)' class='btn-xs btn-success'>启动</button>");
-            $button3 = $("<button type='button' onclick='button3(this)' class='btn-xs btn-warning'>停止</button>");
-            $button4 = $("<button type='button' onclick='button4(this)' class='btn-xs btn-info'>结果</button>");
+            $button1 = $("<button style='padding: 1px 2px' type='button' onclick='button1(this)' class='btn-xs btn-danger'>删除</button>");
+            $button2 = $("<button style='padding: 1px 2px' type='button' onclick='button2(this)' class='btn-xs btn-success'>启动</button>");
+            $button3 = $("<button style='padding: 1px 2px' type='button' onclick='button3(this)' class='btn-xs btn-warning'>停止</button>");
+            $button4 = $("<button style='padding: 1px 2px' type='button' onclick='button4(this)' class='btn-xs btn-info'>结果</button>");
             $td6.append($button1);
             $td6.append($button2);
             $td6.append($button3);
