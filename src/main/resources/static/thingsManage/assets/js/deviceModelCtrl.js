@@ -5,23 +5,23 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
     console.log("展示deviceType");
     console.log($scope.deviceTypeGroups);
 
-    /*鼠标移入动画效果
+    /*鼠标移入动画效果*/
     $scope.fadeSiblings = function () {
         $(".deviceTypeIconStyle").mouseover(function () {
             $(this).siblings().stop().fadeTo(300, 0.3);
         });
-    };*/
-    /*鼠标移出动画效果
+    };
+    /*鼠标移出动画效果*/
     $scope.reSiblings = function () {
         $(".deviceTypeIconStyle").mouseout(function () {
             $(this).siblings().stop().fadeTo(300, 1);
         });
-    };*/
+    };
     $scope.showDefultIcon = false;
-    /*$scope.showIconPictrue = function () {
+    $scope.showIconPictrue = function () {
         $scope.showDefultIcon = !$scope.showDefultIcon;
         console.log( $scope.showDefultIcon);
-    };*/
+    };
 
 
 

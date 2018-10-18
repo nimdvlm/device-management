@@ -105,6 +105,30 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
 
     /*创建能力*/
+    $scope.replyChangeOne = true;
+    $scope.replyChangeTwo = false;
+    $scope.replyChangeThree = false;
+    $scope.selectChange = function (item) {
+        console.log(item);
+        if (item == 1){
+            $scope.replyChangeOne = true;
+            $scope.replyChangeTwo = false;
+            $scope.replyChangeThree = false;
+        }
+        if (item == 2){
+            $scope.replyChangeOne = false;
+            $scope.replyChangeTwo = true;
+            $scope.replyChangeThree = false;
+        }
+        if (item == 3){
+            $scope.replyChangeOne = false;
+            $scope.replyChangeTwo = false;
+            $scope.replyChangeThree = true;
+        }
+    };
+
+
+
     var params = [];
     $scope.addAbility = function(){
         $scope.serviceName = $("#serviceName").val();
