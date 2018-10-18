@@ -193,6 +193,12 @@
     <div class="col-md-2" style="box-shadow: 1px 1px 3px #e5e5e5;height: 1030px;width: 13%">
         <ul id="main-nav" class="nav nav-stacked" style="">
             <li>
+                <a href="#" onclick="dashboard()">
+                    <i class="glyphicon glyphicon-home">&nbsp;</i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
                 <a href="device1.html">
                     <i class="glyphicon glyphicon-th-large">&nbsp;</i>
                     数据管理
@@ -234,6 +240,7 @@
                 <ul id="systemSetting1" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
                     <li><a href="../bigdatamanagement/predict.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
                     <li><a href="../bigdatamanagement/model.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
+                    <li><a href="#" onclick="result1()"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 预测结果</a></li>
                 </ul>
             </li>
             <li>
@@ -281,6 +288,7 @@
 <script src="js/starttoend.js"></script>
 <script src="js/echarts.min.js"></script>
 <script src="theme/dark.js"></script>
+<script src="../bigdatamanagement/js/common.js"></script>
 <script type="text/javascript">
 
     $("#collapse").trigger("click");

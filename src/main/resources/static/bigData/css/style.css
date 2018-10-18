@@ -45,7 +45,7 @@ body {
 	font-family: arial;
 	font-size: 12px;
 	background: #000000;/**#f7f7f7，3c3e40**/
-	background-image: url("../images/test1.jpg");
+	/*background-image: url("../images/test1.jpg");*/
 	overflow-x: hidden;
 	/**color: #3B3E40;**/
 }
@@ -654,7 +654,7 @@ body.login {
 .waiting {
 	z-index: 9999;
 	background-color: transparent;
-	margin: 10% 35% 0 35%;
+	margin: 10% 45% 0 35%;
 	height: 30%;
 	width: 30%;
 	display: none;

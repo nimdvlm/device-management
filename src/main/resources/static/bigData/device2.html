@@ -8,34 +8,185 @@
     <meta name="robots" content="" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/style.css" media="all" />
+    <link rel="stylesheet" href="css/leaflet.css">
+    <style>
+        html, body, #map {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        #forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#c11;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:fixed;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}}</style>
 
 </head>
+
 <body>
 
 <div class="testing">
-    <header class="main">
-        <h1><strong>大数据平台</strong> </h1>
-        <input type="text" value="search" />
-    </header>
-    <section class="user">
 
-        <div class="buttons">
-            <button class="ico-font">&#9206;</button>
-            <input type="button" value="更多皮肤" id="test"/>
-            <input type="button" class="button blue" value="退出" onclick="quitThings()" />
+    <section class="user" style="border-bottom:1px solid white;margin-bottom: 10px">
+        <div style="float: left;width: 40%;height: 26px;padding: 25px 0 0 25px">
+            <p style="font-size: 24px;color: white;margin: 0">大数据平台</p>
+        </div>
+        <div class="buttons" style="width: 55%;padding-top: 15px">
+            <!--<a href="device1.html"><input type="button" style="background:#ffffff;color: #000000; width: 12%; float: left; height:38px;font-size: 12px; margin-left: 11%" value="首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页"/></a>
+            <a href="ocean.html"><input type="button" style="width: 12%; float: left; height:38px;font-size: 12px" value="海量分析"/></a>
+            <a href="statistics1.html"><input type="button" style="width: 12%; float: left; height:38px;font-size: 12px" value="数据分析"/></a>
+            <ul id="dropzone" style="float: left; width: 12%;margin-left: 5px">
+                <li style="width: 100%"><a href="modelmanage.html"><input type="button" style="width: 100%; height:38px;font-size: 12px;margin: 0" value="模型管理"/></a></li>-->
+            <!--<li style="width: 100%; display:none;" id="dropli"><a href="modelmanage.html"><input type="button" style="width: 100%; height:38px;font-size: 12px;margin: 0" value="模型实例"/></a></li>-->
+            <!--</ul>
+            <a href="pre.html"><input type="button" style="width: 12%; float: left; height:38px;font-size: 12px" value="预测管理"/></a>-->
+            <!--<input type="button" value="退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出" style="width: 12%;margin-right: 1%; float: right; height:38px;font-size: 12px" onclick="quitThings()" />
+            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 12%; float: right; height:38px;font-size: 12px" value="返回上一级"/></a>
+            <a href="../bigdatamanagement/table.html"><input type="button" style="width: 16%; float: right; height:38px;font-size: 12px" value="进入数据管理系统"/></a>-->
             <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
             <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
         </div>
     </section>
 </div>
-<nav>
-    <ul>
-        <li><a href="start.html"><span class="icon">&#128200;</span> 首&nbsp;&nbsp;页</a></li>
-        <li class="section"><a href="device1.html"><span class="icon">&#128202;</span>设备统计</a></li>
-        <li><a href="model.html"><span class="icon">&#128201;</span> 模型仓库</a></li>
-        <li><a href="hisdata.html"><span class="icon">&#128196;</span> 海量分析</a></li>
-    </ul>
-</nav>
+
+<div style="width: 25%;height: 62%;float: left; margin-left: 1%">
+    <div id="main1" style="width: 100%;height: 50%;float: left;background: transparent;border:1px dotted grey;"></div>
+    <div id="main2" style="width: 100%;height: 50%;float: left;background: transparent;border:1px dotted grey;"></div>
+</div>
+<div id="map" style="width: 48%;height: 62%;float: left;margin-left: 2px; background: transparent"></div>
+<div style="width: 25%;height: 62%;float: left;margin-left: 2px">
+    <div id="main3" style="width: 100%;height: 50%;float: left;background: transparent;border:1px dotted grey;"></div>
+    <div id="main4" style="width: 100%;height: 50%;float: left;background: transparent;border:1px dotted grey;"></div>
+</div>
+<div id="main5" style="width: 25%;height: 30%;float: left;background: transparent;border:1px dotted grey;margin-top: 3px;margin-left: 1%"></div>
+<div style="width: 48%;height: 30%;float: left;background: transparent;border:1px dotted grey;;margin-top: 3px">
+    <div id="main6" style="width: 33.3%;height: 90%;float: left;margin-top:4%; background: transparent"></div>
+    <div id="main7" style="width: 33.3%;height: 90%;float: left;margin-top:4%; background: transparent"></div>
+    <div id="main8" style="width: 33.3%;height: 90%;float: left;margin-top:4%; background: transparent"></div>
+</div>
+<div id="main9" style="width: 25%;height: 30%;float: left;background: transparent;border:1px dotted grey;;margin-top: 3px"></div>
+
+<div class="waiting" id="YWaitDialog">
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <h1 style="color: #ffffff">loading</h1>
+</div>
+<!--<div>
+<input type="button" value="click" id="test"/>
+</div>
+<script type="text/javascript">
+    $('test').onclick(
+        function () {
+            $('main').css("background","#208ed3");
+        }
+    )
+</script>-->
 
 <!--<script type="text/javascript">
 
@@ -49,13 +200,24 @@
 
     }
 </script>-->
-
-<script src="js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
+</script>
+<script src="../bigdatamanagement/js/jquery-3.3.1.js"></script>
 <script src="js/common.js"></script>
 <script src="js/getUrlParam.js"></script>
 <script src="js/starttoend.js"></script>
-<script src="js/echarts.min.js"></script>
-<script src="js/getDevice2.js"></script>
-
+<!--<script src="js/main.min.js"></script>
+<script src="js/map.js"></script>-->
+<script src="http://api.map.baidu.com/api?v=2.0&ak=53oVIOgmSIejwV7EfphPgTynOZbIiVYu"></script>
+<script src="../bigdatamanagement/js/echarts.min.js"></script>
+<script src="js/bmap.js"></script>
+<script src="js/mapjson.js"></script>
+<script src="js/map1.js"></script>
+<script src="theme/dark.js"></script>
+<script src="js/start.js"></script>
+<script type="text/javascript">
+    document.getElementById("YWaitDialog").setAttribute("style","display:none;");
+</script>
 </body>
 </html>

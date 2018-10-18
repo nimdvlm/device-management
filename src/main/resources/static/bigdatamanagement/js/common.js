@@ -1,61 +1,22 @@
-var a=0;
-var b=0;
-var c=0;
-var d=0;
-$('#ul1').click(
-    function () {
-        if(a%2==0){
-            $(this).parent().find('li').eq(1).css("display","none");
-            $(this).parent().find('li').eq(2).css("display","none");
-            $(this).parent().find('li').eq(3).css("display","none");
-        }else {
-            $(this).parent().find('li').eq(1).css("display","block");
-            $(this).parent().find('li').eq(2).css("display","block");
-            $(this).parent().find('li').eq(3).css("display","block");
-        }
-        a++;
-    }
-);
-$('#ul2').click(
-    function () {
-        if(b%2==0){
-            $(this).parent().find('li').eq(1).css("display","none");
-            $(this).parent().find('li').eq(2).css("display","none");
-            $(this).parent().find('li').eq(3).css("display","none");
-        }else {
-            $(this).parent().find('li').eq(1).css("display","block");
-            $(this).parent().find('li').eq(2).css("display","block");
-            $(this).parent().find('li').eq(3).css("display","block");
-        }
-        b++;
-    }
-);
-$('#ul3').click(
-    function () {
-        if(c%2==0){
-            $(this).parent().find('li').eq(1).css("display","none");
-            $(this).parent().find('li').eq(2).css("display","none");
-            $(this).parent().find('li').eq(3).css("display","none");
-        }else {
-            $(this).parent().find('li').eq(1).css("display","block");
-            $(this).parent().find('li').eq(2).css("display","block");
-            $(this).parent().find('li').eq(3).css("display","block");
-        }
-        c++;
-    }
-);
-$('#ul4').click(
-    function () {
-        if(d%2==0){
-            $(this).parent().find('li').eq(1).css("display","none");
-            $(this).parent().find('li').eq(2).css("display","none");
-        }else {
-            $(this).parent().find('li').eq(1).css("display","block");
-            $(this).parent().find('li').eq(2).css("display","block");
-        }
-        d++;
-    }
-);
+function online() {
+    window.open("http://39.104.186.210:8888");
+}
+
+function dashboard() {
+    window.open("device2.html");
+}
+
+function dashboard1() {
+    window.open("../bigData/device2.html");
+}
+
+function result() {
+    window.open("pre.html");
+}
+
+function result1() {
+    window.open("../bigdatamanagement/pre.html");
+}
 
 function formatDate(now) {
     var year=now.getFullYear();

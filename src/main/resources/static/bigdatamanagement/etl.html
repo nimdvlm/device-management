@@ -61,6 +61,12 @@
     <div class="col-md-2" style="box-shadow: 1px 1px 3px #e5e5e5;height: 1400px;width: 13%">
         <ul id="main-nav" class="nav nav-stacked">
             <li>
+                <a href="#" onclick="dashboard1()">
+                    <i class="glyphicon glyphicon-home">&nbsp;</i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
                 <a href="../bigData/device1.html">
                     <i class="glyphicon glyphicon-th-large">&nbsp;</i>
                     数据管理
@@ -102,6 +108,7 @@
                 <ul id="systemSetting1" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
                     <li><a href="predict.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
                     <li><a href="model.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
+                    <li><a href="#" onclick="result()"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 预测结果</a></li>
                 </ul>
             </li>
             <li>
@@ -194,6 +201,7 @@
 <script src="js/bootstrap-table.js"></script>
 <script src="js/bootstrap-table-zh-CN.js"></script>
 <script src="js/bootstrap-select.js"></script>
+<script src="js/common.js"></script>
 <script type="text/javascript">
 
     var structdata;
