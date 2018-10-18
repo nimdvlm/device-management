@@ -1,257 +1,204 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>大数据平台-数据挖掘</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-table.css" rel="stylesheet">
+    <link href="css/bootstrap-select.css" rel="stylesheet">
 
-    <!-- Required Stylesheets -->
-    <link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/text.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/fluid.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/mws.style.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/icons/icons.css" media="screen" />
+    <style>
+        .abc:hover {
+            color: black !important;
+        }
+        .abc0:hover{
+            background-color: #337ab7 !important;
+        }
 
-    <!-- Demo and Plugin Stylesheets -->
-    <link rel="stylesheet" type="text/css" href="css/demo.css" media="screen" />
-
-    <link rel="stylesheet" type="text/css" href="plugins/colorpicker/colorpicker.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="plugins/jimgareaselect/css/imgareaselect-default.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="plugins/fullcalendar/fullcalendar.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="plugins/fullcalendar/fullcalendar.print.css" media="print" />
-    <link rel="stylesheet" type="text/css" href="plugins/tipsy/tipsy.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="plugins/sourcerer/Sourcerer-1.2.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="plugins/jgrowl/jquery.jgrowl.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="plugins/spinner/spinner.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/jui/jquery.ui.css" media="screen" />
-
-    <!-- Theme Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="css/mws.theme.css" media="screen" />
-
-    <!-- JavaScript Plugins -->
-
-    <title>大数据平台-模型管理</title>
-
+    </style>
 </head>
+<body style="padding-top: 50px;height: 100%">
 
-<body>
+<nav class="navbar navbar-fixed-top" style="background-color: #337ab7">
 
-<div id="mws-header" class="clearfix">
-    <div id="mws-logo-wrap">
-        <p style="color: white;font-size: 24px;margin-top: 13px;margin-left: 15px">大数据平台</p>
+    <div class="navbar-header" style="margin-left: 10px">
+        <a class="navbar-brand" href="#" style="color: white">大数据平台</a>
     </div>
-</div>
+    <div class="navbar-collapse">
+        <!--<ul class="nav navbar-nav">
+            <li><a href="/userformPage.do"  class="abc0"style="color: #faf2cc">用户管理</a></li>
+            <li class="dropdown">
+                <a href="#" class="abc" style="color: white" data-toggle="dropdown">我的网盘<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/uploadPage.do">springmvc</a></li>
+                    <li><a href="#">springsecurity</a></li>
+                    <li><a href="#">spring</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">DAO</li>
+                    <li><a href="#">mybatis</a></li>
+                    <li><a href="#">hibenate</a></li>
+                </ul>
+            </li>
+        </ul>-->
+        <ul class="navbar-right navbar-form">
+            <!--<div class="form-group">
+                <input type="text" placeholder="Email" class="form-control">
+            </div>-->
+            <a href="/home?TENANT_ADMIN&2&1"><button id="logout" type="submit" class="btn btn-primary" style="margin-right: 40px">返回上一级</button></a>
+        </ul>
+    </div><!--/.nav-collapse -->
 
-<div id="mws-wrapper">
-    <div id="mws-sidebar-stitch"></div>
-    <div id="mws-sidebar-bg"></div>
-    <div id="mws-sidebar">
-        <div id="mws-navigation">
-            <ul>
-                <li><a href="../bigData/device1.html" class="mws-i-24 i-home">Dashboard</a></li>
-                <li><a href="table.html" class="mws-i-24 i-list">数据管理</a></li>
-                <ul>
-                    <li id="ul1" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据ETL</a></li>
-                    <li style="background: #000000"><a href="etl.html" class="mws-i-24 i-chart">数据ETL处理</a></li>
-                    <li style="background: #000000"><a href="etl1.html" class="mws-i-24 i-chart">已有数据ETL</a></li>
-                    <li style="background: #000000"><a href="etl2.html" class="mws-i-24 i-chart">上传数据ETL</a></li>
+</nav>
+
+<div class="row" style="height: 100%">
+    <div class="col-md-2" style="box-shadow: 1px 1px 3px #e5e5e5;height: 1400px;width: 13%">
+        <ul id="main-nav" class="nav nav-stacked" style="">
+            <li>
+                <a href="../bigData/device1.html">
+                    <i class="glyphicon glyphicon-th-large">&nbsp;</i>
+                    数据管理
+                </a>
+            </li>
+            <li>
+                <a href="sql.html">
+                    <i class="glyphicon glyphicon-search">&nbsp;</i>
+                    SQL查询
+                </a>
+            </li>
+            <li>
+                <a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-stats">&nbsp;</i>
+                    数据分析
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">2</span>
+                </a>
+                <ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="../bigData/ocean.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 常规分析</a></li>
+                    <li><a href="../bigData/statistics1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 数据分析</a></li>
+                    <!--<li><a href="#"><i class="glyphicon glyphicon-edit">&nbsp;</i> 修改密码</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-eye-open">&nbsp;</i> 日志查看</a></li>-->
                 </ul>
-                <ul>
-                    <li id="ul2" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据分析</a></li>
-                    <li style="background: #000000"><a href="sql.html" class="mws-i-24 i-polaroids">SQL</a></li>
-                    <li style="background: #000000"><a href="../bigData/ocean.html" class="mws-i-24 i-polaroids">常规分析</a></li>
-                    <li style="background: #000000"><a href="../bigData/statistics1.html" class="mws-i-24 i-polaroids">数据分析</a></li>
+            </li>
+            <li>
+                <a href="etl.html">
+                    <i class="glyphicon glyphicon-cog">&nbsp;</i>
+                    数据ETL
+                </a>
+            </li>
+            <li>
+                <a href="#systemSetting1" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+                    数据预测
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">2</span>
+                </a>
+                <ul id="systemSetting1" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="predict.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
+                    <li><a href="model.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
                 </ul>
-                <ul>
-                    <li id="ul3" style="background: #3b3d47"><a href="#" class="mws-i-24 i-list">数据预测</a></li>
-                    <li style="background: #000000"><a href="predict.html" class="mws-i-24 i-blocks-images">预测管理</a></li>
-                    <li style="background: #000000"><a href="../bigData/pre.html" class="mws-i-24 i-blocks-images">预测结果</a></li>
-                    <li style="background: #000000"><a href="model.html" class="mws-i-24 i-blocks-images">预测模型管理</a></li>
+            </li>
+            <li>
+                <a id="collapse2" href="#systemSetting2" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-leaf">&nbsp;</i>
+                    数据挖掘
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">2</span>
+                </a>
+                <ul id="systemSetting2" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="datadig.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
+                    <li class="active" style="background-color: #eeeeee"><a href="model1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
                 </ul>
-                <ul>
-                    <li id="ul4" style="background: #3b3d47"><a style="color: #c8d350" href="#" class="mws-i-24 i-list">数据挖掘</a></li>
-                    <li style="background: #000000"><a href="datadig.html" class="mws-i-24 i-cog">数据挖掘</a></li>
-                    <li style="background: #000000"><a style="color: #c8d350" href="model1.html" class="mws-i-24 i-cog">挖掘模型管理</a></li>
-                </ul>
-                <li><a href="http://39.104.186.210:8888" class="mws-i-24 i-list">线上开发</a></li>
-                <li><a href="/home?TENANT_ADMIN&2&1" class="mws-i-24 i-alert-2">返回上一级</a></li>
-                <!--<li><a href="charts.html" class="mws-i-24 i-chart">Charts</a></li>
-                <li><a href="calendar.html" class="mws-i-24 i-day-calendar">Calendar</a></li>
-                <li><a href="files.html" class="mws-i-24 i-file-cabinet">File Manager</a></li>
-                <li class="active"><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>
-                <li>
-                    <a href="#" class="mws-i-24 i-list">Forms</a>
-                    <ul>
-                        <li><a href="form_layouts.html">Layouts</a></li>
-                        <li><a href="form_elements.html">Elements</a></li>
-                    </ul>
-                </li>
-                <li><a href="widgets.html" class="mws-i-24 i-cog">Widgets</a></li>
-                <li><a href="typography.html" class="mws-i-24 i-text-styling">Typography</a></li>
-                <li><a href="grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
-                <li><a href="gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>
-                <li><a href="error.html" class="mws-i-24 i-alert-2">Error Page</a></li>
-                <li>
-                    <a href="icons.html" class="mws-i-24 i-pacman">
-                        Icons <span class="mws-nav-tooltip">2000+</span>
-                    </a>
-                </li>-->
-            </ul>
-        </div>
+            </li>
+            <li>
+                <a href="http://39.104.186.210:8888">
+                    <i class="glyphicon glyphicon-cloud">&nbsp;</i>
+                    线上开发
+                </a>
+            </li>
+        </ul>
     </div>
 
-    <div id="mws-container" class="clearfix">
-        <div class="container">
-            <div class="mws-panel grid_8">
-                <div class="mws-panel grid_8">
-                    <div class="mws-panel-header">
-                        <span class="mws-i-24 i-file-cabinet">挖掘模型管理</span>
-                    </div>
-                    <div class="mws-panel-body">
-                        <div class="mws-panel-toolbar top clearfix">
-                            <ul>
-                                <li><a href="http://39.104.186.210:8888" class="mws-ic-16 ic-accept">创建并部署模型（密码bupt）</a></li>
-                                <li><a href="#" id="delete1" class="mws-ic-16 ic-cross">删除模型</a></li>
-                            </ul>
+    <div class="col-md-10">
+        <div class="container"  style="padding: 30px 15px">
+            <h1>暂无</h1>
+
+            <!--<fieldset style="border:none;border-top:1px solid #cec9c9;margin:30px 0 20px;">
+                <legend style="font-size: 20px;font-weight: 300;padding: 0 10px;margin-left: 20px">查询结果</legend>
+            </fieldset>-->
+
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel" data-toggle="modal" data-target="#myModal">创建新模型</h4>
                         </div>
-                        <table class="mws-table">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>模型名称</th>
-                                <th>模型描述</th>
-                                <th>模型类型</th>
-                                <th>模型ID</th>
-                                <th>模型路径</th>
-                                <th>模型输入</th>
-                            </tr>
-                            </thead>
-                            <tbody id="add1"></tbody>
-                        </table>
-                    </div><br><br>
-
-                </div>
+                        <div class="modal-body">
+                            <div style="margin-left: 5%">
+                                <select id="modal1" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择数据源">
+                                    <option>["AT","V","AP","RH"]</option>
+                                </select><br><br>
+                                <input id="modal2" class="form-control" placeholder="填写模型名称" type="text" autofocus style="width: 220px"><br>
+                                <input id="modal3" class="form-control" placeholder="填写模型描述" type="text" autofocus style="width: 220px">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button id="modalsubmit" type="button" class="btn btn-primary" data-dismiss="modal">提交更改</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
             </div>
-        </div>
 
+            <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel1" data-toggle="modal" data-target="#myModal">训练模型</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div style="margin-left: 5%">
+                                <select id="modal4" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型id">
+
+                                </select><br><br>
+                                <select id="modal5" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择所需数据表名">
+                                    <option>power_out</option>
+                                </select><br><br>
+                                <select id="modal6" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型输入对应的数据表字段">
+                                    <option>["AT","V","AP","RH"]</option>
+                                </select><br><br>
+                                <select id="modal7" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型输出对应的数据表字段">
+                                    <option>["PE"]</option>
+                                </select><br><br>
+                                <select id="modal8" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择模型类型">
+                                    <option>reg</option>
+                                </select><br><br>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button id="modalsubmit1" type="button" class="btn btn-primary" data-dismiss="modal">提交更改</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+        </div>
     </div>
 </div>
 
-<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="plugins/jquery.dataTables.js"></script>
-<script type="text/javascript" src="plugins/colorpicker/colorpicker.js"></script>
-<script type="text/javascript" src="plugins/spinner/ui.spinner.js"></script>
-<script type="text/javascript" src="js/jquery-ui.js"></script>
-<script type="text/javascript" src="js/demo.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
-
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-table.js"></script>
+<script src="js/bootstrap-table-zh-CN.js"></script>
+<script src="js/bootstrap-select.js"></script>
 <script type="text/javascript">
-    $('button').click(
-        function () {
-            $(this).parent().parent().remove();
-        }
-    );
-</script>
-<script type="text/javascript">
-    htmlobj=$.ajax({url:"http://39.104.186.210:8090/api/model/get-general-model",async:false});
-    var mes = htmlobj.responseText;
-    var mesj = JSON.parse(mes);
-    var meso = eval("("+mesj+")");
-    for (var i=0; i < meso.data.length; i++){
-        $add = $('<tr class="gradeX"></tr>');
-        $add1 = $('<td><input class="abc" type="checkbox" /></td>');
-        $add2 = $('<td></td>');
-        $add3 = $('<td></td>');
-        $add4 = $('<td></td>');
-        $add5 = $('<td></td>');
-        $add6 = $('<td></td>');
-        $add7 = $('<td></td>');
-        $add2.html(meso.data[i].model_name);
-        $add3.html(meso.data[i].model_desc);
-        $add4.html('通用模型');
-        $add5.html(meso.data[i].model_id);
-        $add6.html(meso.data[i].model_path);
-        $add7.html(meso.data[i].model_input[0]+','+ meso.data[i].model_input[1]);
-        $add.append($add1);
-        $add.append($add2);
-        $add.append($add3);
-        $add.append($add4);
-        $add.append($add5);
-        $add.append($add6);
-        $add.append($add7);
-        $('#add1').append($add);
-    }
 
-    htmlobj1=$.ajax({url:"http://39.104.186.210:8090/api/model/get-tenant-model?tenantId=2",async:false});
-    var mes1 = htmlobj1.responseText;
-    var mesj1 = JSON.parse(mes1);
-    var meso1 = eval("("+mesj1+")");
-    for (var j=0; j < meso1.data.length; j++){
-        $add = $('<tr class="gradeX"></tr>');
-        $add1 = $('<td><input class="abc" type="checkbox" /></td>');
-        $add2 = $('<td></td>');
-        $add3 = $('<td></td>');
-        $add4 = $('<td></td>');
-        $add5 = $('<td></td>');
-        $add6 = $('<td></td>');
-        $add7 = $('<td></td>');
-        $add2.html(meso1.data[j].model_name);
-        $add3.html(meso1.data[j].model_desc);
-        $add4.html('自定义模型');
-        $add5.html(meso1.data[j].model_id);
-        $add6.html(meso1.data[j].model_path);
-        $add7.html(meso1.data[j].model_input[0]+','+ meso1.data[j].model_input[1]);
-        $add.append($add1);
-        $add.append($add2);
-        $add.append($add3);
-        $add.append($add4);
-        $add.append($add5);
-        $add.append($add6);
-        $add.append($add7);
-        $('#add1').append($add);
-    }
-    $("#add1").find('tr').eq(0).find('td').eq(1).html("设备质量信息挖掘模型");
-    $("#add1").find('tr').eq(0).find('td').eq(2).html("挖掘哪种设备品牌的质量最好");
-    $("#add1").find('tr').eq(1).find('td').eq(1).html("设备受欢迎度挖掘模型");
-    $("#add1").find('tr').eq(1).find('td').eq(2).html("挖掘各个设备品牌的受欢迎程度");
-    $("#add1").find('tr').eq(2).find('td').eq(1).html("设备分类模型");
-    $("#add1").find('tr').eq(2).find('td').eq(2).html("对多个设备进行分类");
-    $("#add1").find('tr').eq(3).remove();
-
-    /*htmlobj2=$.ajax({url:"http://39.104.186.210:8090/api/app/get-app",async:false});
-    var mes2 = htmlobj2.responseText;
-    var mesj2 = JSON.parse(mes2);
-    var meso2 = eval("("+mesj2+")");
-    for (var k=0; k < meso2.data.length; k++){
-        $add = $('<tr class="gradeX"></tr>');
-        $add1 = $('<td><input class="abc1"type="checkbox" /></td>');
-        $add2 = $('<td></td>');
-        $add3 = $('<td></td>');
-        $add4 = $('<td></td>');
-        $add5 = $('<td></td>');
-        $add6 = $('<td></td>');
-        $add7 = $('<td></td>');
-        $add2.html(meso2.data[k].app_name);
-        $add3.html(meso2.data[k].model_id);
-        $add4.html(meso2.data[k].tenant_id);
-        $add5.html(meso2.data[k].model_id);
-        $add6.html(meso2.data[k].stop_time);
-        $add7.html(meso2.data[k].app_input[0].type+'(所属设备ID：'+ meso2.data[k].app_input[0].devide_id+')'+"，"+meso2.data[k].app_input[1].type+'(所属设备ID：'+ meso2.data[k].app_input[1].devide_id+')');
-        $add.append($add1);
-        $add.append($add2);
-        $add.append($add3);
-        $add.append($add4);
-        $add.append($add5);
-        $add.append($add6);
-        $add.append($add7);
-        $('#add2').append($add);
-    }*/
-
-    $('#delete1').click(
-        function () {
-            $('.abc:checked').parent().parent().remove();
-        }
-    );
+    $("#collapse2").trigger("click");
 
 </script>
-
 </body>
 </html>

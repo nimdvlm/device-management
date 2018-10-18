@@ -93,18 +93,42 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
             console.log($scope.createAbilityInfo);
             var createAbilityGroupObj =  $resource("/api/v1/abilityGroup");
             $scope.abilityInformation = createAbilityGroupObj.save({},$scope.createAbilityInfo,function (resp) {
-               toastr.success("新增设备成功！");
+               toastr.success("创建成功！");
                 setTimeout(function () {
                     window.location.reload();
                 },500);
             },function (error) {
-                toastr.error("新增设备失败！");
+                toastr.error("创建失败！");
             });
         }
     };
 
 
     /*创建能力*/
+    $scope.replyChangeOne = true;
+    $scope.replyChangeTwo = false;
+    $scope.replyChangeThree = false;
+    $scope.selectChange = function (item) {
+        console.log(item);
+        if (item == 1){
+            $scope.replyChangeOne = true;
+            $scope.replyChangeTwo = false;
+            $scope.replyChangeThree = false;
+        }
+        if (item == 2){
+            $scope.replyChangeOne = false;
+            $scope.replyChangeTwo = true;
+            $scope.replyChangeThree = false;
+        }
+        if (item == 3){
+            $scope.replyChangeOne = false;
+            $scope.replyChangeTwo = false;
+            $scope.replyChangeThree = true;
+        }
+    };
+
+
+
     var params = [];
     $scope.addAbility = function(){
         $scope.serviceName = $("#serviceName").val();
@@ -173,14 +197,14 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
             console.log($scope.createAbility);
             var createAbilityObj =  $resource("/api/v1/ability");
             $scope.ability = createAbilityObj.save({},$scope.createAbility,function (resp) {
-                toastr.success("新增成功！");
+                toastr.success("创建成功！");
                 //console.log($scope.ability);
                 setTimeout(function () {
                     $("#createSM").modal("hide");
                     location.reload();
                 },500);
             },function (error) {
-                toastr.error("新增失败！");
+                toastr.error("创建失败！");
             });
         }
     };

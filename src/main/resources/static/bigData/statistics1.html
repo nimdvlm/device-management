@@ -5,11 +5,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>数据分析</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css" media="all" />
+    <title>大数据平台-数据分析</title>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/style1.css">
+    <link rel="stylesheet" href="../bigdatamanagement/css/bootstrap.css">
     <style>
         .t_btn {
             margin-top: 20px;
@@ -24,7 +23,7 @@
         .t_a {
             display: inline-block;
             padding: 10px 5px;
-            width: 75px;
+            width: 80px;
             border-style: solid;
             border-width: 0;
             cursor: pointer;
@@ -64,309 +63,383 @@
     </style>
 </head>
 
-<body>
-    <!--main-->
-    <div class="testing" style="border-bottom: 1px ridge #ccc">
+<body style="padding-top: 50px;height: 100%">
+<nav class="navbar navbar-fixed-top" style="background-color: #337ab7">
 
-        <section class="user">
-            <div style="float: left;width: 40%;height: 26px;padding: 25px 0 0 25px">
-                <p style="font-size: 24px;color: white;margin: 0">大数据平台</p>
-            </div>
-            <a href="../bigdatamanagement/sql.html"><input type="button" style="border: 0.5px dotted white; width:7%;float: right; margin-top:12px; margin-right: 1%; height:38px;font-size: 12px" value="返&nbsp;&nbsp;&nbsp;&nbsp;回"/></a>
-            <!--<div class="buttons" style="width: 55%;padding-top: 15px">
-                <a href="device1.html"><input type="button" style="border: none; width: 12%; float: left; height:38px;font-size: 12px; margin-left: 11%" value="首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页"/></a>
-                <a href="ocean.html"><input type="button" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" value="海量分析"/></a>
-                <a href="statistics1.html"><input type="button" style="background:#ffffff;color:#000000;border: none;width: 12%; float: left; height:38px;font-size: 12px" value="数据分析"/></a>
-                <ul id="dropzone" style="float: left; width: 12%;margin-left: 5px">
-                    <li style="width: 100%"><a href="modelmanage.html"><input type="button" style="border: none;width: 100%; height:38px;font-size: 12px;margin: 0" value="模型管理"/></a></li>-->
-                    <!--<li style="width: 100%; display:none;" id="dropli"><a href="modelentity.html"><input type="button" style="border: none;width: 100%; height:38px;font-size: 12px;margin: 0" value="模型应用"/></a></li>-->
-                <!--</ul>
-                <a href="pre.html"><input type="button" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" value="预测管理"/></a>
-                <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" value="返回上一级"/></a>
-                <input type="button" value="退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出" style="border: none;width: 12%; float: left; height:38px;font-size: 12px" onclick="quitThings()" />-->
-                <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
-                <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
-            </div>
-        </section>
+    <div class="navbar-header" style="margin-left: 10px">
+        <a class="navbar-brand" href="#" style="color: white">大数据平台</a>
     </div>
-    <div class="data_content" style="float: left">
-        <div class="data_main">
-            <div class="main_left fl">
-                <div class="left_1">
-                    <ul class="t_btn">
-                        <p style="color: white;font-size: 14px">设备类型</p>
-                        <li>
-                            <button id="button1" class="selectbutton">温度传感器</button>
-                        </li>
-                        <li>
-                            <button id="button2">湿度传感器</button>
-                        </li>
-                        <li>
-                            <button id="button3">压力传感器</button>
-                        </li>
-                        <li>
-                            <button id="button4">形变传感器</button>
-                        </li>
-                        <li>
-                            <button id="button5">速率传感器</button>
-                        </li>
-                        <li>
-                            <button id="button6">光照传感器</button>
-                        </li>
-                        <br><br>
-                        <p style="color: white;font-size: 14px">查询范围</p>
-                        <li>
-                            <button id="button7">近三天</button>
-                        </li>
-                        <li>
-                            <button id="button8">近一周</button>
-                        </li>
-                        <li>
-                            <button id="button9" class="selectbutton1">近一月</button>
-                        </li>
-                    </ul>
-                </div>
-                <div class="left_2" style="display:none">
-                    <div class="main_title">
-                         湖南省地图
+    <div class="navbar-collapse">
+        <!--<ul class="nav navbar-nav">
+            <li><a href="/userformPage.do"  class="abc0"style="color: #faf2cc">用户管理</a></li>
+            <li class="dropdown">
+                <a href="#" class="abc" style="color: white" data-toggle="dropdown">我的网盘<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/uploadPage.do">springmvc</a></li>
+                    <li><a href="#">springsecurity</a></li>
+                    <li><a href="#">spring</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">DAO</li>
+                    <li><a href="#">mybatis</a></li>
+                    <li><a href="#">hibenate</a></li>
+                </ul>
+            </li>
+        </ul>-->
+        <ul class="navbar-right navbar-form">
+            <!--<div class="form-group">
+                <input type="text" placeholder="Email" class="form-control">
+            </div>-->
+            <a href="/home?TENANT_ADMIN&2&1"><button id="logout" type="submit" class="btn btn-primary" style="margin-right: 40px">返回上一级</button></a>
+        </ul>
+    </div><!--/.nav-collapse -->
+
+</nav>
+
+<div class="row" style="height: 100%;width: 100%;float: left">
+    <div class="col-md-2" style="box-shadow: 1px 1px 3px #e5e5e5;height: 1030px;width: 13%">
+        <ul id="main-nav" class="nav nav-stacked" style="">
+            <li>
+                <a href="device1.html">
+                    <i class="glyphicon glyphicon-th-large">&nbsp;</i>
+                    数据管理
+                </a>
+            </li>
+            <li>
+                <a href="../bigdatamanagement/sql.html">
+                    <i class="glyphicon glyphicon-search">&nbsp;</i>
+                    SQL查询
+                </a>
+            </li>
+            <li>
+                <a href="#systemSetting" id="collapse" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-stats">&nbsp;</i>
+                    数据分析
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">2</span>
+                </a>
+                <ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li class="active"><a href="ocean.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>- 整体分析</a></li>
+                    <li style="background-color: #eeeeee"><a href="statistics1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>- 按类分析</a></li>
+                    <!--<li><a href="#"><i class="glyphicon glyphicon-edit">&nbsp;</i> 修改密码</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-eye-open">&nbsp;</i> 日志查看</a></li>-->
+                </ul>
+            </li>
+            <li>
+                <a href="../bigdatamanagement/etl.html">
+                    <i class="glyphicon glyphicon-cog">&nbsp;</i>
+                    数据ETL
+                </a>
+            </li>
+            <li>
+                <a href="#systemSetting1" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+                    数据预测
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">2</span>
+                </a>
+                <ul id="systemSetting1" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="../bigdatamanagement/predict.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
+                    <li><a href="../bigdatamanagement/model.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../bigdatamanagement/datadig.html">
+                    <i class="glyphicon glyphicon-leaf">&nbsp;</i>
+                    数据挖掘
+                </a>
+            </li>
+            <li>
+                <a onclick="online()">
+                    <i class="glyphicon glyphicon-cloud">&nbsp;</i>
+                    线上开发
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-10" style="height: 100%;background:#ffffff">
+        <div class="t_container" style="height: 100%">
+            <div class="data_content" style="float: left">
+                <div class="data_main">
+                    <div class="main_left fl">
+                        <div class="left_1">
+                            <ul class="t_btn">
+                                <p style="color: grey;font-size: 14px">设备类型</p>
+                                <li>
+                                    <button id="button1" class="selectbutton btn btn-primary">温度传感器</button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-primary" id="button2">湿度传感器</button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-primary" id="button3">压力传感器</button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-primary" id="button4">形变传感器</button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-primary" id="button5">速率传感器</button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-primary" id="button6">光照传感器</button>
+                                </li>
+                                <br><br>
+                                <p style="color: grey;font-size: 14px">查询范围</p>
+                                <li>
+                                    <button class="btn btn-primary" id="button7">近三天</button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-primary" id="button8">近一周</button>
+                                </li>
+                                <li>
+                                    <button id="button9" class="selectbutton1 btn btn-primary">近一月</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="left_2" style="display:none">
+                            <div class="main_title">
+                                湖南省地图
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="main_center fl">
-                <div class="center_text t_cos0">
-                    <!--左上边框-->
-                    <div class="t_line_box">
-                        <i class="t_l_line"></i>
-                        <i class="l_t_line"></i>
-                    </div>
-                    <!--右上边框-->
-                    <div class="t_line_box">
-                        <i class="t_r_line"></i>
-                        <i class="r_t_line"></i>
-                    </div>
-                    <!--左下边框-->
-                    <div class="t_line_box">
-                        <i class="l_b_line"></i>
-                        <i class="b_l_line"></i>
-                    </div>
-                        <!--右下边框-->
-                        <div class="t_line_box">
-                        <i class="r_b_line"></i>
-                        <i class="b_r_line"></i>
-                    </div>
-                    <div class="main_title">
-                         数据分析
-                    </div>
-                    <div style="width: 100%;height: 40px;background: transparent;color: white"><!--<p style="width: 60px; display: inline; margin-left: 30px">模糊查询</p>
+                    <div class="main_center fl">
+                        <div class="center_text t_cos0">
+                            <!--左上边框-->
+                            <div class="t_line_box">
+                                <i class="t_l_line"></i>
+                                <i class="l_t_line"></i>
+                            </div>
+                            <!--右上边框-->
+                            <div class="t_line_box">
+                                <i class="t_r_line"></i>
+                                <i class="r_t_line"></i>
+                            </div>
+                            <!--左下边框-->
+                            <div class="t_line_box">
+                                <i class="l_b_line"></i>
+                                <i class="b_l_line"></i>
+                            </div>
+                            <!--右下边框-->
+                            <div class="t_line_box">
+                                <i class="r_b_line"></i>
+                                <i class="b_r_line"></i>
+                            </div>
+                            <div class="main_title">
+                                数据分析
+                            </div>
+                            <div style="width: 100%;height: 40px;background: transparent;color: white"><!--<p style="width: 60px; display: inline; margin-left: 30px">模糊查询</p>
                         <select id="mohuquery" style="position:relative;margin-top: 15px;margin-left: 5px; color: #000000">
                             <option>近三天</option>
                             <option selected="selected">近一周</option>
                             <option>近一月</option>
                         </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设备类型
                         <select id="mohuquery1" style="position:relative;margin-top: 15px;margin-left: 5px; color: #000000"></select>-->
-
-                        <a id="query1" href="#"><button data-toggle="modal" data-target="#myModal" style="border:1px solid white;width:70px;height:25px;position:relative;float: right;margin-right: 20px;margin-top: 5px">精确查询</button></a>
+                                <a id="query1" href="#"><button data-toggle="modal" data-target="#myModal" class="btn-sm btn-primary" style="float: right;margin-right: 20px;margin-top: 5px;position:relative;">精确查询</button></a>
+                            </div>
+                            <div id="chart_map" style="width:100%;height:100%;"></div>
+                        </div>
                     </div>
-                    <div id="chart_map" style="width:100%;height:100%;"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">精确查询(4月-5月)</h4>
-                </div>
-                <div class="modal-body">
-                    <input name="Fruit" type="radio" value="type" style="width: 20px" checked="checked" />按设备类型查询
-                    <input name="Fruit" type="radio" value="device" style="width: 20px;margin-left: 30px"/>按设备名称查询
-                    <div id="modaldiv" style="margin-top: 30px;width: 100%">
-                        <span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>设备类型</strong> </span>
-                        <select id="fname3" style="margin-left: 1%">
-                            <option>请选择设备类型</option>
-                            <option>temperature</option>
-                            <option>humidity</option>
-                            <option>pressure</option>
-                            <option>deformation</option>
-                            <option>velocity</option>
-                            <option>light</option>
-                        </select>
-                    </div>
-                    <div style="margin-top: 30px;width: 100%">
-                        <span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>开始时间</strong> </span><input style="border:1px solid #ccc;width: 20%;;margin-left: 1%" type="date" id="fname">
-                        <select id="fnameh" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>时</strong></span>
-                        <select id="fnamemin" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>分</strong></span>
-                        <select id="fnames" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>秒</strong></span><br/>
-                        <span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>结束时间</strong> </span><input style="border:1px solid #ccc;width: 20%;;margin-left: 1%" type="date" id="fname1">
-                        <select id="fnameh1" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>时</strong></span>
-                        <select id="fnamemin1" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>分</strong></span>
-                        <select id="fnames1" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>秒</strong></span><br/>
-                        <span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>分段个数</strong> </span><input style="border:1px solid #ccc;width: 10%;margin-left: 1%" type="text" id="fname2"><br/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button id="modelchange" type="button" class="btn btn-primary" onclick="showData()">确定</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
+</div>
 
-    <script>
-        for (var i =0; i<25; i++){
-            var h = document.createElement('option');
-            h.innerHTML = i;
-            document.getElementById('fnameh').appendChild(h);
-        }
-        for (var j =0; j<61; j++){
-            var m = document.createElement('option');
-            m.innerHTML = j;
-            document.getElementById('fnamemin').appendChild(m);
-        }
-        for (var k =0; k<61; k++){
-            var s = document.createElement('option');
-            s.innerHTML = k;
-            document.getElementById('fnames').appendChild(s);
-        }
-        for (var i1 =0; i1<25; i1++){
-            var h1 = document.createElement('option');
-            h1.innerHTML = i1;
-            document.getElementById('fnameh1').appendChild(h1);
-        }
-        for (var j1 =0; j1<61; j1++){
-            var m1 = document.createElement('option');
-            m1.innerHTML = j1;
-            document.getElementById('fnamemin1').appendChild(m1);
-        }
-        for (var k1 =0; k1<61; k1++){
-            var s1 = document.createElement('option');
-            s1.innerHTML = k1;
-            document.getElementById('fnames1').appendChild(s1);
-        }
-    </script>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">精确查询(已完成暂不对外开放)</h4>
+            </div>
+            <div class="modal-body">
+                <input name="Fruit" type="radio" value="type" style="width: 20px" checked="checked" />按设备类型查询
+                <input name="Fruit" type="radio" value="device" style="width: 20px;margin-left: 30px"/>按设备名称查询
+                <div id="modaldiv" style="margin-top: 30px;width: 100%">
+                    <span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>设备类型</strong> </span>
+                    <select id="fname3" style="margin-left: 1%">
+                        <option>请选择设备类型</option>
+                        <option>temperature</option>
+                        <option>humidity</option>
+                        <option>pressure</option>
+                        <option>deformation</option>
+                        <option>velocity</option>
+                        <option>light</option>
+                    </select>
+                </div>
+                <div style="margin-top: 30px;width: 100%">
+                    <span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>开始时间</strong> </span><input style="border:1px solid #ccc;width: 20%;;margin-left: 1%" type="date" id="fname">
+                    <select id="fnameh" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>时</strong></span>
+                    <select id="fnamemin" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>分</strong></span>
+                    <select id="fnames" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>秒</strong></span><br/>
+                    <span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>结束时间</strong> </span><input style="border:1px solid #ccc;width: 20%;;margin-left: 1%" type="date" id="fname1">
+                    <select id="fnameh1" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>时</strong></span>
+                    <select id="fnamemin1" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>分</strong></span>
+                    <select id="fnames1" style="margin-left: 20px"></select><span style="width: 10%;font-size: 15px;color: gray;margin-left: 5px"><strong>秒</strong></span><br/>
+                    <span style="width: 10%;font-size: 15px;color: gray;margin-left: 20px"><strong>分段个数</strong> </span><input style="border:1px solid #ccc;width: 10%;margin-left: 1%" type="text" id="fname2"><br/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="modelchange" type="button" class="btn btn-primary" onclick="showData()">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
-    <div class="waiting" id="YWaitDialog" style="margin: 17% 35% 0 35%">
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
+<script>
+
+    for (var i =0; i<25; i++){
+        var h = document.createElement('option');
+        h.innerHTML = i;
+        document.getElementById('fnameh').appendChild(h);
+    }
+    for (var j =0; j<61; j++){
+        var m = document.createElement('option');
+        m.innerHTML = j;
+        document.getElementById('fnamemin').appendChild(m);
+    }
+    for (var k =0; k<61; k++){
+        var s = document.createElement('option');
+        s.innerHTML = k;
+        document.getElementById('fnames').appendChild(s);
+    }
+    for (var i1 =0; i1<25; i1++){
+        var h1 = document.createElement('option');
+        h1.innerHTML = i1;
+        document.getElementById('fnameh1').appendChild(h1);
+    }
+    for (var j1 =0; j1<61; j1++){
+        var m1 = document.createElement('option');
+        m1.innerHTML = j1;
+        document.getElementById('fnamemin1').appendChild(m1);
+    }
+    for (var k1 =0; k1<61; k1++){
+        var s1 = document.createElement('option');
+        s1.innerHTML = k1;
+        document.getElementById('fnames1').appendChild(s1);
+    }
+</script>
+
+<div class="waiting" id="YWaitDialog" style="margin: 17% 35% 0 35%">
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
         </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <div class="spinner">
-            <div class="spin">
-                <div class="branch"></div>
-                <div class="branch"></div>
-                <div class="branch"></div>
-            </div>
-        </div>
-        <h1 style="color: #ffffff">loading</h1>
     </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <div class="spinner">
+        <div class="spin">
+            <div class="branch"></div>
+            <div class="branch"></div>
+            <div class="branch"></div>
+        </div>
+    </div>
+    <h1 style="color: #000000">loading</h1>
+</div>
 
 </body>
-<script src="js/jquery-3.3.1.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
+<script src="../bigdatamanagement/js/jquery-3.3.1.js"></script>
+<script src="../bigdatamanagement/js/bootstrap.js"></script>
 <script src="js/common.js"></script>
 <script src="js/getUrlParam.js"></script>
 <script src="js/starttoend.js"></script>

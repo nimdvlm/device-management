@@ -48,6 +48,16 @@ public class NavigationController {
         return "static/login/modifyPassword";
     }
 
+    @RequestMapping("/rolePool")
+    public String  getRolePool() {
+        return "static/auth/RolePool";
+    }
+
+    @RequestMapping("/userPool")
+    public String  getUserPool() {
+        return "static/auth/UserPool";
+    }
+
     @RequestMapping("/allocationCenterIndex")
     public String  allocationCenter() {
         return "static/allocationCenter/allocationCenterIndex";
@@ -67,7 +77,7 @@ public class NavigationController {
     }
 
     @RequestMapping("/autoLogin")
-    public String  autoLogin(@RequestParam String username, @RequestParam String password) {
+    public String  autoLogin(@RequestParam String username, @RequestParam String password,@RequestParam String module){
         HttpSession session = request.getSession();
         session.setAttribute("username", username);
         session.setAttribute("password", password);
@@ -75,9 +85,9 @@ public class NavigationController {
         String res = HttpUtil.getAccessToken(session);
         JsonObject responseJson = (JsonObject) new JsonParser().parse(res);
         if(responseJson.has("error")){
-            response.setStatus(400);
             session.removeAttribute("username");
             session.removeAttribute("password");
+            throw new IllegalArgumentException(responseJson.get("error_description").getAsString());
         }else if(responseJson.has("access_token")){
             UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
             Subject subject = SecurityUtils.getSubject();
@@ -93,14 +103,41 @@ public class NavigationController {
         response.addCookie(userId);
         response.addCookie(customerId);
         String authority = responseJson.get("authority").getAsString();
-//        if(authority.equals("TENANT_ADMIN")) {
-//            return "redirect:/thingsTenantManager";
-//        }else if(authority.equals("SYS_ADMIN")){
-//            return "redirect:/thingsSystemManager";
-//        }else{
-//            return "redirect:/thingsUserManager";
-//        }
-        return "redirect:/home";
+        module = module.toLowerCase();
+        switch(module){
+            case "thingsmanager":
+                if(authority.equals("TENANT_ADMIN")) {
+                    return "redirect:/thingsTenantManager";
+                }else if(authority.equals("SYS_ADMIN")){
+                    return "redirect:/thingsSystemManager";
+                }else{
+                    return "redirect:/thingsUserManager";
+                }
+
+            case "bigdata":
+                return "redirect:/bigData/device1.html?id="+responseJson.get("user_id").getAsString();
+
+            case "gis":
+                return "redirect:http://39.104.189.84:8800/?id="+responseJson.get("user_id").getAsString()+"&token="+responseJson.get("access_token").getAsString();
+
+            case "disconf":
+                return "redirect:http://39.104.189.84:30090/main.html";
+
+            case "log":
+                return "redirect:http://39.104.189.84:30190";
+
+            case "k8s":
+                return "redirect:http://39.104.189.84:30000/";
+
+            case "auth":
+                return "redirect:/userPool";
+
+            default:
+                throw new IllegalArgumentException("Bad Module Name");
+
+
+        }
+
     }
 
     @RequestMapping("/thingsUserManager")
@@ -172,16 +209,24 @@ public class NavigationController {
     public String customerUserCtrl() {return "static/thingsManage/customerUser";}
 
     @RequestMapping("/statisticsDevice")
-    public String statisticsDevice() { return  "static/bigData/device1"; }
+    public String statisticsDevice() {
+        return  "static/bigData/device1";
+    }
 
     @RequestMapping("/statisticsData")
-    public String statisticsData() {return  "static/bigData/statisticsdata";}
+    public String statisticsData() {
+        return  "static/bigData/statisticsdata";
+    }
 
     @RequestMapping("/realtimeDevice")
-    public String realtimeDevice() {return "static/bigData/device2";}
+    public String realtimeDevice() {
+        return "static/bigData/device2";
+    }
 
     @RequestMapping("/realtimeData")
-    public String realtimeData() {return "static/bigData/dydatatrue";}
+    public String realtimeData() {
+        return "static/bigData/dydatatrue";
+    }
 
     @RequestMapping("/historicalData")
     public String historicalData() {return "static/bigData/hisdata";}

@@ -109,7 +109,8 @@ mainApp.controller("deviceListCtrl", ["$scope", "$resource", function ($scope, $
         });
     };
     /*在右侧表格中显示各个设备的信息*/
-    $scope.show = function (data) {
+    $scope.show = function (data){
+
         /*回到顶部*/
         /* var offset = $('#deviceListChart').offset().top-205;
          console.log(offset);
@@ -835,7 +836,7 @@ mainApp.controller("deviceListCtrl", ["$scope", "$resource", function ($scope, $
     var ws;
 
     function realtimeDevice(deviceId) {
-        var url = 'ws://39.104.189.84:30080/api/v1/deviceaccess/websocket';
+        var url = 'ws://'+window.Config.WsAddress+'/api/v1/deviceaccess/websocket';
         var keys = [];
         listenWs(url);
 
@@ -1621,6 +1622,85 @@ mainApp.controller("deviceListCtrl", ["$scope", "$resource", function ($scope, $
         });
 
     });
+
+
+
+    $scope.showDeviceAttr = function () {
+        $.ajax({
+            url: "/api/data/getKeyAttribute/"+$scope.ID,
+            dataType: "text",
+            type: "GET",
+            success: function (msg) {
+                console.log("查看自定义调用函数打印结果：");
+                console.log(msg);
+            },
+            error: function (err) {
+                toastr.error("获取属性失败！");
+            }
+        });
+        toastr.success("增加属性成功！");
+    };
+
+
+
+// 添加规格选项addSpecOpetion
+    $scope.isshow_attr = false;
+    $scope.deviceAttrArray = [];
+    $scope.addSpecOpetion = function() {
+        $scope.deviceAttrArray.push({});
+    };
+    // 删除规格选项
+    $scope.delSpecOpetion = function(index) {
+        $scope.deviceAttrArray.splice(index, 1);
+        var deviceKeyAttr = "deviceKeyAttr_" + index;
+        var deviceValueAttr = "deviceValueAttr_" + index;
+        $("#" + deviceKeyAttr).val("");
+        $("#" + deviceValueAttr).val("");
+        if ($scope.deviceAttrArray.length == 0){
+            $scope.isshow_attr = false;
+        }
+    };
+
+    $scope.createDeviceAttr = function () {
+        $scope.jsonDataAttr = {};
+        var jsonAtrr={};
+        var lenAtrr = $scope.deviceAttrArray.length;
+        for (var i=0;i<lenAtrr;i++){
+            var deviceKeyAttr = "deviceKeyAttr_" + i;
+            var deviceValueAttr = "deviceValueAttr_" + i;
+            var key = $("#"+deviceKeyAttr).val();
+            jsonAtrr[key]= $("#" + deviceValueAttr).val();
+            $scope.deviceAttrArray.splice(0,1,jsonAtrr);
+        }
+        $scope.jsonDataAttr = $scope.deviceAttrArray[0];
+        console.log($scope.jsonDataAttr);
+
+        $.ajax({
+            url: "/api/data/addAttribute/"+$scope.ID,
+            data: JSON.stringify($scope.jsonDataAttr),
+            contentType: "application/json; charset=utf-8",
+            dataType: "text",
+            type: "POST",
+            success: function (msg) {
+                $scope.isshow_attr = false;
+                $scope.deviceAttrArray = [];
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000);
+            },
+            error: function (err) {
+                toastr.error("增加属性失败！");
+            }
+        });
+    };
+
+
+
+
+
+
+
+
 
 }]);
 

@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
+<head>
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>三化物联网平台-导航</title>
-        <link rel="icon" href="static/login/assets/ico/Icon.icon" type="image/x-icon"/>
-        <!-- CSS -->
-        <link rel="stylesheet" href="static/login/assets/css/Css.css">
-        <!--<link rel="stylesheet" href="static/login/assets/bootstrap/css/bootstrap.min.css">-->
-        <link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-        <!--<link rel="stylesheet" href="static/login/assets/font-awesome/css/font-awesome.min.css">-->
-        <link href="https://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="static/login/assets/css/form-elements.css">
-        <link rel="stylesheet" href="static/login/assets/css/style.css">
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="static/login/assets/js/html5shiv.js"></script>
-        <script src="static/login/assets/js/respond.min.js"></script>
-        <![endif]-->
+    <title>三化物联网平台-导航</title>
+    <link rel="icon" href="static/login/assets/ico/Icon.icon" type="image/x-icon"/>
+    <!-- CSS -->
+    <link rel="stylesheet" href="static/login/assets/css/Css.css">
+    <!--<link rel="stylesheet" href="static/login/assets/bootstrap/css/bootstrap.min.css">-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="static/login/assets/font-awesome/css/font-awesome.min.css">-->
+    <link href="https://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/login/assets/css/form-elements.css">
+    <link rel="stylesheet" href="static/login/assets/css/style.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="static/login/assets/js/html5shiv.js"></script>
+    <script src="static/login/assets/js/respond.min.js"></script>
+    <![endif]-->
 
 
-    </head>
+</head>
 
-    <body>
-    <div class="container">
-        <div class="row">
+<body>
+<div class="container">
+    <div class="row">
+        <button id="logout" class="btn btn-primary btn-sm" style="float: right;background-color: transparent"><i
+                class="fa fa-reply"></i> 退出登录
+        </button>
+    </div>
+    <div class="row">
+        <div>
             <div class="col-md-4 col-sm-6 chooseBtn">
                 <div class="tray text-center" id="thingsManage">
                     <i class="fa fa-home"></i>
@@ -38,6 +44,8 @@
                     <p>创建虚拟设备，与被管理的实体设备对应。实现对设备的管理与检测。</p>
                 </div>
             </div>
+        </div>
+        <div>
             <div class="col-md-4 col-sm-6 chooseBtn">
                 <!--<a href="../bigData/index.html">-->
                 <div class="tray text-center" id="bigData">
@@ -49,6 +57,8 @@
                 </div>
                 <!--</a>-->
             </div>
+        </div>
+        <div>
             <div class="col-md-4 col-sm-6 chooseBtn">
                 <div class="tray text-center" id="3dPages">
                     <!-- Heading -->
@@ -59,66 +69,82 @@
                 </div>
                 <!--</a>-->
             </div>
+        </div>
 
-
+        <div class="systemOnly" style="display: none">
             <div class="col-md-4 col-sm-6 chooseBtn" style="margin-top: 10px;">
                 <!--a href="/allocationCenterIndex"-->
                 <a href="http://39.104.189.84:30090/main.html">
-                <div class="tray text-center">
-                    <i class="fa fa-briefcase"></i>
-                    <h3>统一配置中心</h3>
-                    <!-- Paragraph -->
-                    <p>解决多个系统配置信息统一管理困难的问题。</p>
-                    <br/>
-                </div>
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6 chooseBtn" style="margin-top: 10px;">
-                <!--a href="/logCenterIndex"-->
-                <a href="http://39.104.189.84:30190">
-                <div class="tray text-center">
-                    <!-- Heading -->
-                    <i class="fa fa-book"></i>
-                    <h3>统一日志中心</h3>
-                    <!-- Paragraph -->
-                    <p>收集多个模块的运行日志并统一管理。</p>
-                    <br/>
-                </div>
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6 chooseBtn" style="margin-top: 10px;">
-                <a href="http://39.104.189.84:30000">
-                <div class="tray text-center">
-                    <!-- Heading -->
-                    <i class="fa fa-link"></i>
-                    <h3>Kubernetes</h3>
-                    <!-- Paragraph -->
-                    <p>将谷歌的集群管理工具引入到虚拟机和裸机场景。</p>
-                    <br/>
-                </div>
+                    <div class="tray text-center">
+                        <i class="fa fa-briefcase"></i>
+                        <h3>统一配置中心</h3>
+                        <!-- Paragraph -->
+                        <p>解决多个系统配置信息统一管理困难的问题。</p>
+                        <br/>
+                    </div>
                 </a>
             </div>
         </div>
+        <div class="systemOnly" style="display: none">
+            <div class="col-md-4 col-sm-6 chooseBtn" style="margin-top: 10px">
+                <!--a href="/logCenterIndex"-->
+                <a href="http://39.104.189.84:30190">
+                    <div class="tray text-center">
+                        <!-- Heading -->
+                        <i class="fa fa-book"></i>
+                        <h3>统一日志中心</h3>
+                        <!-- Paragraph -->
+                        <p>收集多个模块的运行日志并统一管理。</p>
+                        <br/>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="systemOnly" style="display: none">
+            <div class="col-md-4 col-sm-6 chooseBtn" style="margin-top: 10px">
+                <a href="http://39.104.189.84:30000">
+                    <div class="tray text-center">
+                        <!-- Heading -->
+                        <i class="fa fa-link"></i>
+                        <h3>Kubernetes</h3>
+                        <!-- Paragraph -->
+                        <p>将谷歌的集群管理工具引入到虚拟机和裸机场景。</p>
+                        <br/>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="systemOnly" style="display: none">
+            <div class="col-md-4 col-sm-6 chooseBtn" style="margin-top: 10px">
+                <div class="tray text-center" id="accountManagement">
+                    <!-- Heading -->
+                    <i class="fa fa-desktop"></i>
+                    <h3>权限管理</h3>
+                    <!-- Paragraph -->
+                    <p>展示用户目录并且为用户分配不同的角色</p>
+                </div>
+                <!--</a>-->
+            </div>
+        </div>
     </div>
+</div>
 
 
-
-        <!-- Javascript -->
-    <!--<script type="text/javascript" src="static/login/assets/js/jquery-1.11.1.min.js"></script>-->
-    <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.js"></script>
-    <!--<script type="text/javascript" src="static/login/assets/js/jquery.cookie.js"></script>-->
-    <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <!--<script type="text/javascript" src="static/login/assets/bootstrap/js/bootstrap.min.js"></script>-->
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-    <!--<script type="text/javascript" src="static/login/assets/js/jquery.backstretch.min.js"></script>-->
-    <script src="https://cdn.bootcss.com/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
-        <script src="static/login/assets/js/scripts.js"></script>
-        <script src="static/login/assets/js/icon.js"></script>
-        <script type="text/javascript" src="static/login/assets/js/thingsManageUser.js"></script>
-        <!--[if lt IE 10]>
-            <script src="static/login/assets/js/placeholder.js"></script>
-        <![endif]-->
-
-    </body>
+<!-- Javascript -->
+<!--<script type="text/javascript" src="static/login/assets/js/jquery-1.11.1.min.js"></script>-->
+<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.js"></script>
+<!--<script type="text/javascript" src="static/login/assets/js/jquery.cookie.js"></script>-->
+<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<!--<script type="text/javascript" src="static/login/assets/bootstrap/js/bootstrap.min.js"></script>-->
+<link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<!--<script type="text/javascript" src="static/login/assets/js/jquery.backstretch.min.js"></script>-->
+<script src="https://cdn.bootcss.com/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+<script src="static/login/assets/js/scripts.js"></script>
+<script src="static/login/assets/js/icon.js"></script>
+<script type="text/javascript" src="static/login/assets/js/thingsManageUser.js"></script>
+<!--[if lt IE 10]>
+<script src="static/login/assets/js/placeholder.js"></script>
+<![endif]-->
+</body>
 
 </html>

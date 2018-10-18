@@ -300,7 +300,15 @@
                                         条记录
                                     </td>
                                     <td></td>
-                                    <td><input type="text" class="form-control" placeholder="请输入关键字搜索..." id="searchKey"></td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="请输入键值查找..." id="searchKey">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary" type="button" ng-click="findKey()"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+                                        <!--<input type="text" class="form-control" placeholder="请输入关键字搜索..." id="searchKey">-->
+                                    </td>
                                 </tr>
 
                                 <tr class="boldForm">
@@ -336,13 +344,12 @@
                         <div class="divide-line"></div>
 
                         <div class="modal-body showForm" id="controlTable">
-                            <h4 class="detail-block-header">-----控制-----</h4>
+                            <h4 class="detail-block-header">-----控制面板-----</h4>
                             <div class="row">
                                 <div class="control-panel" id="control_panel">
 
                                 </div>
                             </div>
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseDetail">关闭</button>

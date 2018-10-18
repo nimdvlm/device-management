@@ -3,9 +3,9 @@
         <div clas="SMTitle">
             <div class="col-md-7">
                 <span class="header-line">服务组
-                <button style="margin-left:10px" class="btn btn-primary btn-sm user" data-toggle="modal"
+                <!--button style="margin-left:10px" class="btn btn-primary btn-sm user" data-toggle="modal"
                     data-target="#addServiceGroup">+ 创建服务组
-                </button>
+                </button-->
                 </span>
                 <!--span class="SMsearch">
                     <input class="span2" type="text" placeholder="输入设备类型" id="searchAbilityText">
@@ -21,12 +21,12 @@
                 <p class="style"><i class="fa fa-cog fa-cart-plus"></i>&nbsp;设备类型：{{items.deviceType.deviceTypeName}}</p>
                 <p class="style"><i class="fa fa-cog fa-cart-plus"></i>&nbsp;设备型号：{{items.model.modelName}}</p>
                 </div>
-                <span type="button"  class="btn abilityPlus" data-toggle="modal" data-target="#createSM" ng-disabled="flag">
+                <div type="button"  class="abilityPlus" data-toggle="modal" data-target="#createSM" ng-disabled="flag">
                 <i class="glyphicon glyphicon-plus userDelete" title="创建服务"></i>
-                </span>
-                <span type="button" class="btn abilityDelete" data-toggle="modal" data-target="#deleteSM" ng-disabled="flag">
+                </div>
+                <!--span type="button" class="btn abilityDelete" data-toggle="modal" data-target="#deleteSM" ng-disabled="flag">
                 <i class="glyphicon glyphicon-trash userDelete" title="删除服务组"></i>
-                </span>
+                </span--><!--服务组不能删除-->
             </div>
         </div>
 
@@ -158,14 +158,16 @@
                     <div ng-repeat="reply in fchat.replies">
                         <div style="width: 550px; height: 34px; border: 1px solid #ffffff;">
                             <input type="text" style="width: 33%; height:34px;float: left" placeholder="key" ng-model="reply.key" id="reply{{$index+1}}" name="replyOne{{$index+1}}" required="required">
-                            <select class="form-control" type="text" style="width: 33%" ng-model="reply.type" id="replyTwo{{$index+1}}" name="replyTwo{{$index+1}}">
-                                <option value="1" selected="selected" id="option3">1</option>
-                                <option value="2" id="option4">2</option>
-                                <option value="3" id="option5">3</option>
+                            <select class="form-control" type="text" style="width: 33%" ng-model="reply.type" id="replyTwo{{$index+1}}" name="replyTwo{{$index+1}}" ng-change="selectChange(reply.type);">
+                                <option value="1" selected="selected" id="option3">输入值</option>
+                                <option value="2" id="option4">输入Boolean</option>
+                                <option value="3" id="option5">输入范围</option>
                             </select>
                             <div style="width: 33%; float: right;margin-top: -34px">
                                 <!--div id="div2"-->
-                                    <input type="text" style="width: 150px; height:34px" placeholder="value" ng-model="reply.value" id="replyThree{{$index+1}}" name="replyThree{{$index+1}}" required="required">
+                                    <input type="text" ng-show="replyChangeOne" style="width: 150px; height:34px" placeholder="value" ng-model="reply.value" id="replyThree{{$index+1}}" name="replyThree{{$index+1}}" required="required">
+                                    <input class="ng-hide" ng-show="replyChangeTwo" type="text" style="width: 150px; height:34px" placeholder="true or false" ng-model="reply.value" name="replyThree{{$index+1}}" required="required">
+                                    <input class="ng-hide" ng-show="replyChangeThree" type="text" style="width: 150px; height:34px" placeholder="0000 0000" ng-model="reply.value" name="replyThree{{$index+1}}" required="required">
                                 <!--/div-->
                                 <!--div id="div3" style="width: 150px; height: 14px; border: 1px solid #ffffff;display:none">
                                     <input type="text" style="width: 50%;float: left; height:34px" placeholder="on">

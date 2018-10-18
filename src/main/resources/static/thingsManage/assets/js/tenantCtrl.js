@@ -27,13 +27,13 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
 
     /*鼠标移入动画效果*/
     $scope.fadeSiblings = function () {
-        $(".chooseBtn").mouseover(function () {
+        $(".tenantChoose").mouseover(function () {
             $(this).siblings().stop().fadeTo(300, 0.3);
         });
     };
     /*鼠标移出动画效果*/
     $scope.reSiblings = function () {
-        $(".chooseBtn").mouseout(function () {
+        $(".tenantChoose").mouseout(function () {
             $(this).siblings().stop().fadeTo(300, 1);
         });
     };
@@ -45,21 +45,24 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
     //console.log($scope.tenantGroups);
 
 //通过ID获取租户详情
-    $scope.showTenantDetail = function (item) {
-        $scope.tenantGroupID = item.id;
-        $scope.tenantTitle = item.title;
-        tenantID = item.id;
+    $scope.showTenantDetail = function (item,index) {
+        console.log(item);
+        $scope.tenantGroupID = item;
+        $scope.tableType_index = index;
+        //$scope.tenantTitle = item.title;
+        tenantID = item;
         //console.log(item.id);
         /*除点击元素外其他元素均无特殊样式*/
-        $scope.tenantGroups.forEach(function (items) {
-            if(item != items) items.style = {}
+       /* $scope.tenantGroups.forEach(function (items) {
+            console.log(items);
+            if(item != items.id)items.style = {}
         });
-        /*给点击元素加上特定样式*/
-        item.style = {"border": "2px solid #305680"};
+        /!*给点击元素加上特定样式*!/
+        item.style = {"border": "2px solid #305680"};*/
 
         var tenantDetail = $resource('/api/account/tenant?tenantId=:tenantID',{tenantID:'@id'});
         //console.log(item.id);
-        tenantDetail.get({tenantID:item.id}).$promise.then(function (value) {
+        tenantDetail.get({tenantID:item}).$promise.then(function (value) {
             console.log("查看是否显示disable");
             console.log(value);
             $scope.tenantDisable = value.suspendedStatus;
@@ -129,7 +132,7 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
             }
         });
 
-    }
+    };
 
 //创建租户
     $("#addTenant").click(function () {
@@ -201,16 +204,23 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
            //console.log(items);
        })
 
-    }
-
-//Admin创建租户管理员
+    };
+//创建租户管理员
     $("#createManager").click(function () {
         $("#adminName").removeClass("input-err");
         $("#addTenantManager input").each(function () {     //each为每个匹配元素规定要运行的函数
             $(this).val("");
         });
     });
+    $("#reAdminPassword").blur(function(){
+        if($("#adminPassword").val()!=$("#reAdminPassword").val()){
 
+            alert("两次输入的密码不一致");
+            //$("#adminPassword").val();
+            //$("#reAdminPassword").val();
+
+        }
+    });
     $scope.addAdmin = function (vale) {
         $("#modalConfirmCreateAdmin").attr("data-dismiss","modal");//attr设置或返回被选元素的属性或值；
         if($("#adminName").val()){
@@ -222,6 +232,10 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
             var we_chat = $("#adminWe_chart").val();
             var createAdminInfo = '{"tenant_id":'+'"'+tenantID+'"'+',"name":'+'"'+name+'"'+',"additional_info":'+'"'+additional_info+'"'+',"email":'+'"'+email+'"'+',"password":'+'"'+password+'"'+',"phone":'+'"'+phone+'"'+',"we_chat":'+'"'+we_chat+'"'+'}';
             console.log(createAdminInfo);
+            console.log("校验密码是否正确");
+            //校验密码是否正确
+            //var rePassword = $("#reAdminPassword").val();
+
             $.ajax({
                 url:"/api/account/tenantAdmin",
                 data:createAdminInfo,
@@ -229,9 +243,7 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
                 contentType: "application/json; charset=utf-8",//post请求必须
                 success:function (resp) {
                     toastr.success("创建成功！");
-                    setTimeout(function () {
-                        window.location.reload();
-                    },1000);
+                    $scope.showTenantDetail($scope.tenantGroupID,$scope.tableType_index);
                 },
                 error:function (jqXHR, textStatus, errorThrown) {
                     //alert(jqXHR.responseText);
@@ -252,7 +264,7 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
         }
 
 
-    }
+    };
 
 
 //Admin删除租户管理员
@@ -263,16 +275,14 @@ mainApp.controller("tenantCtrl",["$scope","$resource","$location",function ($sco
             var deleteAdmin = $resource("/api/account/user?userId=:userID",{userID:"@id"});
             deleteAdmin.delete({userID:data.id},{},function (resp) {
                 toastr.success("删除成功！");
-                setTimeout(function () {
-                    window.location.reload();
-                },1000);
+                $scope.showTenantDetail($scope.tenantGroupID,$scope.tableType_index);
             },function (err) {
                 alert("删除失败！");
             });
         }else {
             alert("不删除?");
         }
-    }
+    };
 
 
 

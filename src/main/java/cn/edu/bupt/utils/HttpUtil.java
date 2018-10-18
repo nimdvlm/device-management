@@ -198,6 +198,28 @@ public class HttpUtil {
         return sendRequire(request, session);
     }
 
+    public static Response sendDelet(String url,HttpSession session,JsonObject requestBody) throws Exception{
+        String str;
+        if(requestBody==null){
+            str = "";
+        }else{
+            str = requestBody.toString();
+        }
+        RequestBody body = RequestBody.create(JSON, str);
+        Request.Builder buider = new Request.Builder()
+                .url(url)
+                .delete(body) ;
+        String tocken = (String)session.getAttribute("token");
+        if(tocken==null){
+            getAccessToken(session);
+        }
+        tocken = (String)session.getAttribute("token");
+        buider.header("Authorization","Bearer "+tocken);
+        Request request = buider.build();
+
+        return sendRequire(request, session);
+    }
+
     public static String sendGetToThingsboard(String url, Map<String,String> headers, HttpSession session) throws Exception{
 
         Request.Builder buider = new Request.Builder()

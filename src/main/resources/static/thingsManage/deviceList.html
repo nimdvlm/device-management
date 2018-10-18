@@ -14,18 +14,13 @@
 
         </div><!-- /.row -->
           <div class="row" style="margin-top: 10px;margin-left: 20px;">
-            <div class="col-md-2">
-                <!--<div class="input-group">
-                    --<input type="text" class="form-control" placeholder="每页显示设备数量" id="deviceListNum">
-                      <span class="input-group-btn">
-                          <button class="btn btn-primary" type="button" ng-click="deviceListNumChoose()">确定</button>
-                      </span>
-                      </div>-->
+            <!--div class="col-md-3">
+
                   每页显示<input type="text" id="deviceListNum" style="width: 50px;border-radius: 5px;" ng-change="deviceListNumChoose()" ng-model="myNum" placeholder="9">个设备
 
-            </div>
+            </div-->
               <!--<div class="col-md-3"></div>-->
-              <div class="col-md-4">
+              <div class="col-md-3">
                   <div class="input-group">
                       <input type="text" class="form-control" placeholder="请输入设备名称..." id="searchDeviceText">
                       <span class="input-group-btn">
@@ -205,7 +200,10 @@
                         </tr>
                         <tr>
                             <td class="attName">状态：</td>
-                            <td><input type="text" class="inputInfo" id="status"></td>
+                            <td><select class="inputInfo" id="status">
+                                <option value="">运行中</option>
+                                <option>维修中</option>
+                                <option>检查中</option></select></td>
                         </tr>
                         <tr>
                             <td class="attName">检修时间：</td>
@@ -482,6 +480,33 @@
                         <tbody id="attrDisplay" class="data-list"></tbody>
                     </table>
                     <div id="pagination" class="pagination"></div>
+                    <!--新增设备属性-->
+                    <button class="btn btn-primary" ng-show="!isshow_attr" ng-click="addSpecOpetion();isshow_attr=true">新增属性 <i class="glyphicom glyphicon-plus"></i></button>
+                    <table class="table table-bordered table-striped table-hover dataTable ng-hide" ng-show="isshow_attr">
+                        <thead>
+                        <tr>
+                            <th class="sorting">键</th>
+                            <th class="sorting">值</th>
+                            <th class="sorting">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="specOption in deviceAttrArray track by $index">
+                            <td><input class="form-control" placeholder="key" id="deviceKeyAttr_{{$index}}"></td>
+                            <td><input class="form-control" placeholder="value" id="deviceValueAttr_{{$index}}"></td>
+                            <td>
+                                <button type="button" ng-click="addSpecOpetion()"
+                                        class="btn btn-default" title="增加">增加
+                                </button>
+                                <button type="button" ng-click="delSpecOpetion($index)"
+                                        class="btn btn-default" title="删除">删除
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary ng-hide" ng-show="isshow_attr" ng-click="createDeviceAttr()">保存属性</button>
+
                 </div>
                 <div class="divide-line"></div>
                 <div class="modal-body showForm" id="realTimeTable">

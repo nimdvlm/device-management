@@ -18,7 +18,20 @@ $(document).ready(function () {
     var userLevel = $.cookie("userLevel");
     var tenantId = $.cookie("tenantId");
     var userId = $.cookie("userId");
-    console.log($.cookie());
+    console.log($.cookie())
+
+    /******不同权限显示不同模块*******/
+    if(userLevel == "CUSTOMER_USER"){
+        $('.systemOnly').hide()
+    }
+    else if(userLevel == "TENANT_ADMIN"){
+        $('.systemOnly').hide()
+    }
+    else if(userLevel == "SYS_ADMIN"){
+        $('.systemOnly').show()
+    }else{
+        $('.systemOnly').hide()
+    }
 
     var token = undefined;
     $.ajax({
@@ -52,7 +65,32 @@ $(document).ready(function () {
     $("#bigData").click(function () {
        window.location.href = "../bigData/device1.html?id="+tenantId;
     });
-
-
-
+    $("#logout").click(function () {
+        console.log("success");
+        $.ajax({
+            url:"/api/user/logout",
+            contentType: "application/json; charset=utf-8",
+            type:"GET",
+            success:function(msg) {
+                console.log(msg);
+                window.location.href="/";
+            }
+        });
+    });
+    $("#accountManagement").click(function () {
+        window.location.href = "/userPool";
+    })
+    /*退出登录
+    $("#logout").click = function () {
+        console.log("sssssssssssss");
+        $.ajax({
+            url:"/api/user/logout",
+            contentType: "application/json; charset=utf-8",
+            type:"GET",
+            success:function(msg) {
+                console.log(msg);
+                window.location.href="/";
+            }
+        });
+    };*/
 });
