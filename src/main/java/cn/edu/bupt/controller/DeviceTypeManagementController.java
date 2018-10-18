@@ -63,7 +63,7 @@ public class DeviceTypeManagementController extends DefaultThingsboardAwaredCont
     }
 
     //获取单个管理组
-    @RequestMapping(value = "getById/{modelId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"} )
+    @RequestMapping(value = "/getById/{modelId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"} )
     @ResponseBody
     public String getById(@PathVariable("modelId") int modelId){
         String url = "http://" + getDeviceTypeManagementServer() + "/api/v1/devicetypemanagement/deviceTypeManagement/"+modelId;
