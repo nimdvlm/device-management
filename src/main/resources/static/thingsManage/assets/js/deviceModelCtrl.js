@@ -115,7 +115,7 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
         },function (error) {
             toastr.error("创建失败！");
         });
-    }
+    };
 
 
     /*删除*/
@@ -140,23 +140,69 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
 
     /*编辑查看*/
     $scope.editDeviceTypeIcon = function (item) {
-        console.log(item);
-        console.log(item.model);
-        console.log(item.model.modelId);
+        //console.log(item);
         var deviceChangeGroup = $resource('/api/devicetype/getById/:modelId');
         deviceChangeGroup.get({modelId:item.model.modelId},{},function (info) {
-           console.log(info);
-           $scope.modifyDeviceModel = info.modelName;
-           $scope.modifyDeviceIcom = info.deviceIcon;
-
-
-
-
+            console.log(info);
+            //console.log(info.model.modelName);
+            $scope.modifyDeviceModel = info.model.modelName;
+            $scope.modelIdSave = info.model.modelId;
+           // console.log(info.manufacturer.manufacturerName);
+            $scope.modifyManufacturerName = info.manufacturer.manufacturerName;
+            $scope.manufacturerIdSave = info.manufacturer.manufacturerId;
+           // console.log(info.deviceType.deviceTypeName);
+            $scope.modifyDeviceType = info.deviceType.deviceTypeName;
+            $scope.deviceTypeIdSave = info.deviceType.deviceTypeId;
+           // console.log(info.model.deviceIcon);
+            $scope.modifyDeviceIcom = info.model.deviceIcon;
+            //console.log(info.model.limitLifetime);
+            $scope.modifyDeviceDate = info.model.limitLifetime;
         });
-
     }
 
-    /*编辑提交*/
+    /*编辑提交/api/devicetype/update/{modelId}/{deviceTypeId}/{manufacturerId}更新设备型号管理组PUT方法*/
+    $scope.saveModifyDeviceModel = function () {
+        console.log($scope.modelIdSave);
+        console.log($scope.deviceTypeIdSave);
+        console.log($scope.manufacturerIdSave);
+        var saveDeviceModel = {};
+        saveDeviceModel.manufacturerName = $scope.modifyManufacturerName;
+        saveDeviceModel.deviceType = $scope.modifyDeviceType;
+        saveDeviceModel.model = $scope.modifyDeviceModel;
+        saveDeviceModel.limit_lifetime = $scope.modifyDeviceDate;
+        saveDeviceModel.icon = $scope.modifyDeviceIcom;
 
+        console.log(saveDeviceModel);
+        $scope.saveStringDeviceModel = JSON.stringify(saveDeviceModel);
+        console.log($scope.saveStringDeviceModel);
+        $.ajax({
+            url: "/api/devicetype/update/"+$scope.modelIdSave+"/"+$scope.deviceTypeIdSave+"/"+$scope.manufacturerIdSave,
+            data: $scope.saveStringDeviceModel,
+            contentType: "application/json; charset=utf-8",//post请求必须
+            dataType: "text",
+            type: "PUT",
+            success: function (msg) {
+                    toastr.success("保存成功！");
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+
+            },
+            error: function (err) {
+                toastr.error("保存成功失败！");
+            }
+        });
+
+
+       /* var saveDeviceGroupObj =  $resource("/api/devicetype/update/:modelId/:deviceTypeId/:manufacturerId");
+        $scope.deviceInfomation = saveDeviceGroupObj.save({modelId:$scope.modelIdSave,deviceTypeId:$scope.deviceTypeIdSave,manufacturerId:$scope.manufacturerIdSave},$scope.saveStringDeviceModel,function () {
+            toastr.success("！");
+            setTimeout(function () {
+            },500);
+        },function (error) {
+            toastr.error("保存失败！");
+        });*/
+
+    }
 
 });

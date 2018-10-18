@@ -151,11 +151,11 @@
                         <label class="col-sm-3 control-label" style="text-align: left">
                             限制生存时间
                         </label>
-                        <input type="text" style="pixels: 300px" placeholder="00:00:00" onchange="javascript:if(!/^[0-5]{1}[0-9]{1}:[0-5]{1}[0-5]{1}:[0-5]{1}[0-5]{1}$/.test(this.value)){alert('时间格式不正确,正确的格式为 00:00:00-23:59:59');this.value=''};" />
+                        <input type="text" style="pixels: 300px" ng-model="modifyDeviceDate" placeholder="00:00:00" onchange="javascript:if(!/^[0-5]{1}[0-9]{1}:[0-5]{1}[0-5]{1}:[0-5]{1}[0-5]{1}$/.test(this.value)){alert('时间格式不正确,正确的格式为 00:00:00-23:59:59');this.value=''};" />
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" ng-click="modifyDeviceModel()">
+                        <button type="button" class="btn btn-primary" ng-click="saveModifyDeviceModel()">
                             保存
                         </button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">
