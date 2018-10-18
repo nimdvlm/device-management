@@ -79,7 +79,7 @@ public class DeviceTypeManagementController extends DefaultThingsboardAwaredCont
     @RequestMapping(value = "/manufacturerName/{manufacturerId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"} )
     @ResponseBody
     public String getManufacturerName(@PathVariable("manufacturerId") int manufacturerId){
-        String url = "http://" + getDeviceTypeManagementServer() + "/api/v1/devicetypemanagement/deviceTypeManagement/manufacturer"+ manufacturerId;
+        String url = "http://" + getDeviceTypeManagementServer() + "/api/v1/devicetypemanagement/deviceTypeManagement/manufacturer/"+ manufacturerId;
         try{
             String response = HttpUtil.sendGetToThingsboard(url,null,request.getSession());
             return retSuccess(response);
@@ -92,7 +92,7 @@ public class DeviceTypeManagementController extends DefaultThingsboardAwaredCont
     @RequestMapping(value = "/deviceTypeName/{deviceTypeId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"} )
     @ResponseBody
     public String getDeviceTypeName(@PathVariable("deviceTypeId") int deviceTypeId){
-        String url = "http://" + getDeviceTypeManagementServer() + "/api/v1/devicetypemanagement/deviceTypeManagement/deviceType"+ deviceTypeId;
+        String url = "http://" + getDeviceTypeManagementServer() + "/api/v1/devicetypemanagement/deviceTypeManagement/deviceType/"+ deviceTypeId;
         try{
             String response = HttpUtil.sendGetToThingsboard(url,null,request.getSession());
             return retSuccess(response);
