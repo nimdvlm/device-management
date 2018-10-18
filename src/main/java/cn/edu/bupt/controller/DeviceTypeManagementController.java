@@ -69,7 +69,12 @@ public class DeviceTypeManagementController extends DefaultThingsboardAwaredCont
         String url = "http://" + getDeviceTypeManagementServer() + "/api/v1/devicetypemanagement/deviceTypeManagement/"+modelId;
         try{
             String response = HttpUtil.sendGetToThingsboard(url,null,request.getSession());
-            return retSuccess(response);
+            JsonObject obj = (JsonObject)new JsonParser().parse(response);
+            String manufacturerName = getManufacturerName(obj.get("manufacturerId").getAsInt());
+            String deviceTypeName = getDeviceTypeName(obj.get("deviceTypeId").getAsInt());
+            obj.addProperty("manufacturerName", manufacturerName);
+            obj.addProperty("deviceTypeName", deviceTypeName);
+            return retSuccess(obj.getAsString());
         }catch(Exception e){
             return retFail("获取失败: - " + e.toString());
         }
