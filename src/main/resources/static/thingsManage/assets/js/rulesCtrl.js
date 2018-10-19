@@ -10,6 +10,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.showupdatemessage = false;
     $scope.showPluginMail = false;
     $scope.showrestfulPOST = false;
+    $scope.showSMS = false;
+
     $scope.isPluginReady = false
     $scope.RESTMethod = ["POST", "DELETE", "GET"];
     $scope.RestfulBody = {};
@@ -134,15 +136,25 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             console.log("当前插件为mail")
             document.getElementById('plugin_' + i).style.display = 'none'
             document.getElementById('plugin_mail_' + i).style.display = 'block'
+            document.getElementById('plugin_SMS_' + i).style.display = 'none'
             document.getElementById('plugin_updatemessage_' + i).style.display = 'none'
         } else if (data.name.search(/Update/i) >= 0) {
             console.log("当前插件为updatemessage")
             document.getElementById('plugin_' + i).style.display = 'none'
             document.getElementById('plugin_mail_' + i).style.display = 'none'
+            document.getElementById('plugin_SMS_' + i).style.display = 'none'
             document.getElementById('plugin_updatemessage_' + i).style.display = 'block'
-        } else {
+        } else if(data.name.search(/SMS/i) >= 0){
+            console.log("当前插件为SMS")
+            document.getElementById('plugin_' + i).style.display = 'none'
+            document.getElementById('plugin_mail_' + i).style.display = 'none'
+            document.getElementById('plugin_SMS_' + i).style.display = 'block'
+            document.getElementById('plugin_updatemessage_' + i).style.display = 'none'
+        }
+        else {
             document.getElementById('plugin_' + i).style.display = 'block'
             document.getElementById('plugin_mail_' + i).style.display = 'none'
+            document.getElementById('plugin_SMS_' + i).style.display = 'none'
             document.getElementById('plugin_updatemessage_' + i).style.display = 'none'
         }
     }
@@ -598,6 +610,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
                 $scope.showsendmail = true;
                 $scope.showrestful = false;
                 $scope.showupdatemessage = false;
+                $scope.showSMS=false;
+
                 data.method = "POST";
                 $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/mailplugin/sendMail";
                 console.log("MailUrl：" + data.url);
@@ -606,6 +620,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
                 $scope.showrestful = true;
                 $scope.showsendmail = false;
                 $scope.showupdatemessage = false;
+                $scope.showSMS=false;
+
                 tempurl = data.url;
                 $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/restfulplugin/sendRequest";
             } else if (data.name == "UpdateMessagePlugin") {
@@ -613,12 +629,25 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
                 $scope.showupdatemessage = true;
                 $scope.showsendmail = false;
                 $scope.showrestful = false;
+                $scope.showSMS=false;
 
                 $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/updatemessageplugin/updateMessage/insert"
+            }else if(data.name=="SMSPlugin"){
+                console.log("判断添加插件类型为SMSPlugin")
+                $scope.showSMS=true;
+                $scope.showupdatemessage = false;
+                $scope.showsendmail = false;
+                $scope.showrestful = false;
+
+                $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/smsplugin/sendSms"
             }
             else {
                 console.log("判断添加插件类型为其他")
                 $scope.showsendmail = false;
+                $scope.showSMS=false;
+
+                $scope.RuleaddPluginUrl = "http://" + data.url
+
             }
         }
     }
@@ -681,6 +710,22 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             transform.url = $scope.RuleaddPluginUrl;
             transform.method = "POST";
             transform.requestBody = $scope.UpdatemessagereqBody;
+        }else if($scope.RuleaddPlugin.name == "SMSPlugin"){
+            //解决ng-repeat动态遍历空数组报错bug
+            var SMSTo = [];
+            for (var i = 0; i < $scope.fchat.replies.length; i++) {
+                SMSTo.push($scope.fchat.replies[i].value);
+            }
+
+            //插件为SMS时requestbody
+            $scope.SMSrequestBody = {phone: []};
+            $scope.SMSrequestBody.phone = SMSTo;
+            $scope.SMSrequestBody.text = $('#addTranSMSText').val();
+
+            transform.name = $scope.RuleaddPlugin.name;
+            transform.url = $scope.RuleaddPluginUrl;
+            transform.method = "POST";
+            transform.requestBody = $scope.SMSrequestBody;
         }
 
         $scope.formData.transforms.push(new ObjTransform(transform.name, transform.url, transform.method, transform.requestBody))
@@ -806,6 +851,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         $scope.showsendmail = false;
         $scope.showrestful = false;
         $scope.showupdatemessage = false;
+        $scope.showSMS = false
 
         $scope.showPluginMail = false;
         $scope.showrestfulPOST = false;
@@ -821,6 +867,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         $scope.text_devicetype = "绑定"
         $scope.text_devicemodel = "绑定"
 
+        $scope.fchat.replies = [{value: ""}]//清空收件人
         $scope.addFilterType = undefined//用于重置select
         console.log("恢复现场")
     };

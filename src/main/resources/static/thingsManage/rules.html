@@ -140,6 +140,10 @@
                                     <p>消息：{{data.requestBody.message}}</p>
                                     <p>消息类型：{{data.requestBody.messageType}}</p>
                                 </div>
+                                <div id="plugin_SMS_{{$index}}" style="display: none">
+                                    <p>联系人：{{data.requestBody.phone}}</p>
+                                    <p>短信内容：{{data.requestBody.text}}</p>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
@@ -673,6 +677,35 @@
                                     style="vertical-align:top">Message：</span><textarea
                                     style="height:120px;width: 70%;" id="addUpdateMessageText"></textarea>
                             </p>
+
+                            <!--判断是SMS后显示-->
+                            <div ng-show="showSMS">
+                                <div>
+                                    <hr/>
+                                    <!--添加多个收件人-->
+                                    <div ng-repeat="replySMS in fchat.replies">
+                                        <p>
+                                            联系人{{$index + 1}}&ensp;：<input type="text" ng-model="replySMS.value"
+                                                                           id="replySMS{{$index + 1}}"
+                                                                           name="replySMS{{$index + 1}}"
+                                                                           placeholder="请输入联系人电话"/>
+                                            <a href="" ng-click="fchat.incrReply($index)">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                            <a href="" ng-click="fchat.decrReply($index)"
+                                               ng-show="fchat.canDescReply">
+                                                <i class="fa fa-minus"></i>
+                                            </a>
+                                            <i class="fa fa-minus" ng-show="!fchat.canDescReply"/></a>
+                                        </p>
+                                    </div>
+                                    <!--添加多个收件人End-->
+                                    <p>短信内容：<input type="text" name="SMStext" id="addTranSMSText"
+                                                   placeholder="请输入短信内容">
+                                    </p>
+                                    <input type="reset" style="display:none;"/>
+                                </div>
+                            </div>
 
                             <!--判断是sendmail后显示-->
                             <div ng-show="showsendmail">
