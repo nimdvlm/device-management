@@ -27,7 +27,7 @@ public class DeviceTypeManagementController extends DefaultThingsboardAwaredCont
     @RequestMapping(value = "/update/{modelId}/{deviceTypeId}/{manufacturerId}", method = RequestMethod.PUT,produces = {"application/json;charset=UTF-8"} )
     public String updateDeviceTypeMana(@PathVariable("modelId")Integer modelId, @PathVariable("deviceTypeId")Integer deviceTypeId,
                                      @PathVariable("manufacturerId")Integer manufacturerId, @RequestBody String deviceTypeMana){
-        String url = "http://" + getDeviceTypeManagementServer() + "/api/v1/devicetypemanagement/deviceTypeManagement/"+ modelId + "/"+ deviceTypeId + "/"+ manufacturerId;
+        String url = "http://" + getDeviceTypeManagementServer() + "/api/v1/devicetypemanagement/updateManagement/"+ modelId + "/"+ deviceTypeId + "/"+ manufacturerId;
         try{
             String response = HttpUtil.sendPutToThingsboard(url, null, new JsonParser().parse(deviceTypeMana).getAsJsonObject(), request.getSession());
             return retSuccess(response);
