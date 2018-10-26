@@ -425,6 +425,16 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
             document.onmousemove = function (el) {
                 var left = el.clientX - diffX;
                 var top = el.clientY - diffY;
+
+                //保证拖拽框一直保持在浏览器窗口内部，不能被拖出的浏览器窗口的范围
+                //var left = oEvent.clientX - x;
+                //var top = oEvent.clientY - y;
+                if(left < 420) {
+                    left = 420;
+                }
+                if(top < 190) {
+                    top = 190;
+                }
                 drag.style.left = left+'px';
                 drag.style.top = top+'px';
                 $scope.endLeft = left;
