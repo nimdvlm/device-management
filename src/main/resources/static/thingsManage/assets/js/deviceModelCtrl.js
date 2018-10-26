@@ -81,33 +81,32 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
             createDeviceModel.limit_lifetime = 0;
         }else {
             var firstNum = createDeviceModel.limit_lifetime.substring(0,1);
-            console.log(firstNum);
+            //console.log(firstNum);
             var secondNum = createDeviceModel.limit_lifetime.substring(1,2);
-            console.log(secondNum);
+            //console.log(secondNum);
             var thirdNum = createDeviceModel.limit_lifetime.substring(3,4);
-            console.log(thirdNum);
+            //console.log(thirdNum);
             var fourthNum = createDeviceModel.limit_lifetime.substring(4,5);
-            console.log(fourthNum);
+            //console.log(fourthNum);
             var fifthNum = createDeviceModel.limit_lifetime.substring(6,7);
-            console.log(fifthNum);
+            //console.log(fifthNum);
             var sixthNum = createDeviceModel.limit_lifetime.substring(7,8);
-            console.log(sixthNum);
+            //console.log(sixthNum);
             const longNum = parseInt(firstNum)*10*3600000 + parseInt(secondNum)*3600000 + parseInt(thirdNum)*10*60000 + parseInt(fourthNum)*60000 + parseInt(fifthNum)*10*1000 + parseInt(sixthNum)*1000;
-            console.log(longNum);
+            //console.log(longNum);
             createDeviceModel.limit_lifetime = longNum;
         }
         if(createDeviceModel.icon == ""){
             createDeviceModel.icon = "../images/deviceDefult.PNG";
         }
-        console.log("createDeviceModel.icon");
-        console.log(createDeviceModel.icon);
+
+        //console.log(createDeviceModel.icon);
         $scope.createDeviceModel = JSON.stringify(createDeviceModel);
 
-        console.log("查看存入是数值：");
-        console.log($scope.createDeviceModel);
+        //console.log($scope.createDeviceModel);
         var createDeviceGroupObj =  $resource("/api/devicetype/insert");
         $scope.deviceInfomation = createDeviceGroupObj.save({},$scope.createDeviceModel,function (resp) {
-            console.log(resp);
+            //console.log(resp);
             toastr.success("创建成功！");
            setTimeout(function () {
                 window.location.reload();
@@ -120,8 +119,6 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
 
     /*删除*/
     $scope.deleteDeviceTypeIcon = function (item) {
-        console.log("点击删除出现字段");
-        console.log(item);
         console.log(item.model.modelId);
         $scope.modelId = item.model.modelId;
     };
@@ -154,24 +151,27 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
             $scope.modifyDeviceType = info.deviceType.deviceTypeName;
             $scope.deviceTypeIdSave = info.deviceType.deviceTypeId;
            // console.log(info.model.deviceIcon);
-            $scope.modifyDeviceIcom = info.model.deviceIcon;
+            $scope.modifyDeviceIcon = info.model.deviceIcon;
             //console.log(info.model.limitLifetime);
             $scope.modifyDeviceDate = info.model.limitLifetime;
         });
-    }
+    };
 
     /*编辑提交/api/devicetype/update/{modelId}/{deviceTypeId}/{manufacturerId}更新设备型号管理组PUT方法*/
     $scope.saveModifyDeviceModel = function () {
-        console.log($scope.modelIdSave);
-        console.log($scope.deviceTypeIdSave);
-        console.log($scope.manufacturerIdSave);
+        //console.log($scope.modelIdSave);
+        //console.log($scope.deviceTypeIdSave);
+        //console.log($scope.manufacturerIdSave);
+
         var saveDeviceModel = {};
         saveDeviceModel.manufacturerName = $scope.modifyManufacturerName;
         saveDeviceModel.deviceType = $scope.modifyDeviceType;
         saveDeviceModel.model = $scope.modifyDeviceModel;
         saveDeviceModel.limit_lifetime = $scope.modifyDeviceDate;
-        saveDeviceModel.icon = $scope.modifyDeviceIcom;
-
+        saveDeviceModel.icon = $scope.deviceIconShow;
+        if(typeof(saveDeviceModel.icon) == "undefined"){
+            saveDeviceModel.icon = $scope.modifyDeviceIcon;
+        }
         console.log(saveDeviceModel);
         $scope.saveStringDeviceModel = JSON.stringify(saveDeviceModel);
         console.log($scope.saveStringDeviceModel);
@@ -183,10 +183,10 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
             type: "PUT",
             success: function (msg) {
                     toastr.success("保存成功！");
-                    setTimeout(function () {
+                    /*setTimeout(function () {
                         window.location.reload();
                     }, 1000);
-
+*/
             },
             error: function (err) {
                 toastr.error("保存成功失败！");
