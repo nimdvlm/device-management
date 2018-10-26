@@ -343,11 +343,11 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         formData.diffY = "300px";
         //formData.position=JSON.stringify({left:420,top:150});//后端接口调整，临时赋值为常值
 
-        console.log(formData)
+        //console.log(formData)
         var addEntity = $resource('/api/dashboard/entity/insert');
         addEntity.save({}, formData)
             .$promise.then(function (resp) {
-            console.log("创建成功");
+            //console.log("创建成功");
             if(resp.id!=""){
                 location.reload();
             }else{
@@ -361,11 +361,11 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
     $scope.delDashboard=function () {
         var delDB = $resource('/api/dashboard/delete/:id', {id: '@id'});
         delDB.delete({}, {id: $scope.dbItem.id}, function (resp) {
-            console.log("删除成功:id=" + $scope.dbItem.id);
+            //console.log("删除成功:id=" + $scope.dbItem.id);
             $("#delDashboard").modal("hide");
             location.reload();
         }, function (resp) {
-            console.log("1234再来一次");
+            //console.log("1234再来一次");
             alert("删除失败，请重试！")
         });
     }
@@ -378,12 +378,12 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
 
     //删除entity
     $scope.delEntity=function (entity) {
-        console.log("删除实例："+entity.id);
+        //console.log("删除实例："+entity.id);
         var result = confirm("确定删除？");
         if(result){
             var delDB = $resource('/api/dashboard/entity/delete/:id', {id: '@id'});
             delDB.delete({}, {id: entity.id}, function (resp) {
-                console.log("删除成功:id=" + entity.id);
+                //console.log("删除成功:id=" + entity.id);
                 $("#delDashboard").modal("hide");
                 location.reload();
             }, function (resp) {
@@ -417,7 +417,9 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
 
 
     $scope.weiYi_mouseDown = function (item) {
-        console.log(item);
+        //console.log("移位函数：");
+        //console.log(item);
+        $scope.numIndex = item;
         var drag = document.getElementById("drag_"+item);
         drag.onmousedown = function (el) {
             var diffX = el.clientX - drag.offsetLeft;//鼠标点击物体那一刻相对于物体左侧边框的距离=点击时的位置相对于浏览器最左边的距离-物体左边框相对于浏览器最左边的距离
@@ -449,37 +451,47 @@ mainApp.controller("dashboardCtrl",["$scope","$resource","$timeout",function ($s
         }
     }
     //保存实体
-    $scope.saveEntity = function (entity) {
-        console.log("entity");
-        console.log(entity);
-        console.log($scope.endLeft);
-        console.log($scope.endTop);
-        var createEntity = {};
-        createEntity.id = entity.id;
-        createEntity.dashboard_id = entity.dashboard_id;
-        createEntity.device_id = entity.device_id;
-        createEntity.name = entity.name;
-        createEntity.entity_type = entity.entity_type;
-        createEntity.diffX = $scope.endLeft+"px";
-        createEntity.diffY = $scope.endTop+"px";
-        console.log("entity选择的位置为：");
-        console.log(createEntity);
-        $scope.createEntity = JSON.stringify(createEntity);
-        $.ajax({
-            url:"/api/dashboard/entity/updateEntity",
-            data:$scope.createEntity,
-            type:"PUT",
-            dataType:'text',
-            contentType: "application/json; charset=utf-8",//post请求必须
-            success:function (resp) {
-                toastr.success("保存成功！");
-                console.log("success");
-                console.log("保存成功");
-            },
-            error:function (err) {
-                alert("创建失败！");
-            }
-        });
+
+
+    $scope.saveEntity = function (entity,item) {
+       // $event.stopPropagation();
+        //$event.preventDefault();
+
+        //console.log("保存函数");
+        //console.log(entity);
+        //console.log($scope.numIndex);
+        //event.stopPropagation();
+        if(item == $scope.numIndex){
+            var createEntity = {};
+            createEntity.id = entity.id;
+            createEntity.dashboard_id = entity.dashboard_id;
+            createEntity.device_id = entity.device_id;
+            createEntity.name = entity.name;
+            createEntity.entity_type = entity.entity_type;
+            createEntity.diffX = $scope.endLeft+"px";
+            createEntity.diffY = $scope.endTop+"px";
+            //console.log("entity选择的位置为：");
+            //console.log(createEntity);
+            $scope.createEntity = JSON.stringify(createEntity);
+            $.ajax({
+                url:"/api/dashboard/entity/updateEntity",
+                data:$scope.createEntity,
+                type:"PUT",
+                dataType:'text',
+                contentType: "application/json; charset=utf-8",//post请求必须
+                success:function (resp) {
+                    toastr.success("保存成功！");
+                    //console.log("success");
+                    //console.log("保存成功");
+                },
+                error:function (err) {
+                    alert("创建失败！");
+                }
+            });
+        }else {
+            alert("请保存当前实体！"+entity.name);
+        }
+
     };
 
 }]);
