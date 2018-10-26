@@ -183,10 +183,10 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
             type: "PUT",
             success: function (msg) {
                     toastr.success("保存成功！");
-                    /*setTimeout(function () {
+                    setTimeout(function () {
                         window.location.reload();
                     }, 1000);
-*/
+
             },
             error: function (err) {
                 toastr.error("保存成功失败！");
