@@ -39,61 +39,68 @@ mainApp.controller("deviceListCtrl", ["$scope", "$resource", function ($scope, $
     }
 
 
+    $scope.isshowSearchRun = false;
     /*返回值为限制个数的所有设备信息*/
-    $.ajax({
-        url: initUrl,
-        contentType: "application/json; charset=utf-8",
-        async: false,
-        type: "GET",
-        success: function (msg) {
-            console.log(msg);
-            if (msg.length != 0) {
-                $scope.deviceList = msg;
-                var last = $scope.deviceList.length - 1;
-                console.log($scope.deviceList);
-                console.log($scope.deviceList.length);
+    $scope.getDeviceList = function () {
 
-                for (var i = 0; i < $scope.deviceList.length; i++) {
-                    allDeviceId.push($scope.deviceList[i].id);
-                }
+        $.ajax({
+            url: initUrl,
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            type: "GET",
+            success: function (msg) {
+                console.log(msg);
+                if (msg.length != 0) {
+                    $scope.deviceList = msg;
+                    var last = $scope.deviceList.length - 1;
+                    console.log($scope.deviceList);
+                    console.log($scope.deviceList.length);
 
-                /*获取设备状态*/
-                var statusObj = $resource("/api/device/status");
-                var statusInfo = statusObj.save({deviceId: allDeviceId}).$promise.then(function (resp) {
-                    console.log(resp);
-                    var temp;
-                    for (var i = 0; i < allDeviceId.length; i++) {
-                        temp = allDeviceId[i];
-                        console.log(resp[temp]);
-                        if (resp[temp] === "offline") {
-                            $("#" + temp).css({color: "rgb(220, 220, 220)"});
-                        }
+                    for (var i = 0; i < $scope.deviceList.length; i++) {
+                        allDeviceId.push($scope.deviceList[i].id);
                     }
 
-                    //优先级最高，过期设备和快过期设备的提示
-                    for (var i = 0; i < $scope.deviceList.length; i++) {
-                        if ($scope.deviceList[i].alarm) {
-                            console.log($scope.deviceList[i].alarm);
-                            if ($scope.deviceList[i].alarm === "red") {
-                                $("#" + $scope.deviceList[i].id).css("color", "red");
-                            } else if ($scope.deviceList[i].alarm === "orange") {
-                                $("#" + $scope.deviceList[i].id).css("color", "orange");
+                    /*获取设备状态*/
+                    var statusObj = $resource("/api/device/status");
+                    var statusInfo = statusObj.save({deviceId: allDeviceId}).$promise.then(function (resp) {
+                        console.log(resp);
+                        var temp;
+                        for (var i = 0; i < allDeviceId.length; i++) {
+                            temp = allDeviceId[i];
+                            console.log(resp[temp]);
+                            if (resp[temp] === "offline") {
+                                $("#" + temp).css({color: "rgb(220, 220, 220)"});
                             }
                         }
-                    }
 
-                });
+                        //优先级最高，过期设备和快过期设备的提示
+                        for (var i = 0; i < $scope.deviceList.length; i++) {
+                            if ($scope.deviceList[i].alarm) {
+                                console.log($scope.deviceList[i].alarm);
+                                if ($scope.deviceList[i].alarm === "red") {
+                                    $("#" + $scope.deviceList[i].id).css("color", "red");
+                                } else if ($scope.deviceList[i].alarm === "orange") {
+                                    $("#" + $scope.deviceList[i].id).css("color", "orange");
+                                }
+                            }
+                        }
+
+                    });
 
 
-                /*用于翻页*/
-                nextDeviceId = $scope.deviceList[last].id;
-                nextDeviceName = $scope.deviceList[last].name;
-                preDeviceIdArr.push($scope.deviceList[last].id);
-                preDeviceNameArr.push($scope.deviceList[last].name);
+                    /*用于翻页*/
+                    nextDeviceId = $scope.deviceList[last].id;
+                    nextDeviceName = $scope.deviceList[last].name;
+                    preDeviceIdArr.push($scope.deviceList[last].id);
+                    preDeviceNameArr.push($scope.deviceList[last].name);
+                }
+
             }
+        });
 
-        }
-    });
+    };
+    $scope.getDeviceList();
+
 
 
     /*鼠标移入动画效果*/
