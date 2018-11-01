@@ -41,8 +41,8 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
             var addDG = $resource('/api/group/create');
             addDG.save({}, {"name": $scope.addDGName})
                 .$promise.then(function (resp) {
-                console.log("新建设备组接口连接成功");
-                console.log(resp);
+                //console.log("新建设备组接口连接成功");
+                //console.log(resp);
                 $("#addRule").modal("hide");
                 if (resp.id != "") {
                     location.reload();
@@ -59,12 +59,12 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     $scope.searchDG = function () {
         if ($scope.dgname != "" && $scope.dgname != null) {
             //权限管理
-            console.log($.cookie());
+            //console.log($.cookie());
             if ($.cookie("userLevel") === "CUSTOMER_USER") {
-                console.log("客户权限")
+                //console.log("客户权限")
                 var searchDG = $resource('/api/group/customerGroups?limit=20&textSearch=:name', {name: '@name'});
             } else {
-                console.log("租户权限")
+                //console.log("租户权限")
                 var searchDG = $resource('/api/group/tenantGroups?limit=20&textSearch=:name', {name: '@name'});
             }
 
@@ -88,32 +88,14 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     $scope.delDG = function () {
         var delDG = $resource('/api/group/delete/:id', {id: '@id'});
         delDG.delete({}, {id: $scope.item.id}, function (resp) {
-            console.log("删除成功:id=" + $scope.item.id + ";name=" + $scope.item.name);
+            // console.log("删除成功:id=" + $scope.item.id + ";name=" + $scope.item.name);
             $("#delDG").modal("hide");
             location.reload();
         }, function (resp) {
-            console.log("1234再来一次");
+            //console.log("1234再来一次");
             alert("删除失败，请重试！")
         });
     }
-
-
-    //编辑设备组名
-    /****暂无此接口
-     $scope.editDGName=function(){
-        if ($scope.editdg != "" && $scope.editdg != null){
-            var editDG = $resource('http://localhost:8082/person/:id', {id: '@id'});
-            editDG.save({id: $scope.item.id},$scope.editdg)
-                .$promise.then(function (resp) {
-                console.log("信息修改成功:id=" + $scope.item.id + ";name=" + $scope.item.name);
-                $("#editDGName").modal("hide");
-                location.reload();
-            });
-        }else{
-            alert("输入不能为空!");
-        }
-    }
-     *****/
 
 
     //右侧视图展示设备组详情
@@ -135,7 +117,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                 $scope.showEmpty = false;
             } else {
                 $scope.showEmpty = true;
-                console.log("当前设备组下无设备");
+                //console.log("当前设备组下无设备");
             }
 
         });
@@ -146,11 +128,11 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         //点击按钮查看令牌
     var tokenObj = $resource('/api/device/token/:deviceId', {id: '@id'});
     $scope.showToken = function (data) {
-        console.log("向后台获取设备Token中...")
+        //console.log("向后台获取设备Token中...")
         $scope.tokenJson = tokenObj.get({deviceId: data.id})
             .$promise.then(function (value) {
                 $scope.token = value.deviceToken;
-                console.log($scope.token);
+                //console.log($scope.token);
             });
     };
     /****END***/
@@ -158,12 +140,12 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
     /****************设备组取消关联某设备*********************/
     $scope.giveData = function (data) {
-        console.log("ng-repeat中的data赋值给作用域");
+        //console.log("ng-repeat中的data赋值给作用域");
         $scope.devInGroup = data;
     }//此方法用于将ng-repeat里的data赋值给作用域。非上策
 
     $scope.unAssign = function (data) {
-        console.log("正在向后台发送请求...");
+        //console.log("正在向后台发送请求...");
         var DISASS = $resource('/api/group/unassign/:deviceId/:groupId', {deviceId: '@id', groupId: '@id'});
         DISASS.delete({deviceId: $scope.devInGroup.id, groupId: $scope.item.id})
             .$promise.then(function (person) {
@@ -219,14 +201,14 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         /*==========显示属性==========*/
         //分页功能实现
         function initUI(pageNo, pageSize) {
-            console.log(pageNo);
-            console.log(pageSize);
+            //console.log(pageNo);
+            //console.log(pageSize);
             //pageNo 当前页号
             //pageSize 页面展示数据个数
             var html = '';
             for (var i = (pageNo - 1) * pageSize; i < pageNo * pageSize; i++) {
                 var item = attrDetailInfo[i];
-                console.log(attrDetailInfo[i]);
+                //console.log(attrDetailInfo[i]);
                 var latestTs = formatDate(new Date(attrDetailInfo[i].lastUpdateTs));
                 html += '<tr>' + '<td class="list-item">' + latestTs + '</td>' + '<td class="list-item">' + item.key + '</td>' + '<td class="list-item">' + item.value + '</td>' + '</tr>';
             }
@@ -291,7 +273,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         $scope.controlInfo.$promise.then(function (value) {
 
 
-            console.log(value);
+            // console.log(value);
 
             for (var i = 0; i < value.length; i++) {
                 var abilityDesJson = JSON.parse(value[i].abilityDes);//将所有abilityDes（string）转成JSON
@@ -303,13 +285,13 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
                 //每个小控制面板的id为ctrlDiv{{i}}
                 $('#control_panel').append('<div class="col-xs-10 col-sm-6 col-md-4 service-panel"><form><fieldset id="ctrlDiv' + i + '"><legend class="service-control-legend">' + serviceName[i] + '</legend></fieldset></form></div>');
-                console.log("serviceName:" + serviceName[i]);
+                //console.log("serviceName:" + serviceName[i]);
                 var params = abilityDesJson.serviceBody.params;//用于记录每一个小控制面板下有多少个控制选项,随i的取值变化而变化
-                console.log("params" + params);
-                console.log("params.length" + params.length);
+                //console.log("params" + params);
+                // console.log("params.length" + params.length);
                 for (var j = 0; j < params.length; j++) {
-                    console.log(params[j]);
-                    console.log(params[j].value);
+                    //   console.log(params[j]);
+                    //   console.log(params[j].value);
 
                     var type = params[j].type;//控制类型
                     var key = params[j].key;//控制名称
@@ -337,13 +319,13 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                          img.setAttribute('off', false);*/
                         $("#param" + i + j).click(function () {
                             if ($(this).attr("src") == "static/thingsManage/assets/img/off.png") {
-                                console.log("off->on");
+                                //       console.log("off->on");
                                 $(this).removeClass();
                                 $(this).addClass("true");
                                 $(this).attr("src", "static/thingsManage/assets/img/on.png");
 
                             } else {
-                                console.log("on->off");
+                                //      console.log("on->off");
                                 $(this).removeClass();
                                 $(this).addClass("false");
                                 $(this).attr("src", "static/thingsManage/assets/img/off.png");
@@ -358,11 +340,11 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                          var upperBound = temp[1];*/
                         var lowerBound = 10;
                         var upperBound = 20;
-                        console.log(lowerBound);
-                        console.log(upperBound);
+                        // console.log(lowerBound);
+                        // console.log(upperBound);
                         //html5标签 <input type="number" min="" max="" step="" value=""/>
                         $('#ctrlDiv' + i).append('<div class="form-group"><label class="col-sm-3 control-label" style="text-align: left;">' + key + '</label><div class="col-sm-9"><input type="number" class="form-control" id="param' + i + j + '" name="rangeInput" min="' + lowerBound + '" max="' + upperBound + '" value="' + lowerBound + '" step="1"/><span>(' + lowerBound + '-' + upperBound + ')</span></div></div>');
-                        console.log("number:" + $("#param" + i + j).val());
+                        // console.log("number:" + $("#param" + i + j).val());
                     }
                 }
                 $('#ctrlDiv' + i).append('<button class="btn btn-primary ctrlDivBtn" id="' + i + '" type="button">应用</button>');
@@ -387,8 +369,8 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                     keyArr[i] = new Array();
 
                     for (var j = 0; j < params.length; j++) {
-                        console.log(params[j].key);
-                        console.log(params[j].type);
+                        //  console.log(params[j].key);
+                        //  console.log(params[j].type);
 
                         if (params[j].type == 2) {
 
@@ -403,20 +385,20 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                             valueArr[i][j] = $("#param" + i + j).val();
                         }
                         keyArr[i][j] = params[j].key;
-                        console.log("==========" + i + j + "=============");
-                        console.log("valueInfo:" + valueArr[i][j]);
-                        console.log("key:" + keyArr[i][j]);
-                        console.log("===========" + i + j + "============");
+                        // console.log("==========" + i + j + "=============");
+                        // console.log("valueInfo:" + valueArr[i][j]);
+                        // console.log("key:" + keyArr[i][j]);
+                        // console.log("===========" + i + j + "============");
 
                     }
                     // console.log(abilityDesArr[i].serviceBody.params.length);
                 }
 
 
-                console.log(this.id);
+                //console.log(this.id);
                 var index = this.id;
-                console.log(serviceName[index]);
-                console.log(methodName[index]);
+                // console.log(serviceName[index]);
+                // console.log(methodName[index]);
                 // var jsonObj = {};
                 var keys = [];
                 var values = [];
@@ -441,8 +423,8 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
                     keys.push(keyArr[index][i]);
                     values.push(valueArr[index][i]);
-                    console.log("value" + index + i + ":" + valueArr[index][i]);
-                    console.log("key" + index + i + ":" + keyArr[index][i]);
+                    //   console.log("value" + index + i + ":" + valueArr[index][i]);
+                    //  console.log("key" + index + i + ":" + keyArr[index][i]);
                     var json = '{';
                     for (var j = 0; j < keys.length; j++) {
                         json += '"' + keys[j] + '":"' + values[j] + '",';
@@ -450,8 +432,8 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                     json = json.slice(0, json.length - 1);
                     json += '}';
                 }
-                console.log("json:" + json);
-                console.log($scope.item.id);
+                //  console.log("json:" + json);
+                //  console.log($scope.item.id);
                 var subObj = $resource("/api/shadow/control/:deviceId");
                 var subInfo = subObj.save({deviceId: data.id}, json, function (resp) {
                     toastr.success("应用成功！");
@@ -521,9 +503,9 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
                 var message = JSON.parse(e.data);
 
                 for (var i in message.data) {
-                    console.log(message.data[i].ts);
-                    console.log(message.data[i].key);
-                    console.log(message.data[i].value);
+                    // console.log(message.data[i].ts);
+                    // console.log(message.data[i].key);
+                    // console.log(message.data[i].value);
                     var telemetryDate = formatDate(new Date(message.data[i].ts));
                     var telemetryKey = message.data[i].key;
                     var telemetryValue = message.data[i].value;
@@ -553,7 +535,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
         function log(s) {
             // Also log information on the javascript console
-            console.log(s);
+            // console.log(s);
         }
 
         function sendMessage(msg) {
@@ -576,7 +558,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
     /*设置初始信息*/
     $scope.setValue = function (data) {
-        console.log("ng-repeat中的data赋值给作用域");
+        //  console.log("ng-repeat中的data赋值给作用域");
         $scope.devInGroup = data;
 
         //通过父设备ID获取父设备名称
@@ -591,7 +573,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         });
 
         //设置父类设备初始信息
-        console.log("父类设备名称：" + parentName);
+        // console.log("父类设备名称：" + parentName);
         $("#reParentId option").each(function () {
             if ($(this).val() == parentName) {
                 $(this).attr("selected", true);
@@ -624,28 +606,28 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
     $scope.getManufacture = function () {
         manufacturerId = $("#reManufacture option:selected").attr("class");
-        console.log("厂商：" + manufacturerId);
+        // console.log("厂商：" + manufacturerId);
         $("#reDeviceType option").remove();
         $("#reModel option").remove();
         /*根据厂商查询设备类型*/
-        console.log("/api/v1/abilityGroup/deviceTypes?manufacturerId=" + manufacturerId);
+        // console.log("/api/v1/abilityGroup/deviceTypes?manufacturerId=" + manufacturerId);
         var deviceTypeObj = $resource("/api/v1/abilityGroup/deviceTypes?manufacturerId=" + manufacturerId);
         $scope.deviceTypeInfo = deviceTypeObj.query();
 
 
         $scope.getDeviceType = function () {
             deviceTypeId = $("#reDeviceType option:selected").attr("class");
-            console.log("设备类型：" + deviceTypeId);
+            // console.log("设备类型：" + deviceTypeId);
 
 
             /*根据厂商和设备类型查询设备型号*/
-            console.log("/api/v1/abilityGroup/models?manufacturerId=" + manufacturerId + "&deviceTypeId=" + deviceTypeId);
+            // console.log("/api/v1/abilityGroup/models?manufacturerId=" + manufacturerId + "&deviceTypeId=" + deviceTypeId);
             var deviceModelObj = $resource("/api/v1/abilityGroup/models?manufacturerId=" + manufacturerId + "&deviceTypeId=" + deviceTypeId);
             $scope.deviceModelInfo = deviceModelObj.query();
 
             $scope.getDeviceModel = function () {
                 deviceModelId = $("#reModel option:selected").attr("class");
-                console.log("设备型号:" + deviceModelId);
+                // console.log("设备型号:" + deviceModelId);
             };
         };
     };
@@ -662,10 +644,10 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         $scope.reLocation = $("#reLocation").val();
         $scope.reStatus = $("#reStatus").val();
         $scope.refreshDeviceInfo = '{"name":' + '"' + $scope.reName + '"' + ',"Id":' + '"' + $scope.devInGroup.id + '"' + ',"parentDeviceId":' + '"' + $scope.reParent + '"' + ',"deviceType":' + '"' + $scope.reDeviceType + '"' + ',"manufacture":' + '"' + $scope.reManufacture + '"' + ',"model":' + '"' + $scope.reModel + '"' + ',"location":' + '"' + $scope.reLocation + '"' + ',"status":' + '"' + $scope.reStatus + '"' + '}';
-        //字符串类型的数据发送给后台是会自动加上引号
-        console.log($scope.refreshDeviceInfo);
+        // 字符串类型的数据发送给后台是会自动加上引号
+        // console.log($scope.refreshDeviceInfo);
         $scope.refreshDeviceInformation = refreshDeviceObj.save({}, $scope.refreshDeviceInfo, function (resp) {
-            //toastr.success("更新设备成功！");
+            // toastr.success("更新设备成功！");
             setTimeout(function () {
                 window.location.reload();
             }, 1000);
@@ -678,7 +660,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
     /*鼠标移入动画效果*/
     $scope.fadeSiblings = function () {
-        console.log("666");
+        // console.log("666");
         $(".chooseBtn").mouseover(function () {
             $(this).siblings().stop().fadeTo(300, 0.3);
         });

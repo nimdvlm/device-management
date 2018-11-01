@@ -678,7 +678,7 @@
                                     style="height:120px;width: 70%;" id="addUpdateMessageText"></textarea>
                             </p>
 
-                            <!--判断是SMS后显示-->
+                            <!--判断是SMS插件-->
                             <div ng-show="showSMS">
                                 <div>
                                     <hr/>
@@ -707,7 +707,7 @@
                                 </div>
                             </div>
 
-                            <!--判断是sendmail后显示-->
+                            <!--判断是sendmail插件-->
                             <div ng-show="showsendmail">
                                 <div>
                                     <hr/>
@@ -738,6 +738,13 @@
                                     <input type="reset" style="display:none;"/>
                                 </div>
                             </div>
+
+                            <!--判断是sql插件-->
+                            <div ng-show="showSQL">
+                                <p>telemetry_key：<input type="text" id="SQLPlugin_telemetryKey"
+                                                                     style="width: 75%;"/></p>
+                            </div>
+
                         </form>
                     </div>
                     <div class="modal-footer">

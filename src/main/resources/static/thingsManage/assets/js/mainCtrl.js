@@ -63,8 +63,8 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
             controller:"mainCtrl"
         })
         .when("/homeTenant",{
-            templateUrl:"homeTenant.html",
-            controller:"homePageCtrl"
+            templateUrl:"homeTenant.html"
+            //controller:"mainCtrl"
         });
     if($.cookie("userLevel") === "SYS_ADMIN"){
         console.log("系统权限跳转")

@@ -11,6 +11,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.showPluginMail = false;
     $scope.showrestfulPOST = false;
     $scope.showSMS = false;
+    $scope.showSQL=false;
 
     $scope.isPluginReady = false
     $scope.RESTMethod = ["POST", "DELETE", "GET"];
@@ -144,7 +145,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             document.getElementById('plugin_mail_' + i).style.display = 'none'
             document.getElementById('plugin_SMS_' + i).style.display = 'none'
             document.getElementById('plugin_updatemessage_' + i).style.display = 'block'
-        } else if(data.name.search(/SMS/i) >= 0){
+        } else if (data.name.search(/SMS/i) >= 0) {
             console.log("当前插件为SMS")
             document.getElementById('plugin_' + i).style.display = 'none'
             document.getElementById('plugin_mail_' + i).style.display = 'none'
@@ -162,12 +163,12 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //模糊搜索规则
     $scope.searchRule = function () {
         var textSearch = $("#searchRuleText").val();
-        console.log(textSearch)
+        //console.log(textSearch)
         if (textSearch != "" && textSearch != null) {
             var searchRuleObj = $resource("/api/rule/ruleByTenant/" + textSearch);
             $scope.searchRuleInfo = searchRuleObj.query();
-            console.log($scope.searchRuleInfo);
-            console.log($scope.searchRuleInfo.length);
+            //console.log($scope.searchRuleInfo);
+            //console.log($scope.searchRuleInfo.length);
             $scope.searchRuleInfo.$promise.then(function (value) {
                 if (value == false) {
                     toastr.warning("规则名称输入有误，无此设备！");
@@ -193,11 +194,10 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     $scope.delRule = function () {
         var delRULE = $resource('/api/rule/delete/:id', {id: '@id'});
         delRULE.delete({}, {id: $scope.Ruleitem.rule.ruleId}, function (resp) {
-            console.log("删除成功");
+            //console.log("删除成功");
             $("#delDG").modal("hide");
             location.reload();
         }, function (resp) {
-            console.log("1234再来一次");
             alert("删除失败，请重试！")
         });
     }
@@ -209,7 +209,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         //editRule.save({id: $scope.Ruleitem.rule.ruleId}, $scope.state1)
         editRule.save({id: $scope.Ruleitem.rule.ruleId})
             .$promise.then(function (resp) {
-            console.log("规则激活成功:id=" + $scope.Ruleitem.rule.ruleId);
+            //console.log("规则激活成功:id=" + $scope.Ruleitem.rule.ruleId);
             $("#editDGName").modal("hide");
             location.reload();
         });
@@ -222,22 +222,22 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         //editRule.save({id: $scope.Ruleitem.rule.ruleId}, $scope.state2)
         stopRule.save({id: $scope.Ruleitem.rule.ruleId})
             .$promise.then(function (resp) {
-            console.log("规则暂停成功:id=" + $scope.Ruleitem.rule.ruleId);
+            //console.log("规则暂停成功:id=" + $scope.Ruleitem.rule.ruleId);
             $("#editDGName").modal("hide");
             location.reload();
         });
     }
 
     //编辑规则信息
-    $scope.editRuleInfo=function () {
-        var data={}
+    $scope.editRuleInfo = function () {
+        var data = {}
 
-        data.ruleId=$scope.Ruleitem.rule.ruleId
-        data.tenantId=$.cookie("tenantId")
-        data.additional_info=$('#editRuleInfo_addition').val()
-        data.name=$('#editRuleInfo_name').val()
-        data.state=$scope.Ruleitem.rule.state
-        console.log(data)
+        data.ruleId = $scope.Ruleitem.rule.ruleId
+        data.tenantId = $.cookie("tenantId")
+        data.additional_info = $('#editRuleInfo_addition').val()
+        data.name = $('#editRuleInfo_name').val()
+        data.state = $scope.Ruleitem.rule.state
+        //console.log(data)
 
         //$resource只能接受对象
         // var editRuleInfo = $resource('/api/rule/updateRule');
@@ -249,49 +249,49 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         $.ajax({
             url: "/api/rule/updateRule",
             contentType: "application/json; charset=utf-8",
-            data:JSON.stringify(data),
+            data: JSON.stringify(data),
             async: false,
             type: "POST",
             dataType: "text",
             success: function (msg) {
-                console.log(msg)
-                if(msg==='ok'){
+                //console.log(msg)
+                if (msg === 'ok') {
                     toastr.success('编辑规则成功')
                 }
                 location.reload();
             }
         });
     }
-    
-    //编辑过滤器-传递当前Filter对象
-    $scope.showEditFilterModal=function (index) {
-        var scope=angular.element($('#Filter'+index)[0]).scope()
 
-        $scope.editfilter=scope.data
-        console.log($scope.editfilter)
+    //编辑过滤器-传递当前Filter对象
+    $scope.showEditFilterModal = function (index) {
+        var scope = angular.element($('#Filter' + index)[0]).scope()
+
+        $scope.editfilter = scope.data
+        //console.log($scope.editfilter)
     }
 
     //编辑过滤器
-    $scope.editFilter=function () {
-        var data={}
+    $scope.editFilter = function () {
+        var data = {}
 
-        console.log('filter:')
-        data.filterId=$scope.editfilter.filterId
-        data.type=''
-        data.name=$('#editFilter_name').val()
-        data.jsCode=$('#editFilter_jscode').val()
-        console.log(data)
+        //console.log('filter:')
+        data.filterId = $scope.editfilter.filterId
+        data.type = ''
+        data.name = $('#editFilter_name').val()
+        data.jsCode = $('#editFilter_jscode').val()
+        //console.log(data)
 
         $.ajax({
             url: "/api/rule/updateFilter",
             contentType: "application/json; charset=utf-8",
-            data:JSON.stringify(data),
+            data: JSON.stringify(data),
             async: false,
             type: "POST",
             dataType: "text",
             success: function (msg) {
-                console.log(msg)
-                if(msg==='ok'){
+                //console.log(msg)
+                if (msg === 'ok') {
                     toastr.success('修改过滤器成功')
                 }
                 location.reload()
@@ -300,18 +300,18 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     }
 
     //删除过滤器
-    $scope.delFilter=function () {
-        var filterId=$scope.editfilter.filterId
+    $scope.delFilter = function () {
+        var filterId = $scope.editfilter.filterId
 
         $.ajax({
-            url: "/api/rule/deleteFilter/"+filterId,
+            url: "/api/rule/deleteFilter/" + filterId,
             contentType: "application/json; charset=utf-8",
             async: false,
             type: "DELETE",
             dataType: "text",
             success: function (msg) {
-                console.log(msg)
-                if(msg==='ok'){
+                //console.log(msg)
+                if (msg === 'ok') {
                     toastr.success('删除过滤器成功')
                 }
                 location.reload()
@@ -320,38 +320,38 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     }
 
     //编辑插件-传递当前Plugin象
-    $scope.showEditPluginModal=function (index) {
-        var scope=angular.element($('#Plugin'+index)[0]).scope()
+    $scope.showEditPluginModal = function (index) {
+        var scope = angular.element($('#Plugin' + index)[0]).scope()
 
-        $scope.editplugin=scope.data
-        console.log($scope.editplugin)
+        $scope.editplugin = scope.data
+        //console.log($scope.editplugin)
     }
 
     //编辑插件
-    $scope.editPlugin=function () {
-        var data={}
-        var requestBody=$('#editPlugin_requestBody').val()
-        console.log(requestBody)
+    $scope.editPlugin = function () {
+        var data = {}
+        var requestBody = $('#editPlugin_requestBody').val()
+        //console.log(requestBody)
 
-        console.log('plugin:')
-        data.transformId=$scope.editplugin.transformId
-        data.name=$('#editPlugin_name').val()
-        data.url=$('#editPlugin_url').val()
-        data.method='POST'
-        data.requestBody=JSON.parse(requestBody)
-        console.log(data)
-        console.log(JSON.stringify(data))
+        //console.log('plugin:')
+        data.transformId = $scope.editplugin.transformId
+        data.name = $('#editPlugin_name').val()
+        data.url = $('#editPlugin_url').val()
+        data.method = 'POST'
+        data.requestBody = JSON.parse(requestBody)
+        //console.log(data)
+        //console.log(JSON.stringify(data))
 
         $.ajax({
             url: "/api/rule/updateTransform",
             contentType: "application/json; charset=utf-8",
-            data:JSON.stringify(data),
+            data: JSON.stringify(data),
             async: false,
             type: "POST",
             dataType: "text",
             success: function (msg) {
-                console.log(msg)
-                if(msg==='ok'){
+                //console.log(msg)
+                if (msg === 'ok') {
                     toastr.success('修改插件成功')
                 }
                 location.reload()
@@ -360,18 +360,18 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     }
 
     //删除插件
-    $scope.delPlugin=function () {
-        var transformId=$scope.editplugin.transformId
+    $scope.delPlugin = function () {
+        var transformId = $scope.editplugin.transformId
 
         $.ajax({
-            url: "/api/rule/deleteTransform/"+transformId,
+            url: "/api/rule/deleteTransform/" + transformId,
             contentType: "application/json; charset=utf-8",
             async: false,
             type: "DELETE",
             dataType: "text",
             success: function (msg) {
-                console.log(msg)
-                if(msg==='ok'){
+                // console.log(msg)
+                if (msg === 'ok') {
                     toastr.success('删除插件成功')
                 }
                 location.reload()
@@ -402,7 +402,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
                     /*根据厂商和设备类型查询设备型号*/
                     $scope.getDeviceModel = function (myDeviceType) {
-                        console.log($scope.myDeviceType)
+                        //console.log($scope.myDeviceType)
                         if (myDeviceType) {
                             var deviceTypeId = myDeviceType.deviceTypeId
                             var deviceModelObj = $resource("/api/v1/abilityGroup/models?manufacturerId=" + manufacturerId + "&deviceTypeId=" + deviceTypeId);
@@ -547,10 +547,10 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
                 $scope.formData.filters.push(new ObjFilter($('#addfiltername').val(), "", filterjs));
                 console.log($scope.formData.filters);
 
-                if($scope.isAddSingleFilter){
+                if ($scope.isAddSingleFilter) {
                     console.log('addSingleFilter')
                     addSingleFilter($scope.formData.filters[0])
-                    $scope.isAddSingleFilter=false
+                    $scope.isAddSingleFilter = false
                 }
 
                 //清理现场
@@ -571,11 +571,11 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //向某个rule添加单个过滤器
     function addSingleFilter(data) {
-        var ruleId=$scope.Ruleitem.rule.ruleId
+        var ruleId = $scope.Ruleitem.rule.ruleId
         $.ajax({
-            url: "/api/rule/addFilter/"+ruleId,
+            url: "/api/rule/addFilter/" + ruleId,
             contentType: "application/json; charset=utf-8",
-            data:JSON.stringify(data),
+            data: JSON.stringify(data),
             async: false,
             type: "POST",
             dataType: "text",
@@ -601,50 +601,65 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //点击添加规则-根据插件名判断插件类型
     $scope.change = function (data) {
-        console.log(data)
+        //console.log(data)
         //清空现场时会报错
         if (data != null) {
             $scope.RuleaddPluginUrl = data.url;
             if (data.name == "MailPlugin") {
-                console.log("判断添加插件类型为MailPlugin");
+                //console.log("判断添加插件类型为MailPlugin");
                 $scope.showsendmail = true;
                 $scope.showrestful = false;
                 $scope.showupdatemessage = false;
-                $scope.showSMS=false;
+                $scope.showSMS = false;
+                $scope.showSQL =false;
 
                 data.method = "POST";
                 $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/mailplugin/sendMail";
-                console.log("MailUrl：" + data.url);
+                //console.log("MailUrl：" + data.url);
             } else if (data.name == "RestfulPlugin") {
-                console.log("判断添加插件类型为RestfulPlugin");
+                //console.log("判断添加插件类型为RestfulPlugin");
                 $scope.showrestful = true;
                 $scope.showsendmail = false;
                 $scope.showupdatemessage = false;
-                $scope.showSMS=false;
+                $scope.showSMS = false;
+                $scope.showSQL =false;
 
                 tempurl = data.url;
                 $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/restfulplugin/sendRequest";
             } else if (data.name == "UpdateMessagePlugin") {
-                console.log("判断添加插件类型为updateMessagePlugin");
+                //console.log("判断添加插件类型为updateMessagePlugin");
                 $scope.showupdatemessage = true;
                 $scope.showsendmail = false;
                 $scope.showrestful = false;
-                $scope.showSMS=false;
+                $scope.showSMS = false;
+                $scope.showSQL =false;
 
                 $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/updatemessageplugin/updateMessage/insert"
-            }else if(data.name=="SMSPlugin"){
-                console.log("判断添加插件类型为SMSPlugin")
-                $scope.showSMS=true;
+            } else if (data.name == "SMSPlugin") {
+                //console.log("判断添加插件类型为SMSPlugin")
+                $scope.showSMS = true;
                 $scope.showupdatemessage = false;
                 $scope.showsendmail = false;
                 $scope.showrestful = false;
+                $scope.showSQL =false;
 
                 $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/smsplugin/sendSms"
+            }else if (data.name == "sqlPlugin") {
+                $scope.showSMS = false;
+                $scope.showupdatemessage = false;
+                $scope.showsendmail = false;
+                $scope.showrestful = false;
+                $scope.showSQL =true;
+
+                $scope.RuleaddPluginUrl = "http://" + data.url + "/api/v1/sqlplugin/insert"
             }
             else {
-                console.log("判断添加插件类型为其他")
+                //console.log("判断添加插件类型为其他")
+                $scope.showSMS = false;
+                $scope.showupdatemessage = false;
                 $scope.showsendmail = false;
-                $scope.showSMS=false;
+                $scope.showrestful = false;
+                $scope.showSQL =false;
 
                 $scope.RuleaddPluginUrl = "http://" + data.url
 
@@ -710,7 +725,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             transform.url = $scope.RuleaddPluginUrl;
             transform.method = "POST";
             transform.requestBody = $scope.UpdatemessagereqBody;
-        }else if($scope.RuleaddPlugin.name == "SMSPlugin"){
+        } else if ($scope.RuleaddPlugin.name == "SMSPlugin") {
             //解决ng-repeat动态遍历空数组报错bug
             var SMSTo = [];
             for (var i = 0; i < $scope.fchat.replies.length; i++) {
@@ -726,6 +741,14 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             transform.url = $scope.RuleaddPluginUrl;
             transform.method = "POST";
             transform.requestBody = $scope.SMSrequestBody;
+        }else if ($scope.RuleaddPlugin.name == "sqlPlugin") {
+            var SQLrequestBody={"telemetry_key":""}
+            SQLrequestBody['telemetry_key']=$('#SQLPlugin_telemetryKey').val()
+
+            transform.name = $scope.RuleaddPlugin.name;
+            transform.url = $scope.RuleaddPluginUrl;
+            transform.method = "POST";
+            transform.requestBody =SQLrequestBody
         }
 
         $scope.formData.transforms.push(new ObjTransform(transform.name, transform.url, transform.method, transform.requestBody))
@@ -736,10 +759,10 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         $scope.showaddTransform = true;
         $("input[type=reset]").trigger("click");
 
-        if($scope.isAddSingleTransform){
-            console.log('addSingleTransform')
+        if ($scope.isAddSingleTransform) {
+            //console.log('addSingleTransform')
             addSingleTransform($scope.formData.transforms[0])
-            $scope.isAddSingleTransform=false
+            $scope.isAddSingleTransform = false
         }
 
         //清理案发现场
@@ -749,11 +772,11 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
     //向某个rule添加单个插件
     function addSingleTransform(data) {
-        var ruleId=$scope.Ruleitem.rule.ruleId
+        var ruleId = $scope.Ruleitem.rule.ruleId
         $.ajax({
-            url: "/api/rule/addTransform/"+ruleId,
+            url: "/api/rule/addTransform/" + ruleId,
             contentType: "application/json; charset=utf-8",
-            data:JSON.stringify(data),
+            data: JSON.stringify(data),
             async: false,
             type: "POST",
             dataType: "text",
@@ -768,7 +791,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         if ($scope.formData.rule.name != "" && $scope.formData.rule.name != null) {
             if ($scope.formData.filters.length && $scope.formData.transforms.length) {
                 $('#rulenamealert').hide();
-                console.log("formData");
+                //console.log("formData");
                 console.log($scope.formData);
                 var addRULE = $resource('/api/rule/create');
                 addRULE.save({}, $scope.formData)
@@ -797,7 +820,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     // 增加回复数
     $scope.fchat.incrReply = function ($index) {
         $scope.fchat.replies.splice($index + 1, 0, {value: ""});
-        console.log($scope.fchat.replies);
+        //console.log($scope.fchat.replies);
         // 增加新的回复后允许删除
         $scope.fchat.canDescReply = true;
     }
@@ -852,6 +875,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         $scope.showrestful = false;
         $scope.showupdatemessage = false;
         $scope.showSMS = false
+        $scope.showSQL=false
 
         $scope.showPluginMail = false;
         $scope.showrestfulPOST = false;
@@ -869,7 +893,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
         $scope.fchat.replies = [{value: ""}]//清空收件人
         $scope.addFilterType = undefined//用于重置select
-        console.log("恢复现场")
+        //console.log("恢复现场")
     };
 
     $scope.clearForm = function () {

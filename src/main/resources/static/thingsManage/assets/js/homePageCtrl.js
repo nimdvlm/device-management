@@ -1,8 +1,8 @@
-mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resource) {
-    $scope.showBroadcast=false
+mainApp.controller("homePageCtrl", ["$scope", "$resource", function ($scope, $resource) {
+    $scope.showBroadcast = false
 
     //获取当前tenantId
-    var tenantid=$.cookie("tenantId");
+    var tenantid = $.cookie("tenantId");
 
     // //获取设备个数
     // console.log($.cookie());
@@ -25,10 +25,10 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
     getDeviceCount()
 
     function getDeviceCount() {
-        if($.cookie("userLevel") === "CUSTOMER_USER"){
+        if ($.cookie("userLevel") === "CUSTOMER_USER") {
             console.log("客户权限")
             var url = '/api/device/customer/devicesCount';
-        }else {
+        } else {
             console.log("租户权限")
             var url = '/api/device/tenant/devicesCount';
         }
@@ -52,37 +52,37 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
     }
 
     $scope.Devices = Device.query(function () {
-        var DeviceName=getDevicesName()
+        var DeviceName = getDevicesName()
 
-        var DeviceState=$resource("/api/device/status");
-        var DeviceStates=DeviceState.save({deviceId:DeviceName})
+        var DeviceState = $resource("/api/device/status");
+        var DeviceStates = DeviceState.save({deviceId: DeviceName})
             .$promise.then(function (resp) {
-                console.log(resp);
-                var data=resp;
-                var key='6d090f10-6e1c-11e8-8dc5-59c2cc02320f'
-                console.log(data[key])
-               showDeviceState(resp,DeviceName);
+                //console.log(resp);
+                var data = resp;
+                var key = '6d090f10-6e1c-11e8-8dc5-59c2cc02320f'
+                //console.log(data[key])
+                showDeviceState(resp, DeviceName);
             })
 
     });
 
     var pluginGroup = $resource('/api/rule/allPlugins');
     $scope.pluginGroups = pluginGroup.query(function () {
-        $scope.Plugin_Number=$scope.pluginGroups.length;
-        console.log("插件个数："+$scope.Plugin_Number);
+        $scope.Plugin_Number = $scope.pluginGroups.length;
+        // console.log("插件个数："+$scope.Plugin_Number);
     });
 
     var RULE = $resource('/api/rule/ruleByTenant');
-    $scope.Rules=RULE.query(function () {
-        $scope.Rule_Number=$scope.Rules.length;
-        console.log("规则个数："+$scope.Rule_Number);
+    $scope.Rules = RULE.query(function () {
+        $scope.Rule_Number = $scope.Rules.length;
+        //console.log("规则个数："+$scope.Rule_Number);
         showRuleDounut();
     })
 
     function showRuleDounut() {
-        var  _active =0
-        var  _suspend =0
-        var  _error = 0
+        var _active = 0
+        var _suspend = 0
+        var _error = 0
 
         $scope.Rules.forEach(function (item) {
             if (item.rule.state == "ACTIVE") {
@@ -94,7 +94,7 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
                 _error++;
             }
         });
-        console.log(_active, _suspend, _error);
+        //console.log(_active, _suspend, _error);
 
         //charts.js-甜甜圈
         ctx = document.getElementById("myChart1").getContext("2d");
@@ -133,38 +133,40 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
                 },
                 legend: {
                     position: 'bottom',
-                    labels:{
-                        boxWidth:20
+                    labels: {
+                        boxWidth: 20
                     }
                 }
             }
         });
     }
+
     function getDevicesName() {
-        var _DeviceName=[];
+        var _DeviceName = [];
         $scope.Devices.forEach(function (item) {
             _DeviceName.push(item.id);
         })
         return _DeviceName
 
     }
-    function showDeviceState(data,DeviceName) {
-        var _online=0
-        var _offline=0
-        var _error=0
+
+    function showDeviceState(data, DeviceName) {
+        var _online = 0
+        var _offline = 0
+        var _error = 0
         var devicekey
 
-        for(var i=0;i<$scope.Devices.length;i++){
-            devicekey=DeviceName[i]
+        for (var i = 0; i < $scope.Devices.length; i++) {
+            devicekey = DeviceName[i]
             if (data[devicekey] === "offline") {
                 _offline++;
-            }else if(data[devicekey] === "online"){
+            } else if (data[devicekey] === "online") {
                 _online++;
-            }else{
+            } else {
                 _error++;
             }
         }
-        console.log(_offline,_online,_error);
+        // console.log(_offline,_online,_error);
 
         //饼状图
         ctx = document.getElementById("myChart2").getContext("2d");
@@ -203,8 +205,8 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
                 },
                 legend: {
                     position: 'bottom',
-                    labels:{
-                        boxWidth:20
+                    labels: {
+                        boxWidth: 20
                     }
                 }
             }
@@ -218,51 +220,51 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
     /**socket连接**/
     var stompClient = null;
 
-    console.log("begin!") ;
+    //console.log("begin!") ;
 
     // 开启socket连接
     function connect() {
 
 
-        var socket = new SockJS('http://'+window.Config.WsAddress+'/api/v1/updatemessageplugin');
+        var socket = new SockJS('http://' + window.Config.WsAddress + '/api/v1/updatemessageplugin');
         stompClient = Stomp.over(socket);
 
-        var data=[]
+        var data = []
 
         stompClient.connect(
             {}
             , function () {
-                console.log("Connected!") ;
-                console.log("begin to send") ;
-                stompClient.send("/plugins/updateMessage/fromModule", {},JSON.stringify({'tenantId': tenantid})) ;
+                // console.log("Connected!") ;
+                //  console.log("begin to send") ;
+                stompClient.send("/plugins/updateMessage/fromModule", {}, JSON.stringify({'tenantId': tenantid}));
 
-                var res = stompClient.subscribe("/plugins/updateMessage/response/fromModule/"+tenantid, function(frame){
-                    var body=JSON.parse(frame.body)
+                var res = stompClient.subscribe("/plugins/updateMessage/response/fromModule/" + tenantid, function (frame) {
+                    var body = JSON.parse(frame.body)
                     //根据body的数据类型做相应处理
-                    if(isArray(body)){
-                        console.log("初始20条")
-                        data=body
-                    }else{
-                        console.log("新消息")
-                        data.splice(0,0,body)
+                    if (isArray(body)) {
+                        //    console.log("初始20条")
+                        data = body
+                    } else {
+                        //    console.log("新消息")
+                        data.splice(0, 0, body)
                         data.pop()
                     }
                     data.forEach(function (item) {
-                        item.date=formatDate(new Date(item.ts))
+                        item.date = formatDate(new Date(item.ts))
                     })
-                    if(data === undefined || data.length == 0){
-                        $scope.showBroadcast=false
-                    }else {
-                        console.log("判断有数据，显示广播内容")
-                        $scope.showBroadcast=true
+                    if (data === undefined || data.length == 0) {
+                        $scope.showBroadcast = false
+                    } else {
+                        //  console.log("判断有数据，显示广播内容")
+                        $scope.showBroadcast = true
                     }
 
-                    $scope.BroadcastNews=data
+                    $scope.BroadcastNews = data
 
                     $scope.$apply()
-                    console.log($scope.BroadcastNews)
-                }) ;
-                console.log(res) ;
+                    //  console.log($scope.BroadcastNews)
+                });
+                // console.log(res) ;
             });
     }
 
@@ -272,7 +274,7 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
             stompClient.disconnect();
         }
         setConnected(falses);
-        console.log("Disconnect")
+        //console.log("Disconnect")
     }
 
     /*    // 向‘/app/change-notice’服务端发送消息
@@ -288,32 +290,33 @@ mainApp.controller("homePageCtrl",["$scope","$resource",function ($scope,$resour
      })
      }*/
 
-    connect() ;
+    connect();
 
     //时间格式化
     function formatDate(now) {
         //var year=now.getFullYear();
-        var month=now.getMonth()+1;
-        var date=now.getDate();
-        var hour=now.getHours();
-        var minute=now.getMinutes();
-        if(minute<10){
-            minute="0"+minute
+        var month = now.getMonth() + 1;
+        var date = now.getDate();
+        var hour = now.getHours();
+        var minute = now.getMinutes();
+        if (minute < 10) {
+            minute = "0" + minute
         }
-        if(hour<10){
-            hour="0"+hour
+        if (hour < 10) {
+            hour = "0" + hour
         }
         //var second=now.getSeconds();
-        return month+"-"+date+" "+hour+":"+minute;
+        return month + "-" + date + " " + hour + ":" + minute;
     }
 
     //判断接受消息的数据类型
-    function isArray(value){
+    function isArray(value) {
         if (typeof Array.isArray === "function") {
             return Array.isArray(value);
-        }else{
+        } else {
             return Object.prototype.toString.call(value) === "[object Array]";
         }
     }
+
     /**广播事件END**/
 }]);
