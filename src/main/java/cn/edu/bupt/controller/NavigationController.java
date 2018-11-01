@@ -118,7 +118,7 @@ public class NavigationController {
                 return "redirect:/bigData/device1.html?id="+responseJson.get("user_id").getAsString();
 
             case "gis":
-                return "redirect:http://39.104.189.84:8800/?id="+responseJson.get("user_id").getAsString()+"&token="+responseJson.get("access_token").getAsString();
+                return "redirect:http://39.104.189.84:8800/?id="+responseJson.get("user_id").getAsString()+"&sessionId="+request.getRequestedSessionId();
 
             case "disconf":
                 return "redirect:http://39.104.189.84:30090/main.html";
