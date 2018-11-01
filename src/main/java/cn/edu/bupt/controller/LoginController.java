@@ -128,12 +128,12 @@ public class LoginController extends DefaultThingsboardAwaredController {
         return newAccessTokenJson.get("access_token").getAsString();
     }
 
-    @RequestMapping(value = "/authorize", method = RequestMethod.GET)
+    @RequestMapping(value = "/authorize/{sessionId}", method = RequestMethod.GET)
     @ResponseBody
-    public String authorize(){
+    public String authorize(@PathVariable("sessionId") String sessionId){
 
-        String sessionID = request.getRequestedSessionId();
-
+//        String sessionID = request.getRequestedSessionId();
+        String sessionID = sessionId;
         boolean status = false;
         SessionKey key = new WebSessionKey(sessionID,request,response);
         try{
@@ -155,6 +155,14 @@ public class LoginController extends DefaultThingsboardAwaredController {
             response.setStatus(401);
             return "unauthorized";
         }
+    }
+
+    @RequestMapping(value = "/authorize", method = RequestMethod.GET)
+    @ResponseBody
+    public String authorize(){
+
+        return request.getRequestedSessionId();
+
     }
 
 }

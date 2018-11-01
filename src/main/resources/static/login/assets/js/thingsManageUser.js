@@ -33,14 +33,14 @@ $(document).ready(function () {
         $('.systemOnly').hide()
     }
 
-    var token = undefined;
+    var sessionId = undefined;
     $.ajax({
         url: "/api/user/authorize",
         contentType: "application/json; charset=utf-8",
         async: false,
         type: "GET",
         success: function (msg) {
-            token = msg;
+            sessionId = msg;
         }
     });
 
@@ -57,8 +57,8 @@ $(document).ready(function () {
         }
     });
     $("#3dPages").click(function () {
-        if(token !== undefined){
-            window.open("http://39.104.189.84:8800?id="+tenantId+"&token="+token);
+        if(sessionId !== undefined){
+            window.open("http://39.104.189.84:8800?id="+tenantId+"&sessionId="+sessionId);
         }
     });
 
