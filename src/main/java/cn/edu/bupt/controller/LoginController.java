@@ -1,5 +1,6 @@
 package cn.edu.bupt.controller;
 
+import cn.edu.bupt.config.MySessionContext;
 import cn.edu.bupt.utils.HttpUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.JsonObject;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 
 /**
  * Created by tangjialiang on 2018/1/7.
@@ -133,24 +135,30 @@ public class LoginController extends DefaultThingsboardAwaredController {
     public String authorize(@PathVariable("sessionId") String sessionId){
 
 //        String sessionID = request.getRequestedSessionId();
-        String sessionID = sessionId;
-        boolean status = false;
-        SessionKey key = new WebSessionKey(sessionID,request,response);
-        try{
-            Session se = SecurityUtils.getSecurityManager().getSession(key);
-            Object obj = se.getAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
-            if(obj != null){
-                status = (Boolean) obj;
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            Session se = null;
-            Object obj = null;
-        }
+//        String sessionID = sessionId;
+//        boolean status = false;
 
-        if(status == true){
-            return request.getSession().getAttribute("token").toString();
+        MySessionContext myc= MySessionContext.getInstance();
+        HttpSession sess = myc.getSession(sessionId);
+//        request.changeSessionId();
+//
+//        SessionKey key = new WebSessionKey(sessionID,request,response);
+//        try{
+//            Session se = SecurityUtils.getSecurityManager().getSession(key);
+//
+//            Object obj = se.getAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
+//            if(obj != null){
+//                status = (Boolean) obj;
+//            }
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }finally{
+//            Session se = null;
+//            Object obj = null;
+//        }
+
+        if(sess != null){
+            return sess.getAttribute("token").toString();
         }else {
             response.setStatus(401);
             return "unauthorized";
