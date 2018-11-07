@@ -36,7 +36,8 @@
                         <i class="glyphicon glyphicon-trash fa-lg shand dbicon" title="删除仪表板"></i>
                     </span>
                     <span>
-                        <i class="glyphicon glyphicon-check fa-lg shand dbicon" ng-click="saveEditDashboard()" title="保存仪表盘"></i>
+                        <i class="glyphicon glyphicon-check fa-lg shand dbicon" ng-click="saveEditDashboard()"
+                           title="保存仪表盘"></i>
                     </span>
                 </div>
             </div>
@@ -54,7 +55,8 @@
                 </span>
             </div-->
             <div class="row">
-                <div class="dashboard_item" ng-repeat="entity in entitys track by $index" id="drag_{{$index}}" style="left: {{entity.diffX}};top: {{entity.diffY}};">
+                <div class="dashboard_item" ng-repeat="entity in entitys track by $index" id="drag_{{$index}}"
+                     style="left: {{entity.diffX}};top: {{entity.diffY}};text-align: center">
                     <div class="entity_title">
                         <span id="entity_name">{{entity.name}}</span>
                         <span ng-click="delEntity(entity)" style="float: right;margin-top: 10px">
@@ -62,8 +64,10 @@
                             </span>
                         <span>&emsp;设备：{{entity.device_name}}</span>
                     </div>
-                    <canvas id="entityChart_{{$index}}" min-height="400"  ng-mousedown="weiYi_mouseDown($index)" ng-mouseover="weiYi_mouseover($index)" ng-mouseup="weiYi_mouseup($index)"></canvas>
-                    <span ng-click="saveEntity(entity,$index)"  style="float: right;margin-top: 10px" id="saveEntity_{{$index}}">
+                    <canvas id="entityChart_{{$index}}" min-height="400" ng-mousedown="weiYi_mouseDown($index)"
+                            ng-mouseover="weiYi_mouseover($index)" ng-mouseup="weiYi_mouseup($index)"></canvas>
+                    <span ng-click="saveEntity(entity,$index)" style="float: right;margin-top: 10px"
+                          id="saveEntity_{{$index}}">
                             <i class="glyphicon glyphicon-check shand dbicon" title="保存当前实例"></i>
                         </span>
 
@@ -89,9 +93,9 @@
                 <p>仪表板为空，请添加组件实例</p>
             </div>
             <!--<div class="dashboard_add dashboard_item" style="border-style: dashed;" data-toggle="modal" data-target="#addDBWidget">-->
-                <!--<div class="dbwidget_add_item">-->
-                <!--+添加展示组件-->
-                <!--</div>-->
+            <!--<div class="dbwidget_add_item">-->
+            <!--+添加展示组件-->
+            <!--</div>-->
             <!--</div>-->
         </div>
     </div>
@@ -112,7 +116,7 @@
                 <div class="modal-body">
 
                     <label>仪表板名称：</label>
-                            <td><input id="add_db_name" name="add_db_name" type="text"/>
+                    <td><input id="add_db_name" name="add_db_name" type="text"/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cleanForm()">关闭
@@ -140,16 +144,30 @@
                 </div>
                 <div class="modal-body">
                     <table id="addDBwidget_table">
-                        <tr><td>组件名称：</td>
-                            <td><input ng-model="add_entity_name" name="add_entity_name" type="text"/></td></tr>
-                        <tr><td>关联设备：</td>
-                        <td><select id="db_device" ng-model="add_entity_device" ng-options="x.name for x in DeviceName">
-                            <option value="" disabled>--请选择设备--</option>
-                            </select></td></tr>
-                        <tr><td>组件类型：</td>
-                        <td><select id="db_widget" ng-model="add_entity_type" ng-options="x.name for x in Widgets">
-                            <option value="" disabled>--请选择组件--</option>
-                        </select></td></tr>
+                        <tr>
+                            <td>组件名称：</td>
+                            <td><input ng-model="add_entity_name" name="add_entity_name" type="text"/></td>
+                        </tr>
+                        <tr>
+                            <td>关联设备：</td>
+                            <td><select id="db_device" ng-model="add_entity_device"
+                                        ng-options="x.name for x in DeviceName" ng-change="changeDevice(add_entity_device)">
+                                <option value="" disabled>--请选择设备--</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>组件类型：</td>
+                            <td><select id="db_widget" ng-model="add_entity_type" ng-options="x.name for x in Widgets" ng-change="changeEntityType(add_entity_type)">
+                                <option value="" disabled>--请选择组件--</option>
+                            </select></td>
+                        </tr>
+                        <tr ng-show="showProperty">
+                            <td>绑定属性：</td>
+                            <td><select id="db_widget_property" ng-model="add_entity_property" ng-options="x for x in propertys">
+                                <option value="" disabled>--请选择属性--</option>
+                            </select></td>
+                            <td ng-if="propertys.length===0" style="color:red">*当前设备暂无属性，不支持绑定仪表盘！</td>
+                        </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
