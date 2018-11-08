@@ -4,6 +4,8 @@
 <head>
     <script src="/js/jquery-1.8.2.min.js"></script>
     <script>
+        var BUPT_IOT_MAIN= "http://39.104.84.131"
+
         $(function () {
             $("#upload").click(function () {
                 //$("#imgWait").show();
@@ -12,7 +14,7 @@
                 formData.append("file",$("#file1")[0].files[0]);
                 formData.append("name",name);
                 $.ajax({
-                    url: "http://39.104.84.131/api/document/upload",
+                    url: BUPT_IOT_MAIN+"/api/document/upload",
                     type: "POST",
                     data: formData,
                     /**

@@ -1,4 +1,7 @@
 mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
+    var BUPT_IOT_MAIN= "39.104.84.131" //主机IP地址
+
+
     $scope.isShowAll = true;
     $scope.isShowEmpty = false;
 
@@ -471,7 +474,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     var ws;
 
     function realtimeDevice(deviceId) {
-        var url = 'ws://39.104.84.131:8100/websocket';
+        var url = 'ws://'+BUPT_IOT_MAIN+':8100/websocket';
         var keys = [];
         listenWs(url);
 

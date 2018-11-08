@@ -1,4 +1,6 @@
 mainApp.controller("dashboardCtrl", ["$scope", "$resource", "$timeout", function ($scope, $resource, $timeout) {
+    var BUPT_IOT_SERVICE = "39.104.189.84" //各服务所在IP地址
+
     $scope.db_device;
     $scope.isShowEmpty = false;
     $scope.Widgets = [{"name": "line"}, {"name": "gauge"}]
@@ -118,7 +120,7 @@ mainApp.controller("dashboardCtrl", ["$scope", "$resource", "$timeout", function
         }
 
         //获取websocket实时数据
-        var url = 'ws://39.104.189.84:30080/api/v1/deviceaccess/websocket';
+        var url = 'ws://'+BUPT_IOT_SERVICE+':30080/api/v1/deviceaccess/websocket';
         listenWs(url, i);
 
         //测试用模拟数据
