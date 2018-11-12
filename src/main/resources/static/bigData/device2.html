@@ -1,223 +1,414 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <title>大数据平台-Dashboard</title>
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="robots" content="" />
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" href="css/style.css" media="all" />
-    <link rel="stylesheet" href="css/leaflet.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>大数据平台-数据管理</title>
+    <link href="../bigdatamanagement/css/bootstrap.css" rel="stylesheet">
+    <link href="../bigdatamanagement/css/bootstrap-table.css" rel="stylesheet">
+    <link href="../bigdatamanagement/css/bootstrap-select.css" rel="stylesheet">
     <style>
-        html, body, #map {
-            height: 100%;
-            padding: 0;
-            margin: 0;
+        .abc:hover {
+            color: black !important;
         }
-        #forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#c11;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:fixed;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}}</style>
+        .abc0:hover{
+            background-color: #337ab7 !important;
+        }
 
+    </style>
 </head>
+<body style="padding-top: 50px;height: 100%">
 
-<body>
+<nav class="navbar navbar-fixed-top" style="background-color: #337ab7">
 
-<div class="testing">
+    <div class="navbar-header" style="margin-left: 10px">
+        <a class="navbar-brand" href="#" style="color: white">大数据平台</a>
+    </div>
+    <div class="navbar-collapse">
+        <!--<ul class="nav navbar-nav">
+            <li><a href="/userformPage.do"  class="abc0"style="color: #faf2cc">用户管理</a></li>
+            <li class="dropdown">
+                <a href="#" class="abc" style="color: white" data-toggle="dropdown">我的网盘<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/uploadPage.do">springmvc</a></li>
+                    <li><a href="#">springsecurity</a></li>
+                    <li><a href="#">spring</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">DAO</li>
+                    <li><a href="#">mybatis</a></li>
+                    <li><a href="#">hibenate</a></li>
+                </ul>
+            </li>
+        </ul>-->
+        <ul class="navbar-right navbar-form">
+            <!--<div class="form-group">
+                <input type="text" placeholder="Email" class="form-control">
+            </div>-->
+            <a href="/home?TENANT_ADMIN&2&1"><button id="logout" type="submit" class="btn btn-primary" style="margin-right: 40px">返回上一级</button></a>
+        </ul>
+    </div><!--/.nav-collapse -->
 
-    <section class="user" style="border-bottom:1px solid white;margin-bottom: 10px">
-        <div style="float: left;width: 40%;height: 26px;padding: 25px 0 0 25px">
-            <p style="font-size: 24px;color: white;margin: 0">大数据平台</p>
+</nav>
+
+<div class="row" style="height: 100%">
+    <div class="col-md-2" style="box-shadow: 1px 1px 3px #e5e5e5;height: 1030px;width: 13%">
+        <ul id="main-nav" class="nav nav-stacked" style="">
+            <li>
+                <a href="#" onclick="dashboard()">
+                    <i class="glyphicon glyphicon-home">&nbsp;</i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="active" style="background-color: #eeeeee">
+                <a href="device2.html">
+                    <i class="glyphicon glyphicon-th-large">&nbsp;</i>
+                    数据管理
+                </a>
+            </li>
+            <li>
+                <a href="../bigdatamanagement/sql.html">
+                    <i class="glyphicon glyphicon-search">&nbsp;</i>
+                    SQL查询
+                </a>
+            </li>
+            <li>
+                <a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-stats">&nbsp;</i>
+                    数据分析
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">2</span>
+                </a>
+                <ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="ocean.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 整体分析</a></li>
+                    <li><a href="statistics1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 按类分析</a></li>
+                    <!--<li><a href="#"><i class="glyphicon glyphicon-edit">&nbsp;</i> 修改密码</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-eye-open">&nbsp;</i> 日志查看</a></li>-->
+                </ul>
+            </li>
+            <li>
+                <a href="../bigdatamanagement/etl.html">
+                    <i class="glyphicon glyphicon-cog">&nbsp;</i>
+                    数据ETL
+                </a>
+            </li>
+            <li>
+                <a href="#systemSetting1" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+                    数据预测
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">3</span>
+                </a>
+                <ul id="systemSetting1" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="../bigdatamanagement/predict.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
+                    <li><a href="../bigdatamanagement/model.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
+                    <li><a href="#" onclick="result1()"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 预测性维护</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../bigdatamanagement/datadig.html">
+                    <i class="glyphicon glyphicon-leaf">&nbsp;</i>
+                    数据挖掘
+                </a>
+            </li>
+            <li>
+                <a onclick="online()">
+                    <i class="glyphicon glyphicon-cloud">&nbsp;</i>
+                    线上开发
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-10">
+        <div class="container"  style="padding: 30px 15px">
+
+            <!-- 按钮触发模态框 -->
+            <p>
+                <input type="text" id="input1" class="form-control" placeholder="文件路径" value="/" autofocus style="width: 91%;display: inline">
+                <button class="btn btn-sm btn-primary" id="button1" style="margin-left: 2%">查询文件</button>
+            </p>
+            <!--&lt;!&ndash; 模态框（Modal） &ndash;&gt;
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">添加用户</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h6>请输入用户信息:</h6><br>
+                            <input id="input1" type="text" class="form-control" required placeholder="id"><br>
+                            <input id="input2" type="text" class="form-control" required placeholder="用户名"><br>
+                            <input id="input3" type="text" class="form-control" required placeholder="密码"><br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button id="modalbutton1" type="button" class="btn btn-primary">提交更改</button>
+                        </div>
+                    </div>&lt;!&ndash; /.modal-content &ndash;&gt;
+                </div>&lt;!&ndash; /.modal &ndash;&gt;
+            </div>
+
+            &lt;!&ndash; 模态框（Modal） &ndash;&gt;
+            <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel2">修改用户</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h6>请输入修改信息:</h6><br>
+                            <input id="input4" type="text" class="form-control" required placeholder="id"><br>
+                            <input id="input5" type="text" class="form-control" required placeholder="用户名"><br>
+                            <input id="input6" type="text" class="form-control" required placeholder="密码"><br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button id="modalbutton2" type="button" class="btn btn-primary">提交更改</button>
+                        </div>
+                    </div>&lt;!&ndash; /.modal-content &ndash;&gt;
+                </div>&lt;!&ndash; /.modal &ndash;&gt;
+            </div>-->
+
+            <!--<select id="select1" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="大魔王">
+                <optgroup label="filter1">
+            　　　　<option>option1</option>
+            　　　　<option>option2</option>
+            　　　　<option>option3</option>
+            　　　　<option>option4</option>
+            　　</optgroup>
+            　　<optgroup label="filter2">
+            　　　　<option>option1</option>
+            　　　　<option>option2</option>
+            　　　　<option>option3</option>
+            　　　　<option>option4</option>
+            　　</optgroup>
+            </select>-->
+            <!--<div style="padding: 40px 15px;text-align: center;">
+                <h1>Bootstrap starter template</h1>
+                <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+            </div>-->
+
+            <!--<img src="image/test.jpg" class="img-thumbnail">-->
+
+            <div class="panel panel-primary" style="margin-top: 0">
+                <div class="panel-heading" style="text-align: center">
+                    <h3 class="panel-title">数据管理</h3>
+                </div>
+                <div id="divtable" class="panel-body" style="text-align: center; font-size: 12px">
+                    <table id="realTime_Table">
+                        <thead id="thead"></thead>
+                        <tbody id="tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="wait1" class="progress" style="margin-top: 15%;width: 60%;margin-left: 15%;display: none">
+                <div id="wait2" class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
+            </div>
+
+            <!--<table class="table table-bordered">
+                <thead>
+                <tr class="label-info" style="color: white;background-color: #222;text-align: center">
+                    <th style="text-align: center">用户名</th>
+                    <th style="text-align: center">密  码</th>
+                    <th style="text-align: center">操  作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>Tom</td>
+                    <td>123456</td>
+                    <td>delete</td>
+                </tr>
+                <tr>
+                    <td>Kate</td>
+                    <td>12345678</td>
+                    <td>delete</td>
+                </tr>
+                <tr>
+                    <td>Peter</td>
+                    <td>1234</td>
+                    <td>delete</td>
+                </tr>
+                </tbody>
+            </table>-->
+
         </div>
-        <div class="buttons" style="width: 55%;padding-top: 15px">
-            <!--<a href="device1.html"><input type="button" style="background:#ffffff;color: #000000; width: 12%; float: left; height:38px;font-size: 12px; margin-left: 11%" value="首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页"/></a>
-            <a href="ocean.html"><input type="button" style="width: 12%; float: left; height:38px;font-size: 12px" value="海量分析"/></a>
-            <a href="statistics1.html"><input type="button" style="width: 12%; float: left; height:38px;font-size: 12px" value="数据分析"/></a>
-            <ul id="dropzone" style="float: left; width: 12%;margin-left: 5px">
-                <li style="width: 100%"><a href="modelmanage.html"><input type="button" style="width: 100%; height:38px;font-size: 12px;margin: 0" value="模型管理"/></a></li>-->
-            <!--<li style="width: 100%; display:none;" id="dropli"><a href="modelmanage.html"><input type="button" style="width: 100%; height:38px;font-size: 12px;margin: 0" value="模型实例"/></a></li>-->
-            <!--</ul>
-            <a href="pre.html"><input type="button" style="width: 12%; float: left; height:38px;font-size: 12px" value="预测管理"/></a>-->
-            <!--<input type="button" value="退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出" style="width: 12%;margin-right: 1%; float: right; height:38px;font-size: 12px" onclick="quitThings()" />
-            <a href="/home?TENANT_ADMIN&2&1"><input type="button" style="width: 12%; float: right; height:38px;font-size: 12px" value="返回上一级"/></a>
-            <a href="../bigdatamanagement/table.html"><input type="button" style="width: 16%; float: right; height:38px;font-size: 12px" value="进入数据管理系统"/></a>-->
-            <!--<a href="../login/chooseIndex.html"><span class="button">返回物管理 <span class="pip">6</span></span></a>-->
-            <!--<a href="../login/index.html"><span class="button blue">退出</span></a>-->
-        </div>
-    </section>
+    </div>
 </div>
 
-<div style="width: 25%;height: 62%;float: left; margin-left: 1%">
-    <div id="main1" style="width: 100%;height: 50%;float: left;background: transparent;border:1px dotted grey;"></div>
-    <div id="main2" style="width: 100%;height: 50%;float: left;background: transparent;border:1px dotted grey;"></div>
-</div>
-<div id="map" style="width: 48%;height: 62%;float: left;margin-left: 2px; background: transparent"></div>
-<div style="width: 25%;height: 62%;float: left;margin-left: 2px">
-    <div id="main3" style="width: 100%;height: 50%;float: left;background: transparent;border:1px dotted grey;"></div>
-    <div id="main4" style="width: 100%;height: 50%;float: left;background: transparent;border:1px dotted grey;"></div>
-</div>
-<div id="main5" style="width: 25%;height: 30%;float: left;background: transparent;border:1px dotted grey;margin-top: 3px;margin-left: 1%"></div>
-<div style="width: 48%;height: 30%;float: left;background: transparent;border:1px dotted grey;;margin-top: 3px">
-    <div id="main6" style="width: 33.3%;height: 90%;float: left;margin-top:4%; background: transparent"></div>
-    <div id="main7" style="width: 33.3%;height: 90%;float: left;margin-top:4%; background: transparent"></div>
-    <div id="main8" style="width: 33.3%;height: 90%;float: left;margin-top:4%; background: transparent"></div>
-</div>
-<div id="main9" style="width: 25%;height: 30%;float: left;background: transparent;border:1px dotted grey;;margin-top: 3px"></div>
-
-<div class="waiting" id="YWaitDialog">
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <div class="spinner">
-        <div class="spin">
-            <div class="branch"></div>
-            <div class="branch"></div>
-            <div class="branch"></div>
-        </div>
-    </div>
-    <h1 style="color: #ffffff">loading</h1>
-</div>
-<!--<div>
-<input type="button" value="click" id="test"/>
-</div>
-<script type="text/javascript">
-    $('test').onclick(
-        function () {
-            $('main').css("background","#208ed3");
-        }
-    )
-</script>-->
-
-<!--<script type="text/javascript">
-
-    var copydiv = document.getElementById("divcard");
-    for(var i=0;i<14;i++){
-        var clonediv = copydiv.cloneNode(true);
-        clonediv.setAttribute("id","divcard-"+i);
-        var clonename = clonediv.getElementsByTagName("p");
-        clonename[0].innerText="设备 No-"+(i+2);
-        copydiv.parentNode.appendChild(clonediv);
-
-    }
-</script>-->
-<script type="text/javascript">
-    document.getElementById("YWaitDialog").setAttribute("style","display:flex;");
-</script>
 <script src="../bigdatamanagement/js/jquery-3.3.1.js"></script>
-<script src="js/common.js"></script>
-<script src="js/getUrlParam.js"></script>
-<script src="js/starttoend.js"></script>
-<!--<script src="js/main.min.js"></script>
-<script src="js/map.js"></script>-->
-<script src="http://api.map.baidu.com/api?v=2.0&ak=53oVIOgmSIejwV7EfphPgTynOZbIiVYu"></script>
-<script src="../bigdatamanagement/js/echarts.min.js"></script>
-<script src="js/bmap.js"></script>
-<script src="js/mapjson.js"></script>
-<script src="js/map1.js"></script>
-<script src="theme/dark.js"></script>
-<script src="js/start.js"></script>
+<script src="../bigdatamanagement/js/bootstrap.js"></script>
+<script src="../bigdatamanagement/js/bootstrap-table.js"></script>
+<script src="../bigdatamanagement/js/bootstrap-table-zh-CN.js"></script>
+<script src="../bigdatamanagement/js/bootstrap-select.js"></script>
+<script src="../bigdatamanagement/js/common.js"></script>
 <script type="text/javascript">
-    document.getElementById("YWaitDialog").setAttribute("style","display:none;");
+
+    $(function () {
+        waiting();
+        getajax("/");
+    });
+
+    $("#button1").click(
+        function () {
+            var path = $("#input1").val();
+            getajax(path);
+        }
+    );
+
+    function getajax(path) {
+        $(document).off("click",".deleteButton");
+        $("#divtable").empty();
+        $("#wait1").css("display","block");
+        waiting();
+        $.get("http://39.104.186.210:8092/api/hdfs/getFiles?path="+path+"&owner=spark&group=supergroup",function (data) {
+
+            $("#divtable").append("<table id=\"realTime_Table\" style='font-size: 12px'>\n" +
+                "                        <thead id=\"thead\"></thead>\n" +
+                "                        <tbody id=\"tbody\"></tbody>\n" +
+                "                    </table>");
+
+            $tr1 = $(" <tr>\n" +
+                "                            <th style=\"text-align: center\">Permission</th>\n" +
+                "                            <th style=\"text-align: center\">Count</th>\n" +
+                "                            <th style=\"text-align: center\">Owner</th>\n" +
+                "                            <th style=\"text-align: center\">Group</th>\n" +
+                "                            <th style=\"text-align: center\">Size</th>\n" +
+                "                            <th data-field=\"time\" data-sortable=\"true\" style=\"text-align: center\">Last Modified</th>\n" +
+                "                            <th style=\"text-align: center\">Type</th>\n" +
+                "                            <th data-field=\"path\" data-sortable=\"true\" style=\"text-align: center\">Path</th>\n" +
+                "                            <th style=\"text-align: center\">操作</th>\n" +
+                "                        </tr>");
+            $("#thead").append($tr1);
+
+            for (var i=0; i<data.length; i++){
+                $tr = $("<tr></tr>");
+                $td1 = $("<td>"+data[i].permission+"</td>");
+                $td2 = $("<td>"+data[i].childrenNum+"</td>");
+                $td3 = $("<td>"+data[i].owner+"</td>");
+                $td4 = $("<td>"+data[i].group+"</td>");
+                $td5 = $("<td>"+data[i].blockSize+"</td>");
+                $td6 = $("<td>"+formatDate(new Date(data[i].modificationTime))+"</td>");
+                $td7 = $("<td>"+data[i].type+"</td>");
+                $td8 = $("<td>"+data[i].path+"</td>");
+                if (path == "/"){
+                    $td9 = $("<td><button class='btn-xs btn-default deleteButton' type='button' disabled='disabled'>删除</button></td>");
+                }else {
+                    $td9 = $("<td><button class='btn-xs btn-warning deleteButton' type='button'>删除</button></td>");
+                }
+                $tr.append($td1);
+                $tr.append($td2);
+                $tr.append($td3);
+                $tr.append($td4);
+                $tr.append($td5);
+                $tr.append($td6);
+                $tr.append($td7);
+                $tr.append($td8);
+                $tr.append($td9);
+                $("#tbody").append($tr);
+            }
+            $("#wait1").css("display","none");
+            $("#realTime_Table").bootstrapTable({
+                search: true,
+                pagination: true,
+                pageSize: 10,
+                pageList: [5, 10, 15, 20, 50, 100],
+                locale: "zh-CN",
+                striped: true,
+                showColumns: true,
+                sortable: true,
+                sortName: "time"
+            });
+
+            $(document).on("click",".deleteButton",function () {
+                $.get("http://39.104.186.210:8092/api/hdfs/deleteFiles?path=" + $(this).parent().parent().find("td").eq(7).html(), function (data) {
+                    if (data.code == "200"){
+                        window.alert("删除成功！");
+                        window.location.href = "device1.html";
+                    }else {
+                        window.alert("删除失败！");
+                    }
+                });
+            })
+        });
+    }
+
+    function waiting() {
+        $("#wait2").css("width","0%");
+        setTimeout(function () {
+            $("#wait2").css("width","20%");
+        },1000);
+        setTimeout(function () {
+            $("#wait2").css("width","50%");
+        },2000);
+        setTimeout(function () {
+            $("#wait2").css("width","80%");
+        },3000);
+        setTimeout(function () {
+            $("#wait2").css("width","100%");
+        },4000);
+    }
+
+    function formatDate(now) {
+        var year=now.getFullYear();
+        var month=now.getMonth()+1;
+        var date=now.getDate();
+        var hour=now.getHours();
+        var minute=now.getMinutes();
+        var second=now.getSeconds();
+        return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
+    }
+
+    /*$(function() {
+             $.post("/getAllUser.do",function (data) {
+                 var mes = eval("(" + data + ")");
+                 for (var i = 0; i < mes.length; i++) {
+                     $tr = $("<tr></tr>");
+                     $td1 = $("<td data-checkbox='true'></td>");
+                     $td2 = $("<td>" + mes[i].id + "</td>");
+                     $td3 = $("<td>" + mes[i].userName + "</td>");
+                     $td4 = $("<td>" + mes[i].password + "</td>");
+                     $td5 = $("<td><button class='btn-xs btn-warning deleteButton' type='button'>删除</button></td>");
+                     $tr.append($td1);
+                     $tr.append($td2);
+                     $tr.append($td3);
+                     $tr.append($td4);
+                     $tr.append($td5);
+                     $("#tbody").append($tr);
+                 }
+                 $("#realTime_Table").bootstrapTable({
+                     search: true,
+                     pagination: true,
+                     pageSize: 10,
+                     pageList: [5, 10, 15, 20, 50, 100],
+                     locale: "zh-CN",
+                     striped: true,
+                     showColumns: true,
+                     sortable: true,
+                     sortName: "id"
+                 });
+
+                 //jquery的on可以为未来的html标签绑定事件
+                 $(document).on("click",".deleteButton",function () {
+                     $.post("/"+$(this).parent().parent().children().eq(1).html()+"/"+"deleteUser.do?sss=ssss",{asd:"123123123",aaa:"hahaha"},function (flag) {
+                         if(flag == "true"){
+                             window.alert("删除成功！");
+                             window.location.href = "/userformPage.do";
+                         }else {
+                             window.alert("删除失败！");
+                         }
+
+                     });
+                 })
+             })
+         }
+     );*/
+
 </script>
 </body>
 </html>

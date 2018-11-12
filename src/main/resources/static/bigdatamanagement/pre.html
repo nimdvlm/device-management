@@ -45,14 +45,14 @@
                     </div>
                     <div style="text-align: right">
                         <select id="select1">
-                            <option>设备一号</option>
-                            <option>设备二号</option>
-                            <option>设备三号</option>
-                            <option>设备四号</option>
-                            <option>设备五号</option>
+                            <option>测试设备一</option>
+                            <option>测试设备二</option>
+                            <option>测试设备三</option>
+                            <option>测试设备四</option>
+                            <option>测试设备五</option>
                         </select>
                         <select>
-                            <option>保养维护预测模型一号</option>
+                            <option>预测性保养维护模型</option>
                         </select>
                     </div>
                 </div>
@@ -227,7 +227,7 @@
                                                 </td>
                                                 <td>
                                                     <div style="font-size: 40px; text-align: center; font-weight: bold;">
-                                                        <span id="test" style="font-size: 35px">设备一号</span>
+                                                        <span id="test" style="font-size: 28px">测试设备一</span>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -803,26 +803,26 @@
         function(){
             var b = $(this).val();
             $('#test').html(b);
-            if(b == "设备一号"){
+            if(b == "测试设备一"){
                 drawLine(dataGroup[0]);
                 drawCard(dataGroup[0]);
-            }else if(b == "设备二号"){
+            }else if(b == "测试设备二"){
                 drawLine(dataGroup[1]);
                 drawCard(dataGroup[1]);
-            }else if(b == "设备三号"){
+            }else if(b == "测试设备三"){
                 drawLine(dataGroup[2]);
                 drawCard(dataGroup[2]);
-            }else if(b == "设备四号"){
+            }else if(b == "测试设备四"){
                 drawLine(dataGroup[3]);
                 drawCard(dataGroup[3]);
-            }else if(b == "设备五号"){
+            }else if(b == "测试设备五"){
                 drawLine(dataGroup[4]);
                 drawCard(dataGroup[4]);
             }else {
                 window.alert("返回值为空");
             }
         }
-    )
+    );
 
     $('#dropzone').hover(
         function () {

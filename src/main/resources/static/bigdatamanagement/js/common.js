@@ -3,11 +3,11 @@ function online() {
 }
 
 function dashboard() {
-    window.open("device2.html");
+    window.location.href = "device1.html";
 }
 
 function dashboard1() {
-    window.open("../bigData/device2.html");
+    window.location.href = "../bigData/device1.html";
 }
 
 function result() {

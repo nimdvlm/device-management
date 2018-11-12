@@ -2,6 +2,14 @@ var myChart1 = echarts.init(document.getElementById('main1'),'dark');
 myChart1.title = '正负条形图';
 
 option1 = {
+    title: {
+        text: '设备状态统计',
+        textStyle: {
+            fontSize: 14,
+            fontWeight: 'bolder',
+            color: '#ffffff'          // 主标题文字颜色
+        }
+    },
     backgroundColor: 'transparent',
     tooltip : {
         trigger: 'axis',
@@ -28,7 +36,7 @@ option1 = {
         {
             type : 'category',
             axisTick : {show: false},
-            data : ['周一','周二','周三','周四','周五','周六','周日']
+            data : ['周日','周六','周五','周四','周三','周二','周一']
         }
     ],
     series : [
@@ -57,14 +65,13 @@ option1 = {
         {
             name:'离线',
             type:'bar',
-            stack: '总量',
+            stack: '总量1',
             label: {
                 normal: {
-                    show: true,
-                    position: 'left'
+                    show: true
                 }
             },
-            data:[-120, -132, -101, -134, -190, -230, -210]
+            data:[120, 132, 101, 134, 190, 230, 210]
         }
     ]
 };
@@ -73,6 +80,14 @@ myChart1.setOption(option1);
 
 var myChart2 = echarts.init(document.getElementById('main2'),'dark');
 option2 = {
+    title: {
+        text: '设备类型统计',
+        textStyle: {
+            fontSize: 14,
+            fontWeight: 'bolder',
+            color: '#ffffff'          // 主标题文字颜色
+        }
+    },
     backgroundColor: 'transparent',
     tooltip : {
         trigger: 'item',
@@ -80,16 +95,17 @@ option2 = {
     },
     series : [
         {
-            name: '故障预测',
+            name: '设备类型',
             type: 'pie',
             radius : '60%',
             center: ['50%', '50%'],
             data:[
-                {value:335, name:'6test'},
-                {value:310, name:'curtain_1'},
-                {value:234, name:'curtain_2'},
-                {value:135, name:'doorlock'},
-                {value:1548, name:'PM'}
+                {value:335, name:'压力传感器'},
+                {value:310, name:'速率传感器'},
+                {value:234, name:'形变传感器'},
+                {value:135, name:'光照传感器'},
+                {value:535, name:'湿度传感器'},
+                {value:1548, name:'温度传感器'}
             ],
             itemStyle: {
                 emphasis: {
@@ -107,6 +123,14 @@ var myChart3 = echarts.init(document.getElementById('main3'),'dark');
 myChart3.title = '嵌套环形图';
 
 option3 = {
+    title: {
+        text: '用户满意度调查',
+        textStyle: {
+            fontSize: 14,
+            fontWeight: 'bolder',
+            color: '#ffffff'          // 主标题文字颜色
+        }
+    },
     backgroundColor: 'transparent',
     tooltip: {
         trigger: 'item',
@@ -115,7 +139,7 @@ option3 = {
 
     series: [
         {
-            name:'设备组',
+            name:'用户满意度',
             type:'pie',
             selectedMode: 'single',
             radius: [0, '40%'],
@@ -131,24 +155,26 @@ option3 = {
                 }
             },
             data:[
-                {value:335, name:'test2', selected:true},
-                {value:679, name:'curtain'},
-                {value:1548, name:'asdf/asdf'}
+                {value:438, name:'差', selected:true},
+                {value:497, name:'较差'},
+                {value:576, name:'一般'},
+                {value:679, name:'较好'},
+                {value:978, name:'好'}
             ]
         },
         {
-            name:'具体设备',
+            name:'不满因素',
             type:'pie',
             radius: ['55%', '70%'],
 
             data:[
-                {value:335, name:'6test'},
-                {value:310, name:'curtain_1'},
-                {value:234, name:'curtain_2'},
-                {value:135, name:'curtain_3'},
-                {value:1048, name:'test'},
-                {value:251, name:'test2'},
-                {value:147, name:'device'},
+                {value:335, name:'bug较多'},
+                {value:310, name:'请求太慢'},
+                {value:234, name:'安全性不够'},
+                {value:135, name:'不符合需求'},
+                {value:1048, name:'操作繁琐'},
+                {value:251, name:'专业性太强'},
+                {value:147, name:'服务器不稳定'},
                 {value:102, name:'其他'}
             ]
         }
@@ -157,19 +183,29 @@ option3 = {
 myChart3.setOption(option3);
 
 var myChart4 = echarts.init(document.getElementById('main4'),'dark');
-var base = +new Date(1968, 9, 3);
+var base = new Date() - 365 * 24 * 3600 * 1000;
 var oneDay = 24 * 3600 * 1000;
 var date = [];
 
-var data = [Math.random() * 300];
+var data = [];
+/*var data = [Math.random() * 300];*/
 
-for (var i = 1; i < 20000; i++) {
+for (var i = 1; i < 365; i++) {
     var now = new Date(base += oneDay);
     date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
-    data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
+    /*data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));*/
+    data.push(Math.random());
 }
 
 option4 = {
+    title: {
+        text: '设备故障率整体走势',
+        textStyle: {
+            fontSize: 14,
+            fontWeight: 'bolder',
+            color: '#ffffff'          // 主标题文字颜色
+        }
+    },
     backgroundColor: 'transparent',
     tooltip: {
         trigger: 'axis',
@@ -192,7 +228,8 @@ option4 = {
     },
     yAxis: {
         type: 'value',
-        boundaryGap: [0, '100%']
+        boundaryGap: [0, '100%'],
+        axisTick: {length:5}
     },
     dataZoom: [{
         type: 'inside',
@@ -245,6 +282,14 @@ var myChart5 = echarts.init(document.getElementById('main5'),'dark');
 myChart5.title = '堆叠柱状图';
 
 option5 = {
+    title: {
+        text: '设备数量统计',
+        textStyle: {
+            fontSize: 14,
+            fontWeight: 'bolder',
+            color: '#ffffff'          // 主标题文字颜色
+        }
+    },
     backgroundColor: 'transparent',
     tooltip : {
         trigger: 'axis',
@@ -263,7 +308,7 @@ option5 = {
     xAxis : [
         {
             type : 'category',
-            data : ['周一设备增量','周二设备增量','周三设备增量','周四设备增量','周五设备增量','周六设备增量','周日设备增量']
+            data : ['周一','周二','周三','周四','周五','周六','周日']
         }
     ],
     yAxis : [
@@ -273,30 +318,30 @@ option5 = {
     ],
     series : [
         {
-            name:'PM',
+            name:'温度传感器',
             type:'bar',
             data:[320, 332, 301, 334, 390, 330, 320]
         },
         {
-            name:'6test',
+            name:'湿度传感器',
             type:'bar',
             stack: '广告',
             data:[120, 132, 101, 134, 90, 230, 210]
         },
         {
-            name:'test_1',
+            name:'光照传感器',
             type:'bar',
             stack: '广告',
             data:[220, 182, 191, 234, 290, 330, 310]
         },
         {
-            name:'curtain_1',
+            name:'速率传感器',
             type:'bar',
             stack: '广告',
             data:[150, 232, 201, 154, 190, 330, 410]
         },
         {
-            name:'curtain_2',
+            name:'形变传感器',
             type:'bar',
             data:[862, 1018, 964, 1026, 1679, 1600, 1570],
             markLine : {
@@ -311,29 +356,21 @@ option5 = {
             }
         },
         {
-            name:'doorlock',
+            name:'压力传感器',
             type:'bar',
             barWidth : 5,
             stack: '搜索引擎',
-            data:[620, 732, 701, 734, 1090, 1130, 1120]
-        },
-        {
-            name:'test2',
-            type:'bar',
-            stack: '搜索引擎',
-            data:[120, 132, 101, 134, 290, 230, 220]
-        },
-        {
-            name:'curtain',
-            type:'bar',
-            stack: '搜索引擎',
-            data:[60, 72, 71, 74, 190, 130, 110]
-        },
-        {
-            name:'123',
-            type:'bar',
-            stack: '搜索引擎',
-            data:[62, 82, 91, 84, 109, 110, 120]
+            data:[620, 732, 701, 734, 1090, 1130, 1120],
+            markLine : {
+                lineStyle: {
+                    normal: {
+                        type: 'dashed'
+                    }
+                },
+                data : [
+                    [{type : 'min'}, {type : 'max'}]
+                ]
+            }
         }
     ]
 };
@@ -348,7 +385,7 @@ option6 = {
     },
     series : [
         {
-            name:'温度',
+            name:'华东地区',
             type:'gauge',
             min:0,
             max:100,
@@ -415,7 +452,7 @@ option6 = {
                     fontSize: 10
                 }
             },
-            data:[{value: 40, name: 'temperature'}]
+            data:[{value: 6.02, name: '华东地区(%)'}]
         }
 
 
@@ -423,7 +460,8 @@ option6 = {
 };
 
 setInterval(function (){
-    option6.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
+    /*option6.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;*/
+    option6.series[0].data[0].value = (6 + Math.random()*10).toFixed(2);
     myChart6.setOption(option6);
 },2000);
 
@@ -437,95 +475,7 @@ option7 = {
     },
     series : [
         {
-            name:'速度',
-            type:'gauge',
-            min:0,
-            max:200,
-            splitNumber:10,
-            radius: '80%',
-            axisLine: {            // 坐标轴线
-                lineStyle: {       // 属性lineStyle控制线条样式
-                    color: [[0.09, 'lime'],[0.82, '#1e90ff'],[1, '#ff4500']],
-                    width: 3,
-                    shadowColor : '#fff', //默认透明
-                    shadowBlur: 10
-                }
-            },
-            axisLabel: {            // 坐标轴小标记
-                textStyle: {       // 属性lineStyle控制线条样式
-                    fontWeight: 'bolder',
-                    color: '#fff',
-                    shadowColor : '#fff', //默认透明
-                    shadowBlur: 10
-                }
-            },
-            axisTick: {            // 坐标轴小标记
-                length :15,        // 属性length控制线长
-                lineStyle: {       // 属性lineStyle控制线条样式
-                    color: 'auto',
-                    shadowColor : '#fff', //默认透明
-                    shadowBlur: 10
-                }
-            },
-            splitLine: {           // 分隔线
-                length :25,         // 属性length控制线长
-                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-                    width:3,
-                    color: '#fff',
-                    shadowColor : '#fff', //默认透明
-                    shadowBlur: 10
-                }
-            },
-            pointer: {           // 分隔线
-                shadowColor : '#fff', //默认透明
-                shadowBlur: 5,
-                width: 5
-            },
-            title : {
-                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                    fontWeight: 'bolder',
-                    fontSize: 10,
-                    fontStyle: 'italic',
-                    color: '#fff',
-                    shadowColor : '#fff', //默认透明
-                    shadowBlur: 10
-                }
-            },
-            detail : {
-                backgroundColor: 'rgba(30,144,255,0.8)',
-                borderWidth: 1,
-                borderColor: '#fff',
-                shadowColor : '#fff', //默认透明
-                shadowBlur: 5,
-                offsetCenter: [0, '50%'],       // x, y，单位px
-                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                    fontWeight: 'bolder',
-                    color: '#fff',
-                    fontSize: 10
-                }
-            },
-            data:[{value: 40, name: 'speed'}]
-        }
-
-
-    ]
-};
-
-setInterval(function (){
-    option7.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
-    myChart7.setOption(option7);
-},2000);
-myChart7.setOption(option7);
-
-var myChart8 = echarts.init(document.getElementById('main8'),'dark');
-option8 = {
-    backgroundColor: 'transparent',
-    tooltip : {
-        formatter: "{a} <br/>{c}"
-    },
-    series : [
-        {
-            name:'湿度',
+            name:'华北地区',
             type:'gauge',
             min:0,
             max:100,
@@ -592,7 +542,7 @@ option8 = {
                     fontSize: 10
                 }
             },
-            data:[{value: 40, name: 'humidity'}]
+            data:[{value: 25.18, name: '华北地区(%)'}]
         }
 
 
@@ -600,7 +550,97 @@ option8 = {
 };
 
 setInterval(function (){
-    option8.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
+    /*option7.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;*/
+    option7.series[0].data[0].value = (25 + Math.random()*8).toFixed(2);
+    myChart7.setOption(option7);
+},2000);
+myChart7.setOption(option7);
+
+var myChart8 = echarts.init(document.getElementById('main8'),'dark');
+option8 = {
+    backgroundColor: 'transparent',
+    tooltip : {
+        formatter: "{a} <br/>{c}"
+    },
+    series : [
+        {
+            name:'华南地区',
+            type:'gauge',
+            min:0,
+            max:100,
+            splitNumber:10,
+            radius: '80%',
+            axisLine: {            // 坐标轴线
+                lineStyle: {       // 属性lineStyle控制线条样式
+                    color: [[0.09, 'lime'],[0.82, '#1e90ff'],[1, '#ff4500']],
+                    width: 3,
+                    shadowColor : '#fff', //默认透明
+                    shadowBlur: 10
+                }
+            },
+            axisLabel: {            // 坐标轴小标记
+                textStyle: {       // 属性lineStyle控制线条样式
+                    fontWeight: 'bolder',
+                    color: '#fff',
+                    shadowColor : '#fff', //默认透明
+                    shadowBlur: 10
+                }
+            },
+            axisTick: {            // 坐标轴小标记
+                length :15,        // 属性length控制线长
+                lineStyle: {       // 属性lineStyle控制线条样式
+                    color: 'auto',
+                    shadowColor : '#fff', //默认透明
+                    shadowBlur: 10
+                }
+            },
+            splitLine: {           // 分隔线
+                length :25,         // 属性length控制线长
+                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                    width:3,
+                    color: '#fff',
+                    shadowColor : '#fff', //默认透明
+                    shadowBlur: 10
+                }
+            },
+            pointer: {           // 分隔线
+                shadowColor : '#fff', //默认透明
+                shadowBlur: 5,
+                width: 5
+            },
+            title : {
+                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                    fontWeight: 'bolder',
+                    fontSize: 10,
+                    fontStyle: 'italic',
+                    color: '#fff',
+                    shadowColor : '#fff', //默认透明
+                    shadowBlur: 10
+                }
+            },
+            detail : {
+                backgroundColor: 'rgba(30,144,255,0.8)',
+                borderWidth: 1,
+                borderColor: '#fff',
+                shadowColor : '#fff', //默认透明
+                shadowBlur: 5,
+                offsetCenter: [0, '50%'],       // x, y，单位px
+                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                    fontWeight: 'bolder',
+                    color: '#fff',
+                    fontSize: 10
+                }
+            },
+            data:[{value: 14.96, name: '华南地区(%)'}]
+        }
+
+
+    ]
+};
+
+setInterval(function (){
+    /*option8.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;*/
+    option8.series[0].data[0].value = (15 + Math.random()*15).toFixed(2);
     myChart8.setOption(option8);
 },2000);
 myChart8.setOption(option8);
@@ -609,7 +649,7 @@ var myChart9 = echarts.init(document.getElementById('main9'),'dark');
 // Schema:
 // date,AQIindex,PM2.5,PM10,CO,NO2,SO2
 var dataBJ = [
-    [55,9,56,0.46,18,6,1],
+    /*[55,9,56,0.46,18,6,1],
     [25,11,21,0.65,34,9,2],
     [56,7,63,0.3,14,5,3],
     [33,7,29,0.33,16,6,4],
@@ -635,11 +675,13 @@ var dataBJ = [
     [31,12,30,0.5,32,16,24],
     [42,27,43,1,53,22,25],
     [154,117,157,3.05,92,58,26],
-    [234,185,230,4.09,123,69,27],
+    [234,185,230,4.09,123,69,27],*/
     [160,120,186,2.77,91,50,28],
-    [134,96,165,2.76,83,41,29],
+    [160,120,186,2.77,91,50,28],
+    [160,120,186,2.77,91,50,28]
+    /*[134,96,165,2.76,83,41,29],
     [52,24,60,1.03,50,21,30],
-    [46,5,49,0.28,10,6,31]
+    [46,5,49,0.28,10,6,31]*/
 ];
 
 var dataGZ = [
@@ -718,6 +760,14 @@ var lineStyle = {
 };
 
 option9 = {
+    title: {
+        text: '设备故障因素',
+        textStyle: {
+            fontSize: 14,
+            fontWeight: 'bolder',
+            color: '#ffffff'          // 主标题文字颜色
+        }
+    },
     backgroundColor: 'transparent',
     // visualMap: {
     //     show: true,
@@ -730,12 +780,12 @@ option9 = {
     // },
     radar: {
         indicator: [
-            {name: '光照传感', max: 300},
-            {name: '温度传感', max: 250},
-            {name: '压力传感', max: 300},
-            {name: '温度传感', max: 5},
-            {name: '温度传感', max: 200},
-            {name: '速度传感', max: 100}
+            {name: '年限已久', max: 300},
+            {name: '没有定期维护', max: 250},
+            {name: '人为破坏', max: 300},
+            {name: '平台接入模块故障', max: 5},
+            {name: '接入线路故障', max: 200},
+            {name: '平台接入模块故障', max: 100}
         ],
         shape: 'circle',
         splitNumber: 5,
