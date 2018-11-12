@@ -136,13 +136,13 @@ myChart.setOption({
         orient: 'vertical',
         y: 'bottom',
         x:'right',
-        data:['参数一','参数二','参数三'],
+        data:['小型设备','中型设备','大型设备'],
         textStyle: {
             color: '#fff'
         }
     },
     series: [{
-        name:'参数一',
+        name:'小型设备',
         type: 'scatter',
         symbolSize: 1,
         large: true,
@@ -157,7 +157,7 @@ myChart.setOption({
         data: mapData[0]
     },
         {
-            name:'参数二',
+            name:'中型设备',
             type: 'scatter',
             symbolSize: 1,
             large: true,
@@ -172,7 +172,7 @@ myChart.setOption({
             data: mapData[1]
         },
         {
-            name:'参数三',
+            name:'大型设备',
             type: 'scatter',
             symbolSize: 1,
             large: true,
