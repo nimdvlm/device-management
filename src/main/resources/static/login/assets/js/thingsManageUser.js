@@ -60,7 +60,7 @@ $(document).ready(function () {
     });
 
     $("#bigData").click(function () {
-       window.location.href = "../bigData/device1.html?id="+tenantId;
+       window.open("../bigData/device1.html?id="+tenantId);
     });
 
     $("#accountManagement").click(function () {

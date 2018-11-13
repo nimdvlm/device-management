@@ -785,7 +785,7 @@ option9 = {
             {name: '人为破坏', max: 300},
             {name: '平台接入模块故障', max: 5},
             {name: '接入线路故障', max: 200},
-            {name: '平台接入模块故障', max: 100}
+            {name: '自然环境因素', max: 100}
         ],
         shape: 'circle',
         splitNumber: 5,
