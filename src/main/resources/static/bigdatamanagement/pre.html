@@ -296,533 +296,538 @@
 <script src="js/echarts.min.js"></script>
 <script src="../bigData/skin/js/skincommon.js?dt=201706261450"></script>
 <script>
-    var currentData = new Date();
-    var quxian = "PM25";
-    var charts = {"59053893":null,"59570501":null };
-    var last = {"59053893":null,"59570501":null };
-    var color = ["#00a040", "#dbbc49", "#fc703a", "#de4045", "#a13f6f","#ffffff"];
-    var outline ={"59053893":0,"59570501":0 };
-    var dataGroup = [[0, 0.01, 0.03, 0.10, 0.3, 0.6, 1,"2021-03-20","2020-12-20"],[0.11, 0.18, 0.27,0.42, 0.6, 0.8, 0.99,"2020-07-03","2020-04-03"],[0.3, 0.32, 0.35, 0.39, 0.47, 0.58, 0.71,"2019-10-24","2019-07-24"],[0.02, 0.03, 0.05, 0.12, 0.32, 0.62, 0.98,"2021-09-20","2020-06-20"],[0.5, 0.52, 0.54, 0.57, 0.61, 0.7, 1,"2018-12-18","2018-09-18"]];
-    $(function () {
-        setInterval(function () {
-            currentData.setTime(currentData.getTime() + 1000);
-        }, 1000);
 
-        //Highcharts.setOptions({ global: { useUTC: false } });
-        //InitShowBoxSize();
-        UpdateTime();
-        drawLine(dataGroup[0]);
-        drawCard(dataGroup[0]);
-        //GetWeather();
+    $.get("http://139.159.242.107:8092/api/dashboard/maintenance",function (data) {
+        var currentData = new Date();
+        var quxian = "PM25";
+        var charts = {"59053893":null,"59570501":null };
+        var last = {"59053893":null,"59570501":null };
+        var color = ["#00a040", "#dbbc49", "#fc703a", "#de4045", "#a13f6f","#ffffff"];
+        var outline ={"59053893":0,"59570501":0 };
+        var dataGroup = data;
+        //var dataGroup = [[0, 0.01, 0.03, 0.10, 0.3, 0.6, 1,"2021-03-20","2020-12-20"],[0.11, 0.18, 0.27,0.42, 0.6, 0.8, 0.99,"2020-07-03","2020-04-03"],[0.3, 0.32, 0.35, 0.39, 0.47, 0.58, 0.71,"2019-10-24","2019-07-24"],[0.02, 0.03, 0.05, 0.12, 0.32, 0.62, 0.98,"2021-09-20","2020-06-20"],[0.5, 0.52, 0.54, 0.57, 0.61, 0.7, 1,"2018-12-18","2018-09-18"]];
+        $(function () {
+            setInterval(function () {
+                currentData.setTime(currentData.getTime() + 1000);
+            }, 1000);
 
-        //CreateChart("59053893-quxian",0,0);
-        //UpdateData();
+            //Highcharts.setOptions({ global: { useUTC: false } });
+            //InitShowBoxSize();
+            UpdateTime();
+            drawLine(dataGroup[0]);
+            drawCard(dataGroup[0]);
+            //GetWeather();
 
-        //setInterval(SlipeItems,5000);
-        //setInterval(UpdateData, 4000);
-        //setInterval(GetWeather, 60000);
-    });
+            //CreateChart("59053893-quxian",0,0);
+            //UpdateData();
 
-
-    function InitItemShowColor(deviceID,itemValueID,item,itemValue){
-        //dynamic-showbox
-        console.info("deviceID:"+deviceID+"   itemValueID:"+itemValueID+"     item:"+item+"      itemValue:"+itemValue)
-        var showtxt="";
-        if(item=="PM10"){
-            if(itemValue>=0&&itemValue<=50){
-                showtxt= "一级";
-                $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
-            }else if(itemValue>=50.1&&itemValue<=150){
-                showtxt= "二级";
-                $("#"+deviceID+"-"+item+"txt").css("color","#FFFF00");
-            }else{
-                showtxt= "三级 ";
-                $("#"+deviceID+"-"+item+"txt").css("color","#FF0000");
-            }
-        }else  if(item=="TEMP"){
-            if(itemValue>=0&&itemValue<=16){
-                showtxt= "偏冷";
-                $("#"+deviceID+"-"+item+"txt").css("color","#dbbc49");
-            }else if(itemValue>=16.1&&itemValue<=28){
-                showtxt= "舒适";
-                $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
-            }else if(itemValue>=28.1){
-                showtxt= "偏热";
-                $("#"+deviceID+"-"+item+"txt").css("color","#dbbc49");
-            }
-        }else  if(item=="HUMI"){
-            if(itemValue>=0&&itemValue<=40){
-                showtxt= "干燥";
-                $("#"+deviceID+"-"+item+"txt").css("color","#dbbc49");
-            }else if(itemValue>=40.1&&itemValue<=60){
-                showtxt= "舒适";
-                $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
-            }else if(itemValue>=60.1){
-                showtxt= "潮湿";
-                $("#"+deviceID+"-"+item+"txt").css("color","#dbbc49");
-            }
-        }else  if(item=="CO2"){
-            if(itemValue>=0&&itemValue<=350){
-                showtxt= "-- ";
-                $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
-            }else if(itemValue>=351&&itemValue<=1000){
-                showtxt= "优";
-                $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
-            }else if(itemValue>=1001&&itemValue<=2000){
-                showtxt= "中";
-                $("#"+deviceID+"-"+item+"txt").css("color","#dbbc49");
-            }else if(itemValue>=2001){
-                showtxt= "差";
-            }
-        }else  if(item=="VOC"){
-            if(itemValue>=0&&itemValue<=830){
-                showtxt= "合格";
-                $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
-            }else if(itemValue>=11 ){
-                showtxt= "不合格";
-                $("#"+deviceID+"-"+item+"txt").css("color","#dbbc49");
-            }
-        } else  if(item=="PM25"){
-            if(itemValue>=0&&itemValue<=35){
-                showtxt= "优";
-                $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
-            }else if(itemValue>=35.1&&itemValue<=75){
-                showtxt= "良";
-                $("#"+deviceID+"-"+item+"txt").css("color","#FFFF00");
-            }else if(itemValue>=75.1&&itemValue<=115){
-                showtxt= "轻";
-                $("#"+deviceID+"-"+item+"txt").css("color","#FFC000");
-            }else if(itemValue>=115.1&&itemValue<=150){
-                showtxt= "中度";
-                $("#"+deviceID+"-"+item+"txt").css("color","#FF0000");
-            }else if(itemValue>=150.1&&itemValue<=250){
-                showtxt= "重度";
-                $("#"+deviceID+"-"+item+"txt").css("color","#7030A0");
-            }else if(itemValue>=250.1){
-                showtxt= "严重";
-                $("#"+deviceID+"-"+item+"txt").css("color","#595959");
-            }
-        }
-
-        $("#"+deviceID+"-"+item+"txt").text(showtxt)
-
-    }
-
-
-
-
-
-    function InitShowBoxSize() {
-        var myw = $("#showbox-0").width();
-        var myh = $("#showbox-0").height();
-
-        var qxw = $("#dynamic-showbox .quxian:first").width();
-        var qxh = $("#dynamic-showbox .quxian:first").height();
-
-        $("#dynamic-showbox .showbox").each(function () {
-            $(this).width(myw);
-            $(this).height(myh);
+            //setInterval(SlipeItems,5000);
+            //setInterval(UpdateData, 4000);
+            //setInterval(GetWeather, 60000);
         });
 
-        $("#dynamic-showbox .quxian").each(function () {
-            $(this).width(qxw);
-            $(this).height(qxh);
-        });
-    }
 
-    var currentPage = 0;
-    var countPage = $("#dynamic-showbox .showbox").length;
-    function SlipeItems() {
-        currentPage++;
-        if (currentPage >= countPage) {
-            currentPage = 0;
+        function InitItemShowColor(deviceID,itemValueID,item,itemValue){
+            //dynamic-showbox
+            console.info("deviceID:"+deviceID+"   itemValueID:"+itemValueID+"     item:"+item+"      itemValue:"+itemValue)
+            var showtxt="";
+            if(item=="PM10"){
+                if(itemValue>=0&&itemValue<=50){
+                    showtxt= "一级";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
+                }else if(itemValue>=50.1&&itemValue<=150){
+                    showtxt= "二级";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#FFFF00");
+                }else{
+                    showtxt= "三级 ";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#FF0000");
+                }
+            }else  if(item=="TEMP"){
+                if(itemValue>=0&&itemValue<=16){
+                    showtxt= "偏冷";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#dbbc49");
+                }else if(itemValue>=16.1&&itemValue<=28){
+                    showtxt= "舒适";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
+                }else if(itemValue>=28.1){
+                    showtxt= "偏热";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#dbbc49");
+                }
+            }else  if(item=="HUMI"){
+                if(itemValue>=0&&itemValue<=40){
+                    showtxt= "干燥";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#dbbc49");
+                }else if(itemValue>=40.1&&itemValue<=60){
+                    showtxt= "舒适";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
+                }else if(itemValue>=60.1){
+                    showtxt= "潮湿";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#dbbc49");
+                }
+            }else  if(item=="CO2"){
+                if(itemValue>=0&&itemValue<=350){
+                    showtxt= "-- ";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
+                }else if(itemValue>=351&&itemValue<=1000){
+                    showtxt= "优";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
+                }else if(itemValue>=1001&&itemValue<=2000){
+                    showtxt= "中";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#dbbc49");
+                }else if(itemValue>=2001){
+                    showtxt= "差";
+                }
+            }else  if(item=="VOC"){
+                if(itemValue>=0&&itemValue<=830){
+                    showtxt= "合格";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
+                }else if(itemValue>=11 ){
+                    showtxt= "不合格";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#dbbc49");
+                }
+            } else  if(item=="PM25"){
+                if(itemValue>=0&&itemValue<=35){
+                    showtxt= "优";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#92D050");
+                }else if(itemValue>=35.1&&itemValue<=75){
+                    showtxt= "良";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#FFFF00");
+                }else if(itemValue>=75.1&&itemValue<=115){
+                    showtxt= "轻";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#FFC000");
+                }else if(itemValue>=115.1&&itemValue<=150){
+                    showtxt= "中度";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#FF0000");
+                }else if(itemValue>=150.1&&itemValue<=250){
+                    showtxt= "重度";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#7030A0");
+                }else if(itemValue>=250.1){
+                    showtxt= "严重";
+                    $("#"+deviceID+"-"+item+"txt").css("color","#595959");
+                }
+            }
+
+            $("#"+deviceID+"-"+item+"txt").text(showtxt)
+
         }
-        $("#dynamic-showbox .showbox").hide();
-        $("#showbox-"+currentPage).show();
-    }
 
-    var lastRestart = "";
-    function UpdateData() {
-        var data = {"Code":"200","Msg":"获取成功！","Data":{"restart":"","list":[{"LastActive":"2018/05/23 09:50:19","DateTime":"2018/05/23 10:36:22","DeviceType":"UMINI300","DeviceNo":"59053893","IsOnline":true,"Name":"AL-18#-4F-东北","Mark":"--","ItemsData":[{"Title":"HUMI","Unit":"%","ItemKey":"HUMI","Value":32.9,"Grade":"--"},{"Title":"PM2.5","Unit":"ug/m³","ItemKey":"PM25","Value":10,"Grade":"--"},{"Title":"VOC","Unit":"PPB","ItemKey":"VOC","Value":228.0,"Grade":"--"},{"Title":"PM10","Unit":"ug/m³","ItemKey":"PM10","Value":19.0,"Grade":"--"},{"Title":"CO2","Unit":"PPM","ItemKey":"CO2","Value":600.0,"Grade":"--"},{"Title":"TEMP","Unit":"℃","ItemKey":"TEMP","Value":27.4,"Grade":"--"}]},{"LastActive":"2018/05/23 09:50:19","DateTime":"2018/05/23 10:36:23","DeviceType":"UMINI300","DeviceNo":"59570501","IsOnline":true,"Name":"AL-18#-4F-西南","Mark":"--","ItemsData":[{"Title":"HUMI","Unit":"%","ItemKey":"HUMI","Value":49.7,"Grade":"--"},{"Title":"PM2.5","Unit":"ug/m³","ItemKey":"PM25","Value":12.0,"Grade":"--"},{"Title":"VOC","Unit":"PPB","ItemKey":"VOC","Value":748.0,"Grade":"--"},{"Title":"PM10","Unit":"ug/m³","ItemKey":"PM10","Value":14.0,"Grade":"--"},{"Title":"CO2","Unit":"PPM","ItemKey":"CO2","Value":658.0,"Grade":"--"},{"Title":"TEMP","Unit":"℃","ItemKey":"TEMP","Value":25.8,"Grade":"--"}]}]}};
-        for (var i = 0; i < data.Data.list.length; i++) {
-            var deno = data.Data.list[i].DeviceNo;
-            if ($("#" + deno + "-quxian").length > 0) {
-                var myl = data.Data.list[i].DateTime;
-                for (var o in data.Data.list[i].ItemsData) {
-                    if(data.Data.list[i].ItemsData[o].ItemKey=="CH2O"){
-                        data.Data.list[i].ItemsData[o].Value = (data.Data.list[i].ItemsData[o].Value /1000).toFixed(3);
-                    }
-                    var cl = color[data.Data.list[i].ItemsData[o].Grade] || color["--"];
-                    if (data.Data.list[i].ItemsData[o].ItemKey == quxian) {
-                        if (charts[deno] == null) {
-                            charts[deno] = CreateChart(deno + "-quxian","（"+data.Data.list[i].Name +"）  "+ data.Data.list[i].ItemsData[o].Title, data.Data.list[i].ItemsData[o].Unit);
+
+
+
+
+        function InitShowBoxSize() {
+            var myw = $("#showbox-0").width();
+            var myh = $("#showbox-0").height();
+
+            var qxw = $("#dynamic-showbox .quxian:first").width();
+            var qxh = $("#dynamic-showbox .quxian:first").height();
+
+            $("#dynamic-showbox .showbox").each(function () {
+                $(this).width(myw);
+                $(this).height(myh);
+            });
+
+            $("#dynamic-showbox .quxian").each(function () {
+                $(this).width(qxw);
+                $(this).height(qxh);
+            });
+        }
+
+        var currentPage = 0;
+        var countPage = $("#dynamic-showbox .showbox").length;
+        function SlipeItems() {
+            currentPage++;
+            if (currentPage >= countPage) {
+                currentPage = 0;
+            }
+            $("#dynamic-showbox .showbox").hide();
+            $("#showbox-"+currentPage).show();
+        }
+
+        var lastRestart = "";
+        function UpdateData() {
+            var data = {"Code":"200","Msg":"获取成功！","Data":{"restart":"","list":[{"LastActive":"2018/05/23 09:50:19","DateTime":"2018/05/23 10:36:22","DeviceType":"UMINI300","DeviceNo":"59053893","IsOnline":true,"Name":"AL-18#-4F-东北","Mark":"--","ItemsData":[{"Title":"HUMI","Unit":"%","ItemKey":"HUMI","Value":32.9,"Grade":"--"},{"Title":"PM2.5","Unit":"ug/m³","ItemKey":"PM25","Value":10,"Grade":"--"},{"Title":"VOC","Unit":"PPB","ItemKey":"VOC","Value":228.0,"Grade":"--"},{"Title":"PM10","Unit":"ug/m³","ItemKey":"PM10","Value":19.0,"Grade":"--"},{"Title":"CO2","Unit":"PPM","ItemKey":"CO2","Value":600.0,"Grade":"--"},{"Title":"TEMP","Unit":"℃","ItemKey":"TEMP","Value":27.4,"Grade":"--"}]},{"LastActive":"2018/05/23 09:50:19","DateTime":"2018/05/23 10:36:23","DeviceType":"UMINI300","DeviceNo":"59570501","IsOnline":true,"Name":"AL-18#-4F-西南","Mark":"--","ItemsData":[{"Title":"HUMI","Unit":"%","ItemKey":"HUMI","Value":49.7,"Grade":"--"},{"Title":"PM2.5","Unit":"ug/m³","ItemKey":"PM25","Value":12.0,"Grade":"--"},{"Title":"VOC","Unit":"PPB","ItemKey":"VOC","Value":748.0,"Grade":"--"},{"Title":"PM10","Unit":"ug/m³","ItemKey":"PM10","Value":14.0,"Grade":"--"},{"Title":"CO2","Unit":"PPM","ItemKey":"CO2","Value":658.0,"Grade":"--"},{"Title":"TEMP","Unit":"℃","ItemKey":"TEMP","Value":25.8,"Grade":"--"}]}]}};
+            for (var i = 0; i < data.Data.list.length; i++) {
+                var deno = data.Data.list[i].DeviceNo;
+                if ($("#" + deno + "-quxian").length > 0) {
+                    var myl = data.Data.list[i].DateTime;
+                    for (var o in data.Data.list[i].ItemsData) {
+                        if(data.Data.list[i].ItemsData[o].ItemKey=="CH2O"){
+                            data.Data.list[i].ItemsData[o].Value = (data.Data.list[i].ItemsData[o].Value /1000).toFixed(3);
                         }
-                        if (data.Data.list[i].IsOnline) {
-                            var n = (new Date(myl)).getTime();
-                            if (last[deno] == null || last[deno] < n) {
-                                last[deno] = n;
-                                charts[deno].series[0].addPoint({ x: n, y: data.Data.list[i].ItemsData[o].Value, marker: { fillColor: cl } }, true, true);
-                                outline[deno] = 0;
-                            } else if (last[deno] == n) {
+                        var cl = color[data.Data.list[i].ItemsData[o].Grade] || color["--"];
+                        if (data.Data.list[i].ItemsData[o].ItemKey == quxian) {
+                            if (charts[deno] == null) {
+                                charts[deno] = CreateChart(deno + "-quxian","（"+data.Data.list[i].Name +"）  "+ data.Data.list[i].ItemsData[o].Title, data.Data.list[i].ItemsData[o].Unit);
+                            }
+                            if (data.Data.list[i].IsOnline) {
+                                var n = (new Date(myl)).getTime();
+                                if (last[deno] == null || last[deno] < n) {
+                                    last[deno] = n;
+                                    charts[deno].series[0].addPoint({ x: n, y: data.Data.list[i].ItemsData[o].Value, marker: { fillColor: cl } }, true, true);
+                                    outline[deno] = 0;
+                                } else if (last[deno] == n) {
+                                    outline[deno]++;
+                                    if (outline[deno] > 50) {
+                                        charts[deno].series[0].addPoint([currentData.getTime(), 0], true, true);
+                                        outline[deno] = 0;
+                                    }
+                                }
+                            } else {
                                 outline[deno]++;
                                 if (outline[deno] > 50) {
                                     charts[deno].series[0].addPoint([currentData.getTime(), 0], true, true);
                                     outline[deno] = 0;
                                 }
                             }
-                        } else {
-                            outline[deno]++;
-                            if (outline[deno] > 50) {
-                                charts[deno].series[0].addPoint([currentData.getTime(), 0], true, true);
-                                outline[deno] = 0;
-                            }
+                            // continue;
                         }
-                        // continue;
+                        var key = "#" + deno + "-" + data.Data.list[i].ItemsData[o].ItemKey;
+                        $(key + "-title").html(data.Data.list[i].ItemsData[o].Title);
+                        $(key + "-unit").html(data.Data.list[i].ItemsData[o].Unit);
+                        if (data.Data.list[i].ItemsData[o].ItemKey == "WD") {
+                            $(key + "-value").html(GetWdirect(data.Data.list[i].ItemsData[o].Value));
+                        } else {
+                            $(key + "-value").html(data.Data.list[i].ItemsData[o].Value);
+                        }
+                        $(key + "-value").css("color", cl);
+                        InitItemShowColor(deno,key + "-value",data.Data.list[i].ItemsData[o].ItemKey,data.Data.list[i].ItemsData[o].Value)
                     }
-                    var key = "#" + deno + "-" + data.Data.list[i].ItemsData[o].ItemKey;
-                    $(key + "-title").html(data.Data.list[i].ItemsData[o].Title);
-                    $(key + "-unit").html(data.Data.list[i].ItemsData[o].Unit);
-                    if (data.Data.list[i].ItemsData[o].ItemKey == "WD") {
-                        $(key + "-value").html(GetWdirect(data.Data.list[i].ItemsData[o].Value));
-                    } else {
-                        $(key + "-value").html(data.Data.list[i].ItemsData[o].Value);
-                    }
-                    $(key + "-value").css("color", cl);
-                    InitItemShowColor(deno,key + "-value",data.Data.list[i].ItemsData[o].ItemKey,data.Data.list[i].ItemsData[o].Value)
                 }
             }
         }
-    }
 
 
-    function GetWeather() {
-        var city = encodeURIComponent('上海');
-        var data = {"resultcode":"200","reason":"SUCCESSED!","result":[{"city":"上海","PM2.5":"39","AQI":"70","quality":"良","PM10":"87","CO":"0.9","NO2":"41","O3":"84","SO2":"13","time":"2018-05-23 10:00:20"}],"error_code":0};
-        if (data.resultcode == "200") {
-            $("#pm25").html(data.result[0]["PM2.5"] + "ug/m3");
-            $("#aqi").html(data.result[0]["AQI"]);
-            advise(parseFloat(data.result[0]["AQI"]));
+        function GetWeather() {
+            var city = encodeURIComponent('上海');
+            var data = {"resultcode":"200","reason":"SUCCESSED!","result":[{"city":"上海","PM2.5":"39","AQI":"70","quality":"良","PM10":"87","CO":"0.9","NO2":"41","O3":"84","SO2":"13","time":"2018-05-23 10:00:20"}],"error_code":0};
+            if (data.resultcode == "200") {
+                $("#pm25").html(data.result[0]["PM2.5"] + "ug/m3");
+                $("#aqi").html(data.result[0]["AQI"]);
+                advise(parseFloat(data.result[0]["AQI"]));
+            }
+            var data1 = {"resultcode":"200","reason":"successed!","result":{"sk":{"temp":"23","wind_direction":"东风","wind_strength":"2级","humidity":"34%","time":"09:40"},"today":{"temperature":"18℃~25℃","weather":"多云转晴","weather_id":{"fa":"01","fb":"00"},"wind":"北风微风","week":"星期三","city":"上海","date_y":"2018年05月23日","dressing_index":"舒适","dressing_advice":"建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。","uv_index":"中等","comfort_index":"","wash_index":"较适宜","travel_index":"适宜","exercise_index":"适宜","drying_index":""},"future":[{"temperature":"18℃~25℃","weather":"多云转晴","weather_id":{"fa":"01","fb":"00"},"wind":"北风微风","week":"星期三","date":"20180523"},{"temperature":"20℃~26℃","weather":"小雨","weather_id":{"fa":"07","fb":"07"},"wind":"东南风微风","week":"星期四","date":"20180524"},{"temperature":"23℃~27℃","weather":"小雨转大雨","weather_id":{"fa":"07","fb":"09"},"wind":"东南风3-5级","week":"星期五","date":"20180525"},{"temperature":"22℃~28℃","weather":"小雨转阵雨","weather_id":{"fa":"07","fb":"03"},"wind":"东北风微风","week":"星期六","date":"20180526"},{"temperature":"19℃~26℃","weather":"小雨转晴","weather_id":{"fa":"07","fb":"00"},"wind":"南风微风","week":"星期日","date":"20180527"},{"temperature":"20℃~26℃","weather":"小雨","weather_id":{"fa":"07","fb":"07"},"wind":"东南风微风","week":"星期一","date":"20180528"},{"temperature":"20℃~26℃","weather":"小雨","weather_id":{"fa":"07","fb":"07"},"wind":"东南风微风","week":"星期二","date":"20180529"}]},"error_code":0};
+            if (data1.resultcode == "200") {
+                $("#wendu").html(data1.result.today.temperature);
+                $("#shidu").html(data1.result.sk.humidity);
+                //var modal = (currentData.getHours() > 19) || (currentData.getHours()<5) ? "night" : "/day";
+                $("#weatherpic").attr("src", "skin/images" + "/" + data1.result.today.weather_id.fb + ".png");
+                $("#weatherpic").attr("title", data1.result.today.weather);
+            }
+
         }
-        var data1 = {"resultcode":"200","reason":"successed!","result":{"sk":{"temp":"23","wind_direction":"东风","wind_strength":"2级","humidity":"34%","time":"09:40"},"today":{"temperature":"18℃~25℃","weather":"多云转晴","weather_id":{"fa":"01","fb":"00"},"wind":"北风微风","week":"星期三","city":"上海","date_y":"2018年05月23日","dressing_index":"舒适","dressing_advice":"建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。","uv_index":"中等","comfort_index":"","wash_index":"较适宜","travel_index":"适宜","exercise_index":"适宜","drying_index":""},"future":[{"temperature":"18℃~25℃","weather":"多云转晴","weather_id":{"fa":"01","fb":"00"},"wind":"北风微风","week":"星期三","date":"20180523"},{"temperature":"20℃~26℃","weather":"小雨","weather_id":{"fa":"07","fb":"07"},"wind":"东南风微风","week":"星期四","date":"20180524"},{"temperature":"23℃~27℃","weather":"小雨转大雨","weather_id":{"fa":"07","fb":"09"},"wind":"东南风3-5级","week":"星期五","date":"20180525"},{"temperature":"22℃~28℃","weather":"小雨转阵雨","weather_id":{"fa":"07","fb":"03"},"wind":"东北风微风","week":"星期六","date":"20180526"},{"temperature":"19℃~26℃","weather":"小雨转晴","weather_id":{"fa":"07","fb":"00"},"wind":"南风微风","week":"星期日","date":"20180527"},{"temperature":"20℃~26℃","weather":"小雨","weather_id":{"fa":"07","fb":"07"},"wind":"东南风微风","week":"星期一","date":"20180528"},{"temperature":"20℃~26℃","weather":"小雨","weather_id":{"fa":"07","fb":"07"},"wind":"东南风微风","week":"星期二","date":"20180529"}]},"error_code":0};
-        if (data1.resultcode == "200") {
-            $("#wendu").html(data1.result.today.temperature);
-            $("#shidu").html(data1.result.sk.humidity);
-            //var modal = (currentData.getHours() > 19) || (currentData.getHours()<5) ? "night" : "/day";
-            $("#weatherpic").attr("src", "skin/images" + "/" + data1.result.today.weather_id.fb + ".png");
-            $("#weatherpic").attr("title", data1.result.today.weather);
+
+        function UpdateTime() {
+            var temp = WeekCN(currentData.getDay()) + " " + WeekEN(currentData.getDay()) + " " + currentData.Format("yyyy/MM/dd");
+            $("#DataTime").html(temp);
+            setTimeout(UpdateTime, 20000);
         }
 
-    }
-
-    function UpdateTime() {
-        var temp = WeekCN(currentData.getDay()) + " " + WeekEN(currentData.getDay()) + " " + currentData.Format("yyyy/MM/dd");
-        $("#DataTime").html(temp);
-        setTimeout(UpdateTime, 20000);
-    }
-
-    function CreateChart(container, titlename, titleUnit) {
-        var temp = new Highcharts.Chart({
-            chart: {
-                renderTo: container,
-                type: 'spline',
-                marginRight: 10,
-                borderWidth: 1,
-                backgroundColor: 'rgba(0,0,0,0)',
-                events: {
-                    load: function () { }
-                }
-            },
-            title: {
-                text: '设备故障率预测曲线（随时间变化）',
-                align: 'right',
-                style: {
-                    color: "#fff",
-                    fontSize: '25px'
-                }
-            },
-            xAxis: {
+        function CreateChart(container, titlename, titleUnit) {
+            var temp = new Highcharts.Chart({
+                chart: {
+                    renderTo: container,
+                    type: 'spline',
+                    marginRight: 10,
+                    borderWidth: 1,
+                    backgroundColor: 'rgba(0,0,0,0)',
+                    events: {
+                        load: function () { }
+                    }
+                },
                 title: {
-                    text: '时 间',
+                    text: '设备故障率预测曲线（随时间变化）',
+                    align: 'right',
                     style: {
-                        color: '#fff',//颜色
-                        fontSize: '16px',  //字体
-                        fontWeight: 'bold'
+                        color: "#fff",
+                        fontSize: '25px'
                     }
                 },
-                type: 'datetime',
-                gridLineDashStyle: 'Dot',
-                gridLineColor: '#fff',
-                gridLineWidth: 1,
-                tickPixelInterval: 120,
-                style: {
-                    color: "#fff"
-                },
-                labels: {
+                xAxis: {
+                    title: {
+                        text: '时 间',
+                        style: {
+                            color: '#fff',//颜色
+                            fontSize: '16px',  //字体
+                            fontWeight: 'bold'
+                        }
+                    },
+                    type: 'datetime',
+                    gridLineDashStyle: 'Dot',
+                    gridLineColor: '#fff',
+                    gridLineWidth: 1,
+                    tickPixelInterval: 120,
                     style: {
-                        color: '#fff',//颜色
-                        fontSize: '14px'  //字体
-                    }
-                }
-            },
-            yAxis: {
-                title: {
-                    text: ''
-                },
-                labels: {
-                    style: {
-                        color: '#fff',//颜色
-                        fontSize: '14px'  //字体
-                    }
-                }
-            },
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.series.name + '</b><br />' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br />' + Highcharts.numberFormat(this.y, 2);
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            exporting: {
-                enabled: false
-            },
-            plotOptions: {
-                spline: {
-                    dataLabels: {
-                        enabled: true, // 开启数据标签
+                        color: "#fff"
+                    },
+                    labels: {
                         style: {
                             color: '#fff',//颜色
                             fontSize: '14px'  //字体
                         }
                     }
-                }
-            },
-            series: [{
-                name: '实时数据',
-                color: "#fff",
-                data: (function () {
-                    var data = [],
-                        time = currentData.getTime(),
-                        i;
-                    for (i = -19; i <= 0; i++) {
-                        data.push({
-                            x: time + i * 20000000,
-                            y: i+i*0.1
-                        });
-                    }
-                    return data;
-                })()
-            }]
-        });
-        return temp;
-    }
-
-    function drawLine(data) {
-        var myChart = echarts.init(document.getElementById('59053893-quxian'));
-        option = {
-            tooltip: {
-                trigger: 'item',
-                formatter: "{b}故障率: {c}"
-            },
-            grid : {
-                left : 30,    //距离容器上边界40像素
-                right: 30,
-                top: 80
-            },
-            title: {
-                text: '设备故障率预测曲线',
-                textStyle:{
-                    //文字颜色
-                    color:'#fff',
-                    //字体风格,'normal','italic','oblique'
-                    //fontStyle:'normal',
-                    //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
-                    fontWeight:'bold',
-                    //字体系列
-                    //fontFamily:'sans-serif',
-                    //字体大小
-                    fontSize:22
-                }
-            },
-            xAxis: {
-                type: 'category',
-                data: ['今天', '半年后', '一年后', '一年半后', '两年后', '两年半后', '三年后'],
-                axisLine: {
-                    lineStyle: {
-                        type: 'solid',
-                        color: '#fff'//左边线的颜色
-                        //width:'2'//坐标线的宽度
+                },
+                yAxis: {
+                    title: {
+                        text: ''
                     },
-                    axisLabel: {
-                        textStyle: {
-                            color: '#fff'//坐标值得具体的颜色
-
+                    labels: {
+                        style: {
+                            color: '#fff',//颜色
+                            fontSize: '14px'  //字体
                         }
                     }
-                }
-            },
-            yAxis: {
-                name: '故障率',
-                type: 'value',
-                axisLine: {
-                    lineStyle: {
-                        type: 'solid',
-                        color: '#fff'//左边线的颜色
-                        //width:'2'//坐标线的宽度
-                    },
-                    axisLabel: {
-                        textStyle: {
-                            color: '#fff'//坐标值得具体的颜色
-
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.series.name + '</b><br />' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br />' + Highcharts.numberFormat(this.y, 2);
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                exporting: {
+                    enabled: false
+                },
+                plotOptions: {
+                    spline: {
+                        dataLabels: {
+                            enabled: true, // 开启数据标签
+                            style: {
+                                color: '#fff',//颜色
+                                fontSize: '14px'  //字体
+                            }
                         }
                     }
-                }
-            },
-            series: [{
-                data: data,
-                type: 'line',
-                smooth: true,
-                itemStyle: {
-                    normal: {
-                        color: "#ffffff",
+                },
+                series: [{
+                    name: '实时数据',
+                    color: "#fff",
+                    data: (function () {
+                        var data = [],
+                            time = currentData.getTime(),
+                            i;
+                        for (i = -19; i <= 0; i++) {
+                            data.push({
+                                x: time + i * 20000000,
+                                y: i+i*0.1
+                            });
+                        }
+                        return data;
+                    })()
+                }]
+            });
+            return temp;
+        }
+
+        function drawLine(data) {
+            var myChart = echarts.init(document.getElementById('59053893-quxian'));
+            option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{b}故障率: {c}"
+                },
+                grid : {
+                    left : 30,    //距离容器上边界40像素
+                    right: 30,
+                    top: 80
+                },
+                title: {
+                    text: '设备故障率预测曲线',
+                    textStyle:{
+                        //文字颜色
+                        color:'#fff',
+                        //字体风格,'normal','italic','oblique'
+                        //fontStyle:'normal',
+                        //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+                        fontWeight:'bold',
+                        //字体系列
+                        //fontFamily:'sans-serif',
+                        //字体大小
+                        fontSize:22
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['今天', '半年后', '一年后', '一年半后', '两年后', '两年半后', '三年后'],
+                    axisLine: {
                         lineStyle: {
-                            color: "#ffffff"
+                            type: 'solid',
+                            color: '#fff'//左边线的颜色
+                            //width:'2'//坐标线的宽度
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#fff'//坐标值得具体的颜色
+
+                            }
                         }
                     }
-                }
-            }]
-        };
-        myChart.setOption(option);
-    }
+                },
+                yAxis: {
+                    name: '故障率',
+                    type: 'value',
+                    axisLine: {
+                        lineStyle: {
+                            type: 'solid',
+                            color: '#fff'//左边线的颜色
+                            //width:'2'//坐标线的宽度
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#fff'//坐标值得具体的颜色
 
-    function drawCard(data) {
-
-        $('#59053893-PM10-value').html(data[0]*100);
-        $('#59053893-HUMI-value').html(data[1]*100);
-        $('#59053893-TEMP-value').html(data[2]*100);
-        $('#59053893-CO2-value').html(data[4]*100);
-        $('#59053893-VOC-value').html(data[6]*100);
-        $('#wendu').html(data[0]*100 + " %");
-        $('#pm25').html(data[7]);
-        $('#aqi').html(data[8]);
-
-        if(data[0]>=0 && data[0]<0.1){
-            $('#59053893-PM10txt').html("极 低").css("color",color[0]);
-            $('#statecard').css("background",color[0]);
-            $('#shidu').html("故障率极低");
-        }else if(data[0]>=0.1 && data[0]<0.2){
-            $('#59053893-PM10txt').html("低").css("color",color[1]);
-            $('#statecard').css("background",color[1]);
-            $('#shidu').html("故障率低");
-        }else if(data[0]>=0.2 && data[0]<0.4){
-            $('#59053893-PM10txt').html("中").css("color",color[2]);
-            $('#statecard').css("background",color[2]);
-            $('#shidu').html("故障率中");
-        }else if(data[0]>=0.4 && data[0]<0.6){
-            $('#59053893-PM10txt').html("偏高").css("color",color[3]);
-            $('#statecard').css("background",color[3]);
-            $('#shidu').html("故障率偏高");
-        }else if(data[0]>=0.6 && data[0]<0.8){
-            $('#59053893-PM10txt').html("高").css("color",color[4]);
-            $('#statecard').css("background",color[4]);
-            $('#shidu').html("故障率高");
-        }else if(data[0]>=0.8 && data[0]<=1.0){
-            $('#59053893-PM10txt').html("极高").css("color",color[5]);
-            $('#statecard').css("background",color[5]);
-            $('#shidu').html("故障率极高");
-        }else {
-            $('#59053893-PM10txt').html("null");
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    data: data,
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: {
+                        normal: {
+                            color: "#ffffff",
+                            lineStyle: {
+                                color: "#ffffff"
+                            }
+                        }
+                    }
+                }]
+            };
+            myChart.setOption(option);
         }
 
-        if(data[1]>=0 && data[1]<0.1){
-            $('#59053893-HUMItxt').html("极 低").css("color",color[0]);
-        }else if(data[1]>=0.1 && data[1]<0.2){
-            $('#59053893-HUMItxt').html("低").css("color",color[1]);
-        }else if(data[1]>=0.2 && data[1]<0.4){
-            $('#59053893-HUMItxt').html("中").css("color",color[2]);
-        }else if(data[1]>=0.4 && data[1]<0.6){
-            $('#59053893-HUMItxt').html("偏高").css("color",color[3]);
-        }else if(data[1]>=0.6 && data[1]<0.8){
-            $('#59053893-HUMItxt').html("高").css("color",color[4]);
-        }else if(data[1]>=0.8 && data[1]<=1.0){
-            $('#59053893-HUMItxt').html("极高").css("color",color[5]);
-        }else {
-            $('#59053893-HUMItxt').html("null");
-        }
+        function drawCard(data) {
 
-        if(data[2]>=0 && data[2]<0.1){
-            $('#59053893-TEMPtxt').html("极 低").css("color",color[0]);
-        }else if(data[2]>=0.1 && data[2]<0.2){
-            $('#59053893-TEMPtxt').html("低").css("color",color[1]);
-        }else if(data[2]>=0.2 && data[2]<0.4){
-            $('#59053893-TEMPtxt').html("中").css("color",color[2]);
-        }else if(data[2]>=0.4 && data[2]<0.6){
-            $('#59053893-TEMPtxt').html("偏高").css("color",color[3]);
-        }else if(data[2]>=0.6 && data[2]<0.8){
-            $('#59053893-TEMPtxt').html("高").css("color",color[4]);
-        }else if(data[2]>=0.8 && data[2]<=1.0){
-            $('#59053893-TEMPtxt').html("极高").css("color",color[5]);
-        }else {
-            $('#59053893-TEMPtxt').html("null");
-        }
+            $('#59053893-PM10-value').html((data[0]*100).toFixed(2));
+            $('#59053893-HUMI-value').html((data[1]*100).toFixed(2));
+            $('#59053893-TEMP-value').html((data[2]*100).toFixed(2));
+            $('#59053893-CO2-value').html((data[4]*100).toFixed(2));
+            $('#59053893-VOC-value').html((data[6]*100).toFixed(2));
+            $('#wendu').html((data[0]*100).toFixed(2) + " %");
+            $('#pm25').html(data[8]);
+            $('#aqi').html(data[9]);
 
-        if(data[4]>=0 && data[4]<0.1){
-            $('#59053893-CO2txt').html("极 低").css("color",color[0]);
-        }else if(data[4]>=0.1 && data[4]<0.2){
-            $('#59053893-CO2txt').html("低").css("color",color[1]);
-        }else if(data[4]>=0.2 && data[4]<0.4){
-            $('#59053893-CO2txt').html("中").css("color",color[2]);
-        }else if(data[4]>=0.4 && data[4]<0.6){
-            $('#59053893-CO2txt').html("偏高").css("color",color[3]);
-        }else if(data[4]>=0.6 && data[4]<0.8){
-            $('#59053893-CO2txt').html("高").css("color",color[4]);
-        }else if(data[4]>=0.8 && data[4]<=1.0){
-            $('#59053893-CO2txt').html("极高").css("color",color[5]);
-        }else {
-            $('#59053893-CO2txt').html("null");
-        }
-
-        if(data[6]>=0 && data[6]<0.1){
-            $('#59053893-VOCtxt').html("极 低").css("color",color[0]);
-        }else if(data[6]>=0.1 && data[6]<0.2){
-            $('#59053893-VOCtxt').html("低").css("color",color[1]);
-        }else if(data[6]>=0.2 && data[6]<0.4){
-            $('#59053893-VOCtxt').html("中").css("color",color[2]);
-        }else if(data[6]>=0.4 && data[6]<0.6){
-            $('#59053893-VOCtxt').html("偏高").css("color",color[3]);
-        }else if(data[6]>=0.6 && data[6]<0.8){
-            $('#59053893-VOCtxt').html("高").css("color",color[4]);
-        }else if(data[6]>=0.8 && data[6]<=1.0){
-            $('#59053893-VOCtxt').html("极高").css("color",color[5]);
-        }else {
-            $('#59053893-VOCtxt').html("null");
-        }
-    }
-
-    $('#select1').change(
-        function(){
-            var b = $(this).val();
-            $('#test').html(b);
-            if(b == "测试设备一"){
-                drawLine(dataGroup[0]);
-                drawCard(dataGroup[0]);
-            }else if(b == "测试设备二"){
-                drawLine(dataGroup[1]);
-                drawCard(dataGroup[1]);
-            }else if(b == "测试设备三"){
-                drawLine(dataGroup[2]);
-                drawCard(dataGroup[2]);
-            }else if(b == "测试设备四"){
-                drawLine(dataGroup[3]);
-                drawCard(dataGroup[3]);
-            }else if(b == "测试设备五"){
-                drawLine(dataGroup[4]);
-                drawCard(dataGroup[4]);
+            if(data[0]>=0 && data[0]<0.1){
+                $('#59053893-PM10txt').html("极 低").css("color",color[0]);
+                $('#statecard').css("background",color[0]);
+                $('#shidu').html("故障率极低");
+            }else if(data[0]>=0.1 && data[0]<0.2){
+                $('#59053893-PM10txt').html("低").css("color",color[1]);
+                $('#statecard').css("background",color[1]);
+                $('#shidu').html("故障率低");
+            }else if(data[0]>=0.2 && data[0]<0.4){
+                $('#59053893-PM10txt').html("中").css("color",color[2]);
+                $('#statecard').css("background",color[2]);
+                $('#shidu').html("故障率中");
+            }else if(data[0]>=0.4 && data[0]<0.6){
+                $('#59053893-PM10txt').html("偏高").css("color",color[3]);
+                $('#statecard').css("background",color[3]);
+                $('#shidu').html("故障率偏高");
+            }else if(data[0]>=0.6 && data[0]<0.8){
+                $('#59053893-PM10txt').html("高").css("color",color[4]);
+                $('#statecard').css("background",color[4]);
+                $('#shidu').html("故障率高");
+            }else if(data[0]>=0.8 && data[0]<=1.0){
+                $('#59053893-PM10txt').html("极高").css("color",color[5]);
+                $('#statecard').css("background",color[5]);
+                $('#shidu').html("故障率极高");
             }else {
-                window.alert("返回值为空");
+                $('#59053893-PM10txt').html("null");
+            }
+
+            if(data[1]>=0 && data[1]<0.1){
+                $('#59053893-HUMItxt').html("极 低").css("color",color[0]);
+            }else if(data[1]>=0.1 && data[1]<0.2){
+                $('#59053893-HUMItxt').html("低").css("color",color[1]);
+            }else if(data[1]>=0.2 && data[1]<0.4){
+                $('#59053893-HUMItxt').html("中").css("color",color[2]);
+            }else if(data[1]>=0.4 && data[1]<0.6){
+                $('#59053893-HUMItxt').html("偏高").css("color",color[3]);
+            }else if(data[1]>=0.6 && data[1]<0.8){
+                $('#59053893-HUMItxt').html("高").css("color",color[4]);
+            }else if(data[1]>=0.8 && data[1]<=1.0){
+                $('#59053893-HUMItxt').html("极高").css("color",color[5]);
+            }else {
+                $('#59053893-HUMItxt').html("null");
+            }
+
+            if(data[2]>=0 && data[2]<0.1){
+                $('#59053893-TEMPtxt').html("极 低").css("color",color[0]);
+            }else if(data[2]>=0.1 && data[2]<0.2){
+                $('#59053893-TEMPtxt').html("低").css("color",color[1]);
+            }else if(data[2]>=0.2 && data[2]<0.4){
+                $('#59053893-TEMPtxt').html("中").css("color",color[2]);
+            }else if(data[2]>=0.4 && data[2]<0.6){
+                $('#59053893-TEMPtxt').html("偏高").css("color",color[3]);
+            }else if(data[2]>=0.6 && data[2]<0.8){
+                $('#59053893-TEMPtxt').html("高").css("color",color[4]);
+            }else if(data[2]>=0.8 && data[2]<=1.0){
+                $('#59053893-TEMPtxt').html("极高").css("color",color[5]);
+            }else {
+                $('#59053893-TEMPtxt').html("null");
+            }
+
+            if(data[4]>=0 && data[4]<0.1){
+                $('#59053893-CO2txt').html("极 低").css("color",color[0]);
+            }else if(data[4]>=0.1 && data[4]<0.2){
+                $('#59053893-CO2txt').html("低").css("color",color[1]);
+            }else if(data[4]>=0.2 && data[4]<0.4){
+                $('#59053893-CO2txt').html("中").css("color",color[2]);
+            }else if(data[4]>=0.4 && data[4]<0.6){
+                $('#59053893-CO2txt').html("偏高").css("color",color[3]);
+            }else if(data[4]>=0.6 && data[4]<0.8){
+                $('#59053893-CO2txt').html("高").css("color",color[4]);
+            }else if(data[4]>=0.8 && data[4]<=1.0){
+                $('#59053893-CO2txt').html("极高").css("color",color[5]);
+            }else {
+                $('#59053893-CO2txt').html("null");
+            }
+
+            if(data[6]>=0 && data[6]<0.1){
+                $('#59053893-VOCtxt').html("极 低").css("color",color[0]);
+            }else if(data[6]>=0.1 && data[6]<0.2){
+                $('#59053893-VOCtxt').html("低").css("color",color[1]);
+            }else if(data[6]>=0.2 && data[6]<0.4){
+                $('#59053893-VOCtxt').html("中").css("color",color[2]);
+            }else if(data[6]>=0.4 && data[6]<0.6){
+                $('#59053893-VOCtxt').html("偏高").css("color",color[3]);
+            }else if(data[6]>=0.6 && data[6]<0.8){
+                $('#59053893-VOCtxt').html("高").css("color",color[4]);
+            }else if(data[6]>=0.8 && data[6]<=1.0){
+                $('#59053893-VOCtxt').html("极高").css("color",color[5]);
+            }else {
+                $('#59053893-VOCtxt').html("null");
             }
         }
-    );
+
+        $('#select1').change(
+            function(){
+                var b = $(this).val();
+                $('#test').html(b);
+                if(b == "测试设备一"){
+                    drawLine(dataGroup[0]);
+                    drawCard(dataGroup[0]);
+                }else if(b == "测试设备二"){
+                    drawLine(dataGroup[1]);
+                    drawCard(dataGroup[1]);
+                }else if(b == "测试设备三"){
+                    drawLine(dataGroup[2]);
+                    drawCard(dataGroup[2]);
+                }else if(b == "测试设备四"){
+                    drawLine(dataGroup[3]);
+                    drawCard(dataGroup[3]);
+                }else if(b == "测试设备五"){
+                    drawLine(dataGroup[4]);
+                    drawCard(dataGroup[4]);
+                }else {
+                    window.alert("返回值为空");
+                }
+            }
+        );
+    });
+
 
     $('#dropzone').hover(
         function () {
