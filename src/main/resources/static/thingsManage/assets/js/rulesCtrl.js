@@ -353,8 +353,14 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
                 //console.log(msg)
                 if (msg === 'ok') {
                     toastr.success('修改插件成功')
+                    location.reload()
+                }else {
+                    toastr.warning('修改插件失败，请重试！')
+                    location.reload()
                 }
-                location.reload()
+            },
+            error:function(error){
+                console.log(error)
             }
         });
     }
