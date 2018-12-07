@@ -156,7 +156,7 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
             async:false,
             success:function (msg) {
                 console.log(msg);
-                userInfo = msg
+                userInfo = msg;
                 $scope.currentUser = msg.name;
                 $scope.currentUserLevel = msg.authority;
             },
