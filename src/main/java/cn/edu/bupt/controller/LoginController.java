@@ -1,6 +1,7 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.config.MySessionContext;
+import cn.edu.bupt.utils.CodeUtil;
 import cn.edu.bupt.utils.HttpUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.JsonObject;
@@ -16,10 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
+import java.awt.image.RenderedImage;
+import java.util.Map;
 
 /**
  * Created by tangjialiang on 2018/1/7.
@@ -42,7 +47,9 @@ public class LoginController extends DefaultThingsboardAwaredController {
         String username = json1.get("username").getAsString() ;
         String password = json1.get("password").getAsString() ;
         HttpSession session = request.getSession();
-
+        if(session.getAttribute("needCode")!=null&&(Boolean)session.getAttribute("needCode")){
+            return "验证码错误，请重试！";
+        }
         session.setAttribute("username", username);
         session.setAttribute("password", password);
 
@@ -52,10 +59,21 @@ public class LoginController extends DefaultThingsboardAwaredController {
             response.setStatus(400);
             session.removeAttribute("username");
             session.removeAttribute("password");
+            if(session.getAttribute("failures")==null){
+                session.setAttribute("failures",1);
+            }else{
+                int temp = (Integer)session.getAttribute("failures");
+                temp++;
+                session.setAttribute("failures",temp);
+                if(temp>=3){
+                    session.setAttribute("needCode",true);
+                }
+                return "登录失败超过三次，登录时请输入验证码。";
+            }
         }else if(responseJson.has("access_token")){
             UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
             Subject subject = SecurityUtils.getSubject();
-            subject.login(usernamePasswordToken);   //完成登录
+            subject.login(usernamePasswordToken);
         }
         return res;
 //        JsonObject json = new JsonObject();
@@ -171,6 +189,49 @@ public class LoginController extends DefaultThingsboardAwaredController {
 
         return request.getRequestedSessionId();
 
+    }
+
+    @RequestMapping(value = "/getVerify")
+    public void getVerify(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            //设置相应类型,告诉浏览器输出的内容为图片
+            response.setContentType("image/jpeg");
+            //设置响应头信息，告诉浏览器不要缓存此内容
+            response.setHeader("Pragma", "No-cache");
+            response.setHeader("Cache-Control", "no-cache");
+            response.setDateHeader("Expire", 0);
+            Map<String,Object> map = CodeUtil.generateCodeAndPic();
+            HttpSession session = request.getSession();
+            session.removeAttribute("code");
+            session.setAttribute("code",map.get("code"));
+            try {
+                // 将内存中的图片通过流动形式输出到客户端
+                ImageIO.write((RenderedImage) map.get("codePic"), "JPEG", response.getOutputStream());
+            } catch (Exception e) {
+
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    @RequestMapping(value = "/verifyCode/{code}")
+    public boolean checkCode(HttpServletRequest request, @PathVariable("code") String code) {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("code")!=null){
+            String result = session.getAttribute("code").toString();
+            System.out.println(session.getAttribute("code"));
+            System.out.println(code);
+            if(result.equals(code)){
+                session.setAttribute("needCode",false);
+                return true;
+            }else {
+                session.setAttribute("needCode",true);
+                return false;
+            }
+        }
+        return true;
     }
 
 }
