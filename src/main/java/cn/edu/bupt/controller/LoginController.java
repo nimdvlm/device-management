@@ -51,12 +51,18 @@ public class LoginController extends DefaultThingsboardAwaredController {
                 if(session.getAttribute("captcha")==null||!session.getAttribute("captcha").toString().equals(captcha)) {
                     response.setStatus(400);
                     session.removeAttribute("captcha");
-                    return "验证码错误，请重试！";
+                    JsonObject failuresJson = new JsonObject();
+                    failuresJson.addProperty("msg","验证码错误，请重试！");
+                    failuresJson.addProperty("needCaptcha",true);
+                    return failuresJson.toString();
                 }
             }else{
                 session.removeAttribute("captcha");
                 response.setStatus(400);
-                return "验证码错误，请重试！";
+                JsonObject failuresJson = new JsonObject();
+                failuresJson.addProperty("msg","验证码错误，请重试！");
+                failuresJson.addProperty("needCaptcha",true);
+                return failuresJson.toString();
             }
         }
         String username = json1.get("username").getAsString() ;
@@ -72,6 +78,7 @@ public class LoginController extends DefaultThingsboardAwaredController {
             session.removeAttribute("password");
             if(session.getAttribute("failures")==null){
                 session.setAttribute("failures",1);
+                session.setAttribute("needCaptcha",false);
             }else{
                 int temp = (Integer)session.getAttribute("failures");
                 temp++;
@@ -80,13 +87,14 @@ public class LoginController extends DefaultThingsboardAwaredController {
                     session.setAttribute("needCaptcha",true);
                 }
             }
+            responseJson.addProperty("needCaptcha",(boolean)session.getAttribute("needCaptcha"));
         }else if(responseJson.has("access_token")){
             UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
             Subject subject = SecurityUtils.getSubject();
             subject.login(usernamePasswordToken);
         }
         session.removeAttribute("captcha");
-        return res;
+        return responseJson.toString();
 //        JsonObject json = new JsonObject();
 //        if(res){ // 成功登录
 //            UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
@@ -211,8 +219,19 @@ public class LoginController extends DefaultThingsboardAwaredController {
             response.setHeader("Pragma", "No-cache");
             response.setHeader("Cache-Control", "no-cache");
             response.setDateHeader("Expire", 0);
-            Map<String,Object> map = CodeUtil.generateCodeAndPic();
             HttpSession session = request.getSession();
+            /**
+             * 第一次验证码为BSWP方便调试
+             */
+            Map<String, Object> map;
+            if(session.getAttribute("debug")==null) {
+                map = CodeUtil.generateCodeAndPic("BSWP");
+                session.setAttribute("debug",1);
+            }else{
+                map = CodeUtil.generateCodeAndPic();
+            }
+
+
             session.removeAttribute("captcha");
             session.setAttribute("captcha",map.get("captcha").toString().toLowerCase());
             try {
