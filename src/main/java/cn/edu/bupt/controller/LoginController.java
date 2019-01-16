@@ -44,12 +44,23 @@ public class LoginController extends DefaultThingsboardAwaredController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestBody String body){
         JsonObject json1 = new JsonParser().parse(body).getAsJsonObject();
+        HttpSession session = request.getSession();
+        if(session.getAttribute("needCaptcha")!=null&&(Boolean)session.getAttribute("needCaptcha")){
+            if(json1.has("captcha")){
+                String captcha = json1.get("captcha").getAsString().toLowerCase();
+                if(session.getAttribute("captcha")==null||!session.getAttribute("captcha").toString().equals(captcha)) {
+                    response.setStatus(400);
+                    session.removeAttribute("captcha");
+                    return "验证码错误，请重试！";
+                }
+            }else{
+                session.removeAttribute("captcha");
+                response.setStatus(400);
+                return "验证码错误，请重试！";
+            }
+        }
         String username = json1.get("username").getAsString() ;
         String password = json1.get("password").getAsString() ;
-        HttpSession session = request.getSession();
-        if(session.getAttribute("needCode")!=null&&(Boolean)session.getAttribute("needCode")){
-            return "验证码错误，请重试！";
-        }
         session.setAttribute("username", username);
         session.setAttribute("password", password);
 
@@ -66,15 +77,15 @@ public class LoginController extends DefaultThingsboardAwaredController {
                 temp++;
                 session.setAttribute("failures",temp);
                 if(temp>=3){
-                    session.setAttribute("needCode",true);
+                    session.setAttribute("needCaptcha",true);
                 }
-                return "登录失败超过三次，登录时请输入验证码。";
             }
         }else if(responseJson.has("access_token")){
             UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
             Subject subject = SecurityUtils.getSubject();
             subject.login(usernamePasswordToken);
         }
+        session.removeAttribute("captcha");
         return res;
 //        JsonObject json = new JsonObject();
 //        if(res){ // 成功登录
@@ -191,7 +202,7 @@ public class LoginController extends DefaultThingsboardAwaredController {
 
     }
 
-    @RequestMapping(value = "/getVerify")
+    @RequestMapping(value = "/getCaptcha")
     public void getVerify(HttpServletRequest request, HttpServletResponse response) {
         try {
             //设置相应类型,告诉浏览器输出的内容为图片
@@ -202,11 +213,11 @@ public class LoginController extends DefaultThingsboardAwaredController {
             response.setDateHeader("Expire", 0);
             Map<String,Object> map = CodeUtil.generateCodeAndPic();
             HttpSession session = request.getSession();
-            session.removeAttribute("code");
-            session.setAttribute("code",map.get("code"));
+            session.removeAttribute("captcha");
+            session.setAttribute("captcha",map.get("captcha").toString().toLowerCase());
             try {
                 // 将内存中的图片通过流动形式输出到客户端
-                ImageIO.write((RenderedImage) map.get("codePic"), "JPEG", response.getOutputStream());
+                ImageIO.write((RenderedImage) map.get("captchaPic"), "JPEG", response.getOutputStream());
             } catch (Exception e) {
 
             }
@@ -216,22 +227,23 @@ public class LoginController extends DefaultThingsboardAwaredController {
         }
     }
 
-    @RequestMapping(value = "/verifyCode/{code}")
-    public boolean checkCode(HttpServletRequest request, @PathVariable("code") String code) {
+    @RequestMapping(value = "/verify/{captcha}")
+    public boolean checkCaptcha(HttpServletRequest request, @PathVariable("captcha") String captcha) {
         HttpSession session = request.getSession();
-        if(session.getAttribute("code")!=null){
-            String result = session.getAttribute("code").toString();
-            System.out.println(session.getAttribute("code"));
-            System.out.println(code);
-            if(result.equals(code)){
-                session.setAttribute("needCode",false);
-                return true;
-            }else {
-                session.setAttribute("needCode",true);
-                return false;
-            }
+        if(session.getAttribute("captcha")!=null){
+            String result = session.getAttribute("captcha").toString();
+            return result.equals(captcha);
         }
         return true;
+    }
+
+    @RequestMapping(value = "/needCaptchane")
+    public boolean needCaptcha(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("needCaptcha")!=null){
+            return (boolean)session.getAttribute("needCaptcha");
+        }
+        return false;
     }
 
 }

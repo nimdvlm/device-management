@@ -34,8 +34,8 @@ public class CodeUtil {
 
     /**
      * 生成一个map集合
-     * code为生成的验证码
-     * codePic为生成的验证码BufferedImage对象
+     * captcha为生成的验证码
+     * captchaPic为生成的验证码BufferedImage对象
      * @return
      */
     public static Map<String,Object> generateCodeAndPic() {
@@ -89,9 +89,9 @@ public class CodeUtil {
         }
         Map<String,Object> map  =new HashMap<String,Object>();
         //存放验证码
-        map.put("code", randomCode);
+        map.put("captcha", randomCode);
         //存放生成的验证码BufferedImage对象
-        map.put("codePic", buffImg);
+        map.put("captchaPic", buffImg);
         return map;
     }
 
@@ -99,7 +99,7 @@ public class CodeUtil {
         //创建文件输出流对象
         OutputStream out = new FileOutputStream("/Users/czx/Downloads/"+System.currentTimeMillis()+".jpg");
         Map<String,Object> map = CodeUtil.generateCodeAndPic();
-        ImageIO.write((RenderedImage) map.get("codePic"), "jpeg", out);
-        System.out.println("验证码的值为："+map.get("code"));
+        ImageIO.write((RenderedImage) map.get("captchaPic"), "jpeg", out);
+        System.out.println("验证码的值为："+map.get("captcha"));
     }
 }
