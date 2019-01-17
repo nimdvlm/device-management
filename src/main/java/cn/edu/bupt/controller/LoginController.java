@@ -91,6 +91,7 @@ public class LoginController extends DefaultThingsboardAwaredController {
         }else if(responseJson.has("access_token")){
             UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
             Subject subject = SecurityUtils.getSubject();
+            subject.getSession().setTimeout(1000*Long.valueOf(responseJson.get("expires_in").getAsString()));
             subject.login(usernamePasswordToken);
         }
         session.removeAttribute("captcha");
