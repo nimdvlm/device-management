@@ -1,6 +1,8 @@
 // var userLevel;
 // var tenant;
 // var userId;
+window.URL = window.URL || window.webkitURL;
+
 $(document).ready(function () {
     /*Enter回车登录*/
     $(document).keydown(function () {
@@ -17,7 +19,8 @@ $(document).ready(function () {
     $("#login").click(function () {
         var userName = $("#form-username").val();
         var password = $("#form-password").val();
-        var data = {"username":userName,"password":password};
+        var captcha = $("#form-identifycode").val()||'';
+        var data = {"username":userName,"password":password,"captcha":captcha};
         var dataString = JSON.stringify(data);
         //window.location.href="chooseIndex.html";//原窗口打开
         // window.open("chooseIndex.html");//新窗口打开
@@ -43,8 +46,46 @@ $(document).ready(function () {
                    window.location.href = "/home?"+userLevel+"&"+tenant+"&"+userId;*/
                     window.location.href = "/home";
                 },
-                error:function () {
-                    toastr.error("用户名或密码错误！");
+                error:function (error) {
+                    var errObject=getErrObject(error)
+                    if(errObject.msg==='验证码错误，请重试！'){
+                        toastr.error("验证码错误！");
+                    }else{
+                        toastr.error("用户名或密码错误！");
+                        $("#form-identifycode").val("")
+                    }
+                    if(errObject.needCaptcha){
+                        $('#captcha').show()
+                        getCaptchaPic()
+                    }
+
+                    function getErrObject(error) {
+                        var errString=error.responseText
+                        var error=$.parseJSON(errString)
+                        return error
+                    }
+                    function getCaptchaPic() {
+                        // jquery的ajax无法正确获取blob数据，需自己写xmlhttprequest
+                        window.URL = window.URL || window.webkitURL;
+                        if (typeof history.pushState == "function") {
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("get", "/api/user/getCaptcha", true);
+                            xhr.responseType = "blob";
+                            xhr.onload = function() {
+                                if (this.status == 200) {
+                                    var blob = this.response;
+                                    var img = document.getElementById("captchaPic");
+                                    img.onload = function(e) {
+                                        window.URL.revokeObjectURL(img.src); // 清除释放
+                                    };
+                                    img.src = window.URL.createObjectURL(blob);
+                                }
+                            }
+                            xhr.send();
+                        } else {
+                            console.log('浏览器当前版本无法加载验证码')
+                        }
+                    }
                 }
             });
         }
