@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>大数据平台-实时监测</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-table.css" rel="stylesheet">
+    <link href="css/bootstrap-select.css" rel="stylesheet">
+
+    <style>
+        .abc:hover {
+            color: black !important;
+        }
+        .abc0:hover{
+            background-color: #337ab7 !important;
+        }
+
+    </style>
+</head>
+<body style="padding-top: 50px;height: 100%">
+
+<nav class="navbar navbar-fixed-top" style="background-color: #337ab7">
+
+    <div class="navbar-header" style="margin-left: 10px">
+        <a class="navbar-brand" href="#" style="color: white">大数据平台</a>
+    </div>
+    <div class="navbar-collapse">
+        <!--<ul class="nav navbar-nav">
+            <li><a href="/userformPage.do"  class="abc0"style="color: #faf2cc">用户管理</a></li>
+            <li class="dropdown">
+                <a href="#" class="abc" style="color: white" data-toggle="dropdown">我的网盘<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/uploadPage.do">springmvc</a></li>
+                    <li><a href="#">springsecurity</a></li>
+                    <li><a href="#">spring</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">DAO</li>
+                    <li><a href="#">mybatis</a></li>
+                    <li><a href="#">hibenate</a></li>
+                </ul>
+            </li>
+        </ul>-->
+        <ul class="navbar-right navbar-form">
+            <!--<div class="form-group">
+                <input type="text" placeholder="Email" class="form-control">
+            </div>-->
+            <!--<a href="/home?TENANT_ADMIN&2&1"><button id="logout" type="submit" class="btn btn-primary" style="margin-right: 40px">返回上一级</button></a>-->
+        </ul>
+    </div><!--/.nav-collapse -->
+
+</nav>
+
+<div class="row" style="height: 100%">
+    <div class="col-md-2" style="box-shadow: 1px 1px 3px #e5e5e5;height: 1400px;width: 13%">
+        <ul id="main-nav" class="nav nav-stacked" style="">
+            <li>
+                <a href="#" onclick="dashboard1()">
+                    <i class="glyphicon glyphicon-home">&nbsp;</i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="../bigData/device2.html">
+                    <i class="glyphicon glyphicon-th-large">&nbsp;</i>
+                    数据管理
+                </a>
+            </li>
+            <li>
+                <a href="sql.html">
+                    <i class="glyphicon glyphicon-search">&nbsp;</i>
+                    SQL查询
+                </a>
+            </li>
+            <li>
+                <a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-stats">&nbsp;</i>
+                    数据分析
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">2</span>
+                </a>
+                <ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="../bigData/ocean.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 整体分析</a></li>
+                    <li><a href="../bigData/statistics1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 按类分析</a></li>
+                    <!--<li><a href="#"><i class="glyphicon glyphicon-edit">&nbsp;</i> 修改密码</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-eye-open">&nbsp;</i> 日志查看</a></li>-->
+                </ul>
+            </li>
+            <li>
+                <a href="etl.html">
+                    <i class="glyphicon glyphicon-cog">&nbsp;</i>
+                    数据ETL
+                </a>
+            </li>
+            <li>
+                <a href="#systemSetting1" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+                    数据预测
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">3</span>
+                </a>
+                <ul id="systemSetting1" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="predict.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
+                    <li><a href="model.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
+                    <li><a href="#" onclick="result2()"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 预测性维护</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="datadig.html">
+                    <i class="glyphicon glyphicon-leaf">&nbsp;</i>
+                    数据挖掘
+                </a>
+            </li>
+            <li class="active" style="background-color: #eeeeee">
+                <a href="clusterlist.html">
+                    <i class="glyphicon glyphicon-apple">&nbsp;</i>
+                    实时监测
+                </a>
+            </li>
+            <li>
+                <a onclick="online()">
+                    <i class="glyphicon glyphicon-cloud">&nbsp;</i>
+                    线上开发
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-10" style="height: 100%">
+        <div class="container"  style="padding: 15px 15px; height: 100%">
+
+            <div class="panel panel-primary" style="height: 100%; border: 1px dotted lightgrey">
+                <div class="panel-heading" style="text-align: center">
+                    <h3 id="h1" class="panel-title">传感器实时监测</h3>
+                </div>
+                <div class="panel panel-body" style="height: 100%">
+                    <button id="button1" class="btn btn-primary btn-sm" style="margin-bottom: 5px">启动任务</button>
+                    <div id="chart" class="panel-body" style="width: 100%; height:600px; border: 1px dotted lightgrey"></div>
+                    <div id="divtable" class="panel-body" style="text-align: center; margin-bottom: 1%; border: 1px dotted lightgrey">
+                        <!--<div id="toolbar">
+                            <button id="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">切换为折线图</button>
+                        </div>-->
+                        <table id="realTime_Table">
+                            <thead id="thead">
+                                <th>集群ID</th>
+                                <th>数据更新时间</th>
+                                <th>检测指数</th>
+                                <th>最大阈值</th>
+                                <th>最小阈值</th>
+                                <th>数据集数值</th>
+                            </thead>
+                            <tbody id="tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-table.js"></script>
+<script src="js/bootstrap-table-zh-CN.js"></script>
+<script src="js/bootstrap-select.js"></script>
+<script src="js/common.js"></script>
+<script src="js/echarts.min.js"></script>
+<script type="text/javascript">
+
+    var detection_server_url = "39.104.186.210:9080";
+    //var detection_server_url = "127.0.0.1:9080";
+
+
+    $.get("http://"+detection_server_url+"/getrecord.form?clusterId="+localStorage.getItem("cluster_id"),function (data) {
+
+        var mes = JSON.parse(data);
+
+        for (var i=0; i<mes.length; i++) {
+            $("#tbody").append($("<tr>\n" +
+                "                                    <td>"+mes[i].cluster_id+"</td>\n" +
+                "                                    <td>"+fmtDateTotal(mes[i].update_time)+"</td>\n" +
+                "                                    <td>"+mes[i].SPERecentData+"</td>\n" +
+                "                                    <td>"+mes[i].maxThreshold+"</td>\n" +
+                "                                    <td>"+mes[i].minThreshold+"</td>\n" +
+                "                                    <td>"+mes[i].recentDataStr+"</td>\n" +
+                "                                </tr>"));
+        }
+
+        $("#realTime_Table").bootstrapTable({
+            search: true,
+            pagination: true,
+            pageSize: 5,
+            pageList: [5, 10, 15, 20, 50, 100],
+            locale: "zh-CN",
+            striped: true,
+            showColumns: true,
+            sortable: true,
+            sortName: "time"
+            /*toolbar: "#toolbar"*/
+        });
+
+    });
+
+    var cluster_id_local = localStorage.getItem("cluster_id");
+
+    if (localStorage.getItem("running_status") == 1) {
+
+        $button1 = $("#button1");
+        $button1.removeClass();
+        $button1.addClass("btn btn-danger btn-xs");
+        $button1.text("停止任务");
+
+    } else {
+
+        $button1 = $("#button1");
+        $button1.removeClass();
+        $button1.addClass("btn btn-primary btn-xs");
+        $button1.text("启动任务");
+
+    }
+
+    $("#button1").click(
+
+        function () {
+
+            if (localStorage.getItem("running_status") == 1) {
+
+                $.get("http://"+detection_server_url+"/stopdetection.form?cluster_id="+localStorage.getItem("cluster_id"),function (data) {
+
+                    if (data == "Stop success!") {
+
+                        localStorage.setItem("running_status",0);
+
+                        $button1 = $("#button1");
+                        $button1.removeClass();
+                        $button1.addClass("btn btn-primary btn-xs");
+                        $button1.text("启动任务");
+
+                        alert("已停止！");
+
+                    } else {
+
+                        alert("停止失败！");
+
+                    }
+
+                });
+
+            } else {
+
+                $.get("http://"+detection_server_url+"/startdetection.form?cluster_id="+localStorage.getItem("cluster_id"),function (data) {
+
+                    if (data == "Start success!") {
+
+                        localStorage.setItem("running_status",1);
+
+                        $button1 = $("#button1");
+                        $button1.removeClass();
+                        $button1.addClass("btn btn-danger btn-xs");
+                        $button1.text("停止任务");
+
+                        alert("已启动！");
+
+                    } else {
+
+                        alert("启动失败！");
+
+                    }
+
+                });
+
+            }
+
+        }
+
+    );
+
+    var myChart = echarts.init(document.getElementById('chart'));
+
+    option = {
+        title: {
+            text: '实时监测',
+            subtext: ''
+        },
+        count : 11,
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#283b56'
+                }
+            }
+        },
+        legend: {
+            //data:['最新成交价', '预购队列']
+            data:['最新成交价']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {readOnly: false},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        dataZoom: {
+            show: false,
+            start: 0,
+            end: 100
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: true,
+                data: (function (){
+                    var now = new Date().getTime();
+                    var res = [];
+                    var len = 10;
+                    for (var i=9; i>=0; i--) {
+                        res.push(fmtDate(now - 1000*i));
+                    }
+                    return res;
+                })()
+            },
+            {
+                type: 'category',
+                boundaryGap: true,
+                data: (function (){
+                    var res = [1,2,3,4,5,6,7,8,9,10];
+                    return res;
+                })()
+            }
+        ],
+        yAxis: [
+            /*{
+                type: 'value',
+                scale: true,
+                name: '价格',
+                boundaryGap: [0.2, 0.2]
+            },*/
+            {
+                type: 'value',
+                scale: true,
+                name: '',
+                boundaryGap: [0.2, 0.2]
+            }
+        ],
+        series: []
+    };
+
+    myChart.setOption(option);
+
+
+
+    var websocket = null;
+    //判断当前浏览器是否支持WebSocket
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://"+detection_server_url+"/websocket/"+cluster_id_local);
+    }
+    else {
+        alert('当前浏览器 Not support websocket')
+    }
+
+    $("#h1").text("集群ID：" + cluster_id_local);
+
+    //连接发生错误的回调方法
+    websocket.onerror = function () {
+        //setMessageInnerHTML("WebSocket连接发生错误");
+    };
+
+    //连接成功建立的回调方法
+    websocket.onopen = function () {
+        //setMessageInnerHTML("WebSocket连接成功");
+    };
+
+    //接收到消息的回调方法
+
+    myChart.count = 11;
+
+    var colorlist1_0 = ["green","green","green","green","green","green","green","green","green","green"];
+
+    var colorlist2_0 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist2_1 = ["green","green","green","green","green","green","green","green","green","green"];
+
+    var colorlist3_0 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist3_1 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist3_2 = ["green","green","green","green","green","green","green","green","green","green"];
+
+    var colorlist4_0 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist4_1 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist4_2 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist4_3 = ["green","green","green","green","green","green","green","green","green","green"];
+
+    var colorlist5_0 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist5_1 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist5_2 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist5_3 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist5_4 = ["green","green","green","green","green","green","green","green","green","green"];
+
+    var colorlist6_0 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist6_1 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist6_2 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist6_3 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist6_4 = ["green","green","green","green","green","green","green","green","green","green"];
+    var colorlist6_5 = ["green","green","green","green","green","green","green","green","green","green"];
+
+    websocket.onmessage = function (event) {
+
+        var jsonString = event.data;
+        var list = JSON.parse(jsonString);
+
+        if (list[0].init_or_update == "init") {
+            option.title.subtext = "正在获取初始化数据:"+list[0].current_init+"/"+list[0].init_number;
+        } else {
+            option.title.subtext = "任务执行中";
+        }
+
+        if (list.length == 1) {
+
+            var last_tendata1_0 = JSON.parse(list[0].last_tendata);
+
+            colorlist1_0.shift();
+            if (last_tendata1_0[1] == 1) {
+                colorlist1_0.push("green");
+            }else {
+                colorlist1_0.push("red");
+            }
+
+            var deviceId1_0 = list[0].device_id;
+
+            var value1_0 = last_tendata1_0[0];
+
+            if (option.series == "") {
+
+                option.series[0] = {
+                    name:deviceId1_0,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value1_0],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist1_0;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                var now1 = list[0].last_update_time;
+                var len1 = 10;
+                var res1 = [];
+                for (var i1=9; i1>=0; i1--) {
+                    res1.push(fmtDate(now1 - 1000*i1));
+                }
+                option.xAxis[0].data = res1;
+                /*option.xAxis[0].data.shift();
+                option.xAxis[0].data.push(fmtDate(list[0].last_update_time));*/
+                option.xAxis[1].data.shift();
+                option.xAxis[1].data.push(myChart.count++);
+
+                myChart.setOption(option);
+
+            } else {
+
+                option.series[0].data.shift();
+                option.series[0].data.push(value1_0);
+
+                option.xAxis[0].data.shift();
+                option.xAxis[0].data.push(fmtDate(list[0].last_update_time));
+                option.xAxis[1].data.shift();
+                option.xAxis[1].data.push(myChart.count++);
+
+                option.series[0].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist1_0;
+                    return colorList[params.dataIndex]
+                };
+
+                myChart.setOption(option);
+
+            }
+
+        }
+
+        if (list.length == 2) {
+
+            var last_tendata2_0 = JSON.parse(list[0].last_tendata);
+            var last_tendata2_1 = JSON.parse(list[1].last_tendata);
+
+            colorlist2_0.shift();
+            if (last_tendata2_0[1] == 1) {
+                colorlist2_0.push("green");
+            }else {
+                colorlist2_0.push("red");
+            }
+            colorlist2_1.shift();
+            if (last_tendata2_1[1] == 1) {
+                colorlist2_1.push("green");
+            }else {
+                colorlist2_1.push("red");
+            }
+
+            var deviceId2_0 = list[0].device_id;
+            var deviceId2_1 = list[1].device_id;
+
+            var value2_0 = last_tendata2_0[0];
+            var value2_1 = last_tendata2_1[0];
+
+            if (option.series == "") {
+
+                option.series[0] = {
+                    name:deviceId2_0,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value2_0],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist2_0;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                option.series[1] = {
+                    name:deviceId2_1,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value2_1],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist2_1;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                var now2 = list[0].last_update_time;
+                var len2 = 10;
+                var res2 = [];
+                for (var i2=9; i2>=0; i2--) {
+                    res2.push(fmtDate(now2 - 1000*i2));
+                }
+                option.xAxis[0].data = res2;
+                /*option.xAxis[0].data.shift();
+                option.xAxis[0].data.push(fmtDate(list[0].last_update_time));*/
+                option.xAxis[1].data.shift();
+                option.xAxis[1].data.push(myChart.count++);
+
+                myChart.setOption(option);
+
+            } else {
+
+                option.series[0].data.shift();
+                option.series[0].data.push(value2_0);
+                option.series[1].data.shift();
+                option.series[1].data.push(value2_1);
+
+                option.xAxis[0].data.shift();
+                option.xAxis[0].data.push(fmtDate(list[0].last_update_time));
+                option.xAxis[1].data.shift();
+                option.xAxis[1].data.push(myChart.count++);
+
+                option.series[0].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist2_0;
+                    return colorList[params.dataIndex]
+                };
+                option.series[1].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist2_1;
+                    return colorList[params.dataIndex]
+                };
+
+                myChart.setOption(option);
+
+            }
+
+        }
+
+        if (list.length == 3) {
+
+            var last_tendata3_0 = JSON.parse(list[0].last_tendata);
+            var last_tendata3_1 = JSON.parse(list[1].last_tendata);
+            var last_tendata3_2 = JSON.parse(list[2].last_tendata);
+
+            colorlist3_0.shift();
+            if (last_tendata3_0[1] == 1) {
+                colorlist3_0.push("green");
+            }else {
+                colorlist3_0.push("red");
+            }
+            colorlist3_1.shift();
+            if (last_tendata3_1[1] == 1) {
+                colorlist3_1.push("green");
+            }else {
+                colorlist3_1.push("red");
+            }
+            colorlist3_2.shift();
+            if (last_tendata3_2[1] == 1) {
+                colorlist3_2.push("green");
+            }else {
+                colorlist3_2.push("red");
+            }
+
+            var deviceId3_0 = list[0].device_id;
+            var deviceId3_1 = list[1].device_id;
+            var deviceId3_2 = list[2].device_id;
+
+            var value3_0 = last_tendata3_0[0];
+            var value3_1 = last_tendata3_1[0];
+            var value3_2 = last_tendata3_2[0];
+
+            if (option.series == "") {
+
+                option.series[0] = {
+                    name:deviceId3_0,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value3_0],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist3_0;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                option.series[1] = {
+                    name:deviceId3_1,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value3_1],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist3_1;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                option.series[2] = {
+                    name:deviceId3_2,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value3_2],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist3_2;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                var now3 = list[0].last_update_time;
+                var len3 = 10;
+                var res3 = [];
+                for (var i3=9; i3>=0; i3--) {
+                    res3.push(fmtDate(now3 - 1000*i3));
+                }
+                option.xAxis[0].data = res3;
+                /*option.xAxis[0].data.shift();
+                option.xAxis[0].data.push(fmtDate(list[0].last_update_time));*/
+                option.xAxis[1].data.shift();
+                option.xAxis[1].data.push(myChart.count++);
+
+                myChart.setOption(option);
+
+            } else {
+
+                option.series[0].data.shift();
+                option.series[0].data.push(value3_0);
+                option.series[1].data.shift();
+                option.series[1].data.push(value3_1);
+                option.series[2].data.shift();
+                option.series[2].data.push(value3_2);
+
+                option.xAxis[0].data.shift();
+                option.xAxis[0].data.push(fmtDate(list[0].last_update_time));
+                option.xAxis[1].data.shift();
+                option.xAxis[1].data.push(myChart.count++);
+
+                option.series[0].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist3_0;
+                    return colorList[params.dataIndex]
+                };
+                option.series[1].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist3_1;
+                    return colorList[params.dataIndex]
+                };
+                option.series[2].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist3_2;
+                    return colorList[params.dataIndex]
+                };
+
+                myChart.setOption(option);
+
+            }
+
+        }
+
+        if (list.length == 4) {
+
+            var last_tendata4_0 = JSON.parse(list[0].last_tendata);
+            var last_tendata4_1 = JSON.parse(list[1].last_tendata);
+            var last_tendata4_2 = JSON.parse(list[2].last_tendata);
+            var last_tendata4_3 = JSON.parse(list[3].last_tendata);
+
+            colorlist4_0.shift();
+            if (last_tendata4_0[1] == 1) {
+                colorlist4_0.push("green");
+            }else {
+                colorlist4_0.push("red");
+            }
+            colorlist4_1.shift();
+            if (last_tendata4_1[1] == 1) {
+                colorlist4_1.push("green");
+            }else {
+                colorlist4_1.push("red");
+            }
+            colorlist4_2.shift();
+            if (last_tendata4_2[1] == 1) {
+                colorlist4_2.push("green");
+            }else {
+                colorlist4_2.push("red");
+            }
+            colorlist4_3.shift();
+            if (last_tendata4_3[1] == 1) {
+                colorlist4_3.push("green");
+            }else {
+                colorlist4_3.push("red");
+            }
+
+            var deviceId4_0 = list[0].device_id;
+            var deviceId4_1 = list[1].device_id;
+            var deviceId4_2 = list[2].device_id;
+            var deviceId4_3 = list[3].device_id;
+
+            var value4_0 = last_tendata4_0[0];
+            var value4_1 = last_tendata4_1[0];
+            var value4_2 = last_tendata4_2[0];
+            var value4_3 = last_tendata4_3[0];
+
+            if (option.series == "") {
+
+                option.series[0] = {
+                    name:deviceId4_0,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value4_0],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist4_0;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                option.series[1] = {
+                    name:deviceId4_1,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value4_1],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist4_1;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                option.series[2] = {
+                    name:deviceId4_2,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value4_2],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist4_2;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                option.series[3] = {
+                    name:deviceId4_3,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value4_3],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist4_3;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                var now4 = list[0].last_update_time;
+                var len4 = 10;
+                var res4 = [];
+                for (var i4=9; i4>=0; i4--) {
+                    res4.push(fmtDate(now4 - 1000*i4));
+                }
+                option.xAxis[0].data = res4;
+                /*option.xAxis[0].data.shift();
+                option.xAxis[0].data.push(fmtDate(list[0].last_update_time));*/
+                option.xAxis[1].data.shift();
+                option.xAxis[1].data.push(myChart.count++);
+
+                myChart.setOption(option);
+
+            } else {
+
+                option.series[0].data.shift();
+                option.series[0].data.push(value4_0);
+                option.series[1].data.shift();
+                option.series[1].data.push(value4_1);
+                option.series[2].data.shift();
+                option.series[2].data.push(value4_2);
+                option.series[3].data.shift();
+                option.series[3].data.push(value4_3);
+
+                option.xAxis[0].data.shift();
+                option.xAxis[0].data.push(fmtDate(list[0].last_update_time));
+                option.xAxis[1].data.shift();
+                option.xAxis[1].data.push(myChart.count++);
+
+                option.series[0].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist4_0;
+                    return colorList[params.dataIndex]
+                };
+                option.series[1].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist4_1;
+                    return colorList[params.dataIndex]
+                };
+                option.series[2].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist4_2;
+                    return colorList[params.dataIndex]
+                };
+                option.series[3].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist4_3;
+                    return colorList[params.dataIndex]
+                };
+
+                myChart.setOption(option);
+
+            }
+
+        }
+
+        if (list.length == 5) {
+
+            var last_tendata5_0 = JSON.parse(list[0].last_tendata);
+            var last_tendata5_1 = JSON.parse(list[1].last_tendata);
+            var last_tendata5_2 = JSON.parse(list[2].last_tendata);
+            var last_tendata5_3 = JSON.parse(list[3].last_tendata);
+            var last_tendata5_4 = JSON.parse(list[4].last_tendata);
+
+            colorlist5_0.shift();
+            if (last_tendata5_0[1] == 1) {
+                colorlist5_0.push("green");
+            }else {
+                colorlist5_0.push("red");
+            }
+            colorlist5_1.shift();
+            if (last_tendata5_1[1] == 1) {
+                colorlist5_1.push("green");
+            }else {
+                colorlist5_1.push("red");
+            }
+            colorlist5_2.shift();
+            if (last_tendata5_2[1] == 1) {
+                colorlist5_2.push("green");
+            }else {
+                colorlist5_2.push("red");
+            }
+            colorlist5_3.shift();
+            if (last_tendata5_3[1] == 1) {
+                colorlist5_3.push("green");
+            }else {
+                colorlist5_3.push("red");
+            }
+            colorlist5_4.shift();
+            if (last_tendata5_4[1] == 1) {
+                colorlist5_4.push("green");
+            }else {
+                colorlist5_4.push("red");
+            }
+
+            var deviceId5_0 = list[0].device_id;
+            var deviceId5_1 = list[1].device_id;
+            var deviceId5_2 = list[2].device_id;
+            var deviceId5_3 = list[3].device_id;
+            var deviceId5_4 = list[4].device_id;
+
+            var value5_0 = last_tendata5_0[0];
+            var value5_1 = last_tendata5_1[0];
+            var value5_2 = last_tendata5_2[0];
+            var value5_3 = last_tendata5_3[0];
+            var value5_4 = last_tendata5_4[0];
+
+            if (option.series == "") {
+
+                option.series[0] = {
+                    name:deviceId5_0,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value5_0],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist5_0;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                option.series[1] = {
+                    name:deviceId5_1,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value5_1],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist5_1;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                option.series[2] = {
+                    name:deviceId5_2,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value5_2],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist5_2;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                option.series[3] = {
+                    name:deviceId5_3,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value5_3],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist5_3;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+                option.series[4] = {
+                    name:deviceId5_4,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value5_4],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist5_4;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                var now5 = list[0].last_update_time;
+                var len5 = 10;
+                var res5 = [];
+                for (var i5=9; i5>=0; i5--) {
+                    res5.push(fmtDate(now5 - 1000*i5));
+                }
+                option.xAxis[0].data = res5;
+                /*option.xAxis[0].data.shift();
+                option.xAxis[0].data.push(fmtDate(list[0].last_update_time));*/
+                option.xAxis[1].data.shift();
+                option.xAxis[1].data.push(myChart.count++);
+
+                myChart.setOption(option);
+
+            } else {
+
+                option.series[0].data.shift();
+                option.series[0].data.push(value5_0);
+                option.series[1].data.shift();
+                option.series[1].data.push(value5_1);
+                option.series[2].data.shift();
+                option.series[2].data.push(value5_2);
+                option.series[3].data.shift();
+                option.series[3].data.push(value5_3);
+                option.series[4].data.shift();
+                option.series[4].data.push(value5_4);
+
+                option.xAxis[0].data.shift();
+                option.xAxis[0].data.push(fmtDate(list[0].last_update_time));
+                option.xAxis[1].data.shift();
+                option.xAxis[1].data.push(myChart.count++);
+
+                option.series[0].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist5_0;
+                    return colorList[params.dataIndex]
+                };
+                option.series[1].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist5_1;
+                    return colorList[params.dataIndex]
+                };
+                option.series[2].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist5_2;
+                    return colorList[params.dataIndex]
+                };
+                option.series[3].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist5_3;
+                    return colorList[params.dataIndex]
+                };
+                option.series[4].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist5_4;
+                    return colorList[params.dataIndex]
+                };
+
+                myChart.setOption(option);
+
+            }
+
+        }
+
+        if (list.length == 6) {
+
+            var last_tendata6_0 = JSON.parse(list[0].last_tendata);
+            var last_tendata6_1 = JSON.parse(list[1].last_tendata);
+            var last_tendata6_2 = JSON.parse(list[2].last_tendata);
+            var last_tendata6_3 = JSON.parse(list[3].last_tendata);
+            var last_tendata6_4 = JSON.parse(list[4].last_tendata);
+            var last_tendata6_5 = JSON.parse(list[5].last_tendata);
+
+            colorlist6_0.shift();
+            if (last_tendata6_0[1] == 1) {
+                colorlist6_0.push("green");
+            }else {
+                colorlist6_0.push("red");
+            }
+            colorlist6_1.shift();
+            if (last_tendata6_1[1] == 1) {
+                colorlist6_1.push("green");
+            }else {
+                colorlist6_1.push("red");
+            }
+            colorlist6_2.shift();
+            if (last_tendata6_2[1] == 1) {
+                colorlist6_2.push("green");
+            }else {
+                colorlist6_2.push("red");
+            }
+            colorlist6_3.shift();
+            if (last_tendata6_3[1] == 1) {
+                colorlist6_3.push("green");
+            }else {
+                colorlist6_3.push("red");
+            }
+            colorlist6_4.shift();
+            if (last_tendata6_4[1] == 1) {
+                colorlist6_4.push("green");
+            }else {
+                colorlist6_4.push("red");
+            }
+            colorlist6_5.shift();
+            if (last_tendata6_5[1] == 1) {
+                colorlist6_5.push("green");
+            }else {
+                colorlist6_5.push("red");
+            }
+
+            var deviceId6_0 = list[0].device_id;
+            var deviceId6_1 = list[1].device_id;
+            var deviceId6_2 = list[2].device_id;
+            var deviceId6_3 = list[3].device_id;
+            var deviceId6_4 = list[4].device_id;
+            var deviceId6_5 = list[5].device_id;
+
+            var value6_0 = last_tendata6_0[0];
+            var value6_1 = last_tendata6_1[0];
+            var value6_2 = last_tendata6_2[0];
+            var value6_3 = last_tendata6_3[0];
+            var value6_4 = last_tendata6_4[0];
+            var value6_5 = last_tendata6_5[0];
+
+            if (option.series == "") {
+
+                option.series[0] = {
+                    name:deviceId6_0,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value6_0],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist6_0;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                option.series[1] = {
+                    name:deviceId6_1,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value6_1],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist6_1;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                option.series[2] = {
+                    name:deviceId6_2,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value6_2],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist6_2;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                option.series[3] = {
+                    name:deviceId6_3,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value6_3],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist6_3;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+                option.series[4] = {
+                    name:deviceId6_4,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value6_4],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist6_4;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+                option.series[5] = {
+                    name:deviceId6_5,
+                    type:'line',
+                    symbolSize: 6,
+                    data:[0,0,0,0,0,0,0,0,0,value6_5],
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = colorlist6_5;
+                                return colorList[params.dataIndex]
+                            },
+                            lineStyle: {
+                                color: "green"
+                            }
+                        }
+                    }
+                };
+
+                var now6 = list[0].last_update_time;
+                var len6 = 10;
+                var res6 = [];
+                for (var i6=9; i6>=0; i6--) {
+                    res6.push(fmtDate(now6 - 1000*i6));
+                }
+                option.xAxis[0].data = res6;
+                /*option.xAxis[0].data.shift();
+                option.xAxis[0].data.push(fmtDate(list[0].last_update_time));*/
+                option.xAxis[1].data.shift();
+                option.xAxis[1].data.push(myChart.count++);
+
+                myChart.setOption(option);
+
+            } else {
+
+                option.series[0].data.shift();
+                option.series[0].data.push(value6_0);
+                option.series[1].data.shift();
+                option.series[1].data.push(value6_1);
+                option.series[2].data.shift();
+                option.series[2].data.push(value6_2);
+                option.series[3].data.shift();
+                option.series[3].data.push(value6_3);
+                option.series[4].data.shift();
+                option.series[4].data.push(value6_4);
+                option.series[5].data.shift();
+                option.series[5].data.push(value6_5);
+
+                option.xAxis[0].data.shift();
+                option.xAxis[0].data.push(fmtDate(list[0].last_update_time));
+                option.xAxis[1].data.shift();
+                option.xAxis[1].data.push(myChart.count++);
+
+                option.series[0].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist6_0;
+                    return colorList[params.dataIndex]
+                };
+                option.series[1].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist6_1;
+                    return colorList[params.dataIndex]
+                };
+                option.series[2].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist6_2;
+                    return colorList[params.dataIndex]
+                };
+                option.series[3].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist6_3;
+                    return colorList[params.dataIndex]
+                };
+                option.series[4].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist6_4;
+                    return colorList[params.dataIndex]
+                };
+                option.series[5].itemStyle.normal.color = function(params) {
+                    // build a color map as your need.
+                    var colorList = colorlist6_5;
+                    return colorList[params.dataIndex]
+                };
+
+                myChart.setOption(option);
+
+            }
+
+        }
+
+        if (list.length > 6) {
+            alert("最多只能画六条折线!");
+        }
+
+    };
+
+    //连接关闭的回调方法
+    websocket.onclose = function () {
+        /*setMessageInnerHTML("WebSocket连接关闭");*/
+    };
+
+    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+    window.onbeforeunload = function () {
+        closeWebSocket();
+    };
+
+    //将消息显示在网页上
+    /*function setMessageInnerHTML(innerHTML) {
+        document.getElementById('message').innerHTML += innerHTML + '<br/>';
+    }*/
+
+    //关闭WebSocket连接
+    function closeWebSocket() {
+        websocket.close();
+    }
+
+    function fmtDate(obj){
+        var date =  new Date(obj);
+        //var y = 1900+date.getYear();
+        var m = "0"+(date.getMonth()+1);
+        var d = "0"+date.getDate();
+        var h = "0"+date.getHours();
+        var min = "0"+date.getMinutes();
+        var s = "0"+date.getSeconds();
+        return h.substring(h.length-2,h.length)+":"+min.substring(min.length-2,min.length)+":"+s.substring(s.length-2,s.length);
+    }
+
+    function fmtDateTotal(obj){
+        var date =  new Date(obj);
+        var y = 1900+date.getYear();
+        var m = "0"+(date.getMonth()+1);
+        var d = "0"+date.getDate();
+        var h = "0"+date.getHours();
+        var min = "0"+date.getMinutes();
+        var s = "0"+date.getSeconds();
+        return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length)+" "+h.substring(h.length-2,h.length)+":"+min.substring(min.length-2,min.length)+":"+s.substring(s.length-2,s.length);
+    }
+
+    function online() {
+        window.open("http://39.104.186.210:8888");
+    }
+
+    function result2() {
+        window.open("pre.html");
+    }
+
+</script>
+</body>
+</html>

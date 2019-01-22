@@ -27,3 +27,14 @@ function formatDate(now) {
     var second=now.getSeconds();
     return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
 }
+
+function fmtDate(obj){
+    var date =  new Date(obj);
+    //var y = 1900+date.getYear();
+    var m = "0"+(date.getMonth()+1);
+    var d = "0"+date.getDate();
+    var h = "0"+date.getHours();
+    var min = "0"+date.getMinutes();
+    var s = "0"+date.getSeconds();
+    return h.substring(h.length-2,h.length)+":"+min.substring(min.length-2,min.length)+":"+s.substring(s.length-2,s.length);
+}

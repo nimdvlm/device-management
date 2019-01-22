@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>大数据平台-实时监测</title>
+
+    <!-- FONT AWESOME CSS -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <!-- CUSTOM STYLE CSS -->
+    <link href="css/style.css" rel="stylesheet" />
+
+    <link href="css/bootstrap.css" rel="stylesheet" />
+
+    <link href="css/bootstrap-table.css" rel="stylesheet">
+
+    <link href="css/bootstrap-select.css" rel="stylesheet">
+
+    <style>
+        .abc:hover {
+            color: black !important;
+        }
+        .abc0:hover{
+            background-color: #337ab7 !important;
+        }
+
+    </style>
+</head>
+<body style="padding-top: 50px;height: 100%">
+
+<nav class="navbar navbar-fixed-top" style="background-color: #337ab7">
+
+    <div class="navbar-header" style="margin-left: 10px">
+        <a class="navbar-brand" href="#" style="color: white">大数据平台</a>
+    </div>
+    <div class="navbar-collapse">
+        <!--<ul class="nav navbar-nav">
+            <li><a href="/userformPage.do"  class="abc0"style="color: #faf2cc">用户管理</a></li>
+            <li class="dropdown">
+                <a href="#" class="abc" style="color: white" data-toggle="dropdown">我的网盘<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/uploadPage.do">springmvc</a></li>
+                    <li><a href="#">springsecurity</a></li>
+                    <li><a href="#">spring</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">DAO</li>
+                    <li><a href="#">mybatis</a></li>
+                    <li><a href="#">hibenate</a></li>
+                </ul>
+            </li>
+        </ul>-->
+        <ul class="navbar-right navbar-form">
+            <!--<div class="form-group">
+                <input type="text" placeholder="Email" class="form-control">
+            </div>-->
+            <!--<a href="/home?TENANT_ADMIN&2&1"><button id="logout" type="submit" class="btn btn-primary" style="margin-right: 40px">返回上一级</button></a>-->
+        </ul>
+    </div><!--/.nav-collapse -->
+
+</nav>
+
+<div class="row" style="height: 100%">
+    <div class="col-md-2" style="box-shadow: 1px 1px 3px #e5e5e5;height: 1400px;width: 13%">
+        <ul id="main-nav" class="nav nav-stacked" style="">
+            <li>
+                <a href="#" onclick="dashboard1()">
+                    <i class="glyphicon glyphicon-home">&nbsp;</i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="../bigData/device2.html">
+                    <i class="glyphicon glyphicon-th-large">&nbsp;</i>
+                    数据管理
+                </a>
+            </li>
+            <li>
+                <a href="sql.html">
+                    <i class="glyphicon glyphicon-search">&nbsp;</i>
+                    SQL查询
+                </a>
+            </li>
+            <li>
+                <a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-stats">&nbsp;</i>
+                    数据分析
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">2</span>
+                </a>
+                <ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="../bigData/ocean.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 整体分析</a></li>
+                    <li><a href="../bigData/statistics1.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 按类分析</a></li>
+                    <!--<li><a href="#"><i class="glyphicon glyphicon-edit">&nbsp;</i> 修改密码</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-eye-open">&nbsp;</i> 日志查看</a></li>-->
+                </ul>
+            </li>
+            <li>
+                <a href="etl.html">
+                    <i class="glyphicon glyphicon-cog">&nbsp;</i>
+                    数据ETL
+                </a>
+            </li>
+            <li>
+                <a href="#systemSetting1" class="nav-header collapsed" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+                    数据预测
+                    <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    <span class="label label-warning pull-right">3</span>
+                </a>
+                <ul id="systemSetting1" class="nav nav-list collapse secondmenu" style="height: 0px;border-bottom: 1px silver dotted">
+                    <li><a href="predict.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 任务管理</a></li>
+                    <li><a href="model.html"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 模型管理</a></li>
+                    <li><a href="#" onclick="result2()"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>- 预测性维护</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="datadig.html">
+                    <i class="glyphicon glyphicon-leaf">&nbsp;</i>
+                    数据挖掘
+                </a>
+            </li>
+            <li class="active" style="background-color: #eeeeee">
+                <a href="clusterlist.html">
+                    <i class="glyphicon glyphicon-apple">&nbsp;</i>
+                    实时监测
+                </a>
+            </li>
+            <li>
+                <a onclick="online()">
+                    <i class="glyphicon glyphicon-cloud">&nbsp;</i>
+                    线上开发
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-10" style="height: 100%">
+        <div class="container"  style="padding: 15px 15px; height: 100%">
+
+            <button id="button" class="btn btn-default" style="margin-bottom: 10px" data-toggle="modal" data-target="#myModal">创建监测任务</button>
+
+            <div class="row noti-div" id="div_main" style="height: 100%">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">创建监测任务</h4>
+            </div>
+            <div class="modal-body" id="divmain">
+                <p style="color: red;display: inline;margin-right: 1%">*</p><input id="text1" type="text" class="form-control" style="display: inline; width: 220px" placeholder="填写集群名称"><br><br>
+                <p style="color: red;display: inline;margin-right: 1%">*</p><select id="select1" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择监测周期">
+                    <option>一分钟</option>
+                    <option>五分钟</option>
+                    <option>十分钟</option>
+                    <option>半小时</option>
+                    <option>一小时</option>
+                    <option>六小时</option>
+                </select><br><br>
+                <p style="color: red;display: inline;margin-right: 1%">*</p><select id="select2" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择初始化数据长度">
+                    <option>50</option>
+                    <option>100</option>
+                    <option>200</option>
+                    <option>300</option>
+                    <option>500</option>
+                </select><br><br>
+                <div><p style="color: red;display: inline;margin-right: 1%">*</p>选择设备(设备数据间需存在某种相关性):</div><br>
+                <div id="div1"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="createcluster" type="button" class="btn btn-primary">创建集群</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel2">查看详情</h4>
+            </div>
+            <div class="modal-body" id="divmain1">
+
+            </div>
+            <div class="modal-footer">
+                <a href="detection.html"><button id="button1" type="button" class="btn btn-primary">进入实时监测界面</button></a>
+                <button id="button2" type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#myModal2">更改设置</button>
+                <button id="deletebutton" type="button" class="btn btn-danger">删除任务</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel1">更改设置</h4>
+            </div>
+            <div class="modal-body" id="divmain2">
+                <p style="color: red;display: inline;margin-right: 1%">*</p><input id="text2" type="text" class="form-control" style="display: inline; width: 220px" placeholder="填写集群名称"><br><br>
+                <p style="color: red;display: inline;margin-right: 1%">*</p><select id="select3" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择监测周期">
+                    <option>一分钟</option>
+                    <option>五分钟</option>
+                    <option>十分钟</option>
+                    <option>半小时</option>
+                    <option>一小时</option>
+                    <option>六小时</option>
+                </select><br><br>
+                <p style="color: red;display: inline;margin-right: 1%">*</p><select id="select4" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择初始化数据长度">
+                    <option>50</option>
+                    <option>100</option>
+                    <option>200</option>
+                    <option>300</option>
+                    <option>500</option>
+                </select><br><br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="button3" type="button" class="btn btn-primary">更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-table.js"></script>
+<script src="js/bootstrap-table-zh-CN.js"></script>
+<script src="js/bootstrap-select.js"></script>
+<script src="js/common.js"></script>
+
+<script type="text/javascript">
+
+    var detection_server_url = "39.104.186.210:9080";
+    //var detection_server_url = "127.0.0.1:9080";
+
+    var clusterGroup;
+    var currentClusterId;
+
+    $.get("http://"+detection_server_url+"/gettask.form",function (data) {
+
+        var mes = JSON.parse(data);
+        clusterGroup = mes;
+
+        for (var i=0; i<mes.length; i++) {
+
+            if (i % 4 == 0) {
+
+                $div = $("<div style='height: 100%' class=\"col-lg-3 col-md-3 col-sm-3  text-center\" data-toggle=\"modal\" data-target=\"#myModal1\">\n" +
+                    "                </div>");
+
+                var cluster_id = mes[i].cluster_id;
+
+                $a = $("                    <a href=\"#\">\n" +
+                    "                        <div style='height: 170px' class=\"alert alert-danger\">\n" +
+                    "                            <i class=\"fa fa-bar-chart-o fa-4x\"></i>\n" +
+                    "                            <span class=\"label label-info\">监测周期:"+mes[i].time_interval/1000+"s</span>\n" +
+                    "                            <!--<span class=\"label label-danger\">5</span>-->\n" +
+                    "                            <p>\n" +
+                    "集群ID："+cluster_id + "\n" +
+                    "                            </p>\n" +
+                    "                        </div>\n" +
+                    "                    </a>\n");
+
+                $a.click(
+                    function () {
+
+                        $divmain1 = $("#divmain1");
+                        $divmain1.empty();
+
+                        currentClusterId = cluster_id;
+                        localStorage.setItem("cluster_id",cluster_id);
+
+                        for (var i=0; i<deviceGroup.length; i++) {
+
+                            if (clusterGroup[i].cluster_id == cluster_id) {
+
+                                $p1 = $("<p>集群名称：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].cluster_name+"</p><br>");
+                                $p2 = $("<p>集群ID：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+cluster_id+"</p><br>");
+                                var $p3;
+                                if (clusterGroup[i].running_status == 1) {
+
+                                    localStorage.setItem("running_status",1);
+
+                                    $p3 = $("<p>运行状态：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;正在运行</p><br>");
+
+                                }else {
+
+                                    localStorage.setItem("running_status",0);
+
+                                    $p3 = $("<p>运行状态：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已停止</p><br>");
+
+                                }
+                                $p4 = $("<p>监测周期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].time_interval/1000+"&nbsp;s</p><br>");
+                                $p5 = $("<p>初始化数据长度：&nbsp;"+clusterGroup[i].init_number+"</p><br>");
+                                $p6 = $("<p>已初始化数量：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].current_init+"</p><br>");
+                                var $p7;
+                                if (clusterGroup[i].init_or_update == "init") {
+                                    $p7 = $("<p>初始化完成情况：&nbsp;未完成</p><br>");
+                                }else {
+                                    $p7 = $("<p>初始化完成情况：&nbsp;已完成</p><br>");
+                                }
+                                $p8 = $("<p>最后更新时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+fmtDateTotal(clusterGroup[i].last_update_time)+"</p><br>");
+
+                                var deviceArray = JSON.parse(clusterGroup[i].device_id);
+                                var deviceArray1 = [];
+                                for (var j=0; j<deviceArray.length; j++) {
+
+                                    for (var k=0; k<deviceGroup.length; k++) {
+
+                                        if (deviceGroup[k].id == deviceArray[j]) {
+
+                                            deviceArray1.push(deviceGroup[k].name);
+
+                                        }
+
+                                    }
+
+                                }
+                                $p9 = $("<p>所属设备：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+deviceArray1+"</p>");
+
+                                $divmain1.append($p1);
+                                $divmain1.append($p2);
+                                $divmain1.append($p3);
+                                $divmain1.append($p4);
+                                $divmain1.append($p5);
+                                $divmain1.append($p6);
+                                $divmain1.append($p7);
+                                $divmain1.append($p8);
+                                $divmain1.append($p9);
+
+                            }
+
+                        }
+
+                        $divmain2 = $("#divmain2");
+
+                    }
+                );
+
+                $div.append($a);
+                $("#div_main").append($div);
+
+            } else if (i % 4 == 1) {
+
+                $div = $("<div class=\"col-lg-3 col-md-3 col-sm-3  text-center\" data-toggle=\"modal\" data-target=\"#myModal1\">\n" +
+                    "                </div>");
+
+                var cluster_id1 = mes[i].cluster_id;
+
+                $a = $("                    <a href=\"#\">\n" +
+                    "                        <div style='height: 170px' class=\"alert alert-success\">\n" +
+                    "                            <i class=\"fa fa-bar-chart-o fa-4x\"></i>\n" +
+                    "                            <span class=\"label label-warning\">监测周期:"+mes[i].time_interval/1000+"s</span>\n" +
+                    "                            <!--<span class=\"label label-success\">45</span>-->\n" +
+                    "                            <p>\n" +
+                    "集群ID："+cluster_id1 + "\n" +
+                    "                            </p>\n" +
+                    "                        </div>\n" +
+                    "                    </a>\n");
+
+                $a.click(
+                    function () {
+
+                        $divmain1 = $("#divmain1");
+                        $divmain1.empty();
+
+                        currentClusterId = cluster_id1;
+                        localStorage.setItem("cluster_id",cluster_id1);
+
+                        for (var i=0; i<deviceGroup.length; i++) {
+
+                            if (clusterGroup[i].cluster_id == cluster_id1) {
+
+                                $p1 = $("<p>集群名称：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].cluster_name+"</p><br>");
+                                $p2 = $("<p>集群ID：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+cluster_id1+"</p><br>");
+                                var $p3;
+                                if (clusterGroup[i].running_status == 1) {
+
+                                    localStorage.setItem("running_status",1);
+
+                                    $p3 = $("<p>运行状态：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;正在运行</p><br>");
+
+                                }else {
+
+                                    localStorage.setItem("running_status",0);
+
+                                    $p3 = $("<p>运行状态：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已停止</p><br>");
+
+                                }
+                                $p4 = $("<p>监测周期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].time_interval/1000+"&nbsp;s</p><br>");
+                                $p5 = $("<p>初始化数据长度：&nbsp;"+clusterGroup[i].init_number+"</p><br>");
+                                $p6 = $("<p>已初始化数量：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].current_init+"</p><br>");
+                                var $p7;
+                                if (clusterGroup[i].init_or_update == "init") {
+                                    $p7 = $("<p>初始化完成情况：&nbsp;未完成</p><br>");
+                                }else {
+                                    $p7 = $("<p>初始化完成情况：&nbsp;已完成</p><br>");
+                                }
+                                $p8 = $("<p>最后更新时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+fmtDateTotal(clusterGroup[i].last_update_time)+"</p><br>");
+                                var deviceArray = JSON.parse(clusterGroup[i].device_id);
+                                var deviceArray1 = [];
+                                for (var j=0; j<deviceArray.length; j++) {
+
+                                    for (var k=0; k<deviceGroup.length; k++) {
+
+                                        if (deviceGroup[k].id == deviceArray[j]) {
+
+                                            deviceArray1.push(deviceGroup[k].name);
+
+                                        }
+
+                                    }
+
+                                }
+                                $p9 = $("<p>所属设备：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+deviceArray1+"</p>");
+
+                                $divmain1.append($p1);
+                                $divmain1.append($p2);
+                                $divmain1.append($p3);
+                                $divmain1.append($p4);
+                                $divmain1.append($p5);
+                                $divmain1.append($p6);
+                                $divmain1.append($p7);
+                                $divmain1.append($p8);
+                                $divmain1.append($p9);
+
+                            }
+
+                        }
+
+                    }
+                );
+
+                $div.append($a);
+                $("#div_main").append($div);
+
+            } else if (i % 4 == 2) {
+
+                $div = $("<div class=\"col-lg-3 col-md-3 col-sm-3  text-center\" data-toggle=\"modal\" data-target=\"#myModal1\">\n" +
+                    "                </div>");
+
+                var cluster_id2 = mes[i].cluster_id;
+
+                $a = $("                    <a href=\"#\">\n" +
+                    "                        <div style='height: 170px' class=\"alert alert-warning\">\n" +
+                    "                            <i class=\"fa fa-bar-chart-o fa-4x\"></i>\n" +
+                    "                            <span class=\"label label-success\">监测周期:"+mes[i].time_interval/1000+"s</span>\n" +
+                    "                            <!--<span class=\"label label-warning\">4</span>-->\n" +
+                    "                            <p>\n" +
+                    "集群ID："+cluster_id2 + "\n" +
+                    "                            </p>\n" +
+                    "                        </div>\n" +
+                    "                    </a>\n");
+
+                $a.click(
+                    function () {
+
+                        $divmain1 = $("#divmain1");
+                        $divmain1.empty();
+
+                        currentClusterId = cluster_id2;
+                        localStorage.setItem("cluster_id",cluster_id2);
+
+                        for (var i=0; i<deviceGroup.length; i++) {
+
+                            if (clusterGroup[i].cluster_id == cluster_id2) {
+
+                                $p1 = $("<p>集群名称：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].cluster_name+"</p><br>");
+                                $p2 = $("<p>集群ID：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+cluster_id2+"</p><br>");
+                                var $p3;
+                                if (clusterGroup[i].running_status == 1) {
+
+                                    localStorage.setItem("running_status",1);
+
+                                    $p3 = $("<p>运行状态：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;正在运行</p><br>");
+
+                                }else {
+
+                                    localStorage.setItem("running_status",0);
+
+                                    $p3 = $("<p>运行状态：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已停止</p><br>");
+
+                                }
+                                $p4 = $("<p>监测周期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].time_interval/1000+"&nbsp;s</p><br>");
+                                $p5 = $("<p>初始化数据长度：&nbsp;"+clusterGroup[i].init_number+"</p><br>");
+                                $p6 = $("<p>已初始化数量：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].current_init+"</p><br>");
+                                var $p7;
+                                if (clusterGroup[i].init_or_update == "init") {
+                                    $p7 = $("<p>初始化完成情况：&nbsp;未完成</p><br>");
+                                }else {
+                                    $p7 = $("<p>初始化完成情况：&nbsp;已完成</p><br>");
+                                }
+                                $p8 = $("<p>最后更新时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+fmtDateTotal(clusterGroup[i].last_update_time)+"</p><br>");
+                                var deviceArray = JSON.parse(clusterGroup[i].device_id);
+                                var deviceArray1 = [];
+                                for (var j=0; j<deviceArray.length; j++) {
+
+                                    for (var k=0; k<deviceGroup.length; k++) {
+
+                                        if (deviceGroup[k].id == deviceArray[j]) {
+
+                                            deviceArray1.push(deviceGroup[k].name);
+
+                                        }
+
+                                    }
+
+                                }
+                                $p9 = $("<p>所属设备：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+deviceArray1+"</p>");
+
+                                $divmain1.append($p1);
+                                $divmain1.append($p2);
+                                $divmain1.append($p3);
+                                $divmain1.append($p4);
+                                $divmain1.append($p5);
+                                $divmain1.append($p6);
+                                $divmain1.append($p7);
+                                $divmain1.append($p8);
+                                $divmain1.append($p9);
+
+                            }
+
+                        }
+
+                    }
+                );
+
+                $div.append($a);
+                $("#div_main").append($div);
+
+            } else if (i % 4 == 3) {
+
+                $div = $("<div class=\"col-lg-3 col-md-3 col-sm-3 text-center\" data-toggle=\"modal\" data-target=\"#myModal1\">\n" +
+                    "                </div>");
+
+                var cluster_id3 = mes[i].cluster_id;
+
+                $a = $("                    <a href=\"#\">\n" +
+                    "                        <div style='height: 170px' class=\"alert alert-info\">\n" +
+                    "                            <i class=\"fa fa-bar-chart-o fa-4x\"></i>\n" +
+                    "\n" +
+                    "                            <span class=\"label label-danger\">监测周期:"+mes[i].time_interval/1000+"s</span>\n" +
+                    "                            <!--<span class=\"label label-info\">145</span>-->\n" +
+                    "                            <p>\n" +
+                    "集群ID："+cluster_id3 + "\n"  +
+                    "                            </p>\n" +
+                    "                        </div>\n" +
+                    "                    </a>\n");
+
+                $a.click(
+                    function () {
+
+                        $divmain1 = $("#divmain1");
+                        $divmain1.empty();
+
+                        currentClusterId = cluster_id3;
+                        localStorage.setItem("cluster_id",cluster_id3);
+
+                        for (var i=0; i<deviceGroup.length; i++) {
+
+                            if (clusterGroup[i].cluster_id == cluster_id3) {
+
+                                $p1 = $("<p>集群名称：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].cluster_name+"</p><br>");
+                                $p2 = $("<p>集群ID：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+cluster_id3+"</p><br>");
+                                var $p3;
+                                if (clusterGroup[i].running_status == 1) {
+
+                                    localStorage.setItem("running_status",1);
+
+                                    $p3 = $("<p>运行状态：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;正在运行</p><br>");
+
+                                }else {
+
+                                    localStorage.setItem("running_status",0);
+
+                                    $p3 = $("<p>运行状态：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已停止</p><br>");
+
+                                }
+                                $p4 = $("<p>监测周期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].time_interval/1000+"&nbsp;s</p><br>");
+                                $p5 = $("<p>初始化数据长度：&nbsp;"+clusterGroup[i].init_number+"</p><br>");
+                                $p6 = $("<p>已初始化数量：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].current_init+"</p><br>");
+                                var $p7;
+                                if (clusterGroup[i].init_or_update == "init") {
+                                    $p7 = $("<p>初始化完成情况：&nbsp;未完成</p><br>");
+                                }else {
+                                    $p7 = $("<p>初始化完成情况：&nbsp;已完成</p><br>");
+                                }
+                                $p8 = $("<p>最后更新时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+fmtDateTotal(clusterGroup[i].last_update_time)+"</p><br>");
+                                var deviceArray = JSON.parse(clusterGroup[i].device_id);
+                                var deviceArray1 = [];
+                                for (var j=0; j<deviceArray.length; j++) {
+
+                                    for (var k=0; k<deviceGroup.length; k++) {
+
+                                        if (deviceGroup[k].id == deviceArray[j]) {
+
+                                            deviceArray1.push(deviceGroup[k].name);
+
+                                        }
+
+                                    }
+
+                                }
+                                $p9 = $("<p>所属设备：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+deviceArray1+"</p>");
+
+                                $divmain1.append($p1);
+                                $divmain1.append($p2);
+                                $divmain1.append($p3);
+                                $divmain1.append($p4);
+                                $divmain1.append($p5);
+                                $divmain1.append($p6);
+                                $divmain1.append($p7);
+                                $divmain1.append($p8);
+                                $divmain1.append($p9);
+
+                            }
+
+                        }
+
+                    }
+                );
+
+                $div.append($a);
+                $("#div_main").append($div);
+
+            }
+
+        }
+
+    });
+
+    $("#select1").selectpicker("refresh");
+
+    $("#deletebutton").click(
+        function () {
+            $.get("http://"+detection_server_url+"/deletetask.form?cluster_id="+localStorage.getItem("cluster_id"),function (data) {
+
+                if (data == "Delete success!") {
+
+                    alert("任务删除成功！");
+                    window.location.href = "clusterlist.html";
+
+                }else {
+
+                    alert("任务删除失败!");
+
+                }
+
+            });
+        }
+    );
+
+    function fmtDate(obj){
+        var date =  new Date(obj);
+        //var y = 1900+date.getYear();
+        var m = "0"+(date.getMonth()+1);
+        var d = "0"+date.getDate();
+        var h = "0"+date.getHours();
+        var min = "0"+date.getMinutes();
+        var s = "0"+date.getSeconds();
+        return h.substring(h.length-2,h.length)+":"+min.substring(min.length-2,min.length)+":"+s.substring(s.length-2,s.length);
+    }
+
+    var deviceGroup;
+
+    $.get("/api/device/alldevices?limit=100",function (data) {
+        deviceGroup = data;
+
+        $div1 = $("#div1");
+        for (var j=0; j<deviceGroup.length; j++) {
+            $checkbox = $("<label style='margin-left: 4%'><input class='merge' value="+deviceGroup[j].name+" type=\"checkbox\"/>&nbsp;"+deviceGroup[j].name+" </label> ");
+            $div1.append($checkbox);
+        }
+    });
+
+    $("#createcluster").click(
+        function () {
+
+            var clustername = $("#text1").val();
+            var period1 = $("#select1").val();
+            var length = $("#select2").val();
+            var device = [];
+            $("#div1").find("input[type=checkbox]:checked").each(
+                function () {
+                    for (var i=0; i<deviceGroup.length; i++) {
+                        if (deviceGroup[i].name == $(this).val()) {
+                            device.push('"'+deviceGroup[i].id+'"');
+                        }
+                    }
+                }
+            );
+
+            if(device.length > 6) {
+
+                alert("集群中设备不能超过6个！");
+
+            }else if(device.length == 1) {
+
+                alert("集群中设备不能少于2个！");
+
+            }else if (clustername == "" || period1 == "" || length == "" || device == "") {
+
+                alert("有必填项未输入！");
+
+            }else {
+
+                var period = 600000;
+                if (period1 == "一分钟") {
+                    period = 60000;
+                }else if (period1 == "五分钟") {
+                    period = 300000;
+                }else if (period1 == "十分钟") {
+                    period = 600000;
+                }else if (period1 == "半小时") {
+                    period = 1800000;
+                }else if (period1 == "一小时") {
+                    period = 3600000;
+                }else {
+                    period = 21600000;
+                }
+
+                $.get("http://"+detection_server_url+"/createtask.form?clustername="+clustername+"&period="+period+"&length="+length+"&device="+device,function (data) {
+                    alert(data);
+                    window.location.href = "clusterlist.html";
+                })
+
+            }
+
+        }
+    );
+
+    $("#button3").click(
+        function () {
+
+            var cluster_name = $("#text2").val();
+            var period1 = $("#select3").val();
+            var length = $("#select4").val();
+            var cluster_id;
+
+            if (cluster_name == "" || period1 == "" || length == "") {
+
+                alert("有必填项未输入！");
+
+            }else {
+
+                if (period1 == "一分钟"){
+                    period = 60000;
+                }else if (period1 == "五分钟"){
+                    period = 300000;
+                }else if (period1 == "十分钟"){
+                    period = 600000;
+                }else if (period1 == "半小时"){
+                    period = 1800000;
+                }else if (period1 == "一小时"){
+                    period = 3600000;
+                }else if (period1 == "六小时"){
+                    period = 21600000;
+                }else {}
+
+                for (var i=0; i<clusterGroup.length; i++) {
+
+                    if (clusterGroup[i].name == cluster_name) {
+
+                        cluster_id = clusterGroup[i].cluster_id;
+
+                    }
+
+                }
+
+                $.get("http://"+detection_server_url+"/updatetask.form?cluster_id="+currentClusterId+"&cluster_name="+cluster_name+"&period="+period+"&length="+length,function (data) {
+                    alert(data);
+                    window.location.href = "clusterlist.html";
+                });
+
+            }
+
+        }
+    );
+
+    function fmtDateTotal(obj){
+        var date =  new Date(obj);
+        var y = 1900+date.getYear();
+        var m = "0"+(date.getMonth()+1);
+        var d = "0"+date.getDate();
+        var h = "0"+date.getHours();
+        var min = "0"+date.getMinutes();
+        var s = "0"+date.getSeconds();
+        return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length)+" "+h.substring(h.length-2,h.length)+":"+min.substring(min.length-2,min.length)+":"+s.substring(s.length-2,s.length);
+    }
+
+    function online() {
+        window.open("http://39.104.186.210:8888");
+    }
+
+    function result2() {
+        window.open("pre.html");
+    }
+
+</script>
+</body>
+</html>
