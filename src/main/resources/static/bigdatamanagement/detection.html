@@ -172,7 +172,6 @@
     var detection_server_url = "39.104.186.210:9080";
     //var detection_server_url = "127.0.0.1:9080";
 
-
     $.get("http://"+detection_server_url+"/getrecord.form?clusterId="+localStorage.getItem("cluster_id"),function (data) {
 
         var mes = JSON.parse(data);
