@@ -1355,6 +1355,54 @@
             alert("最多只能画六条折线!");
         }
 
+        $.get("http://"+detection_server_url+"/getrecord.form?clusterId="+localStorage.getItem("cluster_id"),function (data) {
+
+            var mes = JSON.parse(data);
+
+            $divtable = $("#divtable");
+            $divtable.empty();
+
+            $table = $("<table id=\"realTime_Table\">\n" +
+                "                    <thead id=\"thead\">\n" +
+                "                        <th>集群ID</th>\n" +
+                "                        <th>数据更新时间</th>\n" +
+                "                        <th>检测指数</th>\n" +
+                "                        <th>最大阈值</th>\n" +
+                "                        <th>最小阈值</th>\n" +
+                "                        <th>数据集数值</th>\n" +
+                "                    </thead>\n" +
+                "                </table>");
+
+            $tbody = $("<tbody id='tbody'></tbody>");
+            $table.append($tbody);
+            for (var i=0; i<mes.length; i++) {
+                $tbody.append($("<tr>\n" +
+                    "                                    <td>"+mes[i].cluster_id+"</td>\n" +
+                    "                                    <td>"+fmtDateTotal(mes[i].update_time)+"</td>\n" +
+                    "                                    <td>"+mes[i].SPERecentData+"</td>\n" +
+                    "                                    <td>"+mes[i].maxThreshold+"</td>\n" +
+                    "                                    <td>"+mes[i].minThreshold+"</td>\n" +
+                    "                                    <td>"+mes[i].recentDataStr+"</td>\n" +
+                    "                                </tr>"));
+            }
+
+            $divtable.append($table);
+
+            $table.bootstrapTable({
+                search: true,
+                pagination: true,
+                pageSize: 5,
+                pageList: [5, 10, 15, 20, 50, 100],
+                locale: "zh-CN",
+                striped: true,
+                showColumns: true,
+                sortable: true,
+                sortName: "time"
+                /*toolbar: "#toolbar"*/
+            });
+
+        });
+
     };
 
     //连接关闭的回调方法
