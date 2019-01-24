@@ -171,7 +171,6 @@
                     <option>100</option>
                     <option>200</option>
                     <option>300</option>
-                    <option>500</option>
                 </select><br><br>
                 <div><p style="color: red;display: inline;margin-right: 1%">*</p>选择设备(设备数据间需存在某种相关性):</div><br>
                 <div id="div1"></div>
@@ -195,9 +194,10 @@
             <div class="modal-body" id="divmain1">
 
             </div>
-            <div class="modal-footer">
-                <a href="detection.html"><button id="button1" type="button" class="btn btn-primary">进入实时监测界面</button></a>
+            <div class="modal-footer" id="div2">
+                <a></a>
                 <button id="button2" type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#myModal2">更改设置</button>
+                <button id="button4" type="button" class="btn btn-primary">初始化重置</button>
                 <button id="deletebutton" type="button" class="btn btn-danger">删除任务</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
@@ -216,6 +216,7 @@
             <div class="modal-body" id="divmain2">
                 <p style="color: red;display: inline;margin-right: 1%">*</p><input id="text2" type="text" class="form-control" style="display: inline; width: 220px" placeholder="填写集群名称"><br><br>
                 <p style="color: red;display: inline;margin-right: 1%">*</p><select id="select3" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择监测周期">
+                    <option>半分钟</option>
                     <option>一分钟</option>
                     <option>五分钟</option>
                     <option>十分钟</option>
@@ -229,6 +230,10 @@
                     <option>200</option>
                     <option>300</option>
                     <option>500</option>
+                </select><br><br>
+                <p style="color: red;display: inline;margin-right: 1%">*</p><select id="select5" class="selectpicker" data-live-search="true" data-live-search-placeholder="搜索" title="选择初始化方式">
+                    <option>实时更新</option>
+                    <option>从数据库</option>
                 </select><br><br>
             </div>
             <div class="modal-footer">
@@ -248,8 +253,8 @@
 
 <script type="text/javascript">
 
-    var detection_server_url = "39.104.186.210:9080";
-    //var detection_server_url = "127.0.0.1:9080";
+    //var detection_server_url = "39.104.186.210:9080";
+    var detection_server_url = "127.0.0.1:9080";
 
     var clusterGroup;
     var currentClusterId;
@@ -311,6 +316,29 @@
                                 $p4 = $("<p>监测周期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].time_interval/1000+"&nbsp;s</p><br>");
                                 $p5 = $("<p>初始化数据长度：&nbsp;"+clusterGroup[i].init_number+"</p><br>");
                                 $p6 = $("<p>已初始化数量：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].current_init+"</p><br>");
+
+                                var $p10;
+                                if (clusterGroup[i].init_pattern == "database") {
+                                    $p10 = $("<p>数据初始化方式：&nbsp;从数据库</p><br>");
+                                    if (clusterGroup[i].init_or_update == "init") {
+                                        $a = $("<a href=\"detectiontest.html\"><button id=\"button1\" type=\"button\" class=\"btn btn-primary\">进入实时监测界面</button></a>");
+                                        $div2 = $("#div2");
+                                        $div2.children().eq(0).remove();
+                                        $div2.prepend($a);
+                                    }else {
+                                        $a = $("<a href=\"detection.html\"><button id=\"button1\" type=\"button\" class=\"btn btn-primary\">进入实时监测界面</button></a>");
+                                        $div2 = $("#div2");
+                                        $div2.children().eq(0).remove();
+                                        $div2.prepend($a);
+                                    }
+                                }else {
+                                    $p10 = $("<p>数据初始化方式：&nbsp;实时更新</p><br>");
+                                    $a = $("<a href=\"detection.html\"><button id=\"button1\" type=\"button\" class=\"btn btn-primary\">进入实时监测界面</button></a>");
+                                    $div2 = $("#div2");
+                                    $div2.children().eq(0).remove();
+                                    $div2.prepend($a);
+                                }
+
                                 var $p7;
                                 if (clusterGroup[i].init_or_update == "init") {
                                     $p7 = $("<p>初始化完成情况：&nbsp;未完成</p><br>");
@@ -320,6 +348,9 @@
                                 $p8 = $("<p>最后更新时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+fmtDateTotal(clusterGroup[i].last_update_time)+"</p><br>");
 
                                 var deviceArray = JSON.parse(clusterGroup[i].device_id);
+
+                                localStorage.setItem("clusterGroupLength",deviceArray.length);
+
                                 var deviceArray1 = [];
                                 for (var j=0; j<deviceArray.length; j++) {
 
@@ -342,6 +373,7 @@
                                 $divmain1.append($p4);
                                 $divmain1.append($p5);
                                 $divmain1.append($p6);
+                                $divmain1.append($p10);
                                 $divmain1.append($p7);
                                 $divmain1.append($p8);
                                 $divmain1.append($p9);
@@ -408,6 +440,29 @@
                                 $p4 = $("<p>监测周期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].time_interval/1000+"&nbsp;s</p><br>");
                                 $p5 = $("<p>初始化数据长度：&nbsp;"+clusterGroup[i].init_number+"</p><br>");
                                 $p6 = $("<p>已初始化数量：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].current_init+"</p><br>");
+
+                                var $p10;
+                                if (clusterGroup[i].init_pattern == "database") {
+                                    $p10 = $("<p>数据初始化方式：&nbsp;从数据库</p><br>");
+                                    if (clusterGroup[i].init_or_update == "init") {
+                                        $a = $("<a href=\"detectiontest.html\"><button id=\"button1\" type=\"button\" class=\"btn btn-primary\">进入实时监测界面</button></a>");
+                                        $div2 = $("#div2");
+                                        $div2.children().eq(0).remove();
+                                        $div2.prepend($a);
+                                    }else {
+                                        $a = $("<a href=\"detection.html\"><button id=\"button1\" type=\"button\" class=\"btn btn-primary\">进入实时监测界面</button></a>");
+                                        $div2 = $("#div2");
+                                        $div2.children().eq(0).remove();
+                                        $div2.prepend($a);
+                                    }
+                                }else {
+                                    $p10 = $("<p>数据初始化方式：&nbsp;实时更新</p><br>");
+                                    $a = $("<a href=\"detection.html\"><button id=\"button1\" type=\"button\" class=\"btn btn-primary\">进入实时监测界面</button></a>");
+                                    $div2 = $("#div2");
+                                    $div2.children().eq(0).remove();
+                                    $div2.prepend($a);
+                                }
+
                                 var $p7;
                                 if (clusterGroup[i].init_or_update == "init") {
                                     $p7 = $("<p>初始化完成情况：&nbsp;未完成</p><br>");
@@ -416,6 +471,9 @@
                                 }
                                 $p8 = $("<p>最后更新时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+fmtDateTotal(clusterGroup[i].last_update_time)+"</p><br>");
                                 var deviceArray = JSON.parse(clusterGroup[i].device_id);
+
+                                localStorage.setItem("clusterGroupLength",deviceArray.length);
+
                                 var deviceArray1 = [];
                                 for (var j=0; j<deviceArray.length; j++) {
 
@@ -438,6 +496,7 @@
                                 $divmain1.append($p4);
                                 $divmain1.append($p5);
                                 $divmain1.append($p6);
+                                $divmain1.append($p10);
                                 $divmain1.append($p7);
                                 $divmain1.append($p8);
                                 $divmain1.append($p9);
@@ -502,6 +561,29 @@
                                 $p4 = $("<p>监测周期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].time_interval/1000+"&nbsp;s</p><br>");
                                 $p5 = $("<p>初始化数据长度：&nbsp;"+clusterGroup[i].init_number+"</p><br>");
                                 $p6 = $("<p>已初始化数量：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].current_init+"</p><br>");
+
+                                var $p10;
+                                if (clusterGroup[i].init_pattern == "database") {
+                                    $p10 = $("<p>数据初始化方式：&nbsp;从数据库</p><br>");
+                                    if (clusterGroup[i].init_or_update == "init") {
+                                        $a = $("<a href=\"detectiontest.html\"><button id=\"button1\" type=\"button\" class=\"btn btn-primary\">进入实时监测界面</button></a>");
+                                        $div2 = $("#div2");
+                                        $div2.children().eq(0).remove();
+                                        $div2.prepend($a);
+                                    }else {
+                                        $a = $("<a href=\"detection.html\"><button id=\"button1\" type=\"button\" class=\"btn btn-primary\">进入实时监测界面</button></a>");
+                                        $div2 = $("#div2");
+                                        $div2.children().eq(0).remove();
+                                        $div2.prepend($a);
+                                    }
+                                }else {
+                                    $p10 = $("<p>数据初始化方式：&nbsp;实时更新</p><br>");
+                                    $a = $("<a href=\"detection.html\"><button id=\"button1\" type=\"button\" class=\"btn btn-primary\">进入实时监测界面</button></a>");
+                                    $div2 = $("#div2");
+                                    $div2.children().eq(0).remove();
+                                    $div2.prepend($a);
+                                }
+
                                 var $p7;
                                 if (clusterGroup[i].init_or_update == "init") {
                                     $p7 = $("<p>初始化完成情况：&nbsp;未完成</p><br>");
@@ -510,6 +592,9 @@
                                 }
                                 $p8 = $("<p>最后更新时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+fmtDateTotal(clusterGroup[i].last_update_time)+"</p><br>");
                                 var deviceArray = JSON.parse(clusterGroup[i].device_id);
+
+                                localStorage.setItem("clusterGroupLength",deviceArray.length);
+
                                 var deviceArray1 = [];
                                 for (var j=0; j<deviceArray.length; j++) {
 
@@ -532,6 +617,7 @@
                                 $divmain1.append($p4);
                                 $divmain1.append($p5);
                                 $divmain1.append($p6);
+                                $divmain1.append($p10);
                                 $divmain1.append($p7);
                                 $divmain1.append($p8);
                                 $divmain1.append($p9);
@@ -597,6 +683,29 @@
                                 $p4 = $("<p>监测周期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].time_interval/1000+"&nbsp;s</p><br>");
                                 $p5 = $("<p>初始化数据长度：&nbsp;"+clusterGroup[i].init_number+"</p><br>");
                                 $p6 = $("<p>已初始化数量：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clusterGroup[i].current_init+"</p><br>");
+
+                                var $p10;
+                                if (clusterGroup[i].init_pattern == "database") {
+                                    $p10 = $("<p>数据初始化方式：&nbsp;从数据库</p><br>");
+                                    if (clusterGroup[i].init_or_update == "init") {
+                                        $a = $("<a href=\"detectiontest.html\"><button id=\"button1\" type=\"button\" class=\"btn btn-primary\">进入实时监测界面</button></a>");
+                                        $div2 = $("#div2");
+                                        $div2.children().eq(0).remove();
+                                        $div2.prepend($a);
+                                    }else {
+                                        $a = $("<a href=\"detection.html\"><button id=\"button1\" type=\"button\" class=\"btn btn-primary\">进入实时监测界面</button></a>");
+                                        $div2 = $("#div2");
+                                        $div2.children().eq(0).remove();
+                                        $div2.prepend($a);
+                                    }
+                                }else {
+                                    $p10 = $("<p>数据初始化方式：&nbsp;实时更新</p><br>");
+                                    $a = $("<a href=\"detection.html\"><button id=\"button1\" type=\"button\" class=\"btn btn-primary\">进入实时监测界面</button></a>");
+                                    $div2 = $("#div2");
+                                    $div2.children().eq(0).remove();
+                                    $div2.prepend($a);
+                                }
+
                                 var $p7;
                                 if (clusterGroup[i].init_or_update == "init") {
                                     $p7 = $("<p>初始化完成情况：&nbsp;未完成</p><br>");
@@ -605,6 +714,9 @@
                                 }
                                 $p8 = $("<p>最后更新时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+fmtDateTotal(clusterGroup[i].last_update_time)+"</p><br>");
                                 var deviceArray = JSON.parse(clusterGroup[i].device_id);
+
+                                localStorage.setItem("clusterGroupLength",deviceArray.length);
+
                                 var deviceArray1 = [];
                                 for (var j=0; j<deviceArray.length; j++) {
 
@@ -627,6 +739,7 @@
                                 $divmain1.append($p4);
                                 $divmain1.append($p5);
                                 $divmain1.append($p6);
+                                $divmain1.append($p10);
                                 $divmain1.append($p7);
                                 $divmain1.append($p8);
                                 $divmain1.append($p9);
@@ -697,6 +810,7 @@
             var clustername = $("#text1").val();
             var period1 = $("#select1").val();
             var length = $("#select2").val();
+            var pattern1 = $("#select5").val();
             var device = [];
             $("#div1").find("input[type=checkbox]:checked").each(
                 function () {
@@ -716,7 +830,7 @@
 
                 alert("集群中设备不能少于2个！");
 
-            }else if (clustername == "" || period1 == "" || length == "" || device == "") {
+            }else if (clustername == "" || period1 == "" || length == "" || device == "" || pattern == "") {
 
                 alert("有必填项未输入！");
 
@@ -725,6 +839,8 @@
                 var period = 600000;
                 if (period1 == "一分钟") {
                     period = 60000;
+                }else if (period1 == "半分钟") {
+                    period = 30000;
                 }else if (period1 == "五分钟") {
                     period = 300000;
                 }else if (period1 == "十分钟") {
@@ -737,12 +853,34 @@
                     period = 21600000;
                 }
 
-                $.get("http://"+detection_server_url+"/createtask.form?clustername="+clustername+"&period="+period+"&length="+length+"&device="+device,function (data) {
+                var pattern;
+                if (pattern1 == "从数据库") {
+                    pattern = "database";
+                }else {
+                    pattern = "realtime";
+                }
+
+                $.get("http://"+detection_server_url+"/createtask.form?clustername="+clustername+"&period="+period+"&length="+length+"&device="+device+"&pattern="+pattern,function (data) {
                     alert(data);
                     window.location.href = "clusterlist.html";
                 })
 
             }
+
+        }
+    );
+
+    $("#button4").click(
+        function () {
+
+            $.get("http://"+detection_server_url+"/reinittask.form?cluster_id="+currentClusterId,function (data) {
+                if (data == "Success!") {
+                    alert("重置成功！");
+                    window.location.href = "clusterlist.html";
+                }else {
+                    alert("重置失败！");
+                }
+            })
 
         }
     );
@@ -785,7 +923,7 @@
 
                 }
 
-                $.get("http://"+detection_server_url+"/updatetask.form?cluster_id="+currentClusterId+"&cluster_name="+cluster_name+"&period="+period+"&length="+length,function (data) {
+                $.get("http://"+detection_server_url+"/updatetask.form?cluster_id="+currentClusterId+"&clustername="+cluster_name+"&period="+period+"&length="+length,function (data) {
                     alert(data);
                     window.location.href = "clusterlist.html";
                 });
