@@ -79,10 +79,11 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
                 redirectTo:"/homePage"
             });
     }
+
 }]);
 
 
-mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope,$location,$resource) {
+mainApp.controller("mainCtrl",["$scope","$location","$interval",function ($scope,$location,$interval) {
     /*路由跳转*/
     $scope.$location = $location;
     console.log($.cookie());
@@ -100,12 +101,22 @@ mainApp.controller("mainCtrl",["$scope","$location","$resource",function ($scope
 
     /*侧边栏选中效果*/
     var href = window.location.hash;
-    console.log("侧边栏选中效果");
-    console.log(href);
     var hrefClass = href.substring(2,href.length);
-    console.log(hrefClass);
     $("#"+hrefClass).css("background","#4f6f93");
     $("#"+hrefClass).siblings().css("background","");
+
+    var timefly = 1800000;//超时时间5s
+    var beginDt = new Date();//把得到的当前时间放入变量作为初始时间
+    document.body.onclick = function () {
+        beginDt = new Date();
+    };
+    $interval(function () {
+        nowDt = new Date();       
+        if((nowDt - beginDt) > timefly){
+            window.location.href = "/signin";//如果当前时间减去初始时间大于超时时间，就执行自动跳转
+        }
+    }, 2000);
+
 
     /*退出登录*/
     $scope.logout = function () {
