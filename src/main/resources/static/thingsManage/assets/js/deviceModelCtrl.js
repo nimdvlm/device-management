@@ -2,8 +2,8 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
     //获取所有设备型号
     var deviceTypeGroup = $resource('/api/devicetype/getAll');
     $scope.deviceTypeGroups = deviceTypeGroup.query();
-    console.log("展示deviceType");
-    console.log($scope.deviceTypeGroups);
+    // console.log("展示deviceType");
+    // console.log($scope.deviceTypeGroups);
 
     /*鼠标移入动画效果*/
     $scope.fadeSiblings = function () {
@@ -140,17 +140,17 @@ mainApp.controller("deviceModelCtrl", function ($scope, $resource) {
         //console.log(item);
         var deviceChangeGroup = $resource('/api/devicetype/getById/:modelId');
         deviceChangeGroup.get({modelId:item.model.modelId},{},function (info) {
-            console.log(info);
-            //console.log(info.model.modelName);
+            // console.log(info);
+            // console.log(info.model.modelName);
             $scope.modifyDeviceModel = info.model.modelName;
             $scope.modelIdSave = info.model.modelId;
-           // console.log(info.manufacturer.manufacturerName);
+            // console.log(info.manufacturer.manufacturerName);
             $scope.modifyManufacturerName = info.manufacturer.manufacturerName;
             $scope.manufacturerIdSave = info.manufacturer.manufacturerId;
-           // console.log(info.deviceType.deviceTypeName);
+            // console.log(info.deviceType.deviceTypeName);
             $scope.modifyDeviceType = info.deviceType.deviceTypeName;
             $scope.deviceTypeIdSave = info.deviceType.deviceTypeId;
-           // console.log(info.model.deviceIcon);
+            // console.log(info.model.deviceIcon);
             $scope.modifyDeviceIcon = info.model.deviceIcon;
             //console.log(info.model.limitLifetime);
             $scope.modifyDeviceDate = info.model.limitLifetime;

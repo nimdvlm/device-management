@@ -42,7 +42,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
             "filters": [],
             "transforms": []
         };
-        console.log("提交表单初始化");
+        // console.log("提交表单初始化");
     }
 
     function ObjFilter(name, type, jscode) //声明filter对象
@@ -63,7 +63,7 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     var TenantId = $resource('/api/rule/tenant');
     TenantId.get().$promise.then(function (resp) {
         $scope.formData.rule.tenantId = resp.tenantId;
-        console.log("tenantid:" + $scope.formData.rule.tenantId);
+        // console.log("tenantid:" + $scope.formData.rule.tenantId);
     });
 
     //获取当前租户规则
@@ -79,10 +79,10 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
         $scope.RulePlugins = $scope.Ruleitem.transforms
         $scope.RuleFilters = $scope.Ruleitem.filters
 
-        console.log("query函数内的Rules：");
-        console.log($scope.Rules);
-        console.log("取第一个对象：");
-        console.log($scope.Ruleitem);
+        // console.log("query函数内的Rules：");
+        // console.log($scope.Rules);
+        // console.log("取第一个对象：");
+        // console.log($scope.Ruleitem);
         $scope.$broadcast('senddata', $scope.Ruleitem);
         if ($scope.Ruleitem.rule.state == "ACTIVE") {
             $scope.isActive = true;
@@ -109,8 +109,8 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
 
 
         $scope.Ruleitem = rule;
-        console.log("rule in rules:");
-        console.log($scope.Ruleitem);
+        // console.log("rule in rules:");
+        // console.log($scope.Ruleitem);
 
         $scope.RulePlugins = rule.transforms
         $scope.RuleFilters = rule.filters
@@ -132,21 +132,21 @@ mainApp.controller("RuleCtrl", function ($scope, $resource) {
     //根据插件类型展示div
     $scope.showplugin = function (data, i) {
         //ng-if指令不会提前渲染DOM，所以报着不到id错。改用ng-show即可
-        console.log(data.name, i)
+        // console.log(data.name, i)
         if (data.name.search(/Mail/i) >= 0) {
-            console.log("当前插件为mail")
+            // console.log("当前插件为mail")
             document.getElementById('plugin_' + i).style.display = 'none'
             document.getElementById('plugin_mail_' + i).style.display = 'block'
             document.getElementById('plugin_SMS_' + i).style.display = 'none'
             document.getElementById('plugin_updatemessage_' + i).style.display = 'none'
         } else if (data.name.search(/Update/i) >= 0) {
-            console.log("当前插件为updatemessage")
+            // console.log("当前插件为updatemessage")
             document.getElementById('plugin_' + i).style.display = 'none'
             document.getElementById('plugin_mail_' + i).style.display = 'none'
             document.getElementById('plugin_SMS_' + i).style.display = 'none'
             document.getElementById('plugin_updatemessage_' + i).style.display = 'block'
         } else if (data.name.search(/SMS/i) >= 0) {
-            console.log("当前插件为SMS")
+            // console.log("当前插件为SMS")
             document.getElementById('plugin_' + i).style.display = 'none'
             document.getElementById('plugin_mail_' + i).style.display = 'none'
             document.getElementById('plugin_SMS_' + i).style.display = 'block'

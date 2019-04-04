@@ -168,7 +168,7 @@ mainApp.controller("dashboardCtrl", ["$scope", "$resource", "$timeout", function
 
         function log(s) {
             // Also log information on the javascript console
-            console.log(s);
+            // console.log(s);
         }
 
         function sendMessage(msg) {
@@ -192,7 +192,7 @@ mainApp.controller("dashboardCtrl", ["$scope", "$resource", "$timeout", function
     //更新数据
     function updateChart(message, myChart, i) {
         var x = i
-        console.log("更新ing...")
+        // console.log("更新ing...")
         //console.log(myChart)
         var tempDate, tempKey, tempValue
         var message = message
@@ -200,9 +200,9 @@ mainApp.controller("dashboardCtrl", ["$scope", "$resource", "$timeout", function
 
         //整理数据
         for (var i in message.data) {
-            console.log(message.data[i].ts);
-            console.log(message.data[i].key);
-            console.log(message.data[i].value);
+            // console.log(message.data[i].ts);
+            // console.log(message.data[i].key);
+            // console.log(message.data[i].value);
             tempDate = formatDate(new Date(message.data[i].ts));
             tempKey = message.data[i].key;
             tempValue = message.data[i].value;

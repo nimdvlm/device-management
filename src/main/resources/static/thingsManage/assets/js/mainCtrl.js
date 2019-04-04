@@ -64,16 +64,16 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
         })
         .when("/homeTenant",{
             templateUrl:"homeTenant.html"
-            //controller:"mainCtrl"
+            // controller:"mainCtrl"
         });
     if($.cookie("userLevel") === "SYS_ADMIN"){
-        console.log("系统权限跳转")
+        //console.log("系统权限跳转")
         $routeProvider
             .otherwise({
                 redirectTo:"/homeTenant"
             });
     }else{
-        console.log("其他权限跳转")
+        // console.log("其他权限跳转")
         $routeProvider
             .otherwise({
                 redirectTo:"/homePage"
@@ -86,7 +86,7 @@ mainApp.config(["$routeProvider","$locationProvider",function ($routeProvider,$l
 mainApp.controller("mainCtrl",["$scope","$location","$interval",function ($scope,$location,$interval) {
     /*路由跳转*/
     $scope.$location = $location;
-    console.log($.cookie());
+    //console.log($.cookie());
     /*权限管理*/
     if($.cookie("userLevel") === "CUSTOMER_USER"){
         $(".user").attr("disabled","disabled");
@@ -125,7 +125,7 @@ mainApp.controller("mainCtrl",["$scope","$location","$interval",function ($scope
             contentType: "application/json; charset=utf-8",
             type:"GET",
             success:function(msg) {
-                console.log(msg);
+                //console.log(msg);
                 window.location.href="/";
             }
         });
@@ -166,13 +166,13 @@ mainApp.controller("mainCtrl",["$scope","$location","$interval",function ($scope
             contentType: "application/json; charset=utf-8",
             async:false,
             success:function (msg) {
-                console.log(msg);
+                //console.log(msg);
                 userInfo = msg;
                 $scope.currentUser = msg.name;
                 $scope.currentUserLevel = msg.authority;
             },
             error:function (err) {
-                console.log(err);
+                //console.log(err);
             }
         });
 

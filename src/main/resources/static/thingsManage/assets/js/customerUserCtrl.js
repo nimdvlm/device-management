@@ -1,11 +1,11 @@
 mainApp.controller("customerUserCtrl",["$scope","$resource","$location",function ($scope,$resource,$location) {
     $scope.$location = $location;
 
-    console.log($.cookie());
+    // console.log($.cookie());
     var customerId = $.cookie("customerId");
     var userObj = $resource("/api/account/customer/users?customerId=:customerId&limit=9&page=0");
     $scope.userInfo = userObj.query({customerId:customerId});
-    console.log($scope.userInfo);
+    // console.log($scope.userInfo);
 
     var currentUserPage = 1;//用于记录当前用户页码
 
@@ -36,14 +36,14 @@ mainApp.controller("customerUserCtrl",["$scope","$resource","$location",function
 
     $scope.showUserInfo = function (data) {
         var offset = $('#customerUserChart').offset().top-215;
-        console.log(offset);
+        // console.log(offset);
         $('html, body').animate({scrollTop:offset}, 1000);
         $scope.userInfo.forEach(function (items) {
             if(data != items) items.style = {}
         });
         /*给点击元素加上特定样式*/
         data.style = {"border": "2px solid #305680"};
-        console.log(data);
+        // console.log(data);
 
         $scope.name = data.name;
         $scope.userId = data.id;
@@ -92,12 +92,12 @@ mainApp.controller("customerUserCtrl",["$scope","$resource","$location",function
         }else{
             setTimeout(function () {
                 userLimit = $("#customerUserNum").val();
-                console.log(userLimit);
+                // console.log(userLimit);
                /* var userCurrentObj = $resource("/api/account/customer/users?customerId=:customerId&limit=:userLimit&page=:currentUserPage");
                 $scope.userInfo = userCurrentObj.query({customerId:customerId,userLimit:userLimit,currentUserPage:(currentUserPage-1)});//所有客户组信息*/
                 var userCurrentObj = $resource("/api/account/customer/users?customerId=:customerId&limit=:userLimit&page=0");
                 $scope.userInfo = userCurrentObj.query({customerId:customerId,userLimit:userLimit});//第一页所有客户信息
-                console.log($scope.userInfo);
+                // console.log($scope.userInfo);
 
                 //获取分页总数
                 $.ajax({
@@ -107,7 +107,7 @@ mainApp.controller("customerUserCtrl",["$scope","$resource","$location",function
                     async:false,
                     success:function (msg) {
                         totalUserPages = Number(msg);
-                        console.log(totalUserPages);
+                        // console.log(totalUserPages);
                     }
                 });
                 Page({
@@ -115,11 +115,11 @@ mainApp.controller("customerUserCtrl",["$scope","$resource","$location",function
                     startnum:1,				//指定页码
                     elem:$('#customerUserPage'),		//指定的元素
                     callback:function(n){	//回调函数
-                        console.log(n);//当前页号
+                        // console.log(n);//当前页号
                         currentUserPage = Number(n);
                         var userCurrentObj = $resource("/api/account/customer/users?customerId=:customerId&limit=:userLimit&page=:currentUserPage");
                         $scope.userInfo = userCurrentObj.query({customerId:customerId,userLimit:userLimit,currentUserPage:(currentUserPage-1)});//所有客户组信息
-                        console.log($scope.userInfo);
+                        // console.log($scope.userInfo);
                     }
                 });
             },1000);
@@ -135,7 +135,7 @@ mainApp.controller("customerUserCtrl",["$scope","$resource","$location",function
         async:false,
         success:function (msg) {
             totalUserPages = Number(msg);
-            console.log(totalUserPages);
+            // console.log(totalUserPages);
         }
     });
     Page({
@@ -143,11 +143,11 @@ mainApp.controller("customerUserCtrl",["$scope","$resource","$location",function
         startnum:1,				//指定页码
         elem:$('#customerUserPage'),		//指定的元素
         callback:function(n){	//回调函数
-            console.log(n);//当前页号
+           //  console.log(n);//当前页号
             currentUserPage = Number(n);
             var userCurrentObj = $resource("/api/account/customer/users?customerId=:customerId&limit=:userLimit&page=:currentUserPage");
             $scope.userInfo = userCurrentObj.query({customerId:customerId,userLimit:userLimit,currentUserPage:(currentUserPage-1)});//所有客户组信息
-            console.log($scope.userInfo);
+            // console.log($scope.userInfo);
         }
     });
 
@@ -178,7 +178,7 @@ mainApp.controller("customerUserCtrl",["$scope","$resource","$location",function
             var userCustomerId = $.cookie("customerId");
             if(userPassword === userPasswordAgain){
                 var createCustomerUserInfo = '{"name":'+'"'+userName+'"'+',"password":'+'"'+userPassword+'"'+',"email":'+'"'+userEmail+'"'+',"customer_id":'+'"'+userCustomerId+'"'+',"additional_info":'+'"'+userAdditionalInfo+'"'+'}';
-                console.log(createCustomerUserInfo);
+                // console.log(createCustomerUserInfo);
                 $.ajax({
                     url:"/api/account/customerUser",
                     data:createCustomerUserInfo,
@@ -229,7 +229,7 @@ mainApp.controller("customerUserCtrl",["$scope","$resource","$location",function
         var refreshCustomerUserEmail = $("#refreshCustomerUserEmail").val();
         var refreshCustomerUserAddInfo = $("#refreshCustomerUserAddInfo").val();
         var refreshCustomerUserInfo = '{"id":'+'"'+$scope.userId+'"'+',"customer_id":'+'"'+refreshCustomerId+'"'+',"name":'+'"'+refreshCustomerUserName+'"'+',"email":'+'"'+refreshCustomerUserEmail+'"'+',"additional_info":'+'"'+refreshCustomerUserAddInfo+'"'+'}';
-        console.log(refreshCustomerUserInfo);
+        // console.log(refreshCustomerUserInfo);
         $.ajax({
             url:"/api/account/user",
             data:refreshCustomerUserInfo,

@@ -152,7 +152,7 @@ mainApp.controller("deviceListCtrl", ["$scope", "$resource", function ($scope, $
          $scope.parentName = parentNameObj.get({parentId:data.parentDeviceId});
          */
         $scope.deviceInfo = data;
-        console.log(data);
+        // console.log(data);
         $scope.ID = data.id;
         $scope.deviceName = data.name;
         $scope.deviceType = data.deviceType;
@@ -1585,7 +1585,7 @@ mainApp.controller("deviceListCtrl", ["$scope", "$resource", function ($scope, $
             console.log("客户权限")
             var url = '/api/device/customer/devicesCount';
         } else {
-            console.log("租户权限")
+            // console.log("租户权限")
             var url = '/api/device/tenant/devicesCount';
         }
         $.ajax({

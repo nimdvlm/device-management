@@ -29,7 +29,7 @@ mainApp.controller("homePageCtrl", ["$scope", "$resource", function ($scope, $re
             console.log("客户权限")
             var url = '/api/device/customer/devicesCount';
         } else {
-            console.log("租户权限")
+            // console.log("租户权限")
             var url = '/api/device/tenant/devicesCount';
         }
         $.ajax({

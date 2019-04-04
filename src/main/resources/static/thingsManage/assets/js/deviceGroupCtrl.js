@@ -1,5 +1,5 @@
 mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
-    var BUPT_IOT_MAIN= "39.104.84.131" //主机IP地址
+    var BUPT_IOT_MAIN = "39.104.84.131" //主机IP地址
 
 
     $scope.isShowAll = true;
@@ -7,12 +7,12 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
     //获取设备组
     /*权限管理*/
-    console.log($.cookie());
+    //console.log($.cookie());
     if ($.cookie("userLevel") === "CUSTOMER_USER") {
-        console.log("客户权限")
+        //console.log("客户权限")
         var Devicegroup = $resource('/api/group/customerGroups?limit=20');
     } else {
-        console.log("租户权限")
+        //console.log("租户权限")
         var Devicegroup = $resource('/api/group/tenantGroups?limit=20');
     }
     /*获取设备组接口*/
@@ -23,14 +23,12 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
             $scope.isShowEmpty = false;
             $scope.isShowAll = true;
-            console.log($scope.item);
+
             //初始化设备组的设备视图
             var DGDEVICES = $resource('/api/group/:id/devices?limit=20', {id: '@id'});
             DGDEVICES.query({id: $scope.item.id})
                 .$promise.then(function (person) {
-                $scope.myData = person;
-                console.log("$scope.myData");
-                console.log($scope.myData);
+                $scope.myData = person
             });
         } else {
             $scope.isShowEmpty = true;
@@ -91,11 +89,9 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     $scope.delDG = function () {
         var delDG = $resource('/api/group/delete/:id', {id: '@id'});
         delDG.delete({}, {id: $scope.item.id}, function (resp) {
-            // console.log("删除成功:id=" + $scope.item.id + ";name=" + $scope.item.name);
             $("#delDG").modal("hide");
             location.reload();
         }, function (resp) {
-            //console.log("1234再来一次");
             alert("删除失败，请重试！")
         });
     }
@@ -474,7 +470,7 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     var ws;
 
     function realtimeDevice(deviceId) {
-        var url = 'ws://'+BUPT_IOT_MAIN+':8100/websocket';
+        var url = 'ws://' + BUPT_IOT_MAIN + ':8100/websocket';
         var keys = [];
         listenWs(url);
 

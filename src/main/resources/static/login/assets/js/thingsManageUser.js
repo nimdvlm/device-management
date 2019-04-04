@@ -1,5 +1,5 @@
 //var level;
-var BUPT_IOT_MAIN= "39.104.84.131" //主机IP地址
+var BUPT_IOT_MAIN = "39.104.84.131" //主机IP地址
 var BUPT_IOT_SERVICE = "39.104.189.84" //各服务所在IP地址
 
 //async:false（默认为true）  表示同步加载，会在ajax的success执行完成之后，在执行其他；
@@ -20,18 +20,18 @@ $(document).ready(function () {
     var userLevel = $.cookie("userLevel");
     var tenantId = $.cookie("tenantId");
     var userId = $.cookie("userId");
-    console.log($.cookie())
+    // console.log($.cookie())
 
     /******不同权限显示不同模块*******/
-    if(userLevel == "CUSTOMER_USER"){
+    if (userLevel == "CUSTOMER_USER") {
         $('.systemOnly').hide()
     }
-    else if(userLevel == "TENANT_ADMIN"){
+    else if (userLevel == "TENANT_ADMIN") {
         $('.systemOnly').hide()
     }
-    else if(userLevel == "SYS_ADMIN"){
+    else if (userLevel == "SYS_ADMIN") {
         $('.systemOnly').show()
-    }else{
+    } else {
         $('.systemOnly').hide()
     }
 
@@ -48,19 +48,19 @@ $(document).ready(function () {
 
     /*************各模块路由***************/
     $("#thingsManage").click(function () {
-        if(userLevel == "CUSTOMER_USER"){
-                window.location.href = "/thingsUserManager";
+        if (userLevel == "CUSTOMER_USER") {
+            window.location.href = "/thingsUserManager";
         }
-        else if(userLevel == "TENANT_ADMIN"){
-                window.location.href = "/thingsTenantManager";
+        else if (userLevel == "TENANT_ADMIN") {
+            window.location.href = "/thingsTenantManager";
         }
-        else if(userLevel == "SYS_ADMIN"){
-                window.location.href = "/thingsSystemManager";
+        else if (userLevel == "SYS_ADMIN") {
+            window.location.href = "/thingsSystemManager";
         }
     });
 
     $("#bigData").click(function () {
-       window.open("../bigData/device1.html?id="+tenantId);
+        window.open("../bigData/device1.html?id=" + tenantId);
     });
 
     $("#accountManagement").click(function () {
@@ -68,47 +68,47 @@ $(document).ready(function () {
     })
 
     $("#3dPages").click(function () {
-        if(sessionId !== undefined){
-            window.open("http://"+BUPT_IOT_SERVICE+":8800?id="+tenantId+"&sessionId="+sessionId);
+        if (sessionId !== undefined) {
+            window.open("http://" + BUPT_IOT_SERVICE + ":8800?id=" + tenantId + "&sessionId=" + sessionId);
         }
     });
 
     $("#allocationCenter").click(function () {
-        window.open("http://"+BUPT_IOT_SERVICE+":30090/main.html")
+        window.open("http://" + BUPT_IOT_SERVICE + ":30090/main.html")
     })
 
     $("#logCenter").click(function () {
-        window.open("http://"+BUPT_IOT_SERVICE+":30190")
+        window.open("http://" + BUPT_IOT_SERVICE + ":30190")
     })
 
     $("#Kubernetes").click(function () {
-        window.open("http://"+BUPT_IOT_SERVICE+":30000")
+        window.open("http://" + BUPT_IOT_SERVICE + ":30000")
     })
 
     /*************各模块路由END***************/
     $("#logout").click(function () {
         console.log("success");
         $.ajax({
-            url:"/api/user/logout",
+            url: "/api/user/logout",
             contentType: "application/json; charset=utf-8",
-            type:"GET",
-            success:function(msg) {
+            type: "GET",
+            success: function (msg) {
                 console.log(msg);
-                window.location.href="/";
+                window.location.href = "/";
             }
         });
     });
     /*退出登录
-    $("#logout").click = function () {
-        console.log("sssssssssssss");
-        $.ajax({
-            url:"/api/user/logout",
-            contentType: "application/json; charset=utf-8",
-            type:"GET",
-            success:function(msg) {
-                console.log(msg);
-                window.location.href="/";
-            }
-        });
-    };*/
+     $("#logout").click = function () {
+     console.log("sssssssssssss");
+     $.ajax({
+     url:"/api/user/logout",
+     contentType: "application/json; charset=utf-8",
+     type:"GET",
+     success:function(msg) {
+     console.log(msg);
+     window.location.href="/";
+     }
+     });
+     };*/
 });

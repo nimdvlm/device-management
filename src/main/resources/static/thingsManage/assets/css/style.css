@@ -8,8 +8,8 @@
 }
 .sec-menu {
     background-color:#305680;
-    padding-top:20px;
-    padding-bottom:15px;
+    padding-top:10px;
+    padding-bottom:10px;
     color:#fff;
     font-size:22px;
     position: fixed;
@@ -94,12 +94,12 @@
             padding: 17px 25px;
         }
         #side-menu ul .tenantMenu{
-            padding: 12px 20px;
+            padding: 10px 20px;
             font-size: 11px;
         }
 
         #side-menu ul li a i {
-                        padding-right: 10px;
+                        width: 25px;
                     }
 
             #side-menu ul li a, #side-menu ul li a:hover {
@@ -113,11 +113,11 @@
 
 }
 .fontStyle{
-    font-size: 20px;
+    font-size: 16px;
 }
 .textStyle{
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 15px;
+    /*font-weight: bold;*/
 }
 #searchKey{
     height: 34px;
@@ -255,6 +255,7 @@ DEVICELIST STYLES
 .ctrlDivBtn{
     margin-left: 60px;
     margin-top: 5px;
+    margin-bottom: 5px;
 }
 .pagination li{
     cursor: pointer;
@@ -278,6 +279,7 @@ DEVICELIST STYLES
 .service-panel{
     background: #c0c0c036;
     border-radius: 10px;
+    border: 5px solid white;
 }
 .service-panel legend{
     text-align: center;
