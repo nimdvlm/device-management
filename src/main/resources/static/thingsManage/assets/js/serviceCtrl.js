@@ -32,7 +32,10 @@ mainApp.controller("abilityCtrl", function ($scope, $resource) {
 
 
     /*能力组信息获取与展示*/
-    var abilityGroup = $resource('/api/v1/abilityGroup');
+    // var abilityGroup = $resource('/api/v1/abilityGroup');
+    // 后端将此接口与[设备类型管理获取所有]合并
+    var abilityGroup = $resource('/api/devicetype/getAll');
+
     $scope.abilityGroups = abilityGroup.query();
     //console.log($scope.abilityGroups);
 
