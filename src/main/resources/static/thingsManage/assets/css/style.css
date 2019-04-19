@@ -341,10 +341,32 @@ DEVICELIST STYLES
  ============================================================ */
 .RightView{
     float: right;
-    padding-top: 10px;
-    width:45%;
+    padding: 20px 0 0 20px;
+    width:50%;
     min-width: 350px;
     height:1000px;
+}
+.RightActiveView{
+    display: none;
+    height:100%;
+    background:#ddd;
+    position: fixed;
+    right:-40%;
+    top:0;
+    padding-top: 80px;
+    padding-left: 20px;
+    padding-right: 5px;
+    width: 40%;
+}
+.LeftViewRightViewOpen{
+    min-width: 560px;
+    margin-right: 48%;
+}
+.LeftViewRightViewClose{
+    min-width: 560px;
+}
+.RightActiveViewCloseBtn{
+    float: right;
 }
 .RightviewTitle{
     font-size: 20px;

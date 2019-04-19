@@ -1,7 +1,12 @@
 <div class="content-wrapper" ng-controller="DevGroupCtrl">
     <div class="container">
         <!--右侧关联设备视图-->
-        <div class="RightView">
+        <div class="RightActiveView">
+            <div style="overflow: hidden;">
+                <div class="RightActiveViewCloseBtn">
+                    <i class="fa fa-close shand" ng-click="CloseRightActiveView()"></i>
+                </div>
+            </div>
             <div class="DGAssignContainer">
                 <div class="DGTitle DGminTitle">
                     <span class="RightviewTitle">设备组信息</span>
@@ -39,12 +44,15 @@
                         <tbody>
                         <tr ng-repeat-start="data in myData">
                             <td>
-                                <button class="btn btn-xs" ng-if="data.expanded" ng-click="data.expanded=false">-</button>
-                                <button class="btn btn-xs" ng-if="!data.expanded" ng-click="data.expanded=true">+</button>
+                                <button class="btn btn-xs" ng-if="data.expanded" ng-click="data.expanded=false">-
+                                </button>
+                                <button class="btn btn-xs" ng-if="!data.expanded" ng-click="data.expanded=true">+
+                                </button>
                             </td>
                             <td>{{data.name}}</td>
                             <td>{{data.id}}</td>
-                            <td style="text-align: center"><i class="fa fa-trash-o shand userDelete" data-toggle="modal" data-target="#warnDelAssign"
+                            <td style="text-align: center"><i class="fa fa-trash-o shand userDelete" data-toggle="modal"
+                                                              data-target="#warnDelAssign"
                                                               ng-click="giveData(data)"></i></td>
                         </tr>
                         <tr ng-if="data.expanded" ng-repeat-end="">
@@ -66,7 +74,8 @@
                                             data-target="#token" ng-click="showToken(data)">查看令牌
                                     </button>
                                     <button data-toggle="modal"
-                                            data-target="#deviceDetail" class="highlight btn btn-default" ng-click="showDetail(data)">
+                                            data-target="#deviceDetail" class="highlight btn btn-default"
+                                            ng-click="showDetail(data)">
                                         查看详情
                                     </button>
                                 </p>
@@ -195,7 +204,8 @@
                                         <select class="inputInfo" id="reManufacture" ng-change="getManufacture()"
                                                 ng-model="myReManufacturer">
                                             <option>------请选择------</option>
-                                            <option ng-repeat="data in manufacturerInfo" class="{{data.manufacturerId}}">
+                                            <option ng-repeat="data in manufacturerInfo"
+                                                    class="{{data.manufacturerId}}">
                                                 {{data.manufacturerName}}
                                             </option>
                                         </select>
@@ -278,7 +288,9 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalCloseTagDetail">&times;</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    id="modalCloseTagDetail">&times;
+                            </button>
                             <h4 class="modal-title" style="font-weight: bold;font-size: 20px;">设备详情</h4>
                         </div>
                         <div class="modal-body showForm" id="detailTable">
@@ -302,9 +314,11 @@
                                     <td></td>
                                     <td>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="请输入键值查找..." id="searchKey">
+                                            <input type="text" class="form-control" placeholder="请输入键值查找..."
+                                                   id="searchKey">
                                             <span class="input-group-btn">
-                                                <button class="btn btn-primary" type="button" ng-click="findKey()"><i class="fa fa-search"></i></button>
+                                                <button class="btn btn-primary" type="button" ng-click="findKey()"><i
+                                                        class="fa fa-search"></i></button>
                                             </span>
                                         </div>
                                         <!--<input type="text" class="form-control" placeholder="请输入关键字搜索..." id="searchKey">-->
@@ -352,15 +366,19 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseDetail">关闭</button>
-                            <button type="button" class="btn btn-primary" id="modalConfirmDetail" data-dismiss="modal">确定</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="modalCloseDetail">
+                                关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" id="modalConfirmDetail" data-dismiss="modal">
+                                确定
+                            </button>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
         </div>
         <!--左侧设备组展示视图-->
-        <div class="LeftView">
+        <div class="LeftViewRightViewClose" id="LeftView">
             <div class="DGTitle">
                 <span style="font-size:30px">设备组</span>
                 <button style="margin-left:5px" class="btn btn-primary btn-sm" data-toggle="modal"
@@ -375,11 +393,12 @@
 
             </div>
             <div class="DGContainer">
-                <div ng-repeat="DG in DeviceGroups" ng-show="isShowAll" class="chooseBtn" ng-click="show(DG)" ng-style="DG.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
-                        <div>
-                            <i class="fa fa-sitemap fa-2x "></i>
-                            <p>{{DG.name}}</p>
-                        </div>
+                <div ng-repeat="DG in DeviceGroups" ng-show="isShowAll" class="chooseBtn" ng-click="show(DG)"
+                     ng-style="DG.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                    <div>
+                        <i class="fa fa-sitemap fa-2x "></i>
+                        <p>{{DG.name}}</p>
+                    </div>
 
                 </div>
                 <div ng-show="isShowEmpty" class="showEmpty">

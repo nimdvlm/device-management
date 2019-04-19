@@ -18,22 +18,23 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
     /*获取设备组接口*/
     $scope.DeviceGroups = Devicegroup.query(function () {
         //初始化右侧视图
-        if ($scope.DeviceGroups[0] != null && $scope.DeviceGroups[0] != "") {
-            $scope.item = $scope.DeviceGroups[0];
-
-            $scope.isShowEmpty = false;
-            $scope.isShowAll = true;
-
-            //初始化设备组的设备视图
-            var DGDEVICES = $resource('/api/group/:id/devices?limit=20', {id: '@id'});
-            DGDEVICES.query({id: $scope.item.id})
-                .$promise.then(function (person) {
-                $scope.myData = person
-            });
-        } else {
-            $scope.isShowEmpty = true;
-            $scope.isShowAll = false;
-        }
+        //改成右侧弹出窗，不需要初始化
+        // if ($scope.DeviceGroups[0] != null && $scope.DeviceGroups[0] != "") {
+        //     $scope.item = $scope.DeviceGroups[0];
+        //
+        //     $scope.isShowEmpty = false;
+        //     $scope.isShowAll = true;
+        //
+        //     //初始化设备组的设备视图
+        //     var DGDEVICES = $resource('/api/group/:id/devices?limit=20', {id: '@id'});
+        //     DGDEVICES.query({id: $scope.item.id})
+        //         .$promise.then(function (person) {
+        //         $scope.myData = person
+        //     });
+        // } else {
+        //     $scope.isShowEmpty = true;
+        //     $scope.isShowAll = false;
+        // }
     });
 
     //添加设备组
@@ -99,6 +100,11 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
 
     //右侧视图展示设备组详情
     $scope.show = function (DG) {
+        //弹出右侧展示窗口
+        $(".RightActiveView").show().animate({right: 0})
+        $("#LeftView").removeClass("LeftViewRightViewClose").addClass("LeftViewRightViewOpen")
+
+
         //item是当前展示的单个设备
         $scope.item = {name: DG.name, id: DG.id};
 
@@ -122,6 +128,11 @@ mainApp.controller("DevGroupCtrl", function ($scope, $resource) {
         });
     };
 
+    //关闭右侧窗口
+    $scope.CloseRightActiveView = function () {
+        $(".RightActiveView").animate({right: "-40%"}) //@todo 不hide() ok?
+        $("#LeftView").removeClass("LeftViewRightViewOpen").addClass("LeftViewRightViewClose")
+    }
 
     /*****************显示设备组内设备**********************/
         //点击按钮查看令牌
