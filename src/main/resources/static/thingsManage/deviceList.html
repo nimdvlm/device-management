@@ -1,26 +1,25 @@
 ﻿<div class="content-wrapper" ng-controller="deviceListCtrl">
-    <div class="container">
-
-
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <span style="font-size: 30px;">设备列表</span>
                 <button style="margin-left:5px" class="btn btn-primary btn-sm user" data-toggle="modal"
                         data-target="#createDevice" id="addDevice">+ 创建设备
                 </button>
-                <span style="margin-left: 30%;font-size: 1.8rem">设备数量：{{Devices_Number||0}}</span>
+
             </div>
-
-
-        </div><!-- /.row -->
-          <div class="row" style="margin-top: 10px;margin-left: 20px;">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <span style="font-size: 30px">设备数量：{{Devices_Number||0}}</span>
+            </div>
+<!--        </div>&lt;!&ndash; /.row &ndash;&gt;-->
+<!--        <div class="row" style="margin-top: 10px;margin-left: 20px;">-->
             <!--div class="col-md-3">
 
                   每页显示<input type="text" id="deviceListNum" style="width: 50px;border-radius: 5px;" ng-change="deviceListNumChoose()" ng-model="myNum" placeholder="9">个设备
 
             </div-->
               <!--<div class="col-md-3"></div>-->
-              <div class="col-md-3">
+              <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                   <div class="input-group">
                       <input type="text" class="form-control" placeholder="请输入设备名称..." id="searchDeviceText">
                       <span class="input-group-btn">
@@ -35,7 +34,7 @@
                   <!--<i class="fa fa-angle-double-up"></i>-->
               <!--</div>-->
         </div>
-        <div class="row" style="margin-left: 4%;margin-top: 1%;">
+        <div class="row" style="height: 80px;">
             <div class="labelDiv">
                 <div style="width: 30px;height: 10px;background: #305680;border-radius: 3px;"></div><span>在线</span>
             </div>
@@ -54,96 +53,96 @@
                 <span>共搜索到   {{searchCount}}    个设备</span>
             </div>
         </div>
-        <div class="row">
-        <div id="preDevice" ng-click="preDeviceInfo()"><i class="fa fa-chevron-left"></i></div>
-        <div id="deviceListIcon">
-          <div class="chooseBtn" ng-repeat="data in deviceList" ng-click="show(data)" ng-style="data.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()" >
-              <div title="{{data.name}}">
-                  <i class="fa fa-file-text fa-2x" id="{{data.id}}"></i>
-                  <p>{{data.name}}</p>
+        <div class="row chooseBtn-wrap">
+              <div class="chooseBtn col-lg-2 col-md-2 col-sm-2 col-xs-3" ng-repeat="data in deviceList" ng-click="show(data)" ng-style="data.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()" >
+                  <div title="{{data.name}}">
+                      <i class="fa fa-file-text fa-2x" id="{{data.id}}"></i>
+                      <p>{{data.name}}</p>
+                  </div>
               </div>
-          </div>
+            <div id="preDevice" ng-click="preDeviceInfo()"><i class="fa fa-chevron-left"></i></div>
+            <div id="nextDevice" ng-click="nextDeviceInfo()"><i class="fa  fa-chevron-right"></i></div>
         </div>
-        <div id="nextDevice" ng-click="nextDeviceInfo()"><i class="fa  fa-chevron-right"></i></div>
-        <div id="deviceListChart">
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th colspan="2">{{deviceName}}
+        <div class="row">
+            <div id="deviceListChart col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th colspan="2">{{deviceName}}
 
-                       <i class="fa fa-trash-o highlight userDelete" data-toggle="modal"
-                        data-target="#deleteDevice" title="删除" style="float: right;font-size: 17px;cursor: pointer;color: #305680;"></i>
+                            <i class="fa fa-trash-o highlight userDelete" data-toggle="modal"
+                               data-target="#deleteDevice" title="删除" style="float: right;font-size: 17px;cursor: pointer;color: #305680;"></i>
 
-                    </th>
-                </tr>
+                        </th>
+                    </tr>
 
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="attName">设备ID:</td>
-                    <td>{{ID}}</td>
-                </tr>
-                <tr>
-                    <td class="attName">设备所属客户组:</td>
-                    <td>{{customerName}}<button id="cancelAssign" ng-click="cancelAssign()">取消分配</button></td>
-                </tr>
-                <tr>
-                    <td class="attName">父类设备:</td>
-                    <td>{{parentName}}</td>
-                </tr>
-                <tr>
-                    <td class="attName">厂商：</td>
-                    <td>{{manufacture}}</td>
-                </tr>
-                <tr>
-                    <td class="attName">设备类型:</td>
-                    <td>{{deviceType}}</td>
-                </tr>
-                <tr>
-                    <td class="attName">型号：</td>
-                    <td>{{model}}</td>
-                </tr>
-                <tr>
-                    <td class="attName">状态：</td>
-                    <td>{{status}}</td>
-                </tr>
-                <tr>
-                    <td class="attName">位置：</td>
-                    <td>{{location}}</td>
-                </tr>
-                <tr>
-                    <td class="attName">维修期限：</td>
-                    <td>{{lifeTime}}</td>
-                </tr>
-                <tr>
-                    <td class="attName">操作：</td>
-                    <td>
-                        <button class="btn btn-primary user" data-toggle="modal"
-                                data-target="#refreshDevice"  ng-click="setValue()">更新设备</button>
-                        <button class="btn btn-primary user" data-toggle="modal"
-                                data-target="#assign" id="assignDevice">分配设备</button>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="attName">设备ID:</td>
+                        <td>{{ID}}</td>
+                    </tr>
+                    <tr>
+                        <td class="attName">设备所属客户组:</td>
+                        <td>{{customerName}}<button id="cancelAssign" ng-click="cancelAssign()">取消分配</button></td>
+                    </tr>
+                    <tr>
+                        <td class="attName">父类设备:</td>
+                        <td>{{parentName}}</td>
+                    </tr>
+                    <tr>
+                        <td class="attName">厂商：</td>
+                        <td>{{manufacture}}</td>
+                    </tr>
+                    <tr>
+                        <td class="attName">设备类型:</td>
+                        <td>{{deviceType}}</td>
+                    </tr>
+                    <tr>
+                        <td class="attName">型号：</td>
+                        <td>{{model}}</td>
+                    </tr>
+                    <tr>
+                        <td class="attName">状态：</td>
+                        <td>{{status}}</td>
+                    </tr>
+                    <tr>
+                        <td class="attName">位置：</td>
+                        <td>{{location}}</td>
+                    </tr>
+                    <tr>
+                        <td class="attName">维修期限：</td>
+                        <td>{{lifeTime}}</td>
+                    </tr>
+                    <tr>
+                        <td class="attName">操作：</td>
+                        <td>
+                            <button class="btn btn-primary user" data-toggle="modal"
+                                    data-target="#refreshDevice"  ng-click="setValue()">更新设备</button>
+                            <button class="btn btn-primary user" data-toggle="modal"
+                                    data-target="#assign" id="assignDevice">分配设备</button>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td class="attName">查看：</td>
-                    <td>
-                        <button class="highlight btn btn-default" data-toggle="modal"
-                                data-target="#token" ng-click="showToken()">查看令牌</button>
-                        <button data-toggle="modal"
-                                data-target="#deviceEvent" class="highlight btn btn-default" ng-click="showEvent()">
-                            查看事件
-                        </button>
-                        <button data-toggle="modal"
-                           data-target="#deviceDetail" class="highlight btn btn-default" ng-click="showDetail()">
-                            查看详情
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="attName">查看：</td>
+                        <td>
+                            <button class="highlight btn btn-default" data-toggle="modal"
+                                    data-target="#token" ng-click="showToken()">查看令牌</button>
+                            <button data-toggle="modal"
+                                    data-target="#deviceEvent" class="highlight btn btn-default" ng-click="showEvent()">
+                                查看事件
+                            </button>
+                            <button data-toggle="modal"
+                                    data-target="#deviceDetail" class="highlight btn btn-default" ng-click="showDetail()">
+                                查看详情
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
     </div>
     <!--  CREATE MODEL  -->
     <div class="modal fade" tabindex="-1" role="dialog" id="createDevice">
