@@ -97,21 +97,21 @@
      <section class="sec-menu" >
         <div class="container"  style="margin: 0;width:100%;">
             <div class="row" id="head-menu">
-                <div class="col-md-1 col-sm-1">
+                <div class="col-md-1 col-sm-1 col-xs-1">
                     <span class="menu-open-icon">
                         <i class="fa fa-bars pull-left fa-2x b-clr"></i>
                     </span>
                 </div>
-                <div class="col-md-3 col-sm-12">
+                <div class="col-md-6 col-sm-6 col-xs-6">
                    <span id="headMenuFont">
                        <marquee direction="left" onmouseover=this.stop() onmouseout=this.start() width=87% scrollamount="4"><i class="fa fa-home"></i>&nbsp;欢 迎 来 到 物 管 理 平 台 ！</marquee>
                    </span>
                 </div>
-                <div class="col-md-8 col-sm-12">
+                <div class="col-md-5 col-sm-5 col-xs-5">
 
                     <span class="dropdown upSideMenu" id="userCenter">
                     <span class="dropdown-toggle" data-toggle="dropdown" id="dropQuit">
-                        <i class="fa fa-user"></i> 个人中心 &nbsp;<i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user"></i><em class="hidden-xs">个人中心</em> &nbsp;<i class="fa fa-caret-down"></i>
                     </span>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> 当前用户：<span ng-cloak>{{currentUser}}</span></a>
@@ -127,7 +127,7 @@
                         </li>
                     </ul>
                     </span>
-                    <span class="upSideMenu" id="backIcon"><i class="fa fa-reply"></i> 返回上一级</span>
+                    <span class="upSideMenu" id="backIcon"><i class="fa fa-reply"></i> <em class="hidden-xs">返回上一级</em></span>
 
                 </div>
             </div>
