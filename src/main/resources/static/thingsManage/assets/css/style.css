@@ -617,15 +617,15 @@ pluginsGroup
     margin-top: 5px;
 }
 .pluginChoose{
-    width:180px ;
-    margin-left: 20px;
-    padding:15px 5px;
+    /* width:180px ; */
+    /* margin-left: 20px; */
+    /* padding:15px 5px; */
 }
 .pluginRightView{
-    float: right;
+    /* float: right; */
     padding-top: 10px;
-    width:44%;
-    min-width: 350px;
+    /* width:44%; */
+    /* min-width: 350px; */
 }
 .pluginChart{
     border:1px solid rgb(212,212,212);
@@ -672,9 +672,9 @@ width: 35%;
 */
 /*插件模块控件位置*/
 #pluginIcon {
-    width:50%;
+    /* width:50%; */
     float: left;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
 .btnPosition{
     margin-top: 20px;
