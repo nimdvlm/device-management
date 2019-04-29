@@ -1,7 +1,44 @@
 ﻿<div class="content-wrapper" ng-controller="RuleCtrl">
-    <div class="container">
+    <div class="row">
+        <!--左侧视图-->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="DGTitle row">
+                <div class="col-md-5 col-xs-12">
+                    <span style="font-size:30px">规则管理</span>
+                    <button class="btn btn-primary btn-sm user" data-toggle="modal"
+                            data-target="#addRule">+ 创建规则
+                    </button>
+                </div>
+                <!--
+                <div class="SearchDG">
+                <span>搜索：<input type="text" style="width: 130px" placeholder="请输入规则id"
+                                ng-model="$parent.ruleid"/></span>
+                    <span class="Searchicon" ng-click="searchRule()" title="搜索">
+                    <i class="fa fa-search fa-lg shand" aria-hidden="true"></i>
+                </span>
+                </div>
+                -->
+                <div class="input-group SearchDG col-md-5 col-xs-12">
+                    <input type="text" class="form-control" placeholder="请输入规则名称..." id="searchRuleText">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-click="searchRule()"><i
+                                class="fa fa-search"></i></button>
+                    </span>
+                </div>
+
+            </div>
+            <div class="DGContainer row" style="margin-left: -15px">
+                <div ng-repeat="rule in Rules" class="chooseBtn col-lg-3 col-md-3 col-sm-3 col-xs-4" ng-click="showrule(rule)"
+                        ng-style="rule.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+                    <div>
+                        <i class="fa fa-puzzle-piece fa-2x "></i>
+                        <p>{{rule.rule.name}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--右侧视图-->
-        <div class="RightView">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="DGAssignContainer">
                 <div class="DGTitle DGminTitle">
                     <span class="RightviewTitle">规则信息</span>
@@ -379,41 +416,7 @@
 
         </div>
 
-        <!--左侧视图-->
-        <div class="LeftView">
-            <div class="DGTitle">
-                <span style="font-size:30px">规则管理</span>
-                <button style="margin-left:5px" class="btn btn-primary btn-sm user" data-toggle="modal"
-                        data-target="#addRule">+ 创建规则
-                </button>
-                <!--
-                <div class="SearchDG">
-                <span>搜索：<input type="text" style="width: 130px" placeholder="请输入规则id"
-                                ng-model="$parent.ruleid"/></span>
-                    <span class="Searchicon" ng-click="searchRule()" title="搜索">
-                    <i class="fa fa-search fa-lg shand" aria-hidden="true"></i>
-                </span>
-                </div>
-                -->
-                <div class="input-group SearchDG">
-                    <input type="text" class="form-control" placeholder="请输入规则名称..." id="searchRuleText">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" type="button" ng-click="searchRule()"><i
-                                class="fa fa-search"></i></button>
-                    </span>
-                </div>
-
-            </div>
-            <div class="DGContainer" style="margin-left: -15px">
-                <div ng-repeat="rule in Rules" class="chooseBtn RuleBtn" ng-click="showrule(rule)"
-                     ng-style="rule.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
-                    <div>
-                        <i class="fa fa-puzzle-piece fa-2x "></i>
-                        <p>{{rule.rule.name}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+     
 
         <!--modal创建规则-->
         <div class="modal fade" id="addRule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
