@@ -254,12 +254,12 @@ DEVICELIST STYLES
     top: 18%;
 }
 #customerChart,#customerUserChart{
-    width: 40%;
+    /* width: 40%;
     float: right;
     border: 1px solid #c0c0c0;
     border-radius: 10px;
     margin-right: 20px;
-    margin-top: 10px;
+    margin-top: 10px; */
 }
 #cancelAssign{
     float: right;
