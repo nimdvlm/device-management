@@ -1,6 +1,6 @@
 ﻿<div class="content-wrapper" ng-controller="deviceListCtrl">
     <div class="container-fluid">
-        <div class="row">
+        <div class="overflow-wrap row">
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <span style="font-size: 30px;">设备列表</span>
                 <button style="margin-left:5px" class="btn btn-primary btn-sm user" data-toggle="modal"
@@ -34,7 +34,7 @@
                   <!--<i class="fa fa-angle-double-up"></i>-->
               <!--</div>-->
         </div>
-        <div class="row" style="height: 80px;">
+        <div class="overflow-wrap row" style="height: 35px; margin: 10px 0;">
             <div class="labelDiv">
                 <div style="width: 30px;height: 10px;background: #305680;border-radius: 3px;"></div><span>在线</span>
             </div>
@@ -53,8 +53,8 @@
                 <span>共搜索到   {{searchCount}}    个设备</span>
             </div>
         </div>
-        <div class="row chooseBtn-wrap">
-              <div class="chooseBtn col-lg-2 col-md-2 col-sm-2 col-xs-3" ng-repeat="data in deviceList" ng-click="show(data)" ng-style="data.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()" >
+        <div class="overflow-wrap chooseBtn-wrap row">
+              <div class="chooseBtn col-lg-1 col-md-1 col-sm-2 col-xs-3" ng-repeat="data in deviceList" ng-click="show(data)" ng-style="data.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()" >
                   <div title="{{data.name}}">
                       <i class="fa fa-file-text fa-2x" id="{{data.id}}"></i>
                       <p>{{data.name}}</p>
@@ -63,7 +63,7 @@
             <div id="preDevice" ng-click="preDeviceInfo()"><i class="fa fa-chevron-left"></i></div>
             <div id="nextDevice" ng-click="nextDeviceInfo()"><i class="fa  fa-chevron-right"></i></div>
         </div>
-        <div class="row">
+        <div class="row" style="border: 1px solid #ccc; margin: 10px 0">
             <div id="deviceListChart col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <table class="table table-striped table-hover">
                     <thead>

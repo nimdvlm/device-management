@@ -208,7 +208,6 @@ img { max-width: 100%; }
 }
 
 .chooseBtn{
-	margin-top: 70px;
+	margin: 70px 2px 0;
 	cursor: pointer;
-
 }

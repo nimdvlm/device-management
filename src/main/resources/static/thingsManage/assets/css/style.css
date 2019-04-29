@@ -2,6 +2,10 @@
 /*======================================
     GENERAL STYLES
 ======================================= */
+.overflow-wrap {
+    overflow: hidden;
+    clear: none;
+}
 
 .b-clr {
     color:#000;
@@ -192,7 +196,7 @@ ul,li{
     text-align: center;
 }
 .chooseBtn{
-    margin-top: 3%;
+    /*margin-top: 3%;*/
     /*margin-left: 20px;*/
     cursor: pointer;
     padding: 20px;
@@ -202,6 +206,7 @@ ul,li{
     float: left;
     border-radius: 5px;
     background: white;
+    margin: 5px 2px;
 }
 .chooseBtn div i{
     color: #305680;
@@ -289,6 +294,7 @@ DEVICELIST STYLES
 }
 .chooseBtn-wrap {
     position: relative;
+    padding: 0 10px;
 }
 #preDevice,#nextDevice{
     /*margin-top: 15%;*/
@@ -307,11 +313,11 @@ DEVICELIST STYLES
 }
 
 #preDevice {
-    left: 10px;
+    left: 0px;
 }
 #nextDevice{
     /*margin-right: 40px;*/
-    right: 10px;
+    right: 0px;
 }
 
 .service-panel{
