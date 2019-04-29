@@ -7,6 +7,20 @@
     clear: none;
 }
 
+/******  => S 頂部彈出菜單******/
+.tp-navbar-wrap {
+    position: relative;
+}
+
+.nav-downlist {
+    position: absolute;
+    top: 58px;
+    left:0px;
+    width: 200px;
+    display: none;
+    z-index: 200;
+}
+/******  => E 頂部彈出菜單******/
 .b-clr {
     color:#000;
 }
