@@ -1,17 +1,15 @@
-<div class="content-wrapper" ng-controller="deviceModelCtrl">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-7">
-                <span class="header-line">设备型号管理
-                <button style="margin-left:10px" class="btn btn-primary btn-sm user" data-toggle="modal"
-                        data-target="#addDeviceModel">+ 创建设备型号管理组
-                </button>
-                </span>
-            </div>
+<div class="container-fluid" ng-controller="deviceModelCtrl">
+        <div class="">
+            <span class="header-line">设备型号管理
+            <button style="margin-left:10px" class="btn btn-primary btn-sm user" data-toggle="modal"
+                    data-target="#addDeviceModel">+ 创建设备型号管理组
+            </button>
+            </span>
         </div>
 
-        <div class="deviceTypeIcon">
-            <div class="deviceTypeIconStyle" ng-repeat="item in deviceTypeGroups" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+    <div class="deviceTypeIcon row">
+        <div class="deviceTypeIconStyleWrap col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="item in deviceTypeGroups" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
+            <div class="deviceTypeIconStyle">
                 <p class="style" style="padding-top: 5px"><i class="fa fa-angle-double-right fa-cart-plus"></i> 型号：{{item.model.modelName}}
                     <!--i title="删除" data-toggle="modal" data-target="#deleteSM" ng-click="deleteDeviceTypeIcon(item)" style="float: right;margin-right: 10px" class="glyphicon glyphicon-trash"></i-->
                     <i title="编辑" data-toggle="modal" data-target="#editSM" ng-click="editDeviceTypeIcon(item)" style="float: right;margin-right: 10px" class="glyphicon glyphicon-edit"></i></p>
@@ -21,6 +19,7 @@
                 <p class="style"><i class="fa fa-angle-double-right fa-cart-plus"></i> 设备在线时间：{{item.model.limitLifetime}}</p>
             </div>
         </div>
+    </div>
 
         <!--div class="deviceTypeIcon" id="accordion">
             <div class="deviceTypeIconStyle" ng-repeat="item in deviceTypeGroups track by $index" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
@@ -81,7 +80,7 @@
         </div-->
 
 
-    </div>
+</div>
 
 
     <!--编辑设备模态框-->

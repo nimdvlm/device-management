@@ -1,5 +1,5 @@
-<div class="content-wrapper" ng-controller="customerCtrl">
-    <div class="container">
+<div class="overflow-wrap row" ng-controller="customerCtrl">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-7">
                 <span style="font-size: 30px;">客户组</span>
@@ -14,7 +14,7 @@
                 每页显示&nbsp<input type="text" id="customerNum" style="width: 50px;border-radius: 5px;" ng-change="customerLimit()" ng-model="myLimit" placeholder="9">&nbsp个客户组
         </div>
         <div class="row">
-            <div id="customerIcon">
+            <div id="" class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="chooseBtn" ng-repeat="data in customersInfo" ng-click="showCustomer(data)" ng-style="data.style" ng-mouseover="fadeSiblings()" ng-mouseout="reSiblings()">
                     <div title="{{data.title}}">
                         <i class="fa fa-users fa-2x"></i>
@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div id="customerChart">
+            <div id="" class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="border: 1px solid #ccc; border-radius: 5px;">
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>

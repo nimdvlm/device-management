@@ -2,9 +2,30 @@
 /*======================================
     GENERAL STYLES
 ======================================= */
+.overflow-wrap {
+    overflow: hidden;
+    clear: none;
+}
 
+/******  => S 頂部彈出菜單******/
+.tp-navbar-wrap {
+    position: relative;
+}
+
+.nav-downlist {
+    position: absolute;
+    top: 58px;
+    left:0px;
+    width: 200px;
+    display: none;
+    z-index: 200;
+}
+/******  => E 頂部彈出菜單******/
 .b-clr {
     color:#000;
+}
+.bd-main {
+    background-color:#305680;
 }
 .sec-menu {
     background-color:#305680;
@@ -12,29 +33,49 @@
     padding-bottom:10px;
     color:#fff;
     font-size:22px;
-    position: fixed;
-    top: 0;
+    height: 67px;
+    /**************************************************/
+    /* position: fixed;
     width: 100%;
     z-index: 100;
+    top: 0; */
+    /**************************************************/
+}
+@media screen and (max-width: 768px) {
+    .bd-content-wrapper {
+        margin-left: 0 !important;
+    }
+}
+.bd-content-wrapper {
+    min-height: 780px;
+    background: rgb(238,238,238);
+    margin-left: 200px;
 }
 .content-wrapper {
-    min-height:1000px;
-    background: rgb(238,238,238);
-    padding-left: 6%;
-    margin-top: 4%;
+    min-height: 780px;
+    /*background: rgb(238,238,238);*/
+    /* padding-left: 6%; */
+    /* 设置样式，两侧各15像素的空隙 */
+    /* padding: 0 15px; */
+    /* margin-top: 4%; */
+    /*margin-left: 200px;*/
 }
-.content-wrapper .container{
+
+/**************************************************/
+/* .content-wrapper .container{
     width: 100%;
-}
-    /* =============================================================
-    HEAD MENU STYLES
-    ============================================================ */
+} */
+/**************************************************/
+
+/* =============================================================
+HEAD MENU STYLES
+============================================================ */
 .upSideMenu{
     font-size: 16px;
     cursor: pointer;
 }
 #userCenter{
-    margin-left: 500px;
+    /* margin-left: 500px; */
     cursor: pointer;
 }
 #backIcon{
@@ -67,20 +108,24 @@
 
 #side-menu {
     height: 100%;
-    position: fixed;
+    /***************************************/
+    /* position: fixed; 
     left: 0px;
-    top: 0px;
+    top: 0px; 
+    z-index: 999; */
+    /***************************************/
     background-color: #305680;
     color: #fff;
-    z-index: 999;
     overflow: auto;
     max-width: 500px;
-
+    width: 200px;
+    float: left;
 }
 
     #side-menu ul {
         list-style: none;
         padding: 0px;
+        height: 100%;
     }
 
         #side-menu ul li {
@@ -165,16 +210,17 @@ ul,li{
     text-align: center;
 }
 .chooseBtn{
-    margin-top: 3%;
-    margin-left: 20px;
+    /*margin-top: 3%;*/
+    /*margin-left: 20px;*/
     cursor: pointer;
     padding: 20px;
-    width: 150px;
+    /*width: 150px;*/
     height: 100px;
     border: 2px solid #c0c0c0;
     float: left;
-    border-radius: 10px;
+    border-radius: 5px;
     background: white;
+    margin: 5px 2px;
 }
 .chooseBtn div i{
     color: #305680;
@@ -208,12 +254,12 @@ DEVICELIST STYLES
     top: 18%;
 }
 #customerChart,#customerUserChart{
-    width: 40%;
+    /* width: 40%;
     float: right;
     border: 1px solid #c0c0c0;
     border-radius: 10px;
     margin-right: 20px;
-    margin-top: 10px;
+    margin-top: 10px; */
 }
 #cancelAssign{
     float: right;
@@ -260,11 +306,17 @@ DEVICELIST STYLES
 .pagination li{
     cursor: pointer;
 }
+.chooseBtn-wrap {
+    position: relative;
+    padding: 0 10px;
+}
 #preDevice,#nextDevice{
-    margin-top: 15%;
+    /*margin-top: 15%;*/
+    position: absolute;
+    top: 40%;
     width: 2%;
     height: 30px;
-    float: left;
+    /*float: left;*/
     background: #c0c0c0;
     opacity: 0.3;
     border-radius: 5px;
@@ -273,9 +325,15 @@ DEVICELIST STYLES
     cursor: pointer;
     color: #7e7e7e;
 }
-#nextDevice{
-    margin-right: 40px;
+
+#preDevice {
+    left: 0px;
 }
+#nextDevice{
+    /*margin-right: 40px;*/
+    right: 0px;
+}
+
 .service-panel{
     background: #c0c0c036;
     border-radius: 10px;
@@ -440,11 +498,15 @@ serviceGroup  &   deviceModelManagement
     border-radius: 6px;
     border: 2px solid #c0c0c0;
     background: white;
-    width: 23%;
-    margin-left: 2%;
+    /*****************************/
+    /*以下代码被bootstrap的响应式代替*/
+    /*width: 23%;*/
+    /*margin-left: 2%;*/
+    /*****************************/
+    margin: 0 3px;
     margin-bottom: 30px;
     cursor: pointer;
-    display: inline-block;
+    /*display: inline-block;*/
 }
 /*.imgIconDisplay img{
     margin-right: 30px;
@@ -555,15 +617,15 @@ pluginsGroup
     margin-top: 5px;
 }
 .pluginChoose{
-    width:180px ;
-    margin-left: 20px;
-    padding:15px 5px;
+    /* width:180px ; */
+    /* margin-left: 20px; */
+    /* padding:15px 5px; */
 }
 .pluginRightView{
-    float: right;
+    /* float: right; */
     padding-top: 10px;
-    width:44%;
-    min-width: 350px;
+    /* width:44%; */
+    /* min-width: 350px; */
 }
 .pluginChart{
     border:1px solid rgb(212,212,212);
@@ -603,16 +665,12 @@ width: 35%;
     background: #c0c0c036;
     margin: 6px 10px 5px -45px;
 }
-
-
-
-
 */
 /*插件模块控件位置*/
 #pluginIcon {
-    width:50%;
+    /* width:50%; */
     float: left;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
 .btnPosition{
     margin-top: 20px;
